@@ -48,6 +48,7 @@ static inline void snoopy_log(const char *filename, char *const argv[])
 	size_t  logStringLength = 0;
 	char    cwd[PATH_MAX+1];
 	char   *getCwdRet       = NULL;
+	char   *ttyPath         = NULL; 
 
 	int     i               = 0;
 	int     argc            = 0;
@@ -61,19 +62,26 @@ static inline void snoopy_log(const char *filename, char *const argv[])
 	}
 	#endif
 
-	// Count number of arguments
+	/* Count number of arguments */
 	for (argc=0 ; *(argv+argc) != '\0' ; argc++);
 
 
-	// Allocate memory for logString
+	/* Get ttyname */
+	ttyPath = ttyname(0);
+	if (ttyPath == NULL) {
+	    ttyPath = malloc(sizeof(int)*1);
+	    ttyPath = "\0";
+	}
+
+	/* Allocate memory for logString */
 	logStringLength = 0;
 	for (i=0 ; i<argc ; i++) {
-		// Argument length + space
+		/* Argument length + space */
 		logStringLength += sizeof(char) * (min(SNOOPY_MAX_ARG_LENGTH, strlen(argv[i])) + 1);
 	}
-	logString = (char *) malloc(logStringLength + 1);   // +1 for last \0
+	logString = (char *) malloc(logStringLength + 1);   /* +1 for last \0 */
 
-	// Create logString
+	/* Create logString */
 	strcpy(logString, "");
 	for (i=0 ; i<argc ; i++) {
 		argLength = strlen(argv[i]);
@@ -82,17 +90,20 @@ static inline void snoopy_log(const char *filename, char *const argv[])
 	}
 	strcat(logString, "\0");
 
-	// Log it
+	/* Log it */
 	openlog("snoopy", LOG_PID, LOG_AUTHPRIV);
 	#if defined(SNOOPY_CWD_LOGGING)
 		getCwdRet = getcwd(cwd, PATH_MAX+1);
-		syslog(LOG_INFO, "[uid:%d sid:%d cwd:%s]: %s", getuid(), getsid(0), cwd, logString);
+		syslog(LOG_INFO, "[uid:%d sid:%d cwd:%s tty:%s]: %s", getuid(), getsid(0), cwd, ttyPath, logString);
 	#else
-		syslog(LOG_INFO, "[uid:%d sid:%d]: %s", getuid(), getsid(0), logString);
+		syslog(LOG_INFO, "[uid:%d sid:%d tty:%s]: %s", getuid(), getsid(0), ttyPath, logString);
 	#endif
 
-	// Free the logString memory
+	/* Free the logString memory */
 	free(logString);
+
+	/* Should this be done? */
+        /* free(ttyPath); */
 }
 
 
