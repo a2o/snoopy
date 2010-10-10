@@ -3,33 +3,35 @@
 
 
 
-CC=gcc
+CC=@CC@
+CFLAGS=@CFLAGS@ @DEFS@
 LIBS=-ldl
+LDFLAGS=@LDFLAGS@ @LIBS@
 PREFIX=@prefix@
-LIBDIR=@prefix@/lib
+LIBDIR=@libdir@
 
 
 
 all: snoopy.so detect
 
 snoopy.so:  snoopy.c snoopy.h
-	$(CC) $(CFLAGS) -shared -O3 -fomit-frame-pointer -fPIC snoopy.c -osnoopy.so $(LIBS)
+	$(CC) $(CFLAGS) -shared -O3 -fomit-frame-pointer -fPIC snoopy.c -osnoopy.so $(LDFLAGS)
 
 detect: detect.c
-	$(CC) detect.c -odetect $(LIBS)
+	$(CC) detect.c -odetect $(LDFLAGS)
 
 
 
 install: all
-	install -m 755 -d $(LIBDIR)
-	install -m 755 snoopy.so $(LIBDIR)/snoopy.so
-	@echo -e "\nSnoopy shared library installed in $(LIBDIR)."
+	install -m 755 -d $(DESTDIR)$(LIBDIR)
+	install -m 755 snoopy.so $(DESTDIR)$(LIBDIR)/snoopy.so
+	@echo -e "\nSnoopy shared library installed in $(DESTDIR)$(LIBDIR)."
 	@echo -e "Run 'make enable' to actually enable snoopy logging.\n"
 
 
 
 enable:
-	./enable.sh $(LIBDIR)
+	./enable.sh $(DESTDIR)$(LIBDIR)
 
 
 
