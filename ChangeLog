@@ -4,6 +4,11 @@
 
 
 
+2010-10-10 - Version  1.7.6
+---------------------------
+o Quick fix of buggy patch applied in previous release
+
+
 2010-10-10 - Version  1.7.5
 ---------------------------
 o Build for 64bit machines and destdir support for RPMs (Aldemira)
