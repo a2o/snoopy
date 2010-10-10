@@ -94,5 +94,15 @@ fi
 ### Create package
 cd .. &&
 tar -c -z -f $FILENAME_RELEASE $DIRNAME_RELEASE &&
-rm -rf $DIRNAME_RELEASE &&
+rm -rf $DIRNAME_RELEASE
+
+
+
+### Check out master branch again
+cd $DIR_REPO &&
+git checkout master
+
+
+
+### Signal success
 echo "Release complete. File: $FILE_RELEASE"
