@@ -59,7 +59,7 @@ fi
 
 
 ### Checkout
-git checkout $RELEASE_TAG > /dev/null
+git checkout $RELEASE_TAG
 
 
 
