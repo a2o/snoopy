@@ -37,6 +37,7 @@ enable:
 
 clean:
 	rm -f detect snoopy.so
+	rm -f contrib/sles/snoopy.spec
 
 distclean: clean
 	rm -f autoscan.log config.h config.log config.status

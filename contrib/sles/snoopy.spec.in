@@ -1,4 +1,4 @@
-%define version 1.7.3
+%define version @PACKAGE_VERSION@
 %define release 1
 %define	enable	1
 
