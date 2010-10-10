@@ -20,8 +20,9 @@ fi
 
 
 ### Check if release already exists
-if [ -e "tags/release-$RELEASE_TAG" ]; then
-	echo "ERROR: Release tag already exists"
+RES=`git tag | grep "^$RELEASE_TAG\$"`
+if [ "$RES" != "$RELEASE_TAG" ]; then
+	echo "ERROR: Release tag does not exist, please create it with 'git tag X.Y.Z"
 	exit 2
 fi
 
