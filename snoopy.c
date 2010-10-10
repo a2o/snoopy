@@ -48,12 +48,13 @@ static inline void snoopy_log(const char *filename, char *const argv[])
 	size_t  logStringLength = 0;
 	char    cwd[PATH_MAX+1];
 	char   *getCwdRet       = NULL;
+
 	char   *ttyPath         = NULL; 
+	char    ttyPathEmpty[]  = ""; 
 
 	int     i               = 0;
 	int     argc            = 0;
 	size_t  argLength       = 0;
-
 
 
 	#if SNOOPY_ROOT_ONLY
@@ -62,15 +63,14 @@ static inline void snoopy_log(const char *filename, char *const argv[])
 	}
 	#endif
 
+
 	/* Count number of arguments */
 	for (argc=0 ; *(argv+argc) != '\0' ; argc++);
-
 
 	/* Get ttyname */
 	ttyPath = ttyname(0);
 	if (ttyPath == NULL) {
-	    ttyPath = malloc(sizeof(int)*1);
-	    ttyPath = "\0";
+	    ttyPath = ttyPathEmpty;
 	}
 
 	/* Allocate memory for logString */
@@ -101,9 +101,6 @@ static inline void snoopy_log(const char *filename, char *const argv[])
 
 	/* Free the logString memory */
 	free(logString);
-
-	/* Should this be done? */
-        /* free(ttyPath); */
 }
 
 
