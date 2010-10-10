@@ -22,7 +22,7 @@ fi
 ### Check if release tag exists
 RES=`git tag | grep "^$RELEASE_TAG\$"`
 if [ "$RES" != "$RELEASE_TAG" ]; then
-	echo "ERROR: Release tag does not exist, please create it with 'git tag X.Y.Z'"
+	echo "ERROR: Release tag does not exist, please create it with:   git tag X.Y.Z"
 	exit 2
 fi
 
@@ -66,9 +66,16 @@ git checkout $RELEASE_TAG
 ### Check for release tags
 RES=`cat configure.ac | fgrep $RELEASE_TAG | cat`
 if [ "x$RES" == "x" ]; then
-	echo "ERROR: Release tag not found in configure.ac file."
+	echo "ERROR: Release tag $RELEASE_TAG not found in configure.ac file."
 	exit 20
 fi
+
+
+
+### Create directory
+mkdir -p $DIR_RELEASE &&
+cp -pR $DIR_REPO/* $DIR_RELEASE
+
 
 
 echo "Implementation missing"
