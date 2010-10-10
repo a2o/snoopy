@@ -4,9 +4,15 @@
 
 
 
+2010-10-10 - Version  1.7.5
+---------------------------
+o Build for 64bit machines and destdir support for RPMs (Aldemira)
+o Fixed 1-byte memory leak introduced in previous release
+
+
 2010-09-24 - Version  1.7.2
 ---------------------------
-o Logs current tty (patch provided by Aldemira user on sourceforge)
+o Logs current tty (initial patch provided by Aldemira user on SourceForge)
 
 
 2010-02-11 - Version  1.6.1
