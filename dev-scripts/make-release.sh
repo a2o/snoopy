@@ -13,7 +13,7 @@ fi
 ### Check release tag
 RELEASE_TAG="$1"
 if [ "x$RELEASE_TAG" == "x" ]; then
-	echo "ERROR: No release tag given. Use $0 X.Y.Z"
+	echo "ERROR: No release tag specified. Please use:   $0 X.Y.Z"
 	exit 1
 fi
 
@@ -26,6 +26,8 @@ if [ "$RES" != "$RELEASE_TAG" ]; then
 	exit 2
 fi
 
+echo "Implementation missing"
+exit;
 
 
 ### Create copy of trunk
