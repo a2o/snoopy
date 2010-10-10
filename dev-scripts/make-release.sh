@@ -59,7 +59,7 @@ fi
 
 
 ### Checkout
-git checkout $RELEASE_TAG
+git checkout $RELEASE_TAG > /dev/null
 
 
 
@@ -72,27 +72,27 @@ fi
 
 
 
-### Create directory
+### Create release directory
 mkdir -p $DIR_RELEASE &&
-cp -pR $DIR_REPO/* $DIR_RELEASE
-
-
-
-echo "Implementation missing"
-exit;
-
-
-
-
-
-
-
-
-# Create temporary directory and copy release there
-cp -pR tags/release-$RELEASE_TAG snoopy-$RELEASE_TAG &&
-cd snoopy-$RELEASE_TAG &&
+cp -pR $DIR_REPO/* $DIR_RELEASE &&
+cd $DIR_RELEASE &&
+rm -rf dev-scripts &&
 autoheader &&
-autoconf &&
+autoconf
+
+
+
+### Compare configure.ac and configure.ac.generated
+diff configure.ac configure.ac.generated
+if [ "$?" != "0" ]; then
+	echo "ERROR: configure.ac and configure.ac.generated differ."
+	exit 40
+fi
+
+
+
+### Create package
 cd .. &&
-tar -c -z -f snoopy-$RELEASE_TAG.tar.gz snoopy-$RELEASE_TAG &&
-rm -rf snoopy-$RELEASE_TAG
+tar -c -z -f $FILENAME_RELEASE $DIRNAME_RELEASE &&
+rm -rf $DIRNAME_RELEASE &&
+echo "Release complete. File: $FILE_RELEASE"
