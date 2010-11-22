@@ -94,9 +94,9 @@ static inline void snoopy_log(const char *filename, char *const argv[])
 	openlog("snoopy", LOG_PID, LOG_AUTHPRIV);
 	#if defined(SNOOPY_CWD_LOGGING)
 		getCwdRet = getcwd(cwd, PATH_MAX+1);
-		syslog(LOG_INFO, "[uid:%d sid:%d cwd:%s tty:%s]: %s", getuid(), getsid(0), cwd, ttyPath, logString);
+		syslog(LOG_INFO, "[uid:%d sid:%d tty:%s cwd:%s filename:%s]: %s", getuid(), getsid(0), ttyPath, cwd, filename, logString);
 	#else
-		syslog(LOG_INFO, "[uid:%d sid:%d tty:%s]: %s", getuid(), getsid(0), ttyPath, logString);
+		syslog(LOG_INFO, "[uid:%d sid:%d tty:%s filename:%s]: %s",        getuid(), getsid(0), ttyPath, filename, logString);
 	#endif
 
 	/* Free the logString memory */
