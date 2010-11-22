@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.63])
-AC_INIT([Snoopy Logger], [1.7.6], [http://sourceforge.net/projects/snoopylogger/], [snoopy])
+AC_INIT([Snoopy Logger], [1.7.8], [http://sourceforge.net/projects/snoopylogger/], [snoopy])
 AC_DEFINE(PACKAGE_URL, [], "http://sourceforge.net/projects/snoopylogger/")
 AC_CONFIG_SRCDIR([config.h.in])
 AC_CONFIG_HEADERS([config.h])
