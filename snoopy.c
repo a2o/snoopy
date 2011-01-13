@@ -55,6 +55,7 @@ static inline void snoopy_log(const char *filename, char *const argv[])
 	int     i               = 0;
 	int     argc            = 0;
 	size_t  argLength       = 0;
+	int n;
 
 
 	#if SNOOPY_ROOT_ONLY
@@ -62,7 +63,6 @@ static inline void snoopy_log(const char *filename, char *const argv[])
 		return;
 	}
 	#endif
-
 
 	/* Count number of arguments */
 	for (argc=0 ; *(argv+argc) != '\0' ; argc++);
@@ -77,19 +77,21 @@ static inline void snoopy_log(const char *filename, char *const argv[])
 	logStringLength = 0;
 	for (i=0 ; i<argc ; i++) {
 		/* Argument length + space */
-		logStringLength += sizeof(char) * (min(SNOOPY_MAX_ARG_LENGTH, strlen(argv[i])) + 1);
+		logStringLength += sizeof(logString[0]) * (strlen(argv[i]) + 1);
 	}
-	logString = (char *) malloc(logStringLength + 1);   /* +1 for last \0 */
+	/* +1 for last \0 */
+	logStringLength = min(SNOOPY_MAX_ARG_LENGTH, logStringLength+1);
+	logString = malloc(sizeof *logString * logStringLength);
 
-	/* Create logString */
-	strcpy(logString, "");
-	for (i=0 ; i<argc ; i++) {
-		argLength = strlen(argv[i]);
-		strncat(logString, argv[i], min(SNOOPY_MAX_ARG_LENGTH, argLength));
-		strcat(logString, " ");
+	/* Create logString, and protect against overflows */
+	logString[0] = '\0';
+	for (i = n = 0 ; i<argc ; i++) {
+		n += snprintf(logString+n, logStringLength-n, "%s", argv[i]);
+		if (n >= logStringLength)
+			break;
+		logString[n++] = ' ';
 	}
-	strcat(logString, "\0");
-
+	logString[logStringLength-1] = '\0';
 	/* Log it */
 	openlog("snoopy", LOG_PID, LOG_AUTHPRIV);
 	#if defined(SNOOPY_CWD_LOGGING)
