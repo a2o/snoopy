@@ -4,6 +4,11 @@
 
 
 
+2010-10-10 - Version  1.7.10
+---------------------------
+o Fixed bug with long command lines (thanks Luis Fernando Muñoz Mejías)
+
+
 2010-10-10 - Version  1.7.6
 ---------------------------
 o Quick fix of buggy patch applied in previous release
