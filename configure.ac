@@ -35,7 +35,8 @@ AC_CONFIG_FILES([
 
 dnl ============================================================================
 AC_ARG_ENABLE(cwd-logging,
-    [AC_HELP_STRING([--disable-cwd-logging],
+    [AC_HELP_STRING(
+	[--disable-cwd-logging],
 	[disable logging of Current Working Directory [default=enabled]]
     )],
     [
@@ -54,7 +55,8 @@ AS_IF([test "x$enable_cwd_logging" == "xyes"], [
 
 dnl ============================================================================
 AC_ARG_ENABLE(external-filter,
-    [AC_HELP_STRING([--enable-external-filter],
+    [AC_HELP_STRING(
+	[--enable-external-filter],
 	[enable external filtering support [default=disabled]]
     )],
     [
@@ -67,6 +69,22 @@ AC_ARG_ENABLE(external-filter,
 
 AS_IF([test "x$enable_external_filter" == "xyes"], [
     AC_DEFINE(SNOOPY_EXTERNAL_FILTER, 1, [Enable external filtering support])
+])
+
+
+
+dnl ============================================================================
+AC_ARG_WITH(filter-command,
+    [AC_HELP_STRING(
+	[--with-filter-command=CMD],
+	[external filter command to use [default=/usr/local/sbin/snoopy-filter.sh]]
+    )],
+    [],
+    [with_filter_command=/usr/local/sbin/snoopy-filter.sh]
+)
+
+AS_IF([test "x$enable_external_filter" == "xyes"], [
+    AC_DEFINE_UNQUOTED(SNOOPY_EXTERNAL_FILTER_COMMAND, ["$with_filter_command"], [External filter command to use])
 ])
 
 
