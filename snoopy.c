@@ -48,6 +48,7 @@ static inline void snoopy_log(const char *filename, char *const argv[])
 	size_t  logStringLength = 0;
 	char    cwd[PATH_MAX+1];
 	char   *getCwdRet       = NULL;
+	char   *logMessage      = NULL;
 
 	char   *ttyPath         = NULL; 
 	char    ttyPathEmpty[]  = ""; 
@@ -81,7 +82,8 @@ static inline void snoopy_log(const char *filename, char *const argv[])
 	}
 	/* +1 for last \0 */
 	logStringLength = min(SNOOPY_MAX_ARG_LENGTH, logStringLength+1);
-	logString = malloc(sizeof *logString * logStringLength);
+	logString  = malloc(sizeof *logString * logStringLength);
+	logMessage = malloc(logStringLength + (PATH_MAX * 2));
 
 	/* Create logString, and protect against overflows */
 	logString[0] = '\0';
@@ -93,17 +95,26 @@ static inline void snoopy_log(const char *filename, char *const argv[])
 	}
 	logString[logStringLength-1] = '\0';
 
-	/* Log it */
-	openlog("snoopy", LOG_PID, LOG_AUTHPRIV);
+	/* Create logMessage */
 	#if defined(SNOOPY_CWD_LOGGING)
 		getCwdRet = getcwd(cwd, PATH_MAX+1);
-		syslog(LOG_INFO, "[uid:%d sid:%d tty:%s cwd:%s filename:%s]: %s", getuid(), getsid(0), ttyPath, cwd, filename, logString);
+		sprintf(logMessage, "[uid:%d sid:%d tty:%s cwd:%s filename:%s]: %s", getuid(), getsid(0), ttyPath, cwd, filename, logString);
 	#else
-		syslog(LOG_INFO, "[uid:%d sid:%d tty:%s filename:%s]: %s",        getuid(), getsid(0), ttyPath, filename, logString);
+		sprintf(logMessage, "[uid:%d sid:%d tty:%s filename:%s]: %s",        getuid(), getsid(0), ttyPath, filename, logString);
 	#endif
+
+	/* Filter it */
+	#if defined(SNOOPY_EXTERNAL_FILTER)
+		// Do it
+	#endif
+
+	/* Log it */
+	openlog("snoopy", LOG_PID, SNOOPY_SYSLOG_FACILITY);
+	syslog(LOG_INFO, "%s", logMessage);
 
 	/* Free the logString memory */
 	free(logString);
+	free(logMessage);
 }
 
 

@@ -90,4 +90,18 @@ AS_IF([test "x$enable_external_filter" == "xyes"], [
 
 
 dnl ============================================================================
+AC_ARG_WITH(syslog-facility,
+    [AC_HELP_STRING(
+	[--with-syslog-facility=FACILITY],
+	[facility to use when logging, check 'man 3 syslog' or 'man openlog' [default=LOG_AUTHPRIV]]
+    )],
+    [],
+    [with_syslog_facility=LOG_AUTHPRIV]
+)
+
+AC_DEFINE_UNQUOTED(SNOOPY_SYSLOG_FACILITY, [$with_syslog_facility], [External filter command to use])
+
+
+
+dnl ============================================================================
 AC_OUTPUT

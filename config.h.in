@@ -67,8 +67,11 @@
 /* Enable external filtering support */
 #undef SNOOPY_EXTERNAL_FILTER
 
-/* External filter command to execute */
+/* External filter command to use */
 #undef SNOOPY_EXTERNAL_FILTER_COMMAND
+
+/* External filter command to use */
+#undef SNOOPY_SYSLOG_FACILITY
 
 /* Define to 1 if you have the ANSI C header files. */
 #undef STDC_HEADERS
