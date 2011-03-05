@@ -92,6 +92,7 @@ static inline void snoopy_log(const char *filename, char *const argv[])
 		logString[n++] = ' ';
 	}
 	logString[logStringLength-1] = '\0';
+
 	/* Log it */
 	openlog("snoopy", LOG_PID, LOG_AUTHPRIV);
 	#if defined(SNOOPY_CWD_LOGGING)

@@ -35,8 +35,8 @@ AC_CONFIG_FILES([
 
 dnl ============================================================================
 AC_ARG_ENABLE(cwd-logging,
-    [AC_HELP_STRING([--enable-cwd-logging],
-	[enable logging of Current Working Directory [default=yes]]
+    [AC_HELP_STRING([--disable-cwd-logging],
+	[disable logging of Current Working Directory [default=enabled]]
     )],
     [
 	if test "$enableval" == "yes"; then
