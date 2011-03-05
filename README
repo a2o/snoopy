@@ -41,8 +41,11 @@ U S A G E
     autoheader
     autoconf
 
+    # Check configuration options:
+    ./configure --help
+
     # Then continue with normal build procedure:
-    ./configure
+    ./configure [OPTIONS]
     make
     make install
 
