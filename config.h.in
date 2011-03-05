@@ -64,6 +64,9 @@
 /* Enable logging of Current Working Directory */
 #undef SNOOPY_CWD_LOGGING
 
+/* Enable external filtering support */
+#undef SNOOPY_EXTERNAL_FILTER
+
 /* Define to 1 if you have the ANSI C header files. */
 #undef STDC_HEADERS
 

@@ -53,4 +53,23 @@ AS_IF([test "x$enable_cwd_logging" == "xyes"], [
 
 
 dnl ============================================================================
+AC_ARG_ENABLE(external-filter,
+    [AC_HELP_STRING([--enable-external-filter],
+	[enable external filtering support [default=disabled]]
+    )],
+    [
+	if test "$enableval" == "yes"; then
+	    enable_external_filter=yes
+	fi
+    ],
+    [enable_external_filter=no]
+)
+
+AS_IF([test "x$enable_external_filter" == "xyes"], [
+    AC_DEFINE(SNOOPY_EXTERNAL_FILTER, 1, [Enable external filtering support])
+])
+
+
+
+dnl ============================================================================
 AC_OUTPUT
