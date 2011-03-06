@@ -77,15 +77,36 @@ dnl ============================================================================
 AC_ARG_WITH(filter-command,
     [AC_HELP_STRING(
 	[--with-filter-command=CMD],
-	[external filter command to use [default=/usr/local/sbin/snoopy-filter.sh]]
+	[external filter command to use.
+	    WARNING WARNING WARNING: Do not change unless you are absolutely sure you know what you are doing
+	    [default=/usr/local/snoopy/bin/snoopy-filter.sh]
+	]
     )],
     [],
-    [with_filter_command=/usr/local/sbin/snoopy-filter.sh]
+    [with_filter_command=/usr/local/snoopy/bin/snoopy-filter.sh]
 )
 
 AS_IF([test "x$enable_external_filter" == "xyes"], [
     AC_DEFINE_UNQUOTED(SNOOPY_EXTERNAL_FILTER_COMMAND, ["$with_filter_command"], [External filter command to use])
 ])
+
+
+
+dnl ============================================================================
+AC_ARG_WITH(exclude-prefix,
+    [AC_HELP_STRING(
+	[--with-exclude-prefix=PREFIX],
+	[prefix to commands excluded from logging.
+	    This feature is mainly intended to specify path to commands which are used by external filter so snoopy does not enter infinite loop.
+	    WARNING WARNING WARNING: Do not change unless you are absolutely sure you know what you are doing
+	    [default=/usr/local/snoopy]
+	]
+    )],
+    [],
+    [with_exclude_prefix=/usr/local/snoopy]
+)
+
+AC_DEFINE_UNQUOTED(SNOOPY_EXCLUDE_PREFIX, ["$with_exclude_prefix"], [Prefix to commands excluded from logging])
 
 
 
@@ -99,7 +120,21 @@ AC_ARG_WITH(syslog-facility,
     [with_syslog_facility=LOG_AUTHPRIV]
 )
 
-AC_DEFINE_UNQUOTED(SNOOPY_SYSLOG_FACILITY, [$with_syslog_facility], [External filter command to use])
+AC_DEFINE_UNQUOTED(SNOOPY_SYSLOG_FACILITY, [$with_syslog_facility], [Syslog facility to use])
+
+
+
+dnl ============================================================================
+AC_ARG_WITH(syslog-level,
+    [AC_HELP_STRING(
+	[--with-syslog-level=LEVEL],
+	[facility to use when logging, check 'man 3 syslog' or 'man openlog' [default=LOG_INFO]]
+    )],
+    [],
+    [with_syslog_level=LOG_INFO]
+)
+
+AC_DEFINE_UNQUOTED(SNOOPY_SYSLOG_LEVEL, [$with_syslog_level], [Syslog level to use])
 
 
 
