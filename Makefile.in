@@ -24,6 +24,17 @@ detect: detect.c
 
 
 install: all
+	@echo @EXCLUDE_PREFIX@
+	install -m 755 -d /usr/local/snoopy/bin
+	if test ! -e /usr/local/snoopy/bin/snoopy-filter.sh; then \
+	    install -m 755 snoopy-filter.sh /usr/local/snoopy/bin/snoopy-filter.sh; \
+	fi
+	if test ! -e /usr/local/snoopy/bin/grep; then \
+	    ln -s /usr/bin/grep /usr/local/snoopy/bin/grep; \
+	fi
+	if test ! -e /usr/local/snoopy/bin/sed; then \
+	    ln -s /usr/bin/sed /usr/local/snoopy/bin/sed; \
+	fi
 	install -m 755 -d $(DESTDIR)$(LIBDIR)
 	install -m 755 snoopy.so $(DESTDIR)$(LIBDIR)/snoopy.so
 	@echo -e "\nSnoopy shared library installed in $(DESTDIR)$(LIBDIR)."

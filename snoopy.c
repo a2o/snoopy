@@ -44,14 +44,27 @@
 
 static inline void snoopy_log(const char *filename, char *const argv[])
 {
-	char   *logString       = NULL;
-	size_t  logStringLength = 0;
+	char   *logString           = NULL;
+	size_t  logStringSize     = 0;
 	char    cwd[PATH_MAX+1];
-	char   *getCwdRet       = NULL;
-	char   *logMessage      = NULL;
+	char   *getCwdRet           = NULL;
+	char   *logMessage          = NULL;
+	int     logMessageMaxSize   = 0;
 
 	char   *ttyPath         = NULL; 
 	char    ttyPathEmpty[]  = ""; 
+
+	#if defined(SNOOPY_EXTERNAL_FILTER)
+		FILE   *fp;
+		int     status;
+		char   *filterCommand          = NULL;
+		int     filterCommandMaxSize   = 0;
+		char   *filterOutput           = NULL;
+		char   *filterOutputPtr        = NULL;
+		int     filterOutputMaxSize    = 0;
+		char    buffer[PATH_MAX];
+		int     bufferSize             = PATH_MAX;
+	#endif
 
 	int     i               = 0;
 	int     argc            = 0;
@@ -59,41 +72,56 @@ static inline void snoopy_log(const char *filename, char *const argv[])
 	int n;
 
 
-	#if SNOOPY_ROOT_ONLY
-	if ((geteuid() != 0) && (getuid() != 0)) {
+	/* If this stuff should be excluded, don't log it */
+	if (strncmp(filename, SNOOPY_EXCLUDE_PREFIX,
+		min(strlen(filename), strlen(SNOOPY_EXCLUDE_PREFIX))
+	) == 0 ) {
 		return;
 	}
+
+
+	/* Also exclude if root-only mode is enabled and this is non-root command */
+	#if SNOOPY_ROOT_ONLY
+		if ((geteuid() != 0) && (getuid() != 0)) {
+			return;
+		}
 	#endif
+
 
 	/* Count number of arguments */
 	for (argc=0 ; *(argv+argc) != '\0' ; argc++);
 
+
 	/* Get ttyname */
 	ttyPath = ttyname(0);
 	if (ttyPath == NULL) {
-	    ttyPath = ttyPathEmpty;
+		ttyPath = ttyPathEmpty;
 	}
 
+
 	/* Allocate memory for logString */
-	logStringLength = 0;
+	logStringSize = 0;
 	for (i=0 ; i<argc ; i++) {
 		/* Argument length + space */
-		logStringLength += sizeof(logString[0]) * (strlen(argv[i]) + 1);
+		logStringSize += sizeof(logString[0]) * (strlen(argv[i]) + 1);
 	}
 	/* +1 for last \0 */
-	logStringLength = min(SNOOPY_MAX_ARG_LENGTH, logStringLength+1);
-	logString  = malloc(sizeof *logString * logStringLength);
-	logMessage = malloc(logStringLength + (PATH_MAX * 2));
+	logStringSize     = min(SNOOPY_MAX_ARG_LENGTH, logStringSize+1);
+	logMessageMaxSize = logStringSize + (PATH_MAX * 3);
+	logString         = malloc(sizeof *logString * logStringSize);
+	logMessage        = malloc(logMessageMaxSize);
+
 
 	/* Create logString, and protect against overflows */
 	logString[0] = '\0';
 	for (i = n = 0 ; i<argc ; i++) {
-		n += snprintf(logString+n, logStringLength-n, "%s", argv[i]);
-		if (n >= logStringLength)
+		n += snprintf(logString+n, logStringSize-n, "%s", argv[i]);
+		if (n >= logStringSize)
 			break;
 		logString[n++] = ' ';
 	}
-	logString[logStringLength-1] = '\0';
+	logString[logStringSize-1] = '\0';
+
 
 	/* Create logMessage */
 	#if defined(SNOOPY_CWD_LOGGING)
@@ -103,18 +131,84 @@ static inline void snoopy_log(const char *filename, char *const argv[])
 		sprintf(logMessage, "[uid:%d sid:%d tty:%s filename:%s]: %s",        getuid(), getsid(0), ttyPath, filename, logString);
 	#endif
 
+
+	/* Prepare logging stuff */
+	openlog("snoopy", LOG_PID, SNOOPY_SYSLOG_FACILITY);
+
+
 	/* Filter it */
 	#if defined(SNOOPY_EXTERNAL_FILTER)
-		// Do it
-	#endif
+		filterCommandMaxSize = logMessageMaxSize;
+		filterOutputMaxSize  = logMessageMaxSize;
+		filterCommand = malloc(filterCommandMaxSize);
+		filterOutput  = malloc(filterOutputMaxSize);
+
+		/* Check filter command - existance */
+		fp = fopen(SNOOPY_EXTERNAL_FILTER_COMMAND, "r");
+		if (fp) {
+			fclose(fp);
+		} else {
+			syslog(LOG_ALERT, "External snoopy filter does not exist: %s", SNOOPY_EXTERNAL_FILTER_COMMAND);
+			goto extFilterEnd;
+		}
+
+		/* Check filter command - executable */
+		if (access(SNOOPY_EXTERNAL_FILTER_COMMAND, X_OK)) {
+			syslog(LOG_ALERT, "External snoopy filter is not executable: %s", SNOOPY_EXTERNAL_FILTER_COMMAND);
+			goto extFilterEnd;
+		}
+
+		/* Construct filter command */
+		sprintf(filterCommand, "%s '%s'", SNOOPY_EXTERNAL_FILTER_COMMAND, logMessage);
+
+		/* Execute it */
+		fp = popen(filterCommand, "r");
+		if (fp == NULL) {
+			syslog(LOG_ALERT, "Unable to execute external snoopy filter: %s", SNOOPY_EXTERNAL_FILTER_COMMAND);
+			goto extFilterEnd;
+		}
+
+		/* Read output and close file descriptor */
+		filterOutputPtr = filterOutput;
+		*filterOutput = '\0';
+		while (!feof(fp)) {
+			fgets(buffer, bufferSize, fp);
+
+			if ((strlen(filterOutput) + strlen(buffer)) > filterOutputMaxSize) {
+				syslog(LOG_ALERT, "Snoopy external filter output is too large");
+				goto extFilterEnd;
+			}
+
+			strcpy(filterOutputPtr, buffer);
+			filterOutputPtr += strlen(buffer);
+		}
+
+		/* Finish execution and check exit status */
+		status = pclose(fp);
+		if (status != 0) {
+			syslog(LOG_ALERT, "External snoopy filter returned non-zero status: %d", status);
+		}
+
+		/* Move contents to logMessage */
+		strcpy(logMessage, filterOutput);
+		extFilterEnd:
+	#endif   /* defined(SNOOPY_EXTERNAL_FILTER) */
+
 
 	/* Log it */
-	openlog("snoopy", LOG_PID, SNOOPY_SYSLOG_FACILITY);
-	syslog(LOG_INFO, "%s", logMessage);
+	if (strlen(logMessage) > 0) {
+		syslog(SNOOPY_SYSLOG_LEVEL, "%s", logMessage);
+	}
+
 
 	/* Free the logString memory */
 	free(logString);
 	free(logMessage);
+
+	#if defined(SNOOPY_EXTERNAL_FILTER)
+		free(filterCommand);
+		free(filterOutput);
+	#endif
 }
 
 

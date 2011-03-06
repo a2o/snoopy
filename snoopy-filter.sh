@@ -1,0 +1,28 @@
+#!/bin/sh
+
+#
+# Sample snoopy external filter
+#
+# Log message is received as first argument, which is stored in variable $1.
+# Whatever this script returns is the message that snoopy sends to syslog.
+# Non-zero exit status will be logged to syslog.
+#
+#
+# WARNING
+# WARNING   This filter should be a standalone executable.
+# WARNING   If it uses external programs, make sure the path to those programs
+# WARNING   was specified in EXCLUDE_PREFIX when ./configuring snoopy.
+# WARNING
+# WARNING   Otherwise snoopy enters infinite loop which will hang your system.
+# WARNING
+# WARNING
+
+# External programs used by this filter
+SNOOPY_EXCLUDE_PREFIX="/usr/local/snoopy"
+SNOOPY_GREP="$SNOOPY_EXCLUDE_PREFIX/bin/grep"
+SNOOPY_SED="$SNOOPY_EXCLUDE_PREFIX/bin/sed"
+
+# Here we just output whatever we have received with slight modification
+if [ "x$1" != "x" ]; then
+    echo "$@" | $SNOOPY_SED -e 's/bash/bush/g'
+fi
