@@ -29,6 +29,7 @@ AC_CHECK_FUNCS([getcwd])
 
 AC_CONFIG_FILES([
     Makefile
+    snoopy-filter.sh
     contrib/sles/snoopy.spec
 ])
 
@@ -61,14 +62,16 @@ AC_ARG_WITH(exclude-prefix,
 	[prefix to commands excluded from logging.
 	    This feature is mainly intended to specify path to commands which are used by external filter so snoopy does not enter infinite loop.
 	    WARNING WARNING WARNING: Do not change unless you are absolutely sure you know what you are doing
-	    [default=/usr/local/snoopy]
+	    [default=/usr/local/snoopy/bin]
 	]
     )],
     [],
-    [with_exclude_prefix=/usr/local/snoopy]
+    [with_exclude_prefix=/usr/local/snoopy/bin]
 )
 
 AC_DEFINE_UNQUOTED(SNOOPY_EXCLUDE_PREFIX, ["$with_exclude_prefix"], [Prefix to commands excluded from logging])
+
+AC_SUBST(SNOOPY_EXCLUDE_PREFIX, ["$with_exclude_prefix"])
 
 
 
@@ -90,6 +93,7 @@ AS_IF([test "x$enable_external_filter" == "xyes"], [
     AC_DEFINE(SNOOPY_EXTERNAL_FILTER, 1, [Enable external filtering support])
 ])
 
+AC_SUBST(SNOOPY_EXTERNAL_FILTER, ["$enable_external_filter"])
 
 
 dnl ============================================================================
@@ -110,11 +114,13 @@ AS_IF(
     [
         AS_IF(
 	    [test `echo "$with_filter_command" | grep -c "^$with_exclude_prefix" | cat` == "0"],
-	    [AC_ERROR([Invalid option combination: filter command must match exclude prefix])]
+	    [AC_ERROR([Invalid option combination: filter command $with_filter_command must match exclude prefix $with_exclude_prefix])]
 	)
 	AC_DEFINE_UNQUOTED(SNOOPY_EXTERNAL_FILTER_COMMAND, ["$with_filter_command"], [External filter command to use])
     ]
 )
+
+AC_SUBST(SNOOPY_FILTER_COMMAND, ["$with_filter_command"])
 
 
 

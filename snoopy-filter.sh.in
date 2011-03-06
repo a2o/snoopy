@@ -15,12 +15,11 @@
 # WARNING
 # WARNING   Otherwise snoopy enters infinite loop which will hang your system.
 # WARNING
-# WARNING
 
 # External programs used by this filter
-SNOOPY_EXCLUDE_PREFIX="/usr/local/snoopy"
-SNOOPY_GREP="$SNOOPY_EXCLUDE_PREFIX/bin/grep"
-SNOOPY_SED="$SNOOPY_EXCLUDE_PREFIX/bin/sed"
+SNOOPY_EXCLUDE_PREFIX="@SNOOPY_EXCLUDE_PREFIX@"
+SNOOPY_GREP="$SNOOPY_EXCLUDE_PREFIX/grep"
+SNOOPY_SED="$SNOOPY_EXCLUDE_PREFIX/sed"
 
 # Here we just output whatever we have received with slight modification
 if [ "x$1" != "x" ]; then
