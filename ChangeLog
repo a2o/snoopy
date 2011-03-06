@@ -1,7 +1,14 @@
 -------------------------------------------------------------------------------
-  SnoopyLogger changelog
+  SnoopyLogger ChangeLog
 -------------------------------------------------------------------------------
 
+
+2011-03-06 - Version  1.8.0
+---------------------------
+o Feature: syslog facility is now configurable
+o Feature: syslog level is now configurable
+o Feature: external filter support available
+o Feature: single path prefix filtering available
 
 
 2010-10-10 - Version  1.7.10

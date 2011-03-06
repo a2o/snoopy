@@ -1,13 +1,14 @@
-$Id: README 29 2010-02-13 16:27:53Z bostjanskufca $
+
 
 
 ------------------------------------------------------------------------------
-Snoopy 1.6
-------------------------------------------------------------------------------
+Snoopy 1.8
 
+By:
   bostjan@a2o.si
    marius@umich.edu
       mbm@linux.com
+------------------------------------------------------------------------------
 
 
 
@@ -37,7 +38,7 @@ U S A G E
   configured at compile through the snoopy.h header, #define ROOT_ONLY 1
   will restrict logging to root activities. Installation is as follows:
 
-    # If you have pulled snoopy from SVN, you must run autoconf first:
+    # If you have pulled snoopy from GIT, you must run autoconf first:
     autoheader
     autoconf
 

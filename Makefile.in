@@ -39,6 +39,10 @@ ifeq ($(SNOOPY_EXTERNAL_FILTER), yes)
 	if test ! -e $(SNOOPY_FILTER_COMMAND); then \
 	    install -m 755 snoopy-filter.sh $(SNOOPY_FILTER_COMMAND); \
 	fi
+	@echo
+	@echo Your external filter is installed here:
+	@echo $(SNOOPY_FILTER_COMMAND)
+	@echo
 endif
 	install -m 755 -d $(DESTDIR)$(LIBDIR)
 	install -m 755 snoopy.so $(DESTDIR)$(LIBDIR)/snoopy.so
