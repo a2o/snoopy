@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.63])
-AC_INIT([Snoopy Logger], [1.7.10], [http://sourceforge.net/projects/snoopylogger/], [snoopy])
+AC_INIT([Snoopy Logger], [1.8.0], [http://sourceforge.net/projects/snoopylogger/], [snoopy])
 AC_DEFINE(PACKAGE_URL, [], "http://sourceforge.net/projects/snoopylogger/")
 AC_CONFIG_SRCDIR([config.h.in])
 AC_CONFIG_HEADERS([config.h])
@@ -10,6 +10,7 @@ AC_CONFIG_HEADERS([config.h])
 # Checks for programs.
 AC_PROG_CC
 AC_PROG_INSTALL
+AC_PROG_LN_S
 
 # Checks for libraries.
 # FIXME: Replace `main' with a function in `-ldl':
@@ -54,6 +55,24 @@ AS_IF([test "x$enable_cwd_logging" == "xyes"], [
 
 
 dnl ============================================================================
+AC_ARG_WITH(exclude-prefix,
+    [AC_HELP_STRING(
+	[--with-exclude-prefix=PREFIX],
+	[prefix to commands excluded from logging.
+	    This feature is mainly intended to specify path to commands which are used by external filter so snoopy does not enter infinite loop.
+	    WARNING WARNING WARNING: Do not change unless you are absolutely sure you know what you are doing
+	    [default=/usr/local/snoopy]
+	]
+    )],
+    [],
+    [with_exclude_prefix=/usr/local/snoopy]
+)
+
+AC_DEFINE_UNQUOTED(SNOOPY_EXCLUDE_PREFIX, ["$with_exclude_prefix"], [Prefix to commands excluded from logging])
+
+
+
+dnl ============================================================================
 AC_ARG_ENABLE(external-filter,
     [AC_HELP_STRING(
 	[--enable-external-filter],
@@ -86,27 +105,16 @@ AC_ARG_WITH(filter-command,
     [with_filter_command=/usr/local/snoopy/bin/snoopy-filter.sh]
 )
 
-AS_IF([test "x$enable_external_filter" == "xyes"], [
-    AC_DEFINE_UNQUOTED(SNOOPY_EXTERNAL_FILTER_COMMAND, ["$with_filter_command"], [External filter command to use])
-])
-
-
-
-dnl ============================================================================
-AC_ARG_WITH(exclude-prefix,
-    [AC_HELP_STRING(
-	[--with-exclude-prefix=PREFIX],
-	[prefix to commands excluded from logging.
-	    This feature is mainly intended to specify path to commands which are used by external filter so snoopy does not enter infinite loop.
-	    WARNING WARNING WARNING: Do not change unless you are absolutely sure you know what you are doing
-	    [default=/usr/local/snoopy]
-	]
-    )],
-    [],
-    [with_exclude_prefix=/usr/local/snoopy]
+AS_IF(
+    [test "x$enable_external_filter" == "xyes"],
+    [
+        AS_IF(
+	    [test `echo "$with_filter_command" | grep -c "^$with_exclude_prefix" | cat` == "0"],
+	    [AC_ERROR([Invalid option combination: filter command must match exclude prefix])]
+	)
+	AC_DEFINE_UNQUOTED(SNOOPY_EXTERNAL_FILTER_COMMAND, ["$with_filter_command"], [External filter command to use])
+    ]
 )
-
-AC_DEFINE_UNQUOTED(SNOOPY_EXCLUDE_PREFIX, ["$with_exclude_prefix"], [Prefix to commands excluded from logging])
 
 
 

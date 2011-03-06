@@ -24,7 +24,7 @@ detect: detect.c
 
 
 install: all
-	@echo @EXCLUDE_PREFIX@
+	@echo @with_exclude_prefix@
 	install -m 755 -d /usr/local/snoopy/bin
 	if test ! -e /usr/local/snoopy/bin/snoopy-filter.sh; then \
 	    install -m 755 snoopy-filter.sh /usr/local/snoopy/bin/snoopy-filter.sh; \
