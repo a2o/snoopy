@@ -1,4 +1,4 @@
-#!/bin/sh
+#!@SNOOPY_EXCLUDE_PREFIX@/sh
 
 #
 # Sample snoopy external filter
@@ -18,10 +18,15 @@
 
 # External programs used by this filter
 SNOOPY_EXCLUDE_PREFIX="@SNOOPY_EXCLUDE_PREFIX@"
+SNOOPY_CAT="$SNOOPY_EXCLUDE_PREFIX/cat"
+SNOOPY_ECHO="$SNOOPY_EXCLUDE_PREFIX/echo"
 SNOOPY_GREP="$SNOOPY_EXCLUDE_PREFIX/grep"
 SNOOPY_SED="$SNOOPY_EXCLUDE_PREFIX/sed"
 
+# Fuse
+export PATH="$SNOOPY_EXCLUDE_PREFIX"
+
 # Here we just output whatever we have received with slight modification
 if [ "x$1" != "x" ]; then
-    echo "$@" | $SNOOPY_SED -e 's/bash/bush/g'
+    $SNOOPY_ECHO "$@" | $SNOOPY_SED -e 's/bash/bush/g'
 fi
