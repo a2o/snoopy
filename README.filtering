@@ -1,5 +1,5 @@
 --------------------------------------------------------------------------------
-    Snoopy filtering support
+    Snoopy log message filtering support
 
     - since version 1.8.0
 --------------------------------------------------------------------------------
@@ -34,7 +34,7 @@ H O W   T O   E N A B L E
 
     # Then proceed with normal build. When installing, sample filter
     # script is installed for you to start with. To get its location,
-    # read the output from 'make install'.
+    # read the output from 'make install' (usually /usr/local/snoopy/bin):
     make
     make install
 
@@ -42,5 +42,6 @@ H O W   T O   E N A B L E
 
 F I L T E R   S C R I P T
 
-  Please refer to the filter script for additional information about
-  customization.
+  Please refer to the installed sample filter script for additional information
+  about customization. In the filters/ directory you can find some more sample
+  filters.

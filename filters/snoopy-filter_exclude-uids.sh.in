@@ -1,0 +1,18 @@
+#!@SNOOPY_EXCLUDE_PREFIX@/sh
+
+#
+# Sample snoopy external filter - exclude certain uids
+#
+
+# External programs used by this filter
+SNOOPY_EXCLUDE_PREFIX="@SNOOPY_EXCLUDE_PREFIX@"
+SNOOPY_ECHO="$SNOOPY_EXCLUDE_PREFIX/echo"
+SNOOPY_GREP="$SNOOPY_EXCLUDE_PREFIX/grep"
+
+# Fuse
+export PATH="$SNOOPY_EXCLUDE_PREFIX"
+
+# Omit messages comming from uids 0, 3, 4, 5 and 7
+if [ "x$1" != "x" ]; then
+    $SNOOPY_ECHO "$@" | $SNOOPY_GREP -v '\[uid:[03457] '
+fi

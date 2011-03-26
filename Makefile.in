@@ -39,8 +39,14 @@ ifeq ($(SNOOPY_EXTERNAL_FILTER), yes)
 	if test ! -e $(SNOOPY_EXCLUDE_PREFIX)/cat; then \
 	    ln -s /usr/bin/cat $(SNOOPY_EXCLUDE_PREFIX)/cat; \
 	fi
+	if test ! -e $(SNOOPY_EXCLUDE_PREFIX)/cut; then \
+	    ln -s /usr/bin/cut $(SNOOPY_EXCLUDE_PREFIX)/cut; \
+	fi
 	if test ! -e $(SNOOPY_EXCLUDE_PREFIX)/echo; then \
 	    ln -s /usr/bin/echo $(SNOOPY_EXCLUDE_PREFIX)/echo; \
+	fi
+	if test ! -e $(SNOOPY_EXCLUDE_PREFIX)/getent; then \
+	    ln -s /usr/bin/getent $(SNOOPY_EXCLUDE_PREFIX)/getent; \
 	fi
 	if test ! -e $(SNOOPY_EXCLUDE_PREFIX)/grep; then \
 	    ln -s /usr/bin/grep $(SNOOPY_EXCLUDE_PREFIX)/grep; \
