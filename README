@@ -1,18 +1,16 @@
+------------------------------------------------------------------------
+
+                             Snoopy Logger
+
+  Created and maintained by:
+    bostjan@a2o.si
+     marius@umich.edu
+        mbm@linux.com
+------------------------------------------------------------------------
 
 
 
-------------------------------------------------------------------------------
-Snoopy 1.8
-
-By:
-  bostjan@a2o.si
-   marius@umich.edu
-      mbm@linux.com
-------------------------------------------------------------------------------
-
-
-
-D E S C R I P T I O N
+1.   D E S C R I P T I O N
 
   Snoopy is designed to aid the taks of a sysadmin by providing a log of
   commands  executed. Snoopy is  completely transparent  to the user and
@@ -23,7 +21,7 @@ D E S C R I P T I O N
 
 
 
-N O T E
+2.   N O T E
 
   execv() calls are now explicitly logged.   Although,  according to the
   man page for execv(),  it is supposed to call execve().   To this date
@@ -32,11 +30,11 @@ N O T E
 
 
 
-U S A G E
+3.   I N S T A L L A T I O N   &   U S A G E
 
-  Snoopy is  able to log all  users or just root,  this functionality is
-  configured at compile through the snoopy.h header, #define ROOT_ONLY 1
-  will restrict logging to root activities. Installation is as follows:
+  Snoopy supports various features that  can  be  enabled  by  supplying
+  arguments to configure command. Consult `./configure --help' for  more
+  information about details. Installation procedure is simple:
 
     # If you have pulled snoopy from GIT, you must run autoconf first:
     autoheader
@@ -50,24 +48,60 @@ U S A G E
     make
     make install
 
-    # Then you can actually enable snoopy:
-    make enable
 
-  Snoopy is placed in /etc/ld.so.preload to trap all occurances of exec,
-  if you wish to monitor only certain applications you can do so through
-  the $LD_PRELOAD environment variable - simply set it to 
-  /usr/local/lib/snoopy.so before loading the application. For example:
 
-    export LD_PRELOAD=/usr/local/lib/snoopy.so
+4.   H O W   T O   E N A B L E
+
+  a) Enable for specific programs
+
+  If you wish to monitor only certain applications you can do so through
+  the LD_PRELOAD environment variable - simply set it to the  full  path
+  to snoopy.so shared library before loading the application. Example:
+
+    export LD_PRELOAD=/usr/local/lib/snoopy.so    # default path
     lynx http://linux.com/
     unset LD_PRELOAD
 
-  To remove snoopy later, simply edit /etc/ld.so.preload and remove the
-  reference to snoopy.so and delete /usr/local/lib/snoopy.so.
+
+  b) Enable system-wide snoopy on 32-bit-only or 64-bit-only systems
+
+  WARNING: Using this method on multilib systems (64-bit systems capable
+  WARNING: of running 32-bit applications) can cause malfunction because
+  WARNING: preload config file /etc/ld.so.preload makes  no  distinction
+  WARNING: between 32- and 64-bit programs and shared libraries.
+
+    # Enable it using entry in /etc/ld.so.preload
+    make enable
+
+  An entry is created in /etc/ld.so.preload file  which  causes  execv()
+  and execve() system calls to be intercepted by snoopy and  logged  via
+  syslog.
+
+
+  c) For multilib systems
+
+  On systems that support LD_PRELOAD_32 and LD_PRELOAD_64  you  can  use
+  those variables to force loading of snoopy. If you with to  enable  it
+  system-wide, ensure that correct values are held  by  those  variables
+  at boot time. Consult section  4.a  of  this  README  on  how  to  set
+  environmental variables. Setting them at boot time is usually  distro-
+  dependent.
 
 
 
-O U T P U T
+5.   H O W   T O   D I S A B L E
+
+  To disable snoopy later, simply edit /etc/ld.so.preload and remove the
+  reference to snoopy.so. Also unset  any  environmental  variable  that
+  references snoopy (LD_PRELOAD, LD_PRELOAD_32 and LD_PRELOAD_64).  Then
+  you can also delete snoopy shared library from  your  system.  Default
+  installation path of snoopy shared library is:
+
+     /usr/local/lib/snoopy.so
+
+
+
+6.   O U T P U T
 
   The exact location  of  your  snoopy output  depends  on  your  syslog
   configuration. Usually it gets stored in one of the following files:

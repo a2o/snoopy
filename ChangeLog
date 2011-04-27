@@ -3,6 +3,13 @@
 -------------------------------------------------------------------------------
 
 
+2011-FIXME - Version  1.8.FIXME
+---------------------------
+o Refactoring:   Root-only feature moved to configure-time option
+    (was "edit-header-file-time" before)
+o Documentation: README updated to reflect current preloading situation
+
+
 2011-03-06 - Version  1.8.0
 ---------------------------
 o Feature: syslog facility is now configurable

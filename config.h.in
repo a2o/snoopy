@@ -73,6 +73,9 @@
 /* External filter command to use */
 #undef SNOOPY_EXTERNAL_FILTER_COMMAND
 
+/* Only log commands executed by root */
+#undef SNOOPY_ROOT_ONLY
+
 /* Syslog facility to use */
 #undef SNOOPY_SYSLOG_FACILITY
 

@@ -81,7 +81,7 @@ static inline void snoopy_log(const char *filename, char *const argv[])
 
 
 	/* Also exclude if root-only mode is enabled and this is non-root command */
-	#if SNOOPY_ROOT_ONLY
+	#if defined(SNOOPY_ROOT_ONLY)
 		if ((geteuid() != 0) && (getuid() != 0)) {
 			return;
 		}

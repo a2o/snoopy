@@ -36,6 +36,28 @@ AC_CONFIG_FILES([
 
 
 dnl ============================================================================
+AC_ARG_ENABLE(root-only,
+    [AC_HELP_STRING(
+	[--enable-root-only],
+	[only log commands executed by root [default=disabled]]
+    )],
+    [
+	if test "$enableval" == "yes"; then
+	    enable_root_only=yes
+	fi
+    ],
+    [enable_root_only=no]
+)
+
+AS_IF([test "x$enable_root_only" == "xyes"], [
+    AC_DEFINE(SNOOPY_ROOT_ONLY, 1, [Only log commands executed by root])
+])
+
+AC_SUBST(SNOOPY_ROOT_ONLY, ["$enable_root_only"])
+
+
+
+dnl ============================================================================
 AC_ARG_ENABLE(cwd-logging,
     [AC_HELP_STRING(
 	[--disable-cwd-logging],
@@ -96,6 +118,7 @@ AS_IF([test "x$enable_external_filter" == "xyes"], [
 AC_SUBST(SNOOPY_EXTERNAL_FILTER, ["$enable_external_filter"])
 
 
+
 dnl ============================================================================
 AC_ARG_WITH(filter-command,
     [AC_HELP_STRING(
@@ -154,3 +177,4 @@ AC_DEFINE_UNQUOTED(SNOOPY_SYSLOG_LEVEL, [$with_syslog_level], [Syslog level to u
 
 dnl ============================================================================
 AC_OUTPUT
+
