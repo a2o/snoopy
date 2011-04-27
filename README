@@ -86,6 +86,13 @@
   at boot time. Consult section  4.a  of  this  README  on  how  to  set
   environmental variables. Setting them at boot time is usually  distro-
   dependent.
+  Users are also required to compile 32-bit version of library. To do so
+  on 64-bit systems it is usually enough to set appropriate CFLAGS:
+
+    CFLAGS=-m32 ./configure [OPTIONS]
+
+  Of course your system must be cross-compilation capable. Consult  your
+  OS documentation for details on this subject.
 
 
 
