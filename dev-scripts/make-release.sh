@@ -83,11 +83,11 @@ autoconf
 
 
 ### Compare configure.ac and configure.ac.generated
-diff configure.ac configure.ac.generated
-if [ "$?" != "0" ]; then
-	echo "ERROR: configure.ac and configure.ac.generated differ."
-	exit 40
-fi
+#diff configure.ac configure.ac.generated
+#if [ "$?" != "0" ]; then
+#	echo "ERROR: configure.ac and configure.ac.generated differ."
+#	exit 40
+#fi
 
 
 
