@@ -63,6 +63,7 @@
     unset LD_PRELOAD
 
 
+  ----------------------------------------------------------------------
   b) Enable system-wide snoopy on 32-bit-only or 64-bit-only systems
 
   WARNING: Using this method on multilib systems (64-bit systems capable
@@ -78,7 +79,19 @@
   syslog.
 
 
+  ----------------------------------------------------------------------
   c) For multilib systems
+
+  Content of /etc/ld.so.preload should include the following line:
+
+    /usr/local/$LIB/snoopy.so
+
+  This applies only when you have installed both 32bit and 64bit version
+  of the library in the appropriate paths.
+
+
+  ----------------------------------------------------------------------
+  d) For multilib systems with LD_PRELOAD_* environmental variables
 
   On systems that support LD_PRELOAD_32 and LD_PRELOAD_64  you  can  use
   those variables to force loading of snoopy. If you with to  enable  it
