@@ -16,10 +16,10 @@ https://bugzilla.redhat.com/show_bug.cgi?id=745603
 https://github.com/a2o/snoopy/issues/1
 
 **How to test**
-# Configure, build, install, enable
-# Make sure it is working by tailing log files
-# Reboot #1
-# Reboot #2. If second reboot is successful, you are on the safe side
+- Configure, build, install, enable
+- Make sure it is working by tailing log files
+- Reboot #1
+- Reboot #2. If second reboot is successful, you are on the safe side
 
 Distributions known to work OK:
 * Ubuntu Server 12.04.01
@@ -43,17 +43,17 @@ to configure command. Consult `./configure --help' for more information.
 
 Installation procedure is simple:
 
-> # If you have pulled snoopy from GIT, you must run autoconf first:
-> autoheader
-> autoconf
->
-> # Check configuration options:
-> ./configure --help
->
-> # Then continue with normal build procedure:
-> ./configure [OPTIONS]
-> make
-> make install
+    # If you have pulled snoopy from GIT, you must run autoconf first:
+    autoheader
+    autoconf
+
+    # Check configuration options:
+    ./configure --help
+
+    # Then continue with normal build procedure:
+    ./configure [OPTIONS]
+    make
+    make install
 
 At this point, snoopy is installed but **not yet enabled**.
 
@@ -68,9 +68,9 @@ the LD_PRELOAD environmental variable - simply set it to the full path
 to snoopy.so shared library before starting the application.
 
 Example:
-> export LD_PRELOAD=/usr/local/lib/snoopy.so    # default path
-> lynx http://linux.com/
-> unset LD_PRELOAD
+    export LD_PRELOAD=/usr/local/lib/snoopy.so    # default path
+    lynx http://linux.com/
+    unset LD_PRELOAD
 
 
 ### 3.b) Enable system-wide snoopy on 32-bit-only or 64-bit-only systems ###
@@ -80,8 +80,8 @@ WARNING: of running 32-bit applications) can cause malfunction because
 WARNING: preload config file /etc/ld.so.preload makes  no  distinction
 WARNING: between 32- and 64-bit programs and shared libraries.
 
-> # Enable it using entry in /etc/ld.so.preload
-> make enable
+    # Enable it using entry in /etc/ld.so.preload
+    make enable
 
 An entry is created in /etc/ld.so.preload file  which  causes  execv()
 and execve() system calls to be intercepted by snoopy and logged via
@@ -92,7 +92,7 @@ syslog.
 
 Content of /etc/ld.so.preload should include the following line:
 
-> /usr/local/$LIB/snoopy.so
+    /usr/local/$LIB/snoopy.so
 
 This applies only when you have installed both 32bit and 64bit version
 of the library in the appropriate paths.
@@ -109,7 +109,7 @@ dependent.
 Users are also required to compile 32-bit version of library. To do so
 on 64-bit systems it is usually enough to set appropriate CFLAGS:
 
-> CFLAGS=-m32 ./configure [OPTIONS]
+    CFLAGS=-m32 ./configure [OPTIONS]
 
 Of course your system must be cross-compilation capable. Consult  your
 OS documentation for details on this subject.
@@ -121,9 +121,9 @@ OS documentation for details on this subject.
 The exact location  of  your  snoopy output  depends  on  your  syslog
 configuration. Usually it gets stored in one of the following files:
 
-> /var/log/auth*
-> /var/log/messages
-> /var/log/secure
+    /var/log/auth*
+    /var/log/messages
+    /var/log/secure
 
 
 
@@ -135,7 +135,7 @@ references snoopy (LD_PRELOAD, LD_PRELOAD_32 and LD_PRELOAD_64).  Then
 you may also delete snoopy shared library from  your  system.  Default
 installation path of snoopy shared library is:
 
-> /usr/local/lib/snoopy.so
+    /usr/local/lib/snoopy.so
 
 
 
