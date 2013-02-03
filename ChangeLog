@@ -1,13 +1,18 @@
 -------------------------------------------------------------------------------
-  SnoopyLogger ChangeLog
+  Snoopy Logger ChangeLog
 -------------------------------------------------------------------------------
 
 
-2011-FIXME - Version  1.8.FIXME
+2013-FIXME - Version  1.8.NEXT
 ---------------------------
-o Refactoring:   Root-only feature moved to configure-time option
-    (was "edit-header-file-time" before)
-o Documentation: README updated to reflect current preloading situation
+o Feature: System-dependent exec() argument length support added (thanks Jeff Schroeder)
+o Refactoring: README updated with Markdown format, for nicer display at github
+o Documentation: A huge warning at the top of README about reboot issues
+
+
+2013-02-03 - Version  1.8.1
+---------------------------
+o Bugfix: enable.sh was not /bin/sh compliant, fixed (thanks "phe")
 
 
 2011-03-06 - Version  1.8.0
