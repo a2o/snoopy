@@ -68,6 +68,7 @@ the LD_PRELOAD environmental variable - simply set it to the full path
 to snoopy.so shared library before starting the application.
 
 Example:
+
     export LD_PRELOAD=/usr/local/lib/snoopy.so    # default path
     lynx http://linux.com/
     unset LD_PRELOAD
