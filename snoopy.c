@@ -209,6 +209,10 @@ static inline void snoopy_log(const char *filename, char *const argv[])
 		free(filterCommand);
 		free(filterOutput);
 	#endif
+
+
+	/* Close the log descriptor */
+	closelog();
 }
 
 
