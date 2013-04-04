@@ -41,6 +41,19 @@ wrapper around calls to execve() syscall. Logging is done via syslog.
 Snoopy supports various features that  can be enabled by supplying arguments
 to configure command. Consult `./configure --help' for more information.
 
+
+Download options:
+
+    # You can download snoopy release directly from this location:
+    http://source.a2o.si/download/snoopy/
+
+    # Alternatively you can download it from GitHub, by selecting a release tag
+    # at the branch dropdown selector, and then clicking the ↓ZIP button, next
+    # to the repository URL, below project description.
+    # (I know this is awkward, but GitHub has discontinued the "Uploads" feature)
+    https://github.com/a2o/snoopy
+
+
 Installation procedure is simple:
 
     # If you have pulled snoopy from GIT, you must run autoconf first:
