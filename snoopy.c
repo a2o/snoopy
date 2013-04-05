@@ -1,10 +1,8 @@
-/* snoopy.c -- execve() logging wrapper 
+/* snoopy.c -- execve() logging wrapper
  * Copyright (c) 2000 marius@linux.com,mbm@linux.com
  *
- * $Id: snoopy.c 30 2010-02-13 16:31:16Z bostjanskufca $
+ * Part hacked on flight KL 0617, 30,000 ft or so over the Atlantic :)
  *
- * Part hacked on flight KL 0617, 30,000 ft or so over the Atlantic :) 
- * 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
