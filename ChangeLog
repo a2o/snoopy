@@ -3,11 +3,15 @@
 -------------------------------------------------------------------------------
 
 
-2013-FIXME - Version  1.8.NEXT
+2013-FIXME - Version  2.NEXT.NEXT
 ---------------------------
+
+
+2013-04-06 - Version  1.9.0
+---------------------------
+o Bugfix: fixed bug with unclosed /dev/log descriptor which caused hangs
 o Feature: System-dependent exec() argument length support added (thanks Jeff Schroeder)
 o Refactoring: README updated with Markdown format, for nicer display at github
-o Documentation: A huge warning at the top of README about reboot issues
 
 
 2013-02-03 - Version  1.8.1

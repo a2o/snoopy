@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.63])
-AC_INIT([Snoopy Logger], [1.8.0], [https://github.com/a2o/snoopy/], [snoopy])
+AC_INIT([Snoopy Logger], [1.9.0], [https://github.com/a2o/snoopy/], [snoopy])
 AC_DEFINE(PACKAGE_URL, [], "https://github.com/a2o/snoopy/")
 AC_CONFIG_SRCDIR([config.h.in])
 AC_CONFIG_HEADERS([config.h])
