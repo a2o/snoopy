@@ -4,7 +4,7 @@
 
 ### Check working directory
 if [ ! -d "dev-scripts" ]; then
-	echo "ERROR: You have to run this script in the root of repository"
+	echo "ERROR: You have to run this script in the root of the git repository"
 	exit 1
 fi
 
@@ -15,6 +15,14 @@ RELEASE_TAG="$1"
 if [ "x$RELEASE_TAG" == "x" ]; then
 	echo "ERROR: No release tag specified. Please use:   $0 X.Y.Z"
 	exit 1
+fi
+
+
+
+### Check if release tag is properly formatted
+if [[ ! "$RELEASE_TAG" =~ ^snoopy- ]]; then
+    echo "ERROR: Release tag is not properly formatted - snoopy-x.y.z format is required"
+    exit 1
 fi
 
 
@@ -36,13 +44,18 @@ fi
 #fi
 
 
+
 ### Paths and filenames
 DIR_REPO=`pwd`
 DIR_REPO_PARENT=`dirname $DIR_REPO`
 DIRNAME_RELEASE="snoopy-$RELEASE_TAG"
 FILENAME_RELEASE="snoopy-$RELEASE_TAG.tar.gz"
+FILENAME_RELEASE_MD5="snoopy-$RELEASE_TAG.tar.gz.md5"
+FILENAME_RELEASE_SHA1="snoopy-$RELEASE_TAG.tar.gz.sha1"
 DIR_RELEASE="$DIR_REPO_PARENT/$DIRNAME_RELEASE"
 FILE_RELEASE="$DIR_REPO_PARENT/$DIRNAME_RELEASE.tar.gz"
+FILE_RELEASE_MD5="$DIR_REPO_PARENT/$DIRNAME_RELEASE.tar.gz.md5"
+FILE_RELEASE_SHA1="$DIR_REPO_PARENT/$DIRNAME_RELEASE.tar.gz.sha1"
 
 
 
@@ -53,7 +66,15 @@ if [ -e $DIR_RELEASE ]; then
 fi
 if [ -e $FILE_RELEASE ]; then
 	echo "ERROR: Release file already exists: $FILE_RELEASE"
-	exit 11
+	exit 10
+fi
+if [ -e $FILE_RELEASE_MD5 ]; then
+	echo "ERROR: Release MD5 file already exists: $FILE_RELEASE_MD5"
+	exit 10
+fi
+if [ -e $FILE_RELEASE_SHA1 ]; then
+	echo "ERROR: Release SHA1 file already exists: $FILE_RELEASE_SHA1"
+	exit 10
 fi
 
 
@@ -94,15 +115,30 @@ autoconf
 ### Create package
 cd .. &&
 tar -c -z -f $FILENAME_RELEASE $DIRNAME_RELEASE &&
-rm -rf $DIRNAME_RELEASE
+md5sum  $FILENAME_RELEASE > $FILENAME_RELEASE_MD5  &&
+sha1sum $FILENAME_RELEASE > $FILENAME_RELEASE_SHA1 &&
+rm -rf $DIRNAME_RELEASE &&
 
 
 
 ### Check out master branch again
 cd $DIR_REPO &&
-git checkout master
+git checkout master &&
 
 
 
-### Signal success
-echo "Release complete. File: $FILE_RELEASE"
+### Upload releases
+echo &&
+echo "RELEASING: Pushing code and tags to GitHub..." &&
+echo &&
+git push github &&
+git push github --tags &&
+
+echo &&
+echo "RELEASING: Pushing code to http://source.a2o.si/download/snoopy/..." &&
+echo &&
+scp $FILE_RELEASE $FILE_RELEASE_MD5 $FILE_RELEASE_SHA1 a2o.source:public/download/snoopy/ &&
+
+echo
+echo "COMPLETE: $RELEASE_TAG has been published."
+echo

@@ -1,0 +1,12 @@
+################################################################################
+###
+### How to release a new version of Snoopy Logger
+###
+################################################################################
+
+Steps:
+1. update ChangeLog, commit
+2. bump version in configure.in, commit
+3. run autoheader and autoconf and commit changes to 'configure', if any
+4. create git tag 'snoopy-X.Y.Z'
+5. cd to the repo root and run dev-scripts/make-release.sh
