@@ -24,13 +24,14 @@ if [[ ! "$RELEASE_TAG" =~ ^snoopy- ]]; then
     echo "ERROR: Release tag is not properly formatted - snoopy-x.y.z format is required"
     exit 1
 fi
+RELEASE_VERSION=`echo "$RELEASE_TAG" | sed -e 's/snoopy-//'`
 
 
 
 ### Check if release tag exists
 RES=`git tag | grep "^$RELEASE_TAG\$"`
 if [ "$RES" != "$RELEASE_TAG" ]; then
-	echo "ERROR: Release tag does not exist, please create it with:   git tag X.Y.Z"
+	echo "ERROR: Release tag does not exist, please create it with:   git tag snoopy-X.Y.Z"
 	exit 2
 fi
 
@@ -48,10 +49,10 @@ fi
 ### Paths and filenames
 DIR_REPO=`pwd`
 DIR_REPO_PARENT=`dirname $DIR_REPO`
-DIRNAME_RELEASE="snoopy-$RELEASE_TAG"
-FILENAME_RELEASE="snoopy-$RELEASE_TAG.tar.gz"
-FILENAME_RELEASE_MD5="snoopy-$RELEASE_TAG.tar.gz.md5"
-FILENAME_RELEASE_SHA1="snoopy-$RELEASE_TAG.tar.gz.sha1"
+DIRNAME_RELEASE="snoopy-$RELEASE_VERSION"
+FILENAME_RELEASE="snoopy-$RELEASE_VERSION.tar.gz"
+FILENAME_RELEASE_MD5="snoopy-$RELEASE_VERSION.tar.gz.md5"
+FILENAME_RELEASE_SHA1="snoopy-$RELEASE_VERSION.tar.gz.sha1"
 DIR_RELEASE="$DIR_REPO_PARENT/$DIRNAME_RELEASE"
 FILE_RELEASE="$DIR_REPO_PARENT/$DIRNAME_RELEASE.tar.gz"
 FILE_RELEASE_MD5="$DIR_REPO_PARENT/$DIRNAME_RELEASE.tar.gz.md5"
@@ -85,7 +86,7 @@ git checkout $RELEASE_TAG
 
 
 ### Check for release tags
-RES=`cat configure.ac | fgrep $RELEASE_TAG | cat`
+RES=`cat configure.ac | fgrep $RELEASE_VERSION | cat`
 if [ "x$RES" == "x" ]; then
 	echo "ERROR: Release tag $RELEASE_TAG not found in configure.ac file."
 	exit 20
@@ -98,8 +99,8 @@ mkdir -p $DIR_RELEASE &&
 cp -pR $DIR_REPO/* $DIR_RELEASE &&
 cd $DIR_RELEASE &&
 rm -rf dev-scripts &&
-autoheader &&
-autoconf
+#autoheader &&
+#autoconf &&
 
 
 
