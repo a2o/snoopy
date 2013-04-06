@@ -30,10 +30,6 @@ repository URL, below project description.
 
 ### Installation procedure is simple:
 
-    # If you have pulled snoopy from GIT, you must run autoconf first:
-    autoheader
-    autoconf
-
     # Check configuration options:
     ./configure --help
 
