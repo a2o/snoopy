@@ -1,31 +1,6 @@
 # Snoopy Logger #
 
 
-## 0. WARNING TO FEDORA/REDHAT/CENTOS USERS ##
-(and possibly other distributions)
-
-Due to bug described at the links below, **please make sure you test your Snoopy
-installation before you deploy it to production**. The bug manifests itself at
-shutdown, when system hangs instead of finishing the whole shutdown procedure.
-
-So far this has only been reproduced on Fedora, and there is a reference to
-Hyper-Threading, but no one has come up with a valid solution, only workarounds.
-
-Bug descriptions:
-https://bugzilla.redhat.com/show_bug.cgi?id=745603
-https://github.com/a2o/snoopy/issues/1
-
-**How to test**
-- Configure, build, install, enable
-- Make sure it is working by tailing log files
-- Reboot #1
-- Reboot #2. If second reboot is successful, you are on the safe side
-
-Distributions known to work OK:
-* Ubuntu Server 12.04.01
-* Slackware 12.2+
-
-
 
 ## 1. DESCRIPTION ##
 
@@ -42,7 +17,7 @@ Snoopy supports various features that  can be enabled by supplying arguments
 to configure command. Consult `./configure --help' for more information.
 
 
-Download options:
+### Download options:
 
     # You can download snoopy release directly from this location:
     http://source.a2o.si/download/snoopy/
@@ -51,10 +26,10 @@ Download options:
     # at the branch dropdown selector, and then clicking the ↓ZIP button, next
     # to the repository URL, below project description.
     # (I know this is awkward, but GitHub has discontinued the "Uploads" feature)
-    https://github.com/a2o/snoopy
+    https://github.com/a2o/snoopy/
 
 
-Installation procedure is simple:
+### Installation procedure is simple:
 
     # If you have pulled snoopy from GIT, you must run autoconf first:
     autoheader
@@ -68,7 +43,7 @@ Installation procedure is simple:
     make
     make install
 
-At this point, snoopy is installed but **not yet enabled**.
+At this point, snoopy is **installed but not yet enabled**.
 
 
 
@@ -162,7 +137,6 @@ are working to find out why.
 
 
 
-
 ## 7. CREDITS ##
 
 Snoopy Logger was created by:
@@ -174,3 +148,29 @@ Currently it is maintained by:
 
 Development is currently located at the following URI:
 http://github.com/a2o/snoopy/
+
+
+
+## X. WARNING TO FEDORA/REDHAT/CENTOS USERS - OBSOLETE, FIXED IN 1.9.0 ##
+(and possibly other distributions)
+
+Due to bug described at the links below, **please make sure you test your Snoopy
+installation before you deploy it to production**. The bug manifests itself at
+shutdown, when system hangs instead of finishing the whole shutdown procedure.
+
+So far this has only been reproduced on Fedora, and there is a reference to
+Hyper-Threading, but no one has come up with a valid solution, only workarounds.
+
+Bug descriptions:
+https://bugzilla.redhat.com/show_bug.cgi?id=745603
+https://github.com/a2o/snoopy/issues/1
+
+**How to test**
+- Configure, build, install, enable
+- Make sure it is working by tailing log files
+- Reboot #1
+- Reboot #2. If second reboot is successful, you are on the safe side
+
+Distributions known to work OK:
+* Ubuntu Server 12.04.01
+* Slackware 12.2+
