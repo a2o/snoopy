@@ -6,8 +6,8 @@ Summary: User monitoring and command logging
 Name: snoopy
 Version: %{version}
 Release: %{release}
-URL: https://sourceforge.net/projects/snoopylogger/
-Source: https://downloads.sourceforge.net/project/snoopylogger/snoopy-%{version}.tar.gz
+URL: https://source.a2o.si/download/snoopy/
+Source: https://source.a2o.si/download/snoopy/snoopy-%{version}.tar.gz
 Group: Applications/Monitoring
 BuildRoot: %{_tmppath}/%{name}-buildroot
 #BuildRequires: readline-devel

@@ -55,7 +55,7 @@
 /* Define to the one symbol short name of this package. */
 #undef PACKAGE_TARNAME
 
-/* "http://sourceforge.net/projects/snoopylogger/" */
+/* "https://github.com/a2o/snoopy/" */
 #undef PACKAGE_URL
 
 /* Define to the version of this package. */
