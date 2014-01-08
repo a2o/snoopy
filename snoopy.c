@@ -27,6 +27,8 @@
 #include <string.h>
 #include <unistd.h>
 #include <limits.h>
+#include <pwd.h>
+#include <grp.h>
 
 #define min(a,b) a<b ? a : b
 
@@ -68,6 +70,27 @@ static inline void snoopy_log(const char *filename, char *const argv[])
 	int     argc            = 0;
 	size_t  argLength       = 0;
 	int n;
+
+	static char login[256];
+	char *loginptr = NULL;
+
+	struct passwd  pwd;
+	struct passwd  *pwd_uid = NULL;
+	char    *buffpwd_uid = NULL;
+	size_t  buffpwdsize_uid = 0;
+
+	struct passwd  *pwd_euid = NULL;
+	char    *buffpwd_euid = NULL;
+	size_t  buffpwdsize_euid = 0;
+
+	struct group  gr;
+	struct group  *gr_gid = NULL;
+	char    *buffgr_gid = NULL;
+	size_t  buffgrsize_gid = 0;
+
+	struct group  *gr_egid = NULL;
+	char    *buffgr_egid = NULL;
+	size_t  buffgrsize_egid = 0;
 
 
 	/* If this stuff should be excluded, don't log it */
@@ -120,18 +143,87 @@ static inline void snoopy_log(const char *filename, char *const argv[])
 	}
 	logString[logStringSize-1] = '\0';
 
+	/* Prepare logging stuff */
+	openlog("snoopy", LOG_PID, SNOOPY_SYSLOG_FACILITY);
+
+	/*
+	Retrive the user login trying in order:
+	  - The login information from the processus.
+	  - the LOGNAME environment variable.
+	  - the SUDO_USER environment variable.
+	return "unknown" otherwise.
+
+	TIP to use with sudo and keep LOGNAME, add this in /etc/sudoers:
+	Defaults        env_reset
+	Defaults        env_keep="LOGNAME"
+	*/
+	if(getlogin_r(login, 255)) {
+		loginptr = getenv("SUDO_USER");
+		if(!loginptr)
+		  loginptr = getenv("LOGNAME");
+		  if(!loginptr) {
+                    strcpy(login,"unkown");
+                  } else {
+			strcpy(login,loginptr);
+		}
+	}
+
+	/* Retrieve UID information */
+	buffpwdsize_uid = sysconf(_SC_GETPW_R_SIZE_MAX);
+	if (buffpwdsize_uid == -1)
+	  buffpwdsize_uid = 16384;
+	buffpwd_uid = malloc(buffpwdsize_uid);
+	if(buffpwd_uid == NULL) {
+           syslog(SNOOPY_SYSLOG_LEVEL, "pwd uid malloc failled");
+	   return;
+        }
+	getpwuid_r(getuid(), &pwd, buffpwd_uid, buffpwdsize_uid, &pwd_uid);
+
+	/* Retrieve EUID information */
+	buffpwdsize_euid = sysconf(_SC_GETPW_R_SIZE_MAX);
+	if (buffpwdsize_euid == -1)
+	  buffpwdsize_euid = 16384;
+	buffpwd_euid = malloc(buffpwdsize_euid);
+	if(buffpwd_euid == NULL) {
+           syslog(SNOOPY_SYSLOG_LEVEL, "pwd euid malloc failled");
+	   return;
+        }
+	getpwuid_r(geteuid(), &pwd, buffpwd_euid, buffpwdsize_euid, &pwd_euid);
+
+	/* Retrieve GID information */
+	buffgrsize_gid = sysconf(_SC_GETGR_R_SIZE_MAX);
+	if (buffgrsize_gid == -1)
+	  buffgrsize_gid = 16384;
+	buffgr_gid = malloc(buffgrsize_gid);
+	if(buffgr_gid == NULL) {
+           syslog(SNOOPY_SYSLOG_LEVEL, "group gid malloc failled");
+	   return;
+        }
+	getgrgid_r(getgid(), &gr, buffgr_gid, buffgrsize_gid, &gr_gid);
+
+	/* Retrieve EGID information */
+	buffgrsize_egid = sysconf(_SC_GETGR_R_SIZE_MAX);
+	if (buffgrsize_egid == -1)
+	  buffgrsize_egid = 16384;
+	buffgr_egid = malloc(buffgrsize_egid);
+	if(buffgr_egid == NULL) {
+           syslog(SNOOPY_SYSLOG_LEVEL, "group egid malloc failled");
+	   return;
+        }
+	getgrgid_r(getegid(), &gr, buffgr_egid, buffgrsize_egid, &gr_egid);
 
 	/* Create logMessage */
 	#if defined(SNOOPY_CWD_LOGGING)
 		getCwdRet = getcwd(cwd, PATH_MAX+1);
-		sprintf(logMessage, "[uid:%d sid:%d tty:%s cwd:%s filename:%s]: %s", getuid(), getsid(0), ttyPath, cwd, filename, logString);
+		sprintf(logMessage, "[starter:%s, uid:%s euid:%s gid:%s egid:%s sid:%d tty:%s cwd:%s filename:%s]: %s", login, pwd_uid->pw_name, pwd_euid->pw_name, gr_gid->gr_name, gr_egid->gr_name, getsid(0), ttyPath, cwd, filename, logString);
 	#else
-		sprintf(logMessage, "[uid:%d sid:%d tty:%s filename:%s]: %s",        getuid(), getsid(0), ttyPath, filename, logString);
+		sprintf(logMessage, "[starter:%s, uid:%s euid:%s gid:%s egid:%s sid:%d tty:%s filename:%s]: %s", login, pwd_uid->pw_name, pwd_euid->pw_name, gr_gid->gr_name, gr_egid->gr_name, getsid(0), ttyPath, filename, logString);
 	#endif
 
-
-	/* Prepare logging stuff */
-	openlog("snoopy", LOG_PID, SNOOPY_SYSLOG_FACILITY);
+	free(buffpwd_uid);
+	free(buffpwd_euid);
+	free(buffgr_gid);
+	free(buffgr_egid);
 
 
 	/* Filter it */
