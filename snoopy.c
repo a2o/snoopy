@@ -22,6 +22,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/types.h>
+#include <sys/stat.h>
 #include <dlfcn.h>
 #include <syslog.h>
 #include <string.h>
@@ -51,6 +52,7 @@ static inline void snoopy_log(const char *filename, char *const argv[])
 
 	char   *ttyPath         = NULL; 
 	char    ttyPathEmpty[]  = ""; 
+	long    ttyUid          = 0;
 
 	#if defined(SNOOPY_EXTERNAL_FILTER)
 		FILE   *fp;
@@ -67,6 +69,7 @@ static inline void snoopy_log(const char *filename, char *const argv[])
 	int     i               = 0;
 	int     argc            = 0;
 	size_t  argLength       = 0;
+	struct  stat statbuffer;
 	int n;
 
 
@@ -95,7 +98,10 @@ static inline void snoopy_log(const char *filename, char *const argv[])
 	if (ttyPath == NULL) {
 		ttyPath = ttyPathEmpty;
 	}
-
+	/* Get owner of tty */
+	else if (stat(ttyPath, &statbuffer) != -1) {
+		ttyUid = statbuffer.st_uid;
+	}
 
 	/* Allocate memory for logString */
 	logStringSize = 0;
@@ -124,9 +130,9 @@ static inline void snoopy_log(const char *filename, char *const argv[])
 	/* Create logMessage */
 	#if defined(SNOOPY_CWD_LOGGING)
 		getCwdRet = getcwd(cwd, PATH_MAX+1);
-		sprintf(logMessage, "[uid:%d sid:%d tty:%s cwd:%s filename:%s]: %s", getuid(), getsid(0), ttyPath, cwd, filename, logString);
+		sprintf(logMessage, "[uid:%d sid:%d tty:%s tty_uid:%d cwd:%s filename:%s]: %s", getuid(), getsid(0), ttyPath, ttyUid, cwd, filename, logString);
 	#else
-		sprintf(logMessage, "[uid:%d sid:%d tty:%s filename:%s]: %s",        getuid(), getsid(0), ttyPath, filename, logString);
+		sprintf(logMessage, "[uid:%d sid:%d tty:%s tty_uid:%d filename:%s]: %s",        getuid(), getsid(0), ttyPath, ttyUid, filename, logString);
 	#endif
 
 
