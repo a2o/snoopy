@@ -52,7 +52,7 @@ static inline void snoopy_log(const char *filename, char *const argv[])
 
 	char   *ttyPath         = NULL; 
 	char    ttyPathEmpty[]  = ""; 
-	long    ttyUid          = 0;
+	long    ttyUid          = -1;
 
 	#if defined(SNOOPY_EXTERNAL_FILTER)
 		FILE   *fp;
