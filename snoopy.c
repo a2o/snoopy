@@ -51,6 +51,7 @@ static inline void snoopy_log(const char *filename, char *const argv[])
 
 	char   *ttyPath         = NULL; 
 	char    ttyPathEmpty[]  = ""; 
+    char   *envCustom       = getenv(SNOOPY_ENVIRONMENT);
 
 	#if defined(SNOOPY_EXTERNAL_FILTER)
 		FILE   *fp;
@@ -124,9 +125,9 @@ static inline void snoopy_log(const char *filename, char *const argv[])
 	/* Create logMessage */
 	#if defined(SNOOPY_CWD_LOGGING)
 		getCwdRet = getcwd(cwd, PATH_MAX+1);
-		sprintf(logMessage, "[uid:%d sid:%d tty:%s cwd:%s filename:%s]: %s", getuid(), getsid(0), ttyPath, cwd, filename, logString);
+        sprintf(logMessage, "[%s]: [uid:%d sid:%d tty:%s cwd:%s filename:%s]: %s", (envCustom != NULL) ? envCustom : "UNKNOWN", getuid(), getsid(0), ttyPath, cwd, filename, logString);
 	#else
-		sprintf(logMessage, "[uid:%d sid:%d tty:%s filename:%s]: %s",        getuid(), getsid(0), ttyPath, filename, logString);
+        sprintf(logMessage, "[%s]: [uid:%d sid:%d tty:%s filename:%s]: %s",        (envCustom != NULL) ? envCustom : "UNKNOWN", getuid(), getsid(0), ttyPath, filename, logString);
 	#endif
 
 
