@@ -30,6 +30,9 @@ repository URL, below project description.
 
 ### Installation procedure is simple:
 
+    # Only if you are building directly from git repository:
+    ./autogen.sh
+
     # Check configuration options:
     ./configure --help
 
