@@ -3,8 +3,10 @@
 -------------------------------------------------------------------------------
 
 
-2013-FIXME - Version  2.NEXT.NEXT
+2014-FIXME - Version  2.NEXT.NEXT
 ---------------------------
+o Removed external filtering, to be replaced with internal filters
+o Removed logging exclusion via prefix, was created for exclusion of logging of external filter commands
 
 
 2013-04-06 - Version  1.9.0

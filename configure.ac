@@ -29,7 +29,6 @@ AC_CHECK_FUNCS([getcwd])
 
 AC_CONFIG_FILES([
     Makefile
-    snoopy-filter.sh
     contrib/sles/snoopy.spec
 ])
 
@@ -74,76 +73,6 @@ AC_ARG_ENABLE(cwd-logging,
 AS_IF([test "x$enable_cwd_logging" == "xyes"], [
     AC_DEFINE(SNOOPY_CWD_LOGGING, 1, [Enable logging of Current Working Directory])
 ])
-
-
-
-dnl ============================================================================
-AC_ARG_WITH(exclude-prefix,
-    [AC_HELP_STRING(
-	[--with-exclude-prefix=PREFIX],
-	[prefix to commands excluded from logging.
-	    This feature is mainly intended to specify path to commands which are used by external filter so snoopy does not enter infinite loop.
-	    WARNING WARNING WARNING: Do not change unless you are absolutely sure you know what you are doing
-	    [default=/usr/local/snoopy/bin]
-	]
-    )],
-    [],
-    [with_exclude_prefix=/usr/local/snoopy/bin]
-)
-
-AC_DEFINE_UNQUOTED(SNOOPY_EXCLUDE_PREFIX, ["$with_exclude_prefix"], [Prefix to commands excluded from logging])
-
-AC_SUBST(SNOOPY_EXCLUDE_PREFIX, ["$with_exclude_prefix"])
-
-
-
-dnl ============================================================================
-AC_ARG_ENABLE(external-filter,
-    [AC_HELP_STRING(
-	[--enable-external-filter],
-	[enable external filtering support [default=disabled]]
-    )],
-    [
-	if test "$enableval" == "yes"; then
-	    enable_external_filter=yes
-	fi
-    ],
-    [enable_external_filter=no]
-)
-
-AS_IF([test "x$enable_external_filter" == "xyes"], [
-    AC_DEFINE(SNOOPY_EXTERNAL_FILTER, 1, [Enable external filtering support])
-])
-
-AC_SUBST(SNOOPY_EXTERNAL_FILTER, ["$enable_external_filter"])
-
-
-
-dnl ============================================================================
-AC_ARG_WITH(filter-command,
-    [AC_HELP_STRING(
-	[--with-filter-command=CMD],
-	[external filter command to use.
-	    WARNING WARNING WARNING: Do not change unless you are absolutely sure you know what you are doing
-	    [default=/usr/local/snoopy/bin/snoopy-filter.sh]
-	]
-    )],
-    [],
-    [with_filter_command=/usr/local/snoopy/bin/snoopy-filter.sh]
-)
-
-AS_IF(
-    [test "x$enable_external_filter" == "xyes"],
-    [
-        AS_IF(
-	    [test `echo "$with_filter_command" | grep -c "^$with_exclude_prefix" | cat` == "0"],
-	    [AC_ERROR([Invalid option combination: filter command $with_filter_command must match exclude prefix $with_exclude_prefix])]
-	)
-	AC_DEFINE_UNQUOTED(SNOOPY_EXTERNAL_FILTER_COMMAND, ["$with_filter_command"], [External filter command to use])
-    ]
-)
-
-AC_SUBST(SNOOPY_FILTER_COMMAND, ["$with_filter_command"])
 
 
 

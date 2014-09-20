@@ -9,10 +9,6 @@ LDFLAGS=@LDFLAGS@ @LIBS@
 prefix=@prefix@
 exec_prefix=@exec_prefix@
 LIBDIR=@libdir@
-SNOOPY_EXCLUDE_PREFIX=@SNOOPY_EXCLUDE_PREFIX@
-SNOOPY_EXTERNAL_FILTER=@SNOOPY_EXTERNAL_FILTER@
-SNOOPY_FILTER_COMMAND=@SNOOPY_FILTER_COMMAND@
-SNOOPY_FILTER_COMMAND_DIR=`dirname @SNOOPY_FILTER_COMMAND@`
 
 
 all: snoopy.so detect
@@ -26,41 +22,6 @@ detect: detect.c
 
 
 install: all
-ifeq ($(SNOOPY_EXTERNAL_FILTER), yes)
-	install -m 755 -d $(SNOOPY_EXCLUDE_PREFIX)
-	install -m 755 -d $(SNOOPY_FILTER_COMMAND_DIR)
-	if test ! -e $(SNOOPY_EXCLUDE_PREFIX)/sh; then \
-	    ln -s /bin/sh $(SNOOPY_EXCLUDE_PREFIX)/sh; \
-	fi
-	if test ! -e $(SNOOPY_EXCLUDE_PREFIX)/bash; then \
-	    ln -s /bin/bash $(SNOOPY_EXCLUDE_PREFIX)/bash; \
-	fi
-	if test ! -e $(SNOOPY_EXCLUDE_PREFIX)/cat; then \
-	    ln -s /usr/bin/cat $(SNOOPY_EXCLUDE_PREFIX)/cat; \
-	fi
-	if test ! -e $(SNOOPY_EXCLUDE_PREFIX)/cut; then \
-	    ln -s /usr/bin/cut $(SNOOPY_EXCLUDE_PREFIX)/cut; \
-	fi
-	if test ! -e $(SNOOPY_EXCLUDE_PREFIX)/echo; then \
-	    ln -s /usr/bin/echo $(SNOOPY_EXCLUDE_PREFIX)/echo; \
-	fi
-	if test ! -e $(SNOOPY_EXCLUDE_PREFIX)/getent; then \
-	    ln -s /usr/bin/getent $(SNOOPY_EXCLUDE_PREFIX)/getent; \
-	fi
-	if test ! -e $(SNOOPY_EXCLUDE_PREFIX)/grep; then \
-	    ln -s /usr/bin/grep $(SNOOPY_EXCLUDE_PREFIX)/grep; \
-	fi
-	if test ! -e $(SNOOPY_EXCLUDE_PREFIX)/sed; then \
-	    ln -s /usr/bin/sed $(SNOOPY_EXCLUDE_PREFIX)/sed; \
-	fi
-	if test ! -e $(SNOOPY_FILTER_COMMAND); then \
-	    install -m 755 snoopy-filter.sh $(SNOOPY_FILTER_COMMAND); \
-	fi
-	@echo
-	@echo Your external filter is installed here:
-	@echo $(SNOOPY_FILTER_COMMAND)
-	@echo
-endif
 	install -m 755 -d $(DESTDIR)$(LIBDIR)
 	install -m 755 snoopy.so $(DESTDIR)$(LIBDIR)/snoopy.so
 	@echo -e "\nSnoopy shared library installed in $(DESTDIR)$(LIBDIR)."
@@ -75,7 +36,6 @@ enable:
 
 clean:
 	rm -f detect snoopy.so
-	rm -f snoopy-filter.sh
 	rm -f contrib/sles/snoopy.spec
 
 distclean: clean
