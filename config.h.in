@@ -64,15 +64,6 @@
 /* Enable logging of Current Working Directory */
 #undef SNOOPY_CWD_LOGGING
 
-/* Prefix to commands excluded from logging */
-#undef SNOOPY_EXCLUDE_PREFIX
-
-/* Enable external filtering support */
-#undef SNOOPY_EXTERNAL_FILTER
-
-/* External filter command to use */
-#undef SNOOPY_EXTERNAL_FILTER_COMMAND
-
 /* Only log commands executed by root */
 #undef SNOOPY_ROOT_ONLY
 
