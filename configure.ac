@@ -105,5 +105,19 @@ AC_DEFINE_UNQUOTED(SNOOPY_SYSLOG_LEVEL, [$with_syslog_level], [Syslog level to u
 
 
 dnl ============================================================================
+AC_ARG_WITH(environment,
+    [AC_HELP_STRING(
+    [--with-environment=VARIABLE],
+    [environment variable to capture when logging, see 'env' [default=USER]]
+    )],
+    [],
+    [with_environment=USER]
+)
+
+AC_DEFINE_UNQUOTED(SNOOPY_ENVIRONMENT, ["$with_environment"], [Environment variable to capture])
+
+
+
+dnl ============================================================================
 AC_OUTPUT
 

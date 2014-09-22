@@ -73,6 +73,9 @@
 /* Syslog level to use */
 #undef SNOOPY_SYSLOG_LEVEL
 
+/* Define environment variable */
+#undef SNOOPY_ENVIRONMENT
+
 /* Define to 1 if you have the ANSI C header files. */
 #undef STDC_HEADERS
 
