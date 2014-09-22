@@ -22,8 +22,10 @@
 #include "config.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include <syslog.h>
 #include <string.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <syslog.h>
 
 
 
@@ -319,6 +321,13 @@ void snoopy_log_syscall (
     const char *syscallName
 ) {
     char *logMessage = NULL;
+
+    /* Do not log non-root commands if this is requested */
+#if defined(SNOOPY_ROOT_ONLY)
+    if ((geteuid() != 0) && (getuid() != 0)) {
+        return;
+    }
+#endif
 
     /* Initialize empty log message */
     logMessage    = malloc(SNOOPY_LOG_MESSAGE_MAX_SIZE);

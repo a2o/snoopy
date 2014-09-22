@@ -106,4 +106,3 @@ AC_DEFINE_UNQUOTED(SNOOPY_SYSLOG_LEVEL, [$with_syslog_level], [Syslog level to u
 
 dnl ============================================================================
 AC_OUTPUT
-
