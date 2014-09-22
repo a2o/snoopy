@@ -1,7 +1,7 @@
 /*
  * SNOOPY LOGGER
  *
- * snoopy.h
+ * snoopy_inputs.h
  * Copyright (c) 2014 bostjan@a2o.si
  *
  * This program is free software; you can redistribute it and/or modify
@@ -18,33 +18,12 @@
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-
-
-
-/**
- * SNOOPY_MAX_ARG_LENGTH
- *
- * Maximum length of arguments passed to execv(e) functions.
- */
-#include <unistd.h>
-#define SNOOPY_SYSCONF_ARG_MAX sysconf(_SC_ARG_MAX)
-
-
-
-/**
- * SNOOPY_INPUT_MESSAGE_MAX_SIZE
- *
- * Maximum length of a string returned from any input function,
- * without terminating null character.
- */
-#define SNOOPY_INPUT_MESSAGE_MAX_SIZE 1024
-
-
-
-/**
- * SNOOPY_LOG_MESSAGE_MAX_SIZE
- *
- * Maximum length of single (whole) log message,
- * without terminating null character.
- */
-#define SNOOPY_LOG_MESSAGE_MAX_SIZE 16383
+#include "snoopy_input_cmdline.h"
+#include "snoopy_input_cwd.h"
+#include "snoopy_input_egid.h"
+#include "snoopy_input_euid.h"
+#include "snoopy_input_filename.h"
+#include "snoopy_input_gid.h"
+#include "snoopy_input_sid.h"
+#include "snoopy_input_tty.h"
+#include "snoopy_input_uid.h"

@@ -1,7 +1,7 @@
 /*
  * SNOOPY LOGGER
  *
- * snoopy.h
+ * snoopy_inputs.c
  * Copyright (c) 2014 bostjan@a2o.si
  *
  * This program is free software; you can redistribute it and/or modify
@@ -21,30 +21,37 @@
 
 
 
-/**
- * SNOOPY_MAX_ARG_LENGTH
- *
- * Maximum length of arguments passed to execv(e) functions.
+/*
+ * Include all input functions
  */
-#include <unistd.h>
-#define SNOOPY_SYSCONF_ARG_MAX sysconf(_SC_ARG_MAX)
+#include "snoopy_inputs.h"
 
 
 
-/**
- * SNOOPY_INPUT_MESSAGE_MAX_SIZE
- *
- * Maximum length of a string returned from any input function,
- * without terminating null character.
+/*
+ * Two arrays holding data about input functions
  */
-#define SNOOPY_INPUT_MESSAGE_MAX_SIZE 1024
-
-
-
-/**
- * SNOOPY_LOG_MESSAGE_MAX_SIZE
- *
- * Maximum length of single (whole) log message,
- * without terminating null character.
- */
-#define SNOOPY_LOG_MESSAGE_MAX_SIZE 16383
+const char *inputNames[] = {
+    "cmdline",
+    "cwd",
+    "egid",
+    "euid",
+    "filename",
+    "gid",
+    "sid",
+    "tty",
+    "uid",
+    "",
+};
+int (*inputPtrs []) (char *input) = {
+    snoopy_input_cmdline,
+    snoopy_input_cwd,
+    snoopy_input_egid,
+    snoopy_input_euid,
+    snoopy_input_filename,
+    snoopy_input_gid,
+    snoopy_input_sid,
+    snoopy_input_tty,
+    snoopy_input_uid,
+};
+int inputCount = 9;

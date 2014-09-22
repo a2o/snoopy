@@ -3,8 +3,9 @@
 -------------------------------------------------------------------------------
 
 
-2014-FIXME - Version  2.NEXT.NEXT
+2014-FIXME - Version  2.0.0rc1
 ---------------------------
+o Separated data gathering into separate functions, to be used at will
 o Removed external filtering, to be replaced with internal filters
 o Removed logging exclusion via prefix, was created for exclusion of logging of external filter commands
 

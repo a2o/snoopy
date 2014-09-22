@@ -2,25 +2,105 @@
 
 
 
-CC=@CC@
-CFLAGS=@CFLAGS@ @DEFS@
+CC=gcc
+CFLAGS=-g -O2 -DHAVE_CONFIG_H
 LIBS=-ldl
-LDFLAGS=@LDFLAGS@ @LIBS@
-prefix=@prefix@
-exec_prefix=@exec_prefix@
-LIBDIR=@libdir@
+LDFLAGS= -ldl 
+prefix=/usr/local
+exec_prefix=${prefix}
+LIBDIR=${exec_prefix}/lib
 
 
-all: snoopy.so detect
 
-snoopy.so:  snoopy.c snoopy.h config.h
-	$(CC) $(CFLAGS) -shared -O3 -fomit-frame-pointer -fPIC snoopy.c -osnoopy.so $(LDFLAGS)
+### Common CC arguments
+#
+#CC_ARGS=-O3 -fomit-frame-pointer -fPIC -I. $(CFLAGS) $(LDFLAGS)
+#CC_ARGS=-O3 -fomit-frame-pointer -fPIC -Wall -Werror
+CC_ARGS=-O3 -fomit-frame-pointer -fPIC -Wall
 
+
+### Common dependencies for all targets
+#
+DEPS_HEADERS=snoopy.h config.h
+DEPS=$(DEPS_HEADERS)
+
+
+
+### Final build target
+#
+.PHONY: all
+#all: snoopy.so detect snoopy-test snoopy-dev-helper
+all: \
+  snoopy.so \
+  snoopy-test-output
+
+
+
+### Define targets for all snoopy inputs
+#
+SNOOPY_INPUTS_INDIVIDUAL     = $(shell ls snoopy_input_*.c | sed -e "s/\.c$$//")
+SNOOPY_INPUTS_INDIVIDUAL_SRC = $(addsuffix .c,${SNOOPY_INPUTS_INDIVIDUAL})
+SNOOPY_INPUTS_INDIVIDUAL_OBJ = $(addsuffix .o,${SNOOPY_INPUTS_INDIVIDUAL})
+
+snoopy_inputs_data.o: $(DEPS) snoopy_inputs_data.c snoopy_inputs_data.h
+	$(CC) $(CC_ARGS) -c snoopy_inputs_data.c
+
+snoopy_input_%.o: $(DEPS) snoopy_input_%.c snoopy_input_%.h snoopy_inputs_data.o
+	$(eval SRC_FILENAME := $(shell echo "$@" | sed -e "s/\.o$$/.c/"))
+	$(CC) $(CC_ARGS) -c $(SRC_FILENAME)
+
+snoopy_inputs.o: $(DEPS) snoopy_inputs.c snoopy_inputs.h snoopy_inputs_data.o ${SNOOPY_INPUTS_INDIVIDUAL_OBJ}
+	$(CC) $(CC_ARGS) -c snoopy_inputs.c
+
+
+
+### Common snoopy logging routines
+#
+snoopy_log.o: $(DEPS) snoopy_log.c snoopy_log.h snoopy_inputs.o snoopy_inputs_data.o
+	$(eval SRC_FILENAME := $(shell echo "$@" | sed -e "s/\.o$$/.c/"))
+	$(CC) $(CC_ARGS) -c $(SRC_FILENAME)
+
+
+
+### Snoopy tester
+#
+snoopy-test-output.o: $(DEPS) snoopy-test-output.c snoopy_log.o
+	$(eval SRC_FILENAME := $(shell echo "$@" | sed -e "s/\.o$$/.c/"))
+	$(CC) $(CC_ARGS) -c $(SRC_FILENAME)
+snoopy-test-output: snoopy-test-output.o
+	$(CC) $(CC_ARGS) -o $@ $@.o snoopy_log.o snoopy_inputs.o snoopy_inputs_data.o $(SNOOPY_INPUTS_INDIVIDUAL_OBJ)
+
+
+
+### Development helper tool, for testing output
+#
+snoopy-dev-helper.o: snoopy-dev-helper.c snoopy_inputs.o
+	$(eval SRC_FILENAME := $(shell echo "$@" | sed -e "s/\.o$$/.c/"))
+	$(CC) $(CC_ARGS) -c $(SRC_FILENAME)
+snoopy-dev-helper: snoopy-dev-helper.o
+	$(CC) $(CC_ARGS) -o $@ $@.o snoopy_log.o snoopy_inputs.o snoopy_inputs_data.o $(SNOOPY_INPUTS_INDIVIDUAL_OBJ)
+
+
+
+### Main library object file and final library
+#
+snoopy.o: $(DEPS) snoopy.c snoopy.h snoopy_log.o
+	$(CC) $(CC_ARGS) -c snoopy.c
+
+snoopy.so: $(DEPS) snoopy.o
+	$(CC) $(CC_ARGS) -shared -o snoopy.so snoopy.o snoopy_log.o snoopy_inputs.o snoopy_inputs_data.o $(SNOOPY_INPUTS_INDIVIDUAL_OBJ)
+
+
+
+### Why is this here actually? To test whether snoopy is loaded?
+#
 detect: detect.c
-	$(CC) detect.c -odetect $(LDFLAGS)
+	$(CC) $(CC_ARGS) $@.c -o $@
 
 
 
+### Installation targets
+#
 install: all
 	install -m 755 -d $(DESTDIR)$(LIBDIR)
 	install -m 755 snoopy.so $(DESTDIR)$(LIBDIR)/snoopy.so
@@ -35,13 +115,16 @@ enable:
 
 
 clean:
+	rm -f *.o
 	rm -f detect snoopy.so
 	rm -f contrib/sles/snoopy.spec
+	rm -f snoopy-test-output
+	rm -f snoopy-dev-helper
 
 distclean: clean
 	rm -f autoscan.log config.h config.log config.status
 	rm -rf autom4te.cache
-	rm -f Makefile
+#	rm -f Makefile
 
 realclean: distclean
 	rm -f configure configure.scan

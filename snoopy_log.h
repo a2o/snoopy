@@ -1,7 +1,7 @@
 /*
  * SNOOPY LOGGER
  *
- * snoopy.h
+ * snoopy_log.h
  * Copyright (c) 2014 bostjan@a2o.si
  *
  * This program is free software; you can redistribute it and/or modify
@@ -21,30 +21,39 @@
 
 
 
-/**
- * SNOOPY_MAX_ARG_LENGTH
- *
- * Maximum length of arguments passed to execv(e) functions.
- */
-#include <unistd.h>
-#define SNOOPY_SYSCONF_ARG_MAX sysconf(_SC_ARG_MAX)
+void snoopy_log_message_generate (
+    char        *logMessage,
+    char        *logMessageFormat
+);
+void snoopy_log_message_generate_origFormat (
+    char        *logMessage
+);
+void snoopy_log_message_generate_testLoopAllInputs (
+    char        *logMessage
+);
 
 
 
-/**
- * SNOOPY_INPUT_MESSAGE_MAX_SIZE
- *
- * Maximum length of a string returned from any input function,
- * without terminating null character.
- */
-#define SNOOPY_INPUT_MESSAGE_MAX_SIZE 1024
+void snoopy_log_message_append (
+    char *logMessage,
+    char *appendThis
+);
+
+void snoopy_log_send_to_syslog (
+    char *logMessage
+);
 
 
 
-/**
- * SNOOPY_LOG_MESSAGE_MAX_SIZE
- *
- * Maximum length of single (whole) log message,
- * without terminating null character.
- */
-#define SNOOPY_LOG_MESSAGE_MAX_SIZE 16383
+void snoopy_log_syscall_execv (
+    const char  *filename,
+    char *const  argv[]
+);
+void snoopy_log_syscall_execve (
+    const char  *filename,
+    char *const  argv[],
+    char *const  envp[]
+);
+void snoopy_log_syscall (
+    const char  *syscallName
+);

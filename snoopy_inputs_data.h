@@ -1,7 +1,7 @@
 /*
  * SNOOPY LOGGER
  *
- * snoopy.h
+ * snoopy_inputs_data.h
  * Copyright (c) 2014 bostjan@a2o.si
  *
  * This program is free software; you can redistribute it and/or modify
@@ -18,33 +18,28 @@
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+#include "snoopy.h"
 
 
 
-/**
- * SNOOPY_MAX_ARG_LENGTH
- *
- * Maximum length of arguments passed to execv(e) functions.
+/*
+ * Store execution data for inputs to use
  */
-#include <unistd.h>
-#define SNOOPY_SYSCONF_ARG_MAX sysconf(_SC_ARG_MAX)
+extern const char *snoopy_inputs_data_filename;
+extern char **snoopy_inputs_data_argv;
+extern char **snoopy_inputs_data_envp;
 
 
 
-/**
- * SNOOPY_INPUT_MESSAGE_MAX_SIZE
- *
- * Maximum length of a string returned from any input function,
- * without terminating null character.
+/*
+ * Functions to use to do the actual storing
  */
-#define SNOOPY_INPUT_MESSAGE_MAX_SIZE 1024
-
-
-
-/**
- * SNOOPY_LOG_MESSAGE_MAX_SIZE
- *
- * Maximum length of single (whole) log message,
- * without terminating null character.
- */
-#define SNOOPY_LOG_MESSAGE_MAX_SIZE 16383
+void snoopy_inputs_data_store_filename (
+    const char *filename
+);
+void snoopy_inputs_data_store_argv (
+    char * argv[]
+);
+void snoopy_inputs_data_store_envp (
+    char * envp[]
+);

@@ -1,7 +1,20 @@
-/Makefile
-/configure
+### Files produced by autotools
+#
 /autom4te.cache
+/configure
 /config.h
 /config.log
 /config.status
+
+
+### Files produced by ./configure
+#
+/Makefile
+
+
+### Files produced by build process
+#
+*.o
 /contrib/sles/snoopy.spec
+/snoopy.so
+/snoopy-test-output

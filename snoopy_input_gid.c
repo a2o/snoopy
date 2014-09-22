@@ -1,7 +1,7 @@
 /*
  * SNOOPY LOGGER
  *
- * snoopy.h
+ * snoopy_input_gid.c
  * Copyright (c) 2014 bostjan@a2o.si
  *
  * This program is free software; you can redistribute it and/or modify
@@ -21,30 +21,26 @@
 
 
 
-/**
- * SNOOPY_MAX_ARG_LENGTH
+/*
+ * SNOOPY INPUT: gid
  *
- * Maximum length of arguments passed to execv(e) functions.
+ * Description:
+ *     Returns GID (Group ID) number of currently running process.
+ *
+ * Params:
+ *     input: pointer to string, to write result into
+ *
+ * Return:
+ *     number of characters in the returned string
  */
+#include "snoopy.h"
+#include <stdio.h>
 #include <unistd.h>
-#define SNOOPY_SYSCONF_ARG_MAX sysconf(_SC_ARG_MAX)
+#include <sys/types.h>
 
 
 
-/**
- * SNOOPY_INPUT_MESSAGE_MAX_SIZE
- *
- * Maximum length of a string returned from any input function,
- * without terminating null character.
- */
-#define SNOOPY_INPUT_MESSAGE_MAX_SIZE 1024
-
-
-
-/**
- * SNOOPY_LOG_MESSAGE_MAX_SIZE
- *
- * Maximum length of single (whole) log message,
- * without terminating null character.
- */
-#define SNOOPY_LOG_MESSAGE_MAX_SIZE 16383
+int snoopy_input_gid (char *input)
+{
+    return snprintf(input, SNOOPY_INPUT_MESSAGE_MAX_SIZE, "%u", getgid());
+}
