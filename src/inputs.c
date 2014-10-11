@@ -24,7 +24,7 @@
 /*
  * Include all input functions
  */
-#include "snoopy_inputs.h"
+#include "inputs.h"
 
 
 

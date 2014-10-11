@@ -18,12 +18,12 @@
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-#include "snoopy_input_cmdline.h"
-#include "snoopy_input_cwd.h"
-#include "snoopy_input_egid.h"
-#include "snoopy_input_euid.h"
-#include "snoopy_input_filename.h"
-#include "snoopy_input_gid.h"
-#include "snoopy_input_sid.h"
-#include "snoopy_input_tty.h"
-#include "snoopy_input_uid.h"
+#include "input/cmdline.h"
+#include "input/cwd.h"
+#include "input/egid.h"
+#include "input/euid.h"
+#include "input/filename.h"
+#include "input/gid.h"
+#include "input/sid.h"
+#include "input/tty.h"
+#include "input/uid.h"

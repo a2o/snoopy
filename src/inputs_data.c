@@ -25,7 +25,7 @@
  * Includes
  */
 #include "snoopy.h"
-#include "snoopy_inputs_data.h"
+#include "inputs_data.h"
 
 
 

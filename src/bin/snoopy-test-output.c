@@ -19,8 +19,8 @@
  * Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include "snoopy.h"
-#include "snoopy_log.h"
-#include "snoopy_inputs_data.h"
+#include "log.h"
+#include "inputs_data.h"
 #include <stdio.h>
 #include <stdlib.h>
 

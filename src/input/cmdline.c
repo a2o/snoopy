@@ -34,7 +34,7 @@
  *     number of characters in the returned string
  */
 #include "snoopy.h"
-#include "snoopy_inputs_data.h"
+#include "inputs_data.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

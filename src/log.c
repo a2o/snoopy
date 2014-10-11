@@ -32,9 +32,9 @@
 /*
  * Include all input functions
  */
-#include "snoopy_log.h"
-#include "snoopy_inputs.h"
-#include "snoopy_inputs_data.h"
+#include "log.h"
+#include "inputs.h"
+#include "inputs_data.h"
 
 
 

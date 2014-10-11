@@ -7,6 +7,9 @@ AC_DEFINE(PACKAGE_URL, [], "https://github.com/a2o/snoopy/")
 AC_CONFIG_SRCDIR([config.h.in])
 AC_CONFIG_HEADERS([config.h])
 
+# We are using automake
+AM_INIT_AUTOMAKE
+
 # Checks for programs.
 AC_PROG_CC
 AC_PROG_INSTALL
@@ -29,6 +32,7 @@ AC_CHECK_FUNCS([getcwd])
 
 AC_CONFIG_FILES([
     Makefile
+    src/Makefile
     contrib/sles/snoopy.spec
 ])
 

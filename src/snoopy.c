@@ -34,7 +34,7 @@
 /*
  * Include snoopy logging facilities
  */
-#include "snoopy_log.h"
+#include "log.h"
 
 
 

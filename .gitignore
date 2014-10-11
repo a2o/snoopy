@@ -5,6 +5,7 @@
 /config.h
 /config.log
 /config.status
+/stamp-h1
 
 
 ### Files produced by ./configure
@@ -16,5 +17,5 @@
 #
 *.o
 /contrib/sles/snoopy.spec
-/snoopy.so
-/snoopy-test-output
+/src/snoopy.so
+/src/bin/snoopy-test-output
