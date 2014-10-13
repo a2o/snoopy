@@ -28,6 +28,7 @@ fi
 
 ### Run autotools
 #
+libtoolize --install --copy --force
 aclocal
 automake --add-missing --copy
 autoconf

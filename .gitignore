@@ -1,21 +1,34 @@
 ### Files produced by autotools
 #
 /autom4te.cache
+/autoscan.log
 /configure
 /config.h
 /config.log
 /config.status
+/config.h.in~
 /stamp-h1
 
 
 ### Files produced by ./configure
 #
-/Makefile
+Makefile
+/libtool
 
 
 ### Files produced by build process
 #
+*.a
 *.o
+*.la
+*.lo
+/.deps/*
+/*/.deps/*
+/*/*/.deps/*
+/.libs/*
+/*/.libs/*
+/*/*/.libs/*
 /contrib/sles/snoopy.spec
 /src/snoopy.so
 /src/bin/snoopy-test-output
+/bin/snoopy-test-output

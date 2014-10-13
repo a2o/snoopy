@@ -37,7 +37,7 @@ make install DESTDIR=%{buildroot}
 %if %enable
 install -d -m 755 $RPM_BUILD_ROOT/etc
 if [ ! -f /etc/ld.so.preload ];then
-echo "%{_libdir}/snoopy.so" >> $RPM_BUILD_ROOT/etc/ld.so.preload
+echo "%{_libdir}/libsnoopy.so" >> $RPM_BUILD_ROOT/etc/ld.so.preload
 fi
 %endif
 
@@ -50,4 +50,4 @@ rm -rf %{buildroot}
 %defattr(644 root root 755)
 %doc COPYING ChangeLog README* RELEASES
 %config /etc/ld.so.preload
-%{_libdir}/snoopy.so
+%{_libdir}/libsnoopy.so

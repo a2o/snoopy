@@ -15,8 +15,8 @@ fi
 
 
 ### Check snoopy installation
-if [ ! -x $LIBDIR/snoopy.so ]; then
-    echo "ERROR: $LIBDIR/snoopy.so is not installed or is not executable"
+if [ ! -x $LIBDIR/libsnoopy.so ]; then
+    echo "ERROR: $LIBDIR/libsnoopy.so is not installed or is not executable"
     exit 1
 fi
 
@@ -32,8 +32,8 @@ fi
 
 
 ### Do the actual install
-if [ "`grep -c "^$LIBDIR/snoopy.so"   /etc/ld.so.preload`" = "0" ]; then
-    echo "$LIBDIR/snoopy.so" >> /etc/ld.so.preload
+if [ "`grep -c "^$LIBDIR/libsnoopy.so"   /etc/ld.so.preload`" = "0" ]; then
+    echo "$LIBDIR/libsnoopy.so" >> /etc/ld.so.preload
     echo "Snoopy is now enabled in /etc/ld.so.preload."
     echo "Check your syslog files for output."
 else

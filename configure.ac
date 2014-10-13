@@ -7,8 +7,11 @@ AC_DEFINE(PACKAGE_URL, [], "https://github.com/a2o/snoopy/")
 AC_CONFIG_SRCDIR([config.h.in])
 AC_CONFIG_HEADERS([config.h])
 
-# We are using automake
-AM_INIT_AUTOMAKE
+# We are using automake and libtool
+AC_CONFIG_MACRO_DIR([m4])
+AM_INIT_AUTOMAKE([1.11 gnu silent-rules subdir-objects -Wall -Wno-portability])
+LT_INIT([disable-static])
+#LT_INIT
 
 # Checks for programs.
 AC_PROG_CC
@@ -33,6 +36,8 @@ AC_CHECK_FUNCS([getcwd])
 AC_CONFIG_FILES([
     Makefile
     src/Makefile
+    src/input/Makefile
+    bin/Makefile
     contrib/sles/snoopy.spec
 ])
 

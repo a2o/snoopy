@@ -1,7 +1,12 @@
+include   $(top_srcdir)/build/Makefile.am.common
+
 AUTOMAKE_OPTIONS = foreign subdir-objects
-#SUBDIRS = src bin
-SUBDIRS = src
-EXTRA_DIST = autogen.sh
+ACLOCAL_AMFLAGS = -I m4
+
+SUBDIRS = src bin
+
+EXTRA_DIST +=\
+	autogen.sh
 
 enable:
-	./enable.sh $(libdir)
+	$(top_srcdir)/enable.sh $(libdir)

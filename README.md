@@ -55,7 +55,7 @@ to snoopy.so shared library before starting the application.
 
 Example:
 
-    export LD_PRELOAD=/usr/local/lib/snoopy.so    # default path
+    export LD_PRELOAD=/usr/local/lib/libsnoopy.so    # default path
     lynx http://linux.com/
     unset LD_PRELOAD
 
@@ -79,7 +79,7 @@ syslog.
 
 Content of /etc/ld.so.preload should include the following line:
 
-    /usr/local/$LIB/snoopy.so
+    /usr/local/$LIB/libsnoopy.so
 
 This applies only when you have installed both 32bit and 64bit version
 of the library in the appropriate paths.
@@ -122,7 +122,7 @@ references snoopy (LD_PRELOAD, LD_PRELOAD_32 and LD_PRELOAD_64).  Then
 you may also delete snoopy shared library from  your  system.  Default
 installation path of snoopy shared library is:
 
-    /usr/local/lib/snoopy.so
+    /usr/local/lib/libsnoopy.so
 
 
 
