@@ -1,7 +1,8 @@
 /*
  * SNOOPY LOGGER
  *
- * snoopy_log.c
+ * File: log.c
+ *
  * Copyright (c) 2014 bostjan@a2o.si
  *
  * This program is free software; you can redistribute it and/or modify
@@ -33,8 +34,8 @@
  * Include all input functions
  */
 #include "log.h"
-#include "inputs.h"
-#include "inputs_data.h"
+#include "inputdatastorage.h"
+#include "inputregistry.h"
 
 
 
@@ -270,9 +271,9 @@ void snoopy_log_syscall_execv (
     const char *filename,
     char *const argv[]
 ) {
-    snoopy_inputs_data_store_filename(filename);
-    snoopy_inputs_data_store_argv((char**)argv);
-//    snoopy_inputs_data_store_envp((char**)envp); // TODO, must create null array
+    snoopy_inputdatastorage_store_filename(filename);
+    snoopy_inputdatastorage_store_argv((char**)argv);
+//    snoopy_inputdatastorage_store_envp((char**)envp); // TODO, must create null array
     snoopy_log_syscall("execv");
 }
 
@@ -297,9 +298,9 @@ void snoopy_log_syscall_execve (
     char *const argv[],
     char *const envp[]
 ) {
-    snoopy_inputs_data_store_filename(filename);
-    snoopy_inputs_data_store_argv((char**)argv);
-//    snoopy_inputs_data_store_envp((char**)envp);
+    snoopy_inputdatastorage_store_filename(filename);
+    snoopy_inputdatastorage_store_argv((char**)argv);
+//    snoopy_inputdatastorage_store_envp((char**)envp);
     snoopy_log_syscall("execve");
 }
 

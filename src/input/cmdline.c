@@ -1,7 +1,8 @@
 /*
  * SNOOPY LOGGER
  *
- * snoopy_input_cmdline.c
+ * File: snoopy_input_cmdline.c
+ *
  * Copyright (c) 2014 bostjan@a2o.si
  *
  * This program is free software; you can redistribute it and/or modify
@@ -34,7 +35,7 @@
  *     number of characters in the returned string
  */
 #include "snoopy.h"
-#include "inputs_data.h"
+#include "inputdatastorage.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -55,13 +56,13 @@ int snoopy_input_cmdline (char *input)
     int     n;
 
     /* Count number of arguments */
-    for (argc=0 ; *(snoopy_inputs_data_argv+argc) != '\0' ; argc++);
+    for (argc=0 ; *(snoopy_inputdatastorage_argv+argc) != '\0' ; argc++);
 
     /* Allocate memory for cmdLine */
     cmdLineSize = 0;
     for (i=0 ; i<argc ; i++) {
         /* Argument length + space */
-        cmdLineSize += sizeof(cmdLine[0]) * (strlen(snoopy_inputs_data_argv[i]) + 1);
+        cmdLineSize += sizeof(cmdLine[0]) * (strlen(snoopy_inputdatastorage_argv[i]) + 1);
     }
 
     /* +1 for last \0 */
@@ -71,7 +72,7 @@ int snoopy_input_cmdline (char *input)
     /* Create cmdLine, and protect against overflows */
     cmdLine[0] = '\0';
     for (i = n = 0 ; i<argc ; i++) {
-        n += snprintf(cmdLine+n, cmdLineSize-n, "%s", snoopy_inputs_data_argv[i]);
+        n += snprintf(cmdLine+n, cmdLineSize-n, "%s", snoopy_inputdatastorage_argv[i]);
         if (n >= cmdLineSize) {
             break;
         }

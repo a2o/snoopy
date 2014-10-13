@@ -1,7 +1,8 @@
 /*
  * SNOOPY LOGGER
  *
- * snoopy_inputs_data.h
+ * File: inputdatastorage.h
+ *
  * Copyright (c) 2014 bostjan@a2o.si
  *
  * This program is free software; you can redistribute it and/or modify
@@ -23,23 +24,23 @@
 
 
 /*
- * Store execution data for inputs to use
+ * Store execution data for inputs to consume
  */
-extern const char *snoopy_inputs_data_filename;
-extern char **snoopy_inputs_data_argv;
-extern char **snoopy_inputs_data_envp;
+extern const char *snoopy_inputdatastorage_filename;
+extern char **snoopy_inputdatastorage_argv;
+extern char **snoopy_inputdatastorage_envp;
 
 
 
 /*
  * Functions to use to do the actual storing
  */
-void snoopy_inputs_data_store_filename (
+void snoopy_inputdatastorage_store_filename (
     const char *filename
 );
-void snoopy_inputs_data_store_argv (
+void snoopy_inputdatastorage_store_argv (
     char * argv[]
 );
-void snoopy_inputs_data_store_envp (
+void snoopy_inputdatastorage_store_envp (
     char * envp[]
 );

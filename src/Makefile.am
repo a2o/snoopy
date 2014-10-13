@@ -10,8 +10,8 @@ noinst_LTLIBRARIES = \
 	libsnoopy_no_execve.la
 
 libsnoopy_no_execve_la_SOURCES = \
-	inputs_data.c \
-	inputs.c \
+	inputdatastorage.c \
+	inputregistry.c \
 	log.c
 
 libsnoopy_no_execve_la_LIBADD = \

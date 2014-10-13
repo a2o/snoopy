@@ -1,7 +1,8 @@
 /*
  * SNOOPY LOGGER
  *
- * snoopy_inputs_data.c
+ * File: inputdatastorage.c
+ *
  * Copyright (c) 2014 bostjan@a2o.si
  *
  * This program is free software; you can redistribute it and/or modify
@@ -25,21 +26,21 @@
  * Includes
  */
 #include "snoopy.h"
-#include "inputs_data.h"
+#include "inputdatastorage.h"
 
 
 
 /*
- * Create these storage locations for inputs to use
+ * Create these storage locations for inputs to consume
  */
-const char *snoopy_inputs_data_filename;
-char **snoopy_inputs_data_argv;
-char **snoopy_inputs_data_envp;
+const char *snoopy_inputdatastorage_filename;
+char **snoopy_inputdatastorage_argv;
+char **snoopy_inputdatastorage_envp;
 
 
 
 /*
- * snoopy_inputs_data_store_filename()
+ * snoopy_inputdatastorage_store_filename()
  *
  * Description:
  *     Store filename of execv()/execve() syscall
@@ -50,16 +51,16 @@ char **snoopy_inputs_data_envp;
  * Return:
  *     void
  */
-void snoopy_inputs_data_store_filename (
+void snoopy_inputdatastorage_store_filename (
     const char *filename
 ) {
-    snoopy_inputs_data_filename = filename;
+    snoopy_inputdatastorage_filename = filename;
 }
 
 
 
 /*
- * snoopy_inputs_data_store_argv()
+ * snoopy_inputdatastorage_store_argv()
  *
  * Description:
  *     Store argv[] of execv()/execve() syscall
@@ -70,16 +71,16 @@ void snoopy_inputs_data_store_filename (
  * Return:
  *     void
  */
-void snoopy_inputs_data_store_argv (
+void snoopy_inputdatastorage_store_argv (
     char * argv[]
 ) {
-    snoopy_inputs_data_argv = argv;
+    snoopy_inputdatastorage_argv = argv;
 }
 
 
 
 /*
- * snoopy_inputs_data_store_envp()
+ * snoopy_inputdatastorage_store_envp()
  *
  * Description:
  *     Store envp[] of execve() syscall
@@ -90,8 +91,8 @@ void snoopy_inputs_data_store_argv (
  * Return:
  *     void
  */
-void snoopy_inputs_data_store_envp (
+void snoopy_inputdatastorage_store_envp (
     char * envp[]
 ) {
-    snoopy_inputs_data_envp = envp;
+    snoopy_inputdatastorage_envp = envp;
 }

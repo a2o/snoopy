@@ -20,7 +20,7 @@
  */
 #include "snoopy.h"
 #include "log.h"
-#include "inputs_data.h"
+#include "inputdatastorage.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -34,8 +34,8 @@ int main (int argc, char **argv)
     logMessage    = malloc(SNOOPY_LOG_MESSAGE_MAX_SIZE);
     logMessage[0] = '\0';
 
-    snoopy_inputs_data_store_filename(argv[0]);
-    snoopy_inputs_data_store_argv(argv);
+    snoopy_inputdatastorage_store_filename(argv[0]);
+    snoopy_inputdatastorage_store_argv(argv);
 
     snoopy_log_message_generate_origFormat(logMessage);
     printf("Message generated:\n");

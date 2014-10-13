@@ -34,12 +34,12 @@
  *     number of characters in the returned string
  */
 #include "snoopy.h"
-#include "inputs_data.h"
+#include "inputdatastorage.h"
 #include <stdio.h>
 
 
 
 int snoopy_input_filename (char *input)
 {
-    return snprintf(input, SNOOPY_INPUT_MESSAGE_MAX_SIZE, "%s", snoopy_inputs_data_filename);
+    return snprintf(input, SNOOPY_INPUT_MESSAGE_MAX_SIZE, "%s", snoopy_inputdatastorage_filename);
 }

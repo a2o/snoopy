@@ -1,7 +1,8 @@
 /*
  * SNOOPY LOGGER
  *
- * snoopy_inputs.h
+ * File: inputregistry.c
+ *
  * Copyright (c) 2014 bostjan@a2o.si
  *
  * This program is free software; you can redistribute it and/or modify
@@ -18,12 +19,40 @@
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-#include "input/cmdline.h"
-#include "input/cwd.h"
-#include "input/egid.h"
-#include "input/euid.h"
-#include "input/filename.h"
-#include "input/gid.h"
-#include "input/sid.h"
-#include "input/tty.h"
-#include "input/uid.h"
+
+
+
+/*
+ * Include all input functions
+ */
+#include "inputregistry.h"
+
+
+
+/*
+ * Two arrays holding data about input functions
+ */
+const char *inputNames[] = {
+    "cmdline",
+    "cwd",
+    "egid",
+    "euid",
+    "filename",
+    "gid",
+    "sid",
+    "tty",
+    "uid",
+    "",
+};
+int (*inputPtrs []) (char *input) = {
+    snoopy_input_cmdline,
+    snoopy_input_cwd,
+    snoopy_input_egid,
+    snoopy_input_euid,
+    snoopy_input_filename,
+    snoopy_input_gid,
+    snoopy_input_sid,
+    snoopy_input_tty,
+    snoopy_input_uid,
+};
+int inputCount = 9;
