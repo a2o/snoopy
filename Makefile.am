@@ -8,5 +8,5 @@ SUBDIRS = src bin
 EXTRA_DIST +=\
 	autogen.sh
 
-enable:
+enable: install
 	$(top_srcdir)/enable.sh $(libdir)
