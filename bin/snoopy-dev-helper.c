@@ -5,25 +5,37 @@
  */
 #include "snoopy.h"
 #include <stdio.h>
+#include <stdlib.h>
 
 
 
 /*
- * Include all input functions
+ * Include all input-related assets
  */
-#include "snoopy_inputs.h"
-#include "snoopy_inputs_data.h"
+#include "inputregistry.h"
+#include "inputdatastorage.h"
 
 
 
 
-int main (void)
+int main (int argc, char **argv)
 {
-//    char   inputString[SNOOPY_INPUT_MESSAGE_MAX_SIZE];
-//    int    inputStringLength;
+    char *logMessage = NULL;
 
-//    inputStringLength = snoopy_input_euid(inputString);
-//    printf("Snoopy input return string: %s\n", inputString);
+    /* Fake init */
+    snoopy_inputdatastorage_store_filename(argv[0]);
+    snoopy_inputdatastorage_store_argv(argv);
+
+    // Init log message as empty string
+    logMessage    = malloc(SNOOPY_LOG_MESSAGE_MAX_SIZE);
+    logMessage[0] = '\n';
+
+    /* Iterate through all inputs */
+    snoopy_log_message_generate_testLoopAllInputs(logMessage);
+    printf("Snoopy loop through all inputs: %s\n", logMessage);
+
+    /* Housekeeping */
+    free(logMessage);
 
     return 0;
 }

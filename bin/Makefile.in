@@ -52,6 +52,7 @@ POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
 bin_PROGRAMS = snoopy-test-output$(EXEEXT)
+noinst_PROGRAMS = snoopy-dev-helper$(EXEEXT)
 subdir = bin
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -66,14 +67,18 @@ CONFIG_HEADER = $(top_builddir)/config.h
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
-PROGRAMS = $(bin_PROGRAMS)
-am_snoopy_test_output_OBJECTS = snoopy-test-output.$(OBJEXT)
-snoopy_test_output_OBJECTS = $(am_snoopy_test_output_OBJECTS)
-snoopy_test_output_DEPENDENCIES =  \
+PROGRAMS = $(bin_PROGRAMS) $(noinst_PROGRAMS)
+am_snoopy_dev_helper_OBJECTS = snoopy-dev-helper.$(OBJEXT)
+snoopy_dev_helper_OBJECTS = $(am_snoopy_dev_helper_OBJECTS)
+snoopy_dev_helper_DEPENDENCIES =  \
 	$(top_srcdir)/src/libsnoopy_no_execve.la
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
 am__v_lt_0 = --silent
+am_snoopy_test_output_OBJECTS = snoopy-test-output.$(OBJEXT)
+snoopy_test_output_OBJECTS = $(am_snoopy_test_output_OBJECTS)
+snoopy_test_output_DEPENDENCIES =  \
+	$(top_srcdir)/src/libsnoopy_no_execve.la
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -100,8 +105,9 @@ am__v_CCLD_0 = @echo "  CCLD  " $@;
 AM_V_GEN = $(am__v_GEN_@AM_V@)
 am__v_GEN_ = $(am__v_GEN_@AM_DEFAULT_V@)
 am__v_GEN_0 = @echo "  GEN   " $@;
-SOURCES = $(snoopy_test_output_SOURCES)
-DIST_SOURCES = $(snoopy_test_output_SOURCES)
+SOURCES = $(snoopy_dev_helper_SOURCES) $(snoopy_test_output_SOURCES)
+DIST_SOURCES = $(snoopy_dev_helper_SOURCES) \
+	$(snoopy_test_output_SOURCES)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -232,6 +238,12 @@ snoopy_test_output_SOURCES = \
 snoopy_test_output_LDADD = \
 	$(top_srcdir)/src/libsnoopy_no_execve.la
 
+snoopy_dev_helper_SOURCES = \
+	snoopy-dev-helper.c
+
+snoopy_dev_helper_LDADD = \
+	$(top_srcdir)/src/libsnoopy_no_execve.la
+
 all: all-am
 
 .SUFFIXES:
@@ -312,6 +324,18 @@ clean-binPROGRAMS:
 	list=`for p in $$list; do echo "$$p"; done | sed 's/$(EXEEXT)$$//'`; \
 	echo " rm -f" $$list; \
 	rm -f $$list
+
+clean-noinstPROGRAMS:
+	@list='$(noinst_PROGRAMS)'; test -n "$$list" || exit 0; \
+	echo " rm -f" $$list; \
+	rm -f $$list || exit $$?; \
+	test -n "$(EXEEXT)" || exit 0; \
+	list=`for p in $$list; do echo "$$p"; done | sed 's/$(EXEEXT)$$//'`; \
+	echo " rm -f" $$list; \
+	rm -f $$list
+snoopy-dev-helper$(EXEEXT): $(snoopy_dev_helper_OBJECTS) $(snoopy_dev_helper_DEPENDENCIES) $(EXTRA_snoopy_dev_helper_DEPENDENCIES) 
+	@rm -f snoopy-dev-helper$(EXEEXT)
+	$(AM_V_CCLD)$(LINK) $(snoopy_dev_helper_OBJECTS) $(snoopy_dev_helper_LDADD) $(LIBS)
 snoopy-test-output$(EXEEXT): $(snoopy_test_output_OBJECTS) $(snoopy_test_output_DEPENDENCIES) $(EXTRA_snoopy_test_output_DEPENDENCIES) 
 	@rm -f snoopy-test-output$(EXEEXT)
 	$(AM_V_CCLD)$(LINK) $(snoopy_test_output_OBJECTS) $(snoopy_test_output_LDADD) $(LIBS)
@@ -322,6 +346,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/snoopy-dev-helper.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/snoopy-test-output.Po@am__quote@
 
 .c.o:
@@ -475,7 +500,8 @@ maintainer-clean-generic:
 	@echo "it deletes files that may require special tools to rebuild."
 clean: clean-am
 
-clean-am: clean-binPROGRAMS clean-generic clean-libtool mostlyclean-am
+clean-am: clean-binPROGRAMS clean-generic clean-libtool \
+	clean-noinstPROGRAMS mostlyclean-am
 
 distclean: distclean-am
 	-rm -rf ./$(DEPDIR)
@@ -546,18 +572,18 @@ uninstall-am: uninstall-binPROGRAMS
 .MAKE: install-am install-strip
 
 .PHONY: CTAGS GTAGS all all-am check check-am clean clean-binPROGRAMS \
-	clean-generic clean-libtool ctags distclean distclean-compile \
-	distclean-generic distclean-libtool distclean-tags distdir dvi \
-	dvi-am html html-am info info-am install install-am \
-	install-binPROGRAMS install-data install-data-am install-dvi \
-	install-dvi-am install-exec install-exec-am install-html \
-	install-html-am install-info install-info-am install-man \
-	install-pdf install-pdf-am install-ps install-ps-am \
-	install-strip installcheck installcheck-am installdirs \
-	maintainer-clean maintainer-clean-generic mostlyclean \
-	mostlyclean-compile mostlyclean-generic mostlyclean-libtool \
-	pdf pdf-am ps ps-am tags uninstall uninstall-am \
-	uninstall-binPROGRAMS
+	clean-generic clean-libtool clean-noinstPROGRAMS ctags \
+	distclean distclean-compile distclean-generic \
+	distclean-libtool distclean-tags distdir dvi dvi-am html \
+	html-am info info-am install install-am install-binPROGRAMS \
+	install-data install-data-am install-dvi install-dvi-am \
+	install-exec install-exec-am install-html install-html-am \
+	install-info install-info-am install-man install-pdf \
+	install-pdf-am install-ps install-ps-am install-strip \
+	installcheck installcheck-am installdirs maintainer-clean \
+	maintainer-clean-generic mostlyclean mostlyclean-compile \
+	mostlyclean-generic mostlyclean-libtool pdf pdf-am ps ps-am \
+	tags uninstall uninstall-am uninstall-binPROGRAMS
 
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.

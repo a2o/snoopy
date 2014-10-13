@@ -28,7 +28,7 @@ Makefile
 /.libs/*
 /*/.libs/*
 /*/*/.libs/*
-/contrib/sles/snoopy.spec
-/src/snoopy.so
-/src/bin/snoopy-test-output
+/src/libsnoopy.so
 /bin/snoopy-test-output
+/bin/snoopy-dev-helper
+/contrib/sles/snoopy.spec
