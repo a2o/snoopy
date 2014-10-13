@@ -28,10 +28,11 @@ fi
 
 ### Run autotools
 #
-libtoolize --install --copy --force
-aclocal
-automake --add-missing --copy
-autoconf
+#libtoolize --install --copy --force
+#aclocal
+#automake --add-missing --copy
+#autoconf
+autoreconf   # This is the new recommended way
 
 
 
