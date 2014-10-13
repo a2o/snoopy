@@ -34,3 +34,11 @@
 #include "input/sid.h"
 #include "input/tty.h"
 #include "input/uid.h"
+
+
+
+/*
+ * Two arrays holding data about input functions
+ */
+extern char *snoopy_inputregistry_names[];
+extern int (*snoopy_inputregistry_ptrs []) (char *input);

@@ -32,7 +32,7 @@
 /*
  * Two arrays holding data about input functions
  */
-const char *inputNames[] = {
+char *snoopy_inputregistry_names[] = {
     "cmdline",
     "cwd",
     "egid",
@@ -44,7 +44,7 @@ const char *inputNames[] = {
     "uid",
     "",
 };
-int (*inputPtrs []) (char *input) = {
+int (*snoopy_inputregistry_ptrs []) (char *input) = {
     snoopy_input_cmdline,
     snoopy_input_cwd,
     snoopy_input_egid,
@@ -55,4 +55,3 @@ int (*inputPtrs []) (char *input) = {
     snoopy_input_tty,
     snoopy_input_uid,
 };
-int inputCount = 9;

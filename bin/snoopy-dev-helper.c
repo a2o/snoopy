@@ -32,7 +32,7 @@ int main (int argc, char **argv)
 
     /* Iterate through all inputs */
     snoopy_log_message_generate_testLoopAllInputs(logMessage);
-    printf("Snoopy loop through all inputs: %s\n", logMessage);
+    printf("Snoopy loop through all input providers:\n%s\n", logMessage);
 
     /* Housekeeping */
     free(logMessage);

@@ -31,20 +31,11 @@
 
 
 /*
- * Include all input functions
+ * Include all input-related resources
  */
 #include "log.h"
 #include "inputdatastorage.h"
 #include "inputregistry.h"
-
-
-
-/*
- * External variables, from inputs
- */
-extern int   inputCount;
-extern char *inputNames[];
-extern int (*inputPtrs []) (char *input);
 
 
 
@@ -159,23 +150,27 @@ void snoopy_log_message_generate_testLoopAllInputs (
     logMessage[0]  = '\0';
 
     /* Loop throught all inputs and just append the output */
-    for (i=0 ; i<inputCount ; i++) {
+    i = 0;
+    while (strcmp(snoopy_inputregistry_names[i], "") != 0) {
         inputMessage[0]  = '\0';
         int inputMessageSize = -1;
 
         /* Execute the input function */
-        inputMessageSize = inputPtrs[i](inputMessage);
+        inputMessageSize = snoopy_inputregistry_ptrs[i](inputMessage);
         if (inputMessageSize > SNOOPY_INPUT_MESSAGE_MAX_SIZE) {
             // ERROR, TODO
-            printf("SNOOPY ERROR: Maximum input message size exceeded (%s)", inputNames[i]);
+            printf("SNOOPY ERROR: Maximum input message size exceeded (%s)", snoopy_inputregistry_names[i]);
             exit(1);
         }
 
         /* Copy content, append */
-        snoopy_log_message_append(logMessage, inputNames[i]);
-        snoopy_log_message_append(logMessage, ":");
+        snoopy_log_message_append(logMessage, snoopy_inputregistry_names[i]);
+        snoopy_log_message_append(logMessage, ":\t");
         snoopy_log_message_append(logMessage, inputMessage);
-        snoopy_log_message_append(logMessage, " ");
+        snoopy_log_message_append(logMessage, "\n");
+
+        /* Go to next input provider */
+        i++;
     }
 
     /* Remove latest space */
