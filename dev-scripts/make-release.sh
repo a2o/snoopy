@@ -4,8 +4,8 @@
 
 ### Check working directory
 if [ ! -d "dev-scripts" ]; then
-	echo "ERROR: You have to run this script in the root of the git repository"
-	exit 1
+    echo "ERROR: You have to run this script in the root of the git repository"
+    exit 1
 fi
 
 
@@ -13,8 +13,8 @@ fi
 ### Check release tag
 RELEASE_TAG="$1"
 if [ "x$RELEASE_TAG" == "x" ]; then
-	echo "ERROR: No release tag specified. Please use:   $0 snoopy-X.Y.Z"
-	exit 1
+    echo "ERROR: No release tag specified. Please use:   $0 snoopy-X.Y.Z"
+    exit 1
 fi
 
 
@@ -31,8 +31,8 @@ RELEASE_VERSION=`echo "$RELEASE_TAG" | sed -e 's/snoopy-//'`
 ### Check if release tag exists
 RES=`git tag | grep "^$RELEASE_TAG\$"`
 if [ "$RES" != "$RELEASE_TAG" ]; then
-	echo "ERROR: Release tag does not exist, please create it with:   git tag snoopy-X.Y.Z"
-	exit 2
+    echo "ERROR: Release tag does not exist, please create it with:   git tag snoopy-X.Y.Z"
+    exit 2
 fi
 
 
@@ -48,34 +48,27 @@ fi
 
 ### Paths and filenames
 DIR_REPO=`pwd`
-DIR_REPO_PARENT=`dirname $DIR_REPO`
-DIRNAME_RELEASE="snoopy-$RELEASE_VERSION"
 FILENAME_RELEASE="snoopy-$RELEASE_VERSION.tar.gz"
 FILENAME_RELEASE_MD5="snoopy-$RELEASE_VERSION.tar.gz.md5"
 FILENAME_RELEASE_SHA1="snoopy-$RELEASE_VERSION.tar.gz.sha1"
-DIR_RELEASE="$DIR_REPO_PARENT/$DIRNAME_RELEASE"
-FILE_RELEASE="$DIR_REPO_PARENT/$DIRNAME_RELEASE.tar.gz"
-FILE_RELEASE_MD5="$DIR_REPO_PARENT/$DIRNAME_RELEASE.tar.gz.md5"
-FILE_RELEASE_SHA1="$DIR_REPO_PARENT/$DIRNAME_RELEASE.tar.gz.sha1"
+FILE_RELEASE="$DIR_REPO/$FILENAME_RELEASE"
+FILE_RELEASE_MD5="$DIR_REPO/$FILENAME_RELEASE_MD5"
+FILE_RELEASE_SHA1="$DIR_REPO/$FILENAME_RELEASE_SHA1"
 
 
 
 ### Check if release dirs and files do not exists
-if [ -e $DIR_RELEASE ]; then
-	echo "ERROR: Release directory already exists: $DIR_RELEASE"
-	exit 10
-fi
 if [ -e $FILE_RELEASE ]; then
-	echo "ERROR: Release file already exists: $FILE_RELEASE"
-	exit 10
+    echo "ERROR: Release file already exists: $FILE_RELEASE"
+    exit 10
 fi
 if [ -e $FILE_RELEASE_MD5 ]; then
-	echo "ERROR: Release MD5 file already exists: $FILE_RELEASE_MD5"
-	exit 10
+    echo "ERROR: Release MD5 file already exists: $FILE_RELEASE_MD5"
+    exit 10
 fi
 if [ -e $FILE_RELEASE_SHA1 ]; then
-	echo "ERROR: Release SHA1 file already exists: $FILE_RELEASE_SHA1"
-	exit 10
+    echo "ERROR: Release SHA1 file already exists: $FILE_RELEASE_SHA1"
+    exit 10
 fi
 
 
@@ -88,20 +81,17 @@ git checkout $RELEASE_TAG
 ### Check for release tags
 RES=`cat configure.ac | fgrep $RELEASE_VERSION | cat`
 if [ "x$RES" == "x" ]; then
-	echo "ERROR: Release tag $RELEASE_TAG not found in configure.ac file."
-	exit 20
+    echo "ERROR: Release tag $RELEASE_TAG not found in configure.ac file."
+    exit 20
 fi
 
 
 
 ### Create release directory
-mkdir -p $DIR_RELEASE &&
-cp -pR $DIR_REPO/* $DIR_RELEASE &&
-cd $DIR_RELEASE &&
 ./autogen.sh &&
 ./configure &&
-make distclean &&
-rm -rf dev-scripts &&
+make clean &&
+make dist &&
 
 
 
@@ -115,17 +105,8 @@ rm -rf dev-scripts &&
 
 
 ### Create package
-cd .. &&
-tar -c -z -f $FILENAME_RELEASE $DIRNAME_RELEASE &&
-md5sum  $FILENAME_RELEASE > $FILENAME_RELEASE_MD5  &&
-sha1sum $FILENAME_RELEASE > $FILENAME_RELEASE_SHA1 &&
-rm -rf $DIRNAME_RELEASE &&
-
-
-
-### Check out master branch again
-cd $DIR_REPO &&
-git checkout master &&
+md5sum  $FILE_RELEASE > $FILE_RELEASE_MD5  &&
+sha1sum $FILE_RELEASE > $FILE_RELEASE_SHA1 &&
 
 
 
@@ -137,10 +118,15 @@ git push github &&
 git push github --tags &&
 
 echo &&
-echo "RELEASING: Pushing code to http://source.a2o.si/download/snoopy/..." &&
+echo "RELEASING: Uploading release files to http://source.a2o.si/download/snoopy/..." &&
 echo &&
 scp $FILE_RELEASE $FILE_RELEASE_MD5 $FILE_RELEASE_SHA1 source.a2o.si:/var/www/source.a2o.si/public/download/snoopy/ &&
 
-echo
-echo "COMPLETE: $RELEASE_TAG has been published."
-echo
+echo &&
+echo "COMPLETE: $RELEASE_TAG has been released." &&
+echo &&
+
+
+
+### All done.
+true

@@ -3,7 +3,7 @@
 -------------------------------------------------------------------------------
 
 
-2014-FIXME - Version  2.0.0rc2
+2014-FIXME - Version  2.0.0rc3
 ---------------------------
 o Feature: Added support for custom message format specification at
     configuration time
@@ -14,6 +14,7 @@ o Refactoring: Removed external filtering, to be replaced with internal
 o Refactoring: Removed logging exclusion via prefix, was created for
     exclusion of logging of external filter commands
 o Refactoring: switched to autotools completely
+o Refactoring: all builds now use -Wall and -Werror
 
 
 2013-04-06 - Version  1.9.0
