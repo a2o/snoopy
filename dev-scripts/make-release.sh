@@ -13,7 +13,7 @@ fi
 ### Check release tag
 RELEASE_TAG="$1"
 if [ "x$RELEASE_TAG" == "x" ]; then
-	echo "ERROR: No release tag specified. Please use:   $0 X.Y.Z"
+	echo "ERROR: No release tag specified. Please use:   $0 snoopy-X.Y.Z"
 	exit 1
 fi
 
@@ -98,9 +98,10 @@ fi
 mkdir -p $DIR_RELEASE &&
 cp -pR $DIR_REPO/* $DIR_RELEASE &&
 cd $DIR_RELEASE &&
+./autogen.sh &&
+./configure &&
+make distclean &&
 rm -rf dev-scripts &&
-#autoheader &&
-#autoconf &&
 
 
 
@@ -138,7 +139,7 @@ git push github --tags &&
 echo &&
 echo "RELEASING: Pushing code to http://source.a2o.si/download/snoopy/..." &&
 echo &&
-scp $FILE_RELEASE $FILE_RELEASE_MD5 $FILE_RELEASE_SHA1 a2o.source:public/download/snoopy/ &&
+scp $FILE_RELEASE $FILE_RELEASE_MD5 $FILE_RELEASE_SHA1 source.a2o.si:/var/www/source.a2o.si/public/download/snoopy/ &&
 
 echo
 echo "COMPLETE: $RELEASE_TAG has been published."
