@@ -52,7 +52,7 @@ POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
 bin_PROGRAMS = snoopy-test-output$(EXEEXT)
-noinst_PROGRAMS = snoopy-dev-helper$(EXEEXT)
+noinst_PROGRAMS = snoopy-detect$(EXEEXT) snoopy-dev-helper$(EXEEXT)
 subdir = bin
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -68,13 +68,16 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS) $(noinst_PROGRAMS)
+am_snoopy_detect_OBJECTS = snoopy-detect.$(OBJEXT)
+snoopy_detect_OBJECTS = $(am_snoopy_detect_OBJECTS)
+snoopy_detect_LDADD = $(LDADD)
+AM_V_lt = $(am__v_lt_@AM_V@)
+am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
+am__v_lt_0 = --silent
 am_snoopy_dev_helper_OBJECTS = snoopy-dev-helper.$(OBJEXT)
 snoopy_dev_helper_OBJECTS = $(am_snoopy_dev_helper_OBJECTS)
 snoopy_dev_helper_DEPENDENCIES =  \
 	$(top_srcdir)/src/libsnoopy_no_execve.la
-AM_V_lt = $(am__v_lt_@AM_V@)
-am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
-am__v_lt_0 = --silent
 am_snoopy_test_output_OBJECTS = snoopy-test-output.$(OBJEXT)
 snoopy_test_output_OBJECTS = $(am_snoopy_test_output_OBJECTS)
 snoopy_test_output_DEPENDENCIES =  \
@@ -105,8 +108,9 @@ am__v_CCLD_0 = @echo "  CCLD  " $@;
 AM_V_GEN = $(am__v_GEN_@AM_V@)
 am__v_GEN_ = $(am__v_GEN_@AM_DEFAULT_V@)
 am__v_GEN_0 = @echo "  GEN   " $@;
-SOURCES = $(snoopy_dev_helper_SOURCES) $(snoopy_test_output_SOURCES)
-DIST_SOURCES = $(snoopy_dev_helper_SOURCES) \
+SOURCES = $(snoopy_detect_SOURCES) $(snoopy_dev_helper_SOURCES) \
+	$(snoopy_test_output_SOURCES)
+DIST_SOURCES = $(snoopy_detect_SOURCES) $(snoopy_dev_helper_SOURCES) \
 	$(snoopy_test_output_SOURCES)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
@@ -238,6 +242,9 @@ snoopy_test_output_SOURCES = \
 snoopy_test_output_LDADD = \
 	$(top_srcdir)/src/libsnoopy_no_execve.la
 
+snoopy_detect_SOURCES = \
+	snoopy-detect.c
+
 snoopy_dev_helper_SOURCES = \
 	snoopy-dev-helper.c
 
@@ -333,6 +340,9 @@ clean-noinstPROGRAMS:
 	list=`for p in $$list; do echo "$$p"; done | sed 's/$(EXEEXT)$$//'`; \
 	echo " rm -f" $$list; \
 	rm -f $$list
+snoopy-detect$(EXEEXT): $(snoopy_detect_OBJECTS) $(snoopy_detect_DEPENDENCIES) $(EXTRA_snoopy_detect_DEPENDENCIES) 
+	@rm -f snoopy-detect$(EXEEXT)
+	$(AM_V_CCLD)$(LINK) $(snoopy_detect_OBJECTS) $(snoopy_detect_LDADD) $(LIBS)
 snoopy-dev-helper$(EXEEXT): $(snoopy_dev_helper_OBJECTS) $(snoopy_dev_helper_DEPENDENCIES) $(EXTRA_snoopy_dev_helper_DEPENDENCIES) 
 	@rm -f snoopy-dev-helper$(EXEEXT)
 	$(AM_V_CCLD)$(LINK) $(snoopy_dev_helper_OBJECTS) $(snoopy_dev_helper_LDADD) $(LIBS)
@@ -346,6 +356,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/snoopy-detect.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/snoopy-dev-helper.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/snoopy-test-output.Po@am__quote@
 

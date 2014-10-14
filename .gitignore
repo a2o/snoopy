@@ -30,5 +30,6 @@ Makefile
 /*/*/.libs/*
 /src/libsnoopy.so
 /bin/snoopy-test-output
+/bin/snoopy-detect
 /bin/snoopy-dev-helper
 /contrib/sles/snoopy.spec

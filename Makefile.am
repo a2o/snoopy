@@ -6,7 +6,8 @@ ACLOCAL_AMFLAGS = -I m4
 SUBDIRS = src bin
 
 EXTRA_DIST +=\
-	autogen.sh
+	autogen.sh \
+	enable.sh
 
 enable: install
 	$(top_srcdir)/enable.sh $(libdir)
