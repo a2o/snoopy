@@ -11,12 +11,16 @@ AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_MACRO_DIR([m4])
 AM_INIT_AUTOMAKE([1.11 gnu silent-rules subdir-objects -Wall -Werror])
 LT_INIT([disable-static])
-#LT_INIT
 
 # Checks for programs.
+AC_PROG_CXX
+AC_PROG_AWK
 AC_PROG_CC
+AC_PROG_CPP
 AC_PROG_INSTALL
 AC_PROG_LN_S
+AC_PROG_MAKE_SET
+AC_PROG_RANLIB
 
 # Checks for libraries.
 # FIXME: Replace `main' with a function in `-ldl':
@@ -31,15 +35,13 @@ AC_TYPE_SIZE_T
 
 # Checks for library functions.
 AC_FUNC_MALLOC
-AC_CHECK_FUNCS([getcwd])
+AC_CHECK_FUNCS([getcwd getsid strstr])
 
-AC_CONFIG_FILES([
-    Makefile
-    src/Makefile
-    src/input/Makefile
-    bin/Makefile
-    contrib/sles/snoopy.spec
-])
+AC_CONFIG_FILES([Makefile
+                 bin/Makefile
+                 contrib/sles/snoopy.spec
+                 src/Makefile
+                 src/input/Makefile])
 
 
 
