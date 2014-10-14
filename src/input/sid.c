@@ -35,6 +35,8 @@
  */
 #include "snoopy.h"
 #include <stdio.h>
+/* Needed to get getpgid and getsid on older glibc */
+#define   _XOPEN_SOURCE   500
 #include <unistd.h>
 #include <sys/types.h>
 
