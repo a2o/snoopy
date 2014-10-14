@@ -22,7 +22,7 @@
 
 
 /**
- * Include configured constants, so we can do thins here
+ * Include configured constants
  */
 #include "config.h"
 

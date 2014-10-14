@@ -9,7 +9,7 @@ AC_CONFIG_HEADERS([config.h])
 
 # We are using automake and libtool
 AC_CONFIG_MACRO_DIR([m4])
-AM_INIT_AUTOMAKE([1.11 gnu silent-rules subdir-objects -Wall -Wno-portability])
+AM_INIT_AUTOMAKE([1.11 gnu silent-rules subdir-objects -Wall -Werror])
 LT_INIT([disable-static])
 #LT_INIT
 

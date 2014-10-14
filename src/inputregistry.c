@@ -27,6 +27,7 @@
  */
 #include "snoopy.h"
 #include "inputregistry.h"
+#include <string.h>
 
 
 
@@ -111,5 +112,5 @@ int snoopy_inputregistry_call (char *providerName, char *returnMessage)
         return -1;
     }
 
-    snoopy_inputregistry_ptrs[idx](returnMessage);
+    return snoopy_inputregistry_ptrs[idx](returnMessage);
 }

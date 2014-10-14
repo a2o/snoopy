@@ -1,4 +1,13 @@
-AM_CFLAGS = -I$(top_srcdir)/src
+### Include common Makefile configuration
+#
+include   $(top_srcdir)/build/Makefile.am.common
+
+
+
+### Include
+#
+AM_CFLAGS += -I$(top_srcdir)/src
+
 
 
 ### Create one library with all snoopy inputs collected in it
@@ -6,15 +15,27 @@ AM_CFLAGS = -I$(top_srcdir)/src
 noinst_LTLIBRARIES = libsnoopy_inputs_all.la
 
 
-### Inputs collection is made of the following files
+
+### Input providers collection is made of the following files
+#
+# Please maintain alphabetical order, equal to what `ls` would do
 #
 libsnoopy_inputs_all_la_SOURCES = \
 	cmdline.c \
+	cmdline.h \
 	cwd.c \
+	cwd.h \
 	egid.c \
+	egid.h \
 	euid.c \
+	euid.h \
 	filename.c \
+	filename.h \
 	gid.c \
+	gid.h \
 	sid.c \
+	sid.h \
 	tty.c \
-	uid.c
+	tty.h \
+	uid.c \
+	uid.h

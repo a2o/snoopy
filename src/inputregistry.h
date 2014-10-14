@@ -48,4 +48,6 @@ extern int (*snoopy_inputregistry_ptrs []) (char *input);
 /*
  * Functions to manage and utilise input providers
  */
+int snoopy_inputregistry_call         (char *providerName, char *returnMessage);
+int snoopy_inputregistry_getIndex     (char *providerName);
 int snoopy_inputregistry_isRegistered (char *providerName);

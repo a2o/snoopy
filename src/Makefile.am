@@ -1,3 +1,9 @@
+### Include common Makefile configuration
+#
+include   $(top_srcdir)/build/Makefile.am.common
+
+
+
 ### First process all required subdirs
 #
 SUBDIRS = input
@@ -11,8 +17,12 @@ noinst_LTLIBRARIES = \
 
 libsnoopy_no_execve_la_SOURCES = \
 	inputdatastorage.c \
+	inputdatastorage.h \
 	inputregistry.c \
-	log.c
+	inputregistry.h \
+	log.c \
+	log.h \
+	snoopy.h
 
 libsnoopy_no_execve_la_LIBADD = \
 	input/libsnoopy_inputs_all.la
