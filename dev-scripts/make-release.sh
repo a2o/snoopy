@@ -87,7 +87,7 @@ fi
 
 
 
-### Create release directory
+### Create release package
 ./autogen.sh &&
 ./configure &&
 make clean &&
@@ -95,12 +95,8 @@ make dist &&
 
 
 
-### Compare configure.ac and configure.ac.generated
-#diff configure.ac configure.ac.generated
-#if [ "$?" != "0" ]; then
-#	echo "ERROR: configure.ac and configure.ac.generated differ."
-#	exit 40
-#fi
+### Checkout back master branch
+git checkout master &&
 
 
 
