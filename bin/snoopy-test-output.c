@@ -37,7 +37,7 @@ int main (int argc, char **argv)
     snoopy_inputdatastorage_store_filename(argv[0]);
     snoopy_inputdatastorage_store_argv(argv);
 
-    snoopy_log_message_generate_origFormat(logMessage);
+    snoopy_log_message_generate(logMessage, SNOOPY_LOG_MESSAGE_FORMAT);
     printf("Message generated:\n");
     printf("\n");
     printf("%s\n", logMessage);

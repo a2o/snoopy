@@ -42,3 +42,10 @@
  */
 extern char *snoopy_inputregistry_names[];
 extern int (*snoopy_inputregistry_ptrs []) (char *input);
+
+
+
+/*
+ * Functions to manage and utilise input providers
+ */
+int snoopy_inputregistry_isRegistered (char *providerName);

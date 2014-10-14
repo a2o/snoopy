@@ -25,6 +25,7 @@
 /*
  * Include all input functions
  */
+#include "snoopy.h"
 #include "inputregistry.h"
 
 
@@ -44,6 +45,7 @@ char *snoopy_inputregistry_names[] = {
     "uid",
     "",
 };
+
 int (*snoopy_inputregistry_ptrs []) (char *input) = {
     snoopy_input_cmdline,
     snoopy_input_cwd,
@@ -55,3 +57,59 @@ int (*snoopy_inputregistry_ptrs []) (char *input) = {
     snoopy_input_tty,
     snoopy_input_uid,
 };
+
+
+
+/*
+ * isRegistered()
+ *
+ * Return true if input provider exists, otherwise return false
+ */
+int snoopy_inputregistry_isRegistered (char *providerName)
+{
+    if (snoopy_inputregistry_getIndex(providerName) == -1) {
+        return SNOOPY_FALSE;
+    } else {
+        return SNOOPY_TRUE;
+    }
+}
+
+
+
+/*
+ * getIndex()
+ *
+ * Return index of given input provider, or -1 if not found 
+ */
+int snoopy_inputregistry_getIndex (char *providerName)
+{
+    int i;
+
+    i = 0;
+    while (strcmp(snoopy_inputregistry_names[i], "") != 0) {
+        if (strcmp(snoopy_inputregistry_names[i], providerName) == 0) {
+            return i;
+        }
+        i++;
+    }
+    return -1;
+}
+
+
+
+/*
+ * call()
+ *
+ * Call the given provider and return its output
+ */
+int snoopy_inputregistry_call (char *providerName, char *returnMessage)
+{
+    int idx;
+
+    idx = snoopy_inputregistry_getIndex(providerName);
+    if (idx == -1) {
+        return -1;
+    }
+
+    snoopy_inputregistry_ptrs[idx](returnMessage);
+}

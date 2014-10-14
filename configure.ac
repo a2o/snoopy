@@ -86,6 +86,17 @@ AS_IF([test "x$enable_cwd_logging" == "xyes"], [
 
 
 dnl ============================================================================
+AC_ARG_WITH(message-format,
+    [AC_HELP_STRING(
+	[--with-message-format=FORMAT],
+	[format to use to log messages with [default=see src/snoopy.h]]
+    )],
+    AC_DEFINE_UNQUOTED(SNOOPY_CONF_LOG_MESSAGE_FORMAT_custom, "$withval", [Custom message format to use])
+)
+
+
+
+dnl ============================================================================
 AC_ARG_WITH(syslog-facility,
     [AC_HELP_STRING(
 	[--with-syslog-facility=FACILITY],

@@ -22,6 +22,13 @@
 
 
 /**
+ * Include configured constants, so we can do thins here
+ */
+#include "config.h"
+
+
+
+/**
  * SNOOPY_MAX_ARG_LENGTH
  *
  * Maximum length of arguments passed to execv(e) functions.
@@ -48,3 +55,35 @@
  * without terminating null character.
  */
 #define SNOOPY_LOG_MESSAGE_MAX_SIZE 16383
+
+
+
+/**
+ * SNOOPY_LOG_MESSAGE_FORMAT_default
+ *
+ * Default format of snoopy log message.
+ */
+#define SNOOPY_LOG_MESSAGE_FORMAT_default \
+    "[uid:%{uid} sid:%{sid} tty:%{tty} cwd:%{cwd} filename:%{filename}]: %{cmdline}"
+
+
+
+/**
+ * SNOOPY_LOG_MESSAGE_FORMAT
+ *
+ * Actual log message format to use
+ */
+#ifdef SNOOPY_CONF_LOG_MESSAGE_FORMAT_custom
+#define   SNOOPY_LOG_MESSAGE_FORMAT   SNOOPY_CONF_LOG_MESSAGE_FORMAT_custom
+#else
+#define   SNOOPY_LOG_MESSAGE_FORMAT   SNOOPY_LOG_MESSAGE_FORMAT_default
+#endif
+
+
+
+/**
+ * SNOOPY_TRUE
+ * SNOOPY_FALSE
+ */
+#define   SNOOPY_TRUE    1
+#define   SNOOPY_FALSE   0

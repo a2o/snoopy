@@ -28,11 +28,13 @@ int main (int argc, char **argv)
 
     // Init log message as empty string
     logMessage    = malloc(SNOOPY_LOG_MESSAGE_MAX_SIZE);
-    logMessage[0] = '\n';
+    logMessage[0] = '\0';
 
-    /* Iterate through all inputs */
-    snoopy_log_message_generate_testLoopAllInputs(logMessage);
-    printf("Snoopy loop through all input providers:\n%s\n", logMessage);
+    printf("Snoopy: testing custom message formatting:\n\n");
+    printf("Message format used: \n%s\n\n", SNOOPY_LOG_MESSAGE_FORMAT);
+    snoopy_log_message_generate(logMessage, SNOOPY_LOG_MESSAGE_FORMAT);
+    printf("Produced output:\n%s\n\n", logMessage);
+
 
     /* Housekeeping */
     free(logMessage);

@@ -54,74 +54,73 @@
  *     void
  */
 void snoopy_log_message_generate (
-    char       *logMessage,
-    char       *logMessageFormat
+    char *logMessage,
+    char *logMessageFormat
 ) {
-}
+    char *fmtPos_cur;
+    char *fmtPos_nextInputTag;
+    char *fmtPos_nextInputTagClose;
+    char *msgPos_cur;
 
+    fmtPos_cur          = logMessageFormat;
+    fmtPos_nextInputTag = logMessageFormat;
+    msgPos_cur          = logMessage;
 
+    // Loop al the way to the end of log message format
+    while (strlen(fmtPos_nextInputTag) > 0) {
+        int   lengthToCopy;
+        char  fmtStaticText[SNOOPY_INPUT_MESSAGE_MAX_SIZE];
+        char  inputTag[100];
+        int   inputTagLength;
+        char *inputProviderName;
+        char  inputProviderMsg[SNOOPY_INPUT_MESSAGE_MAX_SIZE];
 
-/*
- * snoopy_log_message_generate_origFormat
- *
- * Description:
- *     Generates log message from inputs available, formatted
- *     according to logFormat specification - TODO
- *
- * Params:
- *     logMessage:   destination string to return message in
- *
- * Return:
- *     void
- */
-void snoopy_log_message_generate_origFormat (
-    char       *logMessage
-) {
-    char   *inputMessage = NULL;
+        // If no input tag is found, just copy the text and bail out
+        fmtPos_nextInputTag = strstr(fmtPos_cur, "%{");
+        if (NULL == fmtPos_nextInputTag) {
+            snoopy_log_message_append(logMessage, fmtPos_cur);
+            break;
+        }
 
-    /* Initialize empty strings */
-    logMessage[0]    = '\0';
-    inputMessage     = malloc(SNOOPY_INPUT_MESSAGE_MAX_SIZE + 1);
+        // Otherwise copy text up to the next input tag
+        lengthToCopy = fmtPos_nextInputTag - fmtPos_cur + 1; // + 1 for null termination
+        if (lengthToCopy > SNOOPY_LOG_MESSAGE_MAX_SIZE-strlen(logMessage)) {
+            lengthToCopy = SNOOPY_LOG_MESSAGE_MAX_SIZE-strlen(logMessage);
+        }
+        fmtStaticText[0] = '\0';
+        snprintf(fmtStaticText, lengthToCopy, "%s", fmtPos_cur);
+        snoopy_log_message_append(logMessage, fmtStaticText);
+        msgPos_cur += lengthToCopy;
 
-    /* Format like original snoopy format did */
-    snoopy_log_message_append(logMessage, "[uid:");
-    inputMessage[0]  = '\0';
-    snoopy_input_uid(inputMessage);
-    snoopy_log_message_append(logMessage, inputMessage);
-    snoopy_log_message_append(logMessage, " ");
+        // Get input tag
+        fmtPos_nextInputTagClose = strstr(fmtPos_nextInputTag, "}");
+        if (NULL == fmtPos_nextInputTagClose) {
+            snoopy_log_message_append(logMessage, " ERROR: Closing input provider tag not found: '}'");
+            break;
+        }
+        inputTag[0]    = '\0';
+        inputTagLength = (fmtPos_nextInputTagClose-1) - (fmtPos_nextInputTag+2) + 2;
+        snprintf(inputTag, inputTagLength, "%s", fmtPos_nextInputTag + 2);
 
-    snoopy_log_message_append(logMessage, "sid:");
-    inputMessage[0]  = '\0';
-    snoopy_input_sid(inputMessage);
-    snoopy_log_message_append(logMessage, inputMessage);
-    snoopy_log_message_append(logMessage, " ");
+        // Input tag == input provider ATM
+        inputProviderName = inputTag;
 
-    snoopy_log_message_append(logMessage, "tty:");
-    inputMessage[0]  = '\0';
-    snoopy_input_tty(inputMessage);
-    snoopy_log_message_append(logMessage, inputMessage);
-    snoopy_log_message_append(logMessage, " ");
+        // Check if input provider actually exists
+        if (! snoopy_inputregistry_isRegistered(inputProviderName)) {
+            snoopy_log_message_append(logMessage, " ERROR: Input provider not found: ");
+            snoopy_log_message_append(logMessage, inputProviderName);
+            break;
+        }
 
-    #if defined(SNOOPY_CWD_LOGGING)
-        snoopy_log_message_append(logMessage, "cwd:");
-        inputMessage[0]  = '\0';
-        snoopy_input_cwd(inputMessage);
-        snoopy_log_message_append(logMessage, inputMessage);
-        snoopy_log_message_append(logMessage, " ");
-    #endif
+        // Call the provider, and append the results to log message
+        inputProviderMsg[0] = '\0';
+        snoopy_inputregistry_call(inputProviderName, inputProviderMsg);
+        snoopy_log_message_append(logMessage, inputProviderMsg);
 
-    snoopy_log_message_append(logMessage, "filename:");
-    inputMessage[0]  = '\0';
-    snoopy_input_filename(inputMessage);
-    snoopy_log_message_append(logMessage, inputMessage);
-    snoopy_log_message_append(logMessage, "]: ");
-
-    inputMessage[0]  = '\0';
-    snoopy_input_cmdline(inputMessage);
-    snoopy_log_message_append(logMessage, inputMessage);
-
-    /* Housekeeping */
-    free(inputMessage);
+        // Where to start next iteration
+        fmtPos_cur = fmtPos_nextInputTagClose + 1;
+        msgPos_cur = fmtPos_nextInputTagClose + 1;
+    }
 }
 
 
@@ -210,7 +209,7 @@ void snoopy_log_message_append (
     logMessageSizeRemaining = SNOOPY_LOG_MESSAGE_MAX_SIZE - logMessageSize;
     if (logMessageSizeRemaining < appendThisSize) {
         // ERROR TODO
-        printf("SNOOPY ERROR: Maximum log message size exceeded");
+        printf("SNOOPY ERROR: Maximum log message size exceeded: %s", logMessage);
         exit(1);
     }
 
@@ -327,10 +326,10 @@ void snoopy_log_syscall (
 
     /* Initialize empty log message */
     logMessage    = malloc(SNOOPY_LOG_MESSAGE_MAX_SIZE);
-    logMessage[0] = '\n';
+    logMessage[0] = '\0';
 
-    /* Generate log message in original format, for now */
-    snoopy_log_message_generate_origFormat(logMessage);
+    /* Generate log message in specified format */
+    snoopy_log_message_generate(logMessage, SNOOPY_LOG_MESSAGE_FORMAT);
 
     /* Send it to syslog */
     snoopy_log_send_to_syslog(logMessage);

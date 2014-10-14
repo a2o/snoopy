@@ -71,6 +71,9 @@
 /* Define to the version of this package. */
 #undef PACKAGE_VERSION
 
+/* Custom message format to use */
+#undef SNOOPY_CONF_LOG_MESSAGE_FORMAT_custom
+
 /* Enable logging of Current Working Directory */
 #undef SNOOPY_CWD_LOGGING
 
