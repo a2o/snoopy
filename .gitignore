@@ -1,5 +1,6 @@
 ### Files produced by autotools
 #
+Makefile.in
 /autom4te.cache
 /autoscan.log
 /configure
