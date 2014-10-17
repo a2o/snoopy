@@ -1,7 +1,7 @@
 /*
  * SNOOPY LOGGER
  *
- * File: inputregistry.h
+ * File: snoopy_input_tty_uid.h
  *
  * Copyright (c) 2014 bostjan@a2o.si
  *
@@ -23,32 +23,6 @@
 
 
 /*
- * Include headers of all input functions
+ * SNOOPY INPUT PROVIDER: tty_uid
  */
-#include "input/cmdline.h"
-#include "input/cwd.h"
-#include "input/egid.h"
-#include "input/euid.h"
-#include "input/filename.h"
-#include "input/gid.h"
-#include "input/sid.h"
-#include "input/tty.h"
-#include "input/tty_uid.h"
-#include "input/uid.h"
-
-
-
-/*
- * Two arrays holding data about input functions
- */
-extern char *snoopy_inputregistry_names[];
-extern int (*snoopy_inputregistry_ptrs []) (char *input);
-
-
-
-/*
- * Functions to manage and utilise input providers
- */
-int snoopy_inputregistry_call         (char *providerName, char *returnMessage);
-int snoopy_inputregistry_getIndex     (char *providerName);
-int snoopy_inputregistry_isRegistered (char *providerName);
+int snoopy_input_tty_uid (char *input);

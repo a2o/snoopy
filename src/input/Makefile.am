@@ -37,5 +37,7 @@ libsnoopy_inputs_all_la_SOURCES = \
 	sid.h \
 	tty.c \
 	tty.h \
+	tty_uid.c \
+	tty_uid.h \
 	uid.c \
 	uid.h

@@ -43,6 +43,7 @@ char *snoopy_inputregistry_names[] = {
     "gid",
     "sid",
     "tty",
+    "tty_uid",
     "uid",
     "",
 };
@@ -56,6 +57,7 @@ int (*snoopy_inputregistry_ptrs []) (char *input) = {
     snoopy_input_gid,
     snoopy_input_sid,
     snoopy_input_tty,
+    snoopy_input_tty_uid,
     snoopy_input_uid,
 };
 
