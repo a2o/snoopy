@@ -148,6 +148,7 @@ Here are basic rules for input provider development:
 - input provider message must not be longer than SNOOPY_INPUT_MESSAGE_MAX_SIZE
 - each input provider must have a corresponding header file
 - all input providers must build with -Wall -Werror flags (enabled by default)
+- code indentation: 4 spaces, no tabs
 
 If you have developed a shiny new input provider and you would like to
 start using it with snoopy, there are three additional places where you
