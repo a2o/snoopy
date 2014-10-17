@@ -66,7 +66,7 @@ void snoopy_log_message_generate (
     fmtPos_nextInputTag = logMessageFormat;
     msgPos_cur          = logMessage;
 
-    // Loop al the way to the end of log message format
+    // Loop all the way to the end of log message format specification
     while (strlen(fmtPos_nextInputTag) > 0) {
         int   lengthToCopy;
         char  fmtStaticText[SNOOPY_INPUT_MESSAGE_MAX_SIZE];
