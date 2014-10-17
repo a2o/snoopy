@@ -1,7 +1,8 @@
 /*
  * SNOOPY LOGGER
  *
- * snoopy_input_sid.c
+ * File: snoopy/input/sid.c
+ *
  * Copyright (c) 2014 bostjan@a2o.si
  *
  * This program is free software; you can redistribute it and/or modify

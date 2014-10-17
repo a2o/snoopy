@@ -1,7 +1,7 @@
 /*
  * SNOOPY LOGGER
  *
- * File: snoopy_input_tty_uid.h
+ * File: snoopy/input/tty_uid.h
  *
  * Copyright (c) 2014 bostjan@a2o.si
  *

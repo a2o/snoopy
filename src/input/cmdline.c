@@ -1,7 +1,7 @@
 /*
  * SNOOPY LOGGER
  *
- * File: snoopy_input_cmdline.c
+ * File: snoopy/input/cmdline.c
  *
  * Copyright (c) 2014 bostjan@a2o.si
  *

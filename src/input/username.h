@@ -1,7 +1,7 @@
 /*
  * SNOOPY LOGGER
  *
- * File: snoopy_input_username.h
+ * File: snoopy/input/username.h
  *
  * Copyright (c) 2014 bostjan@a2o.si
  *

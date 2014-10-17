@@ -1,7 +1,8 @@
 /*
  * SNOOPY LOGGER
  *
- * snoopy_input_gid.h
+ * File: snoopy/input/gid.h
+ *
  * Copyright (c) 2014 bostjan@a2o.si
  *
  * This program is free software; you can redistribute it and/or modify

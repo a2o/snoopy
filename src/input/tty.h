@@ -1,7 +1,8 @@
 /*
  * SNOOPY LOGGER
  *
- * snoopy_input_tty.h
+ * File: snoopy/input/tty.h
+ *
  * Copyright (c) 2014 bostjan@a2o.si
  *
  * This program is free software; you can redistribute it and/or modify
