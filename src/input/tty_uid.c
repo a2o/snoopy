@@ -58,6 +58,7 @@ int snoopy_input_tty_uid (char *input)
     if (stat(ttyPath, &statbuffer) == -1) {
         return snprintf(input, SNOOPY_INPUT_MESSAGE_MAX_SIZE, "ERROR(unable to stat() %s)", ttyPath);
     }
+    ttyUid = statbuffer.st_uid;
 
     return snprintf(input, SNOOPY_INPUT_MESSAGE_MAX_SIZE, "%ld", ttyUid);
 }
