@@ -38,6 +38,7 @@
 #include "input/sid.h"
 #include "input/tty.h"
 #include "input/tty_uid.h"
+#include "input/tty_username.h"
 #include "input/uid.h"
 #include "input/username.h"
 

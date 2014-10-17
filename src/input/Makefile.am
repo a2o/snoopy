@@ -47,6 +47,8 @@ libsnoopy_inputs_all_la_SOURCES = \
 	tty.h \
 	tty_uid.c \
 	tty_uid.h \
+	tty_username.c \
+	tty_username.h \
 	uid.c \
 	uid.h \
 	username.c \
