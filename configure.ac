@@ -68,26 +68,6 @@ AC_SUBST(SNOOPY_ROOT_ONLY, ["$enable_root_only"])
 
 
 dnl ============================================================================
-AC_ARG_ENABLE(cwd-logging,
-    [AC_HELP_STRING(
-	[--disable-cwd-logging],
-	[disable logging of Current Working Directory [default=enabled]]
-    )],
-    [
-	if test "$enableval" == "yes"; then
-	    enable_cwd_logging=yes
-	fi
-    ],
-    [enable_cwd_logging=yes]
-)
-
-AS_IF([test "x$enable_cwd_logging" == "xyes"], [
-    AC_DEFINE(SNOOPY_CWD_LOGGING, 1, [Enable logging of Current Working Directory])
-])
-
-
-
-dnl ============================================================================
 AC_ARG_WITH(message-format,
     [AC_HELP_STRING(
 	[--with-message-format=FORMAT],
