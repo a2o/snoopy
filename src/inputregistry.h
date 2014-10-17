@@ -28,13 +28,18 @@
 #include "input/cmdline.h"
 #include "input/cwd.h"
 #include "input/egid.h"
+#include "input/egroup.h"
 #include "input/euid.h"
+#include "input/eusername.h"
 #include "input/filename.h"
 #include "input/gid.h"
+#include "input/group.h"
+#include "input/login.h"
 #include "input/sid.h"
 #include "input/tty.h"
 #include "input/tty_uid.h"
 #include "input/uid.h"
+#include "input/username.h"
 
 
 

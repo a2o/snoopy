@@ -156,6 +156,13 @@ need to add references to it to make snoopy fully aware of it:
 - src/inputregistry.h     (one reference)
 - src/inputregistry.c     (two references)
 
+Commits and pull requests:
+- make commits easily readable, with concise comments
+- make commits KISS (do one thing, do it well)
+- same goes for pull requests - one thing at a time (one bugfix or one new
+    feature implementation, not more, and certainly not less:)
+- the cleaner you code/change/changeset is, the faster it will be merged
+
 That is it. Happy coding and pull requesting!
 
 

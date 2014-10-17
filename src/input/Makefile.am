@@ -27,12 +27,20 @@ libsnoopy_inputs_all_la_SOURCES = \
 	cwd.h \
 	egid.c \
 	egid.h \
+	egroup.c \
+	egroup.h \
 	euid.c \
 	euid.h \
+	eusername.c \
+	eusername.h \
 	filename.c \
 	filename.h \
 	gid.c \
 	gid.h \
+	group.c \
+	group.h \
+	login.c \
+	login.h \
 	sid.c \
 	sid.h \
 	tty.c \
@@ -40,4 +48,6 @@ libsnoopy_inputs_all_la_SOURCES = \
 	tty_uid.c \
 	tty_uid.h \
 	uid.c \
-	uid.h
+	uid.h \
+	username.c \
+	username.h

@@ -38,13 +38,18 @@ char *snoopy_inputregistry_names[] = {
     "cmdline",
     "cwd",
     "egid",
+    "egroup",
     "euid",
+    "eusername",
     "filename",
     "gid",
+    "group",
+    "login",
     "sid",
     "tty",
     "tty_uid",
     "uid",
+    "username",
     "",
 };
 
@@ -52,13 +57,18 @@ int (*snoopy_inputregistry_ptrs []) (char *input) = {
     snoopy_input_cmdline,
     snoopy_input_cwd,
     snoopy_input_egid,
+    snoopy_input_egroup,
     snoopy_input_euid,
+    snoopy_input_eusername,
     snoopy_input_filename,
     snoopy_input_gid,
+    snoopy_input_group,
+    snoopy_input_login,
     snoopy_input_sid,
     snoopy_input_tty,
     snoopy_input_tty_uid,
     snoopy_input_uid,
+    snoopy_input_username,
 };
 
 
