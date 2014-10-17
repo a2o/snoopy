@@ -135,17 +135,43 @@ are working to find out why.
 
 
 
-## 7. CREDITS ##
+## 7. NEW INPUT PROVIDER DEVELOPMENT ##
+
+Here are basic rules for input provider development:
+- input providers are located in src/input/
+- input provider names should be lower case, with underscores for word separation
+- data about currently executing process is available in src/inputdatastorage.*
+    files. Consult existing providers on how to use it (filename for example)
+- each input provider must be self-sufficient. Do not rely on other parts of snoopy
+- each input provider must be tidy (free all mallocs, close all file descriptors)
+- the first argument passed to each provider is a char array to return message into
+- input provider message must not be longer than SNOOPY_INPUT_MESSAGE_MAX_SIZE
+- each input provider must have a corresponding header file
+- all input providers must build with -Wall -Werror flags (enabled by default)
+
+If you have developed a shiny new input provider and you would like to
+start using it with snoopy, there are three additional places where you
+need to add references to it to make snoopy fully aware of it:
+- src/input/Makefile.am   (location is evident)
+- src/inputregistry.h     (one reference)
+- src/inputregistry.c     (two references)
+
+That is it. Happy coding and pull requesting!
+
+
+
+## 8. CREDITS ##
 
 Snoopy Logger was created by:
      marius@umich.edu
         mbm@linux.com
 
-Currently it is maintained by:
+It is currently maintained by:
     bostjan@a2o.si
 
-Development is currently located at the following URI:
-http://github.com/a2o/snoopy/
+Development is located at the following URI (see pull requests for
+contributor credits):
+    http://github.com/a2o/snoopy/
 
 
 
