@@ -58,7 +58,7 @@ int snoopy_input_group (char *input)
     }
     buffgr_gid = malloc(buffgrsize_gid);
     if(buffgr_gid == NULL) {
-        return snprintf(input, SNOOPY_INPUT_MESSAGE_MAX_SIZE, "%s", "ERROR(malloc)");
+        return snprintf(input, SNOOPY_INPUT_MESSAGE_MAX_SIZE, "ERROR(malloc)");
     }
 
     /* Format return string */

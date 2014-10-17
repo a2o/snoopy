@@ -58,7 +58,7 @@ int snoopy_input_eusername (char *input)
     }
     buffpwd_uid = malloc(buffpwdsize_uid);
     if(buffpwd_uid == NULL) {
-        return snprintf(input, SNOOPY_INPUT_MESSAGE_MAX_SIZE, "%s", "ERROR(malloc)");
+        return snprintf(input, SNOOPY_INPUT_MESSAGE_MAX_SIZE, "ERROR(malloc)");
     }
 
     /* Format return string */
