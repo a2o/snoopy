@@ -44,19 +44,19 @@
 
 int snoopy_input_tty_uid (char *input)
 {
-    char   *ttyPath        = NULL; 
-    char    ttyPathEmpty[] = ""; 
+    char   *ttyPath = NULL;
     struct  stat statbuffer;
-    long    ttyUid         = -1;
+    long    ttyUid;
 
     /* Get tty path */
     ttyPath = ttyname(0);
     if (ttyPath == NULL) {
-        ttyPath = ttyPathEmpty;
+        return snprintf(input, SNOOPY_INPUT_MESSAGE_MAX_SIZE, "none");
     }
+
     /* Get owner of tty */
-    if (stat(ttyPath, &statbuffer) != -1) {
-        ttyUid = statbuffer.st_uid;
+    if (stat(ttyPath, &statbuffer) == -1) {
+        return snprintf(input, SNOOPY_INPUT_MESSAGE_MAX_SIZE, "ERROR(unable to stat() %s)", ttyPath);
     }
 
     return snprintf(input, SNOOPY_INPUT_MESSAGE_MAX_SIZE, "%ld", ttyUid);
