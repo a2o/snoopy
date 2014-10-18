@@ -3,18 +3,29 @@
 -------------------------------------------------------------------------------
 
 
-2014-FIXME - Version  2.0.0rc3
+2014-FIXME - Version  2.0.0rc4
 ---------------------------
 o Feature: Added support for custom message format specification at
     configuration time
+o Feature: New input providers:
+    - egroup       (thanks Sébastien Gross)
+    - env          (thanks Taylor Kimball)
+    - eusername    (thanks Sébastien Gross)
+    - group        (thanks Sébastien Gross)
+    - login        (thanks Sébastien Gross)
+    - username     (thanks Sébastien Gross)
+    - tty_uid      (thanks Tony Malkowski)
+    - tty_username
 o Refactoring: Separated data gathering into separate functions, to be
-    used at will
+    used at will - now they are called "input providers"
 o Refactoring: Removed external filtering, to be replaced with internal
     filtering capability in the making
 o Refactoring: Removed logging exclusion via prefix, was created for
     exclusion of logging of external filter commands
 o Refactoring: switched to autotools completely
 o Refactoring: all builds now use -Wall and -Werror
+o Refactoring: removed --enable-cwd-logging (superseded by message formatting options and input provider)
+o Documentation: added into about writing new input providers
 
 
 2013-04-06 - Version  1.9.0
