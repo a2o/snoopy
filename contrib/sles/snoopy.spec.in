@@ -1,53 +1,46 @@
-%define version @PACKAGE_VERSION@
-%define release 1
-%define	enable	1
-
-Summary: User monitoring and command logging
-Name: snoopy
-Version: %{version}
-Release: %{release}
-URL: https://source.a2o.si/download/snoopy/
-Source: https://source.a2o.si/download/snoopy/snoopy-%{version}.tar.gz
-Group: Applications/Monitoring
-BuildRoot: %{_tmppath}/%{name}-buildroot
-#BuildRequires: readline-devel
-License: GNU GPL
-Patch1: %{name}-%{version}_64bit.patch
-Patch2: %{name}-%{version}_ttyname.patch
-Packager: Aldemir Akpinar <aldemira@sf.net>
+Summary:        User monitoring and command logging
+Name:           snoopy
+Version:        @PACKAGE_VERSION@
+Release:        1%{dist}
+URL:            https://github.com/a2o/snoopy
+Group:          Applications/Monitoring
+BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
+BuildRequires:  git, gcc, make
+License:        GPL
+Packager:       Taylor Kimball <taylor@linuxhq.org>
 
 %description
 Snoopy Logger, logs all the commands issued by local users on the system.
 It is very useful to track and monitor the users.
 
 %prep
-%setup -q
-%patch1
-%patch2
+%setup -T -c
 
 %build
-
+git clone https://github.com/a2o/%{name}.git
+pushd %{name}
 %configure
-make DESTDIR=%{buildroot}
+%{__make}
 
 %install
-rm -rf %{buildroot}
-make install DESTDIR=%{buildroot}
-
-%if %enable
-install -d -m 755 $RPM_BUILD_ROOT/etc
-if [ ! -f /etc/ld.so.preload ];then
-echo "%{_libdir}/libsnoopy.so" >> $RPM_BUILD_ROOT/etc/ld.so.preload
-fi
-%endif
+pushd %{name}
+%{__install} -d -m 755 %{buildroot}%{_bindir}
+%{__install} -d -m 755 %{buildroot}%{_libdir}
+%{__install} -d -m 755 %{buildroot}%{_sysconfdir}
+%{__install} -m 755 detect %{buildroot}%{_bindir}
+%{__install} -m 755 %{name}.so %{buildroot}%{_libdir}
+echo "%{_libdir}/%{name}.so" >> %{buildroot}%{_sysconfdir}/ld.so.preload
 
 %clean
 rm -rf %{buildroot}
 
-#%post
-
 %files
-%defattr(644 root root 755)
-%doc COPYING ChangeLog README* RELEASES
-%config /etc/ld.so.preload
-%{_libdir}/libsnoopy.so
+%defattr(-,root,root,-)
+%doc %{name}/ChangeLog %{name}/COPYING %{name}/README.filtering %{name}/README.md %{name}/TODO
+%config(noreplace) %{_sysconfdir}/ld.so.preload
+%{_bindir}/detect
+%{_libdir}/%{name}.so
+
+%changelog
+* Fri Sep 12 2014 Taylor Kimball <taylor@linuxhq.org> - @PACKAGE_VERSION@-1
+- Initial spec.
