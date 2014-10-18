@@ -54,6 +54,9 @@ FILENAME_RELEASE_SHA1="snoopy-$RELEASE_VERSION.tar.gz.sha1"
 FILE_RELEASE="$DIR_REPO/$FILENAME_RELEASE"
 FILE_RELEASE_MD5="$DIR_REPO/$FILENAME_RELEASE_MD5"
 FILE_RELEASE_SHA1="$DIR_REPO/$FILENAME_RELEASE_SHA1"
+PUBLIC_DL_SSH_HOST="source.a2o.si"
+PUBLIC_DL_SSH_PATH="/var/www/source.a2o.si/public/download/snoopy"
+PUBLIC_DL_URI_PREFIX="http://source.a2o.si/download/snoopy"
 
 
 
@@ -69,6 +72,17 @@ fi
 if [ -e $FILE_RELEASE_SHA1 ]; then
     echo "ERROR: Release SHA1 file already exists: $FILE_RELEASE_SHA1"
     exit 10
+fi
+
+
+
+### Check if we can connect to SSH host
+echo "SSH TEST: Checking SSH connectivity for final release tarball upload."
+echo "SSH TEST: If you are promted for account password (not private key password), it does not work."
+echo "SSH TEST: If that happens, just hit CTRL+C and fix the problem before trying publish a release."
+ssh $PUBLIC_DL_SSH_HOST true
+if [ "$?" != "0" ]; then
+    echo "ERROR: Failed to test-connect to the $PUBLIC_DL_SSH_HOST via SSH. Aborting."
 fi
 
 
@@ -116,10 +130,11 @@ git push github --tags &&
 echo &&
 echo "RELEASING: Uploading release files to http://source.a2o.si/download/snoopy/..." &&
 echo &&
-scp $FILE_RELEASE $FILE_RELEASE_MD5 $FILE_RELEASE_SHA1 source.a2o.si:/var/www/source.a2o.si/public/download/snoopy/ &&
+scp $FILE_RELEASE $FILE_RELEASE_MD5 $FILE_RELEASE_SHA1 $PUBLIC_DL_SSH_HOST:$PUBLIC_DL_SSH_PATH &&
 
 echo &&
 echo "COMPLETE: $RELEASE_TAG has been released." &&
+echo "DL URI:   $PUBLIC_DL_URI_PREFIX/$FILE_RELEASE" &&
 echo &&
 
 
