@@ -1,5 +1,10 @@
-
 TODO list for Snoopy Logger
 
-- Include patch by Sebastien Gross, located here:
-    https://github.com/renard/snoopylogger
+
+-----[ Sample configuration file ]-----------------
+debug                  = 0
+
+output_syslog_facility = "AUTHPRIV"
+output_syslog_level    = "INFO"
+output_format          = "u=%{username} ttyLang=%{env:LANG}"
+---------------------------------------------------

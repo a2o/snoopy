@@ -7,7 +7,7 @@ SUBDIRS = src bin
 
 EXTRA_DIST +=\
 	autogen.sh \
-	enable.sh
+	bin/snoopy-enable.sh
 
 enable: install
-	$(top_srcdir)/enable.sh $(libdir)
+	$(top_srcdir)/bin/snoopy-enable.sh $(libdir)
