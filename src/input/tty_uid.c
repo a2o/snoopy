@@ -50,12 +50,12 @@ int snoopy_input_tty_uid (char *input, char *arg)
 
     /* Get tty path */
     ttyPath = ttyname(0);
-    if (ttyPath == NULL) {
+    if (NULL == ttyPath) {
         return snprintf(input, SNOOPY_INPUT_MESSAGE_MAX_SIZE, "(none)");
     }
 
     /* Get owner of tty */
-    if (stat(ttyPath, &statbuffer) == -1) {
+    if (-1 == stat(ttyPath, &statbuffer)) {
         return snprintf(input, SNOOPY_INPUT_MESSAGE_MAX_SIZE, "ERROR(unable to stat() %s)", ttyPath);
     }
     ttyUid = statbuffer.st_uid;

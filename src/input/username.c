@@ -53,11 +53,11 @@ int snoopy_input_username (char *input, char *arg)
 
     /* Allocate memory */
     buffpwdsize_uid = sysconf(_SC_GETPW_R_SIZE_MAX);
-    if (buffpwdsize_uid == -1) {
+    if (-1 == buffpwdsize_uid) {
         buffpwdsize_uid = 16384;
     }
     buffpwd_uid = malloc(buffpwdsize_uid);
-    if(buffpwd_uid == NULL) {
+    if (NULL == buffpwd_uid) {
         return snprintf(input, SNOOPY_INPUT_MESSAGE_MAX_SIZE, "ERROR(malloc)");
     }
 

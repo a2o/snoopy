@@ -53,11 +53,11 @@ int snoopy_input_egroup (char *input, char *arg)
 
     /* Allocate memory */
     buffgrsize_gid = sysconf(_SC_GETGR_R_SIZE_MAX);
-    if (buffgrsize_gid == -1) {
+    if (-1 == buffgrsize_gid) {
         buffgrsize_gid = 16384;
     }
     buffgr_gid = malloc(buffgrsize_gid);
-    if(buffgr_gid == NULL) {
+    if (NULL == buffgr_gid) {
         return snprintf(input, SNOOPY_INPUT_MESSAGE_MAX_SIZE, "ERROR(malloc)");
     }
 

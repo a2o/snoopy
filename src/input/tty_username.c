@@ -60,23 +60,23 @@ int snoopy_input_tty_username (char *input, char *arg)
 
     /* Get tty path */
     ttyPath = ttyname(0);
-    if (ttyPath == NULL) {
+    if (NULL == ttyPath) {
         return snprintf(input, SNOOPY_INPUT_MESSAGE_MAX_SIZE, "(none)");
     }
 
     /* Get UID of tty */
-    if (stat(ttyPath, &statbuffer) == -1) {
+    if (-1 == stat(ttyPath, &statbuffer)) {
         return snprintf(input, SNOOPY_INPUT_MESSAGE_MAX_SIZE, "ERROR(unable to stat() %s)", ttyPath);
     }
     ttyUid = statbuffer.st_uid;
 
     /* Allocate memory for pwd structure */
     buffpwdsize_uid = sysconf(_SC_GETPW_R_SIZE_MAX);
-    if (buffpwdsize_uid == -1) {
+    if (-1 == buffpwdsize_uid) {
         buffpwdsize_uid = 16384;
     }
     buffpwd_uid = malloc(buffpwdsize_uid);
-    if(buffpwd_uid == NULL) {
+    if (NULL == buffpwd_uid) {
         return snprintf(input, SNOOPY_INPUT_MESSAGE_MAX_SIZE, "ERROR(malloc)");
     }
 
