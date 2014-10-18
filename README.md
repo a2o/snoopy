@@ -44,6 +44,24 @@ repository URL, below project description.
 At this point, snoopy is **installed but not yet enabled**.
 
 
+### Configuring log output
+
+Snoopy already has default log message format configured, but by using
+"./configure --with-message-format=FORMAT" you can adjust it to your
+needs.
+
+Log message format specification example:
+
+    --with-message-format="text1:%{input1} text2:%{input2} text3:%{input3:arg}"
+
+Text outside %{...} is considered literal and is copied as-is to final
+log message. On the other hand, text found within %{...} has special
+meaning: it calls input provider. If input provider specification
+contains a colon, then text before colon is considered input provider
+name, and text following the colon is passed as argument to the provider
+in question.
+
+
 
 ## 3. HOW TO ENABLE ##
 

@@ -81,6 +81,12 @@
  * SNOOPY_LOG_MESSAGE_FORMAT
  *
  * Actual log message format to use
+ *
+ * Message format may contain:
+ * - any arbitrary text is copied litaraly
+ * - text between "%{" and "}" is considered special - it calls input provider
+ * - %{input_provider}     calls input provider 'input_provider' without argument
+ * - %{input_provider:arg} calls input provider 'input_provider', and passed the given argument to it
  */
 #ifdef SNOOPY_CONF_LOG_MESSAGE_FORMAT_custom
 #define   SNOOPY_LOG_MESSAGE_FORMAT   SNOOPY_CONF_LOG_MESSAGE_FORMAT_custom
