@@ -25,4 +25,4 @@
 /*
  * SNOOPY INPUT: filename
  */
-int snoopy_input_filename (char *input);
+int snoopy_input_filename (char *input, char *arg);

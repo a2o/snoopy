@@ -47,7 +47,7 @@
 
 
 
-int snoopy_input_cmdline (char *input)
+int snoopy_input_cmdline (char *input, char *arg)
 {
     char   *cmdLine = NULL;
     int     cmdLineSize;

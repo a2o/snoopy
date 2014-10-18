@@ -40,7 +40,7 @@
 
 
 
-int snoopy_input_filename (char *input)
+int snoopy_input_filename (char *input, char *arg)
 {
     return snprintf(input, SNOOPY_INPUT_MESSAGE_MAX_SIZE, "%s", snoopy_inputdatastorage_filename);
 }

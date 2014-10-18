@@ -54,7 +54,7 @@ char *snoopy_inputregistry_names[] = {
     "",
 };
 
-int (*snoopy_inputregistry_ptrs []) (char *input) = {
+int (*snoopy_inputregistry_ptrs []) (char *input, char *arg) = {
     snoopy_input_cmdline,
     snoopy_input_cwd,
     snoopy_input_egid,
@@ -117,7 +117,7 @@ int snoopy_inputregistry_getIndex (char *providerName)
  *
  * Call the given provider and return its output
  */
-int snoopy_inputregistry_call (char *providerName, char *returnMessage)
+int snoopy_inputregistry_call (char *providerName, char *returnMessage, char *providerArg)
 {
     int idx;
 
@@ -126,5 +126,5 @@ int snoopy_inputregistry_call (char *providerName, char *returnMessage)
         return -1;
     }
 
-    return snoopy_inputregistry_ptrs[idx](returnMessage);
+    return snoopy_inputregistry_ptrs[idx](returnMessage, providerArg);
 }

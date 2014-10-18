@@ -48,13 +48,13 @@
  * Two arrays holding data about input functions
  */
 extern char *snoopy_inputregistry_names[];
-extern int (*snoopy_inputregistry_ptrs []) (char *input);
+extern int (*snoopy_inputregistry_ptrs []) (char *input, char *arg);
 
 
 
 /*
  * Functions to manage and utilise input providers
  */
-int snoopy_inputregistry_call         (char *providerName, char *returnMessage);
+int snoopy_inputregistry_call         (char *providerName, char *returnMessage, char *providerArg);
 int snoopy_inputregistry_getIndex     (char *providerName);
 int snoopy_inputregistry_isRegistered (char *providerName);

@@ -25,4 +25,4 @@
 /*
  * SNOOPY INPUT: gid
  */
-int snoopy_input_gid (char *input);
+int snoopy_input_gid (char *input, char *arg);

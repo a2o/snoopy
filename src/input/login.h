@@ -25,4 +25,4 @@
 /*
  * SNOOPY INPUT PROVIDER: login
  */
-int snoopy_input_login (char *input);
+int snoopy_input_login (char *input, char *arg);

@@ -25,4 +25,4 @@
 /*
  * SNOOPY INPUT: sid
  */
-int snoopy_input_sid (char *input);
+int snoopy_input_sid (char *input, char *arg);

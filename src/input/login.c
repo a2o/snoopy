@@ -41,7 +41,7 @@
 
 
 
-int snoopy_input_login (char *input)
+int snoopy_input_login (char *input, char *arg)
 {
     static char  login[256];
     char        *loginptr = NULL;

@@ -25,4 +25,4 @@
 /*
  * SNOOPY INPUT PROVIDER: egroup
  */
-int snoopy_input_egroup (char *input);
+int snoopy_input_egroup (char *input, char *arg);

@@ -42,7 +42,7 @@
 
 
 
-int snoopy_input_tty_uid (char *input)
+int snoopy_input_tty_uid (char *input, char *arg)
 {
     char   *ttyPath = NULL;
     struct  stat statbuffer;

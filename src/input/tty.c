@@ -40,7 +40,7 @@
 
 
 
-int snoopy_input_tty (char *input)
+int snoopy_input_tty (char *input, char *arg)
 {
     char *ttyName = NULL;
 

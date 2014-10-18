@@ -25,4 +25,4 @@
 /*
  * SNOOPY INPUT PROVIDER: username
  */
-int snoopy_input_username (char *input);
+int snoopy_input_username (char *input, char *arg);

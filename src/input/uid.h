@@ -25,4 +25,4 @@
 /*
  * SNOOPY INPUT: uid
  */
-int snoopy_input_uid (char *input);
+int snoopy_input_uid (char *input, char *arg);

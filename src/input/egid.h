@@ -25,4 +25,4 @@
 /*
  * SNOOPY INPUT: egid
  */
-int snoopy_input_egid (char *input);
+int snoopy_input_egid (char *input, char *arg);

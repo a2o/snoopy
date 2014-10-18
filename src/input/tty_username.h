@@ -25,4 +25,4 @@
 /*
  * SNOOPY INPUT PROVIDER: tty_username
  */
-int snoopy_input_tty_username (char *input);
+int snoopy_input_tty_username (char *input, char *arg);

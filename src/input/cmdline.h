@@ -25,4 +25,4 @@
 /*
  * SNOOPY INPUT: cmdline
  */
-int snoopy_input_cmdline (char *input);
+int snoopy_input_cmdline (char *input, char *arg);

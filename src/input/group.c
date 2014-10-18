@@ -43,7 +43,7 @@
 
 
 
-int snoopy_input_group (char *input)
+int snoopy_input_group (char *input, char *arg)
 {
     struct group   gr;
     struct group  *gr_gid         = NULL;

@@ -41,7 +41,7 @@
 
 
 
-int snoopy_input_gid (char *input)
+int snoopy_input_gid (char *input, char *arg)
 {
     return snprintf(input, SNOOPY_INPUT_MESSAGE_MAX_SIZE, "%u", getgid());
 }

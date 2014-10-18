@@ -25,4 +25,4 @@
 /*
  * SNOOPY INPUT: cwd
  */
-int snoopy_input_cwd (char *input);
+int snoopy_input_cwd (char *input, char *arg);

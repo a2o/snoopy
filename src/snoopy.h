@@ -39,6 +39,15 @@
 
 
 /**
+ * SNOOPY_INPUT_ARG_MAX_SIZE
+ *
+ * Maximum length of a string argument to each input provider.
+ */
+#define SNOOPY_INPUT_ARG_MAX_SIZE 1024
+
+
+
+/**
  * SNOOPY_INPUT_MESSAGE_MAX_SIZE
  *
  * Maximum length of a string returned from any input function,

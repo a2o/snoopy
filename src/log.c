@@ -72,7 +72,10 @@ void snoopy_log_message_generate (
         char  fmtStaticText[SNOOPY_INPUT_MESSAGE_MAX_SIZE];
         char  inputTag[100];
         int   inputTagLength;
-        char *inputProviderName;
+        char *fmtPos_inputTagArg;
+        char *inputProviderNamePtr;
+        char *inputProviderArgPtr;
+        char  inputProviderArg[SNOOPY_INPUT_ARG_MAX_SIZE];
         char  inputProviderMsg[SNOOPY_INPUT_MESSAGE_MAX_SIZE];
 
         // If no input tag is found, just copy the text and bail out
@@ -102,19 +105,31 @@ void snoopy_log_message_generate (
         inputTagLength = (fmtPos_nextInputTagClose-1) - (fmtPos_nextInputTag+2) + 2;
         snprintf(inputTag, inputTagLength, "%s", fmtPos_nextInputTag + 2);
 
-        // Input tag == input provider ATM
-        inputProviderName = inputTag;
+        // If input tag contains ":", then split it into input provider name and input provider argument
+        fmtPos_inputTagArg  = strstr(inputTag, ":");
+        if (NULL == fmtPos_inputTagArg) {
+            // Input tag == input provider ATM
+            inputProviderNamePtr = inputTag;
+            inputProviderArg[0]  = '\0';
+            inputProviderArgPtr  = inputProviderArg;
+        } else {
+            // Change the colon to null string, and copy fist and second part to corresponding variables
+            fmtPos_inputTagArg[0] = '\0';
+            inputProviderNamePtr = inputTag;
+            inputProviderArgPtr  = fmtPos_inputTagArg + 1;
+        }
 
         // Check if input provider actually exists
-        if (! snoopy_inputregistry_isRegistered(inputProviderName)) {
-            snoopy_log_message_append(logMessage, " ERROR: Input provider not found: ");
-            snoopy_log_message_append(logMessage, inputProviderName);
+        if (! snoopy_inputregistry_isRegistered(inputProviderNamePtr)) {
+            snoopy_log_message_append(logMessage, "ERROR(Input provider not found - ");
+            snoopy_log_message_append(logMessage, inputProviderNamePtr);
+            snoopy_log_message_append(logMessage, ")");
             break;
         }
 
         // Call the provider, and append the results to log message
         inputProviderMsg[0] = '\0';
-        snoopy_inputregistry_call(inputProviderName, inputProviderMsg);
+        snoopy_inputregistry_call(inputProviderNamePtr, inputProviderMsg, inputProviderArgPtr);
         snoopy_log_message_append(logMessage, inputProviderMsg);
 
         // Where to start next iteration
@@ -155,7 +170,7 @@ void snoopy_log_message_generate_testLoopAllInputs (
         int inputMessageSize = -1;
 
         /* Execute the input function */
-        inputMessageSize = snoopy_inputregistry_ptrs[i](inputMessage);
+        inputMessageSize = snoopy_inputregistry_ptrs[i](inputMessage, "");
         if (inputMessageSize > SNOOPY_INPUT_MESSAGE_MAX_SIZE) {
             // ERROR, TODO
             printf("SNOOPY ERROR: Maximum input message size exceeded (%s)", snoopy_inputregistry_names[i]);

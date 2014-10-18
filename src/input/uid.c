@@ -41,7 +41,7 @@
 
 
 
-int snoopy_input_uid (char *input)
+int snoopy_input_uid (char *input, char *arg)
 {
     return snprintf(input, SNOOPY_INPUT_MESSAGE_MAX_SIZE, "%u", getuid());
 }

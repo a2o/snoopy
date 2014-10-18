@@ -43,7 +43,7 @@
 
 
 
-int snoopy_input_username (char *input)
+int snoopy_input_username (char *input, char *arg)
 {
     struct passwd  pwd;
     struct passwd *pwd_uid = NULL;
