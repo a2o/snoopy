@@ -46,7 +46,7 @@ int snoopy_input_tty (char *input, char *arg)
 
     ttyName = ttyname(0);
     if (ttyName == NULL) {
-        return snprintf(input, SNOOPY_INPUT_MESSAGE_MAX_SIZE, "none");
+        return snprintf(input, SNOOPY_INPUT_MESSAGE_MAX_SIZE, "(none)");
     }
 
     return snprintf(input, SNOOPY_INPUT_MESSAGE_MAX_SIZE, "%s", ttyName);

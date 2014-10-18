@@ -63,7 +63,7 @@ int snoopy_input_login (char *input, char *arg)
             loginptr = getenv("LOGNAME");
         }
         if (!loginptr) {
-            strcpy(login, "unknown");
+            strcpy(login, "(unknown)");
         } else {
             strcpy(login, loginptr);
         }

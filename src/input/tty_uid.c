@@ -51,7 +51,7 @@ int snoopy_input_tty_uid (char *input, char *arg)
     /* Get tty path */
     ttyPath = ttyname(0);
     if (ttyPath == NULL) {
-        return snprintf(input, SNOOPY_INPUT_MESSAGE_MAX_SIZE, "none");
+        return snprintf(input, SNOOPY_INPUT_MESSAGE_MAX_SIZE, "(none)");
     }
 
     /* Get owner of tty */
