@@ -21,6 +21,7 @@
 #include "snoopy.h"
 #include "log.h"
 #include "inputdatastorage.h"
+#include "filterregistry.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -43,10 +44,22 @@ int main (int argc, char **argv)
     printf("%s\n", logMessage);
     printf("\n");
 
+#if defined(SNOOPY_FILTER_ENABLED)
+    if (SNOOPY_FILTER_PASS == snoopy_log_filter_check_chain(logMessage, SNOOPY_FILTER_CHAIN)) {
+        /* Send it to syslog */
+        snoopy_log_send_to_syslog(logMessage);
+        printf("Message sent to syslog, check your syslog output.\n");
+        printf("If snoopy is already enabled on your system, you should see two identical messages.\n");
+        printf("If you are testing snoopy via LD_PRELOAD environmental variable, you will see another identical message.\n");
+    } else {
+        printf("Message NOT sent to syslog. One of the filters dropped it.\n");
+    }
+#else
     snoopy_log_send_to_syslog(logMessage);
     printf("Message sent to syslog, check your syslog output.\n");
     printf("If snoopy is already enabled on your system, you should see two identical messages.\n");
     printf("If you are testing snoopy via LD_PRELOAD environmental variable, you will see another identical message.\n");
+#endif
 
     /* Housekeeping */
     free(logMessage);

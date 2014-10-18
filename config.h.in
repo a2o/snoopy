@@ -77,6 +77,12 @@
 /* Define to the version of this package. */
 #undef PACKAGE_VERSION
 
+/* Custom filter chain to use */
+#undef SNOOPY_CONF_FILTER_CHAIN_custom
+
+/* Enable filtering */
+#undef SNOOPY_CONF_FILTER_ENABLED
+
 /* Custom message format to use */
 #undef SNOOPY_CONF_LOG_MESSAGE_FORMAT_custom
 

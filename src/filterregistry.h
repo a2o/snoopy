@@ -1,7 +1,8 @@
 /*
  * SNOOPY LOGGER
  *
- * snoopy_log.h
+ * File: filterregistry.h
+ *
  * Copyright (c) 2014 bostjan@a2o.si
  *
  * This program is free software; you can redistribute it and/or modify
@@ -21,48 +22,26 @@
 
 
 
-void snoopy_log_message_generate (
-    char        *logMessage,
-    char        *logMessageFormat
-);
-void snoopy_log_message_generate_origFormat (
-    char        *logMessage
-);
-void snoopy_log_message_generate_testLoopAllInputs (
-    char        *logMessage
-);
+/*
+ * Include headers of all filter functions
+ */
+#include "filter/exclude_uid.h"
+#include "filter/only_root.h"
+#include "filter/only_uid.h"
 
 
 
-void snoopy_log_message_append (
-    char *logMessage,
-    char *appendThis
-);
+/*
+ * Two arrays holding data about filter functions
+ */
+extern char *snoopy_filterregistry_names[];
+extern int (*snoopy_filterregistry_ptrs []) (char *logMessage, char *arg);
 
 
 
-int snoopy_log_filter_check_chain (
-    char *logMessage,
-    char *chain
-);
-
-
-
-void snoopy_log_send_to_syslog (
-    char *logMessage
-);
-
-
-
-void snoopy_log_syscall_execv (
-    const char  *filename,
-    char *const  argv[]
-);
-void snoopy_log_syscall_execve (
-    const char  *filename,
-    char *const  argv[],
-    char *const  envp[]
-);
-void snoopy_log_syscall (
-    const char  *syscallName
-);
+/*
+ * Functions to manage and utilise filter providers
+ */
+int snoopy_filterregistry_call         (char *filterName, char *logMessage, char *filterArg);
+int snoopy_filterregistry_getIndex     (char *filterName);
+int snoopy_filterregistry_isRegistered (char *filterName);

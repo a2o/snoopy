@@ -16,6 +16,10 @@ o Feature: New input providers:
     - username     (thanks Sébastien Gross)
     - tty_uid      (thanks Tony Malkowski)
     - tty_username
+o Feature: Implemented internal filtering, with the following filters available:
+    - exclude_uid
+    - only_root
+    - only_uid
 o Refactoring: Separated data gathering into separate functions, to be
     used at will - now they are called "input providers"
 o Refactoring: Removed external filtering, to be replaced with internal

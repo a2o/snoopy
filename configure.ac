@@ -41,6 +41,7 @@ AC_CONFIG_FILES([Makefile
                  bin/Makefile
                  contrib/sles/snoopy.spec
                  src/Makefile
+                 src/filter/Makefile
                  src/input/Makefile])
 
 
@@ -74,6 +75,28 @@ AC_ARG_WITH(message-format,
 	[format to use to log messages with [default=see src/snoopy.h]]
     )],
     AC_DEFINE_UNQUOTED(SNOOPY_CONF_LOG_MESSAGE_FORMAT_custom, "$withval", [Custom message format to use])
+)
+
+
+
+dnl ============================================================================
+AC_ARG_ENABLE(filter,
+    [AC_HELP_STRING(
+        [--enable-filter],
+        [enable general message filtering [default=disabled]]
+    )],
+    AC_DEFINE_UNQUOTED(SNOOPY_CONF_FILTER_ENABLED, "1", [Enable filtering])
+)
+
+
+
+dnl ============================================================================
+AC_ARG_WITH(filter-chain,
+    [AC_HELP_STRING(
+        [--with-filter-chain=CHAINSPEC],
+        [filter chain to use [default=see src/snoopy.h and src/filter/ for available filters and their usage]]
+    )],
+    AC_DEFINE_UNQUOTED(SNOOPY_CONF_FILTER_CHAIN_custom, "$withval", [Custom filter chain to use])
 )
 
 

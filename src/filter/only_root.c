@@ -1,7 +1,8 @@
 /*
  * SNOOPY LOGGER
  *
- * snoopy_log.h
+ * File: snoopy/filter/only_root.c
+ *
  * Copyright (c) 2014 bostjan@a2o.si
  *
  * This program is free software; you can redistribute it and/or modify
@@ -21,48 +22,31 @@
 
 
 
-void snoopy_log_message_generate (
-    char        *logMessage,
-    char        *logMessageFormat
-);
-void snoopy_log_message_generate_origFormat (
-    char        *logMessage
-);
-void snoopy_log_message_generate_testLoopAllInputs (
-    char        *logMessage
-);
+/*
+ * SNOOPY FILTER: only_root
+ *
+ * Description:
+ *     Only logs messages from root (uid=0 actually)
+ *
+ * Params:
+ *     msg:   pointer to string that contains formatted log message (may be manipulated)
+ *     arg:   arguments passed to this filter
+ *
+ * Return:
+ *     SNOOPY_FILTER_PASS or SNOOPY_FILTER_DROP
+ */
+#include "snoopy.h"
+#include <stdio.h>
+#include <unistd.h>
+#include <sys/types.h>
 
 
 
-void snoopy_log_message_append (
-    char *logMessage,
-    char *appendThis
-);
-
-
-
-int snoopy_log_filter_check_chain (
-    char *logMessage,
-    char *chain
-);
-
-
-
-void snoopy_log_send_to_syslog (
-    char *logMessage
-);
-
-
-
-void snoopy_log_syscall_execv (
-    const char  *filename,
-    char *const  argv[]
-);
-void snoopy_log_syscall_execve (
-    const char  *filename,
-    char *const  argv[],
-    char *const  envp[]
-);
-void snoopy_log_syscall (
-    const char  *syscallName
-);
+int snoopy_filter_only_root (char *msg, char *arg)
+{
+    if (0 == getuid()) {
+        return SNOOPY_FILTER_PASS;
+    } else {
+        return SNOOPY_FILTER_DROP;
+    }
+}

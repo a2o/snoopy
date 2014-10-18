@@ -62,6 +62,44 @@ name, and text following the colon is passed as argument to the provider
 in question.
 
 
+### Configuring filtering
+
+Snoopy supports message filtering. Filtering must be configured at
+build time, here is an example:
+
+    # REQUIRED TO ENABLE FILTERING FEATURE
+    --enable-filter
+
+    # HOW TO DEFINE FILTERS
+    --with-filter-chain="exclude_uid:0"       # Log all commands, except the ones executed by root
+    --with-filter-chain="exclude_uid:1,2,3"   # Log all commands, except those executed by users with UIDs 1, 2 and 3
+    --with-filter-chain="only_uid:0"          # Log only root commands
+    --with-filter-chain="filter1:arg11;filter2:arg21,arg22;filter3:arg31,32,33"
+
+Here you have four filter definitions for your reference, they are
+quite self-explanatory. As you probably noted in the last example,
+multiple filters may be defined in a chain, separated by semicolon.
+
+Each filter chains can contain multiple filter definitions. They are
+processed in order of appearance. If any of the filters decides the
+message should be dropped, the filter chain processing is immediately
+interrupted and message is not passed to syslog.
+
+If filter requires an argument, they may be passed to them by
+specifying a colon after filter name, followed by an argument.
+Argument is passed to the filter as-is. If passing of multiple
+arguments to filter is required, they are passed as single string
+and must be parsed/tokenized by the filter itself (see "only_uid"
+filter for example).
+
+Filter chain specification may not contain any spaces.
+(Acutally spaces are allowed in arguments, but not in filter names
+and between semicolons and filter names, nor between filter names
+and following colons.)
+
+
+
+
 
 ## 3. HOW TO ENABLE ##
 
@@ -153,7 +191,11 @@ are working to find out why.
 
 
 
-## 7. NEW INPUT PROVIDER DEVELOPMENT ##
+## 7. CONTRIBUTING TO SNOOPY DEVELOPMENT ##
+
+New ideas are welcome. Most of change requests so far were about additional
+log data or filtering capabilities, therefore most of development/changes
+is expected in that area.
 
 Here are basic rules for input provider development:
 - input providers are located in src/input/
@@ -175,14 +217,36 @@ need to add references to it to make snoopy fully aware of it:
 - src/inputregistry.h     (one reference)
 - src/inputregistry.c     (two references)
 
-Commits and pull requests:
-- make commits easily readable, with concise comments
-- make commits KISS (do one thing, do it well)
-- same goes for pull requests - one thing at a time (one bugfix or one new
-    feature implementation, not more, and certainly not less:)
+Rules for filter development are the same as for new input providers, with the
+following additional specifics:
+- filters are located in src/filters
+- each filter is passed two arguments: logMessage and filter argument (if any,
+    otherwise an empty string is passed)
+- filter argument is literal. If it contains multiple arguments (separated by
+    comma, for example), the filter itself must do the parsing/tokenization.
+- filter MAY modify logMessage. If it does so, the new log message MUST NOT
+    EXCEED the maximum log message size, defined in snoopy.h.
+- filter MUST return SNOOPY_FILTER_PASS or SNOOPY_FILTER_DROP constant
+- if SNOOPY_FILTER_DROP is returned by filter, it causes immediate termination
+    of filter chain processing and message is not logged to syslog
+
+If you have developed a shiny new filter and you would like to
+start using it with snoopy, there are three additional places where you
+need to add references to it to make snoopy fully aware of it:
+- src/filter/Makefile.am   (location is evident)
+- src/filterregistry.h     (one reference)
+- src/filterregistry.c     (two references)
+
+Pushing code upstream:
+- your commits should be easily readable, with concise comments
+- your commits should follow the KISS principle: do one thing, and do it well
+- same goes for pull requests - one pull request should contain one change only
+    (one bugfix or one feature at a time)
+- if you have developed multiple features and/or bugfixes, create separate
+    branches for each one of them, and request merges for each branch
 - the cleaner you code/change/changeset is, the faster it will be merged
 
-That is it. Happy coding and pull requesting!
+That is it. Happy coding! :)
 
 
 

@@ -31,7 +31,7 @@
 /**
  * SNOOPY_MAX_ARG_LENGTH
  *
- * Maximum length of arguments passed to execv(e) functions.
+ * Maximum length of arguments passed to execv(e) functions
  */
 #include <unistd.h>
 #define SNOOPY_SYSCONF_ARG_MAX sysconf(_SC_ARG_MAX)
@@ -41,7 +41,7 @@
 /**
  * SNOOPY_INPUT_ARG_MAX_SIZE
  *
- * Maximum length of a string argument to each input provider.
+ * Maximum length of a string argument to each input provider
  */
 #define SNOOPY_INPUT_ARG_MAX_SIZE 1024
 
@@ -58,6 +58,33 @@
 
 
 /**
+ * SNOOPY_FILTER_CHAIN_MAX_SIZE
+ *
+ * Maximum length of filter chain definition
+ */
+#define SNOOPY_FILTER_CHAIN_MAX_SIZE 4096
+
+
+
+/**
+ * SNOOPY_FILTER_NAME_MAX_SIZE
+ *
+ * Maximum length of each filter name
+ */
+#define SNOOPY_FILTER_NAME_MAX_SIZE 1024
+
+
+
+/**
+ * SNOOPY_FILTER_ARG_MAX_SIZE
+ *
+ * Maximum length of a string argument to each filter
+ */
+#define SNOOPY_FILTER_ARG_MAX_SIZE 1024
+
+
+
+/**
  * SNOOPY_LOG_MESSAGE_MAX_SIZE
  *
  * Maximum length of single (whole) log message,
@@ -70,7 +97,7 @@
 /**
  * SNOOPY_LOG_MESSAGE_FORMAT_default
  *
- * Default format of snoopy log message.
+ * Default format of snoopy log message
  */
 #define SNOOPY_LOG_MESSAGE_FORMAT_default \
     "[uid:%{uid} sid:%{sid} tty:%{tty} cwd:%{cwd} filename:%{filename}]: %{cmdline}"
@@ -102,3 +129,55 @@
  */
 #define   SNOOPY_TRUE    1
 #define   SNOOPY_FALSE   0
+
+
+
+/**
+ * FIlter return values
+ *
+ * SNOOPY_FILTER_PASS - message should be passed on
+ * SNOOPY_FILTER_DROP - message should be dropped
+ */
+#define   SNOOPY_FILTER_PASS   1
+#define   SNOOPY_FILTER_DROP   0
+
+
+
+/**
+ * SNOOPY_FILTER_ENABLED
+ *
+ * Whether filtering is enabled or not
+ */
+#ifdef SNOOPY_CONF_FILTER_ENABLED
+#define   SNOOPY_FILTER_ENABLED   1
+#endif
+
+
+
+/**
+ * SNOOPY_FILTER_CHAIN_default
+ *
+ * Default snoopy filter chain specification
+ */
+#define   SNOOPY_FILTER_CHAIN_default   ""
+
+
+
+/**
+ * SNOOPY_FILTER_CHAIN
+ *
+ * Actual filter chain specification to use
+ *
+ * Filter chain format:
+ * - example: filter1; filter2; filter3:arg1; filter3:arg2
+ * - you may pass argument to filter by suffixing it with :arg
+ * - spaces are ignored
+ */
+#ifdef SNOOPY_CONF_FILTER_CHAIN_custom
+#define   SNOOPY_FILTER_CHAIN   SNOOPY_CONF_FILTER_CHAIN_custom
+#else
+#define   SNOOPY_FILTER_CHAIN   SNOOPY_FILTER_CHAIN_default
+#endif
+
+
+

@@ -6,7 +6,7 @@ include   $(top_srcdir)/build/Makefile.am.common
 
 ### First process all required subdirs
 #
-SUBDIRS = input
+SUBDIRS = filter input
 
 
 
@@ -16,6 +16,8 @@ noinst_LTLIBRARIES = \
 	libsnoopy_no_execve.la
 
 libsnoopy_no_execve_la_SOURCES = \
+	filterregistry.c \
+	filterregistry.h \
 	inputdatastorage.c \
 	inputdatastorage.h \
 	inputregistry.c \
@@ -25,6 +27,7 @@ libsnoopy_no_execve_la_SOURCES = \
 	snoopy.h
 
 libsnoopy_no_execve_la_LIBADD = \
+	filter/libsnoopy_filters_all.la \
 	input/libsnoopy_inputs_all.la
 
 
