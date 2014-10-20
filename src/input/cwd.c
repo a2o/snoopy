@@ -45,7 +45,8 @@ int snoopy_input_cwd (char *input, char *arg)
 {
     char cwdBuf[PATH_MAX+1];
 
-    getcwd(cwdBuf, PATH_MAX+1);
-
-    return snprintf(input, SNOOPY_INPUT_MESSAGE_MAX_SIZE, "%s", cwdBuf);
+    if (getcwd(cwdBuf, PATH_MAX+1)) {
+        return snprintf(input, SNOOPY_INPUT_MESSAGE_MAX_SIZE, "%s", cwdBuf);
+    }
+    return -1;
 }
