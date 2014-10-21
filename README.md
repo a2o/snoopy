@@ -99,6 +99,42 @@ and following colons.)
 
 
 
+### Package generation
+
+If you prefer you can generate packages.
+
+#### Debian / Ubuntu packages
+
+You can find recipe to build a Debian/Ubuntu package in
+`contrib/debian`. You first ned to symlink the `contrib/debian` to the
+project root directory. You also need to install all build dependencies:
+
+- debhelper
+- autoconf
+- dh-autoreconf
+
+The package is built into parent directory. You can install it using `dpkg`.
+
+Basically you need to run following commands:
+
+    ln -nfs contrib/debian .
+    apt-get install debhelper autoconf dh-autoreconf
+    debuild --no-tgz-check -I.git -i'\.git/'
+	dpkg -i ../libsnoopy_2.0.0rc5-1_amd64.deb
+
+
+NOTES: Debian package versionning is tricky when working on git
+repositories. You can keep track on per-commit version number using `git
+describe --tags`.
+
+For example the git version `snoopy-2.0.0rc5-3-g7845db6` should be read as:
+
+- `snoopy-2.0.0rc5`: Version as given by `git tag`
+- `3`: Number of commits ahed of current tag
+- `g7845db6`: the git commit SHA1 id.
+
+The Debian package version should be then `2:2.0.0rc5+git.3-1`.
+
 
 
 ## 3. HOW TO ENABLE ##
@@ -286,5 +322,5 @@ https://github.com/a2o/snoopy/issues/1
 - Reboot #2. If second reboot is successful, you are on the safe side
 
 Distributions known to work OK:
-* Ubuntu Server 12.04.01
+* Ubuntu Server 12.04.01 (Debian package OK as well)
 * Slackware 12.2+
