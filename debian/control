@@ -1,0 +1,20 @@
+Source: snoopy
+Section: admin
+Priority: extra
+Maintainer: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
+Build-Depends: debhelper (>= 7.0.50),
+	autoconf (>=2.63), dh-autoreconf
+Standards-Version: 3.9.3
+Homepage: https://github.com/a2o/snoopy 
+
+Package: libsnoopy
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: execve() wrapper and logger
+ snoopylogger is merely a shared library that is used as a wrapper
+ to the execve() function provided by libc as to log every call
+ to syslog (authpriv).  system administrators may find snoopylogger
+ useful in tasks such as light/heavy system monitoring, tracking other
+ administrator's actions as well as getting a good 'feel' of
+ what's going on in the system (for example apache running cgi
+ scripts).

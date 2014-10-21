@@ -1,0 +1,36 @@
+libsnoopy
+=========
+
+Log format is:
+
+[login:%{login} ssh:(%{env:SSH_CONNECTION}) sid:%{sid} tty:%{tty} (%{tty_uid}/%{tty_username}) uid:%{username}(%{uid})/%{eusername}(%{euid}) gid:%{group}(%{gid})/%{egroup}(%{egid}) cwd:%{cwd}]: %{cmdline}
+
+With:
+
+- login: literal login name of logged-in user executing this process.
+  Retrive the user login trying in order:
+   - The login information from the processus.
+   - the LOGNAME environment variable.
+   - the SUDO_USER environment variable.
+  return "unknown" otherwise.
+  
+  TIP to use with sudo and keep LOGNAME, add this in /etc/sudoers:
+  Defaults        env_reset
+  Defaults        env_keep="LOGNAME"
+- ssh: value of SSH_CONNECTION.
+- sid: Session leader process ID of current process.
+- tty: TTY of current process.
+- tty_uid: UID (User ID) of current controlling terminal, or -1 if not found.
+- tty_username: litaral username of current controlling terminal.
+- username: literal username of current process/
+- uid: UID (User ID) of current process.
+- eusername: literal effective user name (User ID) of current process/
+- euid: effective UID of current process.
+- group: literal group name (Group ID) of current process.
+- gid: GID (Group ID) number of currently running process.
+- egroup: literal effective group name (Group ID) of current process.
+- egid: effective UID of current process.
+- cwd: current working directory of current process.
+- cmdline: command line of current process.
+
+ -- Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>, Mon, 20 Oct 2014 01:56:35 +0200
