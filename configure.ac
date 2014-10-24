@@ -41,6 +41,7 @@ AC_CONFIG_FILES([Makefile
                  bin/Makefile
                  contrib/sles/snoopy.spec
                  src/Makefile
+                 src/lib/Makefile
                  src/filter/Makefile
                  src/input/Makefile])
 
