@@ -64,38 +64,33 @@ in question.
 
 ### Configuring filtering
 
-Snoopy supports message filtering. Filtering must be configured at
-build time, here is an example:
+Snoopy supports message filtering. Filtering support must be
+enabled at build time, here is an example:
 
     # REQUIRED TO ENABLE FILTERING FEATURE
     --enable-filter
 
-    # HOW TO DEFINE FILTERS
-    --with-filter-chain="exclude_uid:0"       # Log all commands, except the ones executed by root
-    --with-filter-chain="exclude_uid:1,2,3"   # Log all commands, except those executed by users with UIDs 1, 2 and 3
-    --with-filter-chain="only_uid:0"          # Log only root commands
-    --with-filter-chain="filter1:arg11;filter2:arg21,arg22;filter3:arg31,32,33"
+    # HOW TO DEFINE FILTER CHAINS
+    --with-filter-chain="FILTER_CHAIN_SPEC"
 
-Here you have four filter definitions for your reference, they are
-quite self-explanatory. As you probably noted in the last example,
-multiple filters may be defined in a chain, separated by semicolon.
+By default, if FILTER_CHAIN_SPEC is not configured, empty string is
+used, which effectively disables filtering.
 
-Each filter chains can contain multiple filter definitions. They are
-processed in order of appearance. If any of the filters decides the
-message should be dropped, the filter chain processing is immediately
-interrupted and message is not passed to syslog.
+See sample configuration file etc/snoopy.ini for list and description
+of supported filter configurations.
 
-If filter requires an argument, they may be passed to them by
-specifying a colon after filter name, followed by an argument.
-Argument is passed to the filter as-is. If passing of multiple
-arguments to filter is required, they are passed as single string
-and must be parsed/tokenized by the filter itself (see "only_uid"
-filter for example).
 
-Filter chain specification may not contain any spaces.
-(Acutally spaces are allowed in arguments, but not in filter names
-and between semicolons and filter names, nor between filter names
-and following colons.)
+### Optional configuration file support
+
+Snoopy supports optional configuration file, which may help with
+development and/or configuration endeavours. Configuration file must
+be enabled at build time:
+
+    --with-config-file[=PATH]
+
+If PATH is not specified, default path SYSCONFDIR/snoopy.ini is used
+instead. See sample configuration file etc/snoopy.ini for list and
+description of supported configuration directives.
 
 
 

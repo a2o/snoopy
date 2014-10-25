@@ -19,8 +19,12 @@
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-#include "snoopy.h"
-#include "config.h"
+
+
+
+/*
+ * Include all required C resources
+ */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -31,9 +35,11 @@
 
 
 /*
- * Include all input-related resources
+ * Include all snoopy-related resources
  */
+#include "snoopy.h"
 #include "log.h"
+#include "configuration.h"
 #include "inputdatastorage.h"
 #include "inputregistry.h"
 #include "filterregistry.h"
@@ -429,19 +435,22 @@ void snoopy_log_syscall (
     logMessage    = malloc(SNOOPY_LOG_MESSAGE_MAX_SIZE);
     logMessage[0] = '\0';
 
-    /* Generate log message in specified format */
-    snoopy_log_message_generate(logMessage, SNOOPY_LOG_MESSAGE_FORMAT);
+    /* Initialize snoopy configuration */
+    snoopy_configuration_ctor();
 
-#if defined(SNOOPY_FILTER_ENABLED)
+    /* Generate log message in specified format */
+    snoopy_log_message_generate(logMessage, snoopy_configuration.message_format);
+
     /* Should message be passed to syslog or not? */
-    if (SNOOPY_FILTER_PASS == snoopy_log_filter_check_chain(logMessage, SNOOPY_FILTER_CHAIN)) {
-#endif
-        /* Send it to syslog */
-        snoopy_log_send_to_syslog(logMessage);
-#if defined(SNOOPY_FILTER_ENABLED)
+    if (SNOOPY_TRUE == snoopy_configuration.filter_enabled) {
+        if (SNOOPY_FILTER_PASS == snoopy_log_filter_check_chain(logMessage, snoopy_configuration.filter_chain)) {
+            snoopy_log_send_to_syslog(logMessage);
+        }
+    } else {
+            snoopy_log_send_to_syslog(logMessage);
     }
-#endif
 
     /* Housekeeping */
+    snoopy_configuration_dtor();
     free(logMessage);
 }

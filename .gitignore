@@ -19,16 +19,13 @@ Makefile
 
 ### Files produced by build process
 #
+.dirstamp
 *.a
 *.o
 *.la
 *.lo
-/.deps/*
-/*/.deps/*
-/*/*/.deps/*
-/.libs/*
-/*/.libs/*
-/*/*/.libs/*
+.deps
+.libs
 /src/libsnoopy.so
 /bin/snoopy-test-output
 /bin/snoopy-detect
