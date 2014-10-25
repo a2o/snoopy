@@ -22,7 +22,7 @@
 
 
 /**
- * Include configured constants
+ * Include ./configured constants
  */
 #include "config.h"
 
@@ -181,3 +181,14 @@
 
 
 
+/**
+ * SNOOPY_CONFIG_FILE
+ *
+ * Path to INI configuration file, if enabled
+ *
+ * If configuration file is enabled, this constant is defined
+ * and holds absolute path to it
+ */
+#ifdef SNOOPY_CONF_CONFIG_FILE
+#define   SNOOPY_CONFIG_FILE   SNOOPY_CONF_CONFIG_FILE
+#endif

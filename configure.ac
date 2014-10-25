@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.63])
-AC_INIT([Snoopy Logger], [2.0.0rc5], [https://github.com/a2o/snoopy/], [snoopy])
+AC_INIT([Snoopy Logger], [2.0.0rc6], [https://github.com/a2o/snoopy/], [snoopy])
 AC_DEFINE(PACKAGE_URL, [], "https://github.com/a2o/snoopy/")
 AC_CONFIG_SRCDIR([config.h.in])
 AC_CONFIG_HEADERS([config.h])
@@ -153,7 +153,7 @@ dnl ============================================================================
 AC_ARG_WITH(config-file,
     [AC_HELP_STRING(
         [--with-config-file=PATH],
-        [enable INI configuration file parsing [default=disabled, if enabled then default path is PREFIX/etc/snoopy.ini]]
+        [enable INI configuration file parsing [default=disabled, if enabled then default path is SYSCONFDIR/snoopy.ini]]
     )],
     [
         if test "$with_config_file" == "yes"; then
@@ -161,7 +161,7 @@ AC_ARG_WITH(config-file,
         else
             with_config_file_path="$with_config_file"
         fi
-        AC_DEFINE_UNQUOTED(SNOOPY_CONF_CONFIG_FILE, [$with_config_file_path], [INI configuration file path to use])
+        AC_DEFINE_UNQUOTED(SNOOPY_CONF_CONFIG_FILE, "$with_config_file_path", [INI configuration file path to use])
     ]
 )
 
