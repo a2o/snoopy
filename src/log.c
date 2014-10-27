@@ -372,9 +372,10 @@ void snoopy_log_syscall_execv (
     const char *filename,
     char *const argv[]
 ) {
+    char *envp[] = { NULL };
     snoopy_inputdatastorage_store_filename(filename);
     snoopy_inputdatastorage_store_argv((char**)argv);
-//    snoopy_inputdatastorage_store_envp((char**)envp); // TODO, must create null array
+    snoopy_inputdatastorage_store_envp(envp);
     snoopy_log_syscall("execv");
 }
 
@@ -401,7 +402,7 @@ void snoopy_log_syscall_execve (
 ) {
     snoopy_inputdatastorage_store_filename(filename);
     snoopy_inputdatastorage_store_argv((char**)argv);
-//    snoopy_inputdatastorage_store_envp((char**)envp);
+    snoopy_inputdatastorage_store_envp((char**)envp);
     snoopy_log_syscall("execve");
 }
 
