@@ -60,7 +60,7 @@ int main (int argc, char **argv)
     if (SNOOPY_TRUE == snoopy_configuration.filter_enabled) {
         if (SNOOPY_FILTER_PASS == snoopy_log_filter_check_chain(logMessage, snoopy_configuration.filter_chain)) {
             /* Send it to syslog */
-            snoopy_log_send_to_syslog(logMessage);
+            snoopy_log_send_to_syslog(logMessage, SNOOPY_LOG_MESSAGE);
             printf("Message sent to syslog, check your syslog output.\n");
             printf("If snoopy is already enabled on your system, you should see two identical messages.\n");
             printf("If you are testing snoopy via LD_PRELOAD environmental variable, you will see another identical message.\n");
@@ -68,7 +68,7 @@ int main (int argc, char **argv)
             printf("Message NOT sent to syslog. One of the filters dropped it.\n");
         }
     } else {
-        snoopy_log_send_to_syslog(logMessage);
+        snoopy_log_send_to_syslog(logMessage, SNOOPY_LOG_MESSAGE);
         printf("Message sent to syslog, check your syslog output.\n");
         printf("If snoopy is already enabled on your system, you should see two identical messages.\n");
         printf("If you are testing snoopy via LD_PRELOAD environmental variable, you will see another identical message.\n");

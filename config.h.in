@@ -80,6 +80,9 @@
 /* INI configuration file path to use */
 #undef SNOOPY_CONF_CONFIG_FILE
 
+/* Enable error logging */
+#undef SNOOPY_CONF_ERROR_LOGGING_ENABLED
+
 /* Custom filter chain to use */
 #undef SNOOPY_CONF_FILTER_CHAIN_custom
 

@@ -67,15 +67,37 @@ fi
 
 
 dnl ============================================================================
-AC_ARG_ENABLE(root-only,
+AC_ARG_ENABLE(error-logging,
     [AC_HELP_STRING(
-	[--enable-root-only],
-	[only log commands executed by root [default=disabled]]
+        [--enable-error-logging],
+        [enable error logging through syslog - use only if you are developing snoopy or having problems configuring it [default=disabled]]
     )],
     [
-	if test "$enableval" == "yes"; then
-	    enable_root_only=yes
-	fi
+        if test "$enableval" == "yes"; then
+            enable_error_logging=yes   # Specified as --enable-error-logging
+        else
+            enable_error_logging=no    # Specified as --disable-error-logging
+        fi
+    ],
+    [enable_error_logging=no]              # Unspecified as ./configure argument
+)
+
+AS_IF([test "x$enable_error_logging" == "xyes"], [
+    AC_DEFINE_UNQUOTED(SNOOPY_CONF_ERROR_LOGGING_ENABLED, "1", [Enable error logging])
+])
+
+
+
+dnl ============================================================================
+AC_ARG_ENABLE(root-only,
+    [AC_HELP_STRING(
+        [--enable-root-only],
+        [only log commands executed by root [default=disabled]]
+    )],
+    [
+        if test "$enableval" == "yes"; then
+            enable_root_only=yes
+        fi
     ],
     [enable_root_only=no]
 )
@@ -91,8 +113,8 @@ AC_SUBST(SNOOPY_ROOT_ONLY, ["$enable_root_only"])
 dnl ============================================================================
 AC_ARG_WITH(message-format,
     [AC_HELP_STRING(
-	[--with-message-format=FORMAT],
-	[format to use to log messages with [default=see src/snoopy.h]]
+        [--with-message-format=FORMAT],
+        [format to use to log messages with [default=see src/snoopy.h]]
     )],
     AC_DEFINE_UNQUOTED(SNOOPY_CONF_LOG_MESSAGE_FORMAT_custom, "$withval", [Custom message format to use])
 )
@@ -124,8 +146,8 @@ AC_ARG_WITH(filter-chain,
 dnl ============================================================================
 AC_ARG_WITH(syslog-facility,
     [AC_HELP_STRING(
-	[--with-syslog-facility=FACILITY],
-	[facility to use when logging, check 'man 3 syslog' or 'man openlog' [default=LOG_AUTHPRIV]]
+        [--with-syslog-facility=FACILITY],
+        [facility to use when logging, check 'man 3 syslog' or 'man openlog' [default=LOG_AUTHPRIV]]
     )],
     [],
     [with_syslog_facility=LOG_AUTHPRIV]
@@ -138,8 +160,8 @@ AC_DEFINE_UNQUOTED(SNOOPY_SYSLOG_FACILITY, [$with_syslog_facility], [Syslog faci
 dnl ============================================================================
 AC_ARG_WITH(syslog-level,
     [AC_HELP_STRING(
-	[--with-syslog-level=LEVEL],
-	[facility to use when logging, check 'man 3 syslog' or 'man openlog' [default=LOG_INFO]]
+        [--with-syslog-level=LEVEL],
+        [facility to use when logging, check 'man 3 syslog' or 'man openlog' [default=LOG_INFO]]
     )],
     [],
     [with_syslog_level=LOG_INFO]

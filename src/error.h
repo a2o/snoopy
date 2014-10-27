@@ -1,7 +1,7 @@
 /*
  * SNOOPY LOGGER
  *
- * File: configuration.h
+ * File: error.h
  *
  * Copyright (c) 2014 bostjan@a2o.si
  *
@@ -23,32 +23,6 @@
 
 
 /*
- * Array holding snoopy configuration data in one place
+ * Error-handling functions
  */
-struct snoopy_configuration_type {
-    int   initialized;
-
-    int   config_file_enabled;
-    char *config_file_path;
-    int   config_file_parsed;
-
-    int   error_logging_enabled;
-
-    char *message_format;
-    int   message_format_malloced;
-
-    int   filter_enabled;
-    char *filter_chain;
-    int   filter_chain_malloced;
-};
-extern struct   snoopy_configuration_type   snoopy_configuration;
-
-
-
-/*
- * Functions to manage and utilise configuration
- */
-void snoopy_configuration_ctor();
-void snoopy_configuration_dtor();
-void snoopy_configuration_load_defaults();
-int  snoopy_configuration_load_file(char *iniFilePath);
+void snoopy_error_handler();

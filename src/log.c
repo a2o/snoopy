@@ -40,6 +40,7 @@
 #include "snoopy.h"
 #include "log.h"
 #include "configuration.h"
+#include "error.h"
 #include "inputdatastorage.h"
 #include "inputregistry.h"
 #include "filterregistry.h"
@@ -179,9 +180,7 @@ void snoopy_log_message_generate_testLoopAllInputs (
         /* Execute the input function */
         inputMessageSize = snoopy_inputregistry_ptrs[i](inputMessage, "");
         if (inputMessageSize > SNOOPY_INPUT_MESSAGE_MAX_SIZE) {
-            // ERROR, TODO
-            printf("SNOOPY ERROR: Maximum input message size exceeded (%s)", snoopy_inputregistry_names[i]);
-            exit(1);
+            snoopy_error_handler("Maximum input message size exceeded");
         }
 
         /* Copy content, append */
@@ -230,9 +229,7 @@ void snoopy_log_message_append (
     appendThisSize          = strlen(appendThis);
     logMessageSizeRemaining = SNOOPY_LOG_MESSAGE_MAX_SIZE - logMessageSize;
     if (logMessageSizeRemaining < appendThisSize) {
-        // ERROR TODO
-        printf("SNOOPY ERROR: Maximum log message size exceeded: %s", logMessage);
-        exit(1);
+        snoopy_error_handler("Maximum log message size exceeded");
     }
 
     /* Copy to the destination string */
@@ -339,18 +336,25 @@ int snoopy_log_filter_check_chain (
  *     void
  */
 void snoopy_log_send_to_syslog (
-    char *logMessage
+    char *logMessage,
+    int   errorOrMessage
 ) {
-    /* Prepare logging stuff */
-    openlog("snoopy", LOG_PID, SNOOPY_SYSLOG_FACILITY);
-
     /* Log it, but only if non-zero size */
     if (strlen(logMessage) > 0) {
-        syslog(SNOOPY_SYSLOG_LEVEL, "%s", logMessage);
-    }
 
-    /* Close the syslog file descriptor */
-    closelog();
+        /* Prepare logging stuff */
+        openlog("snoopy", LOG_PID, SNOOPY_SYSLOG_FACILITY);
+
+        /* Log error or ordinary message */
+        if (SNOOPY_LOG_ERROR == errorOrMessage) {
+            syslog(LOG_ERR, "ERROR: %s", logMessage);
+        } else {
+            syslog(SNOOPY_SYSLOG_LEVEL, "%s", logMessage);
+        }
+
+        /* Close the syslog file descriptor */
+        closelog();
+    }
 }
 
 
@@ -445,10 +449,10 @@ void snoopy_log_syscall (
     /* Should message be passed to syslog or not? */
     if (SNOOPY_TRUE == snoopy_configuration.filter_enabled) {
         if (SNOOPY_FILTER_PASS == snoopy_log_filter_check_chain(logMessage, snoopy_configuration.filter_chain)) {
-            snoopy_log_send_to_syslog(logMessage);
+            snoopy_log_send_to_syslog(logMessage, SNOOPY_LOG_MESSAGE);
         }
     } else {
-            snoopy_log_send_to_syslog(logMessage);
+        snoopy_log_send_to_syslog(logMessage, SNOOPY_LOG_MESSAGE);
     }
 
     /* Housekeeping */

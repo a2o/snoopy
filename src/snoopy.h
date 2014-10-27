@@ -133,6 +133,15 @@
 
 
 /**
+ * SNOOPY_LOG_ERROR
+ * SNOOPY_LOG_MESSAGE
+ */
+#define   SNOOPY_LOG_ERROR     1
+#define   SNOOPY_LOG_MESSAGE   2
+
+
+
+/**
  * FIlter return values
  *
  * SNOOPY_FILTER_PASS - message should be passed on
@@ -191,4 +200,19 @@
  */
 #ifdef SNOOPY_CONF_CONFIG_FILE
 #define   SNOOPY_CONFIG_FILE   SNOOPY_CONF_CONFIG_FILE
+#endif
+
+
+
+/**
+ * SNOOPY_LOG_ERRORS
+ *
+ * Whether errors are logged or not?
+ *
+ * If error logging is enabled, then all errors that occur when using snoopy
+ * will be sent to syslog. This is to aid developers and integrators with
+ * their endeavours.
+ */
+#ifdef SNOOPY_CONF_ERROR_LOGGING_ENABLED
+#define   SNOOPY_ERROR_LOGGING_ENABLED   SNOOPY_CONF_ERROR_LOGGING_ENABLED
 #endif

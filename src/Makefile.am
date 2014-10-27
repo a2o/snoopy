@@ -18,6 +18,8 @@ noinst_LTLIBRARIES = \
 libsnoopy_no_execve_la_SOURCES = \
 	configuration.c \
 	configuration.h \
+	error.c \
+	error.h \
 	filterregistry.c \
 	filterregistry.h \
 	inputdatastorage.c \

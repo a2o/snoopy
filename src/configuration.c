@@ -123,9 +123,17 @@ void snoopy_configuration_dtor ()
  */
 void snoopy_configuration_load_defaults ()
 {
+    snoopy_configuration.initialized             = SNOOPY_TRUE;
+
     snoopy_configuration.config_file_enabled     = SNOOPY_FALSE;
     snoopy_configuration.config_file_path        = "";
     snoopy_configuration.config_file_parsed      = SNOOPY_FALSE;
+
+#ifdef SNOOPY_ERROR_LOGGING_ENABLED
+    snoopy_configuration.error_logging_enabled   = SNOOPY_TRUE;
+#else
+    snoopy_configuration.error_logging_enabled   = SNOOPY_FALSE;
+#endif
 
     snoopy_configuration.message_format          = SNOOPY_LOG_MESSAGE_FORMAT;
     snoopy_configuration.message_format_malloced = SNOOPY_FALSE;
@@ -159,6 +167,7 @@ int snoopy_configuration_load_file (
 ) {
     dictionary *ini ;
     char       *confValString;   // Temporary query result space
+    int         confValInt;      // Temporary query result space
 
     /* Tell snoopy we are using configuration file */
     snoopy_configuration.config_file_enabled = SNOOPY_TRUE;
@@ -173,6 +182,11 @@ int snoopy_configuration_load_file (
 
 
     /* Pick out snoopy configuration variables */
+    confValInt = iniparser_getboolean(ini, "snoopy:error_logging", -1);
+    if (-1 != confValInt) {
+        snoopy_configuration.error_logging_enabled = confValInt;
+    }
+
     confValString = iniparser_getstring(ini, "snoopy:message_format", NULL);
     if (NULL != confValString) {
         snoopy_configuration.message_format          = strdup(confValString);

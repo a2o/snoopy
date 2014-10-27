@@ -49,7 +49,8 @@ int snoopy_log_filter_check_chain (
 
 
 void snoopy_log_send_to_syslog (
-    char *logMessage
+    char *logMessage,
+    int   errorOrMessage
 );
 
 
