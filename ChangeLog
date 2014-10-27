@@ -3,7 +3,7 @@
 -------------------------------------------------------------------------------
 
 
-2014-FIXME - Version  2.0.0rc6
+2014-FIXME - Version  2.0.0rc7
 ---------------------------
 o Feature: Added support for custom message format specification at
     configuration time
@@ -21,6 +21,8 @@ o Feature: Implemented internal filtering, with the following filters available:
     - only_root
     - only_uid
 o Feature: Added optional support for INI configuration file
+o Feature: Added envp data to intputdatastorage if execve() is used. Prepared
+    for future inputs to consume it.
 
 o Refactoring: Separated data gathering into separate functions, to be
     used at will - now they are called "input providers"
@@ -34,6 +36,9 @@ o Refactoring: removed --enable-cwd-logging (superseded by message formatting
     options and input provider)
 o Refactoring: snoopy library is now called libsnoopy.so instead of snoopy.so,
     to conform to autotools syntax
+o Refactoring: ./configure: removed many bugs, added proper syntax and error
+    messages to help user decide what she wants
+o Refactoring: added 'proper' (unified) error handling
 
 o Documentation: added into about writing new input providers
 o Bugfix: fixed compilation failure on debian in inputs/cwd.c (thanks Sébastien Gross)
