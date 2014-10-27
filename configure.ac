@@ -73,17 +73,19 @@ AC_ARG_ENABLE(error-logging,
         [enable error logging through syslog - use only if you are developing snoopy or having problems configuring it [default=disabled]]
     )],
     [
-        if test "$enableval" == "yes"; then
+        if test "x$enableval" = "xyes"; then
             enable_error_logging=yes   # Specified as --enable-error-logging
-        else
+        elif test "x$enableval" = "xno"; then
             enable_error_logging=no    # Specified as --disable-error-logging
+        else
+            AC_MSG_ERROR([--enable-error-logging does not take an argument: $enableval])
         fi
     ],
-    [enable_error_logging=no]              # Unspecified as ./configure argument
+    [enable_error_logging=no]          # Unspecified as ./configure argument
 )
 
-AS_IF([test "x$enable_error_logging" == "xyes"], [
-    AC_DEFINE_UNQUOTED(SNOOPY_CONF_ERROR_LOGGING_ENABLED, "1", [Enable error logging])
+AS_IF([test "x$enable_error_logging" = "xyes"], [
+    AC_DEFINE_UNQUOTED(SNOOPY_CONF_ERROR_LOGGING_ENABLED, 1, [Enable error logging])
 ])
 
 
@@ -95,18 +97,20 @@ AC_ARG_ENABLE(root-only,
         [only log commands executed by root [default=disabled]]
     )],
     [
-        if test "$enableval" == "yes"; then
+        if test "x$enableval" = "xyes"; then
             enable_root_only=yes
+        elif test "x$enableval" = "xno"; then
+            enable_root_only=no
+        else
+            AC_MSG_ERROR([--enable-root-only does not take an argument: $enableval])
         fi
     ],
     [enable_root_only=no]
 )
 
-AS_IF([test "x$enable_root_only" == "xyes"], [
-    AC_DEFINE(SNOOPY_ROOT_ONLY, 1, [Only log commands executed by root])
+AS_IF([test "x$enable_root_only" = "xyes"], [
+    AC_DEFINE(SNOOPY_CONF_ROOT_ONLY, 1, [Only log commands executed by root])
 ])
-
-AC_SUBST(SNOOPY_ROOT_ONLY, ["$enable_root_only"])
 
 
 
@@ -116,8 +120,21 @@ AC_ARG_WITH(message-format,
         [--with-message-format=FORMAT],
         [format to use to log messages with [default=see src/snoopy.h]]
     )],
-    AC_DEFINE_UNQUOTED(SNOOPY_CONF_LOG_MESSAGE_FORMAT_custom, "$withval", [Custom message format to use])
+    [
+        if test "x$withval" = "x" -o "x$withval" = "xyes"; then
+            AC_MSG_ERROR([--with-message-format requires an appropriate value (message format specification). See etc/snoopy.ini for syntax. To use default log message format, remove this argument from ./configure line.])
+        elif test "x$withval" = "xno"; then
+            AC_MSG_ERROR([using --without-message-format is not supported, log message format is required, or omit this argument altogether to enable default log message format.])
+        else
+            with_message_format="$withval"
+        fi
+    ],
+    [with_message_format=""]
 )
+
+AS_IF([test "x$with_message_format" != "x"], [
+    AC_DEFINE_UNQUOTED(SNOOPY_CONF_LOG_MESSAGE_FORMAT_custom, "$with_message_format", [Custom message format to use])
+])
 
 
 
@@ -127,8 +144,21 @@ AC_ARG_ENABLE(filter,
         [--enable-filter],
         [enable general message filtering [default=disabled]]
     )],
-    AC_DEFINE_UNQUOTED(SNOOPY_CONF_FILTER_ENABLED, "1", [Enable filtering])
+    [
+        if test "x$enableval" = "xyes"; then
+            enable_filter=yes
+        elif test "x$enableval" = "xno"; then
+            enable_filter=no
+        else
+            AC_MSG_ERROR([--enable-filter does not take an argument: $enableval])
+        fi
+    ],
+    [enable_filter=no]
 )
+
+AS_IF([test "x$enable_filter" = "xyes"], [
+    AC_DEFINE(SNOOPY_CONF_FILTER_ENABLED, 1, [Enable filtering])
+])
 
 
 
@@ -136,10 +166,28 @@ dnl ============================================================================
 AC_ARG_WITH(filter-chain,
     [AC_HELP_STRING(
         [--with-filter-chain=CHAINSPEC],
-        [filter chain to use [default=see src/snoopy.h and src/filter/ for available filters and their usage]]
+        [default filter chain to use [default=see src/snoopy.h and src/filter/ for available filters and their usage]]
     )],
-    AC_DEFINE_UNQUOTED(SNOOPY_CONF_FILTER_CHAIN_custom, "$withval", [Custom filter chain to use])
+    [
+        if test "x$withval" = "x" -o "x$withval" = "xno"; then
+            # We allow it here, as it might be desired to not have any
+            # filter chain configured by default, but will be configured
+            # later, using configuration file.
+            # Allowed: empty, no
+            with_filter_chain=""
+        elif test "x$withval" = "xyes"; then
+            # This must be an error.
+            AC_MSG_ERROR([--with-filter-chain requires an appropriate value (filter chain specification), even empty string will do (--with-filter-chain=""). To disable filtering by default, use --without-filter-chain. Filter chain can later be specified and consequentially enabled by using configuration file. For this to work, configuration file (--with-config-file) and general filtering (--enable-filter) must be enabled.])
+        else
+            with_filter_chain="$withval"
+        fi
+    ],
+    [with_filter_chain=""]
 )
+
+AS_IF([test "x$with_filter_chain" != "x"], [
+    AC_DEFINE_UNQUOTED(SNOOPY_CONF_FILTER_CHAIN_custom, "$with_filter_chain", [Custom filter chain to use])
+])
 
 
 
@@ -149,11 +197,23 @@ AC_ARG_WITH(syslog-facility,
         [--with-syslog-facility=FACILITY],
         [facility to use when logging, check 'man 3 syslog' or 'man openlog' [default=LOG_AUTHPRIV]]
     )],
-    [],
-    [with_syslog_facility=LOG_AUTHPRIV]
+    [
+        if test "x$withval" = "x" -o "x$withval" = "xyes"; then
+            # Enabled, but without explicit value
+            AC_MSG_ERROR([--with-syslog-facility requires an appropriate LOG_* value])
+        elif test "x$withval" = "xno"; then
+            # Explicitly disabled: --without-...
+            AC_MSG_ERROR([using --without-syslog-facility is not supported, syslog log facility is required. Either define it explicitly, or, to use the default value, remove this argument from ./configure line.])
+        else
+            # Enabled with explicit value definition
+            with_syslog_facility_val="$withval"
+        fi
+    ],
+    # Not specified on ./configure line
+    [with_syslog_facility_val="LOG_AUTHPRIV"]
 )
 
-AC_DEFINE_UNQUOTED(SNOOPY_SYSLOG_FACILITY, [$with_syslog_facility], [Syslog facility to use])
+AC_DEFINE_UNQUOTED(SNOOPY_CONF_SYSLOG_FACILITY, [$with_syslog_facility_val], [Syslog facility to use])
 
 
 
@@ -163,11 +223,23 @@ AC_ARG_WITH(syslog-level,
         [--with-syslog-level=LEVEL],
         [facility to use when logging, check 'man 3 syslog' or 'man openlog' [default=LOG_INFO]]
     )],
-    [],
-    [with_syslog_level=LOG_INFO]
+    [
+        if test "x$withval" = "x" -o "x$withval" = "xyes"; then
+            # Enabled, but without explicit value
+            AC_MSG_ERROR([--with-syslog-level requires an appropriate LOG_* value])
+        elif test "x$withval" = "xno"; then
+            # Explicitly disabled: --without-...
+            AC_MSG_ERROR([using --without-syslog-level is not supported, syslog log level is required. Either define it explicitly, or, to use the default value, remove this argument from ./configure line.])
+        else
+            # Enabled with explicit value definition
+            with_syslog_level_val="$withval"
+        fi
+    ],
+    # Not specified on command line
+    [with_syslog_level_val="LOG_INFO"]
 )
 
-AC_DEFINE_UNQUOTED(SNOOPY_SYSLOG_LEVEL, [$with_syslog_level], [Syslog level to use])
+AC_DEFINE_UNQUOTED(SNOOPY_CONF_SYSLOG_LEVEL, [$with_syslog_level_val], [Syslog level to use])
 
 
 
@@ -178,14 +250,27 @@ AC_ARG_WITH(config-file,
         [enable INI configuration file parsing [default=disabled, if enabled then default path is SYSCONFDIR/snoopy.ini]]
     )],
     [
-        if test "$with_config_file" == "yes"; then
+        if test "x$withval" = "xyes"; then
+            # Enabled, but without explicit path
             with_config_file_path="$SYSCONFDIR/snoopy.ini"
+        elif test "x$withval" = "x"; then
+            # Enabled with trailing "=" character but no path specification followed, most likely an script error
+            AC_MSG_ERROR([using --with-config-file= requires an argument, or, to use the default path, remove "=" character from it])
+        elif test "x$withval" = "xno"; then
+            # Explicitly disabled: --without-config-file
+            with_config_file_path=""
         else
-            with_config_file_path="$with_config_file"
+            # Enabled with explicit path definition
+            with_config_file_path="$withval"
         fi
-        AC_DEFINE_UNQUOTED(SNOOPY_CONF_CONFIG_FILE, "$with_config_file_path", [INI configuration file path to use])
-    ]
+    ],
+    # Not specified on command line
+    [with_config_file_path=""]
 )
+
+AS_IF([test "x$with_config_file_path" != "x"], [
+    AC_DEFINE_UNQUOTED(SNOOPY_CONF_CONFIG_FILE, "$with_config_file_path", [INI configuration file path to use])
+])
 
 
 

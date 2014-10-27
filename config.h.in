@@ -93,13 +93,13 @@
 #undef SNOOPY_CONF_LOG_MESSAGE_FORMAT_custom
 
 /* Only log commands executed by root */
-#undef SNOOPY_ROOT_ONLY
+#undef SNOOPY_CONF_ROOT_ONLY
 
 /* Syslog facility to use */
-#undef SNOOPY_SYSLOG_FACILITY
+#undef SNOOPY_CONF_SYSLOG_FACILITY
 
 /* Syslog level to use */
-#undef SNOOPY_SYSLOG_LEVEL
+#undef SNOOPY_CONF_SYSLOG_LEVEL
 
 /* Define to 1 if you have the ANSI C header files. */
 #undef STDC_HEADERS

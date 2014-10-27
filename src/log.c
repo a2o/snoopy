@@ -343,13 +343,13 @@ void snoopy_log_send_to_syslog (
     if (strlen(logMessage) > 0) {
 
         /* Prepare logging stuff */
-        openlog("snoopy", LOG_PID, SNOOPY_SYSLOG_FACILITY);
+        openlog("snoopy", LOG_PID, SNOOPY_CONF_SYSLOG_FACILITY);
 
         /* Log error or ordinary message */
         if (SNOOPY_LOG_ERROR == errorOrMessage) {
             syslog(LOG_ERR, "ERROR: %s", logMessage);
         } else {
-            syslog(SNOOPY_SYSLOG_LEVEL, "%s", logMessage);
+            syslog(SNOOPY_CONF_SYSLOG_LEVEL, "%s", logMessage);
         }
 
         /* Close the syslog file descriptor */
@@ -430,7 +430,7 @@ void snoopy_log_syscall (
     char *logMessage = NULL;
 
     /* Do not log non-root commands if this is requested */
-#if defined(SNOOPY_ROOT_ONLY)
+#if defined(SNOOPY_CONF_ROOT_ONLY)
     if ((geteuid() != 0) && (getuid() != 0)) {
         return;
     }
