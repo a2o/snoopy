@@ -36,14 +36,14 @@ AC_TYPE_UID_T
 
 dnl Checks for library functions.
 AC_FUNC_MALLOC
-AC_CHECK_FUNCS([
-    getcwd
-    getsid
-    memset
-    strchr
-    strdup
-    strstr
-    strtol
+AC_CHECK_FUNCS([ \
+    getcwd \
+    getsid \
+    memset \
+    strchr \
+    strdup \
+    strstr \
+    strtol \
 ])
 
 dnl Generate these (Make)files
