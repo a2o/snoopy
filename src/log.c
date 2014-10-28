@@ -39,11 +39,13 @@
  */
 #include "snoopy.h"
 #include "log.h"
+
 #include "configuration.h"
 #include "error.h"
 #include "inputdatastorage.h"
 #include "inputregistry.h"
 #include "filterregistry.h"
+#include "misc.h"
 
 
 
@@ -436,12 +438,12 @@ void snoopy_log_syscall (
     }
 #endif
 
+    /* Initialize snoopy */
+    snoopy_init();
+
     /* Initialize empty log message */
     logMessage    = malloc(SNOOPY_LOG_MESSAGE_MAX_SIZE);
     logMessage[0] = '\0';
-
-    /* Initialize snoopy configuration */
-    snoopy_configuration_ctor();
 
     /* Generate log message in specified format */
     snoopy_log_message_generate(logMessage, snoopy_configuration.message_format);
@@ -456,6 +458,6 @@ void snoopy_log_syscall (
     }
 
     /* Housekeeping */
-    snoopy_configuration_dtor();
     free(logMessage);
+    snoopy_cleanup();
 }

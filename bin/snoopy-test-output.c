@@ -1,7 +1,8 @@
 /*
  * SNOOPY LOGGER
  *
- * snoopy-test-output
+ * File: snoopy-test-output.c
+ *
  * Copyright (c) 2014 bostjan@a2o.si
  *
  * This program is free software; you can redistribute it and/or modify
@@ -18,19 +19,34 @@
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-#include "snoopy.h"
-#include "log.h"
-#include "configuration.h"
-#include "inputdatastorage.h"
-#include "filterregistry.h"
+
+
+
+/*
+ * Include all required C resources
+ */
 #include <stdio.h>
 #include <stdlib.h>
+
+
+
+/*
+ * Include all snoopy-related resources
+ */
+#include "snoopy.h"
+#include "configuration.h"
+#include "filterregistry.h"
+#include "inputdatastorage.h"
+#include "log.h"
 
 
 
 int main (int argc, char **argv)
 {
     char *logMessage       = NULL;
+
+    /* Initialize snoopy */
+    snoopy_init();
 
     /* Initialize empty log message */
     logMessage    = malloc(SNOOPY_LOG_MESSAGE_MAX_SIZE);
@@ -39,7 +55,6 @@ int main (int argc, char **argv)
     snoopy_inputdatastorage_store_filename(argv[0]);
     snoopy_inputdatastorage_store_argv(argv);
 
-    snoopy_configuration_ctor();
     if (SNOOPY_TRUE == snoopy_configuration.config_file_enabled) {
         printf("Configuration file is enabled: %s\n", snoopy_configuration.config_file_path);
         if (SNOOPY_TRUE == snoopy_configuration.config_file_parsed) {
@@ -75,7 +90,7 @@ int main (int argc, char **argv)
     }
 
     /* Housekeeping */
-    snoopy_configuration_dtor();
     free(logMessage);
+    snoopy_cleanup();
     return 0;
 }

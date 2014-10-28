@@ -1,7 +1,7 @@
 /*
  * SNOOPY LOGGER
  *
- * File: snoopy-dev-helper.c
+ * File: misc.c
  *
  * Copyright (c) 2014 bostjan@a2o.si
  *
@@ -34,36 +34,43 @@
  * Include all snoopy-related resources
  */
 #include "snoopy.h"
-#include "configuration.h"
-#include "inputdatastorage.h"
-#include "inputregistry.h"
 #include "misc.h"
+#include "configuration.h"
 
 
 
-int main (int argc, char **argv)
+/*
+ * snoopy_init
+ *
+ * Description:
+ *     Handles snoopy initialization/startup specifics
+ *
+ * Params:
+ *     (none)
+ *
+ * Return:
+ *     void
+ */
+void snoopy_init ()
 {
-    char *logMessage = NULL;
-
-    /* Initialize snoopy */
-    snoopy_init();
-
-    /* Fake init */
-    snoopy_inputdatastorage_store_filename(argv[0]);
-    snoopy_inputdatastorage_store_argv(argv);
-
-    // Init log message as empty string
-    logMessage    = malloc(SNOOPY_LOG_MESSAGE_MAX_SIZE);
-    logMessage[0] = '\0';
-
-    printf("Snoopy: testing custom message formatting:\n\n");
-    printf("Message format used: \n%s\n\n", SNOOPY_LOG_MESSAGE_FORMAT);
-    snoopy_log_message_generate(logMessage, SNOOPY_LOG_MESSAGE_FORMAT);
-    printf("Produced output:\n%s\n\n", logMessage);
+    snoopy_configuration_ctor();
+}
 
 
-    /* Housekeeping */
-    free(logMessage);
-    snoopy_cleanup();
-    return 0;
+
+/*
+ * snoopy_cleanup
+ *
+ * Description:
+ *     Handles all snoopy deinitialization/shutdown specifics
+ *
+ * Params:
+ *     (none)
+ *
+ * Return:
+ *     void
+ */
+void snoopy_cleanup ()
+{
+    snoopy_configuration_dtor();
 }

@@ -28,6 +28,8 @@ libsnoopy_no_execve_la_SOURCES = \
 	inputregistry.h \
 	log.c \
 	log.h \
+	misc.c \
+	misc.h \
 	snoopy.h
 
 libsnoopy_no_execve_la_LIBADD = \
