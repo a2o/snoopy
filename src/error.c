@@ -59,11 +59,6 @@
  */
 void snoopy_error_handler (char *errorMsg)
 {
-    // Just in case configuration was not initialized before?
-    if (SNOOPY_FALSE == snoopy_configuration.initialized) {
-        snoopy_configuration_load_defaults();
-    }
-
     /* Only send error to syslog if configured like that */
     if (SNOOPY_TRUE == snoopy_configuration.error_logging_enabled) {
         snoopy_log_send_to_syslog(errorMsg, SNOOPY_LOG_ERROR);

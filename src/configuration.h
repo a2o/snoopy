@@ -25,7 +25,7 @@
 /*
  * Array holding snoopy configuration data in one place
  */
-struct snoopy_configuration_type {
+typedef struct {
     int   initialized;
 
     int   config_file_enabled;
@@ -40,8 +40,8 @@ struct snoopy_configuration_type {
     int   filter_enabled;
     char *filter_chain;
     int   filter_chain_malloced;
-};
-extern struct   snoopy_configuration_type   snoopy_configuration;
+} snoopy_configuration_type;
+extern   snoopy_configuration_type   snoopy_configuration;
 
 
 
@@ -50,5 +50,4 @@ extern struct   snoopy_configuration_type   snoopy_configuration;
  */
 void snoopy_configuration_ctor();
 void snoopy_configuration_dtor();
-void snoopy_configuration_load_defaults();
 int  snoopy_configuration_load_file(char *iniFilePath);

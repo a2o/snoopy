@@ -50,9 +50,32 @@
 
 
 /*
- * Storage of snoopy configuration
+ * Storage of snoopy configuration, with default values
  */
-struct   snoopy_configuration_type   snoopy_configuration;
+snoopy_configuration_type   snoopy_configuration = {
+    .initialized             = SNOOPY_TRUE,
+
+    .config_file_enabled     = SNOOPY_FALSE,
+    .config_file_path        = "",
+    .config_file_parsed      = SNOOPY_FALSE,
+
+#ifdef SNOOPY_ERROR_LOGGING_ENABLED
+    .error_logging_enabled   = SNOOPY_TRUE,
+#else
+    .error_logging_enabled   = SNOOPY_FALSE,
+#endif
+
+    .message_format          = SNOOPY_LOG_MESSAGE_FORMAT,
+    .message_format_malloced = SNOOPY_FALSE,
+
+#ifdef SNOOPY_FILTER_ENABLED
+    .filter_enabled          = SNOOPY_TRUE,
+#else
+    .filter_enabled          = SNOOPY_FALSE,
+#endif
+    .filter_chain            = SNOOPY_FILTER_CHAIN,
+    .filter_chain_malloced   = SNOOPY_FALSE,
+};
 
 
 
@@ -73,9 +96,6 @@ struct   snoopy_configuration_type   snoopy_configuration;
  */
 void snoopy_configuration_ctor ()
 {
-    /* Initialize default variables first */
-    snoopy_configuration_load_defaults();
-
     /* Parse INI file if enabled */
 #ifdef SNOOPY_CONFIG_FILE
     snoopy_configuration_load_file(SNOOPY_CONFIG_FILE);
@@ -104,47 +124,6 @@ void snoopy_configuration_dtor ()
     if (SNOOPY_TRUE == snoopy_configuration.filter_chain_malloced) {
         free(snoopy_configuration.filter_chain);
     }
-}
-
-
-
-/*
- * snoopy_configuration_load_defaults
- *
- * Description:
- *     Initializes configuration struct with default configuration,
- *     either hard-coded or ./configured.
- *
- * Params:
- *     (none)
- *
- * Return:
- *     void
- */
-void snoopy_configuration_load_defaults ()
-{
-    snoopy_configuration.initialized             = SNOOPY_TRUE;
-
-    snoopy_configuration.config_file_enabled     = SNOOPY_FALSE;
-    snoopy_configuration.config_file_path        = "";
-    snoopy_configuration.config_file_parsed      = SNOOPY_FALSE;
-
-#ifdef SNOOPY_ERROR_LOGGING_ENABLED
-    snoopy_configuration.error_logging_enabled   = SNOOPY_TRUE;
-#else
-    snoopy_configuration.error_logging_enabled   = SNOOPY_FALSE;
-#endif
-
-    snoopy_configuration.message_format          = SNOOPY_LOG_MESSAGE_FORMAT;
-    snoopy_configuration.message_format_malloced = SNOOPY_FALSE;
-
-#ifdef SNOOPY_FILTER_ENABLED
-    snoopy_configuration.filter_enabled          = SNOOPY_TRUE;
-#else
-    snoopy_configuration.filter_enabled          = SNOOPY_FALSE;
-#endif
-    snoopy_configuration.filter_chain            = SNOOPY_FILTER_CHAIN;
-    snoopy_configuration.filter_chain_malloced   = SNOOPY_FALSE;
 }
 
 
