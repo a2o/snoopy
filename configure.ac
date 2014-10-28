@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.63])
-AC_INIT([Snoopy Logger], [2.0.0rc8], [https://github.com/a2o/snoopy/], [snoopy])
+AC_INIT([Snoopy Logger], [2.0.0rc7], [https://github.com/a2o/snoopy/], [snoopy])
 AC_DEFINE(PACKAGE_URL, [], "https://github.com/a2o/snoopy/")
 AC_CONFIG_SRCDIR([config.h.in])
 AC_CONFIG_HEADERS([config.h])
@@ -32,10 +32,19 @@ AC_CHECK_HEADERS([limits.h stdlib.h string.h syslog.h unistd.h])
 dnl Checks for typedefs, structures, and compiler characteristics.
 AC_C_INLINE
 AC_TYPE_SIZE_T
+AC_TYPE_UID_T
 
 dnl Checks for library functions.
 AC_FUNC_MALLOC
-AC_CHECK_FUNCS([getcwd getsid strstr])
+AC_CHECK_FUNCS([
+    getcwd
+    getsid
+    memset
+    strchr
+    strdup
+    strstr
+    strtol
+])
 
 dnl Generate these (Make)files
 AC_CONFIG_FILES([Makefile
