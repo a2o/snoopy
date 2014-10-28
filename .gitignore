@@ -27,6 +27,7 @@ Makefile
 .deps
 .libs
 /src/libsnoopy.so
+/bin/snoopy-test-all-inputs
 /bin/snoopy-test-output
 /bin/snoopy-detect
 /bin/snoopy-dev-helper

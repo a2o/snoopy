@@ -25,12 +25,6 @@ void snoopy_log_message_generate (
     char        *logMessage,
     char        *logMessageFormat
 );
-void snoopy_log_message_generate_origFormat (
-    char        *logMessage
-);
-void snoopy_log_message_generate_testLoopAllInputs (
-    char        *logMessage
-);
 
 
 

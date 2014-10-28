@@ -15,7 +15,8 @@ snoopy_test_output_LDADD = \
 
 noinst_PROGRAMS = \
 	snoopy-detect \
-	snoopy-dev-helper
+	snoopy-dev-helper \
+        snoopy-test-all-inputs
 
 snoopy_detect_SOURCES = \
 	snoopy-detect.c
@@ -23,4 +24,9 @@ snoopy_detect_SOURCES = \
 snoopy_dev_helper_SOURCES = \
 	snoopy-dev-helper.c
 snoopy_dev_helper_LDADD = \
+	$(top_srcdir)/src/libsnoopy_no_execve.la
+
+snoopy_test_all_inputs_SOURCES = \
+	snoopy-test-all-inputs.c
+snoopy_test_all_inputs_LDADD = \
 	$(top_srcdir)/src/libsnoopy_no_execve.la

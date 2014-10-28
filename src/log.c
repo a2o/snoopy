@@ -151,60 +151,6 @@ void snoopy_log_message_generate (
 
 
 /*
- * snoopy_log_message_generate_testLoopAllInputs
- *
- * Description:
- *     Generates log message from inputs available,
- *     for testing/debugging purposes
- *
- * Params:
- *     logMessage:   destination string to return message in
- *
- * Return:
- *     void
- */
-void snoopy_log_message_generate_testLoopAllInputs (
-    char       *logMessage
-) {
-    char   *inputMessage = NULL;
-    int     i;
-
-    /* Initialize empty strings */
-    inputMessage   = malloc(SNOOPY_INPUT_MESSAGE_MAX_SIZE + 1);
-    logMessage[0]  = '\0';
-
-    /* Loop throught all inputs and just append the output */
-    i = 0;
-    while (strcmp(snoopy_inputregistry_names[i], "") != 0) {
-        inputMessage[0]  = '\0';
-        int inputMessageSize = -1;
-
-        /* Execute the input function */
-        inputMessageSize = snoopy_inputregistry_ptrs[i](inputMessage, "");
-        if (inputMessageSize > SNOOPY_INPUT_MESSAGE_MAX_SIZE) {
-            snoopy_error_handler("Maximum input message size exceeded");
-        }
-
-        /* Copy content, append */
-        snoopy_log_message_append(logMessage, snoopy_inputregistry_names[i]);
-        snoopy_log_message_append(logMessage, ":\t");
-        snoopy_log_message_append(logMessage, inputMessage);
-        snoopy_log_message_append(logMessage, "\n");
-
-        /* Go to next input provider */
-        i++;
-    }
-
-    /* Remove latest space */
-    logMessage[strlen(logMessage)-1] = '\0';
-
-    /* Memory housekeeping */
-    free(inputMessage);
-}
-
-
-
-/*
  * snoopy_log_message_append
  *
  * Description:
