@@ -5,9 +5,21 @@
 ################################################################################
 
 Steps:
-1. update ChangeLog, commit
-2. run autoscan, compare configure.scan to configure.ac,
-    port required changes to .ac and run autoreconf
-2. bump version in configure.ac, run ./autogen.sh, commit
-3. create git tag 'snoopy-X.Y.Z'
-4. cd to the repo root and run "./dev-scripts/make-release.sh snoopy-x.y.z"
+
+1. Run autoscan:
+    - add suggestions to configure.ac
+    - compare configure.scan to configure.ac
+    - update config.h.in
+    - commit
+
+2. Update version info:
+    - in ChangeLog
+    - in configure.ac
+    - commit
+
+3. Create git tag:
+    - called 'snoopy-X.Y.Z'   # For github to provide proper snoopy release tarball name
+
+4. Release it
+    - cd to the repo root
+    - run "./dev-scripts/create-release.sh snoopy-x.y.z"
