@@ -9,7 +9,7 @@ that were executed on the system. Snoopy should be completely transparent to
 users and to applications. It acts as a preloaded library that provides a
 wrapper around calls to execve() syscall. Logging is done via syslog.
 
-[![Flattr this git repo](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=a2o&url=https://github.com/a2o/snoopy&title=Snoopy Logger&language=&tags=github&category=software)
+[![Flattr Snoopy Logger project](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=a2o&url=https://github.com/a2o/snoopy&title=Snoopy Logger)
 
 
 
