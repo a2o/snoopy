@@ -277,6 +277,7 @@ AC_ARG_WITH(config-file,
     [with_config_file_path=""]
 )
 
+AM_CONDITIONAL([CONFIG_FILE_ENABLED], [test "x$with_config_file_path" != "x"])
 AS_IF([test "x$with_config_file_path" != "x"], [
     AC_DEFINE_UNQUOTED(SNOOPY_CONF_CONFIG_FILE, "$with_config_file_path", [INI configuration file path to use])
 ])

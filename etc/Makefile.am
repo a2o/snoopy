@@ -6,6 +6,7 @@ ACLOCAL_AMFLAGS = -I m4
 EXTRA_DIST +=\
     snoopy.ini
 
+if CONFIG_FILE_ENABLED
 install-exec-local:
 	if [ -f $(sysconfdir)/snoopy.ini ]; then \
 	    echo ; \
@@ -17,3 +18,4 @@ install-exec-local:
 	    echo ; \
 	    install snoopy.ini $(sysconfdir)/snoopy.ini ; \
 	fi
+endif
