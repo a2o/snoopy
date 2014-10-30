@@ -10,11 +10,7 @@
 
 ### Where is the library installed?
 #
-LIBDIR=$1
-if [ "x$LIBDIR" = "x" ]; then
-    echo "ERROR: No argument given, libdir expected"
-    exit 1
-fi
+LIBDIR="@SNOOPY_LIBDIR@"
 
 
 
@@ -22,7 +18,7 @@ fi
 #
 if [ ! -x $LIBDIR/libsnoopy.so ]; then
     echo
-    echo "ERROR: $LIBDIR/libsnoopy.so is not installed or is not executable"
+    echo "SNOOPY ERROR: $LIBDIR/libsnoopy.so is not installed or is not executable"
     echo
     exit 1
 fi
@@ -34,7 +30,7 @@ fi
 touch /etc/ld.so.preload
 if [ ! -w /etc/ld.so.preload ]; then
     echo
-    echo 'ERROR: /etc/ld.so.preload not writable - are you running this script as a unprivileged user?'
+    echo 'SNOOPY ERROR: /etc/ld.so.preload not writable - are you running this script as a unprivileged user?'
     echo
     exit 1
 fi
@@ -43,23 +39,18 @@ fi
 
 ### Do the actual installation
 #
-echo "ENABLE:"
 COUNT=`grep -Ec "/(lib)?snoopy.so" /etc/ld.so.preload`
 if [ "$COUNT" -gt "1" ]; then
     echo
-    echo "ERROR: Multiple instances of (lib)snoopy.so found in /etc/ld.so.preload. Unable to proceed."
+    echo "SNOOPY ERROR: Multiple instances of (lib)snoopy.so found in /etc/ld.so.preload. Unable to proceed."
     echo
     exit 1
 elif [ "$COUNT" -eq "1" ]; then
-    echo -n "ENABLE:   Removing from /etc/ld.so.preload: "
+    echo -n "SNOOPY: Removing from /etc/ld.so.preload: "
     cat /etc/ld.so.preload | grep -E "/(lib)?snoopy.so"
     sed -i "/\/\(lib\)\?snoopy.so/d" /etc/ld.so.preload
 fi
-echo "ENABLE:   Adding to /etc/ld.so.preload:     $LIBDIR/libsnoopy.so"
+echo "SNOOPY: Adding to /etc/ld.so.preload:     $LIBDIR/libsnoopy.so"
 echo "$LIBDIR/libsnoopy.so" >> /etc/ld.so.preload
-echo "ENABLE:"
-echo "ENABLE:   SUCCESS!"
-echo "ENABLE:"
-echo "ENABLE:   Snoopy is now added to /etc/ld.so.preload, which means it is enabled."
-echo "ENABLE:   Check your syslog files for output."
-echo "ENABLE:"
+echo "SNOOPY: Hint: check your syslog files for output."
+echo "SNOOPY: Enabled."

@@ -21,6 +21,7 @@ AC_PROG_INSTALL
 AC_PROG_LN_S
 AC_PROG_MAKE_SET
 AC_PROG_RANLIB
+AC_PROG_SED
 
 dnl Checks for libraries.
 dnl FIXME: Replace `main' with a function in `-ldl':
@@ -46,6 +47,16 @@ AC_CHECK_FUNCS([ \
     strtol \
 ])
 
+dnl Substitute these variables when creating (Make)files below - GENERIC
+AC_SUBST([PREFIX])
+AC_SUBST([SYSCONFDIR])
+
+dnl Substitute these variables when creating (Make)files below - CUSTOM
+dnl $libdir        contains '${exec_prefix}' if not specified as ./configure --libdir=...
+dnl ${exec_prefix} contains 'NONE'           if not specified as ./configure --exec-prefix=...
+SNOOPY_LIBDIR="`eval echo ${libdir} | sed -e s/^NONE/$prefix/ | sed -e s@^NONE@/usr/local@`"
+AC_SUBST([SNOOPY_LIBDIR])
+
 dnl Generate these (Make)files
 AC_CONFIG_FILES([Makefile
                  bin/Makefile
@@ -55,6 +66,8 @@ AC_CONFIG_FILES([Makefile
                  src/lib/Makefile
                  src/filter/Makefile
                  src/input/Makefile])
+AC_CONFIG_FILES([bin/snoopy-disable], [chmod +x bin/snoopy-disable])
+AC_CONFIG_FILES([bin/snoopy-enable],  [chmod +x bin/snoopy-enable])
 
 
 

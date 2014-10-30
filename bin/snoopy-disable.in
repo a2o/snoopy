@@ -1,0 +1,44 @@
+#!/bin/sh
+
+
+
+# This is a script that disables system-wide snoopy installation.
+# You have to run this script as a privileged user.
+# This script is also run when you execute "make disable".
+
+
+
+### Where is the library installed?
+#
+LIBDIR="@SNOOPY_LIBDIR@"
+
+
+
+### Check user that is running this script
+#
+touch /etc/ld.so.preload
+if [ ! -w /etc/ld.so.preload ]; then
+    echo
+    echo 'SNOOPY ERROR: /etc/ld.so.preload not writable - are you running this script as a unprivileged user?'
+    echo
+    exit 1
+fi
+
+
+
+### Do the actual installation
+#
+COUNT=`grep -Ec "/(lib)?snoopy.so" /etc/ld.so.preload`
+if [ "$COUNT" -gt "1" ]; then
+    echo
+    echo "SNOOPY ERROR: Multiple instances of (lib)snoopy.so found in /etc/ld.so.preload. Unable to proceed."
+    echo
+    exit 1
+elif [ "$COUNT" -eq "1" ]; then
+    echo -n "SNOOPY: Removing from /etc/ld.so.preload: "
+    cat /etc/ld.so.preload | grep -E "/(lib)?snoopy.so"
+    sed -i "/\/\(lib\)\?snoopy.so/d" /etc/ld.so.preload
+    echo "SNOOPY: Disabled."
+else
+    echo "SNOOPY: Snoopy is NOT enabled on this system."
+fi

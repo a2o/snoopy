@@ -27,6 +27,8 @@ Makefile
 .deps
 .libs
 /src/libsnoopy.so
+/bin/snoopy-disable
+/bin/snoopy-enable
 /bin/snoopy-test-all-inputs
 /bin/snoopy-test-output
 /bin/snoopy-detect

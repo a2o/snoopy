@@ -6,8 +6,18 @@ ACLOCAL_AMFLAGS = -I m4
 SUBDIRS = src bin etc
 
 EXTRA_DIST +=\
-	autogen.sh \
-	bin/snoopy-enable.sh
+	autogen.sh
 
 enable: install
-	$(top_srcdir)/bin/snoopy-enable.sh $(libdir)
+	echo ; \
+	$(top_srcdir)/bin/snoopy-enable ; \
+	echo ;
+
+disable:
+	echo ; \
+	$(top_srcdir)/bin/snoopy-disable \
+	echo ;
+
+# Disable it if we are uninstalling it, to avoid error messages
+# about missing library that should be preloaded.
+uninstall-local: disable

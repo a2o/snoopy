@@ -23,6 +23,7 @@ o Feature: Implemented internal filtering, with the following filters available:
 o Feature: Added optional support for INI configuration file
 o Feature: Added envp data to intputdatastorage if execve() is used. Prepared
     for future inputs to consume it.
+o Feature: Created snoopy-enable and snoopy-disable system scripts.
 
 o Refactoring: Separated data gathering into separate functions, to be
     used at will - now they are called "input providers"
@@ -46,6 +47,7 @@ o Refactoring: created proper initialization/shutdown methods
 o Documentation: added into about writing new input providers
 o Bugfix: fixed compilation failure on debian in inputs/cwd.c (thanks Sébastien Gross)
 o Bugfix: missing snoopy.ini in distribution tarball (thanks Jeremy Brown)
+o Bugfix: When uninstalling, also disable snoopy (remove from /etc/ld.so.preload).
 
 
 2013-04-06 - Version  1.9.0

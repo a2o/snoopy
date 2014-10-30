@@ -1,6 +1,15 @@
 AM_CFLAGS = -I$(top_srcdir)/src
 
 
+
+### Scripts to enable/disable snoopy
+#
+sbin_SCRIPTS = \
+	snoopy-enable \
+	snoopy-disable
+
+
+
 ### Test programs
 #
 # Some development/testing programs here
