@@ -43,6 +43,9 @@ repository URL, below project description.
 
 At this point, snoopy is **installed but not yet enabled**.
 
+For Debian/Ubuntu package generation, please refer to
+`contrib/debian/README.Build.md`.
+
 
 ### Configuring log output
 
