@@ -1,0 +1,30 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+# to run with quilt use this instead:
+# dh  --with quilt $@
+%:
+	dh $* $@ --with autoreconf
+
+override_dh_auto_configure:
+	./configure \
+		--build=x86_64-linux-gnu \
+		--prefix=/ \
+		--includedir=\${prefix}/include \
+		--mandir=\${prefix}/share/man \
+		--infodir=\${prefix}/share/info \
+		--sysconfdir=/etc --localstatedir=/var \
+		--libexecdir=\${prefix}/lib/snoopy \
+		--disable-maintainer-mode \
+		--disable-dependency-tracking \
+		--with-message-format='[login:%{login} ssh:(%{env:SSH_CONNECTION}) sid:%{sid} tty:%{tty} (%{tty_uid}/%{tty_username}) uid:%{username}(%{uid})/%{eusername}(%{euid}) gid:%{group}(%{gid})/%{egroup}(%{egid}) cwd:%{cwd}]: %{cmdline}'
+
+
+override_dh_install:
+	dh_install
+	rm \
+	 	debian/libsnoopy/bin/snoopy-test-output \
+	 	debian/libsnoopy/lib/libsnoopy.la
