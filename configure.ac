@@ -10,6 +10,7 @@ AC_CONFIG_HEADERS([config.h])
 dnl We are using automake and libtool
 AC_CONFIG_MACRO_DIR([m4])
 AM_INIT_AUTOMAKE([1.11 gnu silent-rules subdir-objects -Wall -Werror])
+AM_PROG_AR   dnl Required by Ubuntu 14.04 build receipe, must appear before LT_INIT
 LT_INIT([disable-static])
 
 dnl Checks for programs.
