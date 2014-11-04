@@ -14,7 +14,7 @@ The package is built into parent directory. You can install it using `dpkg`.
 Basically you need to run following commands:
 
     ln -nfs contrib/debian .
-    apt-get install debuild debhelper autoconf dh-autoreconf
+    apt-get install devscripts debhelper autoconf dh-autoreconf
     debuild --no-tgz-check -I.git -i'\.git/'
     dpkg -i ../libsnoopy_2.0.0rc5-1_amd64.deb
 
