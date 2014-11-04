@@ -55,7 +55,7 @@ AC_SUBST([SYSCONFDIR])
 dnl Substitute these variables when creating (Make)files below - CUSTOM
 dnl $libdir        contains '${exec_prefix}' if not specified as ./configure --libdir=...
 dnl ${exec_prefix} contains 'NONE'           if not specified as ./configure --exec-prefix=...
-SNOOPY_LIBDIR="`eval echo ${libdir} | sed -e s/^NONE/$prefix/ | sed -e s@^NONE@/usr/local@`"
+SNOOPY_LIBDIR="`eval echo ${libdir} | sed -e s@^NONE@$prefix@ | sed -e s@^NONE@/usr/local@`"
 AC_SUBST([SNOOPY_LIBDIR])
 
 dnl Generate these (Make)files
