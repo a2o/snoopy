@@ -34,3 +34,7 @@ Makefile
 /bin/snoopy-detect
 /bin/snoopy-dev-helper
 /contrib/sles/snoopy.spec
+
+### Distribution related files
+#
+/debian
