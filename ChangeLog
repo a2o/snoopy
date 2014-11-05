@@ -3,7 +3,7 @@
 -------------------------------------------------------------------------------
 
 
-2014-FIXME - Version  2.0.0rc12
+2014-11-05 - Version  2.0.0
 ---------------------------
 o Feature: Added support for custom message format specification at
     configuration time
@@ -26,6 +26,7 @@ o Feature: Added envp data to intputdatastorage if execve() is used. Prepared
 o Feature: Created snoopy-enable and snoopy-disable system scripts.
 
 o Distro packaging: added debian/ubuntu packaging data (by Sebastien Gross)
+o Distro packaging: added rhel/centos package spec file (by Jeremy Brown)
 
 o Refactoring: Separated data gathering into separate functions, to be
     used at will - now they are called "input providers"
