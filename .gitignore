@@ -33,6 +33,7 @@ Makefile
 /bin/snoopy-test-output
 /bin/snoopy-detect
 /bin/snoopy-dev-helper
+/contrib/rhel/snoopy.spec
 /contrib/sles/snoopy.spec
 
 ### Distribution related files

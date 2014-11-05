@@ -61,6 +61,7 @@ AC_SUBST([SNOOPY_LIBDIR])
 dnl Generate these (Make)files
 AC_CONFIG_FILES([Makefile
                  bin/Makefile
+                 contrib/rhel/snoopy.spec
                  contrib/sles/snoopy.spec
                  etc/Makefile
                  src/Makefile
