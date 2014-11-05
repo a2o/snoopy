@@ -15,6 +15,7 @@ Steps:
 2. Update version info:
     - in ChangeLog
     - in configure.ac
+    - in contrib/rhel/snoopy.spec
     - commit
 
 3. Create git tag:
