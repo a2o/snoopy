@@ -3,7 +3,7 @@
 -------------------------------------------------------------------------------
 
 
-2014-FIXME - Version  2.0.0rc11
+2014-FIXME - Version  2.0.0rc12
 ---------------------------
 o Feature: Added support for custom message format specification at
     configuration time
@@ -24,6 +24,8 @@ o Feature: Added optional support for INI configuration file
 o Feature: Added envp data to intputdatastorage if execve() is used. Prepared
     for future inputs to consume it.
 o Feature: Created snoopy-enable and snoopy-disable system scripts.
+
+o Distro packaging: added debian/ubuntu packaging data (by Sebastien Gross)
 
 o Refactoring: Separated data gathering into separate functions, to be
     used at will - now they are called "input providers"
