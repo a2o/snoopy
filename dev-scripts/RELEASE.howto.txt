@@ -6,7 +6,9 @@
 
 Steps:
 
-1. Run autoscan:
+1. Run autoscan and compare results:
+    - 'autoscan'
+    - use 'git diff' to see if anything changed from previous run
     - add suggestions to configure.ac
     - compare configure.scan to configure.ac
     - update config.h.in
