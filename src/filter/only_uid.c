@@ -55,6 +55,7 @@ int snoopy_filter_only_uid (char *msg, char *arg)
     curUid = getuid();
 
     /* Loop through all UIDs passed to the filter as argument */
+    saveptr1 = NULL;
     for (j=1, str1=arg;  ; j++, str1=NULL) {
         char  *argCurUidStr;   // Literal UID
         uid_t  argCurUid;      // Actual UID to be used for comparison
