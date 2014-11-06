@@ -20,15 +20,13 @@ Snoopy can be installed by:
 Manual build is preferred if you distribution only provides <2.0.0 Snoopy versions.
 Details below.
 
-WARNING:
-Snoopy versions below 2.0.0 are not supported anymore.
-Please do not submit any bug/feature/change requests that concern versions before 2.0.0.
+**WARNING: This manual is for Snoopy version 2.0.0+. Snoopy versions below 2.0.0 are not supported anymore. Please do not submit any bug/feature/change requests that concern versions before 2.0.0.**
 
 
 
 ## 3. Configuration
 
-Most parts of snoopy can and should be configured at build time.
+Most parts of Snoopy can and should be configured at build time.
 However, since version 2.0.0 Snoopy supports optional configuration file.
 But, as this configuration file is optional, it needs to be enabled when Snoopy is being built.
 
@@ -67,7 +65,7 @@ For Debian/Ubuntu package generation, please refer to
 
 #### 5.3.1 Download options
 
-You can download snoopy release tarballs from this location:
+You can download Snoopy release tarballs from this location:
 http://source.a2o.si/download/snoopy/
 
 Alternatively you can download it from GitHub, by selecting a release tag at
@@ -93,7 +91,7 @@ to configure command. Consult `./configure --help' for more information.
     make
     make install
 
-    # At this point, snoopy is **installed but not yet enabled**.
+    # At this point, Snoopy is **installed but not yet enabled**.
     # Enable it
     make enable
 
@@ -159,7 +157,7 @@ description of supported configuration directives.
 
 If you wish to monitor only certain applications you can do so through
 the LD_PRELOAD environmental variable - simply set it to the full path
-to snoopy.so shared library before starting the application.
+to libsnoopy.so shared library before starting the application.
 
 Example:
 
@@ -168,14 +166,14 @@ Example:
     unset LD_PRELOAD
 
 
-#### 5.4.2 Enable system-wide snoopy on 32-bit-only or 64-bit-only systems
+#### 5.4.2 Enable system-wide Snoopy on 32-bit-only or 64-bit-only systems
 
 WARNING: Using this method on multilib systems (64-bit systems capable
 WARNING: of running 32-bit applications) can cause malfunction because
 WARNING: preload config file /etc/ld.so.preload makes  no  distinction
 WARNING: between 32- and 64-bit programs and shared libraries.
 
-    # Use special snoopy script
+    # Use special Snoopy-enabling script
     snoopy-enable
 
     # Or enable it using build tools
@@ -184,7 +182,7 @@ WARNING: between 32- and 64-bit programs and shared libraries.
 Explanation:
 
 An entry is created in /etc/ld.so.preload file  which  causes  execv()
-and execve() system calls to be intercepted by snoopy and logged via
+and execve() system calls to be intercepted by Snoopy and logged via
 syslog.
 
 
@@ -201,7 +199,7 @@ of the library in the appropriate paths.
 #### 5.4.4 For multilib systems with LD_PRELOAD_* environmental variables
 
 On systems that support LD_PRELOAD_32 and LD_PRELOAD_64  you  can  use
-those variables to force loading of snoopy. If you with to  enable  it
+those variables to force loading of Snoopy. If you with to  enable  it
 system-wide, ensure that correct values are held  by  those  variables
 at boot time. Consult section  4.a  of  this  README  on  how  to  set
 environmental variables. Setting them at boot time is usually  distro-
@@ -218,7 +216,7 @@ OS documentation for details on this subject.
 
 ### 5.5 Snoopy output
 
-The exact location  of  your  snoopy output  depends  on  your  syslog
+The exact location  of  your  Snoopy output  depends  on  your  syslog
 configuration. Usually it gets stored in one of the following files:
 
     /var/log/auth*
@@ -227,17 +225,17 @@ configuration. Usually it gets stored in one of the following files:
 
 
 
-### 5.6 How to disable snoopy
+### 5.6 How to disable Snoopy
 
 The simplest way is by using special script:
 
     snoopy-disable
 
-To manually disable snoopy, simply edit /etc/ld.so.preload and remove
+To manually disable Snoopy, simply edit /etc/ld.so.preload and remove
 reference to libsnoopy.so. Also unset any environmental variable that
-references snoopy (LD_PRELOAD, LD_PRELOAD_32 and LD_PRELOAD_64).  Then
-you may also delete snoopy shared library from  your  system.  Default
-installation path of snoopy shared library is:
+references Snoopy (LD_PRELOAD, LD_PRELOAD_32 and LD_PRELOAD_64).  Then
+you may also delete Snoopy shared library from  your  system.  Default
+installation path of Snoopy shared library is:
 
     /usr/local/lib/libsnoopy.so
 
@@ -264,7 +262,7 @@ Here are basic rules for input provider development:
 - input provider names should be lower case, with underscores for word separation
 - data about currently executing process is available in src/inputdatastorage.*
     files. Consult existing providers on how to use it (filename for example)
-- each input provider must be self-sufficient. Do not rely on other parts of snoopy
+- each input provider must be self-sufficient. Do not rely on other parts of Snoopy
 - each input provider must be tidy (free all mallocs, close all file descriptors)
 - the first argument passed to each provider is a char array to return message into
 - input provider message must not be longer than SNOOPY_INPUT_MESSAGE_MAX_SIZE
@@ -273,8 +271,8 @@ Here are basic rules for input provider development:
 - code indentation: 4 spaces, no tabs
 
 If you have developed a shiny new input provider and you would like to
-start using it with snoopy, there are three additional places where you
-need to add references to it to make snoopy fully aware of it:
+start using it with Snoopy, there are three additional places where you
+need to add references to it to make Snoopy fully aware of it:
 
 - src/input/Makefile.am   (location is evident)
 - src/inputregistry.h     (one reference)
@@ -295,8 +293,8 @@ following additional specifics:
     of filter chain processing and message is not logged to syslog
 
 If you have developed a shiny new filter and you would like to
-start using it with snoopy, there are three additional places where you
-need to add references to it to make snoopy fully aware of it:
+start using it with Snoopy, there are three additional places where you
+need to add references to it to make Snoopy fully aware of it:
 
 - src/filter/Makefile.am   (location is evident)
 - src/filterregistry.h     (one reference)
