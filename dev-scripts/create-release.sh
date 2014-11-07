@@ -51,9 +51,15 @@ DIR_REPO=`pwd`
 FILENAME_RELEASE="snoopy-$RELEASE_VERSION.tar.gz"
 FILENAME_RELEASE_MD5="snoopy-$RELEASE_VERSION.tar.gz.md5"
 FILENAME_RELEASE_SHA1="snoopy-$RELEASE_VERSION.tar.gz.sha1"
+FILENAME_RELEASE_SIZE="snoopy-$RELEASE_VERSION.tar.gz.size"
+FILENAME_LATEST_VERSION="snoopy-latest-version.txt"
+FILENAME_LATEST_PACKAGE_FILENAME="snoopy-latest-package-filename.txt"
 FILE_RELEASE="$DIR_REPO/$FILENAME_RELEASE"
 FILE_RELEASE_MD5="$DIR_REPO/$FILENAME_RELEASE_MD5"
 FILE_RELEASE_SHA1="$DIR_REPO/$FILENAME_RELEASE_SHA1"
+FILE_RELEASE_SIZE="$DIR_REPO/$FILENAME_RELEASE_SIZE"
+FILE_LATEST_VERSION="$DIR_REPO/$FILENAME_LATEST_VERSION"
+FILE_LATEST_PACKAGE_FILENAME="$DIR_REPO/$FILENAME_LATEST_PACKAGE_FILENAME"
 PUBLIC_DL_SSH_HOST="source.a2o.si"
 PUBLIC_DL_SSH_PATH="/var/www/source.a2o.si/public/download/snoopy"
 PUBLIC_DL_URI_PREFIX="http://source.a2o.si/download/snoopy"
@@ -71,6 +77,10 @@ if [ -e $FILE_RELEASE_MD5 ]; then
 fi
 if [ -e $FILE_RELEASE_SHA1 ]; then
     echo "ERROR: Release SHA1 file already exists: $FILE_RELEASE_SHA1"
+    exit 10
+fi
+if [ -e $FILE_RELEASE_SIZE ]; then
+    echo "ERROR: Release SIZE file already exists: $FILE_RELEASE_SIZE"
     exit 10
 fi
 
@@ -115,8 +125,13 @@ git checkout master &&
 
 
 ### Create package
-md5sum  $FILE_RELEASE > $FILE_RELEASE_MD5  &&
-sha1sum $FILE_RELEASE > $FILE_RELEASE_SHA1 &&
+md5sum  $FILENAME_RELEASE > $FILE_RELEASE_MD5  &&
+sha1sum $FILENAME_RELEASE > $FILE_RELEASE_SHA1 &&
+wc -c   $FILENAME_RELEASE > $FILE_RELEASE_SIZE &&
+
+# These two are used by snoopy-install.sh script
+echo "$RELEASE_VERSION"  > $FILE_LATEST_VERSION &&
+echo "$FILENAME_RELEASE" > $FILE_LATEST_PACKAGE_FILENAME &&
 
 
 
@@ -130,7 +145,21 @@ git push github --tags &&
 echo &&
 echo "RELEASING: Uploading release files to http://source.a2o.si/download/snoopy/..." &&
 echo &&
-scp $FILE_RELEASE $FILE_RELEASE_MD5 $FILE_RELEASE_SHA1 $PUBLIC_DL_SSH_HOST:$PUBLIC_DL_SSH_PATH &&
+scp \
+    $FILE_RELEASE \
+    $FILE_RELEASE_MD5 \
+    $FILE_RELEASE_SHA1 \
+    $FILE_RELEASE_SIZE \
+    $FILE_LATEST_VERSION \
+    $FILE_LATEST_PACKAGE_FILENAME \
+    $PUBLIC_DL_SSH_HOST:$PUBLIC_DL_SSH_PATH \
+    &&
+
+# Symlink latest files
+echo &&
+echo "RELEASING: Creating symlink snoopy-latest.tar.gz..." &&
+echo &&
+ssh $PUBLIC_DL_SSH_HOST ln -sf $FILENAME_RELEASE $PUBLIC_DL_SSH_PATH/snoopy-latest.tar.gz &&
 
 echo &&
 echo "COMPLETE: $RELEASE_TAG has been released." &&
