@@ -3,7 +3,16 @@ include   $(top_srcdir)/build/Makefile.am.common
 AUTOMAKE_OPTIONS = foreign subdir-objects
 ACLOCAL_AMFLAGS = -I m4
 
-SUBDIRS = src bin etc
+# Process etc/ before other subdirs
+# If snoopy has config file enabled, then there is a small time frame
+# between installation of library and subsequent installation of
+# initial configuration file where iniparser emits an error about
+# configuration file not being found. Therefore we first install
+# configuration file and only then the snoopy library itself.
+SUBDIRS = \
+	etc \
+	src \
+	bin
 
 EXTRA_DIST +=\
 	autogen.sh

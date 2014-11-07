@@ -91,6 +91,33 @@ fi
 
 
 dnl ============================================================================
+AC_ARG_ENABLE(config-file,
+    [AC_HELP_STRING(
+        [--enable-config-file],
+        [enable INI configuration file parsing [default=disabled, if enabled then path is SYSCONFDIR/snoopy.ini]]
+    )],
+    [
+        if test "x$enableval" = "xyes"; then
+            config_file_path="$SYSCONFDIR/snoopy.ini"
+        elif test "x$enableval" = "xno"; then
+            config_file_path=""
+        else
+            AC_MSG_ERROR([--enable-config-file does not take an argument: $enableval])
+        fi
+    ],
+    # Not specified on command line
+    [config_file_path=""]
+)
+
+AS_IF([test "x$config_file_path" != "x"], [
+    AC_DEFINE_UNQUOTED(SNOOPY_CONF_CONFIG_FILE, "$config_file_path", [INI configuration file path to use])
+])
+
+dnl CONFIG_FILE_ENABLED is used in etc/Makefile.am
+AM_CONDITIONAL([CONFIG_FILE_ENABLED], [test "x$config_file_path" != "x"])
+
+
+dnl ============================================================================
 AC_ARG_ENABLE(error-logging,
     [AC_HELP_STRING(
         [--enable-error-logging],
@@ -264,38 +291,6 @@ AC_ARG_WITH(syslog-level,
 )
 
 AC_DEFINE_UNQUOTED(SNOOPY_CONF_SYSLOG_LEVEL, [$with_syslog_level_val], [Syslog level to use])
-
-
-
-dnl ============================================================================
-AC_ARG_WITH(config-file,
-    [AC_HELP_STRING(
-        [--with-config-file=PATH],
-        [enable INI configuration file parsing [default=disabled, if enabled then default path is SYSCONFDIR/snoopy.ini]]
-    )],
-    [
-        if test "x$withval" = "xyes"; then
-            # Enabled, but without explicit path
-            with_config_file_path="$SYSCONFDIR/snoopy.ini"
-        elif test "x$withval" = "x"; then
-            # Enabled with trailing "=" character but no path specification followed, most likely an script error
-            AC_MSG_ERROR([using --with-config-file= requires an argument, or, to use the default path, remove "=" character from it])
-        elif test "x$withval" = "xno"; then
-            # Explicitly disabled: --without-config-file
-            with_config_file_path=""
-        else
-            # Enabled with explicit path definition
-            with_config_file_path="$withval"
-        fi
-    ],
-    # Not specified on command line
-    [with_config_file_path=""]
-)
-
-AM_CONDITIONAL([CONFIG_FILE_ENABLED], [test "x$with_config_file_path" != "x"])
-AS_IF([test "x$with_config_file_path" != "x"], [
-    AC_DEFINE_UNQUOTED(SNOOPY_CONF_CONFIG_FILE, "$with_config_file_path", [INI configuration file path to use])
-])
 
 
 

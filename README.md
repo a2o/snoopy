@@ -143,11 +143,12 @@ Snoopy supports optional configuration file, which may help with
 development and/or configuration endeavours. Configuration file must
 be enabled at build time:
 
-    --with-config-file[=PATH]
+    --enable-config-file
 
-If PATH is not specified, default path SYSCONFDIR/snoopy.ini is used
-instead. See sample configuration file etc/snoopy.ini for list and
-description of supported configuration directives.
+Configuration file is installed as SYSCONFDIR/snoopy.ini. SYSCONFDIR
+can be changed with --sysconfdir=PATH configuration directive.
+See sample configuration file etc/snoopy.ini for list and description
+of supported configuration directives.
 
 
 
