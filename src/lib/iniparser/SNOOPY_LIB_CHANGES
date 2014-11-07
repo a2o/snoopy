@@ -1,0 +1,4 @@
+Snoopy changes to iniparser
+===========================
+
+o Changed all error messages to include "snoopy " prefix
