@@ -14,13 +14,15 @@ It sends every executed command to syslog.
 
 Snoopy can be installed by:
 
+* automated build procedure (preferred), or
 * using packages provided by your Linux distribution ("apt-get" or "yum" or "zypper" + "install snoopy"), or
-* building it manually.
+* building it manually (detail in section 5.3).
 
-Manual build is preferred if you distribution only provides <2.0.0 Snoopy versions.
-Details below.
+To start automated build procedure, run this command:
 
-**WARNING: This manual is for Snoopy version 2.0.0+. Snoopy versions below 2.0.0 are not supported anymore. Please do not submit any bug/feature/change requests that concern versions before 2.0.0.**
+    wget -q -O - https://github.com/a2o/snoopy/raw/master/bin/snoopy-install.sh | sh
+
+**WARNING: This manual is for Snoopy version 2.0.1+. Snoopy versions below 2.0.1 are not supported anymore. Please do not submit any bug/feature/change requests that concern versions before 2.0.1.**
 
 
 
