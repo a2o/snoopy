@@ -3,7 +3,7 @@
 -------------------------------------------------------------------------------
 
 
-2014-FIXME - Version  2.0.1
+2014-11-07 - Version  2.0.1
 ---------------------------
 o Bugfix: fixed uninitialized pointer in filter/exclude_uid.c and only_uid.c
 o Enhancement: prefix all iniparser errors with "SNOOPY " prefix, so it is
