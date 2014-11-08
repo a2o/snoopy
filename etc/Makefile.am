@@ -10,8 +10,9 @@ if CONFIG_FILE_ENABLED
 install-exec-local:
 	if [ -f $(sysconfdir)/snoopy.ini ]; then \
 	    echo ; \
-	    echo "CONFIG FILE EXISTS, skipping: $(sysconfdir)/snoopy.ini" ; \
+	    echo "CONFIG FILE EXISTS, installing as: $(sysconfdir)/snoopy.ini.$(PACKAGE_VERSION)" ; \
 	    echo ; \
+	    install snoopy.ini $(sysconfdir)/snoopy.ini.$(PACKAGE_VERSION) ; \
 	else \
 	    echo ; \
 	    echo "Installing: $(sysconfdir)/snoopy.ini" ; \
