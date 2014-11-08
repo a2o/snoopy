@@ -18,6 +18,7 @@ AC_PROG_CXX
 AC_PROG_AWK
 AC_PROG_CC
 AC_PROG_CPP
+AC_PROG_GREP
 AC_PROG_INSTALL
 AC_PROG_LN_S
 AC_PROG_MAKE_SET
@@ -258,13 +259,22 @@ AC_ARG_WITH(syslog-facility,
         else
             # Enabled with explicit value definition
             with_syslog_facility_val="$withval"
+
+            # Check for value correctness
+            syslog_facility_short=`echo "$with_syslog_facility_val" | awk '{print toupper($0)}' | sed -e 's/^LOG_//' | grep -E '^(AUTH|AUTHPRIV|CRON|DAEMON|FTP|KERN|LOCAL[0-7]|LPR|MAIL|NEWS|SYSLOG|USER|UUCP)$'`
+            if test "x$syslog_facility_short" = "x"; then
+                AC_MSG_ERROR([--with-syslog-facility value provided is invalid: $with_syslog_facility_val])
+            fi
+
+            # Prefix value with LOG_
+            syslog_facility="LOG_$syslog_facility_short"
         fi
     ],
     # Not specified on ./configure line
-    [with_syslog_facility_val="LOG_AUTHPRIV"]
+    [syslog_facility="LOG_AUTHPRIV"]
 )
 
-AC_DEFINE_UNQUOTED(SNOOPY_CONF_SYSLOG_FACILITY, [$with_syslog_facility_val], [Syslog facility to use])
+AC_DEFINE_UNQUOTED(SNOOPY_CONF_SYSLOG_FACILITY, [$syslog_facility], [Syslog facility to use by default])
 
 
 
@@ -284,13 +294,22 @@ AC_ARG_WITH(syslog-level,
         else
             # Enabled with explicit value definition
             with_syslog_level_val="$withval"
+
+            # Check for value correctness
+            syslog_level_short=`echo "$with_syslog_level_val" | awk '{print toupper($0)}' | sed -e 's/^LOG_//' | grep -E '^(EMERG|ALERT|CRIT|ERR|WARNING|NOTICE|INFO|DEBUG)$'`
+            if test "x$syslog_level_short" = "x"; then
+                AC_MSG_ERROR([--with-syslog-level value provided is invalid: $with_syslog_level_val])
+            fi
+
+            # Prefix value with LOG_
+            syslog_level="LOG_$syslog_level_short"
         fi
     ],
     # Not specified on command line
-    [with_syslog_level_val="LOG_INFO"]
+    [syslog_level="LOG_INFO"]
 )
 
-AC_DEFINE_UNQUOTED(SNOOPY_CONF_SYSLOG_LEVEL, [$with_syslog_level_val], [Syslog level to use])
+AC_DEFINE_UNQUOTED(SNOOPY_CONF_SYSLOG_LEVEL, [$syslog_level], [Syslog level to use by default])
 
 
 

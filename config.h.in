@@ -107,10 +107,10 @@
 /* Only log commands executed by root */
 #undef SNOOPY_CONF_ROOT_ONLY
 
-/* Syslog facility to use */
+/* Syslog facility to use by default */
 #undef SNOOPY_CONF_SYSLOG_FACILITY
 
-/* Syslog level to use */
+/* Syslog level to use by default */
 #undef SNOOPY_CONF_SYSLOG_LEVEL
 
 /* Define to 1 if you have the ANSI C header files. */
