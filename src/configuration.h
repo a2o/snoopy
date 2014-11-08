@@ -40,6 +40,9 @@ typedef struct {
     int   filter_enabled;
     char *filter_chain;
     int   filter_chain_malloced;
+
+    int   syslog_facility;
+    int   syslog_level;
 } snoopy_configuration_type;
 extern   snoopy_configuration_type   snoopy_configuration;
 
@@ -48,6 +51,12 @@ extern   snoopy_configuration_type   snoopy_configuration;
 /*
  * Functions to manage and utilise configuration
  */
-void snoopy_configuration_ctor();
-void snoopy_configuration_dtor();
-int  snoopy_configuration_load_file(char *iniFilePath);
+void  snoopy_configuration_ctor ();
+void  snoopy_configuration_dtor ();
+int   snoopy_configuration_load_file (char *iniFilePath);
+// Parsing functions
+void  snoopy_configuration_parse_syslog_facility      (char *confVal);
+void  snoopy_configuration_parse_syslog_level         (char *confVal);
+char *snoopy_configuration_syslog_value_cleanup       (char *confVal);
+char *snoopy_configuration_syslog_value_remove_prefix (char *confVal);
+void  snoopy_configuration_strtoupper (char *s);

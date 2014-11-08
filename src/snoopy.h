@@ -216,3 +216,17 @@
 #ifdef SNOOPY_CONF_ERROR_LOGGING_ENABLED
 #define   SNOOPY_ERROR_LOGGING_ENABLED   SNOOPY_CONF_ERROR_LOGGING_ENABLED
 #endif
+
+
+
+/**
+ * SNOOPY_SYSLOG_*
+ *
+ * Syslog configuration settings
+ *
+ * If error logging is enabled, then all errors that occur when using snoopy
+ * will be sent to syslog. This is to aid developers and integrators with
+ * their endeavours.
+ */
+#define   SNOOPY_SYSLOG_FACILITY   SNOOPY_CONF_SYSLOG_FACILITY
+#define   SNOOPY_SYSLOG_LEVEL      SNOOPY_CONF_SYSLOG_LEVEL

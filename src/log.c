@@ -291,13 +291,13 @@ void snoopy_log_send_to_syslog (
     if (strlen(logMessage) > 0) {
 
         /* Prepare logging stuff */
-        openlog("snoopy", LOG_PID, SNOOPY_CONF_SYSLOG_FACILITY);
+        openlog("snoopy", LOG_PID, snoopy_configuration.syslog_facility);
 
         /* Log error or ordinary message */
         if (SNOOPY_LOG_ERROR == errorOrMessage) {
             syslog(LOG_ERR, "ERROR: %s", logMessage);
         } else {
-            syslog(SNOOPY_CONF_SYSLOG_LEVEL, "%s", logMessage);
+            syslog(snoopy_configuration.syslog_level, "%s", logMessage);
         }
 
         /* Close the syslog file descriptor */
