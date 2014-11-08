@@ -3,7 +3,7 @@
 -------------------------------------------------------------------------------
 
 
-2014-FIXME - Version  2.1.FIXME
+2014-11-08 - Version  2.1.0
 ---------------------------
 o Enhancement: strict checking of ./configure --with-syslog-* values
 o Enhancement: enabled configuration of syslog facility and level from
