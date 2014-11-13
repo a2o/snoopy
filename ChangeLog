@@ -3,6 +3,11 @@
 -------------------------------------------------------------------------------
 
 
+2014-11-FIXME - Version  2.1.1
+---------------------------
+o Enhancement: added dummy input provider: snoopy_version
+
+
 2014-11-08 - Version  2.1.0
 ---------------------------
 o Enhancement: strict checking of ./configure --with-syslog-* values

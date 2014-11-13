@@ -272,6 +272,8 @@ Here are basic rules for input provider development:
 - each input provider must have a corresponding header file
 - all input providers must build with -Wall -Werror flags (enabled by default)
 - code indentation: 4 spaces, no tabs
+- reserverd input names:
+    - snoopy*
 
 If you have developed a shiny new input provider and you would like to
 start using it with Snoopy, there are three additional places where you
@@ -294,6 +296,8 @@ following additional specifics:
 - filter MUST return SNOOPY_FILTER_PASS or SNOOPY_FILTER_DROP constant
 - if SNOOPY_FILTER_DROP is returned by filter, it causes immediate termination
     of filter chain processing and message is not logged to syslog
+- reserved filter names:
+    - snoopy*
 
 If you have developed a shiny new filter and you would like to
 start using it with Snoopy, there are three additional places where you

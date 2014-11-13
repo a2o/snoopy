@@ -99,6 +99,15 @@
  *
  * Default format of snoopy log message
  */
+#define   SNOOPY_VERSION   PACKAGE_VERSION
+
+
+
+/**
+ * SNOOPY_LOG_MESSAGE_FORMAT_default
+ *
+ * Default format of snoopy log message
+ */
 #define SNOOPY_LOG_MESSAGE_FORMAT_default \
     "[uid:%{uid} sid:%{sid} tty:%{tty} cwd:%{cwd} filename:%{filename}]: %{cmdline}"
 

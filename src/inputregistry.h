@@ -37,6 +37,7 @@
 #include "input/group.h"
 #include "input/login.h"
 #include "input/sid.h"
+#include "input/snoopy_version.h"
 #include "input/tty.h"
 #include "input/tty_uid.h"
 #include "input/tty_username.h"
