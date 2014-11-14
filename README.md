@@ -4,6 +4,16 @@
 
 
 
+## WARNING: CentOS 7 problems
+
+**DO NOT INSTALL Snoopy on CentOS 7 just yet!**
+
+For currently unknown reason, when Snoopy is installed, CentOS 7 does not boot.
+Here is the issue tracker entry:
+https://github.com/a2o/snoopy/issues/28
+
+
+
 ## 1. What does Snoopy do, then?
 
 It sends every executed command to syslog.
@@ -14,15 +24,15 @@ It sends every executed command to syslog.
 
 Snoopy can be installed by:
 
-* automated build procedure (preferred), or
-* using packages provided by your Linux distribution ("apt-get" or "yum" or "zypper" + "install snoopy"), or
+* automated installation procedure (preferred, installs latest version), or
+* using packages provided by your Linux distribution ("apt-get|yum|zypper install snoopy"), or
 * building it manually (detail in section 5.3).
 
-To start automated build procedure, run this command:
+To start automated installation procedure, run this command:
 
     wget -q -O - https://github.com/a2o/snoopy/raw/master/bin/snoopy-install.sh | sh
 
-**WARNING: This manual is for Snoopy version 2.0.1+. Snoopy versions below 2.0.1 are not supported anymore. Please do not submit any bug/feature/change requests that concern versions before 2.0.1.**
+**WARNING: This manual is for Snoopy version 2.1.0+. Snoopy versions below 2.1.0 are not supported anymore. Please do not submit any bug/feature/change requests that concern versions before 2.1.0.**
 
 
 
