@@ -4,13 +4,13 @@
 
 
 
-## WARNING: CentOS 7 problems
+**FORTUNATE NEWS: Snoopy version 2.2.0 resolved boot problems on RHEL/CentOS 7.**
+More info: https://github.com/a2o/snoopy/issues/28
 
-**DO NOT INSTALL Snoopy on CentOS 7 just yet!**
-
-For currently unknown reason, when Snoopy is installed, CentOS 7 does not boot.
-Here is the issue tracker entry:
-https://github.com/a2o/snoopy/issues/28
+~~DO NOT INSTALL Snoopy on CentOS 7 just yet!~~
+~~For currently unknown reason, when Snoopy is installed, CentOS 7 does not boot.~~
+~~Here is the issue tracker entry:~~
+~~https://github.com/a2o/snoopy/issues/28~~
 
 
 
@@ -32,7 +32,7 @@ To start automated installation procedure, run this command:
 
     wget -q -O - https://github.com/a2o/snoopy/raw/master/bin/snoopy-install.sh | sh
 
-**WARNING: This manual is for Snoopy version 2.1.0+. Snoopy versions below 2.1.0 are not supported anymore. Please do not submit any bug/feature/change requests that concern versions before 2.1.0.**
+**WARNING: This manual is for latest Snoopy version only. Any version that is not the latest is not supported. Please do not submit any bug/feature/change requests related to unsupported versions.**
 
 
 
