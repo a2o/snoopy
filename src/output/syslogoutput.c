@@ -1,9 +1,9 @@
 /*
  * SNOOPY LOGGER
  *
- * File: error.c
+ * File: snoopy/output/syslogoutput.c
  *
- * Copyright (c) 2014 bostjan@a2o.si
+ * Copyright (c) 2015 Bostjan Skufca (bostjan _A_T_ a2o.si)
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,16 @@
 
 
 /*
- * Include all required C resources
+ * SNOOPY OUTPUT: syslogouput (called like this because <syslog.h> is system library
+ *
+ * Description:
+ *     Sends given message to syslog
+ *
+ * Params:
+ *     message: message to send
+ *
+ * Return:
+ *     void
  */
 #include <stdio.h>
 #include <stdlib.h>
@@ -32,35 +41,30 @@
 #include <sys/types.h>
 #include <syslog.h>
 
-
-
-/*
- * Include all snoopy-related resources
- */
 #include "snoopy.h"
-#include "error.h"
 #include "configuration.h"
-#include "log.h"
 
 
 
-/*
- * snoopy_error_handler
- *
- * Description:
- *     Does the actual error handling. If configured, it sends it
- *     to syslog.
- *
- * Params:
- *     (none)
- *
- * Return:
- *     void
- */
-void snoopy_error_handler (char *errorMsg)
+int snoopy_output_syslogoutput (char *logMessage, int errorOrMessage)
 {
-    /* Only send error to syslog if configured like that */
-    if (SNOOPY_TRUE == snoopy_configuration.error_logging_enabled) {
-        snoopy_log_message_dispatch(errorMsg, SNOOPY_LOG_ERROR);
+    /* Dispatch only if non-zero size */
+    if (0 == strlen(logMessage)) {
+        return 0;
     }
+
+    /* Prepare logging stuff */
+    openlog("snoopy", LOG_PID, snoopy_configuration.syslog_facility);
+
+    /* Log error or ordinary message */
+    if (SNOOPY_LOG_ERROR == errorOrMessage) {
+        syslog(LOG_ERR, "ERROR: %s", logMessage);
+    } else {
+        syslog(snoopy_configuration.syslog_level, "%s", logMessage);
+    }
+
+    /* Close the syslog file descriptor */
+    closelog();
+
+    return 0;
 }

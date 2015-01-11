@@ -214,6 +214,20 @@
 
 
 /**
+ * SNOOPY_OUTPUT
+ *
+ * Where is the outlet of snoopy messages
+ *
+ * By default, messages get sent to syslog. Groundwork for other outputs
+ * is provided to facilitate unforseen uses.
+ */
+#define   SNOOPY_OUTPUT_PROVIDER_SYSLOG   "syslog"
+#define   SNOOPY_OUTPUT_PROVIDER          SNOOPY_OUTPUT_PROVIDER_SYSLOG
+#define   SNOOPY_OUTPUT_PATH              ""
+
+
+
+/**
  * SNOOPY_LOG_ERRORS
  *
  * Whether errors are logged or not?

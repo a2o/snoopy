@@ -76,6 +76,9 @@ snoopy_configuration_type   snoopy_configuration = {
     .filter_chain            = SNOOPY_FILTER_CHAIN,
     .filter_chain_malloced   = SNOOPY_FALSE,
 
+    .output_provider         = SNOOPY_OUTPUT_PROVIDER,
+    .output_path             = SNOOPY_OUTPUT_PATH,
+
     .syslog_facility         = SNOOPY_CONF_SYSLOG_FACILITY,
     .syslog_level            = SNOOPY_CONF_SYSLOG_LEVEL,
 };
@@ -181,6 +184,13 @@ int snoopy_configuration_load_file (
         snoopy_configuration.filter_chain_malloced = SNOOPY_TRUE;
     }
 
+/*
+    confValString = iniparser_getstring(ini, "snoopy:output", NULL);
+    if (NULL != confValString) {
+        snoopy_configuration_parse_output(confValString);
+    }
+*/
+
     confValString = iniparser_getstring(ini, "snoopy:syslog_facility", NULL);
     if (NULL != confValString) {
         snoopy_configuration_parse_syslog_facility(confValString);
@@ -196,6 +206,40 @@ int snoopy_configuration_load_file (
     snoopy_configuration.config_file_parsed = SNOOPY_TRUE;   // We have sucessfully parsed configuration file
     iniparser_freedict(ini);
     return 0;
+}
+
+
+
+/*
+ * snoopy_configuration_parse_output
+ *
+ * Description:
+ *     Parses configuration setting syslog_output and
+ *     sets appropriate internal configuration variable(s).
+ *     Uses default setting if unknown value.
+ *
+ * Params:
+ *     confVal   Value from configuration file
+ *
+ * Return:
+ *     void
+ */
+void snoopy_configuration_parse_output (
+    char *confVal
+) {
+/*
+    // Check if colon character is present, split into left and right string
+
+    // Evaluate and set configuration variable(s)
+    if      (strcmp(confVal, "journald") == 0) { snoopy_configuration.syslog_facility = LOG_AUTHPRIV; }
+    if      (strcmp(confVal, "syslog")   == 0) { snoopy_configuration.output = SNOOPY_OUTPUT_SYSLOG; }
+    else if (strcmp(confValCleaned, "CRON")     == 0) { snoopy_configuration.syslog_facility = LOG_CRON;     }
+    else if (strcmp(confValCleaned, "DAEMON")   == 0) { snoopy_configuration.syslog_facility = LOG_DAEMON;   }
+    else if (strcmp(confValCleaned, "FTP")      == 0) { snoopy_configuration.syslog_facility = LOG_FTP;      }
+    else {
+        snoopy_configuration.output_provider = SNOOPY_OUTPUT_PROVIDER_SYSLOG;
+    }
+*/
 }
 
 

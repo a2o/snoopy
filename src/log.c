@@ -28,9 +28,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <syslog.h>
 
 
 
@@ -46,6 +43,7 @@
 #include "inputregistry.h"
 #include "filterregistry.h"
 #include "misc.h"
+#include "outputregistry.h"
 
 
 
@@ -272,37 +270,29 @@ int snoopy_log_filter_check_chain (
 
 
 /*
- * snoopy_log_send_to_syslog
+ * snoopy_log_message_dispatch
  *
  * Description:
- *     Send given message to syslog
+ *     Dispatch given message to configured output
  *
  * Params:
- *     logMessage:   message to send to syslog
+ *     logMessage:       message to dispatch
+ *     errorOrMessage:   is this a message or an error?
  *
  * Return:
  *     void
  */
-void snoopy_log_send_to_syslog (
+void snoopy_log_message_dispatch (
     char *logMessage,
     int   errorOrMessage
 ) {
-    /* Log it, but only if non-zero size */
-    if (strlen(logMessage) > 0) {
-
-        /* Prepare logging stuff */
-        openlog("snoopy", LOG_PID, snoopy_configuration.syslog_facility);
-
-        /* Log error or ordinary message */
-        if (SNOOPY_LOG_ERROR == errorOrMessage) {
-            syslog(LOG_ERR, "ERROR: %s", logMessage);
-        } else {
-            syslog(snoopy_configuration.syslog_level, "%s", logMessage);
-        }
-
-        /* Close the syslog file descriptor */
-        closelog();
+    /* Dispatch only if non-zero size */
+    if (0 == strlen(logMessage)) {
+        return;
     }
+
+    // Dispatch to configured output
+    snoopy_outputregistry_dispatch(logMessage, errorOrMessage);
 }
 
 
@@ -397,10 +387,10 @@ void snoopy_log_syscall (
     /* Should message be passed to syslog or not? */
     if (SNOOPY_TRUE == snoopy_configuration.filter_enabled) {
         if (SNOOPY_FILTER_PASS == snoopy_log_filter_check_chain(logMessage, snoopy_configuration.filter_chain)) {
-            snoopy_log_send_to_syslog(logMessage, SNOOPY_LOG_MESSAGE);
+            snoopy_log_message_dispatch(logMessage, SNOOPY_LOG_MESSAGE);
         }
     } else {
-        snoopy_log_send_to_syslog(logMessage, SNOOPY_LOG_MESSAGE);
+        snoopy_log_message_dispatch(logMessage, SNOOPY_LOG_MESSAGE);
     }
 
     /* Housekeeping */

@@ -41,6 +41,9 @@ typedef struct {
     char *filter_chain;
     int   filter_chain_malloced;
 
+    char *output_provider;
+    char *output_path;
+
     int   syslog_facility;
     int   syslog_level;
 } snoopy_configuration_type;

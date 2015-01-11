@@ -6,7 +6,7 @@ include   $(top_srcdir)/build/Makefile.am.common
 
 ### First process all required subdirs
 #
-SUBDIRS = lib filter input
+SUBDIRS = lib filter input output
 
 
 
@@ -30,12 +30,15 @@ libsnoopy_no_execve_la_SOURCES = \
 	log.h \
 	misc.c \
 	misc.h \
+	outputregistry.c \
+	outputregistry.h \
 	snoopy.h
 
 libsnoopy_no_execve_la_LIBADD = \
 	lib/libiniparser.la \
 	filter/libsnoopy_filters_all.la \
-	input/libsnoopy_inputs_all.la
+	input/libsnoopy_inputs_all.la \
+	output/libsnoopy_outputs_all.la
 
 
 

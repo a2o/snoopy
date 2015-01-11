@@ -1,7 +1,7 @@
 /*
  * SNOOPY LOGGER
  *
- * File: error.c
+ * File: outputregistry.h
  *
  * Copyright (c) 2014 bostjan@a2o.si
  *
@@ -23,44 +23,28 @@
 
 
 /*
- * Include all required C resources
+ * Include headers of all output functions
  */
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <syslog.h>
+//#include "output/console.h"
+//#include "output/file.h"
+//#include "output/journald.h"
+//#include "output/socket.h"
+#include "output/syslogoutput.h"
 
 
 
 /*
- * Include all snoopy-related resources
+ * Two arrays holding data about output functions
  */
-#include "snoopy.h"
-#include "error.h"
-#include "configuration.h"
-#include "log.h"
+extern char *snoopy_outputregistry_names[];
+extern int (*snoopy_outputregistry_ptrs []) (char *logMessage, int errorOrMessage);
 
 
 
 /*
- * snoopy_error_handler
- *
- * Description:
- *     Does the actual error handling. If configured, it sends it
- *     to syslog.
- *
- * Params:
- *     (none)
- *
- * Return:
- *     void
+ * Functions to manage and utilise output providers
  */
-void snoopy_error_handler (char *errorMsg)
-{
-    /* Only send error to syslog if configured like that */
-    if (SNOOPY_TRUE == snoopy_configuration.error_logging_enabled) {
-        snoopy_log_message_dispatch(errorMsg, SNOOPY_LOG_ERROR);
-    }
-}
+int snoopy_outputregistry_getIndex     (char *providerName);
+int snoopy_outputregistry_isRegistered (char *providerName);
+int snoopy_outputregistry_call         (char *providerName, char *logMessage, int errorOrMessage);
+int snoopy_outputregistry_dispatch     (char *logMessage, int errorOrMessage);

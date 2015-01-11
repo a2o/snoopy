@@ -40,5 +40,6 @@ AC_CONFIG_FILES([Makefile
                  src/lib/Makefile
                  src/lib/iniparser/Makefile
                  src/lib/iniparser/doc/Makefile
-                 src/lib/iniparser/test/Makefile])
+                 src/lib/iniparser/test/Makefile
+                 src/output/Makefile])
 AC_OUTPUT
