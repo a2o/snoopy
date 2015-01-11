@@ -221,8 +221,11 @@
  * By default, messages get sent to syslog. Groundwork for other outputs
  * is provided to facilitate unforseen uses.
  */
+#define   SNOOPY_OUTPUT_PROVIDER_DEVLOG   "devlog"
+#define   SNOOPY_OUTPUT_PROVIDER_SOCKET   "socket"
 #define   SNOOPY_OUTPUT_PROVIDER_SYSLOG   "syslog"
-#define   SNOOPY_OUTPUT_PROVIDER          SNOOPY_OUTPUT_PROVIDER_SYSLOG
+
+#define   SNOOPY_OUTPUT_PROVIDER          SNOOPY_OUTPUT_PROVIDER_DEVLOG   // Was 'syslog' before, but systemd is funny
 #define   SNOOPY_OUTPUT_PATH              ""
 
 

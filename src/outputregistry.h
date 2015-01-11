@@ -26,9 +26,10 @@
  * Include headers of all output functions
  */
 //#include "output/console.h"
+#include "output/devlog.h"
 //#include "output/file.h"
 //#include "output/journald.h"
-//#include "output/socket.h"
+#include "output/socketoutput.h"
 #include "output/syslogoutput.h"
 
 

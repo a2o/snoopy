@@ -1,7 +1,7 @@
 /*
  * SNOOPY LOGGER
  *
- * File: snoopy/output/syslogoutput.c
+ * File: snoopy/output/devlog.c
  *
  * Copyright (c) 2015 Bostjan Skufca (bostjan _A_T_ a2o.si)
  *
@@ -23,10 +23,10 @@
 
 
 /*
- * SNOOPY OUTPUT: syslogouput (called like this because <syslog.h> is system library
+ * SNOOPY OUTPUT: socketouput (called like this because <socket.h> is system library
  *
  * Description:
- *     Sends given message to syslog
+ *     Sends given message to socket
  *
  * Params:
  *     message: message to send
@@ -36,35 +36,27 @@
  */
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <syslog.h>
 
 #include "snoopy.h"
 #include "configuration.h"
+#include "outputregistry.h"
 
 
 
-int snoopy_output_syslogoutput (char *logMessage, int errorOrMessage)
+int snoopy_output_devlog (char *logMessage, int errorOrMessage)
 {
-    /* Dispatch only if non-zero size */
-    if (0 == strlen(logMessage)) {
-        return 0;
-    }
+    char  *logMessageWithPrefix = NULL;
 
-    /* Prepare logging stuff */
-    openlog("snoopy", LOG_PID, snoopy_configuration.syslog_facility);
+    /* Generate final message - add prefix which is otherwise added by syslog() syscall */
+    logMessageWithPrefix    = malloc(SNOOPY_LOG_MESSAGE_MAX_SIZE + 100);   // +100 ought to be enough
+    logMessageWithPrefix[0] = '\0';
+    sprintf(logMessageWithPrefix, "snoopy[%d]: %s", getpid(), logMessage);
 
-    /* Log error or ordinary message */
-    if (SNOOPY_LOG_ERROR == errorOrMessage) {
-        syslog(LOG_ERR, "ERROR: %s", logMessage);
-    } else {
-        syslog(snoopy_configuration.syslog_level, "%s", logMessage);
-    }
+    /* Pass execution to another output provider */
+    snoopy_configuration.output_provider = SNOOPY_OUTPUT_PROVIDER_SOCKET;
+    snoopy_configuration.output_path     = "/dev/log";
+    snoopy_outputregistry_dispatch(logMessageWithPrefix, errorOrMessage);
 
-    /* Close the syslog file descriptor */
-    closelog();
-
+    free(logMessageWithPrefix);
     return 1;
 }

@@ -27,9 +27,11 @@ noinst_LTLIBRARIES = libsnoopy_outputs_all.la
 #	fileoutput.h \
 #	journaldoutput.c \
 #	journaldout.h \
-#	socketoutput.c \
-#	socketoutput.h \
 #
 libsnoopy_outputs_all_la_SOURCES = \
+	devlog.c \
+	devlog.h \
+	socketoutput.c \
+	socketoutput.h \
 	syslogoutput.c \
 	syslogoutput.h

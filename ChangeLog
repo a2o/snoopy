@@ -3,9 +3,12 @@
 -------------------------------------------------------------------------------
 
 
-2014-11-FIXME - Version  2.1.1
+2015-01-11 - Version  2.2.0
 ---------------------------
-o Enhancement: added dummy input provider: snoopy_version
+o Feature: added support for configurable output selection
+o Feature: added dummy input provider: snoopy_version
+o Bugfix: changed default output provider from syslog to devlog (non-blocking
+    socket as workaround for systemd's buffered/blocking /dev/log socket)
 
 
 2014-11-08 - Version  2.1.0

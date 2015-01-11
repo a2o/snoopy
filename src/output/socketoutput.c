@@ -1,7 +1,7 @@
 /*
  * SNOOPY LOGGER
  *
- * File: snoopy/output/syslogoutput.c
+ * File: snoopy/output/socketoutput.c
  *
  * Copyright (c) 2015 Bostjan Skufca (bostjan _A_T_ a2o.si)
  *
@@ -23,10 +23,10 @@
 
 
 /*
- * SNOOPY OUTPUT: syslogouput (called like this because <syslog.h> is system library
+ * SNOOPY OUTPUT: socketouput (called like this because <socket.h> is system library
  *
  * Description:
- *     Sends given message to syslog
+ *     Sends given message to socket
  *
  * Params:
  *     message: message to send
@@ -37,34 +37,48 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <unistd.h>
 #include <sys/types.h>
-#include <syslog.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <sys/un.h>
 
 #include "snoopy.h"
 #include "configuration.h"
 
 
 
-int snoopy_output_syslogoutput (char *logMessage, int errorOrMessage)
+int snoopy_output_socketoutput (char *logMessage, int errorOrMessage)
 {
+    int                  s;
+    struct sockaddr_un   remote;
+    int                  remoteLength;
+
     /* Dispatch only if non-zero size */
     if (0 == strlen(logMessage)) {
         return 0;
     }
 
-    /* Prepare logging stuff */
-    openlog("snoopy", LOG_PID, snoopy_configuration.syslog_facility);
 
-    /* Log error or ordinary message */
-    if (SNOOPY_LOG_ERROR == errorOrMessage) {
-        syslog(LOG_ERR, "ERROR: %s", logMessage);
-    } else {
-        syslog(snoopy_configuration.syslog_level, "%s", logMessage);
+    /* Prepare socket - NON BLOCKING (systemd blocks /dev/log if journald is not running) */
+    if ((s = socket(AF_LOCAL, SOCK_DGRAM|SOCK_CLOEXEC|SOCK_NONBLOCK, 0)) == -1) {
+        return -1;
     }
 
-    /* Close the syslog file descriptor */
-    closelog();
+    remote.sun_family = AF_LOCAL;
+    strcpy(remote.sun_path, snoopy_configuration.output_path);
+    remoteLength      = strlen(remote.sun_path) + sizeof(remote.sun_family);
+    if (connect(s, (struct sockaddr *)&remote, remoteLength) == -1) {
+        return -2;
+    }
 
+
+    /* Send message - returns -1 on error, chars sent on success */
+    if (send(s, logMessage, strlen(logMessage), MSG_DONTWAIT|MSG_NOSIGNAL) == -1) {
+        return -3;
+    }
+
+
+    /* Return success status */
+    close(s);
     return 1;
 }
