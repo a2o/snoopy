@@ -30,7 +30,7 @@ dnl FIXME: Replace `main' with a function in `-ldl':
 AC_CHECK_LIB([dl], [main])
 
 dnl Checks for header files.
-AC_CHECK_HEADERS([limits.h stdlib.h string.h syslog.h unistd.h])
+AC_CHECK_HEADERS([limits.h stdlib.h string.h sys/socket.h syslog.h unistd.h])
 
 dnl Checks for typedefs, structures, and compiler characteristics.
 AC_C_INLINE
@@ -43,6 +43,7 @@ AC_CHECK_FUNCS([ \
     getcwd \
     getsid \
     memset \
+    socket \
     strchr \
     strdup \
     strstr \
