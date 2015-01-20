@@ -33,7 +33,13 @@
  *
  * Maximum length of arguments passed to execv(e) functions
  */
+
+/* This should generaly be done wherever unistd.h is required. */
+/* But sysconf is needed here, and all files include snoopy.h. */
+/* Needed to get getpgid and getsid on older glibc */
+#define  _XOPEN_SOURCE   500
 #include <unistd.h>
+
 #define SNOOPY_SYSCONF_ARG_MAX sysconf(_SC_ARG_MAX)
 
 
