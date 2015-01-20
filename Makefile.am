@@ -30,3 +30,8 @@ disable:
 # Disable it if we are uninstalling it, to avoid error messages
 # about missing library that should be preloaded.
 uninstall-local: disable
+
+# Clean release files
+clean-local:
+	rm -f snoopy-*.tar.gz* ; \
+	rm -f snoopy-latest-*.txt ;
