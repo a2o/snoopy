@@ -168,5 +168,13 @@ echo &&
 
 
 
+### Remove created package files
+echo &&
+echo "CLEANUP: Running 'make clean'... (output suppressed)" &&
+echo &&
+make clean > /dev/null &&
+
+
+
 ### All done.
 true
