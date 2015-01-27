@@ -3,9 +3,15 @@
 -------------------------------------------------------------------------------
 
 
+2015-01-27 - Version  2.2.3
+---------------------------
+o Bugfix: fixed compilation issues on pre 2.09 glibc platforms
+    (SOCK_NONBLOCK, SOCK_CLOEXEC missing)
+
+
 2015-01-20 - Version  2.2.2
 ---------------------------
-o Bugfix: fixed compilation issues on pre 2.12 glibc platforms
+o Bugfix: fixed compilation issues on pre 2.12 glibc platforms (getsid)
 
 
 2015-01-11 - Version  2.2.1
