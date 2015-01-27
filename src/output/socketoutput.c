@@ -34,10 +34,10 @@
  * Return:
  *     void
  */
+#include <features.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <sys/types.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <sys/un.h>
@@ -58,9 +58,13 @@ int snoopy_output_socketoutput (char *logMessage, int errorOrMessage)
         return 0;
     }
 
-
+#if (defined(__GLIBC__) && (2 == __GLIBC__) && (__GLIBC_MINOR__ < 9))
+    /* Prepare socket - non-blocking sockets are not supported on older glibc */
+    if ((s = socket(AF_LOCAL, SOCK_DGRAM, 0)) == -1) {
+#else
     /* Prepare socket - NON BLOCKING (systemd blocks /dev/log if journald is not running) */
     if ((s = socket(AF_LOCAL, SOCK_DGRAM|SOCK_CLOEXEC|SOCK_NONBLOCK, 0)) == -1) {
+#endif
         return -1;
     }
 

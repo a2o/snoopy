@@ -29,17 +29,26 @@
 
 
 /**
- * SNOOPY_MAX_ARG_LENGTH
- *
- * Maximum length of arguments passed to execv(e) functions
+ * Include all required system headers
  */
 
 /* This should generaly be done wherever unistd.h is required. */
 /* But sysconf is needed here, and all files include snoopy.h. */
 /* Needed to get getpgid and getsid on older glibc */
+/* This must be the first file to be included, or implicit inclusion (by i.e. <features.h>) does the wrong thing */
 #define  _XOPEN_SOURCE   500
 #include <unistd.h>
 
+/* Needed for GLIBC macros here */
+#include <features.h>
+
+
+
+/**
+ * SNOOPY_MAX_ARG_LENGTH
+ *
+ * Maximum length of arguments passed to execv(e) functions
+ */
 #define SNOOPY_SYSCONF_ARG_MAX sysconf(_SC_ARG_MAX)
 
 
@@ -231,7 +240,13 @@
 #define   SNOOPY_OUTPUT_PROVIDER_SOCKET   "socket"
 #define   SNOOPY_OUTPUT_PROVIDER_SYSLOG   "syslog"
 
-#define   SNOOPY_OUTPUT_PROVIDER          SNOOPY_OUTPUT_PROVIDER_DEVLOG   // Was 'syslog' before, but systemd is funny
+#if (defined(__GLIBC__) && (2 == __GLIBC__) && (__GLIBC_MINOR__ < 9))
+/* Use 'syslog' on older linuxes that od not support SOCK_CLOEXEC and SOCK_NONBLOCK */
+#define   SNOOPY_OUTPUT_PROVIDER          SNOOPY_OUTPUT_PROVIDER_SYSLOG
+#else
+/* Otherwise do not use 'syslog' (was default before), because systemd is funny (blocks the syslog() call */
+#define   SNOOPY_OUTPUT_PROVIDER          SNOOPY_OUTPUT_PROVIDER_DEVLOG
+#endif
 #define   SNOOPY_OUTPUT_PATH              ""
 
 
