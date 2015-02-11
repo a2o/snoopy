@@ -44,8 +44,8 @@ However, since version 2.0.0 Snoopy supports optional configuration file.
 Snoopy's automated installation procedure enables configuration file support
 by default. Configuration file path is /etc/snoopy.ini.
 
-For additional information please consult comments in /etc/snoopy.ini and
-[doc/INSTALL.md](doc/INSTALL.md).
+For additional information please consult comments in [etc/snoopy.ini](etc/snoopy.ini)
+and [doc/INSTALL.md](doc/INSTALL.md).
 
 
 
