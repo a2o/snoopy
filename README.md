@@ -2,15 +2,11 @@
 
 [![Flattr Snoopy Logger project](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=a2o&url=https://github.com/a2o/snoopy&title=Snoopy Logger)
 
-
-
-## 1. What does Snoopy do?
-
-It logs all commands executed on your system.
+Snoopy is a tiny library that logs all executed commands (+ arguments) on your system.
 
 
 
-## 2. Installation
+## 1. Installation
 
 The easiest way to start using Snoopy is to execute the following command (as root):
 
@@ -21,7 +17,7 @@ Detailed installation instructions are available here: [doc/INSTALL.md](doc/INST
 
 
 
-## 3. Snoopy output
+## 2. Snoopy output
 
 These are default destinations on various Linux distributions:
 
@@ -34,7 +30,7 @@ For actual destination check your syslog configuration.
 
 
 
-## 4. Configuration
+## 3. Configuration
 
 Most parts of Snoopy are/can be/should be configured at build time.
 
@@ -47,7 +43,7 @@ For additional information please consult comments in /etc/snoopy.ini and
 
 
 
-## 5. Support
+## 4. Support
 
 **Only latest released version of Snoopy is supported!**
 Any version that is not the latest is not supported. Please do not submit any bugfix/feature/change
@@ -60,19 +56,19 @@ requests related to old and unsupported Snoopy versions.
 
 
 
-## 6. How does Snoopy actually work?
+## 5. How does Snoopy actually work?
 
 See [doc/INTERNALS.md](doc/INTERNALS.md).
 
 
 
-## 7. Contributing to Snoopy development
+## 6. Contributing to Snoopy development
 
 See [doc/CONTRIBUTING.md](doc/CONTRIBUTING.md).
 
 
 
-## 8. Credits
+## 7. Credits
 
 Snoopy Logger was created by:
      marius@umich.edu
