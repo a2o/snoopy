@@ -4,24 +4,7 @@
 
 
 
-### Pulseaudio fills logs with snoopy installed
-
-Issue was originally reported here: a2o/snoopy#29
-
-If, like us, you have users running desktop environments, you'll find pulseaudio
-filling your logs because of snoopy.
-
-Workaround:
-
-* in /etc/pulse/client.conf
-* ff it exists, uncomment "autospawn" and change to "no"
-* if not, add a line "autospawn = no"
-
-
-
-
-
-### Snoopy hangs my RedHat/Fedora/CentOS/other system
+### 1. Snoopy hangs my RedHat/Fedora/CentOS/other system
 
 **OBSOLETE, FIXED IN SNOOPY 1.9.0**
 
@@ -58,7 +41,7 @@ Distributions known to work OK (all 64-bit, all tested with 2.0.0+ versions):
 
 
 
-### Snoopy hangs my RH/CentOS/(other-systemd-based) system
+### 2. Snoopy hangs my RH/CentOS/(other-systemd-based) system
 
 **HAPPY ANNOUNCEMENT: Snoopy version 2.2.0 resolved boot problems on RHEL/CentOS 7.**
 More info: https://github.com/a2o/snoopy/issues/28
@@ -67,3 +50,25 @@ More info: https://github.com/a2o/snoopy/issues/28
 ~For currently unknown reason, when Snoopy is installed, CentOS 7 does not boot.~~
 ~Here is the issue tracker entry:~~
 ~https://github.com/a2o/snoopy/issues/28~~
+
+
+
+
+
+### 3. PulseAudio fills logs when Snoopy is installed
+
+Issue was originally reported here: https://github.com/a2o/snoopy/issues/29
+
+Transcript of original content (a bit condensed):
+
+    If, like us, you have users running desktop environments, you'll find pulseaudio
+    filling your logs because of snoopy.
+
+    Workaround:
+    * edit /etc/pulse/client.conf
+    * if exists, uncomment line that starts with "autospawn" and change value to "no"
+    * if not, add a line "autospawn = no"
+
+    That should fix your issue.
+
+(Thanks to https://github.com/sykosoft for reporting this and providing a solution.)
