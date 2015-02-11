@@ -19,14 +19,20 @@ Detailed installation instructions are available here: [doc/INSTALL.md](doc/INST
 
 ## 2. Snoopy output
 
-These are default destinations on various Linux distributions:
+This is what typical Snoopy output looks like:
+
+    2015-02-11T19:05:10+00:00 labrat-1 snoopy[896]: [uid:0 sid:11679 tty:/dev/pts/2 cwd:/root filename:/usr/bin/cat]: cat /etc/fstab.BAK
+    2015-02-11T19:05:15+00:00 labrat-1 snoopy[896]: [uid:0 sid:11679 tty:/dev/pts/2 cwd:/root filename:/usr/bin/rm]: rm -f /etc/fstab.BAK
+    2015-02-11T19:05:19+00:00 labrat-1 snoopy[896]: [uid:0 sid:11679 tty:/dev/pts/2 cwd:/root filename:/usr/bin/tail]: tail -f /var/log/messages
+
+These are default output locations on various Linux distributions:
 
 * CentOS: /var/log/secure
 * Debian: /var/log/auth.log
 * Ubuntu: /var/log/auth.log
 * others: /var/log/messages (potentially, not necessarily)
 
-For actual destination check your syslog configuration.
+For actual output destination check your syslog configuration.
 
 
 
