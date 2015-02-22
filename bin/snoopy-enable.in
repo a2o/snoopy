@@ -52,5 +52,6 @@ elif [ "$COUNT" -eq "1" ]; then
 fi
 echo "SNOOPY: Adding to /etc/ld.so.preload:     $LIBDIR/libsnoopy.so"
 echo "$LIBDIR/libsnoopy.so" >> /etc/ld.so.preload
-echo "SNOOPY: Hint: check your syslog files for output."
+echo "SNOOPY: Hint #1: Reboot your machine to load snoopy system-wide."
+echo "SNOOPY: Hint #2: Check your log files for output."
 echo "SNOOPY: Enabled."

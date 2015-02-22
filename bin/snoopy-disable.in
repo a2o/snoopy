@@ -39,6 +39,7 @@ elif [ "$COUNT" -eq "1" ]; then
     cat /etc/ld.so.preload | grep -E "/(lib)?snoopy.so"
     sed -i "/\/\(lib\)\?snoopy.so/d" /etc/ld.so.preload
     echo "SNOOPY: Disabled."
+    echo "SNOOPY: Hint: Your system needs to be restarted to finish snoopy cleanup."
 else
     echo "SNOOPY: Snoopy is NOT enabled on this system."
 fi
