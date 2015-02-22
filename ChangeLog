@@ -10,6 +10,7 @@ o Bugfix: devlog output was not implemented properly, it was missing log
     appearing on user's console, as everything was treated with EMERG
     severity. On CentOS/RH messages of this severity are forwarded to console
     by default.
+o Bugfix: Install configuration file with .NEW suffix, and warn the user.
 
 
 2015-01-27 - Version  2.2.3

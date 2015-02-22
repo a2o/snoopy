@@ -8,14 +8,24 @@ EXTRA_DIST +=\
 
 if CONFIG_FILE_ENABLED
 install-exec-local:
-	if [ -f $(sysconfdir)/snoopy.ini ]; then \
+	if [ ! -f $(sysconfdir)/snoopy.ini ]; then \
 	    echo ; \
-	    echo "CONFIG FILE EXISTS, skipping: $(sysconfdir)/snoopy.ini" ; \
-	    echo ; \
-	else \
-	    echo ; \
-	    echo "Installing: $(sysconfdir)/snoopy.ini" ; \
+	    echo "Installing configuration file: $(sysconfdir)/snoopy.ini" ; \
 	    echo ; \
 	    install snoopy.ini $(sysconfdir)/snoopy.ini ; \
+	else \
+	    if diff snoopy.ini $(sysconfdir)/snoopy.ini; then \
+	        echo ; \
+	        echo "No changes to configuration file are required: $(sysconfdir)/snoopy.ini" ; \
+	        echo ; \
+	    else \
+	        install snoopy.ini $(sysconfdir)/snoopy.ini.NEW ; \
+	        echo ; \
+	        echo "Existing config file: $(sysconfdir)/snoopy.ini" ; \
+	        echo "     New config file: $(sysconfdir)/snoopy.ini.NEW" ; \
+	        echo ; \
+	        echo "WARNING: CONFIGURATION FILE CHANGES NEED MANUAL REVIEW" ; \
+	        echo ; \
+	    fi \
 	fi
 endif

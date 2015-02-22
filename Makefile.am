@@ -10,9 +10,9 @@ ACLOCAL_AMFLAGS = -I m4
 # configuration file not being found. Therefore we first install
 # configuration file and only then the snoopy library itself.
 SUBDIRS = \
-	etc \
 	src \
-	bin
+	bin \
+	etc
 
 EXTRA_DIST +=\
 	autogen.sh
