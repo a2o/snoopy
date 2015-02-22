@@ -36,6 +36,7 @@
  */
 #include <stdio.h>
 #include <stdlib.h>
+#include <syslog.h>
 
 #include "snoopy.h"
 #include "configuration.h"
@@ -50,7 +51,11 @@ int snoopy_output_devlog (char *logMessage, int errorOrMessage)
     /* Generate final message - add prefix which is otherwise added by syslog() syscall */
     logMessageWithPrefix    = malloc(SNOOPY_LOG_MESSAGE_MAX_SIZE + 100);   // +100 ought to be enough
     logMessageWithPrefix[0] = '\0';
-    sprintf(logMessageWithPrefix, "snoopy[%d]: %s", getpid(), logMessage);
+    sprintf(logMessageWithPrefix, "<%d>snoopy[%d]: %s",
+        snoopy_configuration.syslog_facility | snoopy_configuration.syslog_level,
+        getpid(),
+        logMessage
+    );
 
     /* Pass execution to another output provider */
     snoopy_configuration.output_provider = SNOOPY_OUTPUT_PROVIDER_SOCKET;

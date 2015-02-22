@@ -184,12 +184,10 @@ int snoopy_configuration_load_file (
         snoopy_configuration.filter_chain_malloced = SNOOPY_TRUE;
     }
 
-/*
     confValString = iniparser_getstring(ini, "snoopy:output", NULL);
     if (NULL != confValString) {
         snoopy_configuration_parse_output(confValString);
     }
-*/
 
     confValString = iniparser_getstring(ini, "snoopy:syslog_facility", NULL);
     if (NULL != confValString) {
@@ -227,19 +225,14 @@ int snoopy_configuration_load_file (
 void snoopy_configuration_parse_output (
     char *confVal
 ) {
-/*
-    // Check if colon character is present, split into left and right string
+    if (strcmp(confVal, SNOOPY_OUTPUT_PROVIDER_DEVLOG) == 0) { snoopy_configuration.output_provider = SNOOPY_OUTPUT_PROVIDER_DEVLOG; }
+    if (strcmp(confVal, SNOOPY_OUTPUT_PROVIDER_SYSLOG) == 0) { snoopy_configuration.output_provider = SNOOPY_OUTPUT_PROVIDER_SYSLOG; }
 
-    // Evaluate and set configuration variable(s)
-    if      (strcmp(confVal, "journald") == 0) { snoopy_configuration.syslog_facility = LOG_AUTHPRIV; }
-    if      (strcmp(confVal, "syslog")   == 0) { snoopy_configuration.output = SNOOPY_OUTPUT_SYSLOG; }
-    else if (strcmp(confValCleaned, "CRON")     == 0) { snoopy_configuration.syslog_facility = LOG_CRON;     }
-    else if (strcmp(confValCleaned, "DAEMON")   == 0) { snoopy_configuration.syslog_facility = LOG_DAEMON;   }
-    else if (strcmp(confValCleaned, "FTP")      == 0) { snoopy_configuration.syslog_facility = LOG_FTP;      }
-    else {
-        snoopy_configuration.output_provider = SNOOPY_OUTPUT_PROVIDER_SYSLOG;
-    }
-*/
+    // TODO other input providers
+    // Clone string
+    // Check if colon character is present, split into left and right string
+    // If right string is non-empty, malloc it, and store path in there
+    // TODO configure output at ./configue time
 }
 
 

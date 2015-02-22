@@ -58,6 +58,7 @@ void  snoopy_configuration_ctor ();
 void  snoopy_configuration_dtor ();
 int   snoopy_configuration_load_file (char *iniFilePath);
 // Parsing functions
+void  snoopy_configuration_parse_output               (char *confVal);
 void  snoopy_configuration_parse_syslog_facility      (char *confVal);
 void  snoopy_configuration_parse_syslog_level         (char *confVal);
 char *snoopy_configuration_syslog_value_cleanup       (char *confVal);

@@ -3,6 +3,15 @@
 -------------------------------------------------------------------------------
 
 
+2015-01-27 - Version  NEXT
+---------------------------
+o Bugfix: devlog output was not implemented properly, it was missing log
+    facility and log level specification. This resulted in snoopy output
+    appearing on user's console, as everything was treated with EMERG
+    severity. On CentOS/RH messages of this severity are forwarded to console
+    by default.
+
+
 2015-01-27 - Version  2.2.3
 ---------------------------
 o Bugfix: fixed compilation issues on pre 2.09 glibc platforms
