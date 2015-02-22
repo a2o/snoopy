@@ -3,7 +3,7 @@
 -------------------------------------------------------------------------------
 
 
-2015-01-27 - Version  NEXT
+2015-01-27 - Version  2.2.4
 ---------------------------
 o Bugfix: devlog output was not implemented properly, it was missing log
     facility and log level specification. This resulted in snoopy output
