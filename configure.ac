@@ -97,7 +97,7 @@ dnl ============================================================================
 AC_ARG_ENABLE(config-file,
     [AC_HELP_STRING(
         [--enable-config-file],
-        [enable INI configuration file parsing [default=disabled, if enabled then path is SYSCONFDIR/snoopy.ini]]
+        [enable INI configuration file parsing. If enabled, then path is SYSCONFDIR/snoopy.ini [default=disabled]]
     )],
     [
         if test "x$enableval" = "xyes"; then
@@ -172,7 +172,7 @@ dnl ============================================================================
 AC_ARG_WITH(message-format,
     [AC_HELP_STRING(
         [--with-message-format=FORMAT],
-        [format to use to log messages with [default=see src/snoopy.h]]
+        [format to use to log messages with. For default value and available options, see etc/snoopy.ini and src/snoopy.h]
     )],
     [
         if test "x$withval" = "x" -o "x$withval" = "xyes"; then
@@ -220,7 +220,7 @@ dnl ============================================================================
 AC_ARG_WITH(filter-chain,
     [AC_HELP_STRING(
         [--with-filter-chain=CHAINSPEC],
-        [default filter chain to use [default=see src/snoopy.h and src/filter/ for available filters and their usage]]
+        [default filter chain to use. See src/snoopy.h and src/filter/ for available filters [default=empty]]
     )],
     [
         if test "x$withval" = "x" -o "x$withval" = "xno"; then
