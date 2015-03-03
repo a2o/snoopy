@@ -47,6 +47,8 @@
 int snoopy_output_devlog (char *logMessage, int errorOrMessage)
 {
     char  *logMessageWithPrefix = NULL;
+    char  *originalConfig_output_provider = NULL;
+    char  *originalConfig_output_path     = NULL;
 
     /* Generate final message - add prefix which is otherwise added by syslog() syscall */
     logMessageWithPrefix    = malloc(SNOOPY_LOG_MESSAGE_MAX_SIZE + 100);   // +100 ought to be enough
@@ -57,10 +59,18 @@ int snoopy_output_devlog (char *logMessage, int errorOrMessage)
         logMessage
     );
 
+    /* Store original output provider configuration settings - this is awkwardly done */
+    originalConfig_output_provider       = snoopy_configuration.output_provider;
+    originalConfig_output_path           = snoopy_configuration.output_path;
+
     /* Pass execution to another output provider */
     snoopy_configuration.output_provider = SNOOPY_OUTPUT_PROVIDER_SOCKET;
     snoopy_configuration.output_path     = "/dev/log";
     snoopy_outputregistry_dispatch(logMessageWithPrefix, errorOrMessage);
+
+    /* Reset output provider configuration back to original settings */
+    snoopy_configuration.output_provider = originalConfig_output_provider;
+    snoopy_configuration.output_path     = originalConfig_output_path;
 
     free(logMessageWithPrefix);
     return 1;
