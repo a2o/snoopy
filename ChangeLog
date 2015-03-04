@@ -3,7 +3,7 @@
 -------------------------------------------------------------------------------
 
 
-2015-03-XX - Version  2.2.4
+2015-03-04 - Version  2.2.5
 ---------------------------
 o Bugfix: devlog output provider was not resetting configuration to original
     values after it called socket output provider as its subroutine.
