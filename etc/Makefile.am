@@ -12,6 +12,9 @@ install-exec-local:
 	    echo ; \
 	    echo "Installing configuration file: $(DESTDIR)$(sysconfdir)/snoopy.ini" ; \
 	    echo ; \
+	    if [ ! -e $(DESTDIR)$(sysconfdir) ]; then \
+	        install -d $(DESTDIR)$(sysconfdir) ; \
+	    fi ; \
 	    install snoopy.ini $(DESTDIR)$(sysconfdir)/snoopy.ini ; \
 	else \
 	    if diff snoopy.ini $(DESTDIR)$(sysconfdir)/snoopy.ini; then \

@@ -8,6 +8,7 @@
 o Bugfix: devlog output provider was not resetting configuration to original
     values after it called socket output provider as its subroutine.
 o Bugfix: added support for 'make install DESTDIR=...' in etc/Makefile.am
+o Bugfix: fixed installation of snoopy.ini in nonexistent directory
 
 
 2015-01-27 - Version  2.2.4
