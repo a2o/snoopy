@@ -8,21 +8,21 @@ EXTRA_DIST +=\
 
 if CONFIG_FILE_ENABLED
 install-exec-local:
-	if [ ! -f $(sysconfdir)/snoopy.ini ]; then \
+	if [ ! -f $(DESTDIR)$(sysconfdir)/snoopy.ini ]; then \
 	    echo ; \
-	    echo "Installing configuration file: $(sysconfdir)/snoopy.ini" ; \
+	    echo "Installing configuration file: $(DESTDIR)$(sysconfdir)/snoopy.ini" ; \
 	    echo ; \
-	    install snoopy.ini $(sysconfdir)/snoopy.ini ; \
+	    install snoopy.ini $(DESTDIR)$(sysconfdir)/snoopy.ini ; \
 	else \
-	    if diff snoopy.ini $(sysconfdir)/snoopy.ini; then \
+	    if diff snoopy.ini $(DESTDIR)$(sysconfdir)/snoopy.ini; then \
 	        echo ; \
-	        echo "No changes to configuration file are required: $(sysconfdir)/snoopy.ini" ; \
+	        echo "No changes to configuration file are required: $(DESTDIR)$(sysconfdir)/snoopy.ini" ; \
 	        echo ; \
 	    else \
-	        install snoopy.ini $(sysconfdir)/snoopy.ini.NEW ; \
+	        install snoopy.ini $(DESTDIR)$(sysconfdir)/snoopy.ini.NEW ; \
 	        echo ; \
-	        echo "Existing config file: $(sysconfdir)/snoopy.ini" ; \
-	        echo "     New config file: $(sysconfdir)/snoopy.ini.NEW" ; \
+	        echo "Existing config file: $(DESTDIR)$(sysconfdir)/snoopy.ini" ; \
+	        echo "     New config file: $(DESTDIR)$(sysconfdir)/snoopy.ini.NEW" ; \
 	        echo ; \
 	        echo "WARNING: CONFIGURATION FILE CHANGES NEED MANUAL REVIEW" ; \
 	        echo ; \
