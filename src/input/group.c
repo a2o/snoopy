@@ -61,9 +61,16 @@ int snoopy_input_group (char *input, char *arg)
         return snprintf(input, SNOOPY_INPUT_MESSAGE_MAX_SIZE, "ERROR(malloc)");
     }
 
-    /* Format return string */
-    getgrgid_r(getgid(), &gr, buffgr_gid, buffgrsize_gid, &gr_gid);
-    messageLength = snprintf(input, SNOOPY_INPUT_MESSAGE_MAX_SIZE, "%s", gr_gid->gr_name);
+    /* Try to get data */
+    if (0 != getgrgid_r(getgid(), &gr, buffgr_gid, buffgrsize_gid, &gr_gid)) {
+        messageLength  = snprintf(input, SNOOPY_INPUT_MESSAGE_MAX_SIZE, "ERROR(getgrgid_r)");
+    } else {
+        if (NULL == gr_gid) {
+            messageLength = snprintf(input, SNOOPY_INPUT_MESSAGE_MAX_SIZE, "(undefined)");
+        } else {
+            messageLength = snprintf(input, SNOOPY_INPUT_MESSAGE_MAX_SIZE, "%s", gr_gid->gr_name);
+        }
+    }
 
     /* Cleanup and return */
     free(buffgr_gid);

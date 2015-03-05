@@ -3,6 +3,15 @@
 -------------------------------------------------------------------------------
 
 
+2015-03-xx - Version  2.2.x
+---------------------------
+o Bugfix: Fixed improper return value checking in all input providers that
+    work with literal usernames and groups. This was causing shutdown hangs on
+    RH/CentOS 7 systems that use systemd, with additional special conitions:
+    - compiled-in message_format must have included these input providers,
+    - when only configured in snoopy.ini, they did not trigger this bug.
+
+
 2015-03-04 - Version  2.2.5
 ---------------------------
 o Bugfix: devlog output provider was not resetting configuration to original

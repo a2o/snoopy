@@ -61,9 +61,16 @@ int snoopy_input_eusername (char *input, char *arg)
         return snprintf(input, SNOOPY_INPUT_MESSAGE_MAX_SIZE, "ERROR(malloc)");
     }
 
-    /* Format return string */
-    getpwuid_r(geteuid(), &pwd, buffpwd_uid, buffpwdsize_uid, &pwd_uid);
-    messageLength = snprintf(input, SNOOPY_INPUT_MESSAGE_MAX_SIZE, "%s", pwd_uid->pw_name);
+    /* Try to get data */
+    if (0 != getpwuid_r(geteuid(), &pwd, buffpwd_uid, buffpwdsize_uid, &pwd_uid)) {
+        messageLength  = snprintf(input, SNOOPY_INPUT_MESSAGE_MAX_SIZE, "ERROR(getpwuid_r)");
+    } else {
+        if (NULL == pwd_uid) {
+            messageLength = snprintf(input, SNOOPY_INPUT_MESSAGE_MAX_SIZE, "(undefined)");
+        } else {
+            messageLength = snprintf(input, SNOOPY_INPUT_MESSAGE_MAX_SIZE, "%s", pwd_uid->pw_name);
+        }
+    }
 
     /* Cleanup and return */
     free(buffpwd_uid);
