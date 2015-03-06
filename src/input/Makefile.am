@@ -31,6 +31,8 @@ libsnoopy_inputs_all_la_SOURCES = \
 	egroup.h \
 	env.c \
 	env.h \
+	env_all.c \
+	env_all.h \
 	euid.c \
 	euid.h \
 	eusername.c \

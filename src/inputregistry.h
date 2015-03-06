@@ -30,6 +30,7 @@
 #include "input/egid.h"
 #include "input/egroup.h"
 #include "input/env.h"
+#include "input/env_all.h"
 #include "input/euid.h"
 #include "input/eusername.h"
 #include "input/filename.h"
