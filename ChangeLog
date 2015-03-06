@@ -6,6 +6,8 @@
 2015-03-xx - Version  2.2.x
 ---------------------------
 o Feature: added new input provider %{env_all} - logs whole environment
+o Feature: added new input provider %{pid} - provides process id
+o Feature: added new input provider %{ppid} - provides parent process id
 o Bugfix: Fixed improper return value checking in all input providers that
     work with literal usernames and groups. This was causing shutdown hangs on
     RH/CentOS 7 systems that use systemd, with additional special conitions:

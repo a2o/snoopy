@@ -37,6 +37,8 @@
 #include "input/gid.h"
 #include "input/group.h"
 #include "input/login.h"
+#include "input/pid.h"
+#include "input/ppid.h"
 #include "input/sid.h"
 #include "input/snoopy_version.h"
 #include "input/tty.h"

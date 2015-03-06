@@ -45,6 +45,10 @@ libsnoopy_inputs_all_la_SOURCES = \
 	group.h \
 	login.c \
 	login.h \
+	pid.c \
+	pid.h \
+	ppid.c \
+	ppid.h \
 	sid.c \
 	sid.h \
 	snoopy_version.c \
