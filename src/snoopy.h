@@ -66,7 +66,7 @@
  * SNOOPY_INPUT_MESSAGE_MAX_SIZE
  *
  * Maximum length of a string returned from any input function,
- * without terminating null character.
+ * including terminating null character.
  */
 #define SNOOPY_INPUT_MESSAGE_MAX_SIZE 1024
 
@@ -103,7 +103,7 @@
  * SNOOPY_LOG_MESSAGE_MAX_SIZE
  *
  * Maximum length of single (whole) log message,
- * without terminating null character.
+ * including terminating null character.
  */
 #define SNOOPY_LOG_MESSAGE_MAX_SIZE 16383
 
