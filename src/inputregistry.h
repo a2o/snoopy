@@ -39,6 +39,7 @@
 #include "input/login.h"
 #include "input/pid.h"
 #include "input/ppid.h"
+#include "input/rpname.h"
 #include "input/sid.h"
 #include "input/snoopy_version.h"
 #include "input/tty.h"
