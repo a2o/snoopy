@@ -25,7 +25,6 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <sys/types.h>
-#include <proc/readproc.h>
 #include <string.h>
 #include <ctype.h>
 #include <stdlib.h>
