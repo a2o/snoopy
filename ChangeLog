@@ -3,6 +3,12 @@
 -------------------------------------------------------------------------------
 
 
+2015-03-XX - Version  2.2.7
+---------------------------
+o Feature: added new input provider %{rpname} - gets root process name
+    (submitted by Ariel Zach)
+
+
 2015-03-06 - Version  2.2.6
 ---------------------------
 o Feature: added new input provider %{env_all} - logs whole environment
