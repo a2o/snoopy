@@ -1,9 +1,9 @@
 /*
  * SNOOPY LOGGER
  *
- * File: snoopy/input/username.c
+ * File: snoopy/input/rpname.c
  *
- * Copyright (c) 2014 bostjan@a2o.si
+ * Copyright (c) 2015 ajzach@gmail.com
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -105,7 +105,7 @@ int get_rpname(int pid, char *input) {
 	} else if (parent == EMPTY_PID)
 		return snprintf(input, SNOOPY_INPUT_MESSAGE_MAX_SIZE, "%s", UNKNOWN_STR);
 	else {
-		return get_rpname(get_parent_pid(pid), input);
+		return get_rpname(parent, input);
 	}
 }
 
