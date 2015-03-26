@@ -8,7 +8,7 @@ New ideas are welcome. Most of change requests so far were about additional
 log data or filtering capabilities, therefore most of development/changes
 is expected in that area.
 
-Here are basic rules for input provider development:
+## Here are basic rules for input provider development:
 
 - input providers are located in src/input/
 - input provider names should be lower case, with underscores for word separation
@@ -32,8 +32,11 @@ need to add references to it to make Snoopy fully aware of it:
 - src/inputregistry.h     (one reference)
 - src/inputregistry.c     (two references)
 
-Rules for filter development are the same as for new input providers, with the
-following additional specifics:
+
+## New filter development rules
+
+Rules for filter development are the same as for new input provider development,
+with the following additional specifics:
 
 - filters are located in src/filters
 - each filter is passed two arguments: logMessage and filter argument (if any,
@@ -56,11 +59,21 @@ need to add references to it to make Snoopy fully aware of it:
 - src/filterregistry.h     (one reference)
 - src/filterregistry.c     (two references)
 
-Pushing code upstream:
 
+# Creating pull requests for upstream merges
+
+Commits:
 - your commits should be easily readable, with concise comments
 - your commits should follow the KISS principle: do one thing, and do it well
-- same goes for pull requests - one pull request should contain one change only
+
+Branching:
+- branch name: feature/my-shiny-new-snoopy-feature-title for new features
+- branch name: bugfix/my-totally-non-hackish-workaround for bugfixes
+- branch name: master (avoiding creating dedicated branch) may only be used for trivial fixes
+
+Pull requests:
+- do not create pull requests from master branch, unless absolutely sure to do so
+- one pull request should contain one change only
     (one bugfix or one feature at a time)
 - if you have developed multiple features and/or bugfixes, create separate
     branches for each one of them, and request merges for each branch
