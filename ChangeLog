@@ -3,7 +3,7 @@
 -------------------------------------------------------------------------------
 
 
-2015-03-XX - Version  2.2.7
+2015-03-26 - Version  2.2.7
 ---------------------------
 o Feature: added new input provider %{rpname} - gets root process name
     (submitted by Ariel Zach)
