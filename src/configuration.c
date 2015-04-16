@@ -126,9 +126,31 @@ void snoopy_configuration_dtor ()
 {
     if (SNOOPY_TRUE == snoopy_configuration.message_format_malloced) {
         free(snoopy_configuration.message_format);
+
+        /*
+         * Set this to false - REQUIRED
+         *
+         * This needs to be done as a special condition can occur at boot/shutdown:
+         * - snoopy is loaded when snoopy.ini is visible (mounted, present)
+         * - snoopy parses it, and sets message_format and ..._malloced to TRUE
+         * - on shutdown, snoopy.ini might disappear
+         * - snoopy_configuration_ctor() tries to parse config file, and as it is
+         *     not found, it does no alteration of snoopy_configuraton struct
+         * - snoopy_configuration.message_format_malloced is left set to TRUE
+         * - when snoopy_configuration_dtor() is called, it tries to free the
+         *     const char[] that contains the compiled-in message format
+         */
+        snoopy_configuration.message_format_malloced = SNOOPY_FALSE;
     }
     if (SNOOPY_TRUE == snoopy_configuration.filter_chain_malloced) {
         free(snoopy_configuration.filter_chain);
+
+        /*
+         * Set this to false - REQUIRED
+         *
+         * See comment above, same principle applies here.
+         */
+        snoopy_configuration.filter_chain = SNOOPY_FALSE;
     }
 }
 
