@@ -37,6 +37,15 @@ fi
 
 
 
+### Check if first line of tagged commit contains "Release X.Y.Z"
+RES=`git log -1 --pretty="%B" $RELEASE_TAG | head -n1 | grep "^Release $RELEASE_VERSION\$" -c`
+if [ "$RES" -ne "1" ]; then
+    echo "ERROR: Release commit does not contain this message as first line: 'Release $RELEASE_VERSION'"
+    exit 2
+fi
+
+
+
 ### Check for uncommited changes in the current repo
 #RES=`git diff`
 #if [ "x$RES" != "x" ]; then

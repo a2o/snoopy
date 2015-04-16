@@ -17,7 +17,7 @@ Steps:
 2. Update version info:
     - in ChangeLog
     - in configure.ac
-    - commit
+    - commit, with exact message "Release X.Y.Z" on the first line
 
 3. Create git tag:
     - called 'snoopy-X.Y.Z'   # For github to provide proper snoopy release tarball name
