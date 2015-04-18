@@ -3,6 +3,13 @@
 -------------------------------------------------------------------------------
 
 
+2015-04-xx - Version  2.2.x
+---------------------------
+o Bugfix #39: prevent double freeing of message_format and filter_chain
+    variables when snoopy.ini suddenly disappears from filesystem.
+    (reported by Ariel Zach)
+
+
 2015-03-26 - Version  2.2.7
 ---------------------------
 o Feature: added new input provider %{rpname} - gets root process name
