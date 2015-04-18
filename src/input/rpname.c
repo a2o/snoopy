@@ -62,17 +62,32 @@ char* read_proc_property(int pid, char* prop_name) {
 	size_t len = 0;
 	char* k;
 	char* v;
+	char* tmp;
 	char pid_file[50];
 
 	sprintf(pid_file, "/proc/%d/status", pid);
 	fp = fopen(pid_file, "r");
 	if (fp != NULL) {
 		while (getline(&line, &len, fp) != -1) {
+
+			/* The format must be prop_name:value */
+			if (strstr(line, ":") == NULL) {
+				fclose(fp);
+				return NULL;
+			}
+
 			k = strtok(line, ":");
 			v = strtok(NULL, ":");
+			if (v == NULL) {
+				fclose(fp);
+				return NULL;
+			}
+
 			if (strcmp(prop_name, k) == 0) {
 				fclose(fp);
-				return trim_whitespace(v);
+				tmp = v+1;
+				tmp[strlen(tmp)-1] = 0;
+				return tmp;
 			}
 		}
 		fclose(fp);
