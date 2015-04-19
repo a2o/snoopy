@@ -3,7 +3,7 @@
  *
  * File: snoopy/input/rpname.c
  *
- * Copyright (c) 2015 ajzach@gmail.com
+ * Copyright (c) 2015 ajzach@gmail.com, bostjan@a2o.si
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,101 +28,154 @@
 #include <string.h>
 #include <ctype.h>
 #include <stdlib.h>
+#include <limits.h>
 
-#define ROOT_PID        1
-#define EMPTY_PID       0
+#define PID_ROOT                1
+#define PID_EMPTY               0
 
-#define PROC_NAME       "Name"
-#define PROC_PPID       "PPid"
-#define UNKNOWN_STR     "(unknown)"
+#define PROC_PID_STATUS_KEY_NAME        "Name"
+#define PROC_PID_STATUS_KEY_PPID        "PPid"
 
-/* Remove white spaces on the property */
-char* trim_whitespace(char *str) {
-    char *end;
+#define PROC_PID_STATUS_VAL_MAX_LENGTH          NAME_MAX      // Pid is max 2^2 (7-digit number), name can be max 255 bytes
+#define PROC_PID_STATUS_VAL_MAX_LENGTH_STR      PROC_PID_STATUS_VAL_MAX_LENGTH + 1   // +1 for null termination
 
-    while (isspace(*str))
-        str++;
 
-    if (*str == 0)
-        return str;
+#define UNKNOWN_STR             "(unknown)"
 
-    end = str + strlen(str) - 1;
-    while (end > str && isspace(*end))
-        end--;
 
-    *(end + 1) = 0;
-
-    return str;
-}
 
 /* Read /proc/{pid}/status file and extract the property */
-char* read_proc_property(int pid, char* prop_name) {
+char* read_proc_property (int pid, char* prop_name)
+{
+    char    pid_file[50];
     FILE   *fp;
     char   *line = NULL;
-    size_t  len = 0;
+    size_t  lineLen = 0;
     char   *k;
     char   *v;
-    char   *tmp;
-    char    pid_file[50];
+    size_t  vLen = 0;
+    char    returnValue[PROC_PID_STATUS_VAL_MAX_LENGTH_STR] = "";
 
+    /* Open file or return */
     sprintf(pid_file, "/proc/%d/status", pid);
     fp = fopen(pid_file, "r");
-    if (fp != NULL) {
-        while (getline(&line, &len, fp) != -1) {
-
-            /* The format must be prop_name:value */
-            if (strstr(line, ":") == NULL) {
-                fclose(fp);
-                return NULL;
-            }
-
-            k = strtok(line, ":");
-            v = strtok(NULL, ":");
-            if (v == NULL) {
-                fclose(fp);
-                return NULL;
-            }
-
-            if (strcmp(prop_name, k) == 0) {
-                fclose(fp);
-                tmp = v+1;
-                tmp[strlen(tmp)-1] = 0;
-                return tmp;
-            }
-        }
-        fclose(fp);
+    if (NULL == fp) {
+        return NULL;
     }
+
+    /* Read line by line */
+    while (getline(&line, &lineLen, fp) != -1) {
+
+        /* If line is empty, bail out - no such thing in /proc/PID/status */
+        if (0 == lineLen) {
+            goto RETURN_FREE_LINE_AND_CLOSE_FILE;
+        }
+
+        /*
+         * The format must be "prop_name: value".
+         * Otherwise bail out altogether - something must be wrong with this /proc/PID/status file
+         */
+        if (NULL == strstr(line, ":")) {
+            goto RETURN_FREE_LINE_AND_CLOSE_FILE;
+        }
+
+        /*
+         * Separate line content into two tokens: key and value
+         * If separation fails, continue to the next line ("Groups:" key is one such example)
+         */
+        k = strtok(line, ":");
+        v = strtok(NULL, ":");
+        if (NULL == v) {
+            continue;
+        }
+
+        /* The key we are looking for? */
+        if (strcmp(prop_name, k) == 0) {
+            /* Yes! */
+            v++;                  // There is one tab in front of PID number
+            vLen = strlen(v);
+            v[vLen-1] = 0;        // Terminate the newline at the end of value
+            vLen--;               // Length is now shorter for 1 character
+
+            /*
+             * Choose string copy mode depending on length of PID
+             * - prevent segfault if sth happens to MAX PID in future
+             */
+            if (vLen > PROC_PID_STATUS_VAL_MAX_LENGTH) {
+                strncpy(returnValue, v, PROC_PID_STATUS_VAL_MAX_LENGTH);
+                returnValue[PROC_PID_STATUS_VAL_MAX_LENGTH_STR-1] = 0; // Change newline into null character
+            } else {
+                strncpy(returnValue, v, PROC_PID_STATUS_VAL_MAX_LENGTH_STR);
+            }
+
+            // Do a cleanup and return a string duplicate, which should be freed by the caller
+            free(line);
+            fclose(fp);
+            return strdup(returnValue);
+        }
+
+        /*
+         * Line is not freed between subsequent iteration as the same buffer is reused
+         * (and realloc()-ed if required)
+         */
+    }
+
+    RETURN_FREE_LINE_AND_CLOSE_FILE:
+    /* Only free if this was actually allocated */
+    if (NULL != line) {
+        free(line);
+    }
+    fclose(fp);
     return NULL;
 }
 
+
+
 /* Get parent pid */
-int get_parent_pid(int pid) {
-    char* ppid;
-    ppid = read_proc_property(pid, PROC_PPID);
-    if (ppid != NULL)
-        return atoi(ppid);
-    return EMPTY_PID;
+int get_parent_pid (int pid)
+{
+    char *ppid_str;
+    int   ppid_int;
+
+    ppid_str = read_proc_property(pid, PROC_PID_STATUS_KEY_PPID);
+    if (NULL != ppid_str) {
+        ppid_int = atoi(ppid_str);
+        free(ppid_str);
+        return ppid_int;
+    }
+
+    return PID_EMPTY;
 }
 
-/* Find root process name */
-int get_rpname(int pid, char *input) {
-    int parent;
-    char* name;
 
-    parent = get_parent_pid(pid);
-    if (parent == ROOT_PID) {
-        name = read_proc_property(pid, PROC_NAME);
-        if (name != NULL)
-            return snprintf(input, SNOOPY_INPUT_MESSAGE_MAX_SIZE, "%s", name);
-        else
-            return snprintf(input, SNOOPY_INPUT_MESSAGE_MAX_SIZE, "%s",    UNKNOWN_STR);
-    } else if (parent == EMPTY_PID)
+
+/* Find root process name */
+int get_rpname (int pid, char *input)
+{
+    int     parentPid;
+    char   *name;
+    size_t  nameLen;
+
+    parentPid = get_parent_pid(pid);
+    if (PID_ROOT == parentPid) {
+        name = read_proc_property(pid, PROC_PID_STATUS_KEY_NAME);
+        if (NULL != name) {
+            nameLen = snprintf(input, SNOOPY_INPUT_MESSAGE_MAX_SIZE, "%s", name);
+            free(name);
+        } else {
+            nameLen = snprintf(input, SNOOPY_INPUT_MESSAGE_MAX_SIZE, "%s", UNKNOWN_STR);
+        }
+        return nameLen;
+    } else if (PID_EMPTY == parentPid) {
         return snprintf(input, SNOOPY_INPUT_MESSAGE_MAX_SIZE, "%s", UNKNOWN_STR);
-    else {
-        return get_rpname(parent, input);
+    } else {
+        return get_rpname(parentPid, input);
     }
 }
 
-int snoopy_input_rpname(char *input, char *arg) {
+
+
+int snoopy_input_rpname (char *input, char *arg)
+{
     return get_rpname(getpid(), input);
 }

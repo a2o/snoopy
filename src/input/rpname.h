@@ -20,12 +20,13 @@
  * Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
+
+
 /*
  * SNOOPY INPUT: rpname
  */
-
-char* trim_whitespace(char *str);
-char* read_proc_property(int pid, char* prop_name);
-int get_parent_pid(int pid);
-void get_rpname(int pid, int input);
-int snoopy_input_rpname(char *input, char *arg);
+char* trim_whitespace     (char *str);
+char* read_proc_property  (int pid, char* prop_name);
+int   get_parent_pid      (int pid);
+void  get_rpname          (int pid, int input);
+int   snoopy_input_rpname (char *input, char *arg);
