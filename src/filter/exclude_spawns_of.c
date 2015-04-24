@@ -44,10 +44,13 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sys/types.h>
-#include <sys/stat.h>
 #include <unistd.h>
 
 #define PROGLISTSEP ','
+
+int find_ancestor_in_list(char **name_list);
+int find_string_in_array(char *str, char **str_array);
+char **string_to_token_array(char *str);
 
 int snoopy_filter_exclude_spawns_of(char *msg, char *arg)
 {
@@ -82,7 +85,6 @@ int snoopy_filter_exclude_spawns_of(char *msg, char *arg)
  */
 int find_ancestor_in_list(char **name_list)
 {
-    struct stat st;
     pid_t ppid;
     char stat_path[32]; // Path "/proc/nnnn/stat" where nnnn = some PID
     FILE *statf;
