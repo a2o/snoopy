@@ -64,7 +64,7 @@ requests related to old and unsupported Snoopy versions.
 
 ## 5. How does Snoopy actually work?
 
-See [doc/INTERNALS.md](doc/INTERNALS.md)
+See [doc/internals/README.md](doc/internals/README.md)
 
 
 
@@ -76,12 +76,16 @@ See [doc/CONTRIBUTING.md](doc/CONTRIBUTING.md)
 
 ## 7. Credits
 
-Snoopy Logger was created by:
+Development is currently located at the following URI:
+    http://github.com/a2o/snoopy/
+
+Snoopy Logger was originally created by:
      marius@umich.edu
         mbm@linux.com
 
 Snoopy is currently maintained by:
     Bostjan Skufca, bostjan@a2o.si
 
-Development is located at the following URI (see pull requests for contributor credits):
-    http://github.com/a2o/snoopy/
+List of contributors is available at the following locations:
+- in the Snoopy's ChangeLog file;
+- in the list of pull requests on GitHub.
