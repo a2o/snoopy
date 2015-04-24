@@ -1,14 +1,25 @@
-# Contributing to Snoopy development
+## Contributing to Snoopy development
 
 [![Flattr Snoopy Logger project](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=a2o&url=https://github.com/a2o/snoopy&title=Snoopy Logger)
-
-
 
 New ideas are welcome. Most of change requests so far were about additional
 log data or filtering capabilities, therefore most of development/changes
 is expected in that area.
 
-### Here are basic rules for input provider development:
+
+
+Table of Contents
+=================
+
+    * [Contributing to Snoopy development](#contributing-to-snoopy-development)
+      * [Basic rules for input provider development](#basic-rules-for-input-provider-development)
+      * [Filter development rules](#filter-development-rules)
+      * [Creating feature documentation](#creating-feature-documentation)
+      * [Creating pull requests for upstream merges](#creating-pull-requests-for-upstream-merges)
+
+
+
+### Basic rules for input provider development
 
 - input providers are located in src/input/;
 - input provider names should be lower case, with underscores for word separation;
@@ -33,7 +44,8 @@ need to add references to it to make Snoopy fully aware of it:
 - src/inputregistry.c     (two references)
 
 
-### New filter development rules
+
+### Filter development rules
 
 Rules for filter development are the same as for new input provider development,
 with the following additional specifics:
@@ -89,7 +101,7 @@ Directory /doc/internals/:
 
 
 
-## Creating pull requests for upstream merges
+### Creating pull requests for upstream merges
 
 Commits:
 - your commits should be easily readable, with concise comments;

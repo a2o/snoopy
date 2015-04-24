@@ -14,14 +14,18 @@ Steps:
     - update config.h.in
     - commit
 
-2. Update version info:
+2. Update documentation TOCs
+    - use this tool: https://github.com/ekalinin/github-markdown-toc
+    - commit
+
+3. Update version info:
     - in ChangeLog
     - in configure.ac
     - commit, with exact message "Release X.Y.Z" on the first line
 
-3. Create git tag:
+4. Create git tag:
     - called 'snoopy-X.Y.Z'   # For github to provide proper snoopy release tarball name
 
-4. Release it
+5. Release it
     - cd to the repo root
     - run "./dev-scripts/create-release.sh snoopy-x.y.z"

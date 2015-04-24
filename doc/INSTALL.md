@@ -2,6 +2,31 @@
 
 
 
+Table of Contents
+=================
+
+  * [Snoopy Logger Installation Instructions](#snoopy-logger-installation-instructions)
+    * [Available installation methods:](#available-installation-methods)
+      * [1. Automated installation procedure](#1-automated-installation-procedure)
+      * [2. Installing Snoopy from distribution package repositories](#2-installing-snoopy-from-distribution-package-repositories)
+        * [2.1 Building distribution-specific packages yourself](#21-building-distribution-specific-packages-yourself)
+      * [3. Building Snoopy from sources](#3-building-snoopy-from-sources)
+        * [3.1 Download options](#31-download-options)
+        * [3.2 Installation procedure](#32-installation-procedure)
+        * [3.3 Build configuration](#33-build-configuration)
+          * [3.3.1 Configuring log output](#331-configuring-log-output)
+          * [3.3.2 Configuring filtering](#332-configuring-filtering)
+          * [3.3.3 Optional configuration file support](#333-optional-configuration-file-support)
+      * [4 How to enable/activate Snoopy](#4-how-to-enableactivate-snoopy)
+        * [4.1 Enable for specific program](#41-enable-for-specific-program)
+        * [4.2 Enable system-wide Snoopy on 32-bit-only or 64-bit-only systems](#42-enable-system-wide-snoopy-on-32-bit-only-or-64-bit-only-systems)
+        * [4.3 For multilib systems](#43-for-multilib-systems)
+        * [4.4 For multilib systems with LD_PRELOAD_* environmental variables](#44-for-multilib-systems-with-ld_preload_-environmental-variables)
+      * [5 Snoopy output](#5-snoopy-output)
+      * [6 How to disable Snoopy](#6-how-to-disable-snoopy)
+
+
+
 ## Available installation methods:
 
 * automated installation procedure (preferred, installs latest version), or

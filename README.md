@@ -6,6 +6,20 @@ Snoopy is a tiny library that logs all executed commands (+ arguments) on your s
 
 
 
+Table of Contents
+=================
+
+  * [Snoopy Logger](#snoopy-logger)
+    * [1. Installation](#1-installation)
+    * [2. Snoopy output](#2-snoopy-output)
+    * [3. Configuration](#3-configuration)
+    * [4. Support](#4-support)
+    * [5. How does Snoopy actually work?](#5-how-does-snoopy-actually-work)
+    * [6. Contributing to Snoopy development](#6-contributing-to-snoopy-development)
+    * [7. Credits](#7-credits)
+
+
+
 ## 1. Installation
 
 The easiest way to start using Snoopy is to execute the following command (as root):
@@ -44,8 +58,9 @@ However, since version 2.0.0 Snoopy supports optional configuration file.
 Snoopy's automated installation procedure enables configuration file support
 by default. Configuration file path is /etc/snoopy.ini.
 
-For additional information please consult comments in [etc/snoopy.ini](etc/snoopy.ini)
-and [doc/INSTALL.md](doc/INSTALL.md).
+For additional information consult comments in default configuration file
+[etc/snoopy.ini](etc/snoopy.ini) and read appropriate sections of
+[doc/INSTALL.md](doc/INSTALL.md).
 
 
 
