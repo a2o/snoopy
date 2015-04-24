@@ -14,7 +14,7 @@ o Bugfix #39-2: Fix invalid parsing in rpname input provider - check the line
     (reported and initial fix authored by Ariel Zach)
 o Bugfix and refactoring: rpname input provider was leaking some memory, and
     we made it more logically named (variables and if conditions were made
-    more coherent with the rest of snoopy) and structured.
+    more coherent with the rest of Snoopy) and structured.
 
 
 2015-03-26 - Version  2.2.7
@@ -46,7 +46,7 @@ o Bugfix: fixed installation of snoopy.ini in nonexistent directory
 2015-01-27 - Version  2.2.4
 ---------------------------
 o Bugfix: devlog output was not implemented properly, it was missing log
-    facility and log level specification. This resulted in snoopy output
+    facility and log level specification. This resulted in Snoopy output
     appearing on user's console, as everything was treated with EMERG
     severity. On CentOS/RH messages of this severity are forwarded to console
     by default.
@@ -128,7 +128,7 @@ o Refactoring: switched to autotools completely
 o Refactoring: all builds now use -Wall and -Werror
 o Refactoring: removed --enable-cwd-logging (superseded by message formatting
     options and input provider)
-o Refactoring: snoopy library is now called libsnoopy.so instead of snoopy.so,
+o Refactoring: Snoopy library is now called libsnoopy.so instead of snoopy.so,
     to conform to autotools syntax
 o Refactoring: ./configure: removed many bugs, added proper syntax and error
     messages to help user decide what she wants
@@ -140,7 +140,7 @@ o Refactoring: created proper initialization/shutdown methods
 o Documentation: added into about writing new input providers
 o Bugfix: fixed compilation failure on debian in inputs/cwd.c (thanks Sébastien Gross)
 o Bugfix: missing snoopy.ini in distribution tarball (thanks Jeremy Brown)
-o Bugfix: When uninstalling, also disable snoopy (remove from /etc/ld.so.preload).
+o Bugfix: When uninstalling, also disable Snoopy (remove from /etc/ld.so.preload).
 
 
 2013-04-06 - Version  1.9.0

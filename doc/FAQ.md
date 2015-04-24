@@ -62,7 +62,7 @@ Issue was originally reported here: https://github.com/a2o/snoopy/issues/29
 Transcript of original content (a bit condensed):
 
     If, like us, you have users running desktop environments, you'll find pulseaudio
-    filling your logs because of snoopy.
+    filling your logs because of Snoopy.
 
     Workaround:
     * edit /etc/pulse/client.conf
