@@ -63,8 +63,10 @@ need to add references to it to make Snoopy fully aware of it:
 
 ### Creating feature documentation
 
-Documentation should be structured the following way:
-- /README.md: general information and quick install instructions;
+Here is a brief description of Snoopy documentation structure.
+
+File /README.md:
+- general information and quick install instructions;
 
 Directory /doc/:
 - documentation which is useful to average Snoopy user;
