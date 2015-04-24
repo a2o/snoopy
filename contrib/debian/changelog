@@ -1,3 +1,9 @@
+snoopy (2:2.0.1rc1) UNRELEASED; urgency=medium
+
+  * Bump version.
+
+ -- Fred Mora <fmora@datto.com>  Thu, 23 Apr 2015 20:41:58 -0400
+
 snoopy (2:2.0.0rc5-1) unstable; urgency=low
 
   * Bump to version 2.0.0rc5.
