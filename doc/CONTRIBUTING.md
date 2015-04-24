@@ -38,7 +38,7 @@ need to add references to it to make Snoopy fully aware of it:
 Rules for filter development are the same as for new input provider development,
 with the following additional specifics:
 
-- filters are located in src/filters
+- filters are located in src/filter/
 - each filter is passed two arguments: logMessage and filter argument (if any,
     otherwise an empty string is passed)
 - filter argument is literal. If it contains multiple arguments (separated by
