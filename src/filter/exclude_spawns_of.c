@@ -67,7 +67,7 @@ int snoopy_filter_exclude_spawns_of(char *msg, char *arg)
     // Check if one of the program names in losp is an ancestor
     is_ancestor_in_list = find_ancestor_in_list(losp);
     free(losp);
-    return (is_ancestor_in_list == 0) ? SNOOPY_FILTER_PASS : SNOOPY_FILTER_DROP; // Error means pass
+    return (is_ancestor_in_list == 1) ? SNOOPY_FILTER_DROP : SNOOPY_FILTER_PASS; // Error means pass
 }
 
 // Helper functions
