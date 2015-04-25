@@ -1,4 +1,4 @@
-snoopy (2:2.0.1rc3) UNRELEASED; urgency=medium
+snoopy (2:2.3.0rc1) UNRELEASED; urgency=medium
 
   * Bump version.
   * Change build options to enable filtering and config file.
