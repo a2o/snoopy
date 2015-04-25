@@ -1,3 +1,10 @@
+snoopy (2:2.0.1rc3) UNRELEASED; urgency=medium
+
+  * Bump version.
+  * Change build options to enable filtering and config file.
+
+ -- Fred Mora <fmora@datto.com>  Fri, 24 Apr 2015 18:27:42 -0400
+
 snoopy (2:2.0.0rc5-1) unstable; urgency=low
 
   * Bump to version 2.0.0rc5.

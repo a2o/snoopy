@@ -35,6 +35,7 @@
  * Two arrays holding data about filter functions
  */
 char *snoopy_filterregistry_names[] = {
+    "exclude_spawns_of",
     "exclude_uid",
     "only_root",
     "only_uid",
@@ -42,6 +43,7 @@ char *snoopy_filterregistry_names[] = {
 };
 
 int (*snoopy_filterregistry_ptrs []) (char *logMessage, char *arg) = {
+    snoopy_filter_exclude_spawns_of,
     snoopy_filter_exclude_uid,
     snoopy_filter_only_root,
     snoopy_filter_only_uid,

@@ -3,6 +3,12 @@
 -------------------------------------------------------------------------------
 
 
+2015-05-xx - Version  2.3.x - TODO
+---------------------------
+o Feature #45: new filter that excludes snoopy log entries from certain
+    processes. Contributed by Frederic Mora.
+
+
 2015-04-xx - Version  2.2.x
 ---------------------------
 o Bugfix #39: prevent double freeing of message_format and filter_chain

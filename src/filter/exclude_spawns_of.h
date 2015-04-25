@@ -1,9 +1,10 @@
 /*
  * SNOOPY LOGGER
  *
- * File: filterregistry.h
+ * File: snoopy/filter/exclude_spawns_of.h
  *
- * Copyright (c) 2014 bostjan@a2o.si
+ * Copyright (c) 2015 Datto, Inc. All rights reserved.
+ * Author: Fred Mora - fmora@datto.com
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,26 +24,6 @@
 
 
 /*
- * Include headers of all filter functions
+ * SNOOPY FILTER: exclude_spawns_of
  */
-#include "filter/exclude_spawns_of.h"
-#include "filter/exclude_uid.h"
-#include "filter/only_root.h"
-#include "filter/only_uid.h"
-
-
-
-/*
- * Two arrays holding data about filter functions
- */
-extern char *snoopy_filterregistry_names[];
-extern int (*snoopy_filterregistry_ptrs []) (char *logMessage, char *arg);
-
-
-
-/*
- * Functions to manage and utilise filter providers
- */
-int snoopy_filterregistry_call         (char *filterName, char *logMessage, char *filterArg);
-int snoopy_filterregistry_getIndex     (char *filterName);
-int snoopy_filterregistry_isRegistered (char *filterName);
+int snoopy_filter_exclude_spawns_of (char *msg, char *arg);
