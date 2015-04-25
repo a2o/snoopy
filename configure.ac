@@ -52,7 +52,7 @@ AC_PROG_GREP
 AC_PROG_INSTALL
 AC_PROG_LN_S
 AC_PROG_MAKE_SET
-AC_PROG_RANLIB
+dnl AC_PROG_RANLIB   # libtoolize: `AC_PROG_RANLIB' is rendered obsolete by `LT_INIT'
 AC_PROG_SED
 
 dnl Checks for libraries.
