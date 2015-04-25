@@ -10,7 +10,37 @@ AC_CONFIG_HEADERS([config.h])
 dnl We are using automake and libtool
 AC_CONFIG_MACRO_DIR([m4])
 AM_INIT_AUTOMAKE([1.11 gnu silent-rules subdir-objects -Wall -Werror])
-AM_PROG_AR   dnl Required by Ubuntu 14.04 build receipe, must appear before LT_INIT
+
+dnl Option AM_PROG_AR
+dnl
+dnl Required by Ubuntu 14.04 build receipe, must appear before LT_INIT.
+dnl
+dnl Snoopy development priorities:
+dnl - git/master version is targeted at modern Linux distributions - this
+dnl     means we mostly care if git/master is buildable on fresh/latest-version
+dnl     distros (ignore building on legacy systems here);
+dnl - source distribution packages are built on modern Linux distributions, thus
+dnl     what git/master contains follows this assumption;
+dnl - building Snoopy from source packages should be possible on as
+dnl     many Linux distros as feasible;
+dnl - compatibility for building distro-specific packages comes in only here and
+dnl     burden of bending the Snoopy source to distro-packaging-specific needs
+dnl     is placed on distro-specific package maintainer.
+dnl
+dnl Given the priorities above, we removed AM_PROG_AR as dependency, as it:
+dnl - is not needed to build Snoopy from source;
+dnl - interferes with building Snoopy from source (RH/CentOS 6, see GitHub issue #38);
+dnl - is only available in newer Autotools releases.
+dnl
+dnl Should someone wish to get AM_PROG_AR back, they should either:
+dnl - figure a way to conditionally include it in configure.ac
+dnl - make custom check for it that runs on all platforms equally well.
+dnl
+dnl The removal was done in Snoopy 2.3.0.
+dnl
+dnl AM_PROG_AR
+
+dnl Enable libtool
 LT_INIT([disable-static])
 
 dnl Checks for programs.
