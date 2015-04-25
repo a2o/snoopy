@@ -35,10 +35,10 @@
 
 /* Doubles the allocated size associated to a pointer */
 /* 'size' is the current allocated size. */
-static void * mem_double(void * ptr, int size)
+static void * mem_double(void * ptr, size_t size)
 {
     void * newptr ;
- 
+
     newptr = calloc(2*size, 1);
     if (newptr==NULL) {
         return NULL ;
@@ -58,14 +58,17 @@ static void * mem_double(void * ptr, int size)
   for systems that do not have it.
  */
 /*--------------------------------------------------------------------------*/
-static char * xstrdup(const char * s)
+char * xstrdup(const char * s)
 {
     char * t ;
+    size_t len ;
     if (!s)
         return NULL ;
-    t = (char*)malloc(strlen(s)+1) ;
+
+    len = strlen(s) + 1 ;
+    t = malloc(len) ;
     if (t) {
-        strcpy(t,s);
+        memcpy(t, s, len) ;
     }
     return t ;
 }
@@ -87,9 +90,9 @@ static char * xstrdup(const char * s)
 /*--------------------------------------------------------------------------*/
 unsigned dictionary_hash(const char * key)
 {
-    int         len ;
+    size_t      len ;
     unsigned    hash ;
-    int         i ;
+    size_t      i ;
 
     len = strlen(key);
     for (hash=0, i=0 ; i<len ; i++) {
@@ -114,20 +117,21 @@ unsigned dictionary_hash(const char * key)
   dictionary, give size=0.
  */
 /*--------------------------------------------------------------------------*/
-dictionary * dictionary_new(int size)
+dictionary * dictionary_new(size_t size)
 {
     dictionary  *   d ;
 
     /* If no size was specified, allocate space for DICTMINSZ */
     if (size<DICTMINSZ) size=DICTMINSZ ;
 
-    if (!(d = (dictionary *)calloc(1, sizeof(dictionary)))) {
-        return NULL;
+    d = calloc(1, sizeof *d) ;
+
+    if (d) {
+        d->size = size ;
+        d->val  = calloc(size, sizeof *d->val);
+        d->key  = calloc(size, sizeof *d->key);
+        d->hash = calloc(size, sizeof *d->hash);
     }
-    d->size = size ;
-    d->val  = (char **)calloc(size, sizeof(char*));
-    d->key  = (char **)calloc(size, sizeof(char*));
-    d->hash = (unsigned int *)calloc(size, sizeof(unsigned));
     return d ;
 }
 
@@ -142,7 +146,7 @@ dictionary * dictionary_new(int size)
 /*--------------------------------------------------------------------------*/
 void dictionary_del(dictionary * d)
 {
-    int     i ;
+    size_t  i ;
 
     if (d==NULL) return ;
     for (i=0 ; i<d->size ; i++) {
@@ -175,7 +179,7 @@ void dictionary_del(dictionary * d)
 char * dictionary_get(dictionary * d, const char * key, char * def)
 {
     unsigned    hash ;
-    int         i ;
+    size_t      i ;
 
     hash = dictionary_hash(key);
     for (i=0 ; i<d->size ; i++) {
@@ -220,11 +224,11 @@ char * dictionary_get(dictionary * d, const char * key, char * def)
 /*--------------------------------------------------------------------------*/
 int dictionary_set(dictionary * d, const char * key, const char * val)
 {
-    int         i ;
+    size_t      i ;
     unsigned    hash ;
 
     if (d==NULL || key==NULL) return -1 ;
-    
+
     /* Compute hash for this key */
     hash = dictionary_hash(key) ;
     /* Find if value is already in dictionary */
@@ -249,9 +253,9 @@ int dictionary_set(dictionary * d, const char * key, const char * val)
     if (d->n==d->size) {
 
         /* Reached maximum size: reallocate dictionary */
-        d->val  = (char **)mem_double(d->val,  d->size * sizeof(char*)) ;
-        d->key  = (char **)mem_double(d->key,  d->size * sizeof(char*)) ;
-        d->hash = (unsigned int *)mem_double(d->hash, d->size * sizeof(unsigned)) ;
+        d->val  = mem_double(d->val,  d->size * sizeof *d->val) ;
+        d->key  = mem_double(d->key,  d->size * sizeof *d->key) ;
+        d->hash = mem_double(d->hash, d->size * sizeof *d->hash) ;
         if ((d->val==NULL) || (d->key==NULL) || (d->hash==NULL)) {
             /* Cannot grow dictionary */
             return -1 ;
@@ -288,7 +292,7 @@ int dictionary_set(dictionary * d, const char * key, const char * val)
 void dictionary_unset(dictionary * d, const char * key)
 {
     unsigned    hash ;
-    int         i ;
+    size_t      i ;
 
     if (key == NULL) {
         return;
@@ -336,7 +340,7 @@ void dictionary_unset(dictionary * d, const char * key)
 /*--------------------------------------------------------------------------*/
 void dictionary_dump(dictionary * d, FILE * out)
 {
-    int     i ;
+    size_t  i ;
 
     if (d==NULL || out==NULL) return ;
     if (d->n<1) {
@@ -367,7 +371,7 @@ int main(int argc, char *argv[])
     /* Allocate dictionary */
     printf("allocating...\n");
     d = dictionary_new(0);
-    
+
     /* Set values in dictionary */
     printf("setting %d values...\n", NVALS);
     for (i=0 ; i<NVALS ; i++) {
