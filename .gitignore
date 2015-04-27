@@ -4,12 +4,18 @@ Makefile.in
 /aclocal.m4
 /autom4te.cache
 /autoscan.log
+/compile
 /configure
 /config.h
 /config.log
 /config.status
 /config.h.in~
-/stamp-h1
+/depcomp
+/install-sh
+/ltmain.sh
+/m4/
+/missing
+/stamp-h?
 
 
 ### Files produced by ./configure
@@ -25,8 +31,8 @@ Makefile
 *.o
 *.la
 *.lo
-.deps
-.libs
+.deps/
+.libs/
 /src/libsnoopy.so
 /bin/snoopy-disable
 /bin/snoopy-enable
@@ -36,6 +42,7 @@ Makefile
 /bin/snoopy-dev-helper
 /contrib/rhel/snoopy.spec
 /contrib/sles/snoopy.spec
+
 
 ### Distribution related files
 #
