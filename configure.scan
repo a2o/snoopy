@@ -37,6 +37,5 @@ AC_CONFIG_FILES([Makefile
                  src/filter/Makefile
                  src/input/Makefile
                  src/lib/Makefile
-                 src/lib/iniparser/Makefile
                  src/output/Makefile])
 AC_OUTPUT
