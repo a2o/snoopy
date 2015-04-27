@@ -3,7 +3,7 @@
 -------------------------------------------------------------------------------
 
 
-2015-04-28 - Version  2.3.0rc1
+2015-04-28 - Version  2.3.0rc2
 ------------------------------
 o Feature #45: new filter that excludes snoopy log entries from certain
     processes.
