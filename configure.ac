@@ -3,7 +3,8 @@
 
 AC_PREREQ([2.63])
 AC_INIT([Snoopy Logger], [2.2.8], [https://github.com/a2o/snoopy/], [snoopy])
-AC_DEFINE(PACKAGE_URL, [], "https://github.com/a2o/snoopy/")
+AC_DEFINE(PACKAGE_URL,       "https://github.com/a2o/snoopy")
+AC_DEFINE(PACKAGE_BUGREPORT, "https://github.com/a2o/snoopy/issues")
 AC_CONFIG_SRCDIR([config.h.in])
 AC_CONFIG_HEADERS([config.h])
 
@@ -48,10 +49,8 @@ dnl Enable libtool
 LT_INIT([disable-static])
 
 dnl Checks for programs.
-AC_PROG_CXX
 AC_PROG_AWK
 AC_PROG_CC
-AC_PROG_CPP
 AC_PROG_GREP
 AC_PROG_INSTALL
 AC_PROG_LN_S
