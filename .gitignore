@@ -23,6 +23,11 @@ Makefile.in
 Makefile
 /libtool
 
+# Temporary files created during ./configure run
+/confdefs.h
+/conftest.c
+/conftest.err
+
 
 ### Files produced by build process
 #
