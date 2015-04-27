@@ -56,8 +56,20 @@ AC_PROG_GREP
 AC_PROG_INSTALL
 AC_PROG_LN_S
 AC_PROG_MAKE_SET
-dnl AC_PROG_RANLIB   # libtoolize: `AC_PROG_RANLIB' is rendered obsolete by `LT_INIT'
+
+dnl AC_PROG_RANLIB
+dnl
+dnl autogen.sh output:
+dnl   libtoolize: `AC_PROG_RANLIB' is rendered obsolete by `LT_INIT'
+dnl autoscan output:
+dnl   configure.ac: warning: missing AC_PROG_RANLIB wanted by: ltmain.sh:2455
+dnl
+dnl Libtoolize warning seems less harmful, therefore we leave this option in, for now.
+dnl
+AC_PROG_RANLIB
+
 AC_PROG_SED
+
 
 dnl Checks for libraries.
 dnl FIXME: Replace `main' with a function in `-ldl':
