@@ -28,6 +28,9 @@ o Bugfix and refactoring: rpname input provider was leaking some memory, and
     it was made more logically structured (variables and if conditions were
     changed to more logical and coherent naming, to align it better with the
     rest of Snoopy code).
+o Bugfix #47: Bugfix #39 inadvertently introduced a doublefree bug when
+    filter chain was specified in snoopy.ini.
+    (reported by Ariel Zach)
 
 
 2015-03-26 - Version  2.2.7
