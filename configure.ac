@@ -13,7 +13,8 @@ AM_INIT_AUTOMAKE([1.11 gnu silent-rules subdir-objects -Wall -Werror])
 
 dnl Option AM_PROG_AR
 dnl
-dnl Required by Ubuntu 14.04 build receipe, must appear before LT_INIT.
+dnl Required for building Snoopy from git on Ubuntu 14.04 (for development, and
+dnl by package build receipe. It must appear before LT_INIT.
 dnl
 dnl Snoopy development priorities:
 dnl - git/master version is targeted at modern Linux distributions - this
@@ -27,18 +28,21 @@ dnl - compatibility for building distro-specific packages comes in only here and
 dnl     burden of bending the Snoopy source to distro-packaging-specific needs
 dnl     is placed on distro-specific package maintainer.
 dnl
-dnl Given the priorities above, we removed AM_PROG_AR as dependency, as it:
-dnl - is not needed to build Snoopy from source;
-dnl - interferes with building Snoopy from source (RH/CentOS 6, see GitHub issue #38);
-dnl - is only available in newer Autotools releases.
+dnl Given the priorities above, we include AM_PROG_AR as dependency, as it:
+dnl - is needed to build Snoopy from source on Ubuntu, which is somewhat used for
+dnl     Snoopy development;
+dnl - it does not interfere when building Snoopy from source packages;
+dnl - it only interferes when building Snoopy from git, and only on older
+dnl     platforms (RH/CentOS 6, see GitHub issue #38).
 dnl
-dnl Should someone wish to get AM_PROG_AR back, they should either:
-dnl - figure a way to conditionally include it in configure.ac
-dnl - make custom check for it that runs on all platforms equally well.
+dnl Should someone have problems with AM_PROG_AR, they should either:
+dnl - figure a way to conditionally remove it from configure.ac on certain distros, or
+dnl - comment it out manually.
 dnl
-dnl The removal was done in Snoopy 2.3.0.
+dnl The removal was considered for Snoopy 2.3.0, but was ultimately rejected because
+dnl of arguments specified above.
 dnl
-dnl AM_PROG_AR
+AM_PROG_AR
 
 dnl Enable libtool
 LT_INIT([disable-static])

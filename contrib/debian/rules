@@ -9,7 +9,6 @@
 %:
 	dh $* $@ --with autoreconf
 
-# TODO: Create sed command that enabled AM_PROG_AR before running autogen.sh
 override_dh_auto_configure:
 	./configure \
 		--build=x86_64-linux-gnu \
