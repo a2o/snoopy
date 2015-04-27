@@ -15,7 +15,7 @@ o Refactoring #41: change term "input provider" to "data source", to more
     accurately reflect what is actually going on in that part of code.
 
 
-2015-04-xx - Version  2.2.x - TODO
+2015-04-27 - Version  2.2.8
 ---------------------------
 o Bugfix #39: prevent double freeing of message_format and filter_chain
     variables when snoopy.ini suddenly disappears from filesystem.
