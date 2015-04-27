@@ -250,7 +250,7 @@ void snoopy_configuration_parse_output (
     if (strcmp(confVal, SNOOPY_OUTPUT_PROVIDER_DEVLOG) == 0) { snoopy_configuration.output_provider = SNOOPY_OUTPUT_PROVIDER_DEVLOG; }
     if (strcmp(confVal, SNOOPY_OUTPUT_PROVIDER_SYSLOG) == 0) { snoopy_configuration.output_provider = SNOOPY_OUTPUT_PROVIDER_SYSLOG; }
 
-    // TODO other input providers
+    // TODO other outputs
     // Clone string
     // Check if colon character is present, split into left and right string
     // If right string is non-empty, malloc it, and store path in there
@@ -357,7 +357,7 @@ void snoopy_configuration_parse_syslog_level (
  *     confVal   Pointer to string to change and to be operated on
  *
  * Return:
- *     char *    Pointer to cleaned string (either the same as input
+ *     char *    Pointer to cleaned string (either the same as initial argument,
  *               or 4 characters advanced, to remove LOG_ prefix
  */
 char *snoopy_configuration_syslog_value_cleanup (char *confVal)

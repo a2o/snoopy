@@ -54,21 +54,21 @@
 
 
 /**
- * SNOOPY_INPUT_ARG_MAX_SIZE
+ * SNOOPY_DATASOURCE_ARG_MAX_SIZE
  *
- * Maximum length of a string argument to each input provider
+ * Maximum length of a string argument to each data source
  */
-#define SNOOPY_INPUT_ARG_MAX_SIZE 1024
+#define SNOOPY_DATASOURCE_ARG_MAX_SIZE 1024
 
 
 
 /**
- * SNOOPY_INPUT_MESSAGE_MAX_SIZE
+ * SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE
  *
- * Maximum length of a string returned from any input function,
+ * Maximum length of a string returned from any data source function,
  * including terminating null character.
  */
-#define SNOOPY_INPUT_MESSAGE_MAX_SIZE 1024
+#define SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE 1024
 
 
 
@@ -135,9 +135,9 @@
  *
  * Message format may contain:
  * - any arbitrary text is copied litaraly
- * - text between "%{" and "}" is considered special - it calls input provider
- * - %{input_provider}     calls input provider 'input_provider' without argument
- * - %{input_provider:arg} calls input provider 'input_provider', and passed the given argument to it
+ * - text between "%{" and "}" is considered special - it calls data source
+ * - %{data_source}     calls data source named 'data_source' without argument
+ * - %{data_source:arg} calls data source named 'data_source', and passed the given argument to it
  */
 #ifdef SNOOPY_CONF_LOG_MESSAGE_FORMAT_custom
 #define   SNOOPY_LOG_MESSAGE_FORMAT   SNOOPY_CONF_LOG_MESSAGE_FORMAT_custom

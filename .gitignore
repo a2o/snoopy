@@ -36,7 +36,7 @@ Makefile
 /src/libsnoopy.so
 /bin/snoopy-disable
 /bin/snoopy-enable
-/bin/snoopy-test-all-inputs
+/bin/snoopy-test-all-data-sources
 /bin/snoopy-test-output
 /bin/snoopy-detect
 /bin/snoopy-dev-helper

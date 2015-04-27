@@ -10,13 +10,13 @@ AM_CFLAGS += -I$(top_srcdir)/src
 
 
 
-### Create one library with all snoopy inputs collected in it
+### Create one library with all snoopy outputs collected in it
 #
 noinst_LTLIBRARIES = libsnoopy_outputs_all.la
 
 
 
-### Input providers collection is made of the following files
+### Output providers collection is made of the following files
 #
 # Please maintain alphabetical order, equal to what `ls` would do
 #
@@ -26,7 +26,7 @@ noinst_LTLIBRARIES = libsnoopy_outputs_all.la
 #	fileoutput.c \
 #	fileoutput.h \
 #	journaldoutput.c \
-#	journaldout.h \
+#	journaldoutput.h \
 #
 libsnoopy_outputs_all_la_SOURCES = \
 	devlog.c \

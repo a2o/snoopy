@@ -12,42 +12,42 @@ Table of Contents
 =================
 
   * [Contributing to Snoopy development](#contributing-to-snoopy-development)
-    * [Basic rules for input provider development](#basic-rules-for-input-provider-development)
+    * [Basic rules for data source development](#basic-rules-for-data-source-development)
     * [Filter development rules](#filter-development-rules)
     * [Creating feature documentation](#creating-feature-documentation)
     * [Creating pull requests for upstream merges](#creating-pull-requests-for-upstream-merges)
 
 
 
-## Basic rules for input provider development
+## Basic rules for data source development
 
-- input providers are located in src/input/;
-- input provider names should be lower case, with underscores for word separation;
+- data sources are located in src/datasource/;
+- data source names should be lower case, with underscores for word separation;
 - data about currently executing process is available in src/inputdatastorage.*
-    files. Consult existing providers on how to use it (filename for example);
-- each input provider must be self-sufficient. Do not rely on other parts of Snoopy;
-- each input provider must be tidy (free all mallocs, close all file descriptors);
+    files. Consult existing data sources on how to use it (filename for example);
+- each data source must be self-sufficient. Do not rely on other parts of Snoopy;
+- each data source must be tidy (free all mallocs, close all file descriptors);
 - the first argument passed to each provider is a char array to return message into;
-- input provider message must not be longer than SNOOPY_INPUT_MESSAGE_MAX_SIZE;
-- each input provider must have a corresponding header file;
-- all input providers must build with -Wall -Werror flags (enabled by default);
+- data source message must not be longer than SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE;
+- each data source must have a corresponding header file;
+- all data sources must build with -Wall -Werror flags (enabled by default);
 - code indentation: 4 spaces, no tabs;
-- reserverd input names:
+- reserverd data source names:
     - snoopy*
 
-If you have developed a shiny new input provider and you would like to
+If you have developed a shiny new data source and you would like to
 start using it with Snoopy, there are three additional places where you
 need to add references to it to make Snoopy fully aware of it:
 
-- src/input/Makefile.am   (location is evident)
-- src/inputregistry.h     (one reference)
-- src/inputregistry.c     (two references)
+- src/datasource/Makefile.am   (location is evident)
+- src/datasourceregistry.h     (one reference)
+- src/datasourceregistry.c     (two references)
 
 
 
 ## Filter development rules
 
-Rules for filter development are the same as for new input provider development,
+Rules for filter development are the same as for new data source development,
 with the following additional specifics:
 
 - filters are located in src/filter/;
@@ -85,10 +85,11 @@ Directory /doc/:
 - /doc/INSTALL.md: detailed installation instructions;
 - /doc/FAQ.md: location of answers to frequently asked questions;
 
-- /doc/INPUT-PROVIDERS.md: general, input-provider-specific information;
-- /doc/INPUT-PROVIDER_complex_input_provider_name.md: documentation for advanced
-    and configurable input provider called "complex_input_provider_name", which
-    has its code located in src/input/complex_input_provider_name.c;
+- /doc/DATA-SOURCES.md: general, data-sources-specific information;
+- /doc/DATA-SOURCE_complex_data_source_name.md: documentation for advanced
+    and configurable data source called "complex_data_source_name", which
+    has its code located in src/datasource/complex_data_source_name.c;
+    (also, do not include "_name" suffix in data source's name:);
 
 - /doc/FILTERING.md: filtering-specific information;
 - /doc/FILTER_complex_filter_name.md: documentation for advanced filter called

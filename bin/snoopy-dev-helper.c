@@ -36,7 +36,7 @@
 #include "snoopy.h"
 #include "configuration.h"
 #include "inputdatastorage.h"
-#include "inputregistry.h"
+#include "datasourceregistry.h"
 #include "misc.h"
 
 

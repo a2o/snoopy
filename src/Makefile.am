@@ -6,7 +6,7 @@ include   $(top_srcdir)/build/Makefile.am.common
 
 ### First process all required subdirs
 #
-SUBDIRS = lib filter input output
+SUBDIRS = lib filter datasource output
 
 
 
@@ -24,8 +24,8 @@ libsnoopy_no_execve_la_SOURCES = \
 	filterregistry.h \
 	inputdatastorage.c \
 	inputdatastorage.h \
-	inputregistry.c \
-	inputregistry.h \
+	datasourceregistry.c \
+	datasourceregistry.h \
 	log.c \
 	log.h \
 	misc.c \
@@ -37,7 +37,7 @@ libsnoopy_no_execve_la_SOURCES = \
 libsnoopy_no_execve_la_LIBADD = \
 	lib/libiniparser.la \
 	filter/libsnoopy_filters_all.la \
-	input/libsnoopy_inputs_all.la \
+	datasource/libsnoopy_datasources_all.la \
 	output/libsnoopy_outputs_all.la
 
 

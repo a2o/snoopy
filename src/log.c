@@ -40,7 +40,7 @@
 #include "configuration.h"
 #include "error.h"
 #include "inputdatastorage.h"
-#include "inputregistry.h"
+#include "datasourceregistry.h"
 #include "filterregistry.h"
 #include "misc.h"
 #include "outputregistry.h"
@@ -51,8 +51,8 @@
  * snoopy_log_message_generate
  *
  * Description:
- *     Generates log message from inputs available,
- *     for testing/debugging purposes
+ *     Generates log message as specified by messageFormat, using
+ *     data sources where requested.
  *
  * Params:
  *     logMessage:         destination string to return message in
@@ -66,35 +66,35 @@ void snoopy_log_message_generate (
     char *logMessageFormat
 ) {
     char *fmtPos_cur;
-    char *fmtPos_nextInputTag;
-    char *fmtPos_nextInputTagClose;
+    char *fmtPos_nextFormatTag;
+    char *fmtPos_nextFormatTagClose;
     char *msgPos_cur;
 
-    fmtPos_cur          = logMessageFormat;
-    fmtPos_nextInputTag = logMessageFormat;
-    msgPos_cur          = logMessage;
+    fmtPos_cur           = logMessageFormat;
+    fmtPos_nextFormatTag = logMessageFormat;
+    msgPos_cur           = logMessage;
 
     // Loop all the way to the end of log message format specification
-    while (strlen(fmtPos_nextInputTag) > 0) {
+    while (strlen(fmtPos_nextFormatTag) > 0) {
         int   lengthToCopy;
-        char  fmtStaticText[SNOOPY_INPUT_MESSAGE_MAX_SIZE];
-        char  inputTag[100];
-        int   inputTagLength;
-        char *fmtPos_inputTagArg;
-        char *inputProviderNamePtr;
-        char *inputProviderArgPtr;
-        char  inputProviderArg[SNOOPY_INPUT_ARG_MAX_SIZE];
-        char  inputProviderMsg[SNOOPY_INPUT_MESSAGE_MAX_SIZE];
+        char  fmtStaticText[SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE];
+        char  dataSourceTag[100];
+        int   dataSourceTagLength;
+        char *fmtPos_dataSourceTagArg;
+        char *dataSourceNamePtr;
+        char *dataSourceArgPtr;
+        char  dataSourceArg[SNOOPY_DATASOURCE_ARG_MAX_SIZE];
+        char  dataSourceMsg[SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE];
 
-        // If no input tag is found, just copy the text and bail out
-        fmtPos_nextInputTag = strstr(fmtPos_cur, "%{");
-        if (NULL == fmtPos_nextInputTag) {
+        // If no data source tag is found, just copy the text and bail out
+        fmtPos_nextFormatTag = strstr(fmtPos_cur, "%{");
+        if (NULL == fmtPos_nextFormatTag) {
             snoopy_log_message_append(logMessage, fmtPos_cur);
             break;
         }
 
-        // Otherwise copy text up to the next input tag
-        lengthToCopy = fmtPos_nextInputTag - fmtPos_cur + 1; // + 1 for null termination
+        // Otherwise copy text up to the next data source tag
+        lengthToCopy = fmtPos_nextFormatTag - fmtPos_cur + 1; // + 1 for null termination
         if (lengthToCopy > SNOOPY_LOG_MESSAGE_MAX_SIZE-strlen(logMessage)) {
             lengthToCopy = SNOOPY_LOG_MESSAGE_MAX_SIZE-strlen(logMessage);
         }
@@ -103,46 +103,46 @@ void snoopy_log_message_generate (
         snoopy_log_message_append(logMessage, fmtStaticText);
         msgPos_cur += lengthToCopy;
 
-        // Get input tag
-        fmtPos_nextInputTagClose = strstr(fmtPos_nextInputTag, "}");
-        if (NULL == fmtPos_nextInputTagClose) {
-            snoopy_log_message_append(logMessage, " ERROR: Closing input provider tag not found: '}'");
+        // Get data source tag
+        fmtPos_nextFormatTagClose = strstr(fmtPos_nextFormatTag, "}");
+        if (NULL == fmtPos_nextFormatTagClose) {
+            snoopy_log_message_append(logMessage, " ERROR: Closing data source tag not found: '}'");
             break;
         }
-        inputTag[0]    = '\0';
-        inputTagLength = (fmtPos_nextInputTagClose-1) - (fmtPos_nextInputTag+2) + 2;
-        snprintf(inputTag, inputTagLength, "%s", fmtPos_nextInputTag + 2);
+        dataSourceTag[0]    = '\0';
+        dataSourceTagLength = (fmtPos_nextFormatTagClose-1) - (fmtPos_nextFormatTag+2) + 2;
+        snprintf(dataSourceTag, dataSourceTagLength, "%s", fmtPos_nextFormatTag + 2);
 
-        // If input tag contains ":", then split it into input provider name and input provider argument
-        fmtPos_inputTagArg  = strstr(inputTag, ":");
-        if (NULL == fmtPos_inputTagArg) {
-            // Input tag == input provider ATM
-            inputProviderNamePtr = inputTag;
-            inputProviderArg[0]  = '\0';
-            inputProviderArgPtr  = inputProviderArg;
+        // If data source tag contains ":", then split it into data source name and data source argument
+        fmtPos_dataSourceTagArg  = strstr(dataSourceTag, ":");
+        if (NULL == fmtPos_dataSourceTagArg) {
+            // Format tag == data source name ATM
+            dataSourceNamePtr = dataSourceTag;
+            dataSourceArg[0]  = '\0';
+            dataSourceArgPtr  = dataSourceArg;
         } else {
             // Change the colon to null string, and copy fist and second part to corresponding variables
-            fmtPos_inputTagArg[0] = '\0';
-            inputProviderNamePtr = inputTag;
-            inputProviderArgPtr  = fmtPos_inputTagArg + 1;
+            fmtPos_dataSourceTagArg[0] = '\0';
+            dataSourceNamePtr = dataSourceTag;
+            dataSourceArgPtr  = fmtPos_dataSourceTagArg + 1;
         }
 
-        // Check if input provider actually exists
-        if (! snoopy_inputregistry_isRegistered(inputProviderNamePtr)) {
-            snoopy_log_message_append(logMessage, "ERROR(Input provider not found - ");
-            snoopy_log_message_append(logMessage, inputProviderNamePtr);
+        // Check if data source actually exists
+        if (! snoopy_datasourceregistry_isRegistered(dataSourceNamePtr)) {
+            snoopy_log_message_append(logMessage, "ERROR(Data source not found - ");
+            snoopy_log_message_append(logMessage, dataSourceNamePtr);
             snoopy_log_message_append(logMessage, ")");
             break;
         }
 
         // Call the provider, and append the results to log message
-        inputProviderMsg[0] = '\0';
-        snoopy_inputregistry_call(inputProviderNamePtr, inputProviderMsg, inputProviderArgPtr);
-        snoopy_log_message_append(logMessage, inputProviderMsg);
+        dataSourceMsg[0] = '\0';
+        snoopy_datasourceregistry_call(dataSourceNamePtr, dataSourceMsg, dataSourceArgPtr);
+        snoopy_log_message_append(logMessage, dataSourceMsg);
 
         // Where to start next iteration
-        fmtPos_cur = fmtPos_nextInputTagClose + 1;
-        msgPos_cur = fmtPos_nextInputTagClose + 1;
+        fmtPos_cur = fmtPos_nextFormatTagClose + 1;
+        msgPos_cur = fmtPos_nextFormatTagClose + 1;
     }
 }
 
@@ -232,7 +232,7 @@ int snoopy_log_filter_check_chain (
             break;
         }
 
-        // If filter speinput tag contains ":", then split it into input provider name and input provider argument
+        // If filter tag contains ":", then split it into filter name and filter argument
         fcPos_filterSpecArg  = strstr(filterSpec, ":");
         if (NULL == fcPos_filterSpecArg) {
             // filterSpec == filterName, there is no argument
