@@ -34,8 +34,8 @@ AC_CONFIG_FILES([Makefile
                  bin/Makefile
                  etc/Makefile
                  src/Makefile
+                 src/datasource/Makefile
                  src/filter/Makefile
-                 src/input/Makefile
                  src/lib/Makefile
                  src/output/Makefile])
 AC_OUTPUT

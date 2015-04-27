@@ -115,9 +115,9 @@ AC_CONFIG_FILES([Makefile
                  contrib/sles/snoopy.spec
                  etc/Makefile
                  src/Makefile
-                 src/lib/Makefile
-                 src/filter/Makefile
                  src/datasource/Makefile
+                 src/filter/Makefile
+                 src/lib/Makefile
                  src/output/Makefile])
 AC_CONFIG_FILES([bin/snoopy-disable], [chmod +x bin/snoopy-disable])
 AC_CONFIG_FILES([bin/snoopy-enable],  [chmod +x bin/snoopy-enable])
