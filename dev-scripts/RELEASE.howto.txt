@@ -21,10 +21,12 @@ Steps:
 3. Update version info:
     - in ChangeLog
     - in configure.ac
-    - commit, with exact message "Release X.Y.Z" on the first line
+    - commit with sign-off, with exact message "Release X.Y.Z" on the first line
+    - git commit -s -m "Release X.Y.Z"
 
 4. Create git tag:
-    - called 'snoopy-X.Y.Z'   # For github to provide proper snoopy release tarball name
+    - called 'snoopy-X.Y.Z'   # For github to provide proper Snoopy release tarball name - we do not use that anymore
+    - git tag snoopy-X.Y.Z
 
 5. Release it
     - cd to the repo root
