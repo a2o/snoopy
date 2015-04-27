@@ -22,6 +22,7 @@ noinst_LTLIBRARIES = libsnoopy_filters_all.la
 #
 libsnoopy_filters_all_la_SOURCES = \
 	exclude_spawns_of.c \
+	exclude_spawns_of.h \
 	exclude_uid.c \
 	exclude_uid.h \
 	only_root.c \
