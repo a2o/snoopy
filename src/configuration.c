@@ -150,7 +150,7 @@ void snoopy_configuration_dtor ()
          *
          * See comment above, same principle applies here.
          */
-        snoopy_configuration.filter_chain = SNOOPY_FALSE;
+        snoopy_configuration.filter_chain_malloced = SNOOPY_FALSE;
     }
 }
 
