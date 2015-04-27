@@ -3,8 +3,8 @@
 -------------------------------------------------------------------------------
 
 
-2015-05-xx - Version  2.3.x - TODO
----------------------------
+2015-04-28 - Version  2.3.0rc1
+------------------------------
 o Feature #45: new filter that excludes snoopy log entries from certain
     processes.
     (Code contributed by Frederic Mora)
@@ -13,6 +13,10 @@ o Bug #44 / Enhancement #42: upgraded iniparser compotent to latest git
     threaded environments (java).
 o Refactoring #41: change term "input provider" to "data source", to more
     accurately reflect what is actually going on in that part of code.
+o Enhancement #42: upgraded included iniparser component to latest git version.
+    This hopefully resolves issues with threaded processes.
+o Repository refactoring: removed all files that are created/copied by
+    autotools suite, and added them to gitignore.
 
 
 2015-04-27 - Version  2.2.8
