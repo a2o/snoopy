@@ -11,6 +11,8 @@ o Feature #45: new filter that excludes snoopy log entries from certain
 o Bug #44 / Enhancement #42: upgraded iniparser compotent to latest git
     version, the one that was included before was causing problems in
     threaded environments (java).
+o Refactoring #41: change term "input provider" to "data source", to more
+    accurately reflect what is actually going on in that part of code.
 
 
 2015-04-xx - Version  2.2.x - TODO
