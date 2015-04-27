@@ -3,7 +3,7 @@
 -------------------------------------------------------------------------------
 
 
-2015-04-xx - Version  2.2.x
+2015-04-xx - Version  2.2.x - TODO
 ---------------------------
 o Bugfix #39: prevent double freeing of message_format and filter_chain
     variables when snoopy.ini suddenly disappears from filesystem.
@@ -12,9 +12,12 @@ o Bugfix #39-2: Fix invalid parsing in rpname input provider - check the line
     that is read from /proc/PID/status and verify that it is non-empty and that
     it actually contains colon character before attempting to parse it.
     (reported and initial fix authored by Ariel Zach)
+o Bugfix #46: prevent bufffer overflow in cmdline input provider
+    (reported by Ariel Zach)
 o Bugfix and refactoring: rpname input provider was leaking some memory, and
-    we made it more logically named (variables and if conditions were made
-    more coherent with the rest of Snoopy) and structured.
+    it was made more logically structured (variables and if conditions were
+    changed to more logical and coherent naming, to align with the rest of
+    Snoopy code).
 
 
 2015-03-26 - Version  2.2.7
