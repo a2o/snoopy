@@ -62,11 +62,17 @@ fi
 
 
 ### Check for uncommited changes in the current repo
-#RES=`git diff`
-#if [ "x$RES" != "x" ]; then
-#	echo "ERROR: Uncommited changes in current working copy. Please commit/stash and try again."
-#	exit 3
-#fi
+#
+# Uncommited changes are allowed, but only in special locations
+#
+RES=`git status -s | grep -v ' dev-scripts/' | grep -c .`
+if [ "$RES" -ne "0" ]; then
+    echo "ERROR: There are unallowed uncommited changes in git repository. Please commit/stash and try again."
+    echo
+    git status -s
+    echo
+    exit 2
+fi
 
 
 
@@ -88,9 +94,19 @@ PUBLIC_DL_SSH_HOST="source.a2o.si"
 PUBLIC_DL_SSH_PATH="/var/www/source.a2o.si/public/download/snoopy"
 PUBLIC_DL_URI_PREFIX="http://source.a2o.si/download/snoopy"
 
+### Determine if this version is stable or development release
+if [[ $RELEASE_VERSION =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+    RELEASE_IS_STABLE="1"
+else
+    RELEASE_IS_STABLE="0"
+fi
 
 
-### Check if release dirs and files do not exists
+
+
+
+
+### Check that release dirs and files do not exists
 if [ -e $FILE_RELEASE ]; then
     echo "ERROR: Release file already exists: $FILE_RELEASE"
     exit 10
@@ -164,36 +180,52 @@ echo "$FILENAME_RELEASE" > $FILE_LATEST_PACKAGE_FILENAME &&
 
 
 
-### Upload releases
+### Upload release files
 echo &&
-echo "RELEASING: Pushing code and tags to GitHub..." &&
-echo &&
-git push $PUBLIC_GIT_REMOTE_NAME &&
-git push $PUBLIC_GIT_REMOTE_NAME --tags &&
-
-echo &&
-echo "RELEASING: Uploading release files to http://source.a2o.si/download/snoopy/..." &&
+echo "RELEASING: Uploading release package files to http://source.a2o.si/download/snoopy/..." &&
 echo &&
 scp \
     $FILE_RELEASE \
     $FILE_RELEASE_MD5 \
     $FILE_RELEASE_SHA1 \
     $FILE_RELEASE_SIZE \
-    $FILE_LATEST_VERSION \
-    $FILE_LATEST_PACKAGE_FILENAME \
     $PUBLIC_DL_SSH_HOST:$PUBLIC_DL_SSH_PATH \
     &&
+echo &&
 
-# Symlink latest files
-echo &&
-echo "RELEASING: Creating symlink snoopy-latest.tar.gz..." &&
-echo &&
-ssh $PUBLIC_DL_SSH_HOST ln -sf $FILENAME_RELEASE $PUBLIC_DL_SSH_PATH/snoopy-latest.tar.gz &&
+
+
+### If stable release, update latest stable package version metadata
+if [ "$RELEASE_IS_STABLE" == "1" ]; then
+    echo "RELEASING: This is a stable release." &&
+    echo "RELEASING: Updating files that indicate latest package version..." &&
+    echo &&
+    scp \
+        $FILE_LATEST_VERSION \
+        $FILE_LATEST_PACKAGE_FILENAME \
+        $PUBLIC_DL_SSH_HOST:$PUBLIC_DL_SSH_PATH \
+        &&
+
+    ssh $PUBLIC_DL_SSH_HOST \
+        ln -sf $FILENAME_RELEASE $PUBLIC_DL_SSH_PATH/snoopy-latest.tar.gz
+else
+    echo "RELEASING: This is NOT a stable release." &&
+    echo "RELEASING: Skipped updating files that indicate latest package version."
+    echo
+fi &&
 
 echo &&
 echo "COMPLETE: $RELEASE_TAG has been released." &&
 echo "DL URI:   $PUBLIC_DL_URI_PREFIX/$FILENAME_RELEASE" &&
+echo
+
+
+
+### Push code and tags to github
 echo &&
+echo "RELEASING: Pushing code and tags to GitHub..." &&
+echo &&
+git push $PUBLIC_GIT_REMOTE_NAME --tags &&
 
 
 
