@@ -50,42 +50,53 @@
 int snoopy_input_cmdline (char *input, char *arg)
 {
     char   *cmdLine = NULL;
-    int     cmdLineSize;
-    int     argc;
+    int     cmdLineArgCount;
+    int     cmdLineSizeSum;   // Size sum of all arguments and spaces in between
+    int     cmdLineSizeRet;   // Size that will be returned
     int     i;
     int     n;
 
     /* Count number of arguments */
-    for (argc=0 ; *(snoopy_inputdatastorage_argv+argc) != '\0' ; argc++);
+    for (cmdLineArgCount=0 ; *(snoopy_inputdatastorage_argv+cmdLineArgCount) != '\0' ; cmdLineArgCount++);
 
-    /* Allocate memory for cmdLine */
-    cmdLineSize = 0;
-    for (i=0 ; i<argc ; i++) {
+    /* Calculate memory requirement for cmdLine */
+    cmdLineSizeSum = 0;
+    for (i=0 ; i<cmdLineArgCount ; i++) {
         /* Argument length + space */
-        cmdLineSize += sizeof(cmdLine[0]) * (strlen(snoopy_inputdatastorage_argv[i]) + 1);
+        cmdLineSizeSum += strlen(snoopy_inputdatastorage_argv[i]) + 1;
     }
+    /* Last space will be converted to \0 */
+    cmdLineSizeRet = min(SNOOPY_SYSCONF_ARG_MAX, cmdLineSizeSum);
 
-    /* +1 for last \0 */
-    cmdLineSize = min(SNOOPY_SYSCONF_ARG_MAX, cmdLineSize+1);
-    cmdLine     = malloc(sizeof *cmdLine * cmdLineSize);
-
-    /* Create cmdLine, and protect against overflows */
+    /* Initialize cmdLine */
+    cmdLine    = malloc(cmdLineSizeRet);
     cmdLine[0] = '\0';
-    for (i = n = 0 ; i<argc ; i++) {
-        n += snprintf(cmdLine+n, cmdLineSize-n, "%s", snoopy_inputdatastorage_argv[i]);
-        if (n >= cmdLineSize) {
+
+    for (i = n = 0 ; i<cmdLineArgCount ; i++) {
+        /* Did adding space in previous iteration cause this? */
+        if (n >= cmdLineSizeRet) {
             break;
         }
-        cmdLine[n++] = ' ';
+        n += snprintf(cmdLine+n, cmdLineSizeRet-n, "%s", snoopy_inputdatastorage_argv[i]);
+
+        if (n >= cmdLineSizeRet) {
+            break;
+        }
+        cmdLine[n] = ' ';
+        n++;
     }
 
-    /* Remove last space */
-    cmdLineSize--;
-    cmdLine[cmdLineSize-1] = '\0';
+    /*
+     * Conclude string - add \0 at the end
+     * - if last character is space
+     * - or if last character is ordinary character from incompletely copied argument
+     */
+    n--;
+    cmdLine[n] = '\0';
 
     /* Copy the result to the string pointed by return pointer */
     snprintf(input, SNOOPY_INPUT_MESSAGE_MAX_SIZE, "%s", cmdLine);
 
     free(cmdLine);
-    return cmdLineSize;
+    return cmdLineSizeRet;
 }
