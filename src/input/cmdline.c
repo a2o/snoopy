@@ -72,16 +72,21 @@ int snoopy_input_cmdline (char *input, char *arg)
     /* Create cmdLine, and protect against overflows */
     cmdLine[0] = '\0';
     for (i = n = 0 ; i<argc ; i++) {
-        n += snprintf(cmdLine+n, cmdLineSize-n, "%s", snoopy_inputdatastorage_argv[i]);
         if (n >= cmdLineSize) {
             break;
         }
-        cmdLine[n++] = ' ';
+        n += snprintf(cmdLine+n, cmdLineSize-n, "%s", snoopy_inputdatastorage_argv[i]);
+
+        if (n >= cmdLineSize) {
+            break;
+        }
+        cmdLine[n] = ' ';
+        n++;
     }
 
     /* Remove last space */
-    cmdLineSize--;
-    cmdLine[cmdLineSize-1] = '\0';
+    n--;
+    cmdLine[n] = '\0';
 
     /* Copy the result to the string pointed by return pointer */
     snprintf(input, SNOOPY_INPUT_MESSAGE_MAX_SIZE, "%s", cmdLine);
