@@ -68,20 +68,22 @@ AC_CHECK_HEADERS([limits.h stdlib.h string.h sys/socket.h syslog.h unistd.h])
 
 dnl Checks for typedefs, structures, and compiler characteristics.
 AC_C_INLINE
+AC_TYPE_PID_T
 AC_TYPE_SIZE_T
 AC_TYPE_UID_T
 
 dnl Checks for library functions.
 AC_FUNC_MALLOC
 AC_CHECK_FUNCS([ \
-    getcwd \
-    getsid \
-    memset \
-    socket \
-    strchr \
-    strdup \
-    strstr \
-    strtol \
+    getcwd    \
+    getsid    \
+    memmove   \
+    memset    \
+    socket    \
+    strchr    \
+    strdup    \
+    strstr    \
+    strtol    \
 ])
 
 dnl Substitute these variables when creating (Make)files below - GENERIC
