@@ -2,6 +2,12 @@
 
 
 
+### Settings
+#
+PUBLIC_GIT_REMOTE_NAME="github-a2o"
+
+
+
 ### Check working directory
 if [ ! -d "dev-scripts" ]; then
     echo "ERROR: You have to run this script in the root of the git repository"
@@ -41,6 +47,15 @@ fi
 RES=`git log -1 --pretty="%B" $RELEASE_TAG | head -n1 | grep "^Release $RELEASE_VERSION\$" -c`
 if [ "$RES" -ne "1" ]; then
     echo "ERROR: Release commit does not contain this message as first line: 'Release $RELEASE_VERSION'"
+    exit 2
+fi
+
+
+
+### Check if git remote with required name exists
+RES=`git remote | grep "^$PUBLIC_GIT_REMOTE_NAME\$" -c`
+if [ "$RES" -ne "1" ]; then
+    echo "ERROR: Required git remote not found: '$GIT_REMOTE_NAME'"
     exit 2
 fi
 
@@ -106,6 +121,11 @@ fi
 
 
 
+### Remember current git branch
+GIT_BRANCH_CUR=`git rev-parse --abbrev-ref HEAD`
+
+
+
 ### Checkout
 git checkout $RELEASE_TAG
 
@@ -129,7 +149,7 @@ make dist &&
 
 
 ### Checkout back master branch
-git checkout master &&
+git checkout $GIT_BRANCH_CUR &&
 
 
 
@@ -148,8 +168,8 @@ echo "$FILENAME_RELEASE" > $FILE_LATEST_PACKAGE_FILENAME &&
 echo &&
 echo "RELEASING: Pushing code and tags to GitHub..." &&
 echo &&
-git push github &&
-git push github --tags &&
+git push $PUBLIC_GIT_REMOTE_NAME &&
+git push $PUBLIC_GIT_REMOTE_NAME --tags &&
 
 echo &&
 echo "RELEASING: Uploading release files to http://source.a2o.si/download/snoopy/..." &&
