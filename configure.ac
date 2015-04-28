@@ -120,6 +120,8 @@ AC_CONFIG_FILES([Makefile
                  bin/Makefile
                  contrib/rhel/snoopy.spec
                  contrib/sles/snoopy.spec
+                 doc/Makefile
+                 doc/internals/Makefile
                  etc/Makefile
                  src/Makefile
                  src/datasource/Makefile

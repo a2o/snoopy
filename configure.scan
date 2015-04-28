@@ -32,6 +32,8 @@ AC_CHECK_FUNCS([getcwd memmove memset socket strchr strdup strstr strtol])
 
 AC_CONFIG_FILES([Makefile
                  bin/Makefile
+                 doc/Makefile
+                 doc/internals/Makefile
                  etc/Makefile
                  src/Makefile
                  src/datasource/Makefile

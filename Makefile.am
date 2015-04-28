@@ -12,10 +12,12 @@ ACLOCAL_AMFLAGS = -I m4
 SUBDIRS = \
 	src \
 	bin \
-	etc
+	etc \
+	doc
 
 EXTRA_DIST +=\
-	autogen.sh
+	autogen.sh \
+	README.md
 
 enable: install
 	echo ; \

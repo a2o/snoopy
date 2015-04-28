@@ -22,6 +22,7 @@ o Enhancement #42: upgraded included iniparser component to latest git version.
     This hopefully resolves issues with threaded processes.
 o Repository refactoring: removed all files that are created/copied by
     autotools suite, and added them to gitignore.
+o Include documentation in release packages from now on.
 
 
 2015-04-27 - Version  2.2.8
