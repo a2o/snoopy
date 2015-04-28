@@ -3,7 +3,7 @@
 -------------------------------------------------------------------------------
 
 
-2015-04-28 - Version  2.3.0rc2
+2015-04-28 - Version  2.3.0rc3
 ------------------------------
 o Bug #49 (GitHub): reset configuration values back to their corresponding
     defaults when running final cleanup. This prevents buffer overflows on
