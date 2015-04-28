@@ -121,7 +121,8 @@ void snoopy_configuration_ctor ()
  * snoopy_configuration_dtor
  *
  * Description:
- *     Frees all configuration-related malloced resources.
+ *     Frees all configuration-related malloced resources, and sets
+ *     corresponding config settings back to their default values.
  *
  * Params:
  *     (none)
@@ -131,9 +132,11 @@ void snoopy_configuration_ctor ()
  */
 void snoopy_configuration_dtor ()
 {
+    /*
+     * Reset config setting: message_format
+     */
     if (SNOOPY_TRUE == snoopy_configuration.message_format_malloced) {
         free(snoopy_configuration.message_format);
-//        snoopy_configuration.message_format = SNOOPY_LOG_MESSAGE_FORMAT;
 
         /*
          * Set this to false - REQUIRED
@@ -149,18 +152,29 @@ void snoopy_configuration_dtor ()
          *     const char[] that contains the compiled-in message format
          */
         snoopy_configuration.message_format_malloced = SNOOPY_FALSE;
+
+        /*
+         * Set this to default value - REQUIRED
+         *
+         * Otherwise on next Snoopy run there will be no message format defined,
+         * which would in best-case scenario cause no snoopy output, but in
+         * worst-case scenarion there would be a segfault and possible system
+         * crash.
+         */
+        snoopy_configuration.message_format = SNOOPY_LOG_MESSAGE_FORMAT;
     }
 
 
+    /*
+     * Reset config setting: filter_chain
+     */
     if (SNOOPY_TRUE == snoopy_configuration.filter_chain_malloced) {
         free(snoopy_configuration.filter_chain);
-//        snoopy_configuration.filter_chain = SNOOPY_FILTER_CHAIN;
 
-        /*
-         * Set this to false - REQUIRED
-         *
-         * See comment above, same principle applies here.
-         */
+        /* Set this to false - REQUIRED (see above) */
         snoopy_configuration.filter_chain_malloced = SNOOPY_FALSE;
+
+        /* Set this to default value - REQUIRED (see above) */
+        snoopy_configuration.filter_chain = SNOOPY_FILTER_CHAIN;
     }
 }
