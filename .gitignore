@@ -26,9 +26,11 @@ Makefile
 /libtool
 
 # Temporary files created during ./configure run
+/conf*/
 /confdefs.h
 /conftest.c
 /conftest.err
+/libtoolT
 
 
 ### Files produced by build process
