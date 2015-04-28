@@ -65,7 +65,7 @@ fi
 #
 # Uncommited changes are allowed, but only in special locations
 #
-RES=`git status -s | grep -v ' dev-scripts/' | grep -c .`
+RES=`git status -s | grep -v ' doc/releasing/' | grep -c .`
 if [ "$RES" -ne "0" ]; then
     echo "ERROR: There are unallowed uncommited changes in git repository. Please commit/stash and try again."
     echo
