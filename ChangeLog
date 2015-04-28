@@ -5,6 +5,8 @@
 
 2015-04-28 - Version  2.3.0rc2
 ------------------------------
+o Enhancement #48: do not include code for config file in the final library
+    when config file is not enabled at all (via ./configure argument).
 o Feature #45: new filter that excludes snoopy log entries from certain
     processes.
     (Code contributed by Frederic Mora)

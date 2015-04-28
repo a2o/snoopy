@@ -57,6 +57,11 @@ int main (int argc, char **argv)
 
     if (SNOOPY_TRUE == snoopy_configuration.config_file_enabled) {
         printf("Configuration file is enabled: %s\n", snoopy_configuration.config_file_path);
+        if (SNOOPY_TRUE == snoopy_configuration.config_file_found) {
+            printf("Configuration file found.\n");
+        } else {
+            printf("WARNING: Configuration file does not exist!\n");
+        }
         if (SNOOPY_TRUE == snoopy_configuration.config_file_parsed) {
             printf("Configuration file was parsed sucessfully.\n");
         } else {

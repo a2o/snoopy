@@ -1,7 +1,7 @@
 /*
  * SNOOPY LOGGER
  *
- * File: configuration.h
+ * File: configfile.h
  *
  * Copyright (c) 2014 bostjan@a2o.si
  *
@@ -23,37 +23,12 @@
 
 
 /*
- * Array holding snoopy configuration data in one place
+ * Functions to load/parse config file
  */
-typedef struct {
-    int   initialized;
-
-    int   config_file_enabled;
-    char *config_file_path;
-    int   config_file_found;
-    int   config_file_parsed;
-
-    int   error_logging_enabled;
-
-    char *message_format;
-    int   message_format_malloced;
-
-    int   filter_enabled;
-    char *filter_chain;
-    int   filter_chain_malloced;
-
-    char *output_provider;
-    char *output_path;
-
-    int   syslog_facility;
-    int   syslog_level;
-} snoopy_configuration_type;
-extern   snoopy_configuration_type   snoopy_configuration;
-
-
-
-/*
- * Functions to manage and utilise configuration
- */
-void  snoopy_configuration_ctor ();
-void  snoopy_configuration_dtor ();
+int   snoopy_configfile_load (char *iniFilePath);
+void  snoopy_configfile_parse_output               (char *confVal);
+void  snoopy_configfile_parse_syslog_facility      (char *confVal);
+void  snoopy_configfile_parse_syslog_level         (char *confVal);
+char *snoopy_configfile_syslog_value_cleanup       (char *confVal);
+char *snoopy_configfile_syslog_value_remove_prefix (char *confVal);
+void  snoopy_configfile_strtoupper (char *s);
