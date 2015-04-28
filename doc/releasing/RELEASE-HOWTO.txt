@@ -30,4 +30,4 @@ Steps:
 
 5. Release it
     - cd to the repo root
-    - run "./dev-scripts/create-release.sh snoopy-x.y.z"
+    - run "./doc/releasing/bin/create-release.sh snoopy-x.y.z"
