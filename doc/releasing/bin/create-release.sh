@@ -9,7 +9,7 @@ PUBLIC_GIT_REMOTE_NAME="github-a2o"
 
 
 ### Check working directory
-if [ ! -d "dev-scripts" ]; then
+if [ ! -d "doc/releasing" ]; then
     echo "ERROR: You have to run this script in the root of the git repository"
     exit 1
 fi
