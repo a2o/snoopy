@@ -163,8 +163,11 @@ AS_IF([test "x$config_file_path" != "x"], [
     AC_DEFINE_UNQUOTED(SNOOPY_CONF_CONFIG_FILE, "$config_file_path", [INI configuration file path to use])
 ])
 
-dnl CONFIG_FILE_ENABLED is used in etc/Makefile.am
+dnl CONFIG_FILE_ENABLED is used in:
+dnl - src/Makefile.am
+dnl - etc/Makefile.am
 AM_CONDITIONAL([CONFIG_FILE_ENABLED], [test "x$config_file_path" != "x"])
+
 
 
 dnl ============================================================================

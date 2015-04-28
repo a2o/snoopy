@@ -30,6 +30,7 @@ typedef struct {
 
     int   config_file_enabled;
     char *config_file_path;
+    int   config_file_found;
     int   config_file_parsed;
 
     int   error_logging_enabled;

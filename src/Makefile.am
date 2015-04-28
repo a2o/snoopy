@@ -35,10 +35,13 @@ libsnoopy_no_execve_la_SOURCES = \
 	snoopy.h
 
 libsnoopy_no_execve_la_LIBADD = \
-	lib/libiniparser.la \
 	filter/libsnoopy_filters_all.la \
 	datasource/libsnoopy_datasources_all.la \
 	output/libsnoopy_outputs_all.la
+if CONFIG_FILE_ENABLED
+libsnoopy_no_execve_la_LIBADD += \
+	lib/libiniparser.la
+endif
 
 
 

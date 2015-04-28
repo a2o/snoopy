@@ -55,8 +55,13 @@
 snoopy_configuration_type   snoopy_configuration = {
     .initialized             = SNOOPY_TRUE,
 
+#ifdef SNOOPY_CONFIG_FILE
+    .config_file_enabled     = SNOOPY_TRUE,
+#else
     .config_file_enabled     = SNOOPY_FALSE,
+#endif
     .config_file_path        = "",
+    .config_file_found       = SNOOPY_FALSE,
     .config_file_parsed      = SNOOPY_FALSE,
 
 #ifdef SNOOPY_ERROR_LOGGING_ENABLED
@@ -156,6 +161,7 @@ void snoopy_configuration_dtor ()
 
 
 
+#ifdef SNOOPY_CONFIG_FILE
 /*
  * snoopy_configuration_load_file
  *
@@ -176,9 +182,9 @@ int snoopy_configuration_load_file (
     char       *confValString;   // Temporary query result space
     int         confValInt;      // Temporary query result space
 
+
     /* Tell snoopy we are using configuration file */
-    snoopy_configuration.config_file_enabled = SNOOPY_TRUE;
-    snoopy_configuration.config_file_path    = iniFilePath;
+    snoopy_configuration.config_file_path = iniFilePath;
 
     /* Parse the INI configuration file first */
     ini = iniparser_load(iniFilePath);
@@ -186,6 +192,7 @@ int snoopy_configuration_load_file (
         // TODO snoopy error handling
         return -1;
     }
+    snoopy_configuration.config_file_found = SNOOPY_TRUE;
 
 
     /* Pick out snoopy configuration variables */
@@ -423,3 +430,4 @@ void snoopy_configuration_strtoupper (char *s)
         s++;
     }
 }
+#endif   /* END ifdef SNOOPY_CONFIG_FILE */
