@@ -221,10 +221,14 @@ echo
 
 
 
-### Push code and tags to github
+### Push code and tags to GitHub
+#
+# Doing this once with --tags argument only does not push actual code, only tags
+#
 echo &&
 echo "RELEASING: Pushing code and tags to GitHub..." &&
 echo &&
+git push $PUBLIC_GIT_REMOTE_NAME &&
 git push $PUBLIC_GIT_REMOTE_NAME --tags &&
 
 
