@@ -2,9 +2,6 @@
 
 
 
-Table of Contents
-=================
-
   * [Snoopy Logger Installation Instructions](#snoopy-logger-installation-instructions)
     * [Available installation methods:](#available-installation-methods)
       * [1. Automated installation procedure](#1-automated-installation-procedure)
@@ -80,16 +77,14 @@ however are gladly accepted.
 
 ### 3. Building Snoopy from sources
 
-#### 3.1 Download options
+#### 3.1 Downloading source
 
-You can download Snoopy release tarballs from this location:
-http://source.a2o.si/download/snoopy/
+You can download Snoopy release tarballs from this location: http://source.a2o.si/download/snoopy/
 
-Alternatively you can download it from GitHub, by selecting a release tag at
-the branch drop-down selector, and then clicking the ↓ZIP button, next to the
-repository URL, below project description.
-(I know this is awkward, but GitHub has discontinued the "Uploads" feature)
-
+You can clone the latest Snoopy sources from GitHub:
+```
+git clone https://github.com/a2o/snoopy.git
+```
 
 
 #### 3.2 Installation procedure
