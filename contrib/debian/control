@@ -10,6 +10,8 @@ Homepage: https://github.com/a2o/snoopy
 Package: libsnoopy
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
+Conflicts: snoopy
+Replaces: snoopy
 Description: execve() wrapper and logger
  snoopylogger is merely a shared library that is used as a wrapper
  to the execve() function provided by libc as to log every call
