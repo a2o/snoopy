@@ -8,10 +8,11 @@ Snoopy is a tiny library that logs all executed commands (+ arguments) on your s
 
   * [Snoopy Logger](#snoopy-logger)
     * [1. Installation](#1-installation)
-      * [1.1 Versions](#11-versions)
-    * [2. Snoopy output](#2-snoopy-output)
+      * [1.1 Version information](#11-version-information)
+    * [2. Output](#2-output)
     * [3. Configuration](#3-configuration)
     * [4. Support](#4-support)
+      * [4.1 Commercial support](#41-commercial-support)
     * [5. How does Snoopy actually work?](#5-how-does-snoopy-actually-work)
     * [6. Contributing to Snoopy development](#6-contributing-to-snoopy-development)
     * [7. Credits](#7-credits)
@@ -29,7 +30,7 @@ That is it.
 Detailed installation instructions are available here: [doc/INSTALL.md](doc/INSTALL.md)
 
 
-### 1.1 Versions
+### 1.1 Version information
 
 Latest Snoopy version information:
 * stable: [http://source.a2o.si/download/snoopy/snoopy-2.2.8.tar.gz][2.2.8]
@@ -37,7 +38,7 @@ Latest Snoopy version information:
 
 
 
-## 2. Snoopy output
+## 2. Output
 
 This is what typical Snoopy output looks like:
 
@@ -72,14 +73,30 @@ For additional information consult comments in default configuration file
 
 ## 4. Support
 
-**Only latest released version of Snoopy is supported!**
-Any version that is not the latest is not supported. Please do not submit any bugfix/feature/change
-requests related to old and unsupported Snoopy versions.
+**Only latest released version of Snoopy is "supported"!**
+Any version that is not the latest (stable or development) is not supported.
+Please do not submit any bugfix/feature/change requests related to any old and unsupported Snoopy versions.
 
-* You should consult FAQ first: [doc/FAQ.md](doc/FAQ.md)
-* Then you should search the Snoopy issue tracker: https://github.com/a2o/snoopy/issues
-* Then google your issue up.
-* If the problem persist up to this point, create a new issue:)
+If you encounter an issue with Snoopy, proceed with the following steps:
+
+1. make sure you are using the latest version of Snoopy!
+  1. this DOES NOT mean the last version 'apt-get install snoopy' provides!
+  2. this means the latest version available at https://github.com/a2o/snoopy/;
+2. consult FAQ first: [doc/FAQ.md](doc/FAQ.md),
+3. search the internets (using Google for example),
+4. search the Snoopy issue tracker: https://github.com/a2o/snoopy/issues/
+5. if the problem still persist, create a new issue, but you must:
+  1. make sure your issue is reproducible using the latest version of Snoopy;
+  2. provide the following data:
+    1. Snoopy version used and how did you install it?
+    2. Linux distribution you are using?
+    3. Which software is crashing because of Snoopy (whole system, one program)?
+    4. Trace of your program that crashes.
+  3. if possible, provide a patch that fixes (or at least tries to fix) the issue.
+
+### 4.1 Commercial support
+
+Commercial support for Snoopy is available. Contact current maintainer via email for details.
 
 
 
