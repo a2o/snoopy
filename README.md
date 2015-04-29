@@ -15,7 +15,8 @@ Snoopy is a tiny library that logs all executed commands (+ arguments) on your s
       * [4.1 Commercial support](#41-commercial-support)
     * [5. How does Snoopy actually work?](#5-how-does-snoopy-actually-work)
     * [6. Contributing to Snoopy development](#6-contributing-to-snoopy-development)
-    * [7. Credits](#7-credits)
+    * [7. License](#7-license)
+    * [8. Credits](#8-credits)
 
 
 
@@ -75,18 +76,18 @@ For additional information consult comments in default configuration file
 
 **Only latest released version of Snoopy is "supported"!**
 Any version that is not the latest (stable or development) is not supported.
-Please do not submit any bugfix/feature/change requests related to any old and unsupported Snoopy versions.
+Please do not submit any bugfix/feature/change requests related to old (unsupported) Snoopy versions.
 
-If you encounter an issue with Snoopy, proceed with the following steps:
+**If you encounter an issue with Snoopy, proceed with the following steps:**
 
 1. make sure you are using the latest version of Snoopy!
-  1. this DOES NOT mean the last version 'apt-get install snoopy' provides!
-  2. this means the latest version available at https://github.com/a2o/snoopy/;
+  1. this DOES NOT mean the last version 'apt-get install snoopy' provides,
+  2. this means the latest version available at https://github.com/a2o/snoopy/!
 2. consult FAQ first: [doc/FAQ.md](doc/FAQ.md),
 3. search the internets (using Google for example),
-4. search the Snoopy issue tracker: https://github.com/a2o/snoopy/issues/
+4. search the Snoopy issue tracker: https://github.com/a2o/snoopy/issues/,
 5. if the problem still persist, create a new issue, but you must:
-  1. make sure your issue is reproducible using the latest version of Snoopy;
+  1. make sure your issue is reproducible using the latest version of Snoopy,
   2. provide the following data:
     1. Snoopy version used and how did you install it?
     2. Linux distribution you are using?
@@ -112,18 +113,33 @@ See [doc/CONTRIBUTING.md](doc/CONTRIBUTING.md)
 
 
 
-## 7. Credits
+## 7. License
 
-Development is currently located at the following URI:
+Snoopy is released under GNU General Public License version 2.
+
+Snoopy was originally released under GNU GPLv2 license, and during the course of
+it's life various people contributed code to it under the same license. Therefore
+Snoopy continues to be released under GNU GPLv2 license, as this is the only
+license all contributors agreed to, up to this point.
+
+Should some entity (individual or corporation) desire to obtain Snoopy under a
+different license (commercial, for example), a consent from all contributors
+will be required.
+
+
+
+## 8. Credits
+
+Snoopy development is currently located at the following URI:
     http://github.com/a2o/snoopy/
 
-Snoopy Logger was originally created by:
-     marius@umich.edu
-        mbm@linux.com
-
-Snoopy is currently maintained by:
-    Bostjan Skufca, bostjan@a2o.si
+Snoopy Logger was originally created and maintained by:
+    Marius Aamodt Eriksen <marius@umich.edu>
+    Mike Baker <mbm@linux.com>
 
 List of contributors is available at the following locations:
 - in the Snoopy's ChangeLog file;
 - in the list of pull requests on GitHub.
+
+Snoopy is currently maintained by:
+    Bostjan Skufca <bostjan@a2o.si>
