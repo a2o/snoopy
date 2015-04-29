@@ -40,6 +40,7 @@
 #endif
 #include "inputdatastorage.h"
 #include "log.h"
+#include "message.h"
 
 
 
@@ -73,7 +74,7 @@ int main (int argc, char **argv)
         printf("INFO: Configuration file is NOT enabled.\n");
     }
 
-    snoopy_log_message_generate(logMessage, snoopy_configuration.message_format);
+    snoopy_message_generateFromFormat(logMessage, snoopy_configuration.message_format);
     printf("Message generated:\n");
     printf("\n");
     printf("%s\n", logMessage);
@@ -91,7 +92,7 @@ int main (int argc, char **argv)
         )
     ) {
 #endif
-        snoopy_log_message_dispatch(logMessage, SNOOPY_LOG_MESSAGE);
+        snoopy_log_dispatch(logMessage, SNOOPY_LOG_MESSAGE);
         printf("Message sent to syslog, check your syslog output.\n");
         printf("If snoopy is already enabled on your system, you should see two identical messages.\n");
         printf("If you are testing snoopy via LD_PRELOAD environmental variable, you will see another identical message.\n");

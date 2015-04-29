@@ -61,6 +61,6 @@ void snoopy_error_handler (char *errorMsg)
 {
     /* Only send error to syslog if configured like that */
     if (SNOOPY_TRUE == snoopy_configuration.error_logging_enabled) {
-        snoopy_log_message_dispatch(errorMsg, SNOOPY_LOG_ERROR);
+        snoopy_log_dispatch(errorMsg, SNOOPY_LOG_ERROR);
     }
 }

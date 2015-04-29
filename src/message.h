@@ -1,7 +1,7 @@
 /*
  * SNOOPY LOGGER
  *
- * File: log.h
+ * File: message.h
  *
  * Copyright (c) 2014-2015 Bostjan Skufca <bostjan@a2o.si>
  *
@@ -22,28 +22,14 @@
 
 
 
-/*
- * Syscall-interception-handling functions
- */
-void snoopy_log_syscall_execv (
-    const char  *filename,
-    char *const  argv[]
-);
-void snoopy_log_syscall_execve (
-    const char  *filename,
-    char *const  argv[],
-    char *const  envp[]
-);
-void snoopy_log_syscall (
-    const char  *syscallName
+void snoopy_message_generateFromFormat (
+    char        *logMessage,
+    char        *logMessageFormat
 );
 
 
 
-/*
- * Log message dispatching functions
- */
-void snoopy_log_dispatch (
+void snoopy_message_append (
     char *logMessage,
-    int   errorOrMessage
+    char *appendThis
 );

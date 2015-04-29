@@ -26,6 +26,8 @@ libsnoopy_no_execve_la_SOURCES = \
 	datasourceregistry.h \
 	log.c \
 	log.h \
+	message.c \
+	message.h \
 	misc.c \
 	misc.h \
 	outputregistry.c \
