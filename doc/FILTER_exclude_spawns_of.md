@@ -55,7 +55,7 @@ If the filter encounters an error, it will pass the message.
 
 If you install from source, make sure that the following options are passed to `./configure`:
 
-    --enable-filter
+    --enable-filtering
     --enable-config-file
 
 For debian, these options are in `debian/rules`.
