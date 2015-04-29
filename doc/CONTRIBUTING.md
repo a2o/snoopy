@@ -42,6 +42,7 @@ need to add references to it to make Snoopy fully aware of it:
 - src/datasource/Makefile.am   (location is evident)
 - src/datasourceregistry.h     (one reference)
 - src/datasourceregistry.c     (two references)
+- etc/snoopy.ini               (one reference in comments, for documentation purposes)
 
 
 
@@ -70,6 +71,7 @@ need to add references to it to make Snoopy fully aware of it:
 - src/filter/Makefile.am   (location is evident)
 - src/filterregistry.h     (one reference)
 - src/filterregistry.c     (two references)
+- etc/snoopy.ini           (one reference in comments, for documentation purposes)
 
 
 
