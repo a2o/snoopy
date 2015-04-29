@@ -109,7 +109,7 @@ echo "done."
 
 
 echo -n "SNOOPY INSTALL: Configuring... "
-./configure --enable-config-file --sysconfdir=/etc >> $SNOOPY_INSTALL_LOGFILE 2>&1
+./configure --enable-config-file --sysconfdir=/etc --enable-filtering >> $SNOOPY_INSTALL_LOGFILE 2>&1
 echo "done."
 
 echo -n "SNOOPY INSTALL: Building... "
