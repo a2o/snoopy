@@ -6,11 +6,9 @@ Snoopy is a tiny library that logs all executed commands (+ arguments) on your s
 
 
 
-Table of Contents
-=================
-
   * [Snoopy Logger](#snoopy-logger)
     * [1. Installation](#1-installation)
+      * [1.1 Versions](#11-versions)
     * [2. Snoopy output](#2-snoopy-output)
     * [3. Configuration](#3-configuration)
     * [4. Support](#4-support)
@@ -22,12 +20,20 @@ Table of Contents
 
 ## 1. Installation
 
-The easiest way to start using Snoopy is to execute the following command (as root):
+The easiest way to start using Snoopy is to execute the following command (as root),
+which installs the latest stable version of Snoopy on your system:
 
     wget -q -O - https://github.com/a2o/snoopy/raw/master/bin/snoopy-install.sh | sh
 
 That is it.
 Detailed installation instructions are available here: [doc/INSTALL.md](doc/INSTALL.md)
+
+
+### 1.1 Versions
+
+Latest Snoopy version information:
+* stable: [http://source.a2o.si/download/snoopy/snoopy-2.2.8.tar.gz][2.2.8]
+* development: [http://source.a2o.si/download/snoopy/snoopy-2.3.0rc3.tar.gz][2.3.0rc3]
 
 
 

@@ -147,10 +147,24 @@ git checkout $RELEASE_TAG
 
 
 
-### Check for release tags
+### Check for release in configure.ac
 RES=`cat configure.ac | fgrep $RELEASE_VERSION | cat`
 if [ "x$RES" == "x" ]; then
     echo "ERROR: Release tag $RELEASE_TAG not found in configure.ac file."
+    exit 20
+fi
+
+### Check for release in ChangeLog
+RES=`cat ChangeLog | grep $RELEASE_VERSION^ | cat`
+if [ "x$RES" == "x" ]; then
+    echo "ERROR: Release version $RELEASE_VERSION not found in ChangeLog file."
+    exit 20
+fi
+
+### Check for release in README.md
+RES=`cat README.md | grep snoopy-$RELEASE_VERSION\.t | cat`
+if [ "x$RES" == "x" ]; then
+    echo "ERROR: Release version $RELEASE_VERSION not found in README.md file."
     exit 20
 fi
 

@@ -19,9 +19,11 @@ Steps:
     - commit
 
 3. Update version info:
-    - in ChangeLog
-    - in configure.ac
+    - 1. in ChangeLog
+    - 2. in configure.ac
+    - 3. in README.md (displayed on GitHub front page)
     - commit with sign-off, with exact message "Release X.Y.Z" on the first line
+    - git add ChangeLog configure.ac README.md
     - git commit -s -m "Release X.Y.Z"
 
 4. Create git tag:
