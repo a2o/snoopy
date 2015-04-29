@@ -3,7 +3,7 @@
 -------------------------------------------------------------------------------
 
 
-2015-04-28 - Version  2.3.0rc3
+2015-04-29 - Version  2.3.0rc4
 ------------------------------
 o Refactoring: do not include filtering code if filtering is not enabled on
     ./configure line.
