@@ -1,6 +1,10 @@
-/* detect.c -- simple execve() wrapper detection
+/*
+ * SNOOPY LOGGER
  *
- * Copyright (c) 2000 marius@linux.com,mbm@linux.com
+ * File: detect.c -- simple execve() wrapper detection
+ *
+ * Copyright (c) 2000 Marius Aamodt Eriksen <marius@linux.com>
+ * Copyright (c) 2000 Mike Baker <mbm@linux.com>
  *
  *
  * This program is free software; you can redistribute it and/or modify

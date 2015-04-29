@@ -1,9 +1,11 @@
 /*
  * SNOOPY LOGGER
  *
- * snoopy.c -- execve() logging wrapper
- * Copyright (c) 2000 marius@linux.com,mbm@linux.com
- * Copyright (c) 2014 bostjan@a2o.si
+ * File: snoopy.c -- execve() logging wrapper
+ *
+ * Copyright (c) 2000 Marius Aamodt Eriksen <marius@linux.com>
+ * Copyright (c) 2000 Mike Baker <mbm@linux.com>
+ * Copyright (c) 2010-2015 Bostjan Skufca <bostjan@a2o.si>
  *
  * Part hacked on flight KL 0617, 30,000 ft or so over the Atlantic :)
  *

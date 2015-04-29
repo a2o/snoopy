@@ -3,7 +3,7 @@
  *
  * File: snoopy/datasource/rpname.h
  *
- * Copyright (c) 2015 ajzach@gmail.com
+ * Copyright (c) 2015 Ariel Zach <ajzach@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
