@@ -273,6 +273,7 @@ AC_ARG_ENABLE(filtering,
 AS_IF([test "x$enable_filtering" = "xyes"], [
     AC_DEFINE(SNOOPY_CONF_FILTERING_ENABLED, 1, [Enable filtering])
 ])
+AM_CONDITIONAL([FILTERING_ENABLED], [test "x$enable_filtering" == "xyes"])
 
 
 

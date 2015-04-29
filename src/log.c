@@ -41,7 +41,9 @@
 #include "error.h"
 #include "inputdatastorage.h"
 #include "datasourceregistry.h"
-#include "filterregistry.h"
+#if defined(SNOOPY_FILTERING_ENABLED)
+#include "filtering.h"
+#endif
 #include "misc.h"
 #include "outputregistry.h"
 
@@ -185,91 +187,6 @@ void snoopy_log_message_append (
 
 
 /*
- * snoopy_log_filter_check_chain
- *
- * Description:
- *     Determines whether given message should be send to syslog or not
- *
- * Params:
- *     logMessage:   message about to be sent to syslog
- *     chain:        filter chain to check
- *
- * Return:
- *     SNOOPY_FILTER_PASS or SNOOPY_FILTER_DROP
- */
-int snoopy_log_filter_check_chain (
-    char *logMessage,
-    char *filterChain
-) {
-    char  filterChainCopy[SNOOPY_FILTER_CHAIN_MAX_SIZE];   // Must be here, or strtok_r segfaults
-    int   filterChainCopySize;
-    int   j;
-    char *str;
-    char *rest;
-    char *filterSpec;            // Single filter specification from defined filter chain
-    char *fcPos_filterSpecArg;   // Pointer to argument part of single filter specification in a filter chain
-
-    // Copy the filter chain specification to separate string, to be used in strtok_r
-    filterChainCopySize = strlen(filterChain);
-    if (filterChainCopySize > SNOOPY_FILTER_CHAIN_MAX_SIZE - 1) {
-        filterChainCopySize = SNOOPY_FILTER_CHAIN_MAX_SIZE - 1;
-    }
-    strncpy(filterChainCopy, filterChain, filterChainCopySize);
-    filterChainCopy[filterChainCopySize+1] = '\0';
-
-    // Loop through all filters
-    for (j=1, str=filterChainCopy;  ; j++, str=NULL) {
-        char    filterName[SNOOPY_FILTER_NAME_MAX_SIZE];
-        char   *filterNamePtr;
-        size_t  filterNameSize;
-        char    filterArg[SNOOPY_FILTER_ARG_MAX_SIZE];
-        char   *filterArgPtr;
-
-        // Parse the remaining filter chain specification for next filterSpec
-        filterSpec = strtok_r(str, ";", &rest);
-        if (NULL == filterSpec) {
-            // We are at the end of filtering chain
-            break;
-        }
-
-        // If filter tag contains ":", then split it into filter name and filter argument
-        fcPos_filterSpecArg  = strstr(filterSpec, ":");
-        if (NULL == fcPos_filterSpecArg) {
-            // filterSpec == filterName, there is no argument
-            filterName[0] = '\0';
-            filterNamePtr = filterSpec;
-            filterArg[0]  = '\0';
-            filterArgPtr  = filterArg;
-        } else {
-            // Change the colon to null character, which effectively splits the string in two parts.
-            // Then point to first and second part with corresponding variables.
-            filterNameSize = fcPos_filterSpecArg - filterSpec;
-            filterName[0] = '\0';
-            strncpy(filterName, filterSpec, filterNameSize);
-            filterName[filterNameSize] = '\0';
-            filterNamePtr = filterName;
-            filterArgPtr  = fcPos_filterSpecArg + 1;
-        }
-
-        // Check if filter actually exists
-        if (! snoopy_filterregistry_isRegistered(filterNamePtr)) {
-            snoopy_log_message_append(logMessage, "ERROR(Filter not found - ");
-            snoopy_log_message_append(logMessage, filterNamePtr);
-            snoopy_log_message_append(logMessage, ")");
-            break;
-        }
-
-        // Consult the filter, and return immediately if message should be dropped
-        if (SNOOPY_FILTER_DROP == snoopy_filterregistry_call(filterNamePtr, logMessage, filterArgPtr)) {
-            return SNOOPY_FILTER_DROP;
-        }
-    }
-    return SNOOPY_FILTER_PASS;
-}
-
-
-
-/*
  * snoopy_log_message_dispatch
  *
  * Description:
@@ -384,14 +301,22 @@ void snoopy_log_syscall (
     /* Generate log message in specified format */
     snoopy_log_message_generate(logMessage, snoopy_configuration.message_format);
 
+#if defined(SNOOPY_FILTERING_ENABLED)
     /* Should message be passed to syslog or not? */
-    if (SNOOPY_TRUE == snoopy_configuration.filtering_enabled) {
-        if (SNOOPY_FILTER_PASS == snoopy_log_filter_check_chain(logMessage, snoopy_configuration.filter_chain)) {
-            snoopy_log_message_dispatch(logMessage, SNOOPY_LOG_MESSAGE);
-        }
-    } else {
+    if (
+        (SNOOPY_FALSE == snoopy_configuration.filtering_enabled)
+        ||
+        (
+            (SNOOPY_TRUE == snoopy_configuration.filtering_enabled)
+            &&
+            (SNOOPY_FILTER_PASS == snoopy_filtering_check_chain(logMessage, snoopy_configuration.filter_chain))
+        )
+    ) {
+#endif
         snoopy_log_message_dispatch(logMessage, SNOOPY_LOG_MESSAGE);
+#if defined(SNOOPY_FILTERING_ENABLED)
     }
+#endif
 
     /* Housekeeping */
     free(logMessage);

@@ -5,6 +5,8 @@
 
 2015-04-28 - Version  2.3.0rc3
 ------------------------------
+o Refactoring: do not include filtering code if filtering is not enabled on
+    ./configure line.
 o Refactoring #50 (GitHub): change ./configure flag --enable-filter to
     --enable-filtering, to prepare Snoopy for future changes (per-datasource,
     per-filter and per-output configure flags).

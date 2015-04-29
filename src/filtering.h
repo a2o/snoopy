@@ -1,9 +1,9 @@
 /*
  * SNOOPY LOGGER
  *
- * File: log.h
+ * File: filtering.h
  *
- * Copyright (c) 2014-2015 Bostjan Skufca <bostjan@a2o.si>
+ * Copyright (c) 2015 Bostjan Skufca <bostjan@a2o.si>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,36 +22,7 @@
 
 
 
-void snoopy_log_message_generate (
-    char        *logMessage,
-    char        *logMessageFormat
-);
-
-
-
-void snoopy_log_message_append (
+int snoopy_filtering_check_chain (
     char *logMessage,
-    char *appendThis
-);
-
-
-
-void snoopy_log_message_dispatch (
-    char *logMessage,
-    int   errorOrMessage
-);
-
-
-
-void snoopy_log_syscall_execv (
-    const char  *filename,
-    char *const  argv[]
-);
-void snoopy_log_syscall_execve (
-    const char  *filename,
-    char *const  argv[],
-    char *const  envp[]
-);
-void snoopy_log_syscall (
-    const char  *syscallName
+    char *chain
 );

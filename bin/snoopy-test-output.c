@@ -35,7 +35,9 @@
  */
 #include "snoopy.h"
 #include "configuration.h"
-#include "filterregistry.h"
+#if defined(SNOOPY_FILTERING_ENABLED)
+#include "filtering.h"
+#endif
 #include "inputdatastorage.h"
 #include "log.h"
 
@@ -77,22 +79,27 @@ int main (int argc, char **argv)
     printf("%s\n", logMessage);
     printf("\n");
 
-    if (SNOOPY_TRUE == snoopy_configuration.filtering_enabled) {
-        if (SNOOPY_FILTER_PASS == snoopy_log_filter_check_chain(logMessage, snoopy_configuration.filter_chain)) {
-            /* Send it to syslog */
-            snoopy_log_message_dispatch(logMessage, SNOOPY_LOG_MESSAGE);
-            printf("Message sent to syslog, check your syslog output.\n");
-            printf("If snoopy is already enabled on your system, you should see two identical messages.\n");
-            printf("If you are testing snoopy via LD_PRELOAD environmental variable, you will see another identical message.\n");
-        } else {
-            printf("Message NOT sent to syslog. One of the filters dropped it.\n");
-        }
-    } else {
+#if defined(SNOOPY_FILTERING_ENABLED)
+    /* Should message be passed to syslog or not? */
+    if (
+        (SNOOPY_FALSE == snoopy_configuration.filtering_enabled)
+        ||
+        (
+            (SNOOPY_TRUE == snoopy_configuration.filtering_enabled)
+            &&
+            (SNOOPY_FILTER_PASS == snoopy_filtering_check_chain(logMessage, snoopy_configuration.filter_chain))
+        )
+    ) {
+#endif
         snoopy_log_message_dispatch(logMessage, SNOOPY_LOG_MESSAGE);
         printf("Message sent to syslog, check your syslog output.\n");
         printf("If snoopy is already enabled on your system, you should see two identical messages.\n");
         printf("If you are testing snoopy via LD_PRELOAD environmental variable, you will see another identical message.\n");
+#if defined(SNOOPY_FILTERING_ENABLED)
+    } else {
+            printf("Message NOT sent to syslog. One of the filters dropped it.\n");
     }
+#endif
 
     /* Housekeeping */
     free(logMessage);
