@@ -141,7 +141,7 @@ echo "TIP #3: Snoopy output can usually be found somewhere in /var/log/*"
 echo "        Check your syslog configuration for details."
 echo
 echo "TIP #4: Configuration file location: /etc/snoopy.ini"
-echo "        Check your syslog configuration for details."
+echo "        See included comments for additional configuration options."
 echo
 echo "Snoopy wishes you a happy logging experience:)"
 echo
