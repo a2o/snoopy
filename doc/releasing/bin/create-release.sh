@@ -155,7 +155,7 @@ if [ "x$RES" == "x" ]; then
 fi
 
 ### Check for release in ChangeLog
-RES=`cat ChangeLog | grep $RELEASE_VERSION^ | cat`
+RES=`cat ChangeLog | grep "$RELEASE_VERSION\$" | cat`
 if [ "x$RES" == "x" ]; then
     echo "ERROR: Release version $RELEASE_VERSION not found in ChangeLog file."
     exit 20
