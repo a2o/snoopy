@@ -27,6 +27,7 @@
  */
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 
 
@@ -35,7 +36,9 @@
  */
 #include "snoopy.h"
 #include "misc.h"
+
 #include "configuration.h"
+#include "error.h"
 
 
 
@@ -73,4 +76,42 @@ void snoopy_init ()
 void snoopy_cleanup ()
 {
     snoopy_configuration_dtor();
+}
+
+
+
+/*
+ * snoopy_string_append
+ *
+ * Description:
+ *     Appends content to the end of string, watching for
+ *     buffer overrun.
+ *
+ * Params:
+ *     destString:            string container to append to
+ *     appendThis:            content to append to destString
+ *     destStringMaxLength:   maximum length of dest string, including \0
+ *
+ * Return:
+ *     void
+ */
+void snoopy_string_append (
+    char *destString,
+    char *appendThis,
+    int   destStringMaxLength
+) {
+    int   destStringSize          = -1;
+    int   destStringSizeRemaining = -1;
+    int   appendThisSize          = -1;
+
+    /* Verify the limits */
+    destStringSize          = strlen(destString);
+    appendThisSize          = strlen(appendThis);
+    destStringSizeRemaining = destStringMaxLength - destStringSize;
+    if (destStringSizeRemaining < appendThisSize) {
+        snoopy_error_handler("Maximum destination string size exceeded");
+    }
+
+    /* Copy to the destination string */
+    strcat(&destString[destStringSize], appendThis);
 }

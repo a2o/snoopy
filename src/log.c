@@ -155,7 +155,7 @@ void snoopy_log_message_generate (
  *
  * Description:
  *     Appends content to the end of log message, watching for
- *     buffer overruns
+ *     buffer overrun.
  *
  * Params:
  *     logMessage:   message container to append to
@@ -168,20 +168,7 @@ void snoopy_log_message_append (
     char *logMessage,
     char *appendThis
 ) {
-    int   logMessageSize          = -1;
-    int   logMessageSizeRemaining = -1;
-    int   appendThisSize          = -1;
-
-    /* Verify the limits */
-    logMessageSize          = strlen(logMessage);
-    appendThisSize          = strlen(appendThis);
-    logMessageSizeRemaining = SNOOPY_LOG_MESSAGE_MAX_SIZE - logMessageSize;
-    if (logMessageSizeRemaining < appendThisSize) {
-        snoopy_error_handler("Maximum log message size exceeded");
-    }
-
-    /* Copy to the destination string */
-    strcat(&logMessage[logMessageSize], appendThis);
+    return snoopy_string_append(logMessage, appendThis, SNOOPY_LOG_MESSAGE_MAX_SIZE);
 }
 
 

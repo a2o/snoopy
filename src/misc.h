@@ -22,5 +22,19 @@
 
 
 
+/*
+ * Init/shutdown functions
+ */
 void snoopy_init    ();
 void snoopy_cleanup ();
+
+
+
+/*
+ * String functions
+ */
+void snoopy_string_append (
+    char *destString,
+    char *appendThis,
+    int   destStringMaxLength
+);
