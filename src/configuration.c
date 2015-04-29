@@ -75,10 +75,10 @@ snoopy_configuration_type   snoopy_configuration = {
     .message_format          = SNOOPY_LOG_MESSAGE_FORMAT,
     .message_format_malloced = SNOOPY_FALSE,
 
-#ifdef SNOOPY_FILTER_ENABLED
-    .filter_enabled          = SNOOPY_TRUE,
+#ifdef SNOOPY_FILTERING_ENABLED
+    .filtering_enabled          = SNOOPY_TRUE,
 #else
-    .filter_enabled          = SNOOPY_FALSE,
+    .filtering_enabled          = SNOOPY_FALSE,
 #endif
     .filter_chain            = SNOOPY_FILTER_CHAIN,
     .filter_chain_malloced   = SNOOPY_FALSE,

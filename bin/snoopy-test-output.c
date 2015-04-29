@@ -77,7 +77,7 @@ int main (int argc, char **argv)
     printf("%s\n", logMessage);
     printf("\n");
 
-    if (SNOOPY_TRUE == snoopy_configuration.filter_enabled) {
+    if (SNOOPY_TRUE == snoopy_configuration.filtering_enabled) {
         if (SNOOPY_FILTER_PASS == snoopy_log_filter_check_chain(logMessage, snoopy_configuration.filter_chain)) {
             /* Send it to syslog */
             snoopy_log_message_dispatch(logMessage, SNOOPY_LOG_MESSAGE);

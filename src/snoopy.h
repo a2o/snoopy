@@ -177,12 +177,12 @@
 
 
 /**
- * SNOOPY_FILTER_ENABLED
+ * SNOOPY_FILTERING_ENABLED
  *
  * Whether filtering is enabled or not
  */
-#ifdef SNOOPY_CONF_FILTER_ENABLED
-#define   SNOOPY_FILTER_ENABLED   1
+#ifdef SNOOPY_CONF_FILTERING_ENABLED
+#define   SNOOPY_FILTERING_ENABLED   1
 #endif
 
 

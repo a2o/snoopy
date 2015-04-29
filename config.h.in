@@ -104,11 +104,11 @@
 /* Enable error logging */
 #undef SNOOPY_CONF_ERROR_LOGGING_ENABLED
 
+/* Enable filtering */
+#undef SNOOPY_CONF_FILTERING_ENABLED
+
 /* Custom filter chain to use */
 #undef SNOOPY_CONF_FILTER_CHAIN_custom
-
-/* Enable filtering */
-#undef SNOOPY_CONF_FILTER_ENABLED
 
 /* Custom message format to use */
 #undef SNOOPY_CONF_LOG_MESSAGE_FORMAT_custom

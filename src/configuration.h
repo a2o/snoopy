@@ -38,7 +38,7 @@ typedef struct {
     char *message_format;
     int   message_format_malloced;
 
-    int   filter_enabled;
+    int   filtering_enabled;
     char *filter_chain;
     int   filter_chain_malloced;
 

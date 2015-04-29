@@ -253,25 +253,25 @@ AS_IF([test "x$with_message_format" != "x"], [
 
 
 dnl ============================================================================
-AC_ARG_ENABLE(filter,
+AC_ARG_ENABLE(filtering,
     [AC_HELP_STRING(
-        [--enable-filter],
+        [--enable-filtering],
         [enable general message filtering [default=disabled]]
     )],
     [
         if test "x$enableval" = "xyes"; then
-            enable_filter=yes
+            enable_filtering=yes
         elif test "x$enableval" = "xno"; then
-            enable_filter=no
+            enable_filtering=no
         else
-            AC_MSG_ERROR([--enable-filter does not take an argument: $enableval])
+            AC_MSG_ERROR([--enable-filtering does not take an argument: $enableval])
         fi
     ],
-    [enable_filter=no]
+    [enable_filtering=no]
 )
 
-AS_IF([test "x$enable_filter" = "xyes"], [
-    AC_DEFINE(SNOOPY_CONF_FILTER_ENABLED, 1, [Enable filtering])
+AS_IF([test "x$enable_filtering" = "xyes"], [
+    AC_DEFINE(SNOOPY_CONF_FILTERING_ENABLED, 1, [Enable filtering])
 ])
 
 

@@ -5,6 +5,9 @@
 
 2015-04-28 - Version  2.3.0rc3
 ------------------------------
+o Refactoring #50 (GitHub): change ./configure flag --enable-filter to
+    --enable-filtering, to prepare Snoopy for future changes (per-datasource,
+    per-filter and per-output configure flags).
 o Bug #49 (GitHub): reset configuration values back to their corresponding
     defaults when running final cleanup. This prevents buffer overflows on
     next Snoopy invocations when config file is not found anymore.

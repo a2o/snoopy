@@ -385,7 +385,7 @@ void snoopy_log_syscall (
     snoopy_log_message_generate(logMessage, snoopy_configuration.message_format);
 
     /* Should message be passed to syslog or not? */
-    if (SNOOPY_TRUE == snoopy_configuration.filter_enabled) {
+    if (SNOOPY_TRUE == snoopy_configuration.filtering_enabled) {
         if (SNOOPY_FILTER_PASS == snoopy_log_filter_check_chain(logMessage, snoopy_configuration.filter_chain)) {
             snoopy_log_message_dispatch(logMessage, SNOOPY_LOG_MESSAGE);
         }

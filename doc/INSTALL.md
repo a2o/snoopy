@@ -139,13 +139,14 @@ Snoopy supports message filtering. Filtering support must be
 enabled at build time, here is an example:
 
     # REQUIRED TO ENABLE FILTERING FEATURE
-    --enable-filter
+    --enable-filtering
 
     # HOW TO DEFINE FILTER CHAINS
     --with-filter-chain="FILTER_CHAIN_SPEC"
 
-By default, if FILTER_CHAIN_SPEC is not configured, empty string is
-used, which effectively disables filtering.
+By default, if FILTER_CHAIN_SPEC is not configured. An empty string is
+used instead, which effectively disables filtering and all Snoopy messages
+are passed to the configured output.
 
 See sample configuration file etc/snoopy.ini for list and description
 of supported filter configurations.
