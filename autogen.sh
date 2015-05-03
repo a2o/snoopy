@@ -26,6 +26,14 @@ fi
 
 
 
+### Bug in aclocal: manually create m4 directory if it does not exist
+#
+if [ ! -d m4 ]; then
+    mkdir m4
+fi
+
+
+
 ### Run autotools
 #
 #libtoolize --install --copy --force
