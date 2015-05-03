@@ -19,7 +19,7 @@ bin_PROGRAMS = \
 snoopy_test_output_SOURCES = \
 	snoopy-test-output.c
 snoopy_test_output_LDADD = \
-	$(top_srcdir)/src/libsnoopy_no_execve.la
+	../src/libsnoopy_no_execve.la
 
 
 noinst_PROGRAMS = \
@@ -33,9 +33,9 @@ snoopy_detect_SOURCES = \
 snoopy_dev_helper_SOURCES = \
 	snoopy-dev-helper.c
 snoopy_dev_helper_LDADD = \
-	$(top_srcdir)/src/libsnoopy_no_execve.la
+	../src/libsnoopy_no_execve.la
 
 snoopy_test_all_data_sources_SOURCES = \
 	snoopy-test-all-data-sources.c
 snoopy_test_all_data_sources_LDADD = \
-	$(top_srcdir)/src/libsnoopy_no_execve.la
+	../src/libsnoopy_no_execve.la
