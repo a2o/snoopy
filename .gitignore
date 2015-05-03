@@ -7,10 +7,12 @@ Makefile.in
 /autoscan.log
 /compile
 /configure
+/config.guess
 /config.h
 /config.log
 /config.status
 /config.h.in~
+/config.sub
 /depcomp
 /install-sh
 /ltmain.sh
