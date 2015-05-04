@@ -38,7 +38,7 @@
 
 #include "configuration.h"
 #include "filterregistry.h"
-#include "log.h"
+#include "message.h"
 
 
 
@@ -111,9 +111,9 @@ int snoopy_filtering_check_chain (
 
         // Check if filter actually exists
         if (! snoopy_filterregistry_isRegistered(filterNamePtr)) {
-            snoopy_log_message_append(logMessage, "ERROR(Filter not found - ");
-            snoopy_log_message_append(logMessage, filterNamePtr);
-            snoopy_log_message_append(logMessage, ")");
+            snoopy_message_append(logMessage, "ERROR(Filter not found - ");
+            snoopy_message_append(logMessage, filterNamePtr);
+            snoopy_message_append(logMessage, ")");
             break;
         }
 
