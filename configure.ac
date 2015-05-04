@@ -252,6 +252,33 @@ AS_IF([test "x$with_message_format" != "x"], [
 
 
 
+dnl ======= ENABLE FILTERING ===================================================
+AC_ARG_ENABLE(filtering,
+    [AC_HELP_STRING(
+        [--enable-filtering],
+        [enable general message filtering [default=disabled]]
+    )],
+    [
+        if test "x$enableval" = "xyes"; then
+            enable_filtering=yes
+        elif test "x$enableval" = "xno"; then
+            enable_filtering=no
+        else
+            AC_MSG_ERROR([--enable-filtering does not take an argument: $enableval])
+        fi
+    ],
+    [enable_filtering=no]
+)
+
+AS_IF([test "x$enable_filtering" = "xyes"], [
+    AC_DEFINE(SNOOPY_CONF_FILTERING_ENABLED, 1, [Enable filtering])
+])
+AM_CONDITIONAL([FILTERING_ENABLED], [test "x$enable_filtering" == "xyes"])
+
+
+
+dnl ============================================================================
+dnl ======= ENABLE FILTERING ===================================================
 dnl ============================================================================
 AC_ARG_ENABLE(filtering,
     [AC_HELP_STRING(
@@ -278,6 +305,8 @@ AM_CONDITIONAL([FILTERING_ENABLED], [test "x$enable_filtering" == "xyes"])
 
 
 dnl ============================================================================
+dnl ======= WITH FILTER CHAIN ==================================================
+dnl ============================================================================
 AC_ARG_WITH(filter-chain,
     [AC_HELP_STRING(
         [--with-filter-chain=CHAINSPEC],
@@ -303,6 +332,116 @@ AC_ARG_WITH(filter-chain,
 AS_IF([test "x$with_filter_chain" != "x"], [
     AC_DEFINE_UNQUOTED(SNOOPY_CONF_FILTER_CHAIN_custom, "$with_filter_chain", [Custom filter chain to use])
 ])
+
+
+
+
+
+dnl ============================================================================
+dnl ============================================================================
+dnl ======= START individual 'ENABLE FILTER' section ===========================
+dnl ============================================================================
+dnl ============================================================================
+
+dnl ======= ENABLE FILTER: exclude_spawns_of ============================================
+AC_ARG_ENABLE(filter-exclude-spawns-of,
+    [AC_HELP_STRING(
+        [--enable-filter-exclude-spawns-of],
+        [enable filter exclude_spawns_of [default=enabled]]
+    )],
+    [
+        if test "x$enableval" = "xyes"; then
+            enable_filter_exclude_spawns_of=yes
+        elif test "x$enableval" = "xno"; then
+            enable_filter_exclude_spawns_of=no
+        else
+            AC_MSG_ERROR([--enable-filter-* does not take an argument: $enableval])
+        fi
+    ],
+    [enable_filter_exclude_spawns_of=yes]
+)
+
+AS_IF([test "x$enable_filter_exclude_spawns_of" = "xyes"], [
+    AC_DEFINE(SNOOPY_CONF_FILTER_ENABLED_exclude_spawns_of, 1, [Is filter exclude_spawns_of enabled?])
+])
+AM_CONDITIONAL([ENABLE_FILTER_exclude_spawns_of], [test "x$enable_filter_exclude_spawns_of" == "xyes"])
+
+dnl ======= ENABLE FILTER: exclude_uid ============================================
+AC_ARG_ENABLE(filter-exclude-uid,
+    [AC_HELP_STRING(
+        [--enable-filter-exclude-uid],
+        [enable filter exclude_uid [default=enabled]]
+    )],
+    [
+        if test "x$enableval" = "xyes"; then
+            enable_filter_exclude_uid=yes
+        elif test "x$enableval" = "xno"; then
+            enable_filter_exclude_uid=no
+        else
+            AC_MSG_ERROR([--enable-filter-* does not take an argument: $enableval])
+        fi
+    ],
+    [enable_filter_exclude_uid=yes]
+)
+
+AS_IF([test "x$enable_filter_exclude_uid" = "xyes"], [
+    AC_DEFINE(SNOOPY_CONF_FILTER_ENABLED_exclude_uid, 1, [Is filter exclude_uid enabled?])
+])
+AM_CONDITIONAL([ENABLE_FILTER_exclude_uid], [test "x$enable_filter_exclude_uid" == "xyes"])
+
+dnl ======= ENABLE FILTER: only_root ============================================
+AC_ARG_ENABLE(filter-only-root,
+    [AC_HELP_STRING(
+        [--enable-filter-only-root],
+        [enable filter only_root [default=enabled]]
+    )],
+    [
+        if test "x$enableval" = "xyes"; then
+            enable_filter_only_root=yes
+        elif test "x$enableval" = "xno"; then
+            enable_filter_only_root=no
+        else
+            AC_MSG_ERROR([--enable-filter-* does not take an argument: $enableval])
+        fi
+    ],
+    [enable_filter_only_root=yes]
+)
+
+AS_IF([test "x$enable_filter_only_root" = "xyes"], [
+    AC_DEFINE(SNOOPY_CONF_FILTER_ENABLED_only_root, 1, [Is filter only_root enabled?])
+])
+AM_CONDITIONAL([ENABLE_FILTER_only_root], [test "x$enable_filter_only_root" == "xyes"])
+
+dnl ======= ENABLE FILTER: only_uid ============================================
+AC_ARG_ENABLE(filter-only-uid,
+    [AC_HELP_STRING(
+        [--enable-filter-only-uid],
+        [enable filter only_uid [default=enabled]]
+    )],
+    [
+        if test "x$enableval" = "xyes"; then
+            enable_filter_only_uid=yes
+        elif test "x$enableval" = "xno"; then
+            enable_filter_only_uid=no
+        else
+            AC_MSG_ERROR([--enable-filter-* does not take an argument: $enableval])
+        fi
+    ],
+    [enable_filter_only_uid=yes]
+)
+
+AS_IF([test "x$enable_filter_only_uid" = "xyes"], [
+    AC_DEFINE(SNOOPY_CONF_FILTER_ENABLED_only_uid, 1, [Is filter only_uid enabled?])
+])
+AM_CONDITIONAL([ENABLE_FILTER_only_uid], [test "x$enable_filter_only_uid" == "xyes"])
+
+dnl ============================================================================
+dnl ============================================================================
+dnl ======= END individual 'ENABLE FILTER' section =============================
+dnl ============================================================================
+dnl ============================================================================
+
+
 
 
 

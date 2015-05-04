@@ -25,10 +25,18 @@
 /*
  * Include headers of all filter functions
  */
+#ifdef SNOOPY_CONF_FILTER_ENABLED_exclude_spawns_of
 #include "filter/exclude_spawns_of.h"
+#endif
+#ifdef SNOOPY_CONF_FILTER_ENABLED_exclude_uid
 #include "filter/exclude_uid.h"
+#endif
+#ifdef SNOOPY_CONF_FILTER_ENABLED_only_root
 #include "filter/only_root.h"
+#endif
+#ifdef SNOOPY_CONF_FILTER_ENABLED_only_uid
 #include "filter/only_uid.h"
+#endif
 
 
 
