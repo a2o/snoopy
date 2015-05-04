@@ -347,7 +347,7 @@ dnl ======= ENABLE FILTER: exclude_spawns_of ===================================
 AC_ARG_ENABLE(filter-exclude_spawns_of,
     [AC_HELP_STRING(
         [--disable-filter-exclude_spawns_of],
-        [enable filter exclude_spawns_of [default=enabled]]
+        [disable filter exclude_spawns_of [default=enabled]]
     )],
     [
         if test "x$enableval" = "xyes"; then
@@ -370,7 +370,7 @@ dnl ======= ENABLE FILTER: exclude_uid =========================================
 AC_ARG_ENABLE(filter-exclude_uid,
     [AC_HELP_STRING(
         [--disable-filter-exclude_uid],
-        [enable filter exclude_uid [default=enabled]]
+        [disable filter exclude_uid [default=enabled]]
     )],
     [
         if test "x$enableval" = "xyes"; then
@@ -393,7 +393,7 @@ dnl ======= ENABLE FILTER: only_root ===========================================
 AC_ARG_ENABLE(filter-only_root,
     [AC_HELP_STRING(
         [--disable-filter-only_root],
-        [enable filter only_root [default=enabled]]
+        [disable filter only_root [default=enabled]]
     )],
     [
         if test "x$enableval" = "xyes"; then
@@ -416,7 +416,7 @@ dnl ======= ENABLE FILTER: only_uid ============================================
 AC_ARG_ENABLE(filter-only_uid,
     [AC_HELP_STRING(
         [--disable-filter-only_uid],
-        [enable filter only_uid [default=enabled]]
+        [disable filter only_uid [default=enabled]]
     )],
     [
         if test "x$enableval" = "xyes"; then
