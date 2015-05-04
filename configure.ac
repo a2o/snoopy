@@ -344,9 +344,9 @@ dnl ============================================================================
 dnl ============================================================================
 
 dnl ======= ENABLE FILTER: exclude_spawns_of ============================================
-AC_ARG_ENABLE(filter-exclude-spawns-of,
+AC_ARG_ENABLE(filter-exclude_spawns_of,
     [AC_HELP_STRING(
-        [--disable-filter-exclude-spawns-of],
+        [--disable-filter-exclude_spawns_of],
         [enable filter exclude_spawns_of [default=enabled]]
     )],
     [
@@ -367,9 +367,9 @@ AS_IF([test "x$enable_filter_exclude_spawns_of" = "xyes"], [
 AM_CONDITIONAL([ENABLE_FILTER_exclude_spawns_of], [test "x$enable_filter_exclude_spawns_of" == "xyes"])
 
 dnl ======= ENABLE FILTER: exclude_uid ============================================
-AC_ARG_ENABLE(filter-exclude-uid,
+AC_ARG_ENABLE(filter-exclude_uid,
     [AC_HELP_STRING(
-        [--disable-filter-exclude-uid],
+        [--disable-filter-exclude_uid],
         [enable filter exclude_uid [default=enabled]]
     )],
     [
@@ -390,9 +390,9 @@ AS_IF([test "x$enable_filter_exclude_uid" = "xyes"], [
 AM_CONDITIONAL([ENABLE_FILTER_exclude_uid], [test "x$enable_filter_exclude_uid" == "xyes"])
 
 dnl ======= ENABLE FILTER: only_root ============================================
-AC_ARG_ENABLE(filter-only-root,
+AC_ARG_ENABLE(filter-only_root,
     [AC_HELP_STRING(
-        [--disable-filter-only-root],
+        [--disable-filter-only_root],
         [enable filter only_root [default=enabled]]
     )],
     [
@@ -413,9 +413,9 @@ AS_IF([test "x$enable_filter_only_root" = "xyes"], [
 AM_CONDITIONAL([ENABLE_FILTER_only_root], [test "x$enable_filter_only_root" == "xyes"])
 
 dnl ======= ENABLE FILTER: only_uid ============================================
-AC_ARG_ENABLE(filter-only-uid,
+AC_ARG_ENABLE(filter-only_uid,
     [AC_HELP_STRING(
-        [--disable-filter-only-uid],
+        [--disable-filter-only_uid],
         [enable filter only_uid [default=enabled]]
     )],
     [
