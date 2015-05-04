@@ -2,9 +2,12 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.63])
-AC_INIT([Snoopy Logger], [2.3.0rc4], [https://github.com/a2o/snoopy/], [snoopy])
-AC_DEFINE(PACKAGE_URL,       "https://github.com/a2o/snoopy")
-AC_DEFINE(PACKAGE_BUGREPORT, "https://github.com/a2o/snoopy/issues")
+AC_INIT(
+    [Snoopy Logger],
+    [2.3.0rc4],
+    [https://github.com/a2o/snoopy/issues/],
+    [snoopy],
+    [https://github.com/a2o/snoopy/])
 AC_CONFIG_SRCDIR([config.h.in])
 AC_CONFIG_HEADERS([config.h])
 
@@ -181,10 +184,12 @@ AM_CONDITIONAL([CONFIG_FILE_ENABLED], [test "x$config_file_path" != "x"])
 
 
 dnl ============================================================================
+dnl ======= ENABLE ERROR LOGGING ===============================================
+dnl ============================================================================
 AC_ARG_ENABLE(error-logging,
     [AC_HELP_STRING(
         [--enable-error-logging],
-        [enable error logging through syslog - use only if you are developing snoopy or having problems configuring it [default=disabled]]
+        [enable error logging through configured output - use only if you are developing Snoopy or having problems configuring it [default=disabled]]
     )],
     [
         if test "x$enableval" = "xyes"; then
@@ -205,29 +210,7 @@ AS_IF([test "x$enable_error_logging" = "xyes"], [
 
 
 dnl ============================================================================
-AC_ARG_ENABLE(root-only,
-    [AC_HELP_STRING(
-        [--enable-root-only],
-        [only log commands executed by root [default=disabled]]
-    )],
-    [
-        if test "x$enableval" = "xyes"; then
-            enable_root_only=yes
-        elif test "x$enableval" = "xno"; then
-            enable_root_only=no
-        else
-            AC_MSG_ERROR([--enable-root-only does not take an argument: $enableval])
-        fi
-    ],
-    [enable_root_only=no]
-)
-
-AS_IF([test "x$enable_root_only" = "xyes"], [
-    AC_DEFINE(SNOOPY_CONF_ROOT_ONLY, 1, [Only log commands executed by root])
-])
-
-
-
+dnl ======= DEFAULT MESSAGE FORMAT =============================================
 dnl ============================================================================
 AC_ARG_WITH(message-format,
     [AC_HELP_STRING(
@@ -252,28 +235,54 @@ AS_IF([test "x$with_message_format" != "x"], [
 
 
 
-dnl ======= ENABLE FILTERING ===================================================
-AC_ARG_ENABLE(filtering,
+
+
+dnl ============================================================================
+dnl ============================================================================
+dnl ======= START section: DATA SOURCES ========================================
+dnl ============================================================================
+dnl ============================================================================
+
+dnl ============================================================================
+dnl ============================================================================
+dnl ======= END section: DATA SOURCES ==========================================
+dnl ============================================================================
+dnl ============================================================================
+
+
+
+
+
+dnl ============================================================================
+dnl ============================================================================
+dnl ======= START section: FILTERING ===========================================
+dnl ============================================================================
+dnl ============================================================================
+
+
+dnl ============================================================================
+dnl ======= SPECIAL FILTER: root-only ==========================================
+dnl ============================================================================
+AC_ARG_ENABLE(root-only,
     [AC_HELP_STRING(
-        [--enable-filtering],
-        [enable general message filtering [default=disabled]]
+        [--enable-root-only],
+        [only log commands executed by root. This is a special filter, with better performance than general filtering subsystem. If command is not run as root, Snoopy terminates very early, having almost no performance penalty. [default=disabled]]
     )],
     [
         if test "x$enableval" = "xyes"; then
-            enable_filtering=yes
+            enable_root_only=yes
         elif test "x$enableval" = "xno"; then
-            enable_filtering=no
+            enable_root_only=no
         else
-            AC_MSG_ERROR([--enable-filtering does not take an argument: $enableval])
+            AC_MSG_ERROR([--enable-root-only does not take an argument: $enableval])
         fi
     ],
-    [enable_filtering=no]
+    [enable_root_only=no]
 )
 
-AS_IF([test "x$enable_filtering" = "xyes"], [
-    AC_DEFINE(SNOOPY_CONF_FILTERING_ENABLED, 1, [Enable filtering])
+AS_IF([test "x$enable_root_only" = "xyes"], [
+    AC_DEFINE(SNOOPY_CONF_ROOT_ONLY, 1, [Only log commands executed by root])
 ])
-AM_CONDITIONAL([FILTERING_ENABLED], [test "x$enable_filtering" == "xyes"])
 
 
 
@@ -335,15 +344,12 @@ AS_IF([test "x$with_filter_chain" != "x"], [
 
 
 
-
-
 dnl ============================================================================
-dnl ============================================================================
-dnl ======= START individual 'ENABLE FILTER' section ===========================
-dnl ============================================================================
+dnl ======= Start ENABLE/DISABLE individual filters ============================
 dnl ============================================================================
 
-dnl ======= ENABLE FILTER: exclude_spawns_of ============================================
+dnl ======= ENABLE FILTER: exclude_spawns_of ===================================
+dnl ============================================================================
 AC_ARG_ENABLE(filter-exclude_spawns_of,
     [AC_HELP_STRING(
         [--disable-filter-exclude_spawns_of],
@@ -366,7 +372,9 @@ AS_IF([test "x$enable_filter_exclude_spawns_of" = "xyes"], [
 ])
 AM_CONDITIONAL([ENABLE_FILTER_exclude_spawns_of], [test "x$enable_filter_exclude_spawns_of" == "xyes"])
 
-dnl ======= ENABLE FILTER: exclude_uid ============================================
+
+dnl ======= ENABLE FILTER: exclude_uid =========================================
+dnl ============================================================================
 AC_ARG_ENABLE(filter-exclude_uid,
     [AC_HELP_STRING(
         [--disable-filter-exclude_uid],
@@ -389,7 +397,9 @@ AS_IF([test "x$enable_filter_exclude_uid" = "xyes"], [
 ])
 AM_CONDITIONAL([ENABLE_FILTER_exclude_uid], [test "x$enable_filter_exclude_uid" == "xyes"])
 
-dnl ======= ENABLE FILTER: only_root ============================================
+
+dnl ======= ENABLE FILTER: only_root ===========================================
+dnl ============================================================================
 AC_ARG_ENABLE(filter-only_root,
     [AC_HELP_STRING(
         [--disable-filter-only_root],
@@ -412,7 +422,9 @@ AS_IF([test "x$enable_filter_only_root" = "xyes"], [
 ])
 AM_CONDITIONAL([ENABLE_FILTER_only_root], [test "x$enable_filter_only_root" == "xyes"])
 
+
 dnl ======= ENABLE FILTER: only_uid ============================================
+dnl ============================================================================
 AC_ARG_ENABLE(filter-only_uid,
     [AC_HELP_STRING(
         [--disable-filter-only_uid],
@@ -436,8 +448,13 @@ AS_IF([test "x$enable_filter_only_uid" = "xyes"], [
 AM_CONDITIONAL([ENABLE_FILTER_only_uid], [test "x$enable_filter_only_uid" == "xyes"])
 
 dnl ============================================================================
+dnl ======= End ENABLE/DISABLE individual filters ==============================
 dnl ============================================================================
-dnl ======= END individual 'ENABLE FILTER' section =============================
+
+
+dnl ============================================================================
+dnl ============================================================================
+dnl ======= END section: FILTERING =============================================
 dnl ============================================================================
 dnl ============================================================================
 
@@ -447,11 +464,13 @@ dnl ============================================================================
 
 dnl ============================================================================
 dnl ============================================================================
-dnl ======= START individual 'ENABLE OUTPUT' section ===========================
+dnl ======= START section: OUTPUTS =============================================
 dnl ============================================================================
 dnl ============================================================================
+
 
 dnl ======= ENABLE OUTPUT: devlog ==============================================
+dnl ============================================================================
 AC_ARG_ENABLE(output-devlog,
     [AC_HELP_STRING(
         [--disable-output-devlog],
@@ -474,14 +493,18 @@ AS_IF([test "x$enable_output_devlog" = "xyes"], [
 ])
 AM_CONDITIONAL([OUTPUT_ENABLED_devlog], [test "x$enable_output_devlog" == "xyes"])
 
+
 dnl ======= ENABLE OUTPUT: socket ==============================================
+dnl ============================================================================
 dnl
 dnl This one is always enabled
 dnl
 AC_DEFINE(SNOOPY_CONF_OUTPUT_ENABLED_socket, 1, [Output "socket" must be always enabled!])
 AM_CONDITIONAL([OUTPUT_ENABLED_socket], [test "xyes" == "xyes"])
 
+
 dnl ======= ENABLE OUTPUT: syslog ==============================================
+dnl ============================================================================
 AC_ARG_ENABLE(output-syslog,
     [AC_HELP_STRING(
         [--enable-output-syslog],
@@ -504,14 +527,22 @@ AS_IF([test "x$enable_output_syslog" = "xyes"], [
 ])
 AM_CONDITIONAL([OUTPUT_ENABLED_syslog], [test "x$enable_output_syslog" == "xyes"])
 
+
 dnl ============================================================================
 dnl ============================================================================
-dnl ======= END individual 'ENABLE OUTPUT' section =============================
+dnl ======= END section: OUTPUTS ===============================================
 dnl ============================================================================
 dnl ============================================================================
 
 
 
+
+
+dnl ============================================================================
+dnl ============================================================================
+dnl ======= START section: SYSLOG ==============================================
+dnl ============================================================================
+dnl ============================================================================
 
 
 dnl ============================================================================
@@ -548,7 +579,6 @@ AC_ARG_WITH(syslog-facility,
 AC_DEFINE_UNQUOTED(SNOOPY_CONF_SYSLOG_FACILITY, [$syslog_facility], [Syslog facility to use by default])
 
 
-
 dnl ============================================================================
 AC_ARG_WITH(syslog-level,
     [AC_HELP_STRING(
@@ -582,7 +612,17 @@ AC_ARG_WITH(syslog-level,
 
 AC_DEFINE_UNQUOTED(SNOOPY_CONF_SYSLOG_LEVEL, [$syslog_level], [Syslog level to use by default])
 
+dnl ============================================================================
+dnl ============================================================================
+dnl ======= END section: SYSLOG ================================================
+dnl ============================================================================
+dnl ============================================================================
 
 
+
+
+
+dnl ============================================================================
+dnl ======= Final output =======================================================
 dnl ============================================================================
 AC_OUTPUT
