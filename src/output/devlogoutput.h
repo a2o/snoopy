@@ -1,9 +1,9 @@
 /*
  * SNOOPY LOGGER
  *
- * File: snoopy/output/devlog.h
+ * File: snoopy/output/devlogoutput.h
  *
- * Copyright (c) 2014 Bostjan Skufca (bostjan _A_T_ a2o.si)
+ * Copyright (c) 2014-2015 Bostjan Skufca (bostjan _A_T_ a2o.si)
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,4 +25,4 @@
 /*
  * SNOOPY OUTPUT: directly to /dev/log
  */
-int snoopy_output_devlog (char *logMessage, int errorOrMessage);
+int snoopy_output_devlogoutput (char *logMessage, int errorOrMessage);

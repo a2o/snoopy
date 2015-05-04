@@ -47,7 +47,7 @@ char *snoopy_outputregistry_names[] = {
 
 int (*snoopy_outputregistry_ptrs []) (char *logMessage, int errorOrMessage) = {
 //    snoopy_output_consoleoutput,
-    snoopy_output_devlog,
+    snoopy_output_devlogoutput,
 //    snoopy_output_fileoutput,
 //    snoopy_output_journaldoutput,
     snoopy_output_socketoutput,

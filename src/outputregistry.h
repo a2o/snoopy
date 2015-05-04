@@ -25,10 +25,10 @@
 /*
  * Include headers of all output functions
  */
-//#include "output/console.h"
-#include "output/devlog.h"
-//#include "output/file.h"
-//#include "output/journald.h"
+//#include "output/consoleoutput.h"
+#include "output/devlogoutput.h"
+//#include "output/fileoutput.h"
+//#include "output/journaldoutput.h"
 #include "output/socketoutput.h"
 #include "output/syslogoutput.h"
 
