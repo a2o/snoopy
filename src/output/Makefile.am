@@ -16,22 +16,32 @@ noinst_LTLIBRARIES = libsnoopy_outputs_all.la
 
 
 
-### Output providers collection is made of the following files
+### Filter collection is made of the following files
 #
-# Please maintain alphabetical order, equal to what `ls` would do
+# Please maintain alphabetical order, equal to what `ls` would do.
 #
-# TODO:
-#	consoleoutput.c \
-#	consoleoutput.h \
-#	fileoutput.c \
-#	fileoutput.h \
-#	journaldoutput.c \
-#	journaldoutput.h \
+libsnoopy_outputs_all_la_SOURCES =
+
+# Output: devlog
 #
-libsnoopy_outputs_all_la_SOURCES = \
-	devlogoutput.c \
-	devlogoutput.h \
-	socketoutput.c \
-	socketoutput.h \
-	syslogoutput.c \
-	syslogoutput.h
+if OUTPUT_ENABLED_devlog
+libsnoopy_outputs_all_la_SOURCES += \
+    devlogoutput.c \
+    devlogoutput.h
+endif
+
+# Output: socket
+#
+# This one is always enabled, unconditionally
+#
+libsnoopy_outputs_all_la_SOURCES += \
+    socketoutput.c \
+    socketoutput.h
+
+# Output: syslog
+#
+if OUTPUT_ENABLED_syslog
+libsnoopy_outputs_all_la_SOURCES += \
+    syslogoutput.c \
+    syslogoutput.h
+endif

@@ -125,6 +125,15 @@
 /* Custom message format to use */
 #undef SNOOPY_CONF_LOG_MESSAGE_FORMAT_custom
 
+/* Is output "devlog" available? */
+#undef SNOOPY_CONF_OUTPUT_ENABLED_devlog
+
+/* Output "socket" must be always enabled! */
+#undef SNOOPY_CONF_OUTPUT_ENABLED_socket
+
+/* Is output "syslog" available? */
+#undef SNOOPY_CONF_OUTPUT_ENABLED_syslog
+
 /* Only log commands executed by root */
 #undef SNOOPY_CONF_ROOT_ONLY
 

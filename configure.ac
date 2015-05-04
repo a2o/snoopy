@@ -446,6 +446,75 @@ dnl ============================================================================
 
 
 dnl ============================================================================
+dnl ============================================================================
+dnl ======= START individual 'ENABLE OUTPUT' section ===========================
+dnl ============================================================================
+dnl ============================================================================
+
+dnl ======= ENABLE OUTPUT: devlog ==============================================
+AC_ARG_ENABLE(output-devlog,
+    [AC_HELP_STRING(
+        [--disable-output-devlog],
+        [disable output "devlog". This is the default output for Snoopy. [default=enabled]]
+    )],
+    [
+        if test "x$enableval" = "xyes"; then
+            enable_output_devlog=yes
+        elif test "x$enableval" = "xno"; then
+            enable_output_devlog=no
+        else
+            AC_MSG_ERROR([--disable-output-* does not take an argument: $enableval])
+        fi
+    ],
+    [enable_output_devlog=yes]
+)
+
+AS_IF([test "x$enable_output_devlog" = "xyes"], [
+    AC_DEFINE(SNOOPY_CONF_OUTPUT_ENABLED_devlog, 1, [Is output "devlog" available?])
+])
+AM_CONDITIONAL([OUTPUT_ENABLED_devlog], [test "x$enable_output_devlog" == "xyes"])
+
+dnl ======= ENABLE OUTPUT: socket ==============================================
+dnl
+dnl This one is always enabled
+dnl
+AC_DEFINE(SNOOPY_CONF_OUTPUT_ENABLED_socket, 1, [Output "socket" must be always enabled!])
+AM_CONDITIONAL([OUTPUT_ENABLED_socket], [test "xyes" == "xyes"])
+
+dnl ======= ENABLE OUTPUT: syslog ==============================================
+AC_ARG_ENABLE(output-syslog,
+    [AC_HELP_STRING(
+        [--enable-output-syslog],
+        [enable output "syslog". WARNING: This output is causing system hangs with SystemD. Do not use it unless you are absolutely certain you know better! [default=disabled]]
+    )],
+    [
+        if test "x$enableval" = "xyes"; then
+            enable_output_syslog=yes
+        elif test "x$enableval" = "xno"; then
+            enable_output_syslog=no
+        else
+            AC_MSG_ERROR([--disable-output-* does not take an argument: $enableval])
+        fi
+    ],
+    [enable_output_socket=no]
+)
+
+AS_IF([test "x$enable_output_syslog" = "xyes"], [
+    AC_DEFINE(SNOOPY_CONF_OUTPUT_ENABLED_syslog, 1, [Is output "syslog" available?])
+])
+AM_CONDITIONAL([OUTPUT_ENABLED_syslog], [test "x$enable_output_syslog" == "xyes"])
+
+dnl ============================================================================
+dnl ============================================================================
+dnl ======= END individual 'ENABLE OUTPUT' section =============================
+dnl ============================================================================
+dnl ============================================================================
+
+
+
+
+
+dnl ============================================================================
 AC_ARG_WITH(syslog-facility,
     [AC_HELP_STRING(
         [--with-syslog-facility=FACILITY],

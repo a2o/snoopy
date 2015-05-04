@@ -34,24 +34,50 @@
 
 /*
  * Two arrays holding data about output functions
+ *
+ * Please maintain alphabetical order, equal to what `ls` would do.
  */
 char *snoopy_outputregistry_names[] = {
+//#ifdef SNOOPY_CONF_OUTPUT_ENABLED_console
 //    "console",
+//#endif
+#ifdef SNOOPY_CONF_OUTPUT_ENABLED_devlog
     "devlog",
+#endif
+//#ifdef SNOOPY_CONF_OUTPUT_ENABLED_file
 //    "file",
+//#endif
+//#ifdef SNOOPY_CONF_OUTPUT_ENABLED_journald
 //    "journald",
+//#endif
+#ifdef SNOOPY_CONF_OUTPUT_ENABLED_socket
     "socket",
+#endif
+#ifdef SNOOPY_CONF_OUTPUT_ENABLED_syslog
     "syslog",
+#endif
     "",
 };
 
 int (*snoopy_outputregistry_ptrs []) (char *logMessage, int errorOrMessage) = {
+//#ifdef SNOOPY_CONF_OUTPUT_ENABLED_console
 //    snoopy_output_consoleoutput,
+//#endif
+#ifdef SNOOPY_CONF_OUTPUT_ENABLED_devlog
     snoopy_output_devlogoutput,
+#endif
+//#ifdef SNOOPY_CONF_OUTPUT_ENABLED_file
 //    snoopy_output_fileoutput,
+//#endif
+//#ifdef SNOOPY_CONF_OUTPUT_ENABLED_journald
 //    snoopy_output_journaldoutput,
+//#endif
+#ifdef SNOOPY_CONF_OUTPUT_ENABLED_socket
     snoopy_output_socketoutput,
+#endif
+#ifdef SNOOPY_CONF_OUTPUT_ENABLED_syslog
     snoopy_output_syslogoutput,
+#endif
 };
 
 
