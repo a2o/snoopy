@@ -449,7 +449,7 @@ dnl ============================================================================
 AC_ARG_WITH(syslog-facility,
     [AC_HELP_STRING(
         [--with-syslog-facility=FACILITY],
-        [facility to use when logging, check 'man 3 syslog' or 'man openlog' [default=LOG_AUTHPRIV]]
+        [syslog facility to use when logging. Check 'man 3 syslog' or 'man openlog' for supported values [default=LOG_AUTHPRIV]]
     )],
     [
         if test "x$withval" = "x" -o "x$withval" = "xyes"; then
@@ -484,7 +484,7 @@ dnl ============================================================================
 AC_ARG_WITH(syslog-level,
     [AC_HELP_STRING(
         [--with-syslog-level=LEVEL],
-        [facility to use when logging, check 'man 3 syslog' or 'man openlog' [default=LOG_INFO]]
+        [syslog level to use when logging. Check 'man 3 syslog' or 'man openlog' for supported values [default=LOG_INFO]]
     )],
     [
         if test "x$withval" = "x" -o "x$withval" = "xyes"; then
