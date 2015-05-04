@@ -346,7 +346,7 @@ dnl ============================================================================
 dnl ======= ENABLE FILTER: exclude_spawns_of ============================================
 AC_ARG_ENABLE(filter-exclude-spawns-of,
     [AC_HELP_STRING(
-        [--enable-filter-exclude-spawns-of],
+        [--disable-filter-exclude-spawns-of],
         [enable filter exclude_spawns_of [default=enabled]]
     )],
     [
@@ -369,7 +369,7 @@ AM_CONDITIONAL([ENABLE_FILTER_exclude_spawns_of], [test "x$enable_filter_exclude
 dnl ======= ENABLE FILTER: exclude_uid ============================================
 AC_ARG_ENABLE(filter-exclude-uid,
     [AC_HELP_STRING(
-        [--enable-filter-exclude-uid],
+        [--disable-filter-exclude-uid],
         [enable filter exclude_uid [default=enabled]]
     )],
     [
@@ -392,7 +392,7 @@ AM_CONDITIONAL([ENABLE_FILTER_exclude_uid], [test "x$enable_filter_exclude_uid" 
 dnl ======= ENABLE FILTER: only_root ============================================
 AC_ARG_ENABLE(filter-only-root,
     [AC_HELP_STRING(
-        [--enable-filter-only-root],
+        [--disable-filter-only-root],
         [enable filter only_root [default=enabled]]
     )],
     [
@@ -415,7 +415,7 @@ AM_CONDITIONAL([ENABLE_FILTER_only_root], [test "x$enable_filter_only_root" == "
 dnl ======= ENABLE FILTER: only_uid ============================================
 AC_ARG_ENABLE(filter-only-uid,
     [AC_HELP_STRING(
-        [--enable-filter-only-uid],
+        [--disable-filter-only-uid],
         [enable filter only_uid [default=enabled]]
     )],
     [
