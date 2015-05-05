@@ -24,7 +24,7 @@ libsnoopy_filters_all_la_SOURCES =
 
 ### Filter: exclude_spawns_of
 #
-if ENABLE_FILTER_exclude_spawns_of
+if FILTER_ENABLED_exclude_spawns_of
 libsnoopy_filters_all_la_SOURCES += \
 	exclude_spawns_of.c \
 	exclude_spawns_of.h
@@ -32,7 +32,7 @@ endif
 
 ### Filter: exclude_uid
 #
-if ENABLE_FILTER_exclude_uid
+if FILTER_ENABLED_exclude_uid
 libsnoopy_filters_all_la_SOURCES += \
 	exclude_uid.c \
 	exclude_uid.h
@@ -40,7 +40,7 @@ endif
 
 ### Filter: only_root
 #
-if ENABLE_FILTER_only_root
+if FILTER_ENABLED_only_root
 libsnoopy_filters_all_la_SOURCES += \
 	only_root.c \
 	only_root.h
@@ -48,7 +48,7 @@ endif
 
 ### Filter: only_uid
 #
-if ENABLE_FILTER_only_uid
+if FILTER_ENABLED_only_uid
 libsnoopy_filters_all_la_SOURCES += \
 	only_uid.c \
 	only_uid.h
