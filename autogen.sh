@@ -45,6 +45,12 @@ autoreconf -i -v
 
 
 
+### Remove stale/backup files
+#
+rm -f config.h.in~
+
+
+
 ### Signal success and exit
 #
 set +x

@@ -1,6 +1,11 @@
-#                                               -*- Autoconf -*-
-# Process this file with autoconf to produce a configure script.
+###
+### Snoopy configure.ac
+###
 
+
+
+### Initialize autotools
+#
 AC_PREREQ([2.63])
 AC_INIT(
     [Snoopy Logger],
@@ -8,13 +13,16 @@ AC_INIT(
     [https://github.com/a2o/snoopy/issues/],
     [snoopy],
     [https://github.com/a2o/snoopy/])
-AC_CONFIG_SRCDIR([config.h.in])
-AC_CONFIG_HEADERS([config.h])
 
-# We are using automake and libtool
+
+### Configure autotools
+#
+AC_CONFIG_SRCDIR([src/libsnoopy.c])   # Check if we are in correct directory tree
+AC_CONFIG_AUX_DIR([build/aux])
 AC_CONFIG_MACRO_DIR([build/m4])
-m4_include([build/m4/snoopy.m4])
+m4_include([build/m4-custom/snoopy.m4])
 AM_INIT_AUTOMAKE([1.11 gnu silent-rules subdir-objects -Wall -Werror])
+
 
 dnl Option AM_PROG_AR
 dnl
@@ -52,6 +60,8 @@ AM_PROG_AR
 dnl Enable libtool
 LT_INIT([disable-static])
 
+
+
 dnl Checks for programs.
 dnl
 dnl DO NOT REMOVE: CXX, AWK, CPP, RANLIB
@@ -67,7 +77,7 @@ AC_PROG_GREP
 AC_PROG_INSTALL
 AC_PROG_LN_S
 AC_PROG_MAKE_SET
-
+dnl
 dnl AC_PROG_RANLIB
 dnl
 dnl autogen.sh output:
@@ -82,12 +92,20 @@ AC_PROG_RANLIB
 AC_PROG_SED
 
 
+
 dnl Checks for libraries.
 dnl FIXME: Replace `main' with a function in `-ldl':
 AC_CHECK_LIB([dl], [main])
 
 dnl Checks for header files.
-AC_CHECK_HEADERS([limits.h stdlib.h string.h sys/socket.h syslog.h unistd.h])
+AC_CHECK_HEADERS([ \
+    limits.h     \
+    stdlib.h     \
+    string.h     \
+    sys/socket.h \
+    syslog.h     \
+    unistd.h     \
+])
 
 dnl Checks for typedefs, structures, and compiler characteristics.
 AC_C_INLINE
@@ -119,7 +137,15 @@ dnl ${exec_prefix} contains 'NONE'           if not specified as ./configure --e
 SNOOPY_LIBDIR="`eval echo ${libdir} | sed -e s@^NONE@$prefix@ | sed -e s@^NONE@/usr/local@`"
 AC_SUBST([SNOOPY_LIBDIR])
 
-dnl Generate these (Make)files
+
+
+### Generate these header files
+#
+AC_CONFIG_HEADERS([config.h])
+
+
+### Generate these (Make)files
+#
 AC_CONFIG_FILES([Makefile
                  bin/Makefile
                  contrib/rhel/snoopy.spec
