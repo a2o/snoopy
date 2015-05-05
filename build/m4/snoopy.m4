@@ -42,7 +42,7 @@ AU_DEFUN([SNOOPY_CONFIGURE_DATASOURCE_ENABLE],
                 AC_MSG_ERROR([--disable-datasource-$1 does not take any arguments, got: $enableval])
             fi
         ],
-        [enable_datasource_$1=yes]
+        [enable_datasource_$1=$enable_all_datasources]
     )
 
     AS_IF([test "x$enable_datasource_$1" = "xyes"], [

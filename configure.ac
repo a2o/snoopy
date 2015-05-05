@@ -236,6 +236,26 @@ AS_IF([test "x$with_message_format" != "x"], [
 
 
 
+dnl ============================================================================
+dnl ======= Enable/disable all data sources at once ============================
+dnl ============================================================================
+AC_ARG_ENABLE(all-datasources,
+    [AC_HELP_STRING(
+        [--disable-all-datasources],
+        [disables all data sources at once. Use --enable-datasource-NAME to reenable individual data sources. [default=enabled]]
+    )],
+    [
+        if test "x$enableval" = "xyes"; then
+            enable_all_datasources=yes
+        elif test "x$enableval" = "xno"; then
+            enable_all_datasources=no
+        else
+            AC_MSG_ERROR([--enable-all-datasources does not take an argument: $enableval])
+        fi
+    ],
+    [enable_all_datasources=yes]
+)
+
 
 
 # ==============================================================================
