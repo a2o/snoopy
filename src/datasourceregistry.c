@@ -35,54 +35,142 @@
  * Two arrays holding data about all data sources
  */
 char *snoopy_datasourceregistry_names[] = {
+#ifdef SNOOPY_CONF_DATASOURCE_ENABLED_cmdline
     "cmdline",
+#endif
+#ifdef SNOOPY_CONF_DATASOURCE_ENABLED_cwd
     "cwd",
+#endif
+#ifdef SNOOPY_CONF_DATASOURCE_ENABLED_egid
     "egid",
+#endif
+#ifdef SNOOPY_CONF_DATASOURCE_ENABLED_egroup
     "egroup",
+#endif
+#ifdef SNOOPY_CONF_DATASOURCE_ENABLED_env
     "env",
+#endif
+#ifdef SNOOPY_CONF_DATASOURCE_ENABLED_env_all
     "env_all",
+#endif
+#ifdef SNOOPY_CONF_DATASOURCE_ENABLED_euid
     "euid",
+#endif
+#ifdef SNOOPY_CONF_DATASOURCE_ENABLED_eusername
     "eusername",
+#endif
+#ifdef SNOOPY_CONF_DATASOURCE_ENABLED_filename
     "filename",
+#endif
+#ifdef SNOOPY_CONF_DATASOURCE_ENABLED_gid
     "gid",
+#endif
+#ifdef SNOOPY_CONF_DATASOURCE_ENABLED_group
     "group",
+#endif
+#ifdef SNOOPY_CONF_DATASOURCE_ENABLED_login
     "login",
+#endif
+#ifdef SNOOPY_CONF_DATASOURCE_ENABLED_pid
     "pid",
+#endif
+#ifdef SNOOPY_CONF_DATASOURCE_ENABLED_ppid
     "ppid",
+#endif
+#ifdef SNOOPY_CONF_DATASOURCE_ENABLED_rpname
     "rpname",
+#endif
+#ifdef SNOOPY_CONF_DATASOURCE_ENABLED_sid
     "sid",
+#endif
+#ifdef SNOOPY_CONF_DATASOURCE_ENABLED_snoopy_version
     "snoopy_version",
+#endif
+#ifdef SNOOPY_CONF_DATASOURCE_ENABLED_tty
     "tty",
+#endif
+#ifdef SNOOPY_CONF_DATASOURCE_ENABLED_tty_uid
     "tty_uid",
+#endif
+#ifdef SNOOPY_CONF_DATASOURCE_ENABLED_tty_username
     "tty_username",
+#endif
+#ifdef SNOOPY_CONF_DATASOURCE_ENABLED_uid
     "uid",
+#endif
+#ifdef SNOOPY_CONF_DATASOURCE_ENABLED_username
     "username",
+#endif
     "",
 };
 
 int (*snoopy_datasourceregistry_ptrs []) (char *result, char *arg) = {
+#ifdef SNOOPY_CONF_DATASOURCE_ENABLED_cmdline
     snoopy_datasource_cmdline,
+#endif
+#ifdef SNOOPY_CONF_DATASOURCE_ENABLED_cwd
     snoopy_datasource_cwd,
+#endif
+#ifdef SNOOPY_CONF_DATASOURCE_ENABLED_egid
     snoopy_datasource_egid,
+#endif
+#ifdef SNOOPY_CONF_DATASOURCE_ENABLED_egroup
     snoopy_datasource_egroup,
+#endif
+#ifdef SNOOPY_CONF_DATASOURCE_ENABLED_env
     snoopy_datasource_env,
+#endif
+#ifdef SNOOPY_CONF_DATASOURCE_ENABLED_env_all
     snoopy_datasource_env_all,
+#endif
+#ifdef SNOOPY_CONF_DATASOURCE_ENABLED_euid
     snoopy_datasource_euid,
+#endif
+#ifdef SNOOPY_CONF_DATASOURCE_ENABLED_eusername
     snoopy_datasource_eusername,
+#endif
+#ifdef SNOOPY_CONF_DATASOURCE_ENABLED_filename
     snoopy_datasource_filename,
+#endif
+#ifdef SNOOPY_CONF_DATASOURCE_ENABLED_gid
     snoopy_datasource_gid,
+#endif
+#ifdef SNOOPY_CONF_DATASOURCE_ENABLED_group
     snoopy_datasource_group,
+#endif
+#ifdef SNOOPY_CONF_DATASOURCE_ENABLED_login
     snoopy_datasource_login,
+#endif
+#ifdef SNOOPY_CONF_DATASOURCE_ENABLED_pid
     snoopy_datasource_pid,
+#endif
+#ifdef SNOOPY_CONF_DATASOURCE_ENABLED_ppid
     snoopy_datasource_ppid,
+#endif
+#ifdef SNOOPY_CONF_DATASOURCE_ENABLED_rpname
     snoopy_datasource_rpname,
+#endif
+#ifdef SNOOPY_CONF_DATASOURCE_ENABLED_sid
     snoopy_datasource_sid,
+#endif
+#ifdef SNOOPY_CONF_DATASOURCE_ENABLED_snoopy_version
     snoopy_datasource_snoopy_version,
+#endif
+#ifdef SNOOPY_CONF_DATASOURCE_ENABLED_tty
     snoopy_datasource_tty,
+#endif
+#ifdef SNOOPY_CONF_DATASOURCE_ENABLED_tty_uid
     snoopy_datasource_tty_uid,
+#endif
+#ifdef SNOOPY_CONF_DATASOURCE_ENABLED_tty_username
     snoopy_datasource_tty_username,
+#endif
+#ifdef SNOOPY_CONF_DATASOURCE_ENABLED_uid
     snoopy_datasource_uid,
+#endif
+#ifdef SNOOPY_CONF_DATASOURCE_ENABLED_username
     snoopy_datasource_username,
+#endif
 };
 
 

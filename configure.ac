@@ -11,8 +11,9 @@ AC_INIT(
 AC_CONFIG_SRCDIR([config.h.in])
 AC_CONFIG_HEADERS([config.h])
 
-dnl We are using automake and libtool
+# We are using automake and libtool
 AC_CONFIG_MACRO_DIR([build/m4])
+m4_include([build/m4/snoopy.m4])
 AM_INIT_AUTOMAKE([1.11 gnu silent-rules subdir-objects -Wall -Werror])
 
 dnl Option AM_PROG_AR
@@ -237,17 +238,34 @@ AS_IF([test "x$with_message_format" != "x"], [
 
 
 
-dnl ============================================================================
-dnl ============================================================================
-dnl ======= START section: DATA SOURCES ========================================
-dnl ============================================================================
-dnl ============================================================================
-
-dnl ============================================================================
-dnl ============================================================================
-dnl ======= END section: DATA SOURCES ==========================================
-dnl ============================================================================
-dnl ============================================================================
+# ==============================================================================
+# ======= START section: ENABLE INDIVIDUAL DATA SOURCES ========================
+# ==============================================================================
+SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [cmdline],        [full command line including arguments])
+SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [cwd],            [current working directory])
+SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [egid],           [effective GID])
+SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [egroup],         [effective literal group name])
+SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [env],            [particular environment variable])
+SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [env_all],        [all environment variables])
+SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [euid],           [effective UID])
+SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [eusername],      [effective literal username])
+SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [filename],       [full filename of process being executed])
+SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [gid],            [GID of process performing the execution])
+SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [group],          [literal group name of process performing the execution])
+SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [login],          [login username of user doing the execution])
+SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [pid],            [PID of process performing the execution])
+SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [ppid],           [parent PID of process performing the execution])
+SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [rpname],         [real parent name found up the process tree])
+SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [sid],            [session leader PID])
+SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [snoopy_version], [installed Snoopy version])
+SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [tty],            [path to TTY performing the execution])
+SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [tty_uid],        [UID of TTY performing the execution])
+SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [tty_username],   [literal username of TTY performing the execution])
+SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [uid],            [numeric UID that executed the process])
+SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [username],       [literal username of UID that executed the process])
+# ==============================================================================
+# ======= END section: ENABLE INDIVIDUAL DATA SOURCES ==========================
+# ==============================================================================
 
 
 

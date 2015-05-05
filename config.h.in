@@ -101,6 +101,72 @@
 /* INI configuration file path to use */
 #undef SNOOPY_CONF_CONFIG_FILE
 
+/* Is data source "cmdline" available? */
+#undef SNOOPY_CONF_DATASOURCE_ENABLED_cmdline
+
+/* Is data source "cwd" available? */
+#undef SNOOPY_CONF_DATASOURCE_ENABLED_cwd
+
+/* Is data source "egid" available? */
+#undef SNOOPY_CONF_DATASOURCE_ENABLED_egid
+
+/* Is data source "egroup" available? */
+#undef SNOOPY_CONF_DATASOURCE_ENABLED_egroup
+
+/* Is data source "env" available? */
+#undef SNOOPY_CONF_DATASOURCE_ENABLED_env
+
+/* Is data source "env_all" available? */
+#undef SNOOPY_CONF_DATASOURCE_ENABLED_env_all
+
+/* Is data source "euid" available? */
+#undef SNOOPY_CONF_DATASOURCE_ENABLED_euid
+
+/* Is data source "eusername" available? */
+#undef SNOOPY_CONF_DATASOURCE_ENABLED_eusername
+
+/* Is data source "filename" available? */
+#undef SNOOPY_CONF_DATASOURCE_ENABLED_filename
+
+/* Is data source "gid" available? */
+#undef SNOOPY_CONF_DATASOURCE_ENABLED_gid
+
+/* Is data source "group" available? */
+#undef SNOOPY_CONF_DATASOURCE_ENABLED_group
+
+/* Is data source "login" available? */
+#undef SNOOPY_CONF_DATASOURCE_ENABLED_login
+
+/* Is data source "pid" available? */
+#undef SNOOPY_CONF_DATASOURCE_ENABLED_pid
+
+/* Is data source "ppid" available? */
+#undef SNOOPY_CONF_DATASOURCE_ENABLED_ppid
+
+/* Is data source "rpname" available? */
+#undef SNOOPY_CONF_DATASOURCE_ENABLED_rpname
+
+/* Is data source "sid" available? */
+#undef SNOOPY_CONF_DATASOURCE_ENABLED_sid
+
+/* Is data source "snoopy_version" available? */
+#undef SNOOPY_CONF_DATASOURCE_ENABLED_snoopy_version
+
+/* Is data source "tty" available? */
+#undef SNOOPY_CONF_DATASOURCE_ENABLED_tty
+
+/* Is data source "tty_uid" available? */
+#undef SNOOPY_CONF_DATASOURCE_ENABLED_tty_uid
+
+/* Is data source "tty_username" available? */
+#undef SNOOPY_CONF_DATASOURCE_ENABLED_tty_username
+
+/* Is data source "uid" available? */
+#undef SNOOPY_CONF_DATASOURCE_ENABLED_uid
+
+/* Is data source "username" available? */
+#undef SNOOPY_CONF_DATASOURCE_ENABLED_username
+
 /* Enable error logging */
 #undef SNOOPY_CONF_ERROR_LOGGING_ENABLED
 
