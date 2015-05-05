@@ -1,7 +1,7 @@
 include   $(top_srcdir)/build/Makefile.am.common
 
 AUTOMAKE_OPTIONS = foreign subdir-objects
-ACLOCAL_AMFLAGS = -I m4
+ACLOCAL_AMFLAGS = -I build/m4
 
 # Process etc/ before other subdirs
 # If snoopy has config file enabled, then there is a small time frame

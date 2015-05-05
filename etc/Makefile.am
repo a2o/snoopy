@@ -1,7 +1,7 @@
 include   $(top_srcdir)/build/Makefile.am.common
 
 AUTOMAKE_OPTIONS = foreign subdir-objects
-ACLOCAL_AMFLAGS = -I m4
+ACLOCAL_AMFLAGS = -I build/m4
 
 EXTRA_DIST +=\
     snoopy.ini

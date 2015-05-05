@@ -5,6 +5,8 @@ Makefile.in
 /ar-lib
 /autom4te.cache
 /autoscan.log
+/build/m4/libtool.m4
+/build/m4/lt*.m4
 /compile
 /configure
 /config.guess
@@ -16,7 +18,6 @@ Makefile.in
 /depcomp
 /install-sh
 /ltmain.sh
-/m4/
 /missing
 /stamp-h?
 /test-driver

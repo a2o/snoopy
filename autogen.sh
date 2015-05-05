@@ -28,8 +28,8 @@ fi
 
 ### Bug in aclocal: manually create m4 directory if it does not exist
 #
-if [ ! -d m4 ]; then
-    mkdir m4
+if [ ! -d build/m4 ]; then
+    mkdir -p build/m4
 fi
 
 
