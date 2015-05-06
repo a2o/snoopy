@@ -22,8 +22,14 @@ Snoopy is a tiny library that logs all executed commands (+ arguments) on your s
 
 ## 1. Installation
 
-The easiest way to start using Snoopy is to execute the following command (as root),
-which installs the latest stable version of Snoopy on your system:
+The easiest way to start using Snoopy is to execute one of the following
+commands (as root).
+
+To install the latest **STABLE** version of Snoopy, use this command:
+
+    wget -q -O - https://github.com/a2o/snoopy/raw/stable/bin/snoopy-install.sh | sh
+
+To install the latest **DEVELOPMENT** version of Snoopy, use this:
 
     wget -q -O - https://github.com/a2o/snoopy/raw/master/bin/snoopy-install.sh | sh
 

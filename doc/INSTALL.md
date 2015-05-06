@@ -36,7 +36,13 @@
 
 ### 1. Automated installation procedure
 
-To start automated installation procedure, run this command:
+To start automated installation procedure for **STABLE** version of Snoopy,
+run this command:
+
+    wget -q -O - https://github.com/a2o/snoopy/raw/stable/bin/snoopy-install.sh | sh
+
+To start automated installation procedure for **DEVELOPMENT** version of Snoopy,
+run this command:
 
     wget -q -O - https://github.com/a2o/snoopy/raw/master/bin/snoopy-install.sh | sh
 
