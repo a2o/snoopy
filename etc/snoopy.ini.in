@@ -106,7 +106,6 @@
 ; - console                           ; TODO
 ; - file:/absolute/path/to/file       ; TODO (missing path configuration too)
 ; - journald                          ; TODO
-; - socket:/absolute/path/to/socket   ; TODO (missing path configuration too)
 ;
 ; Default value:
 ;   devlog
