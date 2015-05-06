@@ -20,7 +20,7 @@ AC_INIT(
 AC_CONFIG_SRCDIR([src/libsnoopy.c])   # Check if we are in correct directory tree
 AC_CONFIG_AUX_DIR([build/aux])
 AC_CONFIG_MACRO_DIR([build/m4])
-m4_include([build/m4-custom/snoopy.m4])
+m4_include([build/snoopy.m4])
 AM_INIT_AUTOMAKE([1.11 gnu silent-rules subdir-objects -Wall -Werror])
 
 
