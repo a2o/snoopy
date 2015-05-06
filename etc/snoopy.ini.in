@@ -1,0 +1,164 @@
+;;; REQUIRED Section
+;
+[snoopy]
+
+
+
+;;; Log Message Format specification
+;
+; May consist of:
+; - arbitrary text, which is copied to log message as-is,
+; - calls to data sources without arguments: %{datasourcename}
+; - calls to data sources with    argument : %{datasourcename:arg1}
+; - calls to data sources with    arguments: %{datasourcename:arg1,arg2}   <--- if data source supports it
+;
+; List of available data sources:
+; - %{cmdline}        ; (available=@enable_datasource_cmdline@) Full command line, with arguments
+; - %{cwd}            ; (available=@enable_datasource_cwd@) Current working directory
+; - %{egid}           ; (available=@enable_datasource_egid@) Effective gid that executed the command
+; - %{egroup}         ; (available=@enable_datasource_egroup@) Effective group name that executed the command
+; - %{env:VAR}        ; (available=@enable_datasource_env@) Environmental variable named 'VAR'
+; - %{env_all}        ; (available=@enable_datasource_env_all@) All environmental varibles, comma separated
+; - %{euid}           ; (available=@enable_datasource_euid@) Effective uid that executed the command
+; - %{eusername}      ; (available=@enable_datasource_eusername@) Effective username that executed the command
+; - %{filename}       ; (available=@enable_datasource_filename@) Full path to executable
+; - %{gid}            ; (available=@enable_datasource_gid@) Group id that executed the command
+; - %{group}          ; (available=@enable_datasource_group@) Group name that executed the command
+; - %{login}          ; (available=@enable_datasource_login@) Login name (tries getlogin_r() first, then SUDO_USER env variabe, and LOGNAME env as last resort)
+; - %{pid}            ; (available=@enable_datasource_pid@) ID of process that executed the command
+; - %{ppid}           ; (available=@enable_datasource_ppid@) Parent process ID of process that executed the command
+; - %{rpname}         ; (available=@enable_datasource_rpname@) Root process name of process that executed the command
+; - %{sid}            ; (available=@enable_datasource_sid@) Process id of session group process leader
+; - %{snoopy_version} ; (available=@enable_datasource_snoopy_version@) Snoopy version
+; - %{tty}            ; (available=@enable_datasource_tty@) Which TTY the command was run on
+; - %{tty_uid}        ; (available=@enable_datasource_tty_uid@) TTY uid
+; - %{tty_username}   ; (available=@enable_datasource_tty_username@) TTY username
+; - %{uid}            ; (available=@enable_datasource_uid@) User id that executed the command
+; - %{username}       ; (available=@enable_datasource_username@) Username that executed the command
+;
+; Availability (yes/no):
+;   This flag signifies whether this build of Snoopy has particular data source
+;   built-in or not. If particular data source is not available and its use is
+;   desired, then Snoopy must be rebuilt with flags that enable given data
+;   source.
+;
+; Default value:
+;   "[uid:%{uid} sid:%{sid} tty:%{tty} cwd:%{cwd} filename:%{filename}]: %{cmdline}"
+;
+; Example:
+;message_format = "useless static log entry that gets logged on every program execution"
+;message_format = "[uid:%{uid} sid:%{sid} tty:%{tty} cwd:%{cwd} filename:%{filename}]: %{cmdline}"
+
+
+
+;;; Filter Chain specification
+;
+; Must comply with the following rules:
+; - one or more filters may be specified, separated by semicolon,
+; - each filter may contain argument that follows the colon,
+; - filter may accept multiple arguments, separated by comma,
+; - filter chain must not contain any spaces (allowed in filter arguments, but generally discouraged).
+;
+; List of available filters:
+; - exclude_spawns_of   ; (available=@enable_filter_exclude_spawns_of@) Exclude log entries that occur in specified process trees
+; - exclude_uid         ; (available=@enable_filter_exclude_uid@) Exclude these UIDs from logging
+; - only_root           ; (available=@enable_filter_only_root@) Only log root commands
+; - only_uid            ; (available=@enable_filter_only_uid@) Only log commands executed by these UIDs
+;
+; Availability (yes/no):
+;   This flag signifies whether this build of Snoopy has particular filter
+;   built-in or not. If particular filter is not available and its use is
+;   desired, then Snoopy must be rebuilt with flags that enable given filter.
+;
+; Sample definitions with explanations:
+; - filter_chain = "exclude_uid:0"       # Log all commands, except the ones executed by root
+; - filter_chain = "exclude_uid:1,2,3"   # Log all commands, except those executed by users with UIDs 1, 2 and 3
+; - filter_chain = "only_uid:0"          # Log only root commands
+; - filter_chain = "exclude_spawns_of:cron,my_daemon" # Do not log commands spawned by cron or my_daemon
+; - filter_chain = "filter1:arg11;filter2:arg21,arg22;filter3:arg31,32,33"
+;
+; Default value:
+;   "" (empty string)
+;
+; Examples:
+;filter_chain = ""
+;filter_chain = "only_uid:0"
+;filter_chain = "only_uid:10000"
+;filter_chain = "exclude_uid:0"
+
+
+
+;;; Output
+;
+; Where messages get sent to
+;
+; List of available outputs:
+; - devlog   ; (available=@enable_output_devlog@) Default, writes directly to /dev/log.
+; - socket   ; (available=@enable_output_socket@) Built-in output. As argument it requires an absolute path of socket to write to.
+; - syslog   ; (available=@enable_output_syslog@) Previuosly-default (WARNING: DO NOT USE syslog OUTPUT WITH systemd - IT WILL HANG YOUR SYSTEM ON BOOT)
+;
+; Availability (yes/no):
+;   This flag signifies whether this build of Snoopy has particular output
+;   built-in or not. If particular output is not available and its use is
+;   desired, then Snoopy must be rebuilt with flags that enable given output.
+;
+; List of outputs pending implementation (patches welcome!):
+; - console                           ; TODO
+; - file:/absolute/path/to/file       ; TODO (missing path configuration too)
+; - journald                          ; TODO
+; - socket:/absolute/path/to/socket   ; TODO (missing path configuration too)
+;
+; Default value:
+;   devlog
+;   (previously 'syslog' was default value, but due to systemd issues default was changed)
+;   (to raw device writing as syslogd blocks syslog() calls if journald is not running)
+;
+; Example:
+;output = console
+
+
+
+;;; Error Logging
+;
+; Whether to log error messages or not.
+; This should generally be disabled, as it may generate lots of error logs.
+;
+; The most appropriate usage of this parameter is when:
+; - you are developing new data source
+; - you are trying to configure message format and are having problems with it
+;
+; Default value:
+;   no (unless changed by ./configure --enable-error-logging to yes)
+;
+; Example:
+;error_logging = yes
+
+
+
+;;; Syslog Facility
+;
+; What syslog facility to use. Can be prefixed with 'LOG_'.
+;
+; Possible values:
+;   One of AUTH|AUTHPRIV|CRON|DAEMON|FTP|KERN|LOCAL[0-7]|LPR|MAIL|NEWS|SYSLOG|USER|UUCP
+;
+; Default value:
+;   LOG_AUTHPRIV (unless changed by ./configure --with-syslog-facility=FACILITY)
+;
+; Example:
+;syslog_facility = LOG_AUTHPRIV
+
+
+
+;;; Syslog Level
+;
+; What syslog level to use. Can be prefixed with 'LOG_'.
+;
+; Possible values:
+;   One of EMERG|ALERT|CRIT|ERR|WARNING|NOTICE|INFO|DEBUG
+;
+; Default value:
+;   LOG_INFO (unless changed by ./configure --with-syslog-level=LEVEL)
+;
+; Example:
+;syslog_level = LOG_INFO

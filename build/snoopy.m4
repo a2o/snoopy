@@ -49,6 +49,7 @@ AU_DEFUN([SNOOPY_CONFIGURE_DATASOURCE_ENABLE],
         AC_DEFINE(SNOOPY_CONF_DATASOURCE_ENABLED_$1, 1, [Is data source "$1" available?])
     ])
     AM_CONDITIONAL([DATASOURCE_ENABLED_$1], [test "x$enable_datasource_$1" == "xyes"])
+    AC_SUBST([enable_datasource_$1])
 ])
 
 
@@ -75,6 +76,7 @@ AU_DEFUN([SNOOPY_CONFIGURE_DATASOURCE_DISABLE],
         AC_DEFINE(SNOOPY_CONF_DATASOURCE_ENABLED_$1, 1, [Is data source "$1" available?])
     ])
     AM_CONDITIONAL([DATASOURCE_ENABLED_$1], [test "x$enable_datasource_$1" == "xyes"])
+    AC_SUBST([enable_datasource_$1])
 ])
 
 
@@ -106,6 +108,7 @@ AU_DEFUN([SNOOPY_CONFIGURE_FILTER_ENABLE],
         AC_DEFINE(SNOOPY_CONF_FILTER_ENABLED_$1, 1, [Is filter "$1" available?])
     ])
     AM_CONDITIONAL([FILTER_ENABLED_$1], [test "x$enable_filter_$1" == "xyes"])
+    AC_SUBST([enable_filter_$1])
 ])
 
 
@@ -132,6 +135,7 @@ AU_DEFUN([SNOOPY_CONFIGURE_FILTER_DISABLE],
         AC_DEFINE(SNOOPY_CONF_FILTER_ENABLED_$1, 1, [Is filter "$1" available?])
     ])
     AM_CONDITIONAL([FILTER_ENABLED_$1], [test "x$enable_filter_$1" == "xyes"])
+    AC_SUBST([enable_filter_$1])
 ])
 
 
@@ -144,6 +148,7 @@ AU_DEFUN([SNOOPY_CONFIGURE_OUTPUT_ENABLE_FORCE],
 [
     AC_DEFINE(SNOOPY_CONF_OUTPUT_ENABLED_$1, 1, [Is output "$1" available? Forced "Yes".])
     AM_CONDITIONAL([OUTPUT_ENABLED_$1], [test "x$enable_output_$1" == "xyes"])
+    AC_SUBST([enable_output_$1], [yes])
 ])
 
 
@@ -170,6 +175,7 @@ AU_DEFUN([SNOOPY_CONFIGURE_OUTPUT_ENABLE],
         AC_DEFINE(SNOOPY_CONF_OUTPUT_ENABLED_$1, 1, [Is output "$1" available?])
     ])
     AM_CONDITIONAL([OUTPUT_ENABLED_$1], [test "x$enable_output_$1" == "xyes"])
+    AC_SUBST([enable_output_$1])
 ])
 
 
@@ -196,4 +202,5 @@ AU_DEFUN([SNOOPY_CONFIGURE_OUTPUT_DISABLE],
         AC_DEFINE(SNOOPY_CONF_OUTPUT_ENABLED_$1, 1, [Is output "$1" available?])
     ])
     AM_CONDITIONAL([OUTPUT_ENABLED_$1], [test "x$enable_output_$1" == "xyes"])
+    AC_SUBST([enable_output_$1])
 ])

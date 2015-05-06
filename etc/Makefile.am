@@ -3,9 +3,6 @@ include   $(top_srcdir)/build/Makefile.am.common
 AUTOMAKE_OPTIONS = foreign subdir-objects
 ACLOCAL_AMFLAGS = -I build/m4
 
-EXTRA_DIST +=\
-    snoopy.ini
-
 if CONFIG_FILE_ENABLED
 install-exec-local:
 	if [ ! -f $(DESTDIR)$(sysconfdir)/snoopy.ini ]; then \

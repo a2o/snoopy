@@ -54,6 +54,7 @@ Makefile
 /bin/snoopy-dev-helper
 /contrib/rhel/snoopy.spec
 /contrib/sles/snoopy.spec
+/etc/snoopy.ini
 
 
 ### Distribution related files

@@ -153,6 +153,7 @@ AC_CONFIG_FILES([Makefile
                  doc/Makefile
                  doc/internals/Makefile
                  etc/Makefile
+                 etc/snoopy.ini
                  src/Makefile
                  src/datasource/Makefile
                  src/filter/Makefile
