@@ -3,8 +3,8 @@
 -------------------------------------------------------------------------------
 
 
-2015-04-29 - Version  2.3.0rc4
-------------------------------
+2015-05-06 - Version 2.3.0rc5
+-----------------------------
 o Refactoring build process: config file comments now reflect which data
     sources, filters and outputs are available in given Snoopy installation/
     package/build.
