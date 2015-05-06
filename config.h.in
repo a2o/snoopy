@@ -194,7 +194,7 @@
 /* Is output "devlog" available? */
 #undef SNOOPY_CONF_OUTPUT_ENABLED_devlog
 
-/* Output "socket" must be always enabled! */
+/* Is output "socket" available? Forced "Yes". */
 #undef SNOOPY_CONF_OUTPUT_ENABLED_socket
 
 /* Is output "syslog" available? */

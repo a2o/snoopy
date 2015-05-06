@@ -409,6 +409,28 @@ AS_IF([test "x$with_filter_chain" != "x"], [
 
 
 # ==============================================================================
+# ======= Enable/disable all filters at once ===================================
+# ==============================================================================
+AC_ARG_ENABLE(all-filters,
+    [AC_HELP_STRING(
+        [--disable-all-filters],
+        [disables all filters at once. This does not disable filtering in general. It only causes that none of filters is going to be built unless explicitly enabling it by specifying --enable-filter-NAME at ./confgure time. [default=enabled]]
+    )],
+    [
+        if test "x$enableval" = "xyes"; then
+            enable_all_filters=yes
+        elif test "x$enableval" = "xno"; then
+            enable_all_filters=no
+        else
+            AC_MSG_ERROR([--enable-all-filters does not take an argument: $enableval])
+        fi
+    ],
+    [enable_all_filters=yes]
+)
+
+
+
+# ==============================================================================
 # ======= START section: ENABLE INDIVIDUAL FILTERS =============================
 # ==============================================================================
 SNOOPY_CONFIGURE_FILTER_ENABLE( [exclude_spawns_of], [This filter drops messages that originate for specified process trees.])
@@ -432,15 +454,33 @@ dnl ============================================================================
 
 
 # ==============================================================================
+# ======= Enable/disable all outputs at once ===================================
+# ==============================================================================
+AC_ARG_ENABLE(all-outputs,
+    [AC_HELP_STRING(
+        [--disable-all-outputs],
+        [disables all outputs at once. Use --enable-output-NAME to reenable individual outputs. [default=enabled]]
+    )],
+    [
+        if test "x$enableval" = "xyes"; then
+            enable_all_outputs=yes
+        elif test "x$enableval" = "xno"; then
+            enable_all_outputs=no
+        else
+            AC_MSG_ERROR([--enable-all-outputs does not take an argument: $enableval])
+        fi
+    ],
+    [enable_all_outputs=yes]
+)
+
+
+
+# ==============================================================================
 # ======= START section: ENABLE INDIVIDUAL OUTPUTS =============================
 # ==============================================================================
-SNOOPY_CONFIGURE_OUTPUT_ENABLE( [devlog],         [This is the default output of Snoopy.])
-#
-# Socket output - this one is always enabled
-AC_DEFINE(SNOOPY_CONF_OUTPUT_ENABLED_socket, 1, [Output "socket" must be always enabled!])
-AM_CONDITIONAL([OUTPUT_ENABLED_socket], [test "xyes" == "xyes"])
-#
-SNOOPY_CONFIGURE_OUTPUT_DISABLE([syslog],         [WARNING: This output is causing system hangs with SystemD. Do not use it unless you are absolutely certain you know better!])
+SNOOPY_CONFIGURE_OUTPUT_ENABLE(       [devlog],         [This is the default output of Snoopy.])
+SNOOPY_CONFIGURE_OUTPUT_ENABLE_FORCE( [socket],         [Output "socket" is mandatory!])
+SNOOPY_CONFIGURE_OUTPUT_DISABLE(      [syslog],         [WARNING: This output is causing system hangs with SystemD. Do not use it unless you are absolutely certain you know better!])
 # ==============================================================================
 # ======= END section: ENABLE INDIVIDUAL OUTPUTS ===============================
 # ==============================================================================

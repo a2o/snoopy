@@ -99,7 +99,7 @@ AU_DEFUN([SNOOPY_CONFIGURE_FILTER_ENABLE],
                 AC_MSG_ERROR([--disable-filter-$1 does not take any arguments, got: $enableval])
             fi
         ],
-        [enable_filter_$1=yes]
+        [enable_filter_$1=$enable_all_filters]
     )
 
     AS_IF([test "x$enable_filter_$1" = "xyes"], [
@@ -140,6 +140,13 @@ AU_DEFUN([SNOOPY_CONFIGURE_FILTER_DISABLE],
 ### Macros for adding output enable/disable options to ./configure
 ###
 #
+AU_DEFUN([SNOOPY_CONFIGURE_OUTPUT_ENABLE_FORCE],
+[
+    AC_DEFINE(SNOOPY_CONF_OUTPUT_ENABLED_$1, 1, [Is output "$1" available? Forced "Yes".])
+    AM_CONDITIONAL([OUTPUT_ENABLED_$1], [test "x$enable_output_$1" == "xyes"])
+])
+
+
 AU_DEFUN([SNOOPY_CONFIGURE_OUTPUT_ENABLE],
 [
     AC_ARG_ENABLE(output-$1,
@@ -156,7 +163,7 @@ AU_DEFUN([SNOOPY_CONFIGURE_OUTPUT_ENABLE],
                 AC_MSG_ERROR([--disable-output-$1 does not take any arguments, got: $enableval])
             fi
         ],
-        [enable_output_$1=yes]
+        [enable_output_$1=$enable_all_outputs]
     )
 
     AS_IF([test "x$enable_output_$1" = "xyes"], [
