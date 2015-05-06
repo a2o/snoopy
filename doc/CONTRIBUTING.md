@@ -35,15 +35,18 @@ Table of Contents
 - reserverd data source names:
     - snoopy*
 
-If you have developed a shiny new data source and you would like to
-start using it with Snoopy, there are three additional places where you
-need to add references to it to make Snoopy fully aware of it:
+If you have developed a shiny new data source and you would like to start using
+it with Snoopy, you have to add it to the following files to make Snoopy fully
+aware of it:
 
-- src/datasource/Makefile.am   (location is evident)
+- src/datasource/NAME.h        (your data source's main header file)
+- src/datasource/NAME.c        (your data source's main source code goes here)
+- src/datasource/Makefile.am   (one reference)
 - src/datasourceregistry.h     (one reference)
-- src/datasourceregistry.c     (two references)
+- src/datasourceregistry.c     (two references - name and function name)
+- configure.ac                 (one reference)
 - etc/snoopy.ini               (one reference in comments, for documentation purposes)
-
+- Changelog                    (short description of new feature)
 
 
 ## Filter development rules
@@ -64,14 +67,18 @@ with the following additional specifics:
 - reserved filter names:
     - snoopy*
 
-If you have developed a shiny new filter and you would like to
-start using it with Snoopy, there are three additional places where you
-need to add references to it to make Snoopy fully aware of it:
+If you have developed a shiny new filter and you would like to start using
+it with Snoopy, you have to add it to the following files to make Snoopy fully
+aware of it:
 
-- src/filter/Makefile.am   (location is evident)
-- src/filterregistry.h     (one reference)
-- src/filterregistry.c     (two references)
-- etc/snoopy.ini           (one reference in comments, for documentation purposes)
+- src/filter/NAME.h            (your filter's main header file)
+- src/filter/NAME.c            (your filter's main source code goes here)
+- src/filter/Makefile.am       (one reference)
+- src/filterregistry.h         (one reference)
+- src/filterregistry.c         (two references)
+- configure.ac                 (one reference)
+- etc/snoopy.ini               (one reference in comments, for documentation purposes)
+- Changelog                    (short description of new feature)
 
 
 
