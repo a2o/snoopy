@@ -5,6 +5,23 @@
 
 2015-04-29 - Version  2.3.0rc4
 ------------------------------
+o Refactoring build process: config file comments now reflect which data
+    sources, filters and outputs are available in given Snoopy installation/
+    package/build.
+o Refactoring build process: all data sources, filters and outputs can now be
+    enabled/disabled individually by ./configure flags. This should make Snoopy
+    less vulnerable if securing installation by reducing attack surface is
+    desired. Each group (data sources, filters and outputs) can also be
+    disabled with a single --enable-all-* ./configure flag.
+o Refactoring build process: removed all stale files which are copied/symlinked
+    by autoreconf; updated makefiles to enable building outside of source tree;
+    renamed some outputs to maintain naming consistency; reduced complexity and
+    size of configure.ac by abstracting certain functionality into dedicated
+    macros; moved as many build-time files as possible from root into
+    build/aux/ directory;
+o Enhancement: specify in debian build recipe that libsnoopy package is to
+    supersed old 'snoopy' package.
+    (Contributed by Frederic Mora)
 o Refactoring: do not include filtering code if filtering is not enabled on
     ./configure line.
 o Refactoring #50 (GitHub): change ./configure flag --enable-filter to
