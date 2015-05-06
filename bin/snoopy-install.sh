@@ -80,16 +80,16 @@ echo "SNOOPY INSTALL: Starting installation, log file name: $SNOOPY_INSTALL_LOGF
 
 
 
-### Get last stable snoopy release
+### Get last stable Snoopy release
 #
-echo -n "SNOOPY INSTALL: Getting latest snoopy version: "
+echo -n "SNOOPY INSTALL: Getting latest Snoopy version: "
 SNOOPY_PACKAGE_FILENAME=`wget -q -O - $SNOOPY_DOWNLOAD_URI_PREFIX/snoopy-latest-package-filename.txt`
 SNOOPY_PACKAGE_DIRNAME=`echo "$SNOOPY_PACKAGE_FILENAME" | sed -e 's/\.tar.gz$//'`
 echo "$SNOOPY_PACKAGE_FILENAME"
 
 
 
-### Download snoopy package
+### Download Snoopy package
 #
 echo -n "SNOOPY INSTALL: Downloading $SNOOPY_DOWNLOAD_URI_PREFIX/$SNOOPY_PACKAGE_FILENAME... "
 rm -f $SNOOPY_PACKAGE_FILENAME
