@@ -5,22 +5,22 @@ Makefile.in
 /autom4te.cache
 /autoscan.log
 /build/aux/ar-lib
+/build/aux/compile
 /build/aux/config.guess
 /build/aux/config.sub
 /build/aux/depcomp
 /build/aux/install-sh
 /build/aux/ltmain.sh
 /build/aux/missing
+/build/aux/test-driver
 /build/m4/libtool.m4
 /build/m4/lt*.m4
-/compile
 /configure
 /config.h
 /config.log
 /config.status
 /config.h.in~
 /stamp-h?
-/test-driver
 
 
 ### Files produced by ./configure
