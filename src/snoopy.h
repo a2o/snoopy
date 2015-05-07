@@ -49,7 +49,7 @@
  *
  * Maximum length of arguments passed to execv(e) functions
  */
-#define SNOOPY_SYSCONF_ARG_MAX sysconf(_SC_ARG_MAX)
+#define SNOOPY_SYSCONF_ARG_MAX ((-1 == sysconf(_SC_ARG_MAX)) ? 4096 : sysconf(_SC_ARG_MAX))
 
 
 
