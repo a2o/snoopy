@@ -72,7 +72,11 @@ int snoopy_output_socketoutput (char *logMessage, int errorOrMessage)
     }
 
     remote.sun_family = AF_LOCAL;
-    strcpy(remote.sun_path, snoopy_configuration.output_path);
+    strncpy(remote.sun_path, snoopy_configuration.output_path, 108);
+    if (strlen(snoopy_configuration.output_path) > 107) {
+        remote.sun_path[107] = '\0';
+    }
+
     remoteLength      = strlen(remote.sun_path) + sizeof(remote.sun_family);
     if (connect(s, (struct sockaddr *)&remote, remoteLength) == -1) {
         close(s);
