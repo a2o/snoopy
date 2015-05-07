@@ -46,16 +46,17 @@
 
 int snoopy_filter_exclude_uid (char *msg, char *arg)
 {
-    uid_t  curUid;         // Actual UID of running process
+    uid_t  curUid;     // Actual UID of running process
     int    j;
     char  *str1;
-    char  *saveptr1;
+    char  *saveptr1;   // Do not assign null to it explicitly, as you get "Explicit null dereference
+ 
+
 
     /* Get uid of current process */
     curUid = getuid();
 
     /* Loop through all UIDs passed to the filter as argument */
-    saveptr1 = NULL;
     for (j=1, str1=arg;  ; j++, str1=NULL) {
         char  *argCurUidStr;   // Literal UID
         uid_t  argCurUid;      // Actual UID to be used for comparison
