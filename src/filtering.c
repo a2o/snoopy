@@ -73,7 +73,7 @@ int snoopy_filtering_check_chain (
         filterChainCopySize = SNOOPY_FILTER_CHAIN_MAX_SIZE - 1;
     }
     strncpy(filterChainCopy, filterChain, filterChainCopySize);
-    filterChainCopy[filterChainCopySize+1] = '\0';
+    filterChainCopy[filterChainCopySize] = '\0';
 
     // Loop through all filters
     for (j=1, str=filterChainCopy;  ; j++, str=NULL) {
