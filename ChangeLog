@@ -3,8 +3,10 @@
 -------------------------------------------------------------------------------
 
 
-2015-05-06 - Version 2.3.0rc5
+2015-05-08 - Version 2.3.0rc6
 -----------------------------
+o Bugfixes: resolved all nine Coverity bugs (#80899-#80909), covering various
+    resource leaks, unchecked string writes etc.
 o Refactoring build process: config file comments now reflect which data
     sources, filters and outputs are available in given Snoopy installation/
     package/build.
