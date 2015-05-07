@@ -43,21 +43,22 @@
 
 int snoopy_datasource_login (char *result, char *arg)
 {
-    static char  login[256];
+    int          loginSizeMaxWithoutNull = 254;
+    int          loginSizeMaxWithNull    = 255;
+    static char  login[loginSizeMaxWithNull];
     char        *loginptr = NULL;
 
     /*
-    Retrive the user login trying in order:
-      - The login information from the processus.
-      - the LOGNAME environment variable.
-      - the SUDO_USER environment variable.
-    return "unknown" otherwise.
-
-    TIP to use with sudo and keep LOGNAME, add this in /etc/sudoers:
-    Defaults        env_reset
-    Defaults        env_keep="LOGNAME"
+     * Retrive the user login trying in order:
+     * - The login information from the processus.
+     * - the SUDO_USER environment variable.
+     * - the LOGNAME environment variable.
+     *
+     * TIP to use with sudo and keep LOGNAME, add this in /etc/sudoers:
+     * Defaults        env_reset
+     * Defaults        env_keep="LOGNAME"
     */
-    if (getlogin_r(login, 255)) {
+    if (0 != getlogin_r(login, loginSizeMaxWithNull)) {
         loginptr = getenv("SUDO_USER");
         if (!loginptr) {
             loginptr = getenv("LOGNAME");
@@ -65,7 +66,10 @@ int snoopy_datasource_login (char *result, char *arg)
         if (!loginptr) {
             strcpy(login, "(unknown)");
         } else {
-            strcpy(login, loginptr);
+            strncpy(login, loginptr, loginSizeMaxWithNull);
+            if (strlen(loginptr) > loginSizeMaxWithoutNull) {
+                login[loginSizeMaxWithoutNull] = '\0';
+            }
         }
     }
     return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "%s", login);
