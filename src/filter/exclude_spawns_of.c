@@ -110,6 +110,7 @@ int find_ancestor_in_list(char **name_list)
 	// Grab the first few elements from the stat pseudo-file. Format from man 5 proc.
 	rc = fscanf(statf, "%d %ms %c %d", &st_pid, &st_comm, &st_state, &ppid);
 	if (rc == EOF) {
+	    fclose(statf);
 	    return -1;
 	}
 	// stat provides st_comm as the name between parentheses. Get rid of the parens.
@@ -119,10 +120,12 @@ int find_ancestor_in_list(char **name_list)
 
 	free(st_comm);
 	if (found) {
+	    fclose(statf);
 	    return 1;
 	}
-    } 
+    }
 
+    fclose(statf);
     return 0; // Nothing found
 }
 
