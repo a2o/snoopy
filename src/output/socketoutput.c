@@ -65,6 +65,9 @@ int snoopy_output_socketoutput (char *logMessage, int errorOrMessage)
     /* Prepare socket - NON BLOCKING (systemd blocks /dev/log if journald is not running) */
     if ((s = socket(AF_LOCAL, SOCK_DGRAM|SOCK_CLOEXEC|SOCK_NONBLOCK, 0)) == -1) {
 #endif
+        if (-1 != s) {
+            close(s);
+        }
         return -1;
     }
 
@@ -72,12 +75,14 @@ int snoopy_output_socketoutput (char *logMessage, int errorOrMessage)
     strcpy(remote.sun_path, snoopy_configuration.output_path);
     remoteLength      = strlen(remote.sun_path) + sizeof(remote.sun_family);
     if (connect(s, (struct sockaddr *)&remote, remoteLength) == -1) {
+        close(s);
         return -2;
     }
 
 
     /* Send message - returns -1 on error, chars sent on success */
     if (send(s, logMessage, strlen(logMessage), MSG_DONTWAIT|MSG_NOSIGNAL) == -1) {
+        close(s);
         return -3;
     }
 
