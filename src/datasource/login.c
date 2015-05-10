@@ -41,11 +41,15 @@
 
 
 
+#define   SNOOPY_DATASOURCE_LOGIN_loginSizeMaxWithoutNull   254
+#define   SNOOPY_DATASOURCE_LOGIN_loginSizeMaxWithNull      255
+
+
 int snoopy_datasource_login (char *result, char *arg)
 {
-    int          loginSizeMaxWithoutNull = 254;
-    int          loginSizeMaxWithNull    = 255;
-    static char  login[loginSizeMaxWithNull];
+    int          loginSizeMaxWithoutNull = SNOOPY_DATASOURCE_LOGIN_loginSizeMaxWithoutNull;
+    int          loginSizeMaxWithNull    = SNOOPY_DATASOURCE_LOGIN_loginSizeMaxWithNull;
+    static char  login[SNOOPY_DATASOURCE_LOGIN_loginSizeMaxWithNull];
     char        *loginptr = NULL;
 
     /*
