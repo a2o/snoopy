@@ -1,4 +1,12 @@
-AM_CFLAGS = -I$(top_srcdir)/src
+### Include common Makefile configuration
+#
+include   $(top_srcdir)/build/Makefile.am.common
+
+
+
+### Use includes from src/ directory
+#
+AM_CFLAGS += -I$(top_srcdir)/src
 
 
 
