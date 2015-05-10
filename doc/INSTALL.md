@@ -99,7 +99,7 @@ Snoopy supports various features that  can be enabled by supplying arguments
 to configure command. Consult `./configure --help' for more information.
 
     # Only if you are building directly from git repository:
-    ./autogen.sh
+    ./bootstrap.sh
 
     # Check configuration options, see section 3.3 for details:
     ./configure --help

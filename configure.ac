@@ -80,7 +80,7 @@ AC_PROG_MAKE_SET
 dnl
 dnl AC_PROG_RANLIB
 dnl
-dnl autogen.sh output:
+dnl bootstrap.sh output:
 dnl   libtoolize: `AC_PROG_RANLIB' is rendered obsolete by `LT_INIT'
 dnl autoscan output:
 dnl   configure.ac: warning: missing AC_PROG_RANLIB wanted by: ltmain.sh:2455

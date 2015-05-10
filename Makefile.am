@@ -16,7 +16,7 @@ SUBDIRS = \
 	doc
 
 EXTRA_DIST +=\
-	autogen.sh \
+	bootstrap.sh \
 	README.md
 
 enable: install

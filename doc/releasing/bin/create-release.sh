@@ -171,7 +171,7 @@ fi
 
 
 ### Create release package
-./autogen.sh &&
+./bootstrap.sh &&
 ./configure &&
 make clean &&
 make dist &&
