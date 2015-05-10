@@ -36,6 +36,7 @@
  */
 #include "snoopy.h"
 #include "configuration.h"
+#include "error.h"
 #include "inputdatastorage.h"
 #include "datasourceregistry.h"
 #include "misc.h"
@@ -53,8 +54,6 @@ int  snoopy_get_datasource_name_length_max ();
 
 int main (int argc, char **argv)
 {
-    char *logMessage       = NULL;
-
     /* Initialize snoopy */
     snoopy_init();
     snoopy_inputdatastorage_store_filename(argv[0]);
