@@ -103,6 +103,7 @@ AC_CHECK_HEADERS([ \
     stdlib.h     \
     string.h     \
     sys/socket.h \
+    sys/time.h   \
     syslog.h     \
     unistd.h     \
 ])
@@ -118,6 +119,7 @@ AC_FUNC_MALLOC
 AC_CHECK_FUNCS([ \
     getcwd    \
     getsid    \
+    gettimeofday \
     memmove   \
     memset    \
     socket    \
@@ -305,6 +307,9 @@ SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [ppid],           [parent PID of process per
 SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [rpname],         [real parent name found up the process tree])
 SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [sid],            [session leader PID])
 SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [snoopy_version], [installed Snoopy version])
+SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [timestamp],      [current Unix timestamp])
+SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [timestamp_ms],   [millisecond part of current Unix timestamp])
+SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [timestamp_us],   [microsecond part of current Unix timestamp])
 SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [tty],            [path to TTY performing the execution])
 SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [tty_uid],        [UID of TTY performing the execution])
 SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [tty_username],   [literal username of TTY performing the execution])

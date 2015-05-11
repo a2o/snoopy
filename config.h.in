@@ -9,6 +9,9 @@
 /* Define to 1 if you have the `getsid' function. */
 #undef HAVE_GETSID
 
+/* Define to 1 if you have the `gettimeofday' function. */
+#undef HAVE_GETTIMEOFDAY
+
 /* Define to 1 if you have the <inttypes.h> header file. */
 #undef HAVE_INTTYPES_H
 
@@ -66,6 +69,9 @@
 
 /* Define to 1 if you have the <sys/stat.h> header file. */
 #undef HAVE_SYS_STAT_H
+
+/* Define to 1 if you have the <sys/time.h> header file. */
+#undef HAVE_SYS_TIME_H
 
 /* Define to 1 if you have the <sys/types.h> header file. */
 #undef HAVE_SYS_TYPES_H
@@ -151,6 +157,15 @@
 
 /* Is data source "snoopy_version" available? */
 #undef SNOOPY_CONF_DATASOURCE_ENABLED_snoopy_version
+
+/* Is data source "timestamp" available? */
+#undef SNOOPY_CONF_DATASOURCE_ENABLED_timestamp
+
+/* Is data source "timestamp_ms" available? */
+#undef SNOOPY_CONF_DATASOURCE_ENABLED_timestamp_ms
+
+/* Is data source "timestamp_us" available? */
+#undef SNOOPY_CONF_DATASOURCE_ENABLED_timestamp_us
 
 /* Is data source "tty" available? */
 #undef SNOOPY_CONF_DATASOURCE_ENABLED_tty

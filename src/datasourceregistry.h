@@ -76,6 +76,15 @@
 #ifdef SNOOPY_CONF_DATASOURCE_ENABLED_snoopy_version
 #include "datasource/snoopy_version.h"
 #endif
+#ifdef SNOOPY_CONF_DATASOURCE_ENABLED_timestamp
+#include "datasource/timestamp.h"
+#endif
+#ifdef SNOOPY_CONF_DATASOURCE_ENABLED_timestamp_ms
+#include "datasource/timestamp_ms.h"
+#endif
+#ifdef SNOOPY_CONF_DATASOURCE_ENABLED_timestamp_us
+#include "datasource/timestamp_us.h"
+#endif
 #ifdef SNOOPY_CONF_DATASOURCE_ENABLED_tty
 #include "datasource/tty.h"
 #endif

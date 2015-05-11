@@ -86,6 +86,15 @@ char *snoopy_datasourceregistry_names[] = {
 #ifdef SNOOPY_CONF_DATASOURCE_ENABLED_snoopy_version
     "snoopy_version",
 #endif
+#ifdef SNOOPY_CONF_DATASOURCE_ENABLED_timestamp
+    "timestamp",
+#endif
+#ifdef SNOOPY_CONF_DATASOURCE_ENABLED_timestamp_ms
+    "timestamp_ms",
+#endif
+#ifdef SNOOPY_CONF_DATASOURCE_ENABLED_timestamp_us
+    "timestamp_us",
+#endif
 #ifdef SNOOPY_CONF_DATASOURCE_ENABLED_tty
     "tty",
 #endif
@@ -155,6 +164,15 @@ int (*snoopy_datasourceregistry_ptrs []) (char *result, char *arg) = {
 #endif
 #ifdef SNOOPY_CONF_DATASOURCE_ENABLED_snoopy_version
     snoopy_datasource_snoopy_version,
+#endif
+#ifdef SNOOPY_CONF_DATASOURCE_ENABLED_timestamp
+    snoopy_datasource_timestamp,
+#endif
+#ifdef SNOOPY_CONF_DATASOURCE_ENABLED_timestamp_ms
+    snoopy_datasource_timestamp_ms,
+#endif
+#ifdef SNOOPY_CONF_DATASOURCE_ENABLED_timestamp_us
+    snoopy_datasource_timestamp_us,
 #endif
 #ifdef SNOOPY_CONF_DATASOURCE_ENABLED_tty
     snoopy_datasource_tty,

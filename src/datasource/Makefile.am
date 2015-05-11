@@ -158,6 +158,30 @@ libsnoopy_datasources_all_la_SOURCES += \
 	snoopy_version.h
 endif
 
+# Data source: timestamp
+#
+if DATASOURCE_ENABLED_timestamp
+libsnoopy_datasources_all_la_SOURCES += \
+	timestamp.c \
+	timestamp.h
+endif
+
+# Data source: timestamp_ms
+#
+if DATASOURCE_ENABLED_timestamp_ms
+libsnoopy_datasources_all_la_SOURCES += \
+	timestamp_ms.c \
+	timestamp_ms.h
+endif
+
+# Data source: timestamp_us
+#
+if DATASOURCE_ENABLED_timestamp_us
+libsnoopy_datasources_all_la_SOURCES += \
+	timestamp_us.c \
+	timestamp_us.h
+endif
+
 # Data source: tty
 #
 if DATASOURCE_ENABLED_tty

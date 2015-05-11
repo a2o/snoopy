@@ -30,6 +30,9 @@
 ; - %{rpname}         ; (available=@enable_datasource_rpname@) Root process name of process that executed the command
 ; - %{sid}            ; (available=@enable_datasource_sid@) Process id of session group process leader
 ; - %{snoopy_version} ; (available=@enable_datasource_snoopy_version@) Snoopy version
+; - %{timestamp}      ; (available=@enable_datasource_timestamp@) Current Unix timestamp
+; - %{timestamp_ms}   ; (available=@enable_datasource_timestamp_ms@) Millisecond part of current Unix timestamp
+; - %{timestamp_us}   ; (available=@enable_datasource_timestamp_us@) Microsecond part of current Unix timestamp
 ; - %{tty}            ; (available=@enable_datasource_tty@) Which TTY the command was run on
 ; - %{tty_uid}        ; (available=@enable_datasource_tty_uid@) TTY uid
 ; - %{tty_username}   ; (available=@enable_datasource_tty_username@) TTY username
