@@ -12,20 +12,20 @@ install-exec-local:
 	    if [ ! -e $(DESTDIR)$(sysconfdir) ]; then \
 	        install -d $(DESTDIR)$(sysconfdir) ; \
 	    fi ; \
-	    install snoopy.ini $(DESTDIR)$(sysconfdir)/snoopy.ini ; \
+	    install -m 644 snoopy.ini $(DESTDIR)$(sysconfdir)/snoopy.ini ; \
 	else \
 	    if diff snoopy.ini $(DESTDIR)$(sysconfdir)/snoopy.ini; then \
 	        echo ; \
 	        echo "No changes to configuration file are required: $(DESTDIR)$(sysconfdir)/snoopy.ini" ; \
 	        echo ; \
 	    else \
-	        install snoopy.ini $(DESTDIR)$(sysconfdir)/snoopy.ini.NEW ; \
+	        install -m 644 snoopy.ini $(DESTDIR)$(sysconfdir)/snoopy.ini.NEW ; \
 	        echo ; \
 	        echo "Existing config file: $(DESTDIR)$(sysconfdir)/snoopy.ini" ; \
 	        echo "     New config file: $(DESTDIR)$(sysconfdir)/snoopy.ini.NEW" ; \
 	        echo ; \
 	        echo "WARNING: CONFIGURATION FILE CHANGES NEED MANUAL REVIEW" ; \
 	        echo ; \
-	    fi \
-	fi
+	    fi ; \
+	fi ;
 endif
