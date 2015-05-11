@@ -14,7 +14,7 @@ install-exec-local:
 	    fi ; \
 	    install -m 644 snoopy.ini $(DESTDIR)$(sysconfdir)/snoopy.ini ; \
 	else \
-	    if diff snoopy.ini $(DESTDIR)$(sysconfdir)/snoopy.ini; then \
+	    if diff -u snoopy.ini $(DESTDIR)$(sysconfdir)/snoopy.ini; then \
 	        echo ; \
 	        echo "No changes to configuration file are required: $(DESTDIR)$(sysconfdir)/snoopy.ini" ; \
 	        echo ; \
