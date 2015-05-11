@@ -23,12 +23,38 @@
 
 
 /*
- * Include all output functions
+ * Include relevant header files
  */
 #include "snoopy.h"
 #include "outputregistry.h"
 #include "configuration.h"
 #include <string.h>
+
+
+
+/*
+ * Include headers of all output functions
+ *
+ * Please maintain alphabetical order, equal to what `ls` would do.
+ */
+//#ifdef SNOOPY_CONF_OUTPUT_ENABLED_console
+//#include "output/consoleoutput.h"
+//#endif
+#ifdef SNOOPY_CONF_OUTPUT_ENABLED_devlog
+#include "output/devlogoutput.h"
+#endif
+#ifdef SNOOPY_CONF_OUTPUT_ENABLED_file
+#include "output/fileoutput.h"
+#endif
+//#ifdef SNOOPY_CONF_OUTPUT_ENABLED_journald
+//#include "output/journaldoutput.h"
+//#endif
+#ifdef SNOOPY_CONF_OUTPUT_ENABLED_socket
+#include "output/socketoutput.h"
+#endif
+#ifdef SNOOPY_CONF_OUTPUT_ENABLED_syslog
+#include "output/syslogoutput.h"
+#endif
 
 
 
