@@ -5,6 +5,8 @@
 
 2015-05-08 - Version 2.3.0rc6
 -----------------------------
+o Feature: file output is now configurable with ./configure flag
+    --with-default-output=OUTPUT_SPEC.
 o Feature: file output provider implemented. Snoopy is now capable of logging
     directly to file, if filesystem permissions do not prevent it.
 o Bugfixes: resolved all nine Coverity bugs (#80899-#80909), covering various

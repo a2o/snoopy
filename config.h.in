@@ -191,6 +191,12 @@
 /* Custom message format to use */
 #undef SNOOPY_CONF_LOG_MESSAGE_FORMAT_custom
 
+/* Default output provider */
+#undef SNOOPY_CONF_OUTPUT_DEFAULT
+
+/* Default output arguments */
+#undef SNOOPY_CONF_OUTPUT_DEFAULT_ARG
+
 /* Is output "devlog" available? */
 #undef SNOOPY_CONF_OUTPUT_ENABLED_devlog
 

@@ -241,6 +241,13 @@
 #define   SNOOPY_OUTPUT_SOCKET   "socket"
 #define   SNOOPY_OUTPUT_SYSLOG   "syslog"
 
+#ifdef SNOOPY_CONF_OUTPUT_DEFAULT
+
+#define   SNOOPY_OUTPUT_DEFAULT          SNOOPY_CONF_OUTPUT_DEFAULT
+#define   SNOOPY_OUTPUT_DEFAULT_ARG      SNOOPY_CONF_OUTPUT_DEFAULT_ARG
+
+#else   /* SNOOPY_CONF_OUTPUT_DEFAULT */
+
 #if (defined(__GLIBC__) && (2 == __GLIBC__) && (__GLIBC_MINOR__ < 9))
 /* Use 'syslog' on older linuxes that od not support SOCK_CLOEXEC and SOCK_NONBLOCK */
 #define   SNOOPY_OUTPUT_DEFAULT          SNOOPY_OUTPUT_SYSLOG
@@ -250,6 +257,7 @@
 #endif
 #define   SNOOPY_OUTPUT_DEFAULT_ARG      ""
 
+#endif   /* SNOOPY_CONF_OUTPUT_DEFAULT */
 
 
 /**

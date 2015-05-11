@@ -454,6 +454,13 @@ dnl ============================================================================
 
 
 
+dnl ============================================================================
+dnl ============================================================================
+dnl ======= START section: OUTPUTS =============================================
+dnl ============================================================================
+dnl ============================================================================
+
+
 # ==============================================================================
 # ======= Enable/disable all outputs at once ===================================
 # ==============================================================================
@@ -486,6 +493,64 @@ SNOOPY_CONFIGURE_OUTPUT_DISABLE(      [syslog],         [WARNING: This output is
 # ==============================================================================
 # ======= END section: ENABLE INDIVIDUAL OUTPUTS ===============================
 # ==============================================================================
+
+
+dnl ============================================================================
+AC_ARG_WITH(default-output,
+    [AC_HELP_STRING(
+        [--with-default-output=OUTPUT_SPEC],
+        [default output to use. See snoopy.ini or src/output/* for available values. [default=devlog]]
+    )],
+    [
+        if test "x$withval" = "x" -o "x$withval" = "xyes"; then
+            # Enabled, but without explicit value
+            AC_MSG_ERROR([--with-default-output requires an appropriate value])
+        elif test "x$withval" = "xno"; then
+            # Explicitly disabled: --without-...
+            AC_MSG_ERROR([using --without-default-output is not supported, as it makes no sense. Either define it explicitly, or, to use the default value, remove this argument from ./configure line.])
+        else
+            # Enabled with explicit value definition
+            default_output_val="$withval"
+
+            # Separate output from argument
+            if echo "$default_output_val" | grep ':' > /dev/null ; then
+                default_output=`echo "$default_output_val" | cut -d: -f1`
+                default_output_arg=`echo "$default_output_val" | cut -d: -f2-`
+            else
+                default_output="$default_output_val"
+                default_output_arg=""
+            fi
+
+            # Strip "output" suffix if exists
+            if ! echo "$default_output" | grep 'output$' > /dev/null ; then
+                default_output=`echo "$default_output" | sed -e 's/output$//'`
+            fi
+
+            # Check if given output exist
+echo DEF_OUT: $default_output
+            if test ! -f src/output/${default_output}output.c ; then
+                AC_MSG_ERROR([--with-default-output value provided is invalid, output does not exist: $default_output])
+            fi
+        fi
+    ],
+
+    # Not specified on ./configure line, decided in snoopy.h
+    [
+        default_output=""
+        default_output_arg=""
+    ]
+)
+
+AS_IF([test "x$default_output" != "x"], [
+    AC_DEFINE_UNQUOTED(SNOOPY_CONF_OUTPUT_DEFAULT,     ["$default_output"],     [Default output provider])
+    AC_DEFINE_UNQUOTED(SNOOPY_CONF_OUTPUT_DEFAULT_ARG, ["$default_output_arg"], [Default output arguments])
+])
+
+dnl ============================================================================
+dnl ============================================================================
+dnl ======= END section: OUTPUTS ===============================================
+dnl ============================================================================
+dnl ============================================================================
 
 
 
