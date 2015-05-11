@@ -43,18 +43,18 @@
 
 
 
-int snoopy_output_fileoutput (char *logMessage, int errorOrMessage)
+int snoopy_output_fileoutput (char *logMessage, int errorOrMessage, char *arg)
 {
     FILE  *fp;
     int    charCount;
 
     // Check if output file is properly configured
-    if (0 == strcmp(snoopy_configuration.output_arg, "")) {
+    if (0 == strcmp(arg, "")) {
         return -1;
     }
 
     // Try to open file in append mode
-    fp = fopen(snoopy_configuration.output_arg, "a");
+    fp = fopen(arg, "a");
     if (NULL == fp) {
         return -2;
     }

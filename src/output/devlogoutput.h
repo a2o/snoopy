@@ -25,4 +25,4 @@
 /*
  * SNOOPY OUTPUT: directly to /dev/log
  */
-int snoopy_output_devlogoutput (char *logMessage, int errorOrMessage);
+int snoopy_output_devlogoutput (char *logMessage, int errorOrMessage, char *arg);

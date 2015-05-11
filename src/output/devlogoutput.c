@@ -40,15 +40,14 @@
 
 #include "snoopy.h"
 #include "configuration.h"
-#include "outputregistry.h"
+#include "output/socketoutput.h"
 
 
 
-int snoopy_output_devlogoutput (char *logMessage, int errorOrMessage)
+int snoopy_output_devlogoutput (char *logMessage, int errorOrMessage, char *arg)
 {
     char  *logMessageWithPrefix = NULL;
-    char  *originalConfig_output     = NULL;
-    char  *originalConfig_output_arg = NULL;
+    int    retVal;
 
     /* Generate final message - add prefix which is otherwise added by syslog() syscall */
     logMessageWithPrefix    = malloc(SNOOPY_LOG_MESSAGE_MAX_SIZE + 100);   // +100 ought to be enough
@@ -59,19 +58,10 @@ int snoopy_output_devlogoutput (char *logMessage, int errorOrMessage)
         logMessage
     );
 
-    /* Store original output provider configuration settings - this is awkwardly done */
-    originalConfig_output     = snoopy_configuration.output;
-    originalConfig_output_arg = snoopy_configuration.output_arg;
-
     /* Pass execution to another output provider */
-    snoopy_configuration.output     = SNOOPY_OUTPUT_SOCKET;
-    snoopy_configuration.output_arg = "/dev/log";
-    snoopy_outputregistry_dispatch(logMessageWithPrefix, errorOrMessage);
+    retVal = snoopy_output_socketoutput(logMessageWithPrefix, errorOrMessage, "/dev/log");
 
-    /* Reset output provider configuration back to original settings */
-    snoopy_configuration.output     = originalConfig_output;
-    snoopy_configuration.output_arg = originalConfig_output_arg;
-
+    /* Housekeeping */
     free(logMessageWithPrefix);
-    return 1;
+    return retVal;
 }

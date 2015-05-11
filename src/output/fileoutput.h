@@ -25,4 +25,4 @@
 /*
  * SNOOPY OUTPUT: write directly to file
  */
-int snoopy_output_fileoutput (char *logMessage, int errorOrMessage);
+int snoopy_output_fileoutput (char *logMessage, int errorOrMessage, char *arg);

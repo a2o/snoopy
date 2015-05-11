@@ -85,7 +85,7 @@ char *snoopy_outputregistry_names[] = {
     "",
 };
 
-int (*snoopy_outputregistry_ptrs []) (char *logMessage, int errorOrMessage) = {
+int (*snoopy_outputregistry_ptrs []) (char *logMessage, int errorOrMessage, char *arg) = {
 //#ifdef SNOOPY_CONF_OUTPUT_ENABLED_console
 //    snoopy_output_consoleoutput,
 //#endif
@@ -146,25 +146,6 @@ int snoopy_outputregistry_getIndex (char *providerName)
 
 
 /*
- * call()
- *
- * Call the given ouputProvider
- */
-int snoopy_outputregistry_call (char *providerName, char *logMessage, int errorOrMessage)
-{
-    int idx;
-
-    idx = snoopy_outputregistry_getIndex(providerName);
-    if (idx == -1) {
-        return -1;
-    }
-
-    return snoopy_outputregistry_ptrs[idx](logMessage, errorOrMessage);
-}
-
-
-
-/*
  * dispatch()
  *
  * Dispatch the message to configured outputProvider
@@ -178,5 +159,5 @@ int snoopy_outputregistry_dispatch (char *logMessage, int errorOrMessage)
         return -1;
     }
 
-    return snoopy_outputregistry_ptrs[idx](logMessage, errorOrMessage);
+    return snoopy_outputregistry_ptrs[idx](logMessage, errorOrMessage, snoopy_configuration.output_arg);
 }

@@ -46,7 +46,7 @@
 
 
 
-int snoopy_output_syslogoutput (char *logMessage, int errorOrMessage)
+int snoopy_output_syslogoutput (char *logMessage, int errorOrMessage, char *arg)
 {
     /* Dispatch only if non-zero size */
     if (0 == strlen(logMessage)) {
