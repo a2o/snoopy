@@ -123,9 +123,10 @@ int find_ancestor_in_list(char **name_list)
 	    fclose(statf);
 	    return 1;
 	}
+
+	fclose(statf);
     }
 
-    fclose(statf);
     return 0; // Nothing found
 }
 
