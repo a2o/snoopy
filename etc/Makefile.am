@@ -27,5 +27,15 @@ install-exec-local:
 	        echo "WARNING: CONFIGURATION FILE CHANGES NEED MANUAL REVIEW" ; \
 	        echo ; \
 	    fi ; \
+	fi ; \
+	if [ -f $(DESTDIR)$(sysconfdir)/snoopy.ini ]; then \
+	    if [ -x $(DESTDIR)$(sysconfdir)/snoopy.ini ]; then \
+	        chmod 644 $(DESTDIR)$(sysconfdir)/snoopy.ini ; \
+	    fi ; \
+	fi ; \
+	if [ -f $(DESTDIR)$(sysconfdir)/snoopy.ini.NEW ]; then \
+	    if [ -x $(DESTDIR)$(sysconfdir)/snoopy.ini.NEW ]; then \
+	        chmod 644 $(DESTDIR)$(sysconfdir)/snoopy.ini.NEW ; \
+	    fi ; \
 	fi ;
 endif
