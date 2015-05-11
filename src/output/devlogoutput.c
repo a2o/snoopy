@@ -23,10 +23,10 @@
 
 
 /*
- * SNOOPY OUTPUT: socketouput (called like this because <socket.h> is system library
+ * SNOOPY OUTPUT: devlogoutput
  *
  * Description:
- *     Sends given message to socket
+ *     Sends given message directly to /dev/log socket, without using syslog() syscall
  *
  * Params:
  *     message: message to send

@@ -23,7 +23,7 @@
 
 
 /*
- * SNOOPY OUTPUT: socketouput (called like this because <socket.h> is system library
+ * SNOOPY OUTPUT: socketoutput (called like this because <socket.h> is system library)
  *
  * Description:
  *     Sends given message to socket
