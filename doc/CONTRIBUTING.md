@@ -42,10 +42,9 @@ aware of it:
 - src/datasource/NAME.h        (your data source's main header file)
 - src/datasource/NAME.c        (your data source's main source code goes here)
 - src/datasource/Makefile.am   (one reference)
-- src/datasourceregistry.h     (one reference)
-- src/datasourceregistry.c     (two references - name and function name)
+- src/datasourceregistry.c     (three references - header, name and function name)
 - configure.ac                 (one reference)
-- etc/snoopy.ini               (one reference in comments, for documentation purposes)
+- etc/snoopy.ini.in            (one reference in comments, for documentation purposes)
 - Changelog                    (short description of new feature)
 
 
@@ -55,8 +54,9 @@ Rules for filter development are the same as for new data source development,
 with the following additional specifics:
 
 - filters are located in src/filter/;
-- each filter is passed two arguments: logMessage and filter argument (if any,
-    otherwise an empty string is passed);
+- each filter is passed two arguments:
+    - logMessage and
+    - filter argument (if any, otherwise an empty string is passed);
 - filter argument is literal. If it contains multiple arguments (separated by
     comma, for example), the filter itself must do the parsing/tokenization.
 - filter MAY modify logMessage. If it does so, the new log message MUST NOT
@@ -74,10 +74,41 @@ aware of it:
 - src/filter/NAME.h            (your filter's main header file)
 - src/filter/NAME.c            (your filter's main source code goes here)
 - src/filter/Makefile.am       (one reference)
-- src/filterregistry.h         (one reference)
-- src/filterregistry.c         (two references)
+- src/filterregistry.c         (three references - header, name and function name)
 - configure.ac                 (one reference)
-- etc/snoopy.ini               (one reference in comments, for documentation purposes)
+- etc/snoopy.ini.in            (one reference in comments, for documentation purposes)
+- Changelog                    (short description of new feature)
+
+
+
+## Output development rules
+
+Rules for new output development are the same as for new filter development,
+with the following additional specifics:
+
+- outputs are located in src/output/;
+- as output names are generally very generic, files and functions are suffixed with "...output";
+- each output is passed three arguments:
+    - logMessage
+    - flag whether logMessage is a regular Snoopy log message or an error message
+    - output argument string (might not be used by output)
+- output argument is literal. If it contains multiple arguments (separated by
+    comma, for example), the output itself must do the parsing/tokenization.
+- reserved output names:
+    - snoopy*
+
+If you have developed a shiny new output and you would like to start using
+it with Snoopy, you have to add it to the following files to make Snoopy fully
+aware of it:
+
+- src/output/NAME.h            (your output's main header file)
+- src/output/NAME.c            (your output's main source code goes here)
+- src/output/Makefile.am       (one reference)
+- src/outputregistry.c         (three references - header, name and function name)
+- src/configfile.c             (one reference)
+- src/snoopy.h                 (one reference (or more if this is the new default output))
+- configure.ac                 (one reference)
+- etc/snoopy.ini.in            (one reference in comments, for documentation purposes)
 - Changelog                    (short description of new feature)
 
 
