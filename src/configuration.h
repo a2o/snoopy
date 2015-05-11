@@ -42,8 +42,9 @@ typedef struct {
     char *filter_chain;
     int   filter_chain_malloced;
 
-    char *output_provider;
-    char *output_path;
+    char *output;
+    char *output_arg;
+    int   output_arg_malloced;
 
     int   syslog_facility;
     int   syslog_level;

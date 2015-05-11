@@ -236,18 +236,18 @@
  * By default, messages get sent to syslog. Groundwork for other outputs
  * is provided to facilitate unforseen uses.
  */
-#define   SNOOPY_OUTPUT_PROVIDER_DEVLOG   "devlog"
-#define   SNOOPY_OUTPUT_PROVIDER_SOCKET   "socket"
-#define   SNOOPY_OUTPUT_PROVIDER_SYSLOG   "syslog"
+#define   SNOOPY_OUTPUT_DEVLOG   "devlog"
+#define   SNOOPY_OUTPUT_SOCKET   "socket"
+#define   SNOOPY_OUTPUT_SYSLOG   "syslog"
 
 #if (defined(__GLIBC__) && (2 == __GLIBC__) && (__GLIBC_MINOR__ < 9))
 /* Use 'syslog' on older linuxes that od not support SOCK_CLOEXEC and SOCK_NONBLOCK */
-#define   SNOOPY_OUTPUT_PROVIDER          SNOOPY_OUTPUT_PROVIDER_SYSLOG
+#define   SNOOPY_OUTPUT_DEFAULT          SNOOPY_OUTPUT_SYSLOG
 #else
 /* Otherwise do not use 'syslog' (was default before), because systemd is funny (blocks the syslog() call */
-#define   SNOOPY_OUTPUT_PROVIDER          SNOOPY_OUTPUT_PROVIDER_DEVLOG
+#define   SNOOPY_OUTPUT_DEFAULT          SNOOPY_OUTPUT_DEVLOG
 #endif
-#define   SNOOPY_OUTPUT_PATH              ""
+#define   SNOOPY_OUTPUT_DEFAULT_ARG      ""
 
 
 

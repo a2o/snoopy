@@ -147,7 +147,7 @@ int snoopy_outputregistry_dispatch (char *logMessage, int errorOrMessage)
 {
     int idx;
 
-    idx = snoopy_outputregistry_getIndex(snoopy_configuration.output_provider);
+    idx = snoopy_outputregistry_getIndex(snoopy_configuration.output);
     if (idx == -1) {
         return -1;
     }

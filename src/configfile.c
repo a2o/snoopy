@@ -140,16 +140,43 @@ int snoopy_configfile_load (
  *     void
  */
 void snoopy_configfile_parse_output (
-    char *confVal
+    char *confValOrig
 ) {
-    if (strcmp(confVal, SNOOPY_OUTPUT_PROVIDER_DEVLOG) == 0) { snoopy_configuration.output_provider = SNOOPY_OUTPUT_PROVIDER_DEVLOG; }
-    if (strcmp(confVal, SNOOPY_OUTPUT_PROVIDER_SYSLOG) == 0) { snoopy_configuration.output_provider = SNOOPY_OUTPUT_PROVIDER_SYSLOG; }
+    char  *confVal;
+    char  *outputName;
+    char  *outputArg;
+    char  *saveptr1;   // Do not assign null to it explicitly, as you get "Explicit null dereference"
 
-    // TODO other outputs
-    // Clone string
-    // Check if colon character is present, split into left and right string
-    // If right string is non-empty, malloc it, and store path in there
-    // TODO configure output at ./configue time
+    // First clone the config value, as it gets freed by iniparser
+    confVal = strdup(confValOrig);
+
+    // Check if configured value contains argument(s)
+    if (NULL == strchr(confVal, ':')) {
+        outputName = confVal;
+        snoopy_configuration.output_arg          = "";
+        snoopy_configuration.output_arg_malloced = SNOOPY_FALSE;
+        outputArg  = "";
+    } else {
+        // Separate output name from its arguments
+        outputName = strtok_r(confVal, ":", &saveptr1);
+        outputArg  = strtok_r(confVal, ":", &saveptr1);
+
+        // THINK What if conf.output_arg was set in previous call to this function,
+        // and is already malloced? We need to detect that and free previous
+        // allocation.
+        snoopy_configuration.output_arg          = strdup(outputArg);
+        snoopy_configuration.output_arg_malloced = SNOOPY_TRUE;
+    }
+
+    // Determine output name
+    if      (strcmp(outputName, SNOOPY_OUTPUT_DEVLOG) == 0) { snoopy_configuration.output = SNOOPY_OUTPUT_DEVLOG; }
+    else if (strcmp(outputName, SNOOPY_OUTPUT_SYSLOG) == 0) { snoopy_configuration.output = SNOOPY_OUTPUT_SYSLOG; }
+    else {
+        snoopy_configuration.output = SNOOPY_OUTPUT;
+    }
+
+    // Housekeeping
+    free(confVal);
 }
 
 

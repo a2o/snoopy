@@ -76,15 +76,16 @@ snoopy_configuration_type   snoopy_configuration = {
     .message_format_malloced = SNOOPY_FALSE,
 
 #ifdef SNOOPY_FILTERING_ENABLED
-    .filtering_enabled          = SNOOPY_TRUE,
+    .filtering_enabled       = SNOOPY_TRUE,
 #else
-    .filtering_enabled          = SNOOPY_FALSE,
+    .filtering_enabled       = SNOOPY_FALSE,
 #endif
     .filter_chain            = SNOOPY_FILTER_CHAIN,
     .filter_chain_malloced   = SNOOPY_FALSE,
 
-    .output_provider         = SNOOPY_OUTPUT_PROVIDER,
-    .output_path             = SNOOPY_OUTPUT_PATH,
+    .output                  = SNOOPY_OUTPUT_DEFAULT,
+    .output_arg              = SNOOPY_OUTPUT_DEFAULT_ARG,
+    .output_arg_malloced     = SNOOPY_FALSE,
 
     .syslog_facility         = SNOOPY_CONF_SYSLOG_FACILITY,
     .syslog_level            = SNOOPY_CONF_SYSLOG_LEVEL,
@@ -176,5 +177,20 @@ void snoopy_configuration_dtor ()
 
         /* Set this to default value - REQUIRED (see above) */
         snoopy_configuration.filter_chain = SNOOPY_FILTER_CHAIN;
+    }
+
+
+    /*
+     * Reset config setting: output
+     */
+    if (SNOOPY_TRUE == snoopy_configuration.output_arg_malloced) {
+        free(snoopy_configuration.output_arg);
+
+        /* Set this to false - REQUIRED (see above) */
+        snoopy_configuration.output_arg_malloced = SNOOPY_FALSE;
+
+        /* Set this to default value - REQUIRED (see above) */
+        snoopy_configuration.output     = SNOOPY_OUTPUT_DEFAULT;
+        snoopy_configuration.output_arg = SNOOPY_OUTPUT_DEFAULT_ARG;
     }
 }
