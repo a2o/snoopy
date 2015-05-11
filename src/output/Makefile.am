@@ -30,6 +30,14 @@ libsnoopy_outputs_all_la_SOURCES += \
     devlogoutput.h
 endif
 
+# Output: file
+#
+if OUTPUT_ENABLED_file
+libsnoopy_outputs_all_la_SOURCES += \
+    fileoutput.c \
+    fileoutput.h
+endif
+
 # Output: socket
 #
 # This one is always enabled, unconditionally

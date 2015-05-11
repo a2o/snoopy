@@ -194,6 +194,9 @@
 /* Is output "devlog" available? */
 #undef SNOOPY_CONF_OUTPUT_ENABLED_devlog
 
+/* Is output "file" available? */
+#undef SNOOPY_CONF_OUTPUT_ENABLED_file
+
 /* Is output "socket" available? Forced "Yes". */
 #undef SNOOPY_CONF_OUTPUT_ENABLED_socket
 

@@ -33,9 +33,9 @@
 #ifdef SNOOPY_CONF_OUTPUT_ENABLED_devlog
 #include "output/devlogoutput.h"
 #endif
-//#ifdef SNOOPY_CONF_OUTPUT_ENABLED_file
-//#include "output/fileoutput.h"
-//#endif
+#ifdef SNOOPY_CONF_OUTPUT_ENABLED_file
+#include "output/fileoutput.h"
+#endif
 //#ifdef SNOOPY_CONF_OUTPUT_ENABLED_journald
 //#include "output/journaldoutput.h"
 //#endif

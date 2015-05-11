@@ -237,6 +237,7 @@
  * is provided to facilitate unforseen uses.
  */
 #define   SNOOPY_OUTPUT_DEVLOG   "devlog"
+#define   SNOOPY_OUTPUT_FILE     "file"
 #define   SNOOPY_OUTPUT_SOCKET   "socket"
 #define   SNOOPY_OUTPUT_SYSLOG   "syslog"
 

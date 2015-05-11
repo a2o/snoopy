@@ -94,6 +94,7 @@
 ;
 ; List of available outputs:
 ; - devlog   ; (available=@enable_output_devlog@) Default, writes directly to /dev/log.
+; - file     ; (available=@enable_output_file@) Write directly to file.
 ; - socket   ; (available=@enable_output_socket@) Built-in output. As argument it requires an absolute path of socket to write to.
 ; - syslog   ; (available=@enable_output_syslog@) Previuosly-default (WARNING: DO NOT USE syslog OUTPUT WITH systemd - IT WILL HANG YOUR SYSTEM ON BOOT)
 ;
@@ -114,6 +115,8 @@
 ;
 ; Example:
 ;output = console
+;output = devlog
+;output = file:/var/log/snoopy.log
 
 
 

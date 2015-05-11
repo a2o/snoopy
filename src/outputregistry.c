@@ -44,9 +44,9 @@ char *snoopy_outputregistry_names[] = {
 #ifdef SNOOPY_CONF_OUTPUT_ENABLED_devlog
     "devlog",
 #endif
-//#ifdef SNOOPY_CONF_OUTPUT_ENABLED_file
-//    "file",
-//#endif
+#ifdef SNOOPY_CONF_OUTPUT_ENABLED_file
+    "file",
+#endif
 //#ifdef SNOOPY_CONF_OUTPUT_ENABLED_journald
 //    "journald",
 //#endif
@@ -66,9 +66,9 @@ int (*snoopy_outputregistry_ptrs []) (char *logMessage, int errorOrMessage) = {
 #ifdef SNOOPY_CONF_OUTPUT_ENABLED_devlog
     snoopy_output_devlogoutput,
 #endif
-//#ifdef SNOOPY_CONF_OUTPUT_ENABLED_file
-//    snoopy_output_fileoutput,
-//#endif
+#ifdef SNOOPY_CONF_OUTPUT_ENABLED_file
+    snoopy_output_fileoutput,
+#endif
 //#ifdef SNOOPY_CONF_OUTPUT_ENABLED_journald
 //    snoopy_output_journaldoutput,
 //#endif

@@ -480,6 +480,7 @@ AC_ARG_ENABLE(all-outputs,
 # ======= START section: ENABLE INDIVIDUAL OUTPUTS =============================
 # ==============================================================================
 SNOOPY_CONFIGURE_OUTPUT_ENABLE(       [devlog],         [This is the default output of Snoopy.])
+SNOOPY_CONFIGURE_OUTPUT_ENABLE(       [file],           [Write directly to file.])
 SNOOPY_CONFIGURE_OUTPUT_ENABLE_FORCE( [socket],         [Output "socket" is mandatory!])
 SNOOPY_CONFIGURE_OUTPUT_DISABLE(      [syslog],         [WARNING: This output is causing system hangs with SystemD. Do not use it unless you are absolutely certain you know better!])
 # ==============================================================================
