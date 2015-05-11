@@ -159,7 +159,7 @@ void snoopy_configfile_parse_output (
     } else {
         // Separate output name from its arguments
         outputName = strtok_r(confVal, ":", &saveptr1);
-        outputArg  = strtok_r(confVal, ":", &saveptr1);
+        outputArg  = strtok_r(NULL   , ":", &saveptr1);
 
         // THINK What if conf.output_arg was set in previous call to this function,
         // and is already malloced? We need to detect that and free previous
@@ -170,9 +170,10 @@ void snoopy_configfile_parse_output (
 
     // Determine output name
     if      (strcmp(outputName, SNOOPY_OUTPUT_DEVLOG) == 0) { snoopy_configuration.output = SNOOPY_OUTPUT_DEVLOG; }
+    else if (strcmp(outputName, SNOOPY_OUTPUT_FILE  ) == 0) { snoopy_configuration.output = SNOOPY_OUTPUT_FILE;   }
     else if (strcmp(outputName, SNOOPY_OUTPUT_SYSLOG) == 0) { snoopy_configuration.output = SNOOPY_OUTPUT_SYSLOG; }
     else {
-        snoopy_configuration.output = SNOOPY_OUTPUT;
+        snoopy_configuration.output = SNOOPY_OUTPUT_DEFAULT;
     }
 
     // Housekeeping

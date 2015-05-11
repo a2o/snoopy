@@ -36,6 +36,7 @@
  */
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "snoopy.h"
 #include "configuration.h"
