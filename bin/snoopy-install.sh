@@ -55,7 +55,7 @@ esac
 if [ "`id -u`" != "0" ]; then
     echo "SNOOPY INSTALL ERROR: This installation must be run as root."
     echo "Hint: 'sudo COMMAND' perhaps?"
-#    exit 1
+    exit 1
 fi
 
 
