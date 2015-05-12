@@ -150,7 +150,6 @@ AC_CONFIG_HEADERS([config.h])
 ### Generate these (Make)files
 #
 AC_CONFIG_FILES([Makefile
-                 bin/Makefile
                  contrib/rhel/snoopy.spec
                  contrib/sles/snoopy.spec
                  doc/Makefile
@@ -161,9 +160,10 @@ AC_CONFIG_FILES([Makefile
                  src/datasource/Makefile
                  src/filter/Makefile
                  src/lib/Makefile
-                 src/output/Makefile])
-AC_CONFIG_FILES([bin/snoopy-disable], [chmod +x bin/snoopy-disable])
-AC_CONFIG_FILES([bin/snoopy-enable],  [chmod +x bin/snoopy-enable])
+                 src/output/Makefile
+                 util/Makefile])
+AC_CONFIG_FILES([util/snoopy-disable], [chmod +x util/snoopy-disable])
+AC_CONFIG_FILES([util/snoopy-enable],  [chmod +x util/snoopy-enable])
 
 
 

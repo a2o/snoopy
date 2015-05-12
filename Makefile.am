@@ -19,7 +19,7 @@ ACLOCAL_AMFLAGS = -I build/m4
 # configuration file and only then the snoopy library itself.
 SUBDIRS = \
 	src \
-	bin \
+	util \
 	etc \
 	doc
 
@@ -29,12 +29,12 @@ EXTRA_DIST +=\
 
 enable: install
 	echo ; \
-	$(top_srcdir)/bin/snoopy-enable ; \
+	$(top_srcdir)/util/snoopy-enable ; \
 	echo ;
 
 disable:
 	echo ; \
-	$(top_srcdir)/bin/snoopy-disable \
+	$(top_srcdir)/util/snoopy-disable \
 	echo ;
 
 # Disable it if we are uninstalling it, to avoid error messages
