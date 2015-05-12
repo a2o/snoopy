@@ -106,3 +106,12 @@ curl \
     --form description="$COVERITY_DESCRIPTION" \
     --form file=@${BUILD_FILE_PREFIX}-${COVERITY_BUILD_VERSION}.tar.gz \
     https://scan.coverity.com/builds?project=Snoopy+Logger
+
+
+
+### Tell the user what has been done
+#
+echo
+echo "Submitted file to Coverity: ${BUILD_FILE_PREFIX}-${COVERITY_BUILD_VERSION}.tar.gz"
+echo "All done."
+echo
