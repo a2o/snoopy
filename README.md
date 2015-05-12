@@ -1,4 +1,4 @@
-# Snoopy Logger
+a# Snoopy Logger
 
 [![Flattr Snoopy Logger project](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=a2o&url=https://github.com/a2o/snoopy&title=Snoopy Logger)
 
@@ -23,9 +23,11 @@ Snoopy is a tiny library that logs all executed commands (+ arguments) on your s
 
 ## 0. News
 
-2015-05-12: **Snoopy 2.3.0 released!** Contains many improvements, bugfixes, new
-features and quite improved build process. All users are encouraged to upgrade
-to Snoopy version 2.3.0+ as soon as possible.
+2015-05-12:
+**Snoopy 2.3.0 released!** This Snoopy version contains many
+improvements, bugfixes, new features and quite improved build process.
+All users are encouraged to upgrade to Snoopy version 2.3.0+ as soon
+as possible.
 
 
 ## 1. Installation
