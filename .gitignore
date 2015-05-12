@@ -57,6 +57,12 @@ Makefile
 /etc/snoopy.ini
 
 
+### Coverity files
+#
+/cov-int*
+/build/coverity-settings.sh.conf
+
+
 ### Distribution related files
 #
 /debian
