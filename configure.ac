@@ -156,10 +156,10 @@ AC_CONFIG_FILES([Makefile
                  doc/internals/Makefile
                  etc/Makefile
                  etc/snoopy.ini
+                 lib/Makefile
                  src/Makefile
                  src/datasource/Makefile
                  src/filter/Makefile
-                 src/lib/Makefile
                  src/output/Makefile
                  util/Makefile])
 AC_CONFIG_FILES([util/snoopy-disable], [chmod +x util/snoopy-disable])

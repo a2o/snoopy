@@ -18,10 +18,17 @@ ACLOCAL_AMFLAGS = -I build/m4
 # configuration file not being found. Therefore we first install
 # configuration file and only then the snoopy library itself.
 SUBDIRS = \
+	lib \
 	src \
 	util \
 	etc \
 	doc
+
+if CONFIG_FILE_ENABLED
+SUBDIRS += \
+	lib
+endif
+
 
 EXTRA_DIST +=\
 	bootstrap.sh \

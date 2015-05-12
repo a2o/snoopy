@@ -40,13 +40,11 @@ libsnoopy_no_execve_la_LIBADD = \
 
 # If config file is enabled, build and link these too
 if CONFIG_FILE_ENABLED
-SUBDIRS += \
-	lib
 libsnoopy_no_execve_la_SOURCES += \
 	configfile.c \
 	configfile.h
 libsnoopy_no_execve_la_LIBADD += \
-	lib/libiniparser.la
+	../lib/libiniparser.la
 endif
 
 # If filtering is enabled, add these too
