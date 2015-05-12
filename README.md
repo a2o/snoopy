@@ -40,8 +40,10 @@ Detailed installation instructions are available here: [doc/INSTALL.md](doc/INST
 ### 1.1 Version information
 
 Latest Snoopy version information:
-* stable: http://source.a2o.si/download/snoopy/snoopy-2.2.8.tar.gz
-* development: http://source.a2o.si/download/snoopy/snoopy-2.3.0rc6.tar.gz
+* stable: http://source.a2o.si/download/snoopy/snoopy-2.3.0.tar.gz
+<!---
+* development: http://source.a2o.si/download/snoopy/snoopy-2.3.0.tar.gz
+-->
 
 
 

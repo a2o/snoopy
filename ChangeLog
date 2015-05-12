@@ -3,17 +3,18 @@
 -------------------------------------------------------------------------------
 
 
-2015-05-08 - Version 2.3.0rc6
------------------------------
+2015-05-11 - Version 2.3.0
+--------------------------
 o Feature: new data source: datetime (returns current date and time in
     ISO8601 format).
-o Feature: new data sources: timestamp, timestamp_ms and timestamp_us
-o Feature: file output is now configurable with ./configure flag
+o Feature (#54 @ GitHub): new data sources: timestamp, timestamp_ms and timestamp_us
+o Feature (#55 @ GitHub): file output is now configurable with ./configure flag
     --with-default-output=OUTPUT_SPEC.
-o Feature: file output provider implemented. Snoopy is now capable of logging
+o Feature (#53 @ GitHub): file output provider implemented. Snoopy is now capable of logging
     directly to file, if filesystem permissions do not prevent it.
 o Bugfixes: resolved all nine Coverity bugs (#80899-#80909), covering various
     resource leaks, unchecked string writes etc.
+o Bugfixes: resolved six additional coverity bugs (82437-82442)
 o Refactoring build process: config file comments now reflect which data
     sources, filters and outputs are available in given Snoopy installation/
     package/build.
