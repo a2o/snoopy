@@ -7,6 +7,7 @@ Snoopy is a tiny library that logs all executed commands (+ arguments) on your s
 
 
   * [Snoopy Logger](#snoopy-logger)
+    * [0. News](#1-news)
     * [1. Installation](#1-installation)
       * [1.1 Version information](#11-version-information)
     * [2. Output](#2-output)
@@ -18,6 +19,13 @@ Snoopy is a tiny library that logs all executed commands (+ arguments) on your s
     * [7. License](#7-license)
     * [8. Credits](#8-credits)
 
+
+
+## 0. News
+
+2015-05-12: **Snoopy 2.3.0 released!** Contains many improvements, bugfixes, new
+features and quite improved build process. All users are encouraged to upgrade
+to Snoopy version 2.3.0+ as soon as possible.
 
 
 ## 1. Installation
@@ -41,6 +49,7 @@ Detailed installation instructions are available here: [doc/INSTALL.md](doc/INST
 
 Latest Snoopy version information:
 * stable: http://source.a2o.si/download/snoopy/snoopy-2.3.0.tar.gz
+
 <!---
 * development: http://source.a2o.si/download/snoopy/snoopy-2.3.0.tar.gz
 -->
