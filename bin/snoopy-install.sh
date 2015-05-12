@@ -191,6 +191,10 @@ if [ "$SNOOPY_INSTALL_MODE" == "git" ]; then
 
         ./autogen.sh           >> $SNOOPY_INSTALL_LOGFILE 2>&1
 
+    elif [ -x configure ]; then
+        # Do nothing, ./configure is commited
+        true
+
     else
         echo "SNOOPY INSTALL ERROR: This git ref is too old to be supported by this installation procedure."
         echo "SNOOPY INSTALL ERROR: You will have to install it manually."
