@@ -109,7 +109,6 @@
 ;
 ; List of outputs pending implementation (patches welcome!):
 ; - console                           ; TODO
-; - file:/absolute/path/to/file       ; TODO (missing path configuration too)
 ; - journald                          ; TODO
 ;
 ; Default value:
@@ -121,6 +120,7 @@
 ;output = console
 ;output = devlog
 ;output = file:/var/log/snoopy.log
+;output = socket:/var/run/socket-for-snoopy.sock
 
 
 
