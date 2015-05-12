@@ -174,6 +174,7 @@ void snoopy_configfile_parse_output (
     // Determine output name
     if      (strcmp(outputName, SNOOPY_OUTPUT_DEVLOG) == 0) { snoopy_configuration.output = SNOOPY_OUTPUT_DEVLOG; }
     else if (strcmp(outputName, SNOOPY_OUTPUT_FILE  ) == 0) { snoopy_configuration.output = SNOOPY_OUTPUT_FILE;   }
+    else if (strcmp(outputName, SNOOPY_OUTPUT_SOCKET) == 0) { snoopy_configuration.output = SNOOPY_OUTPUT_SOCKET; }
     else if (strcmp(outputName, SNOOPY_OUTPUT_SYSLOG) == 0) { snoopy_configuration.output = SNOOPY_OUTPUT_SYSLOG; }
     else {
         snoopy_configuration.output = SNOOPY_OUTPUT_DEFAULT;
