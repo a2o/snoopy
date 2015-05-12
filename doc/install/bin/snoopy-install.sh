@@ -108,14 +108,14 @@ fi
 ### If building from git, check for some more stuff
 #
 if [ "$SNOOPY_INSTALL_MODE" == "git" ]; then
-    echo "SNOOPY INSTALL: Installing distro-specific packages 'autoconf', 'git', 'm4' and others..."
+    echo "SNOOPY INSTALL: Installing distro-specific packages: autoconf, git, libtool, m4..."
     if [ -f /etc/debian_version ]; then
         # Debian, Ubuntu
         # About /dev/null: http://askubuntu.com/questions/372810/how-to-prevent-script-not-to-stop-after-apt-get
-        apt-get -y install autoconf git < "/dev/null"
+        apt-get -y install autoconf git libtool m4 < "/dev/null"
     elif [ -f /etc/redhat-release ]; then
         # RHEL, Fedora, CentOS
-        yum install -y autoconf git
+        yum install -y autoconf git libtool
     else
         # Check manually
         if ! which autoreconf &> /dev/null; then
@@ -127,6 +127,13 @@ if [ "$SNOOPY_INSTALL_MODE" == "git" ]; then
         # Check manually
         if ! which git &> /dev/null; then
             echo "SNOOPY INSTALL ERROR: 'git' not found!"
+            echo "SNOOPY INSTALL ERROR: Install it and rerun this installer."
+            exit 1
+        fi
+
+        # Check manually
+        if ! which libtool &> /dev/null; then
+            echo "SNOOPY INSTALL ERROR: 'libtool' not found!"
             echo "SNOOPY INSTALL ERROR: Install it and rerun this installer."
             exit 1
         fi
