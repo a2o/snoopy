@@ -39,7 +39,7 @@
 To start automated installation procedure for **STABLE** version of Snoopy,
 run this command:
 
-    rm -f snoopy-install &&
+    rm -f snoopy-install.sh &&
     wget -q -O snoopy-install.sh https://github.com/a2o/snoopy/raw/install/doc/install/bin/snoopy-install.sh &&
     chmod 755 snoopy-install.sh &&
     ./snoopy-install.sh stable
@@ -47,7 +47,7 @@ run this command:
 To start automated installation procedure for **DEVELOPMENT** version of Snoopy,
 run this command:
 
-    rm -f snoopy-install &&
+    rm -f snoopy-install.sh &&
     wget -q -O snoopy-install.sh https://github.com/a2o/snoopy/raw/install/doc/install/bin/snoopy-install.sh &&
     chmod 755 snoopy-install.sh &&
     ./snoopy-install.sh git-master
