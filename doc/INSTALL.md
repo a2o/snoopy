@@ -39,12 +39,18 @@
 To start automated installation procedure for **STABLE** version of Snoopy,
 run this command:
 
-    wget -q -O - https://github.com/a2o/snoopy/raw/stable/bin/snoopy-install.sh | sh
+    rm -f snoopy-install &&
+    wget -q -O snoopy-install.sh https://github.com/a2o/snoopy/raw/install/doc/install/bin/snoopy-install.sh &&
+    chmod 755 snoopy-install.sh &&
+    ./snoopy-install.sh stable
 
 To start automated installation procedure for **DEVELOPMENT** version of Snoopy,
 run this command:
 
-    wget -q -O - https://github.com/a2o/snoopy/raw/master/bin/snoopy-install.sh | sh
+    rm -f snoopy-install &&
+    wget -q -O snoopy-install.sh https://github.com/a2o/snoopy/raw/install/doc/install/bin/snoopy-install.sh &&
+    chmod 755 snoopy-install.sh &&
+    ./snoopy-install.sh git-master
 
 **WARNING: This manual is for latest Snoopy version only. Any version that is not the latest is not supported. Please do not submit any bug/feature/change requests related to unsupported versions.**
 
