@@ -49,7 +49,11 @@ int snoopy_filter_only_uid (char *msg, char *arg)
     uid_t  curUid;     // Actual UID of running process
     int    j;
     char  *str1;
-    char  *saveptr1;   // Do not assign null to it explicitly, as you get "Explicit null dereference"
+
+    // Do not assign null to it explicitly, as you get "Explicit null dereference" Coverity error.
+    // If you do not assign it, Coverity complains with "Uninitialized pointer read".
+    char  *saveptr1 = "";
+
 
     /* Get uid of current process */
     curUid = getuid();

@@ -145,7 +145,10 @@ void snoopy_configfile_parse_output (
     char  *confVal;
     char  *outputName;
     char  *outputArg;
-    char  *saveptr1;   // Do not assign null to it explicitly, as you get "Explicit null dereference"
+
+    // Do not assign null to it explicitly, as you get "Explicit null dereference" Coverity error.
+    // If you do not assign it, Coverity complains with "Uninitialized pointer read".
+    char  *saveptr1 = "";
 
     // First clone the config value, as it gets freed by iniparser
     confVal = strdup(confValOrig);
