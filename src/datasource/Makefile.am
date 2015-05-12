@@ -38,6 +38,14 @@ libsnoopy_datasources_all_la_SOURCES += \
 	cwd.h
 endif
 
+# Data source: datetime
+#
+if DATASOURCE_ENABLED_datetime
+libsnoopy_datasources_all_la_SOURCES += \
+	datetime.c \
+	datetime.h
+endif
+
 # Data source: egid
 #
 if DATASOURCE_ENABLED_egid

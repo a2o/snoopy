@@ -5,6 +5,8 @@
 
 2015-05-08 - Version 2.3.0rc6
 -----------------------------
+o Feature: new data source: datetime (returns current date and time in
+    ISO8601 format).
 o Feature: new data sources: timestamp, timestamp_ms and timestamp_us
 o Feature: file output is now configurable with ./configure flag
     --with-default-output=OUTPUT_SPEC.

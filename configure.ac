@@ -105,6 +105,7 @@ AC_CHECK_HEADERS([ \
     sys/socket.h \
     sys/time.h   \
     syslog.h     \
+    time.h       \
     unistd.h     \
 ])
 
@@ -292,6 +293,7 @@ AC_ARG_ENABLE(all-datasources,
 # ==============================================================================
 SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [cmdline],        [full command line including arguments])
 SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [cwd],            [current working directory])
+SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [datetime],       [current date and time in ISO 8601 format])
 SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [egid],           [effective GID])
 SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [egroup],         [effective literal group name])
 SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [env],            [particular environment variable])

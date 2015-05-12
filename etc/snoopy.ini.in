@@ -15,6 +15,7 @@
 ; List of available data sources:
 ; - %{cmdline}        ; (available=@enable_datasource_cmdline@) Full command line, with arguments
 ; - %{cwd}            ; (available=@enable_datasource_cwd@) Current working directory
+; - %{datetime}       ; (available=@enable_datasource_datetime@) Date and time in ISO 8601 format
 ; - %{egid}           ; (available=@enable_datasource_egid@) Effective gid that executed the command
 ; - %{egroup}         ; (available=@enable_datasource_egroup@) Effective group name that executed the command
 ; - %{env:VAR}        ; (available=@enable_datasource_env@) Environmental variable named 'VAR'

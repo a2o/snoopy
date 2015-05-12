@@ -40,6 +40,9 @@
 #ifdef SNOOPY_CONF_DATASOURCE_ENABLED_cwd
 #include "datasource/cwd.h"
 #endif
+#ifdef SNOOPY_CONF_DATASOURCE_ENABLED_datetime
+#include "datasource/datetime.h"
+#endif
 #ifdef SNOOPY_CONF_DATASOURCE_ENABLED_egid
 #include "datasource/egid.h"
 #endif
@@ -122,6 +125,9 @@ char *snoopy_datasourceregistry_names[] = {
 #ifdef SNOOPY_CONF_DATASOURCE_ENABLED_cwd
     "cwd",
 #endif
+#ifdef SNOOPY_CONF_DATASOURCE_ENABLED_datetime
+    "datetime",
+#endif
 #ifdef SNOOPY_CONF_DATASOURCE_ENABLED_egid
     "egid",
 #endif
@@ -200,6 +206,9 @@ int (*snoopy_datasourceregistry_ptrs []) (char *result, char *arg) = {
 #endif
 #ifdef SNOOPY_CONF_DATASOURCE_ENABLED_cwd
     snoopy_datasource_cwd,
+#endif
+#ifdef SNOOPY_CONF_DATASOURCE_ENABLED_datetime
+    snoopy_datasource_datetime,
 #endif
 #ifdef SNOOPY_CONF_DATASOURCE_ENABLED_egid
     snoopy_datasource_egid,

@@ -76,6 +76,9 @@
 /* Define to 1 if you have the <sys/types.h> header file. */
 #undef HAVE_SYS_TYPES_H
 
+/* Define to 1 if you have the <time.h> header file. */
+#undef HAVE_TIME_H
+
 /* Define to 1 if you have the <unistd.h> header file. */
 #undef HAVE_UNISTD_H
 
@@ -112,6 +115,9 @@
 
 /* Is data source "cwd" available? */
 #undef SNOOPY_CONF_DATASOURCE_ENABLED_cwd
+
+/* Is data source "datetime" available? */
+#undef SNOOPY_CONF_DATASOURCE_ENABLED_datetime
 
 /* Is data source "egid" available? */
 #undef SNOOPY_CONF_DATASOURCE_ENABLED_egid
