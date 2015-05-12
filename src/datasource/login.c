@@ -70,7 +70,7 @@ int snoopy_datasource_login (char *result, char *arg)
         if (!loginptr) {
             strcpy(login, "(unknown)");
         } else {
-            strncpy(login, loginptr, loginSizeMaxWithNull);
+            strncpy(login, loginptr, loginSizeMaxWithoutNull);   // Coverity suggests using -1 size here
             if (strlen(loginptr) > loginSizeMaxWithoutNull) {
                 login[loginSizeMaxWithoutNull] = '\0';
             }

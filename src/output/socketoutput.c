@@ -65,14 +65,11 @@ int snoopy_output_socketoutput (char *logMessage, int errorOrMessage, char *arg)
     /* Prepare socket - NON BLOCKING (systemd blocks /dev/log if journald is not running) */
     if ((s = socket(AF_LOCAL, SOCK_DGRAM|SOCK_CLOEXEC|SOCK_NONBLOCK, 0)) == -1) {
 #endif
-        if (-1 != s) {
-            close(s);
-        }
         return -1;
     }
 
     remote.sun_family = AF_LOCAL;
-    strncpy(remote.sun_path, arg, 108);
+    strncpy(remote.sun_path, arg, 107);   // Coverity suggests -1 here
     if (strlen(arg) > 107) {
         remote.sun_path[107] = '\0';
     }
