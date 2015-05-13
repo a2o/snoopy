@@ -1,6 +1,6 @@
 /* Snoopy 1.1
  *
- * $Id: $
+ * $Id: snoopy.h,v 1.3 2000/08/19 02:25:31 marius Exp $
  * 
  */
 

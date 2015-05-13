@@ -1,7 +1,4 @@
-o Decrease function-calling overhead by using macros to 
-  replace log().  
-  -> See where else macros could be used.
-
+$Id: TODO,v 1.3 2000/10/11 02:57:22 marius Exp $
 o Logging of environment (in the case of execve())
   -> Would require a change in the logging mechanism
 

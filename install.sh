@@ -2,7 +2,7 @@
 
 #installation script for snoopy (for system wide installs)
 #Run as root!
-#$Id: $
+#$Id: install.sh,v 1.2 2000/08/19 02:25:31 marius Exp $
 
 [ -x snoopy.so ] && {
   touch /etc/ld.so.preload

@@ -1,5 +1,5 @@
 # Makefile for snoopy
-# $Id: $
+# $Id: Makefile,v 1.2 2000/08/19 02:25:31 marius Exp $
 
 CC = gcc
 LIBS  = -ldl

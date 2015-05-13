@@ -1,3 +1,9 @@
+$Id: ChangeLog,v 1.3 2000/10/11 02:57:22 marius Exp $
+
+Thu October 10 - Version  1.2
+-----------------------------
+o Fixed small bug with rather adverse side effects. 
+
 Thu August 17 - Version  1.1
 ----------------------------
 o Added support for execv().  Although execv() calls execve()

@@ -1,7 +1,7 @@
 /* snoopy.c -- execve() logging wrapper 
  * Copyright (c) 2000 marius@linux.com,mbm@linux.com
  * Version 1.1
- * $Id: $
+ * $Id: snoopy.c,v 1.5 2000/09/27 05:16:40 mbm Exp $
  *
  * Part hacked on flight KL 0617, 30,000 ft or so over the Atlantic :) 
  * 
@@ -33,7 +33,7 @@
 
 #define FN(ptr,type,name,args)  ptr = (type (*)args)dlsym (REAL_LIBC, name)
 
-void log(const char *filename, char **argv) {
+inline void log(const char *filename, char **argv) {
 
 	static char **ptr, *logstring; 
 	static int size = MAX;
@@ -42,7 +42,7 @@ void log(const char *filename, char **argv) {
 	FN(guid,int,"getuid",(void));
 
 	ptr       = (char **)&argv[1];
-	logstring = (char *)malloc((size_t *)size);
+	logstring = (char *)malloc((size_t *)size+2);
 
 	openlog("snoopy", LOG_PID, LOG_AUTHPRIV);
 	
