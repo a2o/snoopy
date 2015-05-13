@@ -1,5 +1,5 @@
 /* detect.c -- simple execve() wrapper detection 
- * $Id: detect.c,v 1.2 2000/10/11 02:57:22 marius Exp $
+ * $Id: detect.c,v 1.4 2000/11/04 22:20:52 mbm Exp $
  * Copyright (c) 2000 marius@linux.com,mbm@linux.com
  *
  * 
@@ -21,16 +21,14 @@
 #include <stdio.h>
 #include <dlfcn.h>
 
-#if defined(RTLD_NEXT)
-#  define REAL_LIBC RTLD_NEXT
-#else
-#  define REAL_LIBC ((void *) -1L)
+#ifndef RTLD_DEFAULT
+#  define RTLD_DEFAULT ((void *) 0)
 #endif
 
 int main(void) {
 	void *handle = dlopen("/lib/libc.so.6", RTLD_LAZY);
 	//simple test to see if the execve in memory matches libc.so.6
-	if (dlsym(handle, "execve") != dlsym(REAL_LIBC, "execve"))
+	if (dlsym(handle, "execve") != dlsym(RTLD_DEFAULT, "execve"))
 		printf("something fishy...\n");
 	else
 		printf("secure\n");

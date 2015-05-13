@@ -2,9 +2,9 @@
 
 #installation script for snoopy (for system wide installs)
 #Run as root!
-#$Id: install.sh,v 1.2 2000/08/19 02:25:31 marius Exp $
+#$Id: install.sh,v 1.3 2000/12/10 18:48:30 marius Exp $
 
-[ -x snoopy.so ] && {
+[ -x /lib/snoopy.so ] && {
   touch /etc/ld.so.preload
   [ -w /etc/ld.so.preload ] && {
     [ `grep -c '/lib/snoopy.so'    /etc/ld.so.preload` == 0 ] && {

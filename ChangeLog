@@ -1,4 +1,15 @@
-$Id: ChangeLog,v 1.3 2000/10/11 02:57:22 marius Exp $
+$Id: ChangeLog,v 1.5 2000/12/10 08:50:49 marius Exp $
+
+Sun December 10 - Version  1.3
+------------------------------
+o Altered logging mechanism for performance
+o Added new way of logging (can choose)
+o Added an integrity check (optional)
+
+Wed October 25 - Version  1.2a
+-----------------------------
+o ROOT_ONLY behavior now works again, thanks to adrian.head@bytecomm.com.au for
+  notifying us!
 
 Thu October 10 - Version  1.2
 -----------------------------
