@@ -1,5 +1,5 @@
 # Makefile for snoopy
-# $Id: Makefile.in 16 2010-02-10 00:48:15Z bostjanskufca $
+# $Id: Makefile.in 25 2010-02-11 20:58:06Z bostjanskufca $
 
 
 
@@ -42,4 +42,4 @@ distclean: clean
 	rm -f Makefile
 
 realclean: distclean
-	rm -f configure
+	rm -f configure configure.scan

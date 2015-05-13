@@ -1,7 +1,7 @@
 /* snoopy.c -- execve() logging wrapper 
  * Copyright (c) 2000 marius@linux.com,mbm@linux.com
  *
- * $Id: snoopy.c 19 2010-02-10 01:45:48Z bostjanskufca $
+ * $Id: snoopy.c 25 2010-02-11 20:58:06Z bostjanskufca $
  *
  * Part hacked on flight KL 0617, 30,000 ft or so over the Atlantic :) 
  * 
@@ -25,6 +25,8 @@
 #include <dlfcn.h>
 #include <syslog.h>
 #include <string.h>
+#include <unistd.h>
+#include <limits.h>
 #include "snoopy.h"
 
 #define min(a,b) a<b ? a : b
@@ -41,11 +43,16 @@
 
 static inline void snoopy_log(const char *filename, char *const argv[])
 {
-	char *logString       = NULL; 
-	int   logStringLength = 0;
-	int   i               = 0;
-	int   argc            = 0;
-	int   argLength       = 0;
+	char   *logString       = NULL;
+	size_t  logStringLength = 0;
+	char    cwd[PATH_MAX+1];
+	char   *getCwdRet       = NULL;
+
+	int     i               = 0;
+	int     argc            = 0;
+	size_t  argLength       = 0;
+
+
 
 	#if SNOOPY_ROOT_ONLY
 	if ((geteuid() != 0) && (getuid() != 0)) {
@@ -56,14 +63,16 @@ static inline void snoopy_log(const char *filename, char *const argv[])
 	// Count number of arguments
 	for (argc=0 ; *(argv+argc) != '\0' ; argc++);
 
-	// Allocate space
+	// Get current working directory
+	getCwdRet = getcwd(cwd, PATH_MAX+1);
+
+	// Allocate memory for logString
 	logStringLength = 0;
 	for (i=0 ; i<argc ; i++) {
 		// Argument length + space
 		logStringLength += sizeof(char) * (min(SNOOPY_MAX_ARG_LENGTH, strlen(argv[i])) + 1);
 	}
-	logStringLength += 1; // for last \0
-	logString        = (char *) malloc(logStringLength);
+	logString = (char *) malloc(logStringLength + 1);   // +1 for last \0
 
 	// Create logString
 	strcpy(logString, "");
@@ -76,7 +85,7 @@ static inline void snoopy_log(const char *filename, char *const argv[])
 
 	// Log it
 	openlog("snoopy", LOG_PID, LOG_AUTHPRIV);
-	syslog(LOG_INFO, "[uid:%d sid:%d]: %s", getuid(), getsid(0), logString);
+	syslog(LOG_INFO, "[uid:%d sid:%d cwd:%s]: %s", getuid(), getsid(0), cwd, logString);
 
 	// Free the logString memory
 	free(logString);
