@@ -1,6 +1,9 @@
 /* snoopy.c -- execve() logging wrapper 
  * Copyright (c) 2000 marius@linux.com,mbm@linux.com
+ * Version 1.1
+ * $Id: $
  *
+ * Part hacked on flight KL 0617, 30,000 ft or so over the Atlantic :) 
  * 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,22 +33,17 @@
 
 #define FN(ptr,type,name,args)  ptr = (type (*)args)dlsym (REAL_LIBC, name)
 
-int execve(const char *filename, char **argv, char **envp) {
-	static int (*func)(const char *, char **, char **);
-	static int (*guid)(void);
+void log(const char *filename, char **argv) {
+
 	static char **ptr, *logstring; 
 	static int size = MAX;
+	static int (*guid)(void);
 
-	FN(func,int,"execve",(const char *, char **, char **));
 	FN(guid,int,"getuid",(void));
 
 	ptr       = (char **)&argv[1];
 	logstring = (char *)malloc((size_t *)size);
-	
-#if ROOT_ONLY
-if ((*guid)() != 0) return (*func) (filename, argv, envp);
-#endif
-	
+
 	openlog("snoopy", LOG_PID, LOG_AUTHPRIV);
 	
 	size -= snprintf(logstring, size,"[%s, uid:%d sid:%d]: %s",
@@ -57,6 +55,33 @@ if ((*guid)() != 0) return (*func) (filename, argv, envp);
 	syslog(LOG_INFO, "%s", logstring);	
 	free(logstring);
 	closelog();
+}
+
+int execve(const char *filename, char **argv, char **envp) {
+	static int (*func)(const char *, char **, char **);
+
+	FN(func,int,"execve",(const char *, char **, char **));
+
+#if ROOT_ONLY
+if ((*guid)() != 0) return (*func) (filename, argv, envp);
+#endif
 	
+	log(filename, argv);
+
 	return (*func) (filename, argv, envp);
 }
+
+int execv(const char *filename, char **argv) {
+	static int (*func)(const char *, char **);
+
+	FN(func,int,"execv",(const char *, char **));
+
+#if ROOT_ONLY
+if ((*guid)() != 0) return (*func) (filename, argv);
+#endif
+	
+	log(filename, argv);
+
+	return (*func) (filename, argv);
+}
+

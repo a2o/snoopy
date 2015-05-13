@@ -1,5 +1,5 @@
 ------------------------------------------------------------------------------
-Snoopy 1.0
+Snoopy 1.1
 ------------------------------------------------------------------------------
 
    marius@linux.com
@@ -14,6 +14,13 @@ D E S C R I P T I O N
   to execve() calls. Logging is done via syslogd and written to authpriv
   allowing secure offsite logging of activity, generally the authpriv is
   stored as /var/log/auth.log.
+
+N O T E
+
+  execv() calls are now explicitly logged.   Although,  according to the
+  man page for execv(),  it is supposed to call execve().   To this date
+  the reason why execv()  calls weren't being logged is unknown,  but we 
+  are working to find out why.
 
 U S A G E
 

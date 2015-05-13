@@ -1,4 +1,8 @@
-// Snoopy 1.0
+/* Snoopy 1.1
+ *
+ * $Id: $
+ * 
+ */
 
 /* ROOT_ONLY
  * log only the actions running under uid 0, set 1 to enable

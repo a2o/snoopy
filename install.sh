@@ -1,4 +1,9 @@
 #!/bin/sh
+
+#installation script for snoopy (for system wide installs)
+#Run as root!
+#$Id: $
+
 [ -x snoopy.so ] && {
   touch /etc/ld.so.preload
   [ -w /etc/ld.so.preload ] && {

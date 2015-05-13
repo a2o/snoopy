@@ -1,5 +1,13 @@
-Thu August 3 - Version 1.00
----------------------------
+Thu August 17 - Version  1.1
+----------------------------
+o Added support for execv().  Although execv() calls execve()
+  [as described in the man page], execv() calls don't seem to log.
+  They now do.  Will investigate this issue a bit further.
+o Made logging code modular, as to accomodate for the extra 
+  overload that execv() brought.
+
+Thu August 3  - Version 1.00
+----------------------------
 o Cleaned up the codebase a bit
 o Added the output of username and sid (PID of the login shell) 
   to the logged output

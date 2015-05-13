@@ -1,0 +1,8 @@
+o Decrease function-calling overhead by using macros to 
+  replace log().  
+  -> See where else macros could be used.
+
+o Logging of environment (in the case of execve())
+  -> Would require a change in the logging mechanism
+
+o The inclusion of Verio's parsing code in the snoopy distribution (?)
