@@ -1,0 +1,6 @@
+Thu August 3 - Version 1.00
+---------------------------
+o Cleaned up the codebase a bit
+o Added the output of username and sid (PID of the login shell) 
+  to the logged output
+o Fixed install.sh to be compatible with older (v1.0) bash shells

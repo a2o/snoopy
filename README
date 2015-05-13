@@ -1,0 +1,37 @@
+------------------------------------------------------------------------------
+Snoopy 1.0
+------------------------------------------------------------------------------
+
+   marius@linux.com
+      mbm@linux.com
+
+
+D E S C R I P T I O N
+
+  Snoopy is designed to aid the taks of a sysadmin by providing a log of
+  commands  executed. Snoopy is  completely transparent  to the user and
+  applications it hooks in as a library providing a wrapper around calls
+  to execve() calls. Logging is done via syslogd and written to authpriv
+  allowing secure offsite logging of activity, generally the authpriv is
+  stored as /var/log/auth.log.
+
+U S A G E
+
+  Snoopy is  able to log all  users or just root,  this functionality is
+  configured at compile through the snoopy.h header, #define ROOT_ONLY 1
+  will restrict logging to root activities. Installation is as follows: 
+
+     make
+     make install
+
+  Snoopy is placed in /etc/ld.so.preload to trap all occurances of exec,
+  if you wish to monitor only certain applications you can do so through
+  the $LD_PRELOAD environment variable - simply set it to /lib/snoopy.so
+  before loading the application. For example:
+
+     export LD_PRELOAD=/lib/snoopy.so
+     lynx http://linux.com/
+     unset LD_PRELOAD 
+
+  To remove snoopy later, simply edit /etc/ld.so.preload and remove the
+  reference to snoopy.so and delete /lib/snoopy.so.
