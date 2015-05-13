@@ -1,11 +1,12 @@
-$Id: README,v 1.4 2000/12/10 08:50:49 marius Exp $
+$Id: README 19 2010-02-10 01:45:48Z bostjanskufca $
 
 
 ------------------------------------------------------------------------------
-Snoopy 1.3
+Snoopy 1.6
 ------------------------------------------------------------------------------
 
-   marius@linux.com
+  bostjan@a2o.si
+   marius@umich.edu
       mbm@linux.com
 
 
@@ -22,7 +23,7 @@ N O T E
 
   execv() calls are now explicitly logged.   Although,  according to the
   man page for execv(),  it is supposed to call execve().   To this date
-  the reason why execv()  calls weren't being logged is unknown,  but we 
+  the reason why execv()  calls weren't being logged is unknown,  but we
   are working to find out why.
 
 U S A G E
@@ -31,17 +32,25 @@ U S A G E
   configured at compile through the snoopy.h header, #define ROOT_ONLY 1
   will restrict logging to root activities. Installation is as follows: 
 
-     make
-     make install
+    # If you have pulled snoopy from SVN, you must run autoconf first:
+    autoconf
+
+    # Then continue with normal build procedure:
+    ./configure
+    make
+    make install
+
+    # Then you can actually enable snoopy:
+    make enable
 
   Snoopy is placed in /etc/ld.so.preload to trap all occurances of exec,
   if you wish to monitor only certain applications you can do so through
-  the $LD_PRELOAD environment variable - simply set it to /lib/snoopy.so
-  before loading the application. For example:
+  the $LD_PRELOAD environment variable - simply set it to 
+  /usr/local/lib/snoopy.so before loading the application. For example:
 
-     export LD_PRELOAD=/lib/snoopy.so
-     lynx http://linux.com/
-     unset LD_PRELOAD 
+    export LD_PRELOAD=/usr/local/lib/snoopy.so
+    lynx http://linux.com/
+    unset LD_PRELOAD
 
   To remove snoopy later, simply edit /etc/ld.so.preload and remove the
-  reference to snoopy.so and delete /lib/snoopy.so.
+  reference to snoopy.so and delete /usr/local/lib/snoopy.so.

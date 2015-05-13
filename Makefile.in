@@ -1,0 +1,45 @@
+# Makefile for snoopy
+# $Id: Makefile.in 16 2010-02-10 00:48:15Z bostjanskufca $
+
+
+
+CC=gcc
+LIBS=-ldl
+PREFIX=@prefix@
+LIBDIR=@prefix@/lib
+
+
+
+all: snoopy.so detect
+
+snoopy.so:  snoopy.c snoopy.h
+	$(CC) $(CFLAGS) -shared -O3 -fomit-frame-pointer -fPIC snoopy.c -osnoopy.so $(LIBS)
+
+detect: detect.c
+	$(CC) detect.c -odetect $(LIBS)
+
+
+
+install: all
+	install -m 755 -d $(LIBDIR)
+	install -m 755 snoopy.so $(LIBDIR)/snoopy.so
+	@echo -e "\nSnoopy shared library installed in $(LIBDIR)."
+	@echo -e "Run 'make enable' to actually enable snoopy logging.\n"
+
+
+
+enable:
+	./enable.sh $(LIBDIR)
+
+
+
+clean:
+	rm -f detect snoopy.so
+
+distclean: clean
+	rm -f autoscan.log config.h config.log config.status
+	rm -rf autom4te.cache
+	rm -f Makefile
+
+realclean: distclean
+	rm -f configure

@@ -1,4 +1,19 @@
-$Id: ChangeLog,v 1.5 2000/12/10 08:50:49 marius Exp $
+$Id: ChangeLog 19 2010-02-10 01:45:48Z bostjanskufca $
+
+2010-02-09 - Version  1.6.0
+---------------------------
+o Uses autotools now
+o Changed installation procedure
+o Rewritten logging function to avoid memory leaks
+o No more segfaults on 64bit platforms
+o Program name and argument lengths limited to 4096 bytes
+o Many thanks to otheus for supplying a patch on SourceForge one and a half 
+    years ago, it helped tremendously.
+
+2010-02-09 - Version  1.5.0
+---------------------------
+o Updated to compile and work without segfaults on 32bit and 64bit platforms
+o Project maintenance taken over by Bostjan Skufca
 
 Sun December 10 - Version  1.3
 ------------------------------

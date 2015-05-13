@@ -1,8 +1,7 @@
 /* snoopy.c -- execve() logging wrapper 
  * Copyright (c) 2000 marius@linux.com,mbm@linux.com
- * Version 1.3
  *
- * $Id: snoopy.c,v 1.32 2000/12/21 06:53:03 marius Exp $
+ * $Id: snoopy.c 19 2010-02-10 01:45:48Z bostjanskufca $
  *
  * Part hacked on flight KL 0617, 30,000 ft or so over the Atlantic :) 
  * 
@@ -20,14 +19,15 @@
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-
 #include <stdio.h>
+#include <stdlib.h>
 #include <sys/types.h>
 #include <dlfcn.h>
 #include <syslog.h>
+#include <string.h>
 #include "snoopy.h"
 
-#define min(a,b) a<b?a:b
+#define min(a,b) a<b ? a : b
 
 #if defined(RTLD_NEXT)
 #  define REAL_LIBC RTLD_NEXT
@@ -37,84 +37,70 @@
 
 #define FN(ptr,type,name,args)  ptr = (type (*)args)dlsym (REAL_LIBC, name)
 
-inline void log(const char *filename, char **argv) {
-	static char *logstring=NULL; 
-	static int argc, size=0;
-	register int i, spos=0;
-	#if INTEGRITY_CHECK
-	static char **argv_copy;
-	static int *t_size;
-	#endif
 
-	#if ROOT_ONLY
-	if (getuid() != 0) 
-	   	return; 
-	#endif
 
-	#if IGNORE_NULL
-	if (getlogin() == 0)
+static inline void snoopy_log(const char *filename, char *const argv[])
+{
+	char *logString       = NULL; 
+	int   logStringLength = 0;
+	int   i               = 0;
+	int   argc            = 0;
+	int   argLength       = 0;
+
+	#if SNOOPY_ROOT_ONLY
+	if ((geteuid() != 0) && (getuid() != 0)) {
 		return;
-	#endif
-
-	for(argc=0; *(argv+argc)!='\0';argc++);
-
-	#if INTEGRITY_CHECK
-	argv_copy = (char**)malloc(sizeof(char*)*argc);
-	t_size = (int*)malloc(sizeof(int)*argc);
-	for(i=0; i<argc; i++) {
-	    size = sizeof(char)*strlen(*(argv+i));
-		*(t_size+i) = size;
-		*(argv_copy+i) = (char*)malloc(size);
-		memcpy(*(argv_copy+i), *(argv+i), size);
 	}
-	*(argv_copy+argc) = '\0';
-	size=0;
 	#endif
 
+	// Count number of arguments
+	for (argc=0 ; *(argv+argc) != '\0' ; argc++);
+
+	// Allocate space
+	logStringLength = 0;
+	for (i=0 ; i<argc ; i++) {
+		// Argument length + space
+		logStringLength += sizeof(char) * (min(SNOOPY_MAX_ARG_LENGTH, strlen(argv[i])) + 1);
+	}
+	logStringLength += 1; // for last \0
+	logString        = (char *) malloc(logStringLength);
+
+	// Create logString
+	strcpy(logString, "");
+	for (i=0 ; i<argc ; i++) {
+		argLength = strlen(argv[i]);
+		strncat(logString, argv[i], min(SNOOPY_MAX_ARG_LENGTH, argLength));
+		strcat(logString, " ");
+	}
+	strcat(logString, "\0");
+
+	// Log it
 	openlog("snoopy", LOG_PID, LOG_AUTHPRIV);
+	syslog(LOG_INFO, "[uid:%d sid:%d]: %s", getuid(), getsid(0), logString);
 
-	#if MAX
-	logstring = (char *)malloc(sizeof(char)*MAX*argc);
-	for(i=0; i<argc; i++) 
-	   spos += min(snprintf(logstring+spos, MAX, "%s ", *(argv+i)), MAX);
-	#else
-	for(i=0; i<argc; i++)
-	    size += sizeof(char)*strlen(*(argv+i))+1;
-	size++; /*make space for that \0*/
-	logstring = (char*)malloc(sizeof(char)*size);
-
-	for(i=0; i<argc; i++)
-	   spos += sprintf(logstring+spos, "%s ", *(argv+i));
-	#endif
-
-	#if INTEGRITY_CHECK
-	for(i=0; i<argc; i++)
-		if(memcmp(*(argv+i), *(argv_copy+i), *(t_size+i)))
-		   syslog(LOG_ERR, "Integrity check failed");
-
-	for(i=0; i<argc; i++)
-	   free(*(argv_copy+i));
-	#endif
-
-	syslog(LOG_INFO, "[%s, uid:%d sid:%d]: %s", getlogin(), getuid(), getsid(0), logstring); 
-	free(logstring);
-
+	// Free the logString memory
+	free(logString);
 }
 
-int execve(const char *filename, char **argv, char **envp) {
+
+
+int execve(const char *filename, char *const argv[], char *const envp[])
+{
 	static int (*func)(const char *, char **, char **);
 
-	FN(func,int,"execve",(const char *, char **, char **));
-	log(filename, argv);
+	FN(func,int,"execve",(const char *, char **const, char **const));
+	snoopy_log(filename, argv);
 
-	return (*func) (filename, argv, envp);
+	return (*func) (filename, (char**) argv, (char **) envp);
 }
 
-int execv(const char *filename, char **argv) {
+
+
+int execv(const char *filename, char *const argv[]) {
 	static int (*func)(const char *, char **);
 
-	FN(func,int,"execv",(const char *, char **));
-	log(filename, argv);
+	FN(func,int,"execv",(const char *, char **const));
+	snoopy_log(filename, argv);
 
-	return (*func) (filename, argv);
+	return (*func) (filename, (char **) argv);
 }

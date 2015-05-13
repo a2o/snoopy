@@ -1,6 +1,1 @@
-$Id: TODO,v 1.4 2000/12/10 08:50:49 marius Exp $
-
-o Logging of environment (in the case of execve())
-  -> Would require a change in the logging mechanism
-
-o The inclusion of Verio's parsing code in the snoopy distribution (?)
+$Id: TODO 5 2010-02-09 20:00:51Z bostjanskufca $
