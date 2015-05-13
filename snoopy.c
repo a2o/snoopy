@@ -1,7 +1,7 @@
 /* snoopy.c -- execve() logging wrapper 
  * Copyright (c) 2000 marius@linux.com,mbm@linux.com
  *
- * $Id: snoopy.c 25 2010-02-11 20:58:06Z bostjanskufca $
+ * $Id: snoopy.c 30 2010-02-13 16:31:16Z bostjanskufca $
  *
  * Part hacked on flight KL 0617, 30,000 ft or so over the Atlantic :) 
  * 
@@ -19,6 +19,8 @@
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+#include "config.h"
+#include "snoopy.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/types.h>
@@ -27,7 +29,6 @@
 #include <string.h>
 #include <unistd.h>
 #include <limits.h>
-#include "snoopy.h"
 
 #define min(a,b) a<b ? a : b
 
@@ -63,8 +64,6 @@ static inline void snoopy_log(const char *filename, char *const argv[])
 	// Count number of arguments
 	for (argc=0 ; *(argv+argc) != '\0' ; argc++);
 
-	// Get current working directory
-	getCwdRet = getcwd(cwd, PATH_MAX+1);
 
 	// Allocate memory for logString
 	logStringLength = 0;
@@ -85,7 +84,12 @@ static inline void snoopy_log(const char *filename, char *const argv[])
 
 	// Log it
 	openlog("snoopy", LOG_PID, LOG_AUTHPRIV);
-	syslog(LOG_INFO, "[uid:%d sid:%d cwd:%s]: %s", getuid(), getsid(0), cwd, logString);
+	#if defined(SNOOPY_CWD_LOGGING)
+		getCwdRet = getcwd(cwd, PATH_MAX+1);
+		syslog(LOG_INFO, "[uid:%d sid:%d cwd:%s]: %s", getuid(), getsid(0), cwd, logString);
+	#else
+		syslog(LOG_INFO, "[uid:%d sid:%d]: %s", getuid(), getsid(0), logString);
+	#endif
 
 	// Free the logString memory
 	free(logString);

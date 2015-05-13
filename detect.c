@@ -1,5 +1,5 @@
 /* detect.c -- simple execve() wrapper detection 
- * $Id: detect.c 25 2010-02-11 20:58:06Z bostjanskufca $
+ * $Id: detect.c 5 2010-02-09 20:00:51Z bostjanskufca $
  * Copyright (c) 2000 marius@linux.com,mbm@linux.com
  *
  * 

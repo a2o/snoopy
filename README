@@ -1,4 +1,4 @@
-$Id: README 25 2010-02-11 20:58:06Z bostjanskufca $
+$Id: README 29 2010-02-13 16:27:53Z bostjanskufca $
 
 
 ------------------------------------------------------------------------------
@@ -10,6 +10,7 @@ Snoopy 1.6
       mbm@linux.com
 
 
+
 D E S C R I P T I O N
 
   Snoopy is designed to aid the taks of a sysadmin by providing a log of
@@ -19,6 +20,8 @@ D E S C R I P T I O N
   allowing secure offsite logging of activity, generally the authpriv is
   stored as /var/log/auth.log.
 
+
+
 N O T E
 
   execv() calls are now explicitly logged.   Although,  according to the
@@ -26,13 +29,16 @@ N O T E
   the reason why execv()  calls weren't being logged is unknown,  but we
   are working to find out why.
 
+
+
 U S A G E
 
   Snoopy is  able to log all  users or just root,  this functionality is
   configured at compile through the snoopy.h header, #define ROOT_ONLY 1
-  will restrict logging to root activities. Installation is as follows: 
+  will restrict logging to root activities. Installation is as follows:
 
     # If you have pulled snoopy from SVN, you must run autoconf first:
+    autoheader
     autoconf
 
     # Then continue with normal build procedure:
@@ -54,3 +60,14 @@ U S A G E
 
   To remove snoopy later, simply edit /etc/ld.so.preload and remove the
   reference to snoopy.so and delete /usr/local/lib/snoopy.so.
+
+
+
+O U T P U T
+
+  The exact location  of  your  snoopy output  depends  on  your  syslog
+  configuration. Usually it gets stored in one of the following files:
+
+    /var/log/auth*
+    /var/log/messages
+    /var/log/secure
