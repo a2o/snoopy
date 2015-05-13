@@ -25,7 +25,6 @@
 ; - %{filename}       ; (available=@enable_datasource_filename@) Full path to executable
 ; - %{gid}            ; (available=@enable_datasource_gid@) Group id that executed the command
 ; - %{group}          ; (available=@enable_datasource_group@) Group name that executed the command
-; - %{legacy}         ; (available=@enable_datasource_legacy@) Whole legacy format, in one data source. Matches "[uid:%{uid} sid:%{sid} tty:%{tty} cwd:%{cwd} filename:%{filename}]: %{cmdline}")
 ; - %{login}          ; (available=@enable_datasource_login@) Login name (tries getlogin_r() first, then SUDO_USER env variabe, and LOGNAME env as last resort)
 ; - %{pid}            ; (available=@enable_datasource_pid@) ID of process that executed the command
 ; - %{ppid}           ; (available=@enable_datasource_ppid@) Parent process ID of process that executed the command

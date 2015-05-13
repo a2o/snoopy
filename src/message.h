@@ -26,9 +26,6 @@ void snoopy_message_generateFromFormat (
     char        *logMessage,
     char        *logMessageFormat
 );
-void snoopy_message_generateLegacy (
-    char        *logMessage
-);
 
 
 

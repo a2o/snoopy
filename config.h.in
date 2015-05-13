@@ -146,9 +146,6 @@
 /* Is data source "group" available? */
 #undef SNOOPY_CONF_DATASOURCE_ENABLED_group
 
-/* Is data source "legacy" available? */
-#undef SNOOPY_CONF_DATASOURCE_ENABLED_legacy
-
 /* Is data source "login" available? */
 #undef SNOOPY_CONF_DATASOURCE_ENABLED_login
 
@@ -211,9 +208,6 @@
 
 /* Is filter "only_uid" available? */
 #undef SNOOPY_CONF_FILTER_ENABLED_only_uid
-
-/* Enable legacy performance mode */
-#undef SNOOPY_CONF_LEGACY_PERFORMANCE
 
 /* Custom message format to use */
 #undef SNOOPY_CONF_LOG_MESSAGE_FORMAT_custom

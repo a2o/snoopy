@@ -147,33 +147,6 @@ void snoopy_message_generateFromFormat (
 
 
 /*
- * snoopy_message_generateLegacy
- *
- * Description:
- *     Generates log message as it used to do in pre-2.0.0 times. Message format
- *     is fixed and unconfigurable. Message generation is actually implemented
- *     as a dedicated data source.
- *
- * Params:
- *     logMessage:         destination string to return message in
- *
- * Return:
- *     void
- */
-void snoopy_message_generateLegacy (
-    char *logMessage
-) {
-    char  dataSourceMsg[SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE];
-
-    // Call the provider, and append the results to log message
-    dataSourceMsg[0] = '\0';
-    snoopy_datasourceregistry_call("legacy", dataSourceMsg, "");
-    snoopy_message_append(logMessage, dataSourceMsg);
-}
-
-
-
-/*
  * snoopy_message_append
  *
  * Description:

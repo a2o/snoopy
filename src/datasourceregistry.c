@@ -70,9 +70,6 @@
 #ifdef SNOOPY_CONF_DATASOURCE_ENABLED_group
 #include "datasource/group.h"
 #endif
-#ifdef SNOOPY_CONF_DATASOURCE_ENABLED_legacy
-#include "datasource/legacy.h"
-#endif
 #ifdef SNOOPY_CONF_DATASOURCE_ENABLED_login
 #include "datasource/login.h"
 #endif
@@ -158,9 +155,6 @@ char *snoopy_datasourceregistry_names[] = {
 #ifdef SNOOPY_CONF_DATASOURCE_ENABLED_group
     "group",
 #endif
-#ifdef SNOOPY_CONF_DATASOURCE_ENABLED_legacy
-    "legacy",
-#endif
 #ifdef SNOOPY_CONF_DATASOURCE_ENABLED_login
     "login",
 #endif
@@ -242,9 +236,6 @@ int (*snoopy_datasourceregistry_ptrs []) (char *result, char *arg) = {
 #endif
 #ifdef SNOOPY_CONF_DATASOURCE_ENABLED_group
     snoopy_datasource_group,
-#endif
-#ifdef SNOOPY_CONF_DATASOURCE_ENABLED_legacy
-    snoopy_datasource_legacy,
 #endif
 #ifdef SNOOPY_CONF_DATASOURCE_ENABLED_login
     snoopy_datasource_login,
