@@ -185,6 +185,37 @@ fi
 
 
 dnl ============================================================================
+AC_ARG_ENABLE(legacy-performance,
+    [AC_HELP_STRING(
+        [--enable-legacy-performance],
+        [enable legacy mode of operation, more performant but less configurable.
+         It has fixed message format.
+         For maximum performance you should not enable config file or filtering functionality.
+         The only thing that is modern in output selection.
+         Legacy Snoopy used syslog() syscall for output, which has been proven troublesome with modern distributions (systemd).
+         [default=disabled]
+        ]
+    )],
+    [
+        if test "x$enableval" = "xyes"; then
+            legacy_performance="yes"
+        elif test "x$enableval" = "xno"; then
+            legacy_performance="no"
+        else
+            AC_MSG_ERROR([--enable-legacy-performance does not take an argument. Got: $enableval])
+        fi
+    ],
+    # Not specified on command line
+    [legacy_performance="no"]
+)
+
+AS_IF([test "x$legacy_performance" != "xyes"], [
+    AC_DEFINE_UNQUOTED(SNOOPY_CONF_LEGACY_PERFORMANCE, 1, [Enable legacy performance mode])
+])
+
+
+
+dnl ============================================================================
 AC_ARG_ENABLE(config-file,
     [AC_HELP_STRING(
         [--enable-config-file],
@@ -303,6 +334,7 @@ SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [eusername],      [effective literal usernam
 SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [filename],       [full filename of process being executed])
 SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [gid],            [GID of process performing the execution])
 SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [group],          [literal group name of process performing the execution])
+SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [legacy],         [legacy format created in single pass])
 SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [login],          [login username of user doing the execution])
 SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [pid],            [PID of process performing the execution])
 SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [ppid],           [parent PID of process performing the execution])

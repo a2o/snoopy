@@ -118,6 +118,14 @@ libsnoopy_datasources_all_la_SOURCES += \
 	group.h
 endif
 
+# Data source: legacy
+#
+if DATASOURCE_ENABLED_legacy
+libsnoopy_datasources_all_la_SOURCES += \
+	legacy.c \
+	legacy.h
+endif
+
 # Data source: login
 #
 if DATASOURCE_ENABLED_login

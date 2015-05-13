@@ -1,9 +1,9 @@
 /*
  * SNOOPY LOGGER
  *
- * File: message.h
+ * File: snoopy/datasource/legacy.h
  *
- * Copyright (c) 2014-2015 Bostjan Skufca <bostjan@a2o.si>
+ * Copyright (c) 2015 Bostjan Skufca <bostjan@a2o.si>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,17 +22,7 @@
 
 
 
-void snoopy_message_generateFromFormat (
-    char        *logMessage,
-    char        *logMessageFormat
-);
-void snoopy_message_generateLegacy (
-    char        *logMessage
-);
-
-
-
-void snoopy_message_append (
-    char *logMessage,
-    char *appendThis
-);
+/*
+ * SNOOPY DATA SOURCE: legacy
+ */
+int snoopy_datasource_legacy (char *result, char *arg);

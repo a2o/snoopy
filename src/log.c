@@ -133,7 +133,11 @@ void snoopy_log_syscall (
     logMessage[0] = '\0';
 
     /* Generate log message in specified format */
+#if defined(SNOOPY_CONF_LEGACY_PERFORMANCE)
+    snoopy_message_generateLegacy(logMessage);
+#else
     snoopy_message_generateFromFormat(logMessage, snoopy_configuration.message_format);
+#endif
 
 #if defined(SNOOPY_FILTERING_ENABLED)
     /* Should message be passed to syslog or not? */
