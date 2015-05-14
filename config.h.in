@@ -227,6 +227,12 @@
 /* Is output "socket" available? Forced "Yes". */
 #undef SNOOPY_CONF_OUTPUT_ENABLED_socket
 
+/* Is output "stderr" available? */
+#undef SNOOPY_CONF_OUTPUT_ENABLED_stderr
+
+/* Is output "stdout" available? */
+#undef SNOOPY_CONF_OUTPUT_ENABLED_stdout
+
 /* Is output "syslog" available? */
 #undef SNOOPY_CONF_OUTPUT_ENABLED_syslog
 

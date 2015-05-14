@@ -52,6 +52,12 @@
 #ifdef SNOOPY_CONF_OUTPUT_ENABLED_socket
 #include "output/socketoutput.h"
 #endif
+#ifdef SNOOPY_CONF_OUTPUT_ENABLED_stderr
+#include "output/stderroutput.h"
+#endif
+#ifdef SNOOPY_CONF_OUTPUT_ENABLED_stdout
+#include "output/stdoutoutput.h"
+#endif
 #ifdef SNOOPY_CONF_OUTPUT_ENABLED_syslog
 #include "output/syslogoutput.h"
 #endif
@@ -79,6 +85,12 @@ char *snoopy_outputregistry_names[] = {
 #ifdef SNOOPY_CONF_OUTPUT_ENABLED_socket
     "socket",
 #endif
+#ifdef SNOOPY_CONF_OUTPUT_ENABLED_stderr
+    "stderr",
+#endif
+#ifdef SNOOPY_CONF_OUTPUT_ENABLED_stdout
+    "stdout",
+#endif
 #ifdef SNOOPY_CONF_OUTPUT_ENABLED_syslog
     "syslog",
 #endif
@@ -100,6 +112,12 @@ int (*snoopy_outputregistry_ptrs []) (char *logMessage, int errorOrMessage, char
 //#endif
 #ifdef SNOOPY_CONF_OUTPUT_ENABLED_socket
     snoopy_output_socketoutput,
+#endif
+#ifdef SNOOPY_CONF_OUTPUT_ENABLED_stderr
+    snoopy_output_stderroutput,
+#endif
+#ifdef SNOOPY_CONF_OUTPUT_ENABLED_stdout
+    snoopy_output_stdoutoutput,
 #endif
 #ifdef SNOOPY_CONF_OUTPUT_ENABLED_syslog
     snoopy_output_syslogoutput,

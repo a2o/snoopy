@@ -239,6 +239,8 @@
 #define   SNOOPY_OUTPUT_DEVLOG   "devlog"
 #define   SNOOPY_OUTPUT_FILE     "file"
 #define   SNOOPY_OUTPUT_SOCKET   "socket"
+#define   SNOOPY_OUTPUT_STDERR   "stderr"
+#define   SNOOPY_OUTPUT_STDOUT   "stdout"
 #define   SNOOPY_OUTPUT_SYSLOG   "syslog"
 
 #ifdef SNOOPY_CONF_OUTPUT_DEFAULT

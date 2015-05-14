@@ -46,6 +46,22 @@ libsnoopy_outputs_all_la_SOURCES += \
     socketoutput.c \
     socketoutput.h
 
+# Output: stderr
+#
+if OUTPUT_ENABLED_stderr
+libsnoopy_outputs_all_la_SOURCES += \
+    stderroutput.c \
+    stderroutput.h
+endif
+
+# Output: stdout
+#
+if OUTPUT_ENABLED_stdout
+libsnoopy_outputs_all_la_SOURCES += \
+    stdoutoutput.c \
+    stdoutoutput.h
+endif
+
 # Output: syslog
 #
 if OUTPUT_ENABLED_syslog

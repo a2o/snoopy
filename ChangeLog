@@ -3,6 +3,11 @@
 -------------------------------------------------------------------------------
 
 
+2015-05-XX - Version 2.3.X - FIXME
+--------------------------
+o Feature: added two new outputs: stderr and stdout.
+
+
 2015-05-11 - Version 2.3.0
 --------------------------
 o Feature: new data source: datetime (returns current date and time in
