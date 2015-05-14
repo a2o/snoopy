@@ -110,82 +110,82 @@
 /* INI configuration file path to use */
 #undef SNOOPY_CONF_CONFIG_FILE
 
-/* Is data source "cmdline" available? */
+/* Is datasource "cmdline" available? */
 #undef SNOOPY_CONF_DATASOURCE_ENABLED_cmdline
 
-/* Is data source "cwd" available? */
+/* Is datasource "cwd" available? */
 #undef SNOOPY_CONF_DATASOURCE_ENABLED_cwd
 
-/* Is data source "datetime" available? */
+/* Is datasource "datetime" available? */
 #undef SNOOPY_CONF_DATASOURCE_ENABLED_datetime
 
-/* Is data source "egid" available? */
+/* Is datasource "egid" available? */
 #undef SNOOPY_CONF_DATASOURCE_ENABLED_egid
 
-/* Is data source "egroup" available? */
+/* Is datasource "egroup" available? */
 #undef SNOOPY_CONF_DATASOURCE_ENABLED_egroup
 
-/* Is data source "env" available? */
+/* Is datasource "env" available? */
 #undef SNOOPY_CONF_DATASOURCE_ENABLED_env
 
-/* Is data source "env_all" available? */
+/* Is datasource "env_all" available? */
 #undef SNOOPY_CONF_DATASOURCE_ENABLED_env_all
 
-/* Is data source "euid" available? */
+/* Is datasource "euid" available? */
 #undef SNOOPY_CONF_DATASOURCE_ENABLED_euid
 
-/* Is data source "eusername" available? */
+/* Is datasource "eusername" available? */
 #undef SNOOPY_CONF_DATASOURCE_ENABLED_eusername
 
-/* Is data source "filename" available? */
+/* Is datasource "filename" available? */
 #undef SNOOPY_CONF_DATASOURCE_ENABLED_filename
 
-/* Is data source "gid" available? */
+/* Is datasource "gid" available? */
 #undef SNOOPY_CONF_DATASOURCE_ENABLED_gid
 
-/* Is data source "group" available? */
+/* Is datasource "group" available? */
 #undef SNOOPY_CONF_DATASOURCE_ENABLED_group
 
-/* Is data source "login" available? */
+/* Is datasource "login" available? */
 #undef SNOOPY_CONF_DATASOURCE_ENABLED_login
 
-/* Is data source "pid" available? */
+/* Is datasource "pid" available? */
 #undef SNOOPY_CONF_DATASOURCE_ENABLED_pid
 
-/* Is data source "ppid" available? */
+/* Is datasource "ppid" available? */
 #undef SNOOPY_CONF_DATASOURCE_ENABLED_ppid
 
-/* Is data source "rpname" available? */
+/* Is datasource "rpname" available? */
 #undef SNOOPY_CONF_DATASOURCE_ENABLED_rpname
 
-/* Is data source "sid" available? */
+/* Is datasource "sid" available? */
 #undef SNOOPY_CONF_DATASOURCE_ENABLED_sid
 
-/* Is data source "snoopy_version" available? */
+/* Is datasource "snoopy_version" available? */
 #undef SNOOPY_CONF_DATASOURCE_ENABLED_snoopy_version
 
-/* Is data source "timestamp" available? */
+/* Is datasource "timestamp" available? */
 #undef SNOOPY_CONF_DATASOURCE_ENABLED_timestamp
 
-/* Is data source "timestamp_ms" available? */
+/* Is datasource "timestamp_ms" available? */
 #undef SNOOPY_CONF_DATASOURCE_ENABLED_timestamp_ms
 
-/* Is data source "timestamp_us" available? */
+/* Is datasource "timestamp_us" available? */
 #undef SNOOPY_CONF_DATASOURCE_ENABLED_timestamp_us
 
-/* Is data source "tty" available? */
+/* Is datasource "tty" available? */
 #undef SNOOPY_CONF_DATASOURCE_ENABLED_tty
 
-/* Is data source "tty_uid" available? */
+/* Is datasource "tty_uid" available? */
 #undef SNOOPY_CONF_DATASOURCE_ENABLED_tty_uid
 
-/* Is data source "tty_username" available? */
+/* Is datasource "tty_username" available? */
 #undef SNOOPY_CONF_DATASOURCE_ENABLED_tty_username
 
-/* Is data source "uid" available? */
+/* Is datasource "uid" available? */
 #undef SNOOPY_CONF_DATASOURCE_ENABLED_uid
 
-/* Is data source "username" available? */
+/* Is datasource "username" available? */
 #undef SNOOPY_CONF_DATASOURCE_ENABLED_username
 
 /* Enable error logging */

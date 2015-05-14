@@ -22,26 +22,61 @@
 
 
 
+
+
 ###
-### Macros for adding data source enable/disable options to ./configure
+### GENERAL ENTITY macros
 ###
 #
+
+# GENERAL ENTITY: ./configure output
+#
+# Args:
+#   1: entity type (lower case)
+#   2: entity type (upper case)
+#   3: entity id
+#   4: "yes" if enabled, anything else if not
+#
+AU_DEFUN([SNOOPY_CONFIGURE_ENTITY_MSG],
+[
+    AS_IF(
+        [test "x$4" = "xyes"],
+        [AC_MSG_NOTICE([Snoopy $1 enabled: $3])],
+        [AC_MSG_NOTICE([Snoopy $1 disabled: $3])]
+    )
+])
+
+
+
+
+
+###
+### DATASOURCE Macros
+###
+#
+
+# DATASOURCE: ./configure output
 AU_DEFUN([SNOOPY_CONFIGURE_DATASOURCE_MSG],
 [
-    AS_IF(
-        [test "x$2" = "xyes"],
-        [AC_MSG_NOTICE([Snoopy datasource enabled: $1])],
-        [AC_MSG_NOTICE([Snoopy datasource disabled: $1])]
-    )
+    # Do not put newline between last angled and regular closing brace,
+    # it gets picked up as part of argument.
+    SNOOPY_CONFIGURE_ENTITY_MSG([datasource], [DATASOURCE], [$1], [$2])
 ])
 
-
-AU_DEFUN([SNOOPY_CONFIGURE_DATASOURCE_ENABLE],
+# DATASOURCE: actual macro
+#
+# Args:
+#   1: datasource name
+#   2: datasource info
+#   3: enable/disable by default
+#   4: oposite of arg #3
+#
+AU_DEFUN([SNOOPY_CONFIGURE_DATASOURCE_ENABLEDISABLE],
 [
     AC_ARG_ENABLE(datasource-$1,
         [AC_HELP_STRING(
-            [--disable-datasource-$1],
-            [disable data source "$1". This datasource provides $2. [default=enabled]]
+            [--$4-datasource-$1],
+            [$4 datasource "$1". This datasource provides $2. [default=$3]]
         )],
         [
             if test "x$enableval" = "xyes"; then
@@ -49,72 +84,62 @@ AU_DEFUN([SNOOPY_CONFIGURE_DATASOURCE_ENABLE],
             elif test "x$enableval" = "xno"; then
                 enable_datasource_$1=no
             else
-                AC_MSG_ERROR([--disable-datasource-$1 does not take any arguments, got: $enableval])
+                AC_MSG_ERROR([--$4-datasource-$1 does not take any arguments, got: $enableval])
             fi
         ],
-        [enable_datasource_$1=$enable_all_datasources]
-    )
-
-    AS_IF([test "x$enable_datasource_$1" = "xyes"], [
-        AC_DEFINE(SNOOPY_CONF_DATASOURCE_ENABLED_$1, 1, [Is data source "$1" available?])
-    ])
-    AM_CONDITIONAL([DATASOURCE_ENABLED_$1], [test "x$enable_datasource_$1" == "xyes"])
-    AC_SUBST([enable_datasource_$1])
-
-    SNOOPY_CONFIGURE_DATASOURCE_MSG([$1], [$enable_datasource_$1])
-])
-
-
-AU_DEFUN([SNOOPY_CONFIGURE_DATASOURCE_DISABLE],
-[
-    AC_ARG_ENABLE(datasource-$1,
-        [AC_HELP_STRING(
-            [--enable-datasource-$1],
-            [enable data source "$1". This datasource provides $2. [default=disabled]]
-        )],
         [
-            if test "x$enableval" = "xyes"; then
-                enable_datasource_$1=yes
-            elif test "x$enableval" = "xno"; then
-                enable_datasource_$1=no
+            if test "x$3" = "xenable"; then
+                enable_datasource_$1=$enable_all_datasources
             else
-                AC_MSG_ERROR([--enable-datasource-$1 does not take any arguments, got: $enableval])
+                enable_datasource_$1=no
             fi
-        ],
-        [enable_datasource_$1=no]
+        ]
     )
 
     AS_IF([test "x$enable_datasource_$1" = "xyes"], [
-        AC_DEFINE(SNOOPY_CONF_DATASOURCE_ENABLED_$1, 1, [Is data source "$1" available?])
+        AC_DEFINE(SNOOPY_CONF_DATASOURCE_ENABLED_$1, 1, [Is datasource "$1" available?])
     ])
     AM_CONDITIONAL([DATASOURCE_ENABLED_$1], [test "x$enable_datasource_$1" == "xyes"])
     AC_SUBST([enable_datasource_$1])
 
     SNOOPY_CONFIGURE_DATASOURCE_MSG([$1], [$enable_datasource_$1])
 ])
+
+# DATASOURCE: alias macros
+AU_DEFUN([SNOOPY_CONFIGURE_DATASOURCE_ENABLE],  [SNOOPY_CONFIGURE_DATASOURCE_ENABLEDISABLE([$1], [$2], [enable],  [disable])])
+AU_DEFUN([SNOOPY_CONFIGURE_DATASOURCE_DISABLE], [SNOOPY_CONFIGURE_DATASOURCE_ENABLEDISABLE([$1], [$2], [disable], [enable] )])
+
+
 
 
 
 ###
-### Macros for adding filter enable/disable options to ./configure
+### FILTER Macros
 ###
 #
+
+# FILTER: ./configure output
 AU_DEFUN([SNOOPY_CONFIGURE_FILTER_MSG],
 [
-    AS_IF(
-        [test "x$2" = "xyes"],
-        [AC_MSG_NOTICE([Snoopy filter enabled: $1])],
-        [AC_MSG_NOTICE([Snoopy filter disabled: $1])]
-    )
+    # Do not put newline between last angled and regular closing brace,
+    # it gets picked up as part of argument.
+    SNOOPY_CONFIGURE_ENTITY_MSG([filter], [FILTER], [$1], [$2])
 ])
 
-
-AU_DEFUN([SNOOPY_CONFIGURE_FILTER_ENABLE],
+# FILTER: actual macro
+#
+# Args:
+#   1: filter name
+#   2: filter info
+#   3: enable/disable by default
+#   4: oposite of arg #3
+#
+AU_DEFUN([SNOOPY_CONFIGURE_FILTER_ENABLEDISABLE],
 [
     AC_ARG_ENABLE(filter-$1,
         [AC_HELP_STRING(
-            [--disable-filter-$1],
-            [disable filter "$1". $2 [default=enabled]]
+            [--$4-filter-$1],
+            [$4 filter "$1". This filter provides $2. [default=$3]]
         )],
         [
             if test "x$enableval" = "xyes"; then
@@ -122,10 +147,16 @@ AU_DEFUN([SNOOPY_CONFIGURE_FILTER_ENABLE],
             elif test "x$enableval" = "xno"; then
                 enable_filter_$1=no
             else
-                AC_MSG_ERROR([--disable-filter-$1 does not take any arguments, got: $enableval])
+                AC_MSG_ERROR([--$4-filter-$1 does not take any arguments, got: $enableval])
             fi
         ],
-        [enable_filter_$1=$enable_all_filters]
+        [
+            if test "x$3" = "xenable"; then
+                enable_filter_$1=$enable_all_filters
+            else
+                enable_filter_$1=no
+            fi
+        ]
     )
 
     AS_IF([test "x$enable_filter_$1" = "xyes"], [
@@ -137,112 +168,78 @@ AU_DEFUN([SNOOPY_CONFIGURE_FILTER_ENABLE],
     SNOOPY_CONFIGURE_FILTER_MSG([$1], [$enable_filter_$1])
 ])
 
+# FILTER: alias macros
+AU_DEFUN([SNOOPY_CONFIGURE_FILTER_ENABLE],  [SNOOPY_CONFIGURE_FILTER_ENABLEDISABLE([$1], [$2], [enable],  [disable])])
+AU_DEFUN([SNOOPY_CONFIGURE_FILTER_DISABLE], [SNOOPY_CONFIGURE_FILTER_ENABLEDISABLE([$1], [$2], [disable], [enable] )])
 
-AU_DEFUN([SNOOPY_CONFIGURE_FILTER_DISABLE],
-[
-    AC_ARG_ENABLE(filter-$1,
-        [AC_HELP_STRING(
-            [--enable-filter-$1],
-            [enable filter "$1". $2 [default=disabled]]
-        )],
-        [
-            if test "x$enableval" = "xyes"; then
-                enable_filter_$1=yes
-            elif test "x$enableval" = "xno"; then
-                enable_filter_$1=no
-            else
-                AC_MSG_ERROR([--enable-filter-$1 does not take any arguments, got: $enableval])
-            fi
-        ],
-        [enable_filter_$1=no]
-    )
 
-    AS_IF([test "x$enable_filter_$1" = "xyes"], [
-        AC_DEFINE(SNOOPY_CONF_FILTER_ENABLED_$1, 1, [Is filter "$1" available?])
-    ])
-    AM_CONDITIONAL([FILTER_ENABLED_$1], [test "x$enable_filter_$1" == "xyes"])
-    AC_SUBST([enable_filter_$1])
-
-    SNOOPY_CONFIGURE_FILTER_MSG([$1], [$enable_filter_$1])
-])
 
 
 
 ###
-### Macros for adding output enable/disable options to ./configure
+### OUTPUT Macros
 ###
 #
+
+# OUTPUT: ./configure output
 AU_DEFUN([SNOOPY_CONFIGURE_OUTPUT_MSG],
 [
-    AS_IF(
-        [test "x$2" = "xyes"],
-        [AC_MSG_NOTICE([Snoopy output enabled: $1])],
-        [AC_MSG_NOTICE([Snoopy output disabled: $1])]
-    )
+    # Do not put newline between last angled and regular closing brace,
+    # it gets picked up as part of argument.
+    SNOOPY_CONFIGURE_ENTITY_MSG([output], [OUTPUT], [$1], [$2])
 ])
 
+# OUTPUT: actual macro
+#
+# Args:
+#   1: output name
+#   2: output info
+#   3: enable/disable by default
+#   4: oposite of arg #3
+#
+AU_DEFUN([SNOOPY_CONFIGURE_OUTPUT_ENABLEDISABLE],
+[
+    AC_ARG_ENABLE(output-$1,
+        [AC_HELP_STRING(
+            [--$4-output-$1],
+            [$4 output "$1". This output provides $2. [default=$3]]
+        )],
+        [
+            if test "x$enableval" = "xyes"; then
+                enable_output_$1=yes
+            elif test "x$enableval" = "xno"; then
+                enable_output_$1=no
+            else
+                AC_MSG_ERROR([--$4-output-$1 does not take any arguments, got: $enableval])
+            fi
+        ],
+        [
+            if test "x$3" = "xenable"; then
+                enable_output_$1=$enable_all_outputs
+            else
+                enable_output_$1=no
+            fi
+        ]
+    )
 
+    AS_IF([test "x$enable_output_$1" = "xyes"], [
+        AC_DEFINE(SNOOPY_CONF_OUTPUT_ENABLED_$1, 1, [Is output "$1" available?])
+    ])
+    AM_CONDITIONAL([OUTPUT_ENABLED_$1], [test "x$enable_output_$1" == "xyes"])
+    AC_SUBST([enable_output_$1])
+
+    SNOOPY_CONFIGURE_OUTPUT_MSG([$1], [$enable_output_$1])
+])
+
+# OUTPUT: alias macros
+AU_DEFUN([SNOOPY_CONFIGURE_OUTPUT_ENABLE],  [SNOOPY_CONFIGURE_OUTPUT_ENABLEDISABLE([$1], [$2], [enable],  [disable])])
+AU_DEFUN([SNOOPY_CONFIGURE_OUTPUT_DISABLE], [SNOOPY_CONFIGURE_OUTPUT_ENABLEDISABLE([$1], [$2], [disable], [enable] )])
+
+# OUTPUT: alias to force certain filter to be enabled
 AU_DEFUN([SNOOPY_CONFIGURE_OUTPUT_ENABLE_FORCE],
 [
     AC_DEFINE(SNOOPY_CONF_OUTPUT_ENABLED_$1, 1, [Is output "$1" available? Forced "Yes".])
     AM_CONDITIONAL([OUTPUT_ENABLED_$1], [test "x$enable_output_$1" == "xyes"])
     AC_SUBST([enable_output_$1], [yes])
-])
-
-
-AU_DEFUN([SNOOPY_CONFIGURE_OUTPUT_ENABLE],
-[
-    AC_ARG_ENABLE(output-$1,
-        [AC_HELP_STRING(
-            [--disable-output-$1],
-            [disable output "$1". $2 [default=enabled]]
-        )],
-        [
-            if test "x$enableval" = "xyes"; then
-                enable_output_$1=yes
-            elif test "x$enableval" = "xno"; then
-                enable_output_$1=no
-            else
-                AC_MSG_ERROR([--disable-output-$1 does not take any arguments, got: $enableval])
-            fi
-        ],
-        [enable_output_$1=$enable_all_outputs]
-    )
-
-    AS_IF([test "x$enable_output_$1" = "xyes"], [
-        AC_DEFINE(SNOOPY_CONF_OUTPUT_ENABLED_$1, 1, [Is output "$1" available?])
-    ])
-    AM_CONDITIONAL([OUTPUT_ENABLED_$1], [test "x$enable_output_$1" == "xyes"])
-    AC_SUBST([enable_output_$1])
-
-    SNOOPY_CONFIGURE_OUTPUT_MSG([$1], [$enable_output_$1])
-])
-
-
-AU_DEFUN([SNOOPY_CONFIGURE_OUTPUT_DISABLE],
-[
-    AC_ARG_ENABLE(output-$1,
-        [AC_HELP_STRING(
-            [--enable-output-$1],
-            [enable output "$1". $2 [default=disabled]]
-        )],
-        [
-            if test "x$enableval" = "xyes"; then
-                enable_output_$1=yes
-            elif test "x$enableval" = "xno"; then
-                enable_output_$1=no
-            else
-                AC_MSG_ERROR([--enable-output-$1 does not take any arguments, got: $enableval])
-            fi
-        ],
-        [enable_output_$1=no]
-    )
-
-    AS_IF([test "x$enable_output_$1" = "xyes"], [
-        AC_DEFINE(SNOOPY_CONF_OUTPUT_ENABLED_$1, 1, [Is output "$1" available?])
-    ])
-    AM_CONDITIONAL([OUTPUT_ENABLED_$1], [test "x$enable_output_$1" == "xyes"])
-    AC_SUBST([enable_output_$1])
-
-    SNOOPY_CONFIGURE_OUTPUT_MSG([$1], [$enable_output_$1])
+    AC_MSG_NOTICE([Snoopy output enabled: $1 - forced])
 ])

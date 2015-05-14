@@ -6,6 +6,8 @@
 2015-05-XX - Version 2.3.X - FIXME
 --------------------------
 o Feature: added two new outputs: stderr and stdout.
+o Refactoring: optimize configuration process, output relevant settings for
+    review.
 
 
 2015-05-11 - Version 2.3.0
