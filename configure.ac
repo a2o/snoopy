@@ -205,6 +205,9 @@ AC_ARG_ENABLE(config-file,
 
 AS_IF([test "x$config_file_path" != "x"], [
     AC_DEFINE_UNQUOTED(SNOOPY_CONF_CONFIG_FILE, "$config_file_path", [INI configuration file path to use])
+
+    # Add output to ./configure
+    AC_MSG_NOTICE([Snoopy configuration file enabled: $config_file_path])
 ])
 
 dnl CONFIG_FILE_ENABLED is used in:
@@ -236,35 +239,9 @@ AC_ARG_ENABLE(error-logging,
 
 AS_IF([test "x$enable_error_logging" = "xyes"], [
     AC_DEFINE_UNQUOTED(SNOOPY_CONF_ERROR_LOGGING_ENABLED, 1, [Enable error logging])
-])
-
-
-
-dnl ============================================================================
-dnl ======= DEFAULT MESSAGE FORMAT =============================================
-dnl ============================================================================
-AC_ARG_WITH(message-format,
-    [AC_HELP_STRING(
-        [--with-message-format=FORMAT],
-        [format to use to log messages with. For default value and available options, see etc/snoopy.ini and src/snoopy.h]
-    )],
-    [
-        if test "x$withval" = "x" -o "x$withval" = "xyes"; then
-            AC_MSG_ERROR([--with-message-format requires an appropriate value (message format specification). See etc/snoopy.ini for syntax. To use default log message format, remove this argument from ./configure line.])
-        elif test "x$withval" = "xno"; then
-            AC_MSG_ERROR([using --without-message-format is not supported, log message format is required, or omit this argument altogether to enable default log message format.])
-        else
-            with_message_format="$withval"
-        fi
-    ],
-    [with_message_format=""]
-)
-
-AS_IF([test "x$with_message_format" != "x"], [
-    AC_DEFINE_UNQUOTED(SNOOPY_CONF_LOG_MESSAGE_FORMAT_custom, "$with_message_format", [Custom message format to use])
 
     # Add output to ./configure
-    AC_MSG_NOTICE([Snoopy default message format: $with_message_format])
+    AC_MSG_NOTICE([Snoopy error logging enabled: $enable_error_logging])
 ])
 
 
@@ -323,6 +300,35 @@ SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [username],       [literal username of UID t
 # ==============================================================================
 # ======= END section: ENABLE INDIVIDUAL DATA SOURCES ==========================
 # ==============================================================================
+
+
+
+dnl ============================================================================
+dnl ======= DEFAULT MESSAGE FORMAT =============================================
+dnl ============================================================================
+AC_ARG_WITH(message-format,
+    [AC_HELP_STRING(
+        [--with-message-format=FORMAT],
+        [format to use to log messages with. For default value and available options, see etc/snoopy.ini and src/snoopy.h]
+    )],
+    [
+        if test "x$withval" = "x" -o "x$withval" = "xyes"; then
+            AC_MSG_ERROR([--with-message-format requires an appropriate value (message format specification). See etc/snoopy.ini for syntax. To use default log message format, remove this argument from ./configure line.])
+        elif test "x$withval" = "xno"; then
+            AC_MSG_ERROR([using --without-message-format is not supported, log message format is required, or omit this argument altogether to enable default log message format.])
+        else
+            with_message_format="$withval"
+        fi
+    ],
+    [with_message_format=""]
+)
+
+AS_IF([test "x$with_message_format" != "x"], [
+    AC_DEFINE_UNQUOTED(SNOOPY_CONF_LOG_MESSAGE_FORMAT_custom, "$with_message_format", [Custom message format to use])
+
+    # Add output to ./configure
+    AC_MSG_NOTICE([Snoopy default message format: $with_message_format])
+])
 
 
 
@@ -388,40 +394,6 @@ AM_CONDITIONAL([FILTERING_ENABLED], [test "x$enable_filtering" == "xyes"])
 
 
 
-dnl ============================================================================
-dnl ======= WITH FILTER CHAIN ==================================================
-dnl ============================================================================
-AC_ARG_WITH(filter-chain,
-    [AC_HELP_STRING(
-        [--with-filter-chain=CHAINSPEC],
-        [default filter chain to use. See src/snoopy.h and src/filter/ for available filters [default=empty]]
-    )],
-    [
-        if test "x$withval" = "x" -o "x$withval" = "xno"; then
-            # We allow it here, as it might be desired to not have any
-            # filter chain configured by default, but will be configured
-            # later, using configuration file.
-            # Allowed: empty, no
-            with_filter_chain=""
-        elif test "x$withval" = "xyes"; then
-            # This must be an error.
-            AC_MSG_ERROR([--with-filter-chain requires an appropriate value (filter chain specification), even empty string will do (--with-filter-chain=""). To disable filtering by default, use --without-filter-chain. Filter chain can later be specified and consequentially enabled by using configuration file. For this to work, configuration file (--with-config-file) and general filtering (--enable-filter) must be enabled.])
-        else
-            with_filter_chain="$withval"
-        fi
-    ],
-    [with_filter_chain=""]
-)
-
-AS_IF([test "x$with_filter_chain" != "x"], [
-    AC_DEFINE_UNQUOTED(SNOOPY_CONF_FILTER_CHAIN_custom, "$with_filter_chain", [Custom filter chain to use])
-
-    # Add output to ./configure
-    AC_MSG_NOTICE([Snoopy default filter chain: $with_filter_chain])
-])
-
-
-
 # ==============================================================================
 # ======= Enable/disable all filters at once ===================================
 # ==============================================================================
@@ -454,6 +426,40 @@ SNOOPY_CONFIGURE_FILTER_ENABLE( [only_uid],          [This filter passes only me
 # ==============================================================================
 # ======= END section: ENABLE INDIVIDUAL FILTERS ===============================
 # ==============================================================================
+
+
+
+dnl ============================================================================
+dnl ======= WITH FILTER CHAIN ==================================================
+dnl ============================================================================
+AC_ARG_WITH(filter-chain,
+    [AC_HELP_STRING(
+        [--with-filter-chain=CHAINSPEC],
+        [default filter chain to use. See src/snoopy.h and src/filter/ for available filters [default=empty]]
+    )],
+    [
+        if test "x$withval" = "x" -o "x$withval" = "xno"; then
+            # We allow it here, as it might be desired to not have any
+            # filter chain configured by default, but will be configured
+            # later, using configuration file.
+            # Allowed: empty, no
+            with_filter_chain=""
+        elif test "x$withval" = "xyes"; then
+            # This must be an error.
+            AC_MSG_ERROR([--with-filter-chain requires an appropriate value (filter chain specification), even empty string will do (--with-filter-chain=""). To disable filtering by default, use --without-filter-chain. Filter chain can later be specified and consequentially enabled by using configuration file. For this to work, configuration file (--with-config-file) and general filtering (--enable-filter) must be enabled.])
+        else
+            with_filter_chain="$withval"
+        fi
+    ],
+    [with_filter_chain=""]
+)
+
+AS_IF([test "x$with_filter_chain" != "x"], [
+    AC_DEFINE_UNQUOTED(SNOOPY_CONF_FILTER_CHAIN_custom, "$with_filter_chain", [Custom filter chain to use])
+
+    # Add output to ./configure
+    AC_MSG_NOTICE([Snoopy default filter chain: $with_filter_chain])
+])
 
 
 
