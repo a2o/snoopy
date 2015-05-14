@@ -1,6 +1,6 @@
 /*
  *
- * $Id: snoopy.h 17 2010-02-10 01:25:39Z bostjanskufca $
+ * snoopy.h
  *
  */
 

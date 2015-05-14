@@ -1,7 +1,5 @@
 /* snoopy.c -- execve() logging wrapper 
- * Copyright (c) 2000 marius@linux.com,mbm@linux.com
- *
- * $Id: snoopy.c 30 2010-02-13 16:31:16Z bostjanskufca $
+ * Copyright (c) 2000 marius@linux.com,mbm@linux.com,bostjan@a2o.si
  *
  * Part hacked on flight KL 0617, 30,000 ft or so over the Atlantic :) 
  * 
@@ -86,9 +84,9 @@ static inline void snoopy_log(const char *filename, char *const argv[])
 	openlog("snoopy", LOG_PID, LOG_AUTHPRIV);
 	#if defined(SNOOPY_CWD_LOGGING)
 		getCwdRet = getcwd(cwd, PATH_MAX+1);
-		syslog(LOG_INFO, "[uid:%d sid:%d cwd:%s]: %s", getuid(), getsid(0), cwd, logString);
+		syslog(LOG_INFO, "[uid:%d sid:%d cwd:%s path:%s]: %s", getuid(), getsid(0), cwd, filename, logString);
 	#else
-		syslog(LOG_INFO, "[uid:%d sid:%d]: %s", getuid(), getsid(0), logString);
+		syslog(LOG_INFO, "[uid:%d sid:%d path:%s]: %s", getuid(), getsid(0), filename, logString);
 	#endif
 
 	// Free the logString memory

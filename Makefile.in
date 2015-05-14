@@ -1,5 +1,4 @@
 # Makefile for snoopy
-# $Id: Makefile.in 21 2010-02-11 19:58:54Z bostjanskufca $
 
 
 
@@ -23,8 +22,10 @@ detect: detect.c
 install: all
 	install -m 755 -d $(LIBDIR)
 	install -m 755 snoopy.so $(LIBDIR)/snoopy.so
-	@echo -e "\nSnoopy shared library installed in $(LIBDIR)."
-	@echo -e "Run 'make enable' to actually enable snoopy logging.\n"
+	@echo "----------------------------------------------------"
+	@echo "Snoopy shared library installed in $(LIBDIR)."
+	@echo "Run 'make enable' to actually enable snoopy logging."
+	@echo "----------------------------------------------------"
 
 
 

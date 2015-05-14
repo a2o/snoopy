@@ -1,8 +1,7 @@
 /* detect.c -- simple execve() wrapper detection 
- * $Id: detect.c 5 2010-02-09 20:00:51Z bostjanskufca $
  * Copyright (c) 2000 marius@linux.com,mbm@linux.com
  *
- * 
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)

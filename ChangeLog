@@ -1,50 +1,71 @@
-$Id: ChangeLog 24 2010-02-11 20:24:49Z bostjanskufca $
+commit 19e458d40bc036da48f3008c27864e4a64fc712b
+Author: Boštjan Škufca <bostjan@a2o.si>
+Date:   Thu Aug 5 01:10:59 2010 +0200
 
-2010-02-11 - Version  1.6.1
----------------------------
-o Logs current working directory
+    Created release 1.7.1
 
-2010-02-09 - Version  1.6.0
----------------------------
-o Uses autotools now
-o Changed installation procedure
-o Rewritten logging function to avoid memory leaks
-o No more segfaults on 64bit platforms
-o Program name and argument lengths limited to 4096 bytes
-o Many thanks to otheus for supplying a patch on SourceForge one and a half 
-    years ago, it helped tremendously.
+commit b47eb17ea12bbe6265fce583206739219e096005
+Author: Boštjan Škufca <bostjan@a2o.si>
+Date:   Thu Aug 5 01:10:23 2010 +0200
 
-2010-02-09 - Version  1.5.0
----------------------------
-o Updated to compile and work without segfaults on 32bit and 64bit platforms
-o Project maintenance taken over by Bostjan Skufca
+    Re-added install-sh, required by configure
 
-Sun December 10 - Version  1.3
-------------------------------
-o Altered logging mechanism for performance
-o Added new way of logging (can choose)
-o Added an integrity check (optional)
+commit ed9058bce9b461b807000df274548f0ff8b7f8cb
+Author: Boštjan Škufca <bostjan@a2o.si>
+Date:   Thu Aug 5 01:07:28 2010 +0200
 
-Wed October 25 - Version  1.2a
------------------------------
-o ROOT_ONLY behavior now works again, thanks to adrian.head@bytecomm.com.au for
-  notifying us!
+    Release script adds changelog to release
 
-Thu October 10 - Version  1.2
------------------------------
-o Fixed small bug with rather adverse side effects. 
+commit 230f078560f11d1ac3bda1f1ecf81649059b9e95
+Author: Boštjan Škufca <bostjan@a2o.si>
+Date:   Thu Aug 5 01:06:57 2010 +0200
 
-Thu August 17 - Version  1.1
-----------------------------
-o Added support for execv().  Although execv() calls execve()
-  [as described in the man page], execv() calls don't seem to log.
-  They now do.  Will investigate this issue a bit further.
-o Made logging code modular, as to accomodate for the extra 
-  overload that execv() brought.
+    Removed old ChangeLog and empty install-sh file
 
-Thu August 3  - Version 1.00
-----------------------------
-o Cleaned up the codebase a bit
-o Added the output of username and sid (PID of the login shell) 
-  to the logged output
-o Fixed install.sh to be compatible with older (v1.0) bash shells
+commit 97aca7294fef8ef94580923770ff5ae1a6b08d82
+Author: Boštjan Škufca <bostjan@a2o.si>
+Date:   Thu Aug 5 01:03:57 2010 +0200
+
+    Removed SVN tags from file header comments
+
+commit 66986368857aa1f7291725db94e90bf92829d1c9
+Author: Boštjan Škufca <bostjan@a2o.si>
+Date:   Thu Aug 5 01:00:44 2010 +0200
+
+    Fixed release generation script to remove some folders from release
+
+commit 5bf297ed71b66d645db69656d9c68cd7eab1b8f2
+Author: Boštjan Škufca <bostjan@a2o.si>
+Date:   Thu Aug 5 00:52:19 2010 +0200
+
+    Fixed cosmetic -e errors in Makefile echo statements, and updated release script to utilise git in release creation
+
+commit 28558a326b824b0bae9ff9e948afa84795b4d54f
+Author: Boštjan Škufca <bostjan@a2o.si>
+Date:   Thu Aug 5 00:31:32 2010 +0200
+
+    Fixed warnings in enable.sh when not using bash (uses sh now)
+
+commit 3e3461a8ca9f1ef382be8eedbd537785bfe9b0a4
+Author: Boštjan Škufca <bostjan@a2o.si>
+Date:   Thu Aug 5 00:17:06 2010 +0200
+
+    Fixed order of log arguments, broken by previous commit
+
+commit 1caae173b83a48364b604fb41c30f62e3b9e2d9f
+Author: Luis Fernando Muñoz Mejías <Luis.Fernando.Munoz.Mejias@cern.ch>
+Date:   Thu Aug 5 00:15:57 2010 +0200
+
+    Log the filename argument as well
+
+commit b5c58e1adbcb56420a5832c09d23d6c75e1228ff
+Author: Boštjan Škufca <bostjan@a2o.si>
+Date:   Wed Aug 4 23:56:43 2010 +0200
+
+    Pre-git commit, check additional changelog in old SVN repo.
+
+commit f07024ab57116ace59b79de2c285274670c1133b
+Author: Bostjan Skufca <bostjan@a2o.si>
+Date:   Wed Aug 4 23:44:24 2010 +0200
+
+    Imported contents of SVN trunk/ at revision 31.
