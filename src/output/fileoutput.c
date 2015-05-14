@@ -64,4 +64,3 @@ int snoopy_output_fileoutput (char *logMessage, int errorOrMessage, char *arg)
     fclose(fp);
     return charCount;
 }
-
