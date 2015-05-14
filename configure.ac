@@ -262,6 +262,9 @@ AC_ARG_WITH(message-format,
 
 AS_IF([test "x$with_message_format" != "x"], [
     AC_DEFINE_UNQUOTED(SNOOPY_CONF_LOG_MESSAGE_FORMAT_custom, "$with_message_format", [Custom message format to use])
+
+    # Add output to ./configure
+    AC_MSG_NOTICE([Snoopy default message format: $with_message_format])
 ])
 
 
@@ -412,6 +415,9 @@ AC_ARG_WITH(filter-chain,
 
 AS_IF([test "x$with_filter_chain" != "x"], [
     AC_DEFINE_UNQUOTED(SNOOPY_CONF_FILTER_CHAIN_custom, "$with_filter_chain", [Custom filter chain to use])
+
+    # Add output to ./configure
+    AC_MSG_NOTICE([Snoopy default filter chain: $with_filter_chain])
 ])
 
 
@@ -536,7 +542,6 @@ AC_ARG_WITH(default-output,
             fi
 
             # Check if given output exist
-echo DEF_OUT: $default_output
             if test ! -f src/output/${default_output}output.c ; then
                 AC_MSG_ERROR([--with-default-output value provided is invalid, output does not exist: $default_output])
             fi
@@ -553,6 +558,9 @@ echo DEF_OUT: $default_output
 AS_IF([test "x$default_output" != "x"], [
     AC_DEFINE_UNQUOTED(SNOOPY_CONF_OUTPUT_DEFAULT,     ["$default_output"],     [Default output provider])
     AC_DEFINE_UNQUOTED(SNOOPY_CONF_OUTPUT_DEFAULT_ARG, ["$default_output_arg"], [Default output arguments])
+
+    # Add output to ./configure
+    AC_MSG_NOTICE([Snoopy default output: $default_output($default_output_arg)])
 ])
 
 dnl ============================================================================

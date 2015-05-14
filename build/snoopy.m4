@@ -26,6 +26,16 @@
 ### Macros for adding data source enable/disable options to ./configure
 ###
 #
+AU_DEFUN([SNOOPY_CONFIGURE_DATASOURCE_MSG],
+[
+    AS_IF(
+        [test "x$2" = "xyes"],
+        [AC_MSG_NOTICE([Snoopy datasource enabled: $1])],
+        [AC_MSG_NOTICE([Snoopy datasource disabled: $1])]
+    )
+])
+
+
 AU_DEFUN([SNOOPY_CONFIGURE_DATASOURCE_ENABLE],
 [
     AC_ARG_ENABLE(datasource-$1,
@@ -50,6 +60,8 @@ AU_DEFUN([SNOOPY_CONFIGURE_DATASOURCE_ENABLE],
     ])
     AM_CONDITIONAL([DATASOURCE_ENABLED_$1], [test "x$enable_datasource_$1" == "xyes"])
     AC_SUBST([enable_datasource_$1])
+
+    SNOOPY_CONFIGURE_DATASOURCE_MSG([$1], [$enable_datasource_$1])
 ])
 
 
@@ -77,6 +89,8 @@ AU_DEFUN([SNOOPY_CONFIGURE_DATASOURCE_DISABLE],
     ])
     AM_CONDITIONAL([DATASOURCE_ENABLED_$1], [test "x$enable_datasource_$1" == "xyes"])
     AC_SUBST([enable_datasource_$1])
+
+    SNOOPY_CONFIGURE_DATASOURCE_MSG([$1], [$enable_datasource_$1])
 ])
 
 
@@ -85,6 +99,16 @@ AU_DEFUN([SNOOPY_CONFIGURE_DATASOURCE_DISABLE],
 ### Macros for adding filter enable/disable options to ./configure
 ###
 #
+AU_DEFUN([SNOOPY_CONFIGURE_FILTER_MSG],
+[
+    AS_IF(
+        [test "x$2" = "xyes"],
+        [AC_MSG_NOTICE([Snoopy filter enabled: $1])],
+        [AC_MSG_NOTICE([Snoopy filter disabled: $1])]
+    )
+])
+
+
 AU_DEFUN([SNOOPY_CONFIGURE_FILTER_ENABLE],
 [
     AC_ARG_ENABLE(filter-$1,
@@ -109,6 +133,8 @@ AU_DEFUN([SNOOPY_CONFIGURE_FILTER_ENABLE],
     ])
     AM_CONDITIONAL([FILTER_ENABLED_$1], [test "x$enable_filter_$1" == "xyes"])
     AC_SUBST([enable_filter_$1])
+
+    SNOOPY_CONFIGURE_FILTER_MSG([$1], [$enable_filter_$1])
 ])
 
 
@@ -136,6 +162,8 @@ AU_DEFUN([SNOOPY_CONFIGURE_FILTER_DISABLE],
     ])
     AM_CONDITIONAL([FILTER_ENABLED_$1], [test "x$enable_filter_$1" == "xyes"])
     AC_SUBST([enable_filter_$1])
+
+    SNOOPY_CONFIGURE_FILTER_MSG([$1], [$enable_filter_$1])
 ])
 
 
@@ -144,6 +172,16 @@ AU_DEFUN([SNOOPY_CONFIGURE_FILTER_DISABLE],
 ### Macros for adding output enable/disable options to ./configure
 ###
 #
+AU_DEFUN([SNOOPY_CONFIGURE_OUTPUT_MSG],
+[
+    AS_IF(
+        [test "x$2" = "xyes"],
+        [AC_MSG_NOTICE([Snoopy output enabled: $1])],
+        [AC_MSG_NOTICE([Snoopy output disabled: $1])]
+    )
+])
+
+
 AU_DEFUN([SNOOPY_CONFIGURE_OUTPUT_ENABLE_FORCE],
 [
     AC_DEFINE(SNOOPY_CONF_OUTPUT_ENABLED_$1, 1, [Is output "$1" available? Forced "Yes".])
@@ -176,6 +214,8 @@ AU_DEFUN([SNOOPY_CONFIGURE_OUTPUT_ENABLE],
     ])
     AM_CONDITIONAL([OUTPUT_ENABLED_$1], [test "x$enable_output_$1" == "xyes"])
     AC_SUBST([enable_output_$1])
+
+    SNOOPY_CONFIGURE_OUTPUT_MSG([$1], [$enable_output_$1])
 ])
 
 
@@ -203,4 +243,6 @@ AU_DEFUN([SNOOPY_CONFIGURE_OUTPUT_DISABLE],
     ])
     AM_CONDITIONAL([OUTPUT_ENABLED_$1], [test "x$enable_output_$1" == "xyes"])
     AC_SUBST([enable_output_$1])
+
+    SNOOPY_CONFIGURE_OUTPUT_MSG([$1], [$enable_output_$1])
 ])
