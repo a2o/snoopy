@@ -9,6 +9,10 @@ o Feature: added a new output: devtty - writes to /dev/tty directly.
 o Feature: added two new outputs: stderr and stdout.
 o Refactoring: optimize configuration process, output relevant settings for
     review.
+o Removal of deprecated feature: removed ./configure flag --enable-root-only.
+    An error message will be emited by ./configure if this deprecated flag
+    is encountered. General filtering should be used instead, like this:
+        --enable-filtering --with-filter-chain="only_uid:0".
 
 
 2015-05-11 - Version 2.3.0

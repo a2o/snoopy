@@ -118,13 +118,6 @@ void snoopy_log_syscall (
 ) {
     char *logMessage = NULL;
 
-    /* Do not log non-root commands if this is requested */
-#if defined(SNOOPY_CONF_ROOT_ONLY)
-    if ((geteuid() != 0) && (getuid() != 0)) {
-        return;
-    }
-#endif
-
     /* Initialize snoopy */
     snoopy_init();
 

@@ -376,28 +376,17 @@ AC_MSG_NOTICE([-])
 
 
 dnl ============================================================================
-dnl ======= SPECIAL FILTER: root-only ==========================================
+dnl ======= DEPRECATED FILTER: root-only =======================================
 dnl ============================================================================
 AC_ARG_ENABLE(root-only,
     [AC_HELP_STRING(
         [--enable-root-only],
-        [only log commands executed by root. This is a special filter, with better performance than general filtering subsystem. If command is not run as root, Snoopy terminates very early, having almost no performance penalty. [default=disabled]]
+        [DEPRECATED. Use --enable-filtering --with-filter-chain="only_uid:0" instead.]
     )],
     [
-        if test "x$enableval" = "xyes"; then
-            enable_root_only=yes
-        elif test "x$enableval" = "xno"; then
-            enable_root_only=no
-        else
-            AC_MSG_ERROR([--enable-root-only does not take an argument: $enableval])
-        fi
-    ],
-    [enable_root_only=no]
+        AC_MSG_ERROR([Use of --enable-root-only is DEPRECATED. Use --enable-filtering --with-filter-chain="only_uid:0" instead.])
+    ]
 )
-
-AS_IF([test "x$enable_root_only" = "xyes"], [
-    AC_DEFINE(SNOOPY_CONF_ROOT_ONLY, 1, [Only log commands executed by root])
-])
 
 
 

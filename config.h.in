@@ -239,9 +239,6 @@
 /* Is output "syslog" available? */
 #undef SNOOPY_CONF_OUTPUT_ENABLED_syslog
 
-/* Only log commands executed by root */
-#undef SNOOPY_CONF_ROOT_ONLY
-
 /* Syslog facility to use by default */
 #undef SNOOPY_CONF_SYSLOG_FACILITY
 
