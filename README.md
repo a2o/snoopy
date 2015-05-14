@@ -1,4 +1,4 @@
-a# Snoopy Logger
+# Snoopy Logger
 
 [![Flattr Snoopy Logger project](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=a2o&url=https://github.com/a2o/snoopy&title=Snoopy Logger)
 
