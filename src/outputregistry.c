@@ -37,11 +37,11 @@
  *
  * Please maintain alphabetical order, equal to what `ls` would do.
  */
-//#ifdef SNOOPY_CONF_OUTPUT_ENABLED_console
-//#include "output/consoleoutput.h"
-//#endif
 #ifdef SNOOPY_CONF_OUTPUT_ENABLED_devlog
 #include "output/devlogoutput.h"
+#endif
+#ifdef SNOOPY_CONF_OUTPUT_ENABLED_devtty
+#include "output/devttyoutput.h"
 #endif
 #ifdef SNOOPY_CONF_OUTPUT_ENABLED_file
 #include "output/fileoutput.h"
@@ -70,11 +70,11 @@
  * Please maintain alphabetical order, equal to what `ls` would do.
  */
 char *snoopy_outputregistry_names[] = {
-//#ifdef SNOOPY_CONF_OUTPUT_ENABLED_console
-//    "console",
-//#endif
 #ifdef SNOOPY_CONF_OUTPUT_ENABLED_devlog
     "devlog",
+#endif
+#ifdef SNOOPY_CONF_OUTPUT_ENABLED_devtty
+    "devtty",
 #endif
 #ifdef SNOOPY_CONF_OUTPUT_ENABLED_file
     "file",
@@ -98,11 +98,11 @@ char *snoopy_outputregistry_names[] = {
 };
 
 int (*snoopy_outputregistry_ptrs []) (char *logMessage, int errorOrMessage, char *arg) = {
-//#ifdef SNOOPY_CONF_OUTPUT_ENABLED_console
-//    snoopy_output_consoleoutput,
-//#endif
 #ifdef SNOOPY_CONF_OUTPUT_ENABLED_devlog
     snoopy_output_devlogoutput,
+#endif
+#ifdef SNOOPY_CONF_OUTPUT_ENABLED_devtty
+    snoopy_output_devttyoutput,
 #endif
 #ifdef SNOOPY_CONF_OUTPUT_ENABLED_file
     snoopy_output_fileoutput,

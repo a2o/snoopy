@@ -500,6 +500,7 @@ AC_ARG_ENABLE(all-outputs,
 # ======= START section: ENABLE INDIVIDUAL OUTPUTS =============================
 # ==============================================================================
 SNOOPY_CONFIGURE_OUTPUT_ENABLE(       [devlog],         [This is the default output of Snoopy.])
+SNOOPY_CONFIGURE_OUTPUT_ENABLE(       [devtty],         [Write to current console via /dev/tty.])
 SNOOPY_CONFIGURE_OUTPUT_ENABLE(       [file],           [Write directly to file.])
 SNOOPY_CONFIGURE_OUTPUT_ENABLE_FORCE( [socket],         [Output "socket" is mandatory!])
 SNOOPY_CONFIGURE_OUTPUT_ENABLE(       [stderr],         [Write to stderr])

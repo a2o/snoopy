@@ -221,6 +221,9 @@
 /* Is output "devlog" available? */
 #undef SNOOPY_CONF_OUTPUT_ENABLED_devlog
 
+/* Is output "devtty" available? */
+#undef SNOOPY_CONF_OUTPUT_ENABLED_devtty
+
 /* Is output "file" available? */
 #undef SNOOPY_CONF_OUTPUT_ENABLED_file
 

@@ -30,6 +30,14 @@ libsnoopy_outputs_all_la_SOURCES += \
     devlogoutput.h
 endif
 
+# Output: devtty
+#
+if OUTPUT_ENABLED_devtty
+libsnoopy_outputs_all_la_SOURCES += \
+    devttyoutput.c \
+    devttyoutput.h
+endif
+
 # Output: file
 #
 if OUTPUT_ENABLED_file

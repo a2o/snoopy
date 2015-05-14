@@ -5,6 +5,7 @@
 
 2015-05-XX - Version 2.3.X - FIXME
 --------------------------
+o Feature: added a new output: devtty - writes to /dev/tty directly.
 o Feature: added two new outputs: stderr and stdout.
 o Refactoring: optimize configuration process, output relevant settings for
     review.
