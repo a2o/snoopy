@@ -184,6 +184,19 @@ fi
 
 
 
+
+
+dnl ============================================================================
+dnl ======= START CONFIGURATION SUMMARY OUTPUT =================================
+dnl ============================================================================
+AC_MSG_NOTICE([======================================================================])
+
+
+
+
+
+dnl ============================================================================
+dnl ======= ENABLE CONFIG FILE =================================================
 dnl ============================================================================
 AC_ARG_ENABLE(config-file,
     [AC_HELP_STRING(
@@ -192,22 +205,26 @@ AC_ARG_ENABLE(config-file,
     )],
     [
         if test "x$enableval" = "xyes"; then
+            enable_config_file=yes
             config_file_path="$SYSCONFDIR/snoopy.ini"
         elif test "x$enableval" = "xno"; then
+            enable_config_file=no
             config_file_path=""
         else
             AC_MSG_ERROR([--enable-config-file does not take an argument: $enableval])
         fi
     ],
     # Not specified on command line
-    [config_file_path=""]
+    [
+        enable_config_file=no
+        config_file_path=""
+    ]
 )
 
+AC_MSG_NOTICE([Snoopy config file enabled: $enable_config_file])
 AS_IF([test "x$config_file_path" != "x"], [
     AC_DEFINE_UNQUOTED(SNOOPY_CONF_CONFIG_FILE, "$config_file_path", [INI configuration file path to use])
-
-    # Add output to ./configure
-    AC_MSG_NOTICE([Snoopy configuration file enabled: $config_file_path])
+    AC_MSG_NOTICE([Snoopy config file path: $config_file_path])
 ])
 
 dnl CONFIG_FILE_ENABLED is used in:
@@ -239,10 +256,19 @@ AC_ARG_ENABLE(error-logging,
 
 AS_IF([test "x$enable_error_logging" = "xyes"], [
     AC_DEFINE_UNQUOTED(SNOOPY_CONF_ERROR_LOGGING_ENABLED, 1, [Enable error logging])
-
-    # Add output to ./configure
-    AC_MSG_NOTICE([Snoopy error logging enabled: $enable_error_logging])
 ])
+AC_MSG_NOTICE([Snoopy error logging enabled: $enable_error_logging])
+
+
+
+
+
+dnl ============================================================================
+dnl ============================================================================
+dnl ======= START section: DATASOURCES & MESSAGE FORMAT ========================
+dnl ============================================================================
+dnl ============================================================================
+AC_MSG_NOTICE([-])
 
 
 
@@ -325,10 +351,16 @@ AC_ARG_WITH(message-format,
 
 AS_IF([test "x$with_message_format" != "x"], [
     AC_DEFINE_UNQUOTED(SNOOPY_CONF_LOG_MESSAGE_FORMAT_custom, "$with_message_format", [Custom message format to use])
-
-    # Add output to ./configure
     AC_MSG_NOTICE([Snoopy default message format: $with_message_format])
 ])
+
+
+
+dnl ============================================================================
+dnl ============================================================================
+dnl ======= END section: DATASOURCES & MESSAGE FORMAT ==========================
+dnl ============================================================================
+dnl ============================================================================
 
 
 
@@ -339,6 +371,8 @@ dnl ============================================================================
 dnl ======= START section: FILTERING ===========================================
 dnl ============================================================================
 dnl ============================================================================
+AC_MSG_NOTICE([-])
+
 
 
 dnl ============================================================================
@@ -391,6 +425,7 @@ AS_IF([test "x$enable_filtering" = "xyes"], [
     AC_DEFINE(SNOOPY_CONF_FILTERING_ENABLED, 1, [Enable filtering])
 ])
 AM_CONDITIONAL([FILTERING_ENABLED], [test "x$enable_filtering" == "xyes"])
+AC_MSG_NOTICE([Snoopy filtering subsystem enabled: $enable_filtering])
 
 
 
@@ -411,7 +446,13 @@ AC_ARG_ENABLE(all-filters,
             AC_MSG_ERROR([--enable-all-filters does not take an argument: $enableval])
         fi
     ],
-    [enable_all_filters=yes]
+    [
+        if test "x$enable_filtering" = "xyes"; then
+            enable_all_filters=yes
+        else
+            enable_all_filters=no
+        fi
+    ]
 )
 
 
@@ -456,9 +497,9 @@ AC_ARG_WITH(filter-chain,
 
 AS_IF([test "x$with_filter_chain" != "x"], [
     AC_DEFINE_UNQUOTED(SNOOPY_CONF_FILTER_CHAIN_custom, "$with_filter_chain", [Custom filter chain to use])
-
-    # Add output to ./configure
     AC_MSG_NOTICE([Snoopy default filter chain: $with_filter_chain])
+],[
+    AC_MSG_NOTICE([Snoopy default filter chain: none])
 ])
 
 
@@ -478,6 +519,8 @@ dnl ============================================================================
 dnl ======= START section: OUTPUTS =============================================
 dnl ============================================================================
 dnl ============================================================================
+AC_MSG_NOTICE([-])
+
 
 
 # ==============================================================================
@@ -565,10 +608,10 @@ AC_ARG_WITH(default-output,
 AS_IF([test "x$default_output" != "x"], [
     AC_DEFINE_UNQUOTED(SNOOPY_CONF_OUTPUT_DEFAULT,     ["$default_output"],     [Default output provider])
     AC_DEFINE_UNQUOTED(SNOOPY_CONF_OUTPUT_DEFAULT_ARG, ["$default_output_arg"], [Default output arguments])
-
-    # Add output to ./configure
-    AC_MSG_NOTICE([Snoopy default output: $default_output($default_output_arg)])
 ])
+AC_MSG_NOTICE([Snoopy default output: $default_output($default_output_arg)])
+
+
 
 dnl ============================================================================
 dnl ============================================================================
@@ -585,6 +628,8 @@ dnl ============================================================================
 dnl ======= START section: SYSLOG ==============================================
 dnl ============================================================================
 dnl ============================================================================
+AC_MSG_NOTICE([-])
+
 
 
 dnl ============================================================================
@@ -619,6 +664,7 @@ AC_ARG_WITH(syslog-facility,
 )
 
 AC_DEFINE_UNQUOTED(SNOOPY_CONF_SYSLOG_FACILITY, [$syslog_facility], [Syslog facility to use by default])
+AC_MSG_NOTICE([Snoopy default syslog facility: $syslog_facility])
 
 
 dnl ============================================================================
@@ -653,6 +699,7 @@ AC_ARG_WITH(syslog-level,
 )
 
 AC_DEFINE_UNQUOTED(SNOOPY_CONF_SYSLOG_LEVEL, [$syslog_level], [Syslog level to use by default])
+AC_MSG_NOTICE([Snoopy default syslog level:    $syslog_level])
 
 dnl ============================================================================
 dnl ============================================================================
@@ -661,6 +708,11 @@ dnl ============================================================================
 dnl ============================================================================
 
 
+
+dnl ============================================================================
+dnl ======= END CONFIGURATION SUMMARY OUTPUT ===================================
+dnl ============================================================================
+AC_MSG_NOTICE([======================================================================])
 
 
 
