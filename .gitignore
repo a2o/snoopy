@@ -60,7 +60,7 @@ Makefile
 ### Coverity files
 #
 /cov-int*
-/build/coverity-settings.sh.conf
+/build/coverity-settings.conf
 
 
 ### Distribution related files

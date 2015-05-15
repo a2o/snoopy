@@ -10,7 +10,7 @@ set -e
 
 ### Settings
 #
-COVERITY_SETTINGS_FILE="./build/coverity-settings.sh.conf"
+COVERITY_SETTINGS_FILE="./build/coverity-settings.conf"
 BUILD_DIR="cov-int"
 BUILD_FILE_PREFIX="cov-int-snoopy"
 
@@ -20,13 +20,20 @@ BUILD_FILE_PREFIX="cov-int-snoopy"
 #
 displayHelp()
 {
-    echo
-    echo "To automatically submit build to Coverity, some environment variables must be defined:"
-    echo
-    echo "export COVERITY_EMAIL=\"\""
-    echo "export COVERITY_TOKEN=\"\""
-    echo "export COVERITY_BUILD_VERSION=\"\""
-    echo
+    cat <<EOF
+To automatically submit build to Coverity, some environment variables must
+be defined:
+
+export COVERITY_EMAIL=""
+export COVERITY_TOKEN=""
+export COVERITY_BUILD_VERSION=""
+
+Alternatively you may store those settings in the following config
+file:
+
+    $COVERITY_SETTINGS_FILE
+
+EOF
 }
 
 
@@ -60,13 +67,33 @@ if [ "x$COVERITY_BUILD_VERSION" == "x" ]; then
     exit 1
 fi
 if ! which cov-build; then
+    echo
     echo "ERROR: Unable to find cov-build."
     echo
     echo "export PATH=/path/to/cov-analysis-linux64-a.b.c/bin:\$PATH"
     echo
-    displayHelp
     exit 1
 fi
+if ! which curl; then
+    echo
+    echo "ERROR: Unable to find CURL. Please install it and rerun the process."
+    echo
+    exit 1
+fi
+
+
+
+### Display stuff
+#
+cat <<EOF
+
+Starting build for Coverity analysis.
+Settings:
+            email: $COVERITY_EMAIL
+    build version: $COVERITY_BUILD_VERSION
+            token: (redacted)
+
+EOF
 
 
 
@@ -76,9 +103,10 @@ fi
 # Clean
 ./bootstrap.sh
 ./configure
-make distclean
+make maintainer-clean
 
 # Configure for real
+./bootstrap.sh
 ./configure \
     --enable-config-file \
     --enable-filtering

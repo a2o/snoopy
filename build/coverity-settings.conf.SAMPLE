@@ -1,0 +1,3 @@
+COVERITY_EMAIL=`git config user.email`
+COVERITY_TOKEN=""
+COVERITY_BUILD_VERSION=`git rev-parse HEAD`
