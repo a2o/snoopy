@@ -119,6 +119,9 @@
 /* Is datasource "datetime" available? */
 #undef SNOOPY_CONF_DATASOURCE_ENABLED_datetime
 
+/* Is datasource "domain" available? */
+#undef SNOOPY_CONF_DATASOURCE_ENABLED_domain
+
 /* Is datasource "egid" available? */
 #undef SNOOPY_CONF_DATASOURCE_ENABLED_egid
 
@@ -145,6 +148,9 @@
 
 /* Is datasource "group" available? */
 #undef SNOOPY_CONF_DATASOURCE_ENABLED_group
+
+/* Is datasource "hostname" available? */
+#undef SNOOPY_CONF_DATASOURCE_ENABLED_hostname
 
 /* Is datasource "login" available? */
 #undef SNOOPY_CONF_DATASOURCE_ENABLED_login

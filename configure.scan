@@ -28,7 +28,7 @@ AC_TYPE_UID_T
 
 # Checks for library functions.
 AC_FUNC_MALLOC
-AC_CHECK_FUNCS([getcwd gettimeofday memmove memset socket strchr strdup strstr strtol])
+AC_CHECK_FUNCS([getcwd gethostname gettimeofday memmove memset socket strchr strdup strstr strtol uname])
 
 AC_CONFIG_FILES([Makefile
                  doc/Makefile

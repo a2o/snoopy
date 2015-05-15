@@ -43,6 +43,9 @@
 #ifdef SNOOPY_CONF_DATASOURCE_ENABLED_datetime
 #include "datasource/datetime.h"
 #endif
+#ifdef SNOOPY_CONF_DATASOURCE_ENABLED_domain
+#include "datasource/domain.h"
+#endif
 #ifdef SNOOPY_CONF_DATASOURCE_ENABLED_egid
 #include "datasource/egid.h"
 #endif
@@ -69,6 +72,9 @@
 #endif
 #ifdef SNOOPY_CONF_DATASOURCE_ENABLED_group
 #include "datasource/group.h"
+#endif
+#ifdef SNOOPY_CONF_DATASOURCE_ENABLED_hostname
+#include "datasource/hostname.h"
 #endif
 #ifdef SNOOPY_CONF_DATASOURCE_ENABLED_login
 #include "datasource/login.h"
@@ -128,6 +134,9 @@ char *snoopy_datasourceregistry_names[] = {
 #ifdef SNOOPY_CONF_DATASOURCE_ENABLED_datetime
     "datetime",
 #endif
+#ifdef SNOOPY_CONF_DATASOURCE_ENABLED_domain
+    "domain",
+#endif
 #ifdef SNOOPY_CONF_DATASOURCE_ENABLED_egid
     "egid",
 #endif
@@ -154,6 +163,9 @@ char *snoopy_datasourceregistry_names[] = {
 #endif
 #ifdef SNOOPY_CONF_DATASOURCE_ENABLED_group
     "group",
+#endif
+#ifdef SNOOPY_CONF_DATASOURCE_ENABLED_hostname
+    "hostname",
 #endif
 #ifdef SNOOPY_CONF_DATASOURCE_ENABLED_login
     "login",
@@ -210,6 +222,9 @@ int (*snoopy_datasourceregistry_ptrs []) (char *result, char *arg) = {
 #ifdef SNOOPY_CONF_DATASOURCE_ENABLED_datetime
     snoopy_datasource_datetime,
 #endif
+#ifdef SNOOPY_CONF_DATASOURCE_ENABLED_domain
+    snoopy_datasource_domain,
+#endif
 #ifdef SNOOPY_CONF_DATASOURCE_ENABLED_egid
     snoopy_datasource_egid,
 #endif
@@ -236,6 +251,9 @@ int (*snoopy_datasourceregistry_ptrs []) (char *result, char *arg) = {
 #endif
 #ifdef SNOOPY_CONF_DATASOURCE_ENABLED_group
     snoopy_datasource_group,
+#endif
+#ifdef SNOOPY_CONF_DATASOURCE_ENABLED_hostname
+    snoopy_datasource_hostname,
 #endif
 #ifdef SNOOPY_CONF_DATASOURCE_ENABLED_login
     snoopy_datasource_login,

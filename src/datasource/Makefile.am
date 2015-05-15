@@ -46,6 +46,14 @@ libsnoopy_datasources_all_la_SOURCES += \
 	datetime.h
 endif
 
+# Data source: domain
+#
+if DATASOURCE_ENABLED_domain
+libsnoopy_datasources_all_la_SOURCES += \
+	domain.c \
+	domain.h
+endif
+
 # Data source: egid
 #
 if DATASOURCE_ENABLED_egid
@@ -116,6 +124,14 @@ if DATASOURCE_ENABLED_group
 libsnoopy_datasources_all_la_SOURCES += \
 	group.c \
 	group.h
+endif
+
+# Data source: hostname
+#
+if DATASOURCE_ENABLED_hostname
+libsnoopy_datasources_all_la_SOURCES += \
+	hostname.c \
+	hostname.h
 endif
 
 # Data source: login

@@ -16,6 +16,7 @@
 ; - %{cmdline}        ; (available=@enable_datasource_cmdline@) Full command line, with arguments
 ; - %{cwd}            ; (available=@enable_datasource_cwd@) Current working directory
 ; - %{datetime}       ; (available=@enable_datasource_datetime@) Date and time in ISO 8601 format
+; - %{domain}         ; (available=@enable_datasource_domain@) Domain of current system
 ; - %{egid}           ; (available=@enable_datasource_egid@) Effective gid that executed the command
 ; - %{egroup}         ; (available=@enable_datasource_egroup@) Effective group name that executed the command
 ; - %{env:VAR}        ; (available=@enable_datasource_env@) Environmental variable named 'VAR'
@@ -25,6 +26,7 @@
 ; - %{filename}       ; (available=@enable_datasource_filename@) Full path to executable
 ; - %{gid}            ; (available=@enable_datasource_gid@) Group id that executed the command
 ; - %{group}          ; (available=@enable_datasource_group@) Group name that executed the command
+; - %{hostname}       ; (available=@enable_datasource_hostname@) Hostname of current system
 ; - %{login}          ; (available=@enable_datasource_login@) Login name (tries getlogin_r() first, then SUDO_USER env variabe, and LOGNAME env as last resort)
 ; - %{pid}            ; (available=@enable_datasource_pid@) ID of process that executed the command
 ; - %{ppid}           ; (available=@enable_datasource_ppid@) Parent process ID of process that executed the command
