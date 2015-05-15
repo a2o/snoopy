@@ -1,0 +1,15 @@
+language: c
+
+
+compiler:
+  - gcc
+  - clang
+
+
+before_script:
+  - "./bootstrap.sh"
+
+
+script:
+  - "./configure --enable-config-file --enable-filtering"
+  - "make"
