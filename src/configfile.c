@@ -40,6 +40,7 @@
 #include "snoopy.h"
 #include "configfile.h"
 #include "configuration.h"
+#include "outputregistry.h"
 
 
 
@@ -172,15 +173,12 @@ void snoopy_configfile_parse_output (
     }
 
     // Determine output name
-    if      (strcmp(outputName, SNOOPY_OUTPUT_DEVLOG) == 0) { snoopy_configuration.output = SNOOPY_OUTPUT_DEVLOG; }
-    else if (strcmp(outputName, SNOOPY_OUTPUT_DEVTTY) == 0) { snoopy_configuration.output = SNOOPY_OUTPUT_DEVTTY; }
-    else if (strcmp(outputName, SNOOPY_OUTPUT_FILE  ) == 0) { snoopy_configuration.output = SNOOPY_OUTPUT_FILE;   }
-    else if (strcmp(outputName, SNOOPY_OUTPUT_SOCKET) == 0) { snoopy_configuration.output = SNOOPY_OUTPUT_SOCKET; }
-    else if (strcmp(outputName, SNOOPY_OUTPUT_STDERR) == 0) { snoopy_configuration.output = SNOOPY_OUTPUT_STDERR; }
-    else if (strcmp(outputName, SNOOPY_OUTPUT_STDOUT) == 0) { snoopy_configuration.output = SNOOPY_OUTPUT_STDOUT; }
-    else if (strcmp(outputName, SNOOPY_OUTPUT_SYSLOG) == 0) { snoopy_configuration.output = SNOOPY_OUTPUT_SYSLOG; }
-    else {
-        snoopy_configuration.output = SNOOPY_OUTPUT_DEFAULT;
+    if (SNOOPY_TRUE == snoopy_outputregistry_isRegistered(outputName)) {
+        snoopy_configuration.output          = strdup(outputName);
+        snoopy_configuration.output_malloced = SNOOPY_TRUE;
+    } else {
+        snoopy_configuration.output          = SNOOPY_OUTPUT_DEFAULT;
+        snoopy_configuration.output_malloced = SNOOPY_FALSE;
     }
 
     // Housekeeping

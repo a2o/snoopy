@@ -84,6 +84,7 @@ snoopy_configuration_type   snoopy_configuration = {
     .filter_chain_malloced   = SNOOPY_FALSE,
 
     .output                  = SNOOPY_OUTPUT_DEFAULT,
+    .output_malloced         = SNOOPY_FALSE,
     .output_arg              = SNOOPY_OUTPUT_DEFAULT_ARG,
     .output_arg_malloced     = SNOOPY_FALSE,
 
@@ -183,6 +184,20 @@ void snoopy_configuration_dtor ()
     /*
      * Reset config setting: output
      */
+    if (SNOOPY_TRUE == snoopy_configuration.output_malloced) {
+        free(snoopy_configuration.output);
+
+        /* Set this to false - REQUIRED (see above) */
+        snoopy_configuration.output_malloced = SNOOPY_FALSE;
+
+        /* Set this to default value - REQUIRED (see above) */
+        snoopy_configuration.output = SNOOPY_OUTPUT_DEFAULT;
+    }
+
+
+    /*
+     * Reset config setting: output_arg
+     */
     if (SNOOPY_TRUE == snoopy_configuration.output_arg_malloced) {
         free(snoopy_configuration.output_arg);
 
@@ -190,7 +205,6 @@ void snoopy_configuration_dtor ()
         snoopy_configuration.output_arg_malloced = SNOOPY_FALSE;
 
         /* Set this to default value - REQUIRED (see above) */
-        snoopy_configuration.output     = SNOOPY_OUTPUT_DEFAULT;
         snoopy_configuration.output_arg = SNOOPY_OUTPUT_DEFAULT_ARG;
     }
 }

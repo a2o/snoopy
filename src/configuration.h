@@ -43,6 +43,7 @@ typedef struct {
     int   filter_chain_malloced;
 
     char *output;
+    int   output_malloced;
     char *output_arg;
     int   output_arg_malloced;
 
