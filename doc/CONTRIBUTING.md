@@ -52,7 +52,7 @@ Snoopy repo clones:
 - documentation/*: pull request branch, contains documentation work,
 - enhancement/*:   pull request branch, contains one enhancement (not a new feature, but improvement nonetheless)
 - feature/*:       pull request branch, contains a new feature,
-- refactoring/...: pull request branch, contains code refactoring,
+- refactoring/*:   pull request branch, contains code refactoring,
 
 
 ### On what branch should you base your contribution to Snoopy?
