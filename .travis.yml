@@ -3,7 +3,8 @@ language: c
 
 compiler:
   - gcc
-  - clang
+# We are disabling this one because Coverity does not need to process two builds of the same source.
+#  - clang
 
 
 before_script:
@@ -37,4 +38,4 @@ addons:
     notification_email: bostjan@a2o.si
     build_command_prepend: "./bootstrap.sh && ./configure && make distclean && ./configure --enable-config-file --enable-filtering"
     build_command: "make -j 16"
-    branch_pattern: master
+    branch_pattern: coverity_scan
