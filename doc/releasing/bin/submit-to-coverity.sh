@@ -5,6 +5,8 @@
 ### Configure shell
 #
 set -e
+set -u
+set -o pipefail
 
 
 
@@ -67,6 +69,15 @@ if [ "x$COVERITY_BUILD_VERSION" == "x" ]; then
     displayHelp
     exit 1
 fi
+
+
+if [ -n "${COVERITY_BUILD_DESCRIPTION+1}" ]; then
+    true
+else
+    export COVERITY_BUILD_DESCRIPTION="Build version $COVERITY_BUILD_VERSION"
+fi
+
+
 if ! which cov-build; then
     echo
     echo "ERROR: Unable to find cov-build."
