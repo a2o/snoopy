@@ -139,13 +139,13 @@ tar \
 
 ### Submit to Coverity
 #
-curl \
+curl -f \
     --form email="$COVERITY_EMAIL" \
     --form token="$COVERITY_TOKEN" \
     --form version="$COVERITY_BUILD_VERSION" \
     --form description="$COVERITY_BUILD_DESCRIPTION" \
     --form file=@${BUILD_FILE_PREFIX}-${COVERITY_BUILD_VERSION}.tar.gz \
-    https://scan.coverity.com/builds?project=Snoopy+Logger
+    https://scan.coverity.com/builds?project=a2o%2Fsnoopy
 
 
 
