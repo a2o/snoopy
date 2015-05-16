@@ -3,8 +3,7 @@ language: c
 
 compiler:
   - gcc
-# We are disabling this one because Coverity does not need to process two builds of the same source.
-#  - clang
+  - clang
 
 
 before_script:
