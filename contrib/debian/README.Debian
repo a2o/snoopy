@@ -13,7 +13,7 @@ With:
    - the LOGNAME environment variable.
    - the SUDO_USER environment variable.
   return "unknown" otherwise.
-  
+
   TIP to use with sudo and keep LOGNAME, add this in /etc/sudoers:
   Defaults        env_reset
   Defaults        env_keep="LOGNAME"

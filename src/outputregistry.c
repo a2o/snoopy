@@ -145,7 +145,7 @@ int snoopy_outputregistry_isRegistered (char *providerName)
 /*
  * getIndex()
  *
- * Return index of given output provider, or -1 if not found 
+ * Return index of given output provider, or -1 if not found
  */
 int snoopy_outputregistry_getIndex (char *providerName)
 {

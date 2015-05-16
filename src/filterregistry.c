@@ -104,7 +104,7 @@ int snoopy_filterregistry_isRegistered (char *filterName)
 /*
  * getIndex()
  *
- * Return index of given filter, or -1 if not found 
+ * Return index of given filter, or -1 if not found
  */
 int snoopy_filterregistry_getIndex (char *filterName)
 {

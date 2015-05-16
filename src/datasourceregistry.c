@@ -320,7 +320,7 @@ int snoopy_datasourceregistry_isRegistered (char *providerName)
 /*
  * getIndex()
  *
- * Return index of given data source, or -1 if not found 
+ * Return index of given data source, or -1 if not found
  */
 int snoopy_datasourceregistry_getIndex (char *providerName)
 {

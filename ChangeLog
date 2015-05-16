@@ -269,7 +269,7 @@ o Changed installation procedure
 o Rewritten logging function to avoid memory leaks
 o No more segfaults on 64bit platforms
 o Program name and argument lengths limited to 4096 bytes
-o Many thanks to otheus for supplying a patch on SourceForge one and a half 
+o Many thanks to otheus for supplying a patch on SourceForge one and a half
     years ago, it helped tremendously.
 
 
@@ -294,7 +294,7 @@ o ROOT_ONLY behavior now works again, thanks to adrian.head@bytecomm.com.au for
 
 Thu October 10 - Version  1.2
 -----------------------------
-o Fixed small bug with rather adverse side effects. 
+o Fixed small bug with rather adverse side effects.
 
 
 Thu August 17 - Version  1.1
@@ -302,13 +302,13 @@ Thu August 17 - Version  1.1
 o Added support for execv().  Although execv() calls execve()
   [as described in the man page], execv() calls don't seem to log.
   They now do.  Will investigate this issue a bit further.
-o Made logging code modular, as to accomodate for the extra 
+o Made logging code modular, as to accomodate for the extra
   overload that execv() brought.
 
 
 Thu August 3  - Version 1.00
 ----------------------------
 o Cleaned up the codebase a bit
-o Added the output of username and sid (PID of the login shell) 
+o Added the output of username and sid (PID of the login shell)
   to the logged output
 o Fixed install.sh to be compatible with older (v1.0) bash shells

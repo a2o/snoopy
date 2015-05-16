@@ -5,7 +5,7 @@ Maintainer: Sébastien Gross <seb•ɑƬ•chezwam•ɖɵʈ•org>
 Build-Depends: debhelper (>= 7.0.50),
 	autoconf (>=2.63), dh-autoreconf
 Standards-Version: 3.9.3
-Homepage: https://github.com/a2o/snoopy 
+Homepage: https://github.com/a2o/snoopy
 
 Package: libsnoopy
 Architecture: any
