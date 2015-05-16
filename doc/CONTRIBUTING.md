@@ -57,17 +57,17 @@ Snoopy repo clones:
 
 ### On what branch should you base your contribution to Snoopy?
 
-''As a general rule, base your contribution on MASTER branch.''
+**As a general rule, base your contribution on MASTER branch.**
 
 Exception:
 - you found a bug that impacts current stable release - base your work on
-    ''stable'' branch, if it is currently present in Snoopy repo. Maintainer
+    **stable** branch, if it is currently present in Snoopy repo. Maintainer
     will merge it into master branch.
 
 Non-exception:
 - you have developed a new feature and would like it to land in the next bugfix
-    release: ''do not bother''. Bugfix releases are bugfix releases, they are
-    not intended to introduce new features. Base your work on ''master'' branch.
+    release: **do not bother**. Bugfix releases are bugfix releases, they are
+    not intended to introduce new features. Base your work on **master** branch.
     If you somehow manage to convince maintainer(s) that your feature should
     land in next bugfix release anyway, maintainer will do the integration.
 
