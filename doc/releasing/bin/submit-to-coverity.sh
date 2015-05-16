@@ -27,6 +27,7 @@ be defined:
 export COVERITY_EMAIL=""
 export COVERITY_TOKEN=""
 export COVERITY_BUILD_VERSION=""
+export COVERITY_BUILD_DESCRIPTION=""   # This one is optional
 
 Alternatively you may store those settings in the following config
 file:
@@ -130,8 +131,8 @@ tar \
 curl \
     --form email="$COVERITY_EMAIL" \
     --form token="$COVERITY_TOKEN" \
-    --form version="$COVERITY_VERSION" \
-    --form description="$COVERITY_DESCRIPTION" \
+    --form version="$COVERITY_BUILD_VERSION" \
+    --form description="$COVERITY_BUILD_DESCRIPTION" \
     --form file=@${BUILD_FILE_PREFIX}-${COVERITY_BUILD_VERSION}.tar.gz \
     https://scan.coverity.com/builds?project=Snoopy+Logger
 
