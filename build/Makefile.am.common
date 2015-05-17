@@ -13,4 +13,4 @@ CLEANFILES += *.o
 #DISTCLEANFILES += $(BUILT_SOURCES)
 MAINTAINERCLEANFILES += Makefile.in
 
-AM_CFLAGS = -Wall -Werror
+AM_CFLAGS = -Wall -Werror -std=c99 -pedantic

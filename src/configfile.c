@@ -25,6 +25,10 @@
 /*
  * Include all required C resources
  */
+#ifdef   _XOPEN_SOURCE   // For strdup
+#undef   _XOPEN_SOURCE
+#endif
+#define  _XOPEN_SOURCE   500
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

@@ -35,7 +35,12 @@
 /* This should generaly be done wherever unistd.h is required. */
 /* But sysconf is needed here, and all files include snoopy.h. */
 /* Needed to get getpgid and getsid on older glibc */
-/* This must be the first file to be included, or implicit inclusion (by i.e. <features.h>) does the wrong thing */
+/* This must be the first file to be included, or implicit inclusion
+ * (by i.e. <features.h>) does the wrong thing
+ */
+#ifdef   _XOPEN_SOURCE
+#undef   _XOPEN_SOURCE
+#endif
 #define  _XOPEN_SOURCE   500
 #include <unistd.h>
 

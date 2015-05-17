@@ -25,6 +25,9 @@
 /*
  * Include all required C resources
  */
+#ifndef _POSIX_SOURCE   // For strtok_r
+#define _POSIX_SOURCE
+#endif
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

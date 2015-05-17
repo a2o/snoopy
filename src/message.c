@@ -164,5 +164,5 @@ void snoopy_message_append (
     char *logMessage,
     char *appendThis
 ) {
-    return snoopy_string_append(logMessage, appendThis, SNOOPY_LOG_MESSAGE_MAX_SIZE);
+    snoopy_string_append(logMessage, appendThis, SNOOPY_LOG_MESSAGE_MAX_SIZE);
 }

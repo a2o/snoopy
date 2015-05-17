@@ -64,12 +64,10 @@ endif
 
 ### Create main library, whole
 #
-
-lib_LTLIBRARIES = \
-	libsnoopy.la
-
-libsnoopy_la_SOURCES = \
-	libsnoopy.c
-
-libsnoopy_la_LIBADD = \
-	libsnoopy_no_execve.la
+# Exclude -pedantic from CFLAGS because casing object pointer received from
+# dlsym to function pointer is not allowed by ISO C.
+#
+lib_LTLIBRARIES      = libsnoopy.la
+libsnoopy_la_SOURCES = libsnoopy.c
+libsnoopy_la_CFLAGS  = `echo $(AM_CFLAGS) | sed -e 's/-pedantic//'`
+libsnoopy_la_LIBADD  = libsnoopy_no_execve.la

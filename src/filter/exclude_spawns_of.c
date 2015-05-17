@@ -91,7 +91,10 @@ int find_ancestor_in_list(char **name_list)
     int rc, found;
     char *ancestor_name;
     // The following var are read from /proc/nnnn/stat
-    char *st_comm; //Exec file name. Points to buffer that will be malloc'd.
+    /* Buffer for exec file name. In kernel/include/linux/sched.h is this
+     * defined as 16 byte string, but let's keep a bit of spare room.
+     */
+    char st_comm[256];
     pid_t st_pid;
     char st_state;
 
@@ -108,7 +111,7 @@ int find_ancestor_in_list(char **name_list)
 	}
 
 	// Grab the first few elements from the stat pseudo-file. Format from man 5 proc.
-	rc = fscanf(statf, "%d %ms %c %d", &st_pid, &st_comm, &st_state, &ppid);
+	rc = fscanf(statf, "%d %s %c %d", &st_pid, st_comm, &st_state, &ppid);
 	if (rc == EOF) {
 	    fclose(statf);
 	    return -1;
@@ -118,7 +121,6 @@ int find_ancestor_in_list(char **name_list)
 	st_comm[strlen(st_comm) - 1] = '\0';
 	found = find_string_in_array(ancestor_name, name_list);
 
-	free(st_comm);
 	if (found) {
 	    fclose(statf);
 	    return 1;
