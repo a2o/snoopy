@@ -49,7 +49,7 @@
 #  define REAL_LIBC ((void *) -1L)
 #endif
 
-#define FN(ptr,type,name,args)  ptr = (type (*)args)dlsym (REAL_LIBC, name)
+#define FN(ptr, type, name, args)   ptr = (type (*)args)dlsym (REAL_LIBC, name)
 
 
 
@@ -59,7 +59,7 @@
 int execv (const char *filename, char *const argv[]) {
     static int (*func)(const char *, char **);
 
-    FN(func,int,"execv",(const char *, char **const));
+    FN(func, int, "execv", (const char *, char **const));
     snoopy_log_syscall_execv(filename, argv);
 
     return (*func) (filename, (char **) argv);
@@ -74,7 +74,7 @@ int execve (const char *filename, char *const argv[], char *const envp[])
 {
     static int (*func)(const char *, char **, char **);
 
-    FN(func,int,"execve",(const char *, char **const, char **const));
+    FN(func, int, "execve", (const char *, char **const, char **const));
     snoopy_log_syscall_execve(filename, argv, envp);
 
     return (*func) (filename, (char**) argv, (char **) envp);
