@@ -22,6 +22,17 @@
  */
 
 
+
+/*
+ * Local defines
+ */
+#define   PROGLISTSEP               ','
+#define   ST_COMM_SIZE_MAX           32   // Keep these 3 in sync
+#define   ST_COMM_SCANF_PRECISION_S "31"  // Keep these 3 in sync
+#define   ST_COMM_LAST_CHAR_POS      31   // Keep these 3 in sync
+
+
+
 /*
  * SNOOPY FILTER: exclude_spawns_of
  *
@@ -90,11 +101,17 @@ int find_ancestor_in_list(char **name_list)
     FILE *statf;
     int rc, found;
     char *ancestor_name;
-    // The following var are read from /proc/nnnn/stat
-    /* Buffer for exec file name. In kernel/include/linux/sched.h is this
-     * defined as 16 byte string, but let's keep a bit of spare room.
+
+    /*
+     * The following vars are read from /proc/PID/stat
+     *
+     * st_comm:
+     * Buffer for exec file name. In kernel/include/linux/sched.h is this
+     * defined as 16 byte string, but let's keep a bit of spare room if
+     * something suddenly changes in the kernel.
      */
-    char st_comm[256];
+    char st_commBuff[ST_COMM_SIZE_MAX];
+    char *st_comm;
     pid_t st_pid;
     char st_state;
 
@@ -111,11 +128,21 @@ int find_ancestor_in_list(char **name_list)
 	}
 
 	// Grab the first few elements from the stat pseudo-file. Format from man 5 proc.
-	rc = fscanf(statf, "%d %s %c %d", &st_pid, st_comm, &st_state, &ppid);
+	st_comm = st_commBuff;
+	rc = fscanf(statf, "%d %"ST_COMM_SCANF_PRECISION_S"s %c %d", &st_pid, st_comm, &st_state, &ppid);
 	if (rc == EOF) {
 	    fclose(statf);
 	    return -1;
 	}
+        /*
+         * Do not worry about %31s not being enough if command name in
+         * /proc/PID/stat exceeds it. fscanf() returns OK, it just shortens
+         * the resulting string to 31+\0.
+         */
+
+	// Secure string ending, just in case (this should be done by fscanf())
+	st_comm[ST_COMM_LAST_CHAR_POS] = '\0';
+
 	// stat provides st_comm as the name between parentheses. Get rid of the parens.
 	ancestor_name = st_comm + 1;
 	st_comm[strlen(st_comm) - 1] = '\0';
