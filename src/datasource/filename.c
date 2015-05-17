@@ -23,6 +23,18 @@
 
 
 /*
+ * Includes order: from local to global
+ */
+#include "filename.h"
+
+#include "snoopy.h"
+
+#include "inputdatastorage.h"
+#include <stdio.h>
+
+
+
+/*
  * SNOOPY DATA SOURCE: filename
  *
  * Description:
@@ -34,12 +46,6 @@
  * Return:
  *     number of characters in the returned string
  */
-#include "snoopy.h"
-#include "inputdatastorage.h"
-#include <stdio.h>
-
-
-
 int snoopy_datasource_filename (char *result, char *arg)
 {
     return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "%s", snoopy_inputdatastorage_filename);

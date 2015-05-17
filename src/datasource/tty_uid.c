@@ -23,6 +23,20 @@
 
 
 /*
+ * Includes order: from local to global
+ */
+#include "tty_uid.h"
+
+#include "snoopy.h"
+
+#include <stdio.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
+
+
+
+/*
  * SNOOPY DATA SOURCE: tty_uid
  *
  * Description:
@@ -34,14 +48,6 @@
  * Return:
  *     number of characters in the returned string
  */
-#include "snoopy.h"
-#include <stdio.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <unistd.h>
-
-
-
 int snoopy_datasource_tty_uid (char *result, char *arg)
 {
     char   *ttyPath = NULL;

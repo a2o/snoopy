@@ -23,6 +23,21 @@
 
 
 /*
+ * Includes order: from local to global
+ */
+#include "devlogoutput.h"
+
+#include "snoopy.h"
+#include "configuration.h"
+#include "output/socketoutput.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+//#include <syslog.h>
+
+
+
+/*
  * SNOOPY OUTPUT: devlogoutput
  *
  * Description:
@@ -34,16 +49,6 @@
  * Return:
  *     void
  */
-#include <stdio.h>
-#include <stdlib.h>
-#include <syslog.h>
-
-#include "snoopy.h"
-#include "configuration.h"
-#include "output/socketoutput.h"
-
-
-
 int snoopy_output_devlogoutput (char *logMessage, int errorOrMessage, char *arg)
 {
     char  *logMessageWithPrefix = NULL;

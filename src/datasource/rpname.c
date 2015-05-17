@@ -21,8 +21,19 @@
  * Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
+
+
+/*
+ * Includes order: from local to global
+ */
+#ifndef _GNU_SOURCE
 #define _GNU_SOURCE
+#endif
+
+#include "rpname.h"
+
 #include "snoopy.h"
+
 #include <stdio.h>
 #include <unistd.h>
 #include <sys/types.h>
@@ -31,6 +42,11 @@
 #include <stdlib.h>
 #include <limits.h>
 
+
+
+/*
+ * Local defines
+ */
 #define PID_ROOT                1
 #define PID_EMPTY               0
 
@@ -40,8 +56,35 @@
 #define PROC_PID_STATUS_VAL_MAX_LENGTH          NAME_MAX      // Pid is max 2^2 (7-digit number), name can be max 255 bytes
 #define PROC_PID_STATUS_VAL_MAX_LENGTH_STR      PROC_PID_STATUS_VAL_MAX_LENGTH + 1   // +1 for null termination
 
-
 #define UNKNOWN_STR             "(unknown)"
+
+
+
+/*
+ * Non-public function prototypes
+ */
+int   get_parent_pid (int pid);
+int   get_rpname (int pid, char *result);
+char* read_proc_property (int pid, char* prop_name);
+
+
+
+/*
+ * SNOOPY DATA SOURCE: rpname
+ *
+ * Description:
+ *     Returns root process name of current process tree.
+ *
+ * Params:
+ *     result: pointer to string, to write result into
+ *
+ * Return:
+ *     number of characters in the returned string
+ */
+int snoopy_datasource_rpname (char *result, char *arg)
+{
+    return get_rpname(getpid(), result);
+}
 
 
 
@@ -172,11 +215,4 @@ int get_rpname (int pid, char *result)
     } else {
         return get_rpname(parentPid, result);
     }
-}
-
-
-
-int snoopy_datasource_rpname (char *result, char *arg)
-{
-    return get_rpname(getpid(), result);
 }

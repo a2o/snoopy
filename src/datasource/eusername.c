@@ -23,6 +23,21 @@
 
 
 /*
+ * Includes order: from local to global
+ */
+#include "eusername.h"
+
+#include "snoopy.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <pwd.h>
+
+
+
+/*
  * SNOOPY DATA SOURCE: eusername
  *
  * Description:
@@ -34,15 +49,6 @@
  * Return:
  *     number of characters in the returned string
  */
-#include "snoopy.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <pwd.h>
-
-
-
 int snoopy_datasource_eusername (char *result, char *arg)
 {
     struct passwd  pwd;

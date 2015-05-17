@@ -23,10 +23,12 @@
 
 
 /*
- * Include relevant header files
+ * Includes order: from local to global
  */
-#include "snoopy.h"
 #include "datasourceregistry.h"
+
+#include "snoopy.h"
+
 #include <string.h>
 
 

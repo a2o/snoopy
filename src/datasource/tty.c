@@ -23,6 +23,18 @@
 
 
 /*
+ * Includes order: from local to global
+ */
+#include "tty.h"
+
+#include "snoopy.h"
+
+#include <stdio.h>
+#include <unistd.h>
+
+
+
+/*
  * SNOOPY DATA SOURCE: tty
  *
  * Description:
@@ -34,12 +46,6 @@
  * Return:
  *     number of characters in the returned string
  */
-#include "snoopy.h"
-#include <stdio.h>
-#include <unistd.h>
-
-
-
 int snoopy_datasource_tty (char *result, char *arg)
 {
     char *ttyName = NULL;

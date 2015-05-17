@@ -23,6 +23,18 @@
 
 
 /*
+ * Includes order: from local to global
+ */
+#include "env.h"
+
+#include "snoopy.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+
+
+
+/*
  * SNOOPY DATA SOURCE: env
  *
  * Description:
@@ -35,12 +47,6 @@
  * Return:
  *     number of characters in the returned string
  */
-#include "snoopy.h"
-#include <stdio.h>
-#include <stdlib.h>
-
-
-
 int snoopy_datasource_env (char *result, char *arg)
 {
     char *env = getenv(arg);

@@ -23,6 +23,19 @@
 
 
 /*
+ * Includes order: from local to global
+ */
+#include "only_root.h"
+
+#include "snoopy.h"
+
+#include <stdio.h>
+#include <sys/types.h>
+#include <unistd.h>
+
+
+
+/*
  * SNOOPY FILTER: only_root
  *
  * Description:
@@ -35,13 +48,6 @@
  * Return:
  *     SNOOPY_FILTER_PASS or SNOOPY_FILTER_DROP
  */
-#include "snoopy.h"
-#include <stdio.h>
-#include <unistd.h>
-#include <sys/types.h>
-
-
-
 int snoopy_filter_only_root (char *msg, char *arg)
 {
     if (0 == getuid()) {

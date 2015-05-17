@@ -23,6 +23,19 @@
 
 
 /*
+ * Includes order: from local to global
+ */
+#include "euid.h"
+
+#include "snoopy.h"
+
+#include <stdio.h>
+#include <unistd.h>
+#include <sys/types.h>
+
+
+
+/*
  * SNOOPY DATA SOURCE: euid
  *
  * Description:
@@ -34,13 +47,6 @@
  * Return:
  *     number of characters in the returned string
  */
-#include "snoopy.h"
-#include <stdio.h>
-#include <unistd.h>
-#include <sys/types.h>
-
-
-
 int snoopy_datasource_euid (char *result, char *arg)
 {
     return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "%u", geteuid());

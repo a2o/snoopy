@@ -23,6 +23,26 @@
 
 
 /*
+ * Includes order: from local to global
+ */
+#include "env_all.h"
+
+#include "snoopy.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+
+
+/*
+ * Use this extenal variable
+ */
+extern char **environ;
+
+
+
+/*
  * SNOOPY DATA SOURCE: env_all
  *
  * Description:
@@ -35,20 +55,6 @@
  * Return:
  *     number of characters in the returned string
  */
-#include "snoopy.h"
-#include <stdio.h>
-#include <stdlib.h>
-
-#include <string.h>
-
-
-/*
- * Use this extenal variable
- */
-extern char **environ;
-
-
-
 int snoopy_datasource_env_all (char *result, char *arg)
 {
     int resultSize = 0; // Current size of message to be returned back - does not include trailing null character

@@ -27,16 +27,14 @@
 
 
 /*
- * Include DL
+ * Includes order: from local to global
  */
-#include <dlfcn.h>
+//#include "libsnoopy.h"
 
-
-
-/*
- * Include snoopy logging facilities
- */
+#include "snoopy.h"
 #include "log.h"
+
+#include <dlfcn.h>
 
 
 

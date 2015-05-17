@@ -23,20 +23,11 @@
 
 
 /*
- * Include all required C resources
+ * Includes order: from local to global
  */
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
-
-
-/*
- * Include all snoopy-related resources
- */
-#include "snoopy.h"
 #include "log.h"
 
+#include "snoopy.h"
 #include "configuration.h"
 #if defined(SNOOPY_FILTERING_ENABLED)
 #include "filtering.h"
@@ -45,6 +36,10 @@
 #include "message.h"
 #include "misc.h"
 #include "outputregistry.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 
 

@@ -22,6 +22,22 @@
 
 
 
+/* 
+ * Includes order: from local to global
+ */
+#include "snoopy_version.h"
+
+#include "snoopy.h"
+
+#ifndef   _XOPEN_SOURCE   /* Needed to get getpgid and getsid on older glibc */
+#define   _XOPEN_SOURCE   500
+#endif
+#include <stdio.h>
+#include <sys/types.h>
+#include <unistd.h>
+
+
+
 /*
  * SNOOPY DATA SOURCE: snoopy_version
  *
@@ -34,15 +50,6 @@
  * Return:
  *     number of characters in the returned string
  */
-#include "snoopy.h"
-#include <stdio.h>
-/* Needed to get getpgid and getsid on older glibc */
-#define   _XOPEN_SOURCE   500
-#include <unistd.h>
-#include <sys/types.h>
-
-
-
 int snoopy_datasource_snoopy_version (char *result, char *arg)
 {
     return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "%s", SNOOPY_VERSION);

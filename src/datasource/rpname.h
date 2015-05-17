@@ -25,8 +25,4 @@
 /*
  * SNOOPY DATA SOURCE: rpname
  */
-char* trim_whitespace     (char *str);
-char* read_proc_property  (int pid, char* prop_name);
-int   get_parent_pid      (int pid);
-void  get_rpname          (int pid, int result);
 int   snoopy_datasource_rpname (char *result, char *arg);

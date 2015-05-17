@@ -23,6 +23,15 @@
 
 
 /*
+ * Includes order: from local to global
+ */
+#include "devttyoutput.h"
+
+#include "output/fileoutput.h"
+
+
+
+/*
  * SNOOPY OUTPUT: devttyoutput
  *
  * Description:
@@ -34,10 +43,6 @@
  * Return:
  *     void
  */
-#include "output/fileoutput.h"
-
-
-
 int snoopy_output_devttyoutput (char *logMessage, int errorOrMessage, char *arg)
 {
     return snoopy_output_fileoutput(logMessage, errorOrMessage, "/dev/tty");

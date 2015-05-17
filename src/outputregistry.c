@@ -23,11 +23,13 @@
 
 
 /*
- * Include relevant header files
+ * Includes order: from local to global
  */
-#include "snoopy.h"
 #include "outputregistry.h"
+
+#include "snoopy.h"
 #include "configuration.h"
+
 #include <string.h>
 
 

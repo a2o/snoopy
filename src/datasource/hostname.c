@@ -22,10 +22,13 @@
 
 
 
-/* Snoopy-specific includes first */
+/*
+ * Includes order: from local to global
+ */
+#include "hostname.h"
+
 #include "snoopy.h"
 
-/* Generic includes second */
 #include <errno.h>
 #include <stdio.h>
 #include <string.h>

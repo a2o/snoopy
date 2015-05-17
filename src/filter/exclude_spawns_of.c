@@ -24,12 +24,36 @@
 
 
 /*
+ * Includes order: from local to global
+ */
+#include "exclude_spawns_of.h"
+
+#include "snoopy.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/types.h>
+#include <unistd.h>
+
+
+
+/*
  * Local defines
  */
 #define   PROGLISTSEP               ','
 #define   ST_COMM_SIZE_MAX           32   // Keep these 3 in sync
 #define   ST_COMM_SCANF_PRECISION_S "31"  // Keep these 3 in sync
 #define   ST_COMM_LAST_CHAR_POS      31   // Keep these 3 in sync
+
+
+
+/*
+ * Non-public function prototypes
+ */
+int find_ancestor_in_list(char **name_list);
+int find_string_in_array(char *str, char **str_array);
+char **string_to_token_array(char *str);
 
 
 
@@ -49,20 +73,6 @@
  * Return:
  *     SNOOPY_FILTER_PASS or SNOOPY_FILTER_DROP
  */
-
-#include "snoopy.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <sys/types.h>
-#include <unistd.h>
-
-#define PROGLISTSEP ','
-
-int find_ancestor_in_list(char **name_list);
-int find_string_in_array(char *str, char **str_array);
-char **string_to_token_array(char *str);
-
 int snoopy_filter_exclude_spawns_of(char *msg, char *arg)
 {
     char **losp; // List of specified programs derived from arg

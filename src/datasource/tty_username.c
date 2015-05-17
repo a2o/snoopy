@@ -23,6 +23,22 @@
 
 
 /*
+ * Includes order: from local to global
+ */
+#include "tty_username.h"
+
+#include "snoopy.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
+#include <pwd.h>
+
+
+
+/*
  * SNOOPY DATA SOURCE: tty_username
  *
  * Description:
@@ -34,16 +50,6 @@
  * Return:
  *     number of characters in the returned string
  */
-#include "snoopy.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <unistd.h>
-#include <pwd.h>
-
-
-
 int snoopy_datasource_tty_username (char *result, char *arg)
 {
     /* Variables for tty-to-uid conversion */

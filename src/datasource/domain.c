@@ -22,15 +22,17 @@
 
 
 
-/* Define required stuff first */
+/*
+ * Includes order: from local to global
+ */
 // This needs to be defined before including sys/utsname.h,
 // or struct utsname does not return domainname member.
 #define   _GNU_SOURCE
 
-/* Snoopy-specific includes second */
-#include   "snoopy.h"
+#include "domain.h"
 
-/* Generic includes third */
+#include "snoopy.h"
+
 #include   <errno.h>
 #include   <stdio.h>
 #include   <string.h>

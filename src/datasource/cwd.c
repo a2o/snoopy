@@ -23,6 +23,19 @@
 
 
 /*
+ * Includes order: from local to global
+ */
+#include "cwd.h"
+
+#include "snoopy.h"
+
+#include <stdio.h>
+#include <unistd.h>
+#include <limits.h>
+
+
+
+/*
  * SNOOPY DATA SOURCE: cwd
  *
  * Description:
@@ -34,13 +47,6 @@
  * Return:
  *     number of characters in the returned string
  */
-#include "snoopy.h"
-#include <stdio.h>
-#include <unistd.h>
-#include <limits.h>
-
-
-
 int snoopy_datasource_cwd (char *result, char *arg)
 {
     char cwdBuf[PATH_MAX+1];

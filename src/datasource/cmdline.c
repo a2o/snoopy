@@ -23,19 +23,13 @@
 
 
 /*
- * SNOOPY DATA SOURCE: cmdline
- *
- * Description:
- *     Returns command line of current process.
- *
- * Params:
- *     result: pointer to string, to write result into
- *
- * Return:
- *     number of characters in the returned string
+ * Includes order: from local to global
  */
+#include "cmdline.h"
+
 #include "snoopy.h"
 #include "inputdatastorage.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -47,6 +41,18 @@
 
 
 
+/*
+ * SNOOPY DATA SOURCE: cmdline
+ *
+ * Description:
+ *     Returns command line of current process.
+ *
+ * Params:
+ *     result: pointer to string, to write result into
+ *
+ * Return:
+ *     number of characters in the returned string
+ */
 int snoopy_datasource_cmdline (char *result, char *arg)
 {
     char   *cmdLine = NULL;

@@ -23,6 +23,23 @@
 
 
 /*
+ * Includes order: from local to global
+ */
+#include "syslogoutput.h"
+
+#include "snoopy.h"
+#include "configuration.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <syslog.h>
+
+
+
+/*
  * SNOOPY OUTPUT: syslogouput (called like this because <syslog.h> is system library
  *
  * Description:
@@ -34,18 +51,6 @@
  * Return:
  *     void
  */
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <syslog.h>
-
-#include "snoopy.h"
-#include "configuration.h"
-
-
-
 int snoopy_output_syslogoutput (char *logMessage, int errorOrMessage, char *arg)
 {
     /* Dispatch only if non-zero size */

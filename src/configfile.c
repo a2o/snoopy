@@ -23,35 +23,26 @@
 
 
 /*
- * Include all required C resources
+ * Includes order: from local to global
  */
-#ifdef   _XOPEN_SOURCE   // For strdup
-#undef   _XOPEN_SOURCE
-#endif
-#define  _XOPEN_SOURCE   500
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <syslog.h>
+#include "configfile.h"
 
-
-
-/*
- * Include all snoopy-related resources
- */
 #include "snoopy.h"
 #include "configfile.h"
 #include "configuration.h"
 #include "outputregistry.h"
 
-
-
-/*
- * Include iniparser-related resources
- */
 #include "lib/iniparser/src/iniparser.h"
+
+#ifndef   _XOPEN_SOURCE   // For strdup
+#define   _XOPEN_SOURCE   500
+#endif
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/types.h>
+#include <syslog.h>
+#include <unistd.h>
 
 
 

@@ -23,10 +23,10 @@
 
 
 /*
- * Includes
+ * Includes order: from local to global
  */
-#include "snoopy.h"
 #include "inputdatastorage.h"
+#include "snoopy.h"
 
 
 

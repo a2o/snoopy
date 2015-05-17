@@ -23,6 +23,21 @@
 
 
 /*
+ * Includes order: from local to global
+ */
+#include "exclude_uid.h"
+
+#include "snoopy.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/types.h>
+#include <unistd.h>
+
+
+
+/*
  * SNOOPY FILTER: exclude_uid
  *
  * Description:
@@ -35,15 +50,6 @@
  * Return:
  *     SNOOPY_FILTER_PASS or SNOOPY_FILTER_DROP
  */
-#include "snoopy.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <sys/types.h>
-#include <unistd.h>
-
-
-
 int snoopy_filter_exclude_uid (char *msg, char *arg)
 {
     uid_t  curUid;     // Actual UID of running process

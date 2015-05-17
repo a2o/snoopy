@@ -23,6 +23,27 @@
 
 
 /*
+ * Includes order: from local to global
+ */
+#include "login.h"
+
+#include "snoopy.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+
+
+/*
+ * Local defines
+ */
+#define   SNOOPY_DATASOURCE_LOGIN_loginSizeMaxWithoutNull   254
+#define   SNOOPY_DATASOURCE_LOGIN_loginSizeMaxWithNull      255
+
+
+
+/*
  * SNOOPY DATA SOURCE: login
  *
  * Description:
@@ -34,17 +55,6 @@
  * Return:
  *     number of characters in the returned string
  */
-#include "snoopy.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
-
-
-#define   SNOOPY_DATASOURCE_LOGIN_loginSizeMaxWithoutNull   254
-#define   SNOOPY_DATASOURCE_LOGIN_loginSizeMaxWithNull      255
-
-
 int snoopy_datasource_login (char *result, char *arg)
 {
     int          loginSizeMaxWithoutNull = SNOOPY_DATASOURCE_LOGIN_loginSizeMaxWithoutNull;

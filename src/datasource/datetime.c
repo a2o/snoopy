@@ -23,6 +23,19 @@
 
 
 /*
+ * Includes order: from local to global
+ */
+#include "datetime.h"
+
+#include "snoopy.h"
+
+#include <errno.h>
+#include <stdio.h>
+#include <time.h>
+
+
+
+/*
  * SNOOPY DATA SOURCE: datetime
  *
  * Description:
@@ -34,13 +47,6 @@
  * Return:
  *     number of characters in the returned string
  */
-#include "snoopy.h"
-#include <errno.h>
-#include <stdio.h>
-#include <time.h>
-
-
-
 int snoopy_datasource_datetime (char *result, char *arg)
 {
     time_t     curTime;

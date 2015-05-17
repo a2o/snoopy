@@ -23,6 +23,21 @@
 
 
 /*
+ * Includes order: from local to global
+ */
+#include "egroup.h"
+
+#include "snoopy.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <grp.h>
+
+
+
+/*
  * SNOOPY DATA SOURCE: egroup
  *
  * Description:
@@ -34,15 +49,6 @@
  * Return:
  *     number of characters in the returned string
  */
-#include "snoopy.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <grp.h>
-
-
-
 int snoopy_datasource_egroup (char *result, char *arg)
 {
     struct group   gr;

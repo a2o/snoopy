@@ -23,6 +23,15 @@
 
 
 /*
+ * Includes order: from local to global
+ */
+#include "stdoutoutput.h"
+
+#include <stdio.h>
+
+
+
+/*
  * SNOOPY OUTPUT: stdoutoutput
  *
  * Description:
@@ -34,10 +43,6 @@
  * Return:
  *     int: number of characters printed
  */
-#include <stdio.h>
-
-
-
 int snoopy_output_stdoutoutput (char *logMessage, int errorOrMessage, char *arg)
 {
     return fprintf(stdout, "%s\n", logMessage);

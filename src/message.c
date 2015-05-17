@@ -23,25 +23,20 @@
 
 
 /*
- * Include all required C resources
+ * Includes order: from local to global
  */
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
-
-
-/*
- * Include all snoopy-related resources
- */
-#include "snoopy.h"
 #include "message.h"
 
+#include "snoopy.h"
 #include "configuration.h"
 #include "error.h"
 #include "inputdatastorage.h"
 #include "datasourceregistry.h"
 #include "misc.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 
 

@@ -23,25 +23,21 @@
 
 
 /*
- * Include all required C resources
+ * Includes order: from local to global
  */
+#include "filtering.h"
+
+#include "snoopy.h"
+#include "configuration.h"
+#include "filterregistry.h"
+#include "message.h"
+
 #ifndef _POSIX_SOURCE   // For strtok_r
 #define _POSIX_SOURCE
 #endif
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-
-
-/*
- * Include all snoopy-related resources
- */
-#include "snoopy.h"
-
-#include "configuration.h"
-#include "filterregistry.h"
-#include "message.h"
 
 
 

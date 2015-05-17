@@ -23,6 +23,24 @@
 
 
 /*
+ * Includes order: from local to global
+ */
+#include "socketoutput.h"
+
+#include "snoopy.h"
+#include "configuration.h"
+
+#include <features.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <sys/un.h>
+
+
+
+/*
  * SNOOPY OUTPUT: socketoutput (called like this because <socket.h> is system library)
  *
  * Description:
@@ -34,19 +52,6 @@
  * Return:
  *     void
  */
-#include <features.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <sys/un.h>
-
-#include "snoopy.h"
-#include "configuration.h"
-
-
-
 int snoopy_output_socketoutput (char *logMessage, int errorOrMessage, char *arg)
 {
     int                  s;

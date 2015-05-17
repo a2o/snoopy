@@ -23,6 +23,19 @@
 
 
 /*
+ * Includes order: from local to global
+ */
+#include "timestamp_us.h"
+
+#include "snoopy.h"
+
+#include <errno.h>
+#include <stdio.h>
+#include <sys/time.h>
+
+
+
+/*
  * SNOOPY DATA SOURCE: timestamp_us
  *
  * Description:
@@ -34,13 +47,6 @@
  * Return:
  *     number of characters in the returned string
  */
-#include "snoopy.h"
-#include <errno.h>
-#include <stdio.h>
-#include <sys/time.h>
-
-
-
 int snoopy_datasource_timestamp_us (char *result, char *arg)
 {
     struct timeval tv;

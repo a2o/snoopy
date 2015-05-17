@@ -23,6 +23,20 @@
 
 
 /*
+ * Includes order: from local to global (local, this-subsystem, snoopy.h, other-subsystems, global)
+ */
+#include "fileoutput.h"
+
+#include "snoopy.h"
+#include "configuration.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+
+
+/*
  * SNOOPY OUTPUT: fileoutput (called like this because <socket.h> is system library
  *
  * Description:
@@ -34,15 +48,6 @@
  * Return:
  *     void
  */
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
-#include "snoopy.h"
-#include "configuration.h"
-
-
-
 int snoopy_output_fileoutput (char *logMessage, int errorOrMessage, char *arg)
 {
     FILE  *fp;
