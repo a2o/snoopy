@@ -11,23 +11,28 @@ ACLOCAL_AMFLAGS = -I build/m4
 
 
 
+### Subdir processing order.
+#
 # Process etc/ before other subdirs
+#
 # If snoopy has config file enabled, then there is a small time frame
 # between installation of library and subsequent installation of
 # initial configuration file where iniparser emits an error about
 # configuration file not being found. Therefore we first install
 # configuration file and only then the snoopy library itself.
-SUBDIRS = \
-	lib \
-	src \
-	util \
-	etc \
-	doc
-
+#
+# Also, lib/ must be processed before src/, as iniparser is needed
+# there if config file is enabled.
+#
+SUBDIRS  =
 if CONFIG_FILE_ENABLED
-SUBDIRS += \
-	lib
+SUBDIRS += etc
+SUBDIRS += lib
 endif
+SUBDIRS += src
+SUBDIRS += util
+SUBDIRS += doc
+
 
 
 EXTRA_DIST +=\
