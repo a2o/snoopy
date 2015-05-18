@@ -67,10 +67,11 @@ snoopy_configuration_type   snoopy_configuration = {
 
 #ifdef SNOOPY_FILTERING_ENABLED
     .filtering_enabled       = SNOOPY_TRUE,
+    .filter_chain            = SNOOPY_FILTER_CHAIN,
 #else
     .filtering_enabled       = SNOOPY_FALSE,
+    .filter_chain            = "",
 #endif
-    .filter_chain            = SNOOPY_FILTER_CHAIN,
     .filter_chain_malloced   = SNOOPY_FALSE,
 
     .output                  = SNOOPY_OUTPUT_DEFAULT,
@@ -167,7 +168,11 @@ void snoopy_configuration_dtor ()
         snoopy_configuration.filter_chain_malloced = SNOOPY_FALSE;
 
         /* Set this to default value - REQUIRED (see above) */
+#ifdef SNOOPY_FILTERING_ENABLED
         snoopy_configuration.filter_chain = SNOOPY_FILTER_CHAIN;
+#else
+        snoopy_configuration.filter_chain = "";
+#endif
     }
 
 
