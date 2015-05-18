@@ -190,7 +190,7 @@
 
 
 /**
- * SNOOPY_CONFIG_FILE
+ * SNOOPY_CONFIG_FILE_*
  *
  * Path to INI configuration file, if enabled
  *

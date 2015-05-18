@@ -28,7 +28,7 @@
 #include "configuration.h"
 
 #include "snoopy.h"
-#ifdef SNOOPY_CONFIG_FILE
+#ifdef SNOOPY_CONFIG_FILE_ENABLED
 #include "configfile.h"
 #endif
 
@@ -103,7 +103,7 @@ snoopy_configuration_type   snoopy_configuration = {
 void snoopy_configuration_ctor ()
 {
     /* Parse INI file if enabled */
-#ifdef SNOOPY_CONFIG_FILE
+#ifdef SNOOPY_CONFIG_FILE_ENABLED
     snoopy_configfile_load(SNOOPY_CONFIG_FILE_PATH);
 #endif
 }
