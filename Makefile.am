@@ -71,3 +71,13 @@ maintainer-clean-local:
 	rm -fr build/aux/ ; \
 	rm -fr build/m4/ ; \
 	rm -f  configure ;
+
+
+
+### Bootstrap target
+#
+# Simplify maintainer life
+#
+.PHONY: bootstrap
+bootstrap: maintainer-clean
+	./bootstrap.sh
