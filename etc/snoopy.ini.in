@@ -49,11 +49,12 @@
 ;   source.
 ;
 ; Default value:
-;   "[uid:%{uid} sid:%{sid} tty:%{tty} cwd:%{cwd} filename:%{filename}]: %{cmdline}"
+;   "@SNOOPY_CONF_MESSAGE_FORMAT@"
 ;
-; Example:
+; Examples:
 ;message_format = "useless static log entry that gets logged on every program execution"
-;message_format = "[uid:%{uid} sid:%{sid} tty:%{tty} cwd:%{cwd} filename:%{filename}]: %{cmdline}"
+;message_format = "uid=%{uid}"   ; <--- this would only log uids who execute programs, nothing else;
+;message_format = "uid=%{uid} tty=%{tty} cmdline=%{cmdline}"   ; <--- logs uid + tty + command that is executed
 
 
 

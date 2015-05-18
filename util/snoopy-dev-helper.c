@@ -57,8 +57,8 @@ int main (int argc, char **argv)
     logMessage[0] = '\0';
 
     printf("Snoopy: testing custom message formatting:\n\n");
-    printf("Message format used: \n%s\n\n", SNOOPY_LOG_MESSAGE_FORMAT);
-    snoopy_message_generateFromFormat(logMessage, SNOOPY_LOG_MESSAGE_FORMAT);
+    printf("Message format used: \n%s\n\n", SNOOPY_MESSAGE_FORMAT);
+    snoopy_message_generateFromFormat(logMessage, SNOOPY_MESSAGE_FORMAT);
     printf("Produced output:\n%s\n\n", logMessage);
 
 

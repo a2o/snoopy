@@ -113,8 +113,11 @@
 /* Define to the version of this package. */
 #undef PACKAGE_VERSION
 
+/* Is config file parsing enabled? */
+#undef SNOOPY_CONF_CONFIG_FILE_ENABLED
+
 /* INI configuration file path to use */
-#undef SNOOPY_CONF_CONFIG_FILE
+#undef SNOOPY_CONF_CONFIG_FILE_PATH
 
 /* Is datasource "cmdline" available? */
 #undef SNOOPY_CONF_DATASOURCE_ENABLED_cmdline
@@ -206,8 +209,8 @@
 /* Enable filtering */
 #undef SNOOPY_CONF_FILTERING_ENABLED
 
-/* Custom filter chain to use */
-#undef SNOOPY_CONF_FILTER_CHAIN_custom
+/* Filter chain to use */
+#undef SNOOPY_CONF_FILTER_CHAIN
 
 /* Is filter "exclude_spawns_of" available? */
 #undef SNOOPY_CONF_FILTER_ENABLED_exclude_spawns_of
@@ -222,7 +225,7 @@
 #undef SNOOPY_CONF_FILTER_ENABLED_only_uid
 
 /* Custom message format to use */
-#undef SNOOPY_CONF_LOG_MESSAGE_FORMAT_custom
+#undef SNOOPY_CONF_MESSAGE_FORMAT
 
 /* Default output provider */
 #undef SNOOPY_CONF_OUTPUT_DEFAULT

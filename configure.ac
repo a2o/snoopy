@@ -207,32 +207,33 @@ AC_ARG_ENABLE(config-file,
     )],
     [
         if test "x$enableval" = "xyes"; then
-            enable_config_file=yes
+            config_file_enabled=yes
             config_file_path="$SYSCONFDIR/snoopy.ini"
         elif test "x$enableval" = "xno"; then
-            enable_config_file=no
+            config_file_enabled="no"
             config_file_path=""
         else
-            AC_MSG_ERROR([--enable-config-file does not take an argument: $enableval])
+            AC_MSG_ERROR([--enable-config-file does not take an argument. Use --sysconfdir to set config file path. Got: $enableval])
         fi
     ],
     # Not specified on command line
     [
-        enable_config_file=no
+        config_file_enabled="no"
         config_file_path=""
     ]
 )
 
-AC_MSG_NOTICE([Snoopy config file enabled: $enable_config_file])
-AS_IF([test "x$config_file_path" != "x"], [
-    AC_DEFINE_UNQUOTED(SNOOPY_CONF_CONFIG_FILE, "$config_file_path", [INI configuration file path to use])
+AC_MSG_NOTICE([Snoopy config file enabled: $config_file_enabled])
+AS_IF([test "x$config_file_enabled" == "xyes"], [
+    AC_DEFINE_UNQUOTED(SNOOPY_CONF_CONFIG_FILE_ENABLED, 1,                   [Is config file parsing enabled?])
+    AC_DEFINE_UNQUOTED(SNOOPY_CONF_CONFIG_FILE_PATH,    "$config_file_path", [INI configuration file path to use])
     AC_MSG_NOTICE([Snoopy config file path: $config_file_path])
 ])
 
 dnl CONFIG_FILE_ENABLED is used in:
 dnl - src/Makefile.am
 dnl - etc/Makefile.am
-AM_CONDITIONAL([CONFIG_FILE_ENABLED], [test "x$config_file_path" != "x"])
+AM_CONDITIONAL([CONFIG_FILE_ENABLED], [test "x$config_file_enabled" == "xyes"])
 
 
 
@@ -339,7 +340,7 @@ dnl ============================================================================
 AC_ARG_WITH(message-format,
     [AC_HELP_STRING(
         [--with-message-format=FORMAT],
-        [format to use to log messages with. For default value and available options, see etc/snoopy.ini and src/snoopy.h]
+        [format to use to log messages with. For default value and available options, see comments in etc/snoopy.ini for format specification.]
     )],
     [
         if test "x$withval" = "x" -o "x$withval" = "xyes"; then
@@ -350,13 +351,11 @@ AC_ARG_WITH(message-format,
             with_message_format="$withval"
         fi
     ],
-    [with_message_format=""]
+    [with_message_format="@<:@uid:%{uid} sid:%{sid} tty:%{tty} cwd:%{cwd} filename:%{filename}@:>@: %{cmdline}"]
 )
-
-AS_IF([test "x$with_message_format" != "x"], [
-    AC_DEFINE_UNQUOTED(SNOOPY_CONF_LOG_MESSAGE_FORMAT_custom, "$with_message_format", [Custom message format to use])
-    AC_MSG_NOTICE([Snoopy default message format: $with_message_format])
-])
+AC_DEFINE_UNQUOTED(SNOOPY_CONF_MESSAGE_FORMAT, "$with_message_format", [Custom message format to use])
+AC_SUBST([SNOOPY_CONF_MESSAGE_FORMAT], [$with_message_format])
+AC_MSG_NOTICE([Snoopy default message format: "$with_message_format"])
 
 
 
@@ -488,12 +487,8 @@ AC_ARG_WITH(filter-chain,
     [with_filter_chain=""]
 )
 
-AS_IF([test "x$with_filter_chain" != "x"], [
-    AC_DEFINE_UNQUOTED(SNOOPY_CONF_FILTER_CHAIN_custom, "$with_filter_chain", [Custom filter chain to use])
-    AC_MSG_NOTICE([Snoopy default filter chain: $with_filter_chain])
-],[
-    AC_MSG_NOTICE([Snoopy default filter chain: none])
-])
+AC_DEFINE_UNQUOTED(SNOOPY_CONF_FILTER_CHAIN, "$with_filter_chain", [Filter chain to use])
+AC_MSG_NOTICE([Snoopy default filter chain: ${with_filter_chain:-(none)}])
 
 
 
@@ -602,7 +597,8 @@ AS_IF([test "x$default_output" != "x"], [
     AC_DEFINE_UNQUOTED(SNOOPY_CONF_OUTPUT_DEFAULT,     ["$default_output"],     [Default output provider])
     AC_DEFINE_UNQUOTED(SNOOPY_CONF_OUTPUT_DEFAULT_ARG, ["$default_output_arg"], [Default output arguments])
 ])
-AC_MSG_NOTICE([Snoopy default output: $default_output($default_output_arg)])
+AC_MSG_NOTICE([Snoopy default output: ${default_output:-(default, system dependent)}])
+AC_MSG_NOTICE([Snoopy default output argument: ${default_output_arg:-(none)}])
 
 
 

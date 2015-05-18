@@ -124,31 +124,12 @@
 
 
 /**
- * SNOOPY_LOG_MESSAGE_FORMAT_default
+ * SNOOPY_MESSAGE_FORMAT
  *
- * Default format of snoopy log message
+ * Actual message format to use, unless configured otherwise in config file.
+ * For format specification consult comments in etc/snoopy.ini.
  */
-#define SNOOPY_LOG_MESSAGE_FORMAT_default \
-    "[uid:%{uid} sid:%{sid} tty:%{tty} cwd:%{cwd} filename:%{filename}]: %{cmdline}"
-
-
-
-/**
- * SNOOPY_LOG_MESSAGE_FORMAT
- *
- * Actual log message format to use
- *
- * Message format may contain:
- * - any arbitrary text is copied litaraly
- * - text between "%{" and "}" is considered special - it calls data source
- * - %{data_source}     calls data source named 'data_source' without argument
- * - %{data_source:arg} calls data source named 'data_source', and passed the given argument to it
- */
-#ifdef SNOOPY_CONF_LOG_MESSAGE_FORMAT_custom
-#define   SNOOPY_LOG_MESSAGE_FORMAT   SNOOPY_CONF_LOG_MESSAGE_FORMAT_custom
-#else
-#define   SNOOPY_LOG_MESSAGE_FORMAT   SNOOPY_LOG_MESSAGE_FORMAT_default
-#endif
+#define   SNOOPY_MESSAGE_FORMAT   SNOOPY_CONF_MESSAGE_FORMAT
 
 
 
@@ -193,15 +174,6 @@
 
 
 /**
- * SNOOPY_FILTER_CHAIN_default
- *
- * Default snoopy filter chain specification
- */
-#define   SNOOPY_FILTER_CHAIN_default   ""
-
-
-
-/**
  * SNOOPY_FILTER_CHAIN
  *
  * Actual filter chain specification to use
@@ -211,10 +183,8 @@
  * - you may pass argument to filter by suffixing it with :arg
  * - spaces are ignored
  */
-#ifdef SNOOPY_CONF_FILTER_CHAIN_custom
-#define   SNOOPY_FILTER_CHAIN   SNOOPY_CONF_FILTER_CHAIN_custom
-#else
-#define   SNOOPY_FILTER_CHAIN   SNOOPY_FILTER_CHAIN_default
+#ifdef SNOOPY_FILTERING_ENABLED
+#define   SNOOPY_FILTER_CHAIN   SNOOPY_CONF_FILTER_CHAIN
 #endif
 
 
@@ -227,8 +197,9 @@
  * If configuration file is enabled, this constant is defined
  * and holds absolute path to it
  */
-#ifdef SNOOPY_CONF_CONFIG_FILE
-#define   SNOOPY_CONFIG_FILE   SNOOPY_CONF_CONFIG_FILE
+#ifdef SNOOPY_CONF_CONFIG_FILE_ENABLED
+#define   SNOOPY_CONFIG_FILE_ENABLED   1
+#define   SNOOPY_CONFIG_FILE_PATH      SNOOPY_CONF_CONFIG_FILE_PATH
 #endif
 
 

@@ -47,7 +47,7 @@
 snoopy_configuration_type   snoopy_configuration = {
     .initialized             = SNOOPY_TRUE,
 
-#ifdef SNOOPY_CONFIG_FILE
+#ifdef SNOOPY_CONFIG_FILE_ENABLED
     .config_file_enabled     = SNOOPY_TRUE,
 #else
     .config_file_enabled     = SNOOPY_FALSE,
@@ -62,7 +62,7 @@ snoopy_configuration_type   snoopy_configuration = {
     .error_logging_enabled   = SNOOPY_FALSE,
 #endif
 
-    .message_format          = SNOOPY_LOG_MESSAGE_FORMAT,
+    .message_format          = SNOOPY_MESSAGE_FORMAT,
     .message_format_malloced = SNOOPY_FALSE,
 
 #ifdef SNOOPY_FILTERING_ENABLED
@@ -103,7 +103,7 @@ void snoopy_configuration_ctor ()
 {
     /* Parse INI file if enabled */
 #ifdef SNOOPY_CONFIG_FILE
-    snoopy_configfile_load(SNOOPY_CONFIG_FILE);
+    snoopy_configfile_load(SNOOPY_CONFIG_FILE_PATH);
 #endif
 }
 
@@ -153,7 +153,7 @@ void snoopy_configuration_dtor ()
          * worst-case scenarion there would be a segfault and possible system
          * crash.
          */
-        snoopy_configuration.message_format = SNOOPY_LOG_MESSAGE_FORMAT;
+        snoopy_configuration.message_format = SNOOPY_MESSAGE_FORMAT;
     }
 
 
