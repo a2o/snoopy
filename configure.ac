@@ -169,12 +169,12 @@ AC_CONFIG_FILES([Makefile
                  etc/snoopy.ini
                  lib/Makefile
                  src/Makefile
-                 src/bin/Makefile
                  src/datasource/Makefile
                  src/filter/Makefile
                  src/output/Makefile
                  util/Makefile
                  tests/Makefile
+                 tests/bin/Makefile
                  tests/datasource/Makefile
                  tests/filter/Makefile
                  tests/output/Makefile])

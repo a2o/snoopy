@@ -17,5 +17,5 @@ set -u
 
 ### Paths
 #
-export SNOOPY_TEST_BIN_PREFIX=`dirname $0`/../../src/bin/snoopy-test
+export SNOOPY_TEST_BIN_PREFIX=`dirname $0`/../bin/snoopy-test
 export SNOOPY_TEST_OUTPUT="${SNOOPY_TEST_BIN_PREFIX}-output"

@@ -13,7 +13,6 @@ SUBDIRS += filter
 endif
 SUBDIRS += output
 SUBDIRS += .
-SUBDIRS += bin
 
 
 
