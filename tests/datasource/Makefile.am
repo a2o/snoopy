@@ -9,36 +9,117 @@ include   $(top_srcdir)/build/Makefile.am.common
 SCRIPT_PREFIX = datasource
 TESTS  =
 XFAIL_TESTS  =
-TESTS += $(SCRIPT_PREFIX)_cmdline.sh
-TESTS += $(SCRIPT_PREFIX)_cwd.sh
+
+if DATASOURCE_ENABLED_cmdline
+    TESTS += $(SCRIPT_PREFIX)_cmdline.sh
+endif
+
+if DATASOURCE_ENABLED_cwd
+    TESTS += $(SCRIPT_PREFIX)_cwd.sh
+endif
+
+if DATASOURCE_ENABLED_datetime
 TESTS += $(SCRIPT_PREFIX)_datetime.sh
+endif
 
 # This one is failing because there seems to be a bug in snoopy datasource implementation
-TESTS += $(SCRIPT_PREFIX)_domain.sh
-XFAIL_TESTS += $(SCRIPT_PREFIX)_domain.sh
+if DATASOURCE_ENABLED_domain
+    TESTS += $(SCRIPT_PREFIX)_domain.sh
+    XFAIL_TESTS += $(SCRIPT_PREFIX)_domain.sh
+endif
 
-TESTS += $(SCRIPT_PREFIX)_egid.sh
+if DATASOURCE_ENABLED_egid
+    TESTS += $(SCRIPT_PREFIX)_egid.sh
+endif
+
+if DATASOURCE_ENABLED_egroup
 TESTS += $(SCRIPT_PREFIX)_egroup.sh
-TESTS += $(SCRIPT_PREFIX)_env_all.sh
-TESTS += $(SCRIPT_PREFIX)_env-set.sh
-TESTS += $(SCRIPT_PREFIX)_env-unset.sh
-TESTS += $(SCRIPT_PREFIX)_euid.sh
-TESTS += $(SCRIPT_PREFIX)_eusername.sh
-TESTS += $(SCRIPT_PREFIX)_filename.sh
-TESTS += $(SCRIPT_PREFIX)_gid.sh
-TESTS += $(SCRIPT_PREFIX)_group.sh
-TESTS += $(SCRIPT_PREFIX)_hostname.sh
-TESTS += $(SCRIPT_PREFIX)_login.sh
-TESTS += $(SCRIPT_PREFIX)_pid.sh
-TESTS += $(SCRIPT_PREFIX)_ppid.sh
-#TESTS += $(SCRIPT_PREFIX)_rpname.sh
-TESTS += $(SCRIPT_PREFIX)_sid.sh
-TESTS += $(SCRIPT_PREFIX)_snoopy_version.sh
-TESTS += $(SCRIPT_PREFIX)_timestamp.sh
-TESTS += $(SCRIPT_PREFIX)_timestamp_ms.sh
-TESTS += $(SCRIPT_PREFIX)_timestamp_us.sh
-TESTS += $(SCRIPT_PREFIX)_tty.sh
-TESTS += $(SCRIPT_PREFIX)_tty_uid.sh
-TESTS += $(SCRIPT_PREFIX)_tty_username.sh
-TESTS += $(SCRIPT_PREFIX)_uid.sh
-TESTS += $(SCRIPT_PREFIX)_username.sh
+endif
+
+if DATASOURCE_ENABLED_env_all
+    TESTS += $(SCRIPT_PREFIX)_env_all.sh
+endif
+if DATASOURCE_ENABLED_env
+    TESTS += $(SCRIPT_PREFIX)_env-set.sh
+    TESTS += $(SCRIPT_PREFIX)_env-unset.sh
+endif
+
+if DATASOURCE_ENABLED_euid
+    TESTS += $(SCRIPT_PREFIX)_euid.sh
+endif
+
+if DATASOURCE_ENABLED_eusername
+    TESTS += $(SCRIPT_PREFIX)_eusername.sh
+endif
+
+if DATASOURCE_ENABLED_filename
+    TESTS += $(SCRIPT_PREFIX)_filename.sh
+endif
+
+if DATASOURCE_ENABLED_gid
+    TESTS += $(SCRIPT_PREFIX)_gid.sh
+endif
+
+if DATASOURCE_ENABLED_group
+    TESTS += $(SCRIPT_PREFIX)_group.sh
+endif
+
+if DATASOURCE_ENABLED_hostname
+    TESTS += $(SCRIPT_PREFIX)_hostname.sh
+endif
+
+if DATASOURCE_ENABLED_login
+    TESTS += $(SCRIPT_PREFIX)_login.sh
+endif
+
+if DATASOURCE_ENABLED_pid
+    TESTS += $(SCRIPT_PREFIX)_pid.sh
+endif
+
+if DATASOURCE_ENABLED_ppid
+    TESTS += $(SCRIPT_PREFIX)_ppid.sh
+endif
+
+#if DATASOURCE_ENABLED_rpname
+#    TESTS += $(SCRIPT_PREFIX)_rpname.sh
+#endif
+
+if DATASOURCE_ENABLED_sid
+    TESTS += $(SCRIPT_PREFIX)_sid.sh
+endif
+
+if DATASOURCE_ENABLED_snoopy_version
+    TESTS += $(SCRIPT_PREFIX)_snoopy_version.sh
+endif
+
+if DATASOURCE_ENABLED_timestamp
+    TESTS += $(SCRIPT_PREFIX)_timestamp.sh
+endif
+
+if DATASOURCE_ENABLED_timestamp_ms
+    TESTS += $(SCRIPT_PREFIX)_timestamp_ms.sh
+endif
+
+if DATASOURCE_ENABLED_timestamp_us
+    TESTS += $(SCRIPT_PREFIX)_timestamp_us.sh
+endif
+
+if DATASOURCE_ENABLED_tty
+    TESTS += $(SCRIPT_PREFIX)_tty.sh
+endif
+
+if DATASOURCE_ENABLED_tty_uid
+    TESTS += $(SCRIPT_PREFIX)_tty_uid.sh
+endif
+
+if DATASOURCE_ENABLED_tty_username
+    TESTS += $(SCRIPT_PREFIX)_tty_username.sh
+endif
+
+if DATASOURCE_ENABLED_uid
+    TESTS += $(SCRIPT_PREFIX)_uid.sh
+endif
+
+if DATASOURCE_ENABLED_username
+    TESTS += $(SCRIPT_PREFIX)_username.sh
+endif
