@@ -9,7 +9,7 @@ include   $(top_srcdir)/build/Makefile.am.common
 SUBDIRS  =
 SUBDIRS += datasource
 if FILTERING_ENABLED
-#SUBDIRS += filter
+SUBDIRS += filter
 endif
 #SUBDIRS += message
 #SUBDIRS += output
