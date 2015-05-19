@@ -10,7 +10,7 @@ set -u
 
 
 
-### Get data from Snoopy
+### Get data
 #
 export SNOOPY_TEST_DATASOURCE_ENV_SET="asdf"
 VAL_SNOOPY=`$SNOOPY_TEST_DATASOURCE env "SNOOPY_TEST_DATASOURCE_ENV_SET"`

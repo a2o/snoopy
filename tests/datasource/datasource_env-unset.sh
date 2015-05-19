@@ -10,7 +10,7 @@ set -u
 
 
 
-### Get data from Snoopy
+### Get data
 #
 unset SNOOPY_TEST_DATASOURCE_ENV_UNSET
 VAL_SNOOPY=`$SNOOPY_TEST_DATASOURCE env "SNOOPY_TEST_DATASOURCE_ENV_UNSET"`

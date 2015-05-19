@@ -10,7 +10,7 @@ set -u
 
 
 
-### Get data from Snoopy
+### Get data
 #
 VAL_SNOOPY=`$SNOOPY_TEST_DATASOURCE eusername`
 MY_EUID="$EUID"
