@@ -23,6 +23,11 @@ Makefile.in
 /stamp-h?
 
 
+### Temporary files creating during ./bootstrap.sh run
+#
+/configure.tmp
+
+
 ### Files produced by ./configure
 #
 Makefile
@@ -31,7 +36,9 @@ Makefile
 # Temporary files created during ./configure run
 /conf*/
 /confdefs.h
+/conftest
 /conftest.c
+/conftest.cpp
 /conftest.err
 /libtoolT
 
@@ -45,6 +52,7 @@ Makefile
 *.lo
 .deps/
 .libs/
+/a.out
 /src/libsnoopy.so
 /tests/bin/snoopy-test-*
 /util/snoopy-disable
