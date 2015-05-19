@@ -37,6 +37,7 @@ env:
 script:
   - "./configure $SNOOPY_CONFIGURE_OPTS"
   - "make -j16"
+  - "make -j16 check"
 
 
 addons:
