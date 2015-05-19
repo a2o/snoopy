@@ -88,11 +88,6 @@ int main (int argc, char **argv)
 
 
     /* Display and return */
-    printf("Message sent to output %s", outputName);
-    if (strcmp(outputArg, "") != 0) {
-        printf(":%s", outputArg);
-    }
-    printf(".\n");
     return 0;
 }
 
