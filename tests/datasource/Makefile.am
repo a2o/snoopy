@@ -80,9 +80,9 @@ if DATASOURCE_ENABLED_ppid
     TESTS += $(SCRIPT_PREFIX)_ppid.sh
 endif
 
-#if DATASOURCE_ENABLED_rpname
-#    TESTS += $(SCRIPT_PREFIX)_rpname.sh
-#endif
+if DATASOURCE_ENABLED_rpname
+    TESTS += $(SCRIPT_PREFIX)_rpname.sh
+endif
 
 if DATASOURCE_ENABLED_sid
     TESTS += $(SCRIPT_PREFIX)_sid.sh
