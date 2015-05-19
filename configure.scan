@@ -40,5 +40,9 @@ AC_CONFIG_FILES([Makefile
                  src/datasource/Makefile
                  src/filter/Makefile
                  src/output/Makefile
+                 tests/Makefile
+                 tests/datasource/Makefile
+                 tests/filter/Makefile
+                 tests/output/Makefile
                  util/Makefile])
 AC_OUTPUT
