@@ -45,6 +45,7 @@ Makefile
 *.lo
 .deps/
 .libs/
+/src/bin/snoopy-test-*
 /src/libsnoopy.so
 /util/snoopy-disable
 /util/snoopy-enable
