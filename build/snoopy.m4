@@ -239,7 +239,7 @@ AU_DEFUN([SNOOPY_CONFIGURE_OUTPUT_DISABLE], [SNOOPY_CONFIGURE_OUTPUT_ENABLEDISAB
 AU_DEFUN([SNOOPY_CONFIGURE_OUTPUT_ENABLE_FORCE],
 [
     AC_DEFINE(SNOOPY_CONF_OUTPUT_ENABLED_$1, 1, [Is output "$1" available? Forced "Yes".])
-    AM_CONDITIONAL([OUTPUT_ENABLED_$1], [test "x$enable_output_$1" == "xyes"])
+    AM_CONDITIONAL([OUTPUT_ENABLED_$1], [test "x" == "x"])
     AC_SUBST([enable_output_$1], [yes])
     AC_MSG_NOTICE([Snoopy output enabled: $1 - forced])
 ])

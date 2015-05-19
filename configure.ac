@@ -93,6 +93,15 @@ AC_PROG_SED
 
 
 
+### Check for programs required for TEST suite
+#
+AC_CHECK_PROG(PROG_SOCAT_FOUND, socat, yes)
+if test x"$PROG_SOCAT_FOUND" != x"yes" ; then
+    AC_MSG_ERROR([Please install socat program. It is required for testing socket output during "make check" phase])
+fi
+
+
+
 dnl Checks for libraries.
 dnl FIXME: Replace `main' with a function in `-ldl':
 AC_CHECK_LIB([dl], [main])
@@ -167,7 +176,8 @@ AC_CONFIG_FILES([Makefile
                  util/Makefile
                  tests/Makefile
                  tests/datasource/Makefile
-                 tests/filter/Makefile])
+                 tests/filter/Makefile
+                 tests/output/Makefile])
 AC_CONFIG_FILES([util/snoopy-disable], [chmod +x util/snoopy-disable])
 AC_CONFIG_FILES([util/snoopy-enable],  [chmod +x util/snoopy-enable])
 
