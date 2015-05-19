@@ -12,13 +12,12 @@ set -u
 
 ### Get data
 #
-VAL_SNOOPY=`$SNOOPY_TEST_DATASOURCE username`
+VAL_SNOOPY=`$SNOOPY_TEST_DATASOURCE login`
 
 if ! tty -s; then
     VAL_REAL=""
 else
-    MY_TTY=`tty | sed -e 's#/dev/##'`
-    VAL_REAL=`last -n1 $MY_TTY | grep 'still logged in' | awk '{print $1}'`
+    VAL_REAL=`logname`
 fi
 
 if [ "$VAL_REAL" == "" ]; then
