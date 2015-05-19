@@ -9,6 +9,24 @@ set -u
 
 
 
+### Configure paths
+#
+# Get own location
+THIS_FILE="$BASH_SOURCE"
+THIS_FILE_PATH=`readlink -e $THIS_FILE`
+#
+# Dirs
+export SNOOPY_TESTS_ROOTDIR=`dirname $THIS_FILE_PATH`
+export SNOOPY_TESTS_BINDIR="$SNOOPY_TESTS_ROOTDIR/bin"
+#
+# Test suite helpers
+export SNOOPY_TEST_BIN_PREFIX="$SNOOPY_TESTS_BINDIR/snoopy-test"
+export SNOOPY_TEST_DATASOURCE="${SNOOPY_TEST_BIN_PREFIX}-datasource"
+export SNOOPY_TEST_FILTER="${SNOOPY_TEST_BIN_PREFIX}-filter"
+export SNOOPY_TEST_OUTPUT="${SNOOPY_TEST_BIN_PREFIX}-output"
+
+
+
 ### Result function: PASS
 #
 snoopy_testResult_pass()

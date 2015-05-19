@@ -6,7 +6,7 @@
 #
 set -e
 set -u
-. `dirname $0`/_bootstrap.sh
+. `dirname $BASH_SOURCE`/_bootstrap.sh
 
 
 
