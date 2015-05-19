@@ -12,24 +12,11 @@ set -u
 
 ### Get data from Snoopy
 #
-VAL_SNOOPY=`../../src/bin/snoopy-test-datasource gid`
-
-
-
-### Get data from elsewhere
-#
+VAL_SNOOPY=`$SNOOPY_TEST_DATASOURCE gid`
 VAL_REAL=`id -a | grep -Eo 'gid=[0-9]+' | grep -Eo '[0-9]+'`
 
 
 
 ### Evaluate
 #
-if [ "$VAL_SNOOPY" != "$VAL_REAL" ]; then
-    snoopy_testResult_fail "Values do not match (snoopy=$VAL_SNOOPY, real="$VAL_REAL")"
-fi
-
-
-
-### All went well
-#
-snoopy_testResult_pass
+snoopy_test_compareValues "$VAL_SNOOPY" "$VAL_REAL"

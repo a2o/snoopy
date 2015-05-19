@@ -10,10 +10,11 @@ set -u
 
 
 
-### Get data from Snoopy
+### Get data
 #
-VAL_SNOOPY=`$SNOOPY_TEST_DATASOURCE uid`
-VAL_REAL=`id -a | grep -Eo 'uid=[0-9]+' | grep -Eo '[0-9]+'`
+COMMAND_NO_ARGS="$SNOOPY_TEST_DATASOURCE"
+VAL_SNOOPY=`$COMMAND_NO_ARGS filename`
+VAL_REAL="$COMMAND_NO_ARGS"
 
 
 

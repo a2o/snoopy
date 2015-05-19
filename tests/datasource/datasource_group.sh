@@ -12,8 +12,8 @@ set -u
 
 ### Get data from Snoopy
 #
-VAL_SNOOPY=`$SNOOPY_TEST_DATASOURCE uid`
-VAL_REAL=`id -a | grep -Eo 'uid=[0-9]+' | grep -Eo '[0-9]+'`
+VAL_SNOOPY=`$SNOOPY_TEST_DATASOURCE group`
+VAL_REAL=`id -a | grep -Eo 'gid=[0-9]+[(][^)]+[)]' | grep -Eo '[(][^)]+[)]' | grep -Eo '[^()]+'`
 
 
 

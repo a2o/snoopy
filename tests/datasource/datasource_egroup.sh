@@ -12,8 +12,10 @@ set -u
 
 ### Get data from Snoopy
 #
-VAL_SNOOPY=`$SNOOPY_TEST_DATASOURCE uid`
-VAL_REAL=`id -a | grep -Eo 'uid=[0-9]+' | grep -Eo '[0-9]+'`
+VAL_SNOOPY=`$SNOOPY_TEST_DATASOURCE egroup`
+MY_PID=$$
+MY_EGID=`snoopy_test_getValue_fromPs "$MY_PID" "egid"`
+VAL_REAL=`getent group "$MY_EGID" | cut -d: -f1`
 
 
 

@@ -12,8 +12,9 @@ set -u
 
 ### Get data from Snoopy
 #
-VAL_SNOOPY=`$SNOOPY_TEST_DATASOURCE uid`
-VAL_REAL=`id -a | grep -Eo 'uid=[0-9]+' | grep -Eo '[0-9]+'`
+unset SNOOPY_TEST_DATASOURCE_ENV_UNSET
+VAL_SNOOPY=`$SNOOPY_TEST_DATASOURCE env "SNOOPY_TEST_DATASOURCE_ENV_UNSET"`
+VAL_REAL="(undefined)"
 
 
 
