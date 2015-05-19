@@ -14,7 +14,7 @@ if FILTERING_ENABLED
 SUBDIRS += filter
 endif
 #SUBDIRS += log
-#SUBDIRS += message
+SUBDIRS += message
 SUBDIRS += output
 #SUBDIRS += .
 

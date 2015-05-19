@@ -43,6 +43,7 @@ AC_CONFIG_FILES([Makefile
                  tests/bin/Makefile
                  tests/datasource/Makefile
                  tests/filter/Makefile
+                 tests/message/Makefile
                  tests/output/Makefile
                  util/Makefile])
 AC_OUTPUT
