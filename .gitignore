@@ -57,6 +57,14 @@ Makefile
 /etc/snoopy.ini
 
 
+### Files produced by test suite
+#
+/tests/*.log
+/tests/*/*.log
+/tests/*.trs
+/tests/*/*.trs
+
+
 ### Coverity files
 #
 /cov-int*

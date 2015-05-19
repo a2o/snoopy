@@ -11,7 +11,7 @@ ACLOCAL_AMFLAGS = -I build/m4
 
 
 
-### Subdir processing order.
+### Subdir processing order
 #
 # Process etc/ before other subdirs
 #
@@ -32,13 +32,28 @@ endif
 SUBDIRS += src
 SUBDIRS += util
 SUBDIRS += doc
+SUBDIRS += tests
 
 
 
+### Additional files to distribute in distribution package
+#
 EXTRA_DIST +=\
 	bootstrap.sh \
 	README.md
 
+
+
+### Make check aliases
+#
+checks: check
+test:   check
+tests:  check
+
+
+
+### Enable/disable targets
+#
 enable: install
 	echo ; \
 	$(top_srcdir)/util/snoopy-enable ; \
