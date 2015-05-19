@@ -16,3 +16,11 @@ endif
 #SUBDIRS += message
 SUBDIRS += output
 #SUBDIRS += .
+
+
+
+### Tests in this subdir
+#
+# None yet
+#
+#TESTS =

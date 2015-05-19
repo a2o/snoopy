@@ -38,7 +38,7 @@ SUBDIRS += tests
 
 ### Additional files to distribute in distribution package
 #
-EXTRA_DIST +=\
+EXTRA_DIST = \
 	bootstrap.sh \
 	README.md
 
