@@ -13,7 +13,11 @@ set -u
 ### Get data
 #
 VAL_SNOOPY=`$SNOOPY_TEST_DATASOURCE tty_uid`
-VAL_REAL=`tty | xargs ls -lan | awk '{print $3}'`
+if ! tty -s; then
+    VAL_REAL="(none)"
+else
+    VAL_REAL=`tty | xargs ls -lan | awk '{print $3}'`
+fi
 
 
 

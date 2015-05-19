@@ -5,7 +5,7 @@
 ### Configure shell and bootstrap
 #
 set -e
-#set -u
+set -u
 . ./_bootstrap.sh
 
 
@@ -14,13 +14,18 @@ set -e
 #
 VAL_SNOOPY=`$SNOOPY_TEST_DATASOURCE username`
 
-MY_TTY=`tty | sed -e 's#/dev/##'`
-VAL_REAL=`last -n1 $MY_TTY | grep 'still logged in' | awk '{print $1}'`
+if ! tty -s; then
+    VAL_REAL=""
+else
+    MY_TTY=`tty | sed -e 's#/dev/##'`
+    VAL_REAL=`last -n1 $MY_TTY | grep 'still logged in' | awk '{print $1}'`
+fi
+
 if [ "$VAL_REAL" == "" ]; then
-    VAL_REAL="$SUDO_USER"
+    VAL_REAL=${SUDO_USER:-}
 fi
 if [ "$VAL_REAL" == "" ]; then
-    VAL_REAL="$LOGNAME"
+    VAL_REAL=${LOGNAME:-}
 fi
 if [ "$VAL_REAL" == "" ]; then
     VAL_REAL="(unknown)"

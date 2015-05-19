@@ -13,7 +13,11 @@ set -u
 ### Get data
 #
 VAL_SNOOPY=`$SNOOPY_TEST_DATASOURCE tty`
-VAL_REAL=`tty`
+if ! tty -s; then
+    VAL_REAL="(none)"
+else
+    VAL_REAL=`tty`
+fi
 
 
 
