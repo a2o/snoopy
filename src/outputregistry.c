@@ -166,6 +166,25 @@ int snoopy_outputregistry_getIndex (char *providerName)
 
 
 /*
+ * call()
+ *
+ * Dispatch the message to named outputProvider
+ */
+int snoopy_outputregistry_call (char *providerName, char *logMessage, int errorOrMessage, char *providerArg)
+{
+    int idx;
+
+    idx = snoopy_outputregistry_getIndex(providerName);
+    if (idx == -1) {
+        return -1;
+    }
+
+    return snoopy_outputregistry_ptrs[idx](logMessage, errorOrMessage, providerArg);
+}
+
+
+
+/*
  * dispatch()
  *
  * Dispatch the message to configured outputProvider

@@ -35,4 +35,5 @@ extern int (*snoopy_outputregistry_ptrs []) (char *logMessage, int errorOrMessag
  */
 int snoopy_outputregistry_isRegistered (char *providerName);
 int snoopy_outputregistry_getIndex     (char *providerName);
+int snoopy_outputregistry_call         (char *providerName, char *logMessage, int errorOrMessage, char *providerArg);
 int snoopy_outputregistry_dispatch     (char *logMessage, int errorOrMessage);
