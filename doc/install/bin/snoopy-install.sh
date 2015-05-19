@@ -66,10 +66,10 @@ echo "SNOOPY INSTALL: Installing distro-specific packages 'gcc' and 'make'..."
 if [ -f /etc/debian_version ]; then
     # Debian, Ubuntu
     # About /dev/null: http://askubuntu.com/questions/372810/how-to-prevent-script-not-to-stop-after-apt-get
-    apt-get -y install gcc gzip make tar wget < "/dev/null"
+    apt-get -y install gcc gzip make socat tar wget < "/dev/null"
 elif [ -f /etc/redhat-release ]; then
     # RHEL, Fedora, CentOS
-    yum install -y gcc gzip make tar wget
+    yum install -y gcc gzip make socat tar wget
 else
     # Check if gcc and make are present
     if ! which which &> /dev/null; then
@@ -101,6 +101,12 @@ else
         echo "SNOOPY INSTALL ERROR: Install it and rerun this installer."
         exit 1
     fi
+
+    if ! which socat &> /dev/null; then
+        echo "SNOOPY INSTALL ERROR: 'socat' not found!"
+        echo "SNOOPY INSTALL ERROR: Install it and rerun this installer."
+        exit 1
+    fi
 fi
 
 
@@ -124,21 +130,18 @@ if [ "$SNOOPY_INSTALL_MODE" == "git" ]; then
             exit 1
         fi
 
-        # Check manually
         if ! which git &> /dev/null; then
             echo "SNOOPY INSTALL ERROR: 'git' not found!"
             echo "SNOOPY INSTALL ERROR: Install it and rerun this installer."
             exit 1
         fi
 
-        # Check manually
         if ! which libtool &> /dev/null; then
             echo "SNOOPY INSTALL ERROR: 'libtool' not found!"
             echo "SNOOPY INSTALL ERROR: Install it and rerun this installer."
             exit 1
         fi
 
-        # Check manually
         if ! which m4 &> /dev/null; then
             echo "SNOOPY INSTALL ERROR: 'm4' not found!"
             echo "SNOOPY INSTALL ERROR: Install it and rerun this installer."
@@ -146,12 +149,12 @@ if [ "$SNOOPY_INSTALL_MODE" == "git" ]; then
         fi
 
 
-    if ! which gzip &> /dev/null; then
-        echo "SNOOPY INSTALL ERROR: 'gzip' program not found!"
-        echo "SNOOPY INSTALL ERROR: Install it and rerun this installer."
-        exit 1
+        if ! which gzip &> /dev/null; then
+            echo "SNOOPY INSTALL ERROR: 'gzip' program not found!"
+            echo "SNOOPY INSTALL ERROR: Install it and rerun this installer."
+            exit 1
+        fi
     fi
-fi
 fi
 
 
@@ -266,6 +269,10 @@ echo "done."
 
 echo -n "SNOOPY INSTALL: Building... "
 make         >> $SNOOPY_INSTALL_LOGFILE 2>&1
+echo "done."
+
+echo -n "SNOOPY INSTALL: Testing build... "
+make check   >> $SNOOPY_INSTALL_LOGFILE 2>&1
 echo "done."
 
 echo -n "SNOOPY INSTALL: Installing... "
