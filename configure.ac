@@ -95,10 +95,9 @@ AC_PROG_SED
 
 ### Check for programs required for TEST suite
 #
-AC_CHECK_PROG(PROG_SOCAT_FOUND, socat, yes)
-if test x"$PROG_SOCAT_FOUND" != x"yes" ; then
-    AC_MSG_ERROR([Please install socat program. It is required for testing socket output during "make check" phase])
-fi
+SNOOPY_PROG_CHECK([dirname],  [DIRNAME],  [Needed for "make check" test suite.])
+SNOOPY_PROG_CHECK([readlink], [READLINK], [Needed for "make check" test suite.])
+SNOOPY_PROG_CHECK([socat],    [SOCAT],    [Needed for "make check" test suite.])
 
 
 
