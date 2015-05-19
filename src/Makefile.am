@@ -4,9 +4,16 @@ include   $(top_srcdir)/build/Makefile.am.common
 
 
 
-### First process all required subdirs
+### Subdir processing order
 #
-SUBDIRS = datasource output
+SUBDIRS  =
+SUBDIRS += datasource
+if FILTERING_ENABLED
+SUBDIRS += filter
+endif
+SUBDIRS += output
+SUBDIRS += .
+SUBDIRS += bin
 
 
 
@@ -49,8 +56,6 @@ endif
 
 # If filtering is enabled, add these too
 if FILTERING_ENABLED
-SUBDIRS += \
-	filter
 libsnoopy_no_execve_la_SOURCES += \
 	filtering.c \
 	filtering.h \
