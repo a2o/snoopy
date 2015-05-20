@@ -6,22 +6,14 @@ include   $(top_srcdir)/build/Makefile.am.common
 
 ### Subdir processing order
 #
-SUBDIRS  =
-SUBDIRS += bin
-#SUBDIRS += configfile
-SUBDIRS += datasource
-if FILTERING_ENABLED
-SUBDIRS += filter
+SUBDIRS      =
+SUBDIRS     += bin
+if CONFIG_FILE_ENABLED
+    SUBDIRS += configfile
 endif
-#SUBDIRS += log
-SUBDIRS += message
-SUBDIRS += output
-#SUBDIRS += .
-
-
-
-### Tests in this subdir
-#
-# None yet
-#
-#TESTS =
+SUBDIRS     += datasource
+if FILTERING_ENABLED
+    SUBDIRS += filter
+endif
+SUBDIRS     += message
+SUBDIRS     += output

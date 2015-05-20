@@ -21,10 +21,14 @@ export SNOOPY_TESTS_BINDIR="$SNOOPY_TESTS_ROOTDIR/bin"
 #
 # Test suite helpers
 export SNOOPY_TEST_BIN_PREFIX="$SNOOPY_TESTS_BINDIR/snoopy-test"
+export SNOOPY_TEST_CONFIGFILE="${SNOOPY_TEST_BIN_PREFIX}-configfile"
 export SNOOPY_TEST_DATASOURCE="${SNOOPY_TEST_BIN_PREFIX}-datasource"
 export SNOOPY_TEST_FILTER="${SNOOPY_TEST_BIN_PREFIX}-filter"
 export SNOOPY_TEST_MESSAGE_FORMAT="${SNOOPY_TEST_BIN_PREFIX}-message-format"
 export SNOOPY_TEST_OUTPUT="${SNOOPY_TEST_BIN_PREFIX}-output"
+#
+# Currently executing test filename
+export SNOOPY_CUR_TEST_FILENAME=`basename $0`
 
 
 

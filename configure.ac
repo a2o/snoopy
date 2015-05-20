@@ -174,6 +174,7 @@ AC_CONFIG_FILES([Makefile
                  util/Makefile
                  tests/Makefile
                  tests/bin/Makefile
+                 tests/configfile/Makefile
                  tests/datasource/Makefile
                  tests/filter/Makefile
                  tests/message/Makefile

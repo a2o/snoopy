@@ -19,6 +19,9 @@ LDADD           = ../../src/libsnoopy_no_execve.la
 
 ### Programs that are needed for testing suite
 #
+if CONFIG_FILE_ENABLED
+noinst_PROGRAMS     += snoopy-test-configfile
+endif
 noinst_PROGRAMS     += snoopy-test-datasource
 if FILTERING_ENABLED
     noinst_PROGRAMS += snoopy-test-filter
