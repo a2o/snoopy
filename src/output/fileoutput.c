@@ -43,10 +43,12 @@
  *     Sends given message to socket
  *
  * Params:
- *     message: message to send
+ *     message:    message to send
+ *     errOrMsg:   is message and error message or ordinary Snoopy log message
+ *     arg:        output argument(s)
  *
  * Return:
- *     void
+ *     int:        See snoopy.h (SNOOPY_OUTPUT_*) for details.
  */
 int snoopy_output_fileoutput (char *logMessage, int errorOrMessage, char *arg)
 {
@@ -55,13 +57,13 @@ int snoopy_output_fileoutput (char *logMessage, int errorOrMessage, char *arg)
 
     // Check if output file is properly configured
     if (0 == strcmp(arg, "")) {
-        return -1;
+        return SNOOPY_OUTPUT_FAILURE;
     }
 
     // Try to open file in append mode
     fp = fopen(arg, "a");
     if (NULL == fp) {
-        return -2;
+        return SNOOPY_OUTPUT_FAILURE;
     }
 
     // Try to print to file

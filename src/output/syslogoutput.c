@@ -46,16 +46,18 @@
  *     Sends given message to syslog
  *
  * Params:
- *     message: message to send
+ *     message:    message to send
+ *     errOrMsg:   is message and error message or ordinary Snoopy log message
+ *     arg:        output argument(s)
  *
  * Return:
- *     void
+ *     int:        See snoopy.h (SNOOPY_OUTPUT_*) for details.
  */
 int snoopy_output_syslogoutput (char *logMessage, int errorOrMessage, char *arg)
 {
     /* Dispatch only if non-zero size */
     if (0 == strlen(logMessage)) {
-        return 0;
+        return SNOOPY_OUTPUT_GRACEFUL_DISCARD;
     }
 
     /* Prepare logging stuff */
@@ -71,5 +73,5 @@ int snoopy_output_syslogoutput (char *logMessage, int errorOrMessage, char *arg)
     /* Close the syslog file descriptor */
     closelog();
 
-    return 1;
+    return strlen(logMessage);
 }

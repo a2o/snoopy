@@ -38,10 +38,12 @@
  *     Sends given message to STDOUT
  *
  * Params:
- *     message: message to send
+ *     message:    message to send
+ *     errOrMsg:   is message and error message or ordinary Snoopy log message
+ *     arg:        output argument(s)
  *
  * Return:
- *     int: number of characters printed
+ *     int:        See snoopy.h (SNOOPY_OUTPUT_*) for details.
  */
 int snoopy_output_stdoutoutput (char *logMessage, int errorOrMessage, char *arg)
 {

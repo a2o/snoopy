@@ -43,7 +43,7 @@ void snoopy_log_syscall (
 /*
  * Log message dispatching functions
  */
-void snoopy_log_dispatch (
+int snoopy_log_dispatch (
     char *logMessage,
     int   errorOrMessage
 );

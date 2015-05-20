@@ -158,17 +158,17 @@ void snoopy_log_syscall (
  *     errorOrMessage:   is this a message or an error?
  *
  * Return:
- *     void
+ *     int:              See snoopy.h (SNOOPY_OUTPUT_*) for details.
  */
-void snoopy_log_dispatch (
+int snoopy_log_dispatch (
     char *logMessage,
     int   errorOrMessage
 ) {
     /* Dispatch only if non-zero size */
     if (0 == strlen(logMessage)) {
-        return;
+        return SNOOPY_OUTPUT_GRACEFUL_DISCARD;
     }
 
     // Dispatch to configured output
-    snoopy_outputregistry_dispatch(logMessage, errorOrMessage);
+    return snoopy_outputregistry_dispatch(logMessage, errorOrMessage);
 }

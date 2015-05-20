@@ -49,6 +49,7 @@ int main (int argc, char **argv)
     char *message;
     char *outputName;
     char *outputArg;
+    int   retVal;
 
 
     /* Initialize Snoopy */
@@ -84,8 +85,10 @@ int main (int argc, char **argv)
     }
 
     /* Dispatch message to output */
-    snoopy_outputregistry_call(outputName, message, SNOOPY_LOG_MESSAGE, outputArg);
-
+    retVal = snoopy_outputregistry_call(outputName, message, SNOOPY_LOG_MESSAGE, outputArg);
+    if (SNOOPY_OUTPUT_FAILED(retVal)) {
+        return fatalError("Output failure");
+    }
 
     /* Display and return */
     return 0;

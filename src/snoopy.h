@@ -152,7 +152,7 @@
 
 
 /**
- * FIlter return values
+ * Filter return values
  *
  * SNOOPY_FILTER_PASS - message should be passed on
  * SNOOPY_FILTER_DROP - message should be dropped
@@ -229,6 +229,20 @@
 #define   SNOOPY_OUTPUT_DEFAULT_ARG      ""
 
 #endif   /* SNOOPY_CONF_OUTPUT_DEFAULT */
+
+
+
+/**
+ * Output return values/macro
+ *
+ * SNOOPY_OUTPUT_SUCCESS - message was sent successfully
+ * SNOOPY_OUTPUT_FAILURE - message was NOT sent
+ */
+#define   SNOOPY_OUTPUT_SUCCESS              1
+#define   SNOOPY_OUTPUT_GRACEFUL_DISCARD     0
+#define   SNOOPY_OUTPUT_FAILURE             -1
+#define   SNOOPY_OUTPUT_SUCCEEDED(retVal)   (retVal >= 0)
+#define   SNOOPY_OUTPUT_FAILED(retVal)      (retVal <  0)
 
 
 

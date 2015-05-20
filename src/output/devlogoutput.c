@@ -44,10 +44,12 @@
  *     Sends given message directly to /dev/log socket, without using syslog() syscall
  *
  * Params:
- *     message: message to send
+ *     message:    message to send
+ *     errOrMsg:   is message and error message or ordinary Snoopy log message
+ *     arg:        output argument(s)
  *
  * Return:
- *     void
+ *     int:        See snoopy.h (SNOOPY_OUTPUT_*) for details.
  */
 int snoopy_output_devlogoutput (char *logMessage, int errorOrMessage, char *arg)
 {
