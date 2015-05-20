@@ -35,7 +35,7 @@ env:
 
     # Build concurency
     #
-    - MAKE_J: "4"
+    - MAKE_J: "16"
 
   matrix:
     - SNOOPY_CONFIGURE_OPTS=""
