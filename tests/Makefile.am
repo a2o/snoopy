@@ -16,5 +16,5 @@ SUBDIRS     += datasource
 if FILTERING_ENABLED
     SUBDIRS += filter
 endif
-#SUBDIRS     += message
-#SUBDIRS     += output
+SUBDIRS     += message
+SUBDIRS     += output
