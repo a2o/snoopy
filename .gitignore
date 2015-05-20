@@ -54,7 +54,10 @@ Makefile
 .libs/
 /a.out
 /src/libsnoopy.so
-/tests/bin/snoopy-test-*
+/tests/bin/snoopy-test-configfile
+/tests/bin/snoopy-test-datasource
+/tests/bin/snoopy-test-message-format
+/tests/bin/snoopy-test-output
 /util/snoopy-disable
 /util/snoopy-enable
 /util/snoopy-test-all-data-sources
