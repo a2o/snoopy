@@ -24,6 +24,9 @@ touch $FILE_OUT
 socat UNIX-LISTEN:$FILE_SOCKET OPEN:$FILE_OUT &
 SOCAT_PID=$!
 
+# Sleep a bit, or sometimes this fails as socket is not yet present
+sleep 0.2
+
 # Send content to this socket
 echo "$VAL_REAL" | socat - UNIX-CONNECT:$FILE_SOCKET
 
