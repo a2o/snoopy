@@ -30,6 +30,7 @@ noinst_PROGRAMS     += snoopy-test-message-format
 noinst_PROGRAMS     += snoopy-test-output
 
 
+snoopy_test_configfile_SOURCES     = snoopy-test-configfile.c
 snoopy_test_datasource_SOURCES     = snoopy-test-datasource.c
 if FILTERING_ENABLED
     snoopy_test_filter_SOURCES     = snoopy-test-filter.c
