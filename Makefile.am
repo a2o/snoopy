@@ -32,7 +32,7 @@ endif
 SUBDIRS += src
 SUBDIRS += util
 SUBDIRS += doc
-SUBDIRS += tests
+#SUBDIRS += tests
 
 
 

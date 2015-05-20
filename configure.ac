@@ -171,14 +171,14 @@ AC_CONFIG_FILES([Makefile
                  src/datasource/Makefile
                  src/filter/Makefile
                  src/output/Makefile
-                 util/Makefile
-                 tests/Makefile
-                 tests/bin/Makefile
-                 tests/configfile/Makefile
-                 tests/datasource/Makefile
-                 tests/filter/Makefile
-                 tests/message/Makefile
-                 tests/output/Makefile])
+                 util/Makefile])
+#                 tests/Makefile
+#                 tests/bin/Makefile
+#                 tests/configfile/Makefile
+#                 tests/datasource/Makefile
+#                 tests/filter/Makefile
+#                 tests/message/Makefile
+#                 tests/output/Makefile
 AC_CONFIG_FILES([util/snoopy-disable], [chmod +x util/snoopy-disable])
 AC_CONFIG_FILES([util/snoopy-enable],  [chmod +x util/snoopy-enable])
 
