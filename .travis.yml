@@ -32,6 +32,11 @@ env:
     #   via the "travis encrypt" command using the project repo's public key
     #
     - secure: "WSIKaNG2czmsMv0DqNKiYBuaFp/ChmSEpMmMnn9T0vqQmxPVnFnKg0UaPhXJj9THp24vqJmPoEdQPSjH5GsbbW1YQKgEDOyKfAFs1Uv1yBYnObvlcH0LJQWQjY5ZjnTEpCbP5q4iWj7Cbz/4kTmEZto8mbLyEUBkwt3LHXqHVJh0Tteg0wW2lvuyj/QYqEIm7uzOB5v3gsqpGTeKT7DKV99IuMpoIEAO66+8HzRgvJgQT3XnF4RVUTDYzOF2gUSnS1aLsDzVXbFMGlDjDtSmGEZyUrfQkfX4/Jt0fZMRMiYdbK2+cfHbHSOQQjL0WwnLn3175ZDtkpQynwoGL8KafLli1N7Xh3NP8e+N9r1FV2mwA0gIyLCo3/fSF7ya7BToWJjyIfO/vk4QUoLOR0dbmK7zrVcCJD//DZBTlWc1ZcTDlP8VvmScLqvAndo/03UAdIOo3KjaS7LZsEHr144KGYMEQbYVfGqCOLcL6eRwbi42PgJ1drbINCcb3mfZHhJFrbdBkHTSK3yD1yHb3SbHuCp2ThbVAVi1oAh9FpsN5UEo/guAAR+R7mNGhZFEBYqhaQItdyxegKxPeheNNIxGszyt8cShPL3GqX5sq2/MxTn8SFuXjVzBZoy2MboBg82uk4G8pntOdW6NDJNeugtAYwVdJECKKcucS9B2VciTEpU="
+
+    # Build concurency
+    #
+    - MAKE_J: "4"
+
   matrix:
     - SNOOPY_CONFIGURE_OPTS=""
     - SNOOPY_CONFIGURE_OPTS="--enable-config-file"
@@ -41,8 +46,8 @@ env:
 
 script:
   - "./configure $SNOOPY_CONFIGURE_OPTS"
-  - "make -j16"
-  - "make -j16 check"
+  - "make -j$MAKE_J"
+  - "make -j$MAKE_J check"
 
 
 addons:
@@ -55,5 +60,5 @@ addons:
       description: "Build submitted via Travis CI"
     notification_email: bostjan@a2o.si
     build_command_prepend: "./bootstrap.sh && ./configure && make distclean && ./configure --enable-config-file --enable-filtering"
-    build_command: "make -j 16"
+    build_command: "make -j$MAKE_J"
     branch_pattern: coverity_scan
