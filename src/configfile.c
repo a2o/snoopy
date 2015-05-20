@@ -141,6 +141,7 @@ void snoopy_configfile_parse_output (
     char  *confVal;
     char  *outputName;
     char  *outputArg;
+    int    outputArgFound = SNOOPY_FALSE;
 
     // Do not assign null to it explicitly, as you get "Explicit null dereference" Coverity error.
     // If you do not assign it, Coverity complains with "Uninitialized pointer read".
@@ -159,21 +160,27 @@ void snoopy_configfile_parse_output (
         // Separate output name from its arguments
         outputName = strtok_r(confVal, ":", &saveptr1);
         outputArg  = strtok_r(NULL   , ":", &saveptr1);
+        outputArgFound = SNOOPY_TRUE;
 
-        // THINK What if conf.output_arg was set in previous call to this function,
-        // and is already malloced? We need to detect that and free previous
-        // allocation.
-        snoopy_configuration.output_arg          = strdup(outputArg);
-        snoopy_configuration.output_arg_malloced = SNOOPY_TRUE;
     }
 
     // Determine output name
     if (SNOOPY_TRUE == snoopy_outputregistry_isRegistered(outputName)) {
         snoopy_configuration.output          = strdup(outputName);
         snoopy_configuration.output_malloced = SNOOPY_TRUE;
+
+        if (SNOOPY_TRUE == outputArgFound) {
+            // THINK What if conf.output_arg was set in previous call to this function,
+            // and is already malloced? We need to detect that and free previous
+            // allocation.
+            snoopy_configuration.output_arg          = strdup(outputArg);
+            snoopy_configuration.output_arg_malloced = SNOOPY_TRUE;
+        }
     } else {
-        snoopy_configuration.output          = SNOOPY_OUTPUT_DEFAULT;
-        snoopy_configuration.output_malloced = SNOOPY_FALSE;
+        snoopy_configuration.output              = SNOOPY_OUTPUT_DEFAULT;
+        snoopy_configuration.output_malloced     = SNOOPY_FALSE;
+        snoopy_configuration.output_arg          = SNOOPY_OUTPUT_DEFAULT_ARG;
+        snoopy_configuration.output_arg_malloced = SNOOPY_FALSE;
     }
 
     // Housekeeping
