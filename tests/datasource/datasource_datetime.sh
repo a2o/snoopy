@@ -15,6 +15,11 @@ set -u
 VAL_SNOOPY=`$SNOOPY_TEST_DATASOURCE datetime`
 VAL_REAL=`date "+%Y-%m-%dT%H:%M:%S%z"`
 
+# If they differ, just do it again - maybe we were lucky :)
+if [ "$VAL_REAL" != "$VAL_SNOOPY" ]; then
+    VAL_SNOOPY=`$SNOOPY_TEST_DATASOURCE datetime`
+fi
+
 
 
 ### Evaluate
