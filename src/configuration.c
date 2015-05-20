@@ -49,10 +49,11 @@ snoopy_configuration_type   snoopy_configuration = {
 
 #ifdef SNOOPY_CONFIG_FILE_ENABLED
     .config_file_enabled     = SNOOPY_TRUE,
+    .config_file_path        = SNOOPY_CONFIG_FILE_PATH,
 #else
     .config_file_enabled     = SNOOPY_FALSE,
-#endif
     .config_file_path        = "",
+#endif
     .config_file_found       = SNOOPY_FALSE,
     .config_file_parsed      = SNOOPY_FALSE,
 
@@ -104,7 +105,7 @@ void snoopy_configuration_ctor ()
 {
     /* Parse INI file if enabled */
 #ifdef SNOOPY_CONFIG_FILE_ENABLED
-    snoopy_configfile_load(SNOOPY_CONFIG_FILE_PATH);
+    snoopy_configfile_load(snoopy_configuration.config_file_path);
 #endif
 }
 
