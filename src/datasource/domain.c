@@ -85,12 +85,6 @@ int snoopy_datasource_domain (char *result, char *arg)
     hostname[tmpInt+1] = '\0';
 
 
-    /* Check access to hosts file */
-    if (-1 == access(HOSTS_PATH, R_OK)) {
-        snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "File not found or not readable: %s", HOSTS_PATH);
-        return SNOOPY_DATASOURCE_FAILURE;
-    }
-
     /* Try to open file in read mode */
     fp = fopen(HOSTS_PATH, "r");
     if (NULL == fp) {
@@ -102,30 +96,30 @@ int snoopy_datasource_domain (char *result, char *arg)
     /* Read line by line */
     char *linePtr;
     char *lineEntryPtr;
-    char *tokenPtr;
     char *savePtr;
-    char *domainPtr;
+    char *domainPtr = NULL;
 
     while (NULL != (linePtr = fgets(line, sizeof(line), fp))) {
 
         /* Try to find "hostname." there */
         lineEntryPtr = strcasestr(linePtr, hostname);
         if (NULL != lineEntryPtr) {
-            tokenPtr = strtok_r(lineEntryPtr, " \t\n\r", &savePtr);
-            if (NULL != tokenPtr) {
-                /* Found. Strtok created \0 where appropriate */
-                domainPtr = lineEntryPtr + strlen(hostname);
-                break;
-            } else {
-                /* Token was not found, but this might be just the end of file. */
-                domainPtr = lineEntryPtr + strlen(hostname);
-                break;
-            }
+            strtok_r(lineEntryPtr, " \t\n\r", &savePtr);
+
+            /* Does not matter whether token has been found or not. */
+            /* If it was, strtok creates \0 at the end of it and returns pointer to it. */
+            /* If it was not, we must have met the EOF and just use everything. */
+            domainPtr = lineEntryPtr + strlen(hostname);
+            break;
         }
     }
 
 
     /* Cleanup and return */
     fclose(fp);
-    return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "%s", domainPtr);
+    if (NULL != domainPtr) {
+        return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "%s", domainPtr);
+    } else {
+        return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "(none)");
+    }
 }
