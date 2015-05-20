@@ -34,6 +34,9 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <grp.h>
+
+
+
 /*
  * SNOOPY DATA SOURCE: group
  *
@@ -42,9 +45,10 @@
  *
  * Params:
  *     result: pointer to string, to write result into
+ *     arg:    (ignored)
  *
  * Return:
- *     number of characters in the returned string
+ *     number of characters in the returned string, or SNOOPY_DATASOURCE_FAILURE
  */
 int snoopy_datasource_group (char *result, char *arg)
 {
