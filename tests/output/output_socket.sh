@@ -19,13 +19,18 @@ FILE_SOCKET="output_socket.sh.$MY_PID.socket"
 FILE_OUT="output_socket.sh.$MY_PID.sock.out"
 
 # Listen
+rm -f $FILE_SOCKET
 rm -f $FILE_OUT
 touch $FILE_OUT
 socat UNIX-LISTEN:$FILE_SOCKET OPEN:$FILE_OUT &
 SOCAT_PID=$!
 
-# Sleep a bit, or sometimes this fails as socket is not yet present
-sleep 0.2
+# Sleep a bit, if socket file, or sometimes this fails as socket is not yet present
+if [ ! -e $FILE_SOCKET ]; then
+    sleep 0.2
+elif [ ! -S $FILE_SOCKET ]; then
+    sleep 0.2
+fi
 
 # Send content to this socket
 echo "$VAL_REAL" | socat - UNIX-CONNECT:$FILE_SOCKET
