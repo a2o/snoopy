@@ -28,7 +28,7 @@
 #include "configuration.h"
 
 #include "snoopy.h"
-#ifdef SNOOPY_CONFIG_FILE_ENABLED
+#ifdef SNOOPY_CONFIGFILE_ENABLED
 #include "configfile.h"
 #endif
 
@@ -47,15 +47,15 @@
 snoopy_configuration_type   snoopy_configuration = {
     .initialized             = SNOOPY_TRUE,
 
-#ifdef SNOOPY_CONFIG_FILE_ENABLED
-    .config_file_enabled     = SNOOPY_TRUE,
-    .config_file_path        = SNOOPY_CONFIG_FILE_PATH,
+#ifdef SNOOPY_CONFIGFILE_ENABLED
+    .configfile_enabled     = SNOOPY_TRUE,
+    .configfile_path        = SNOOPY_CONFIGFILE_PATH,
 #else
-    .config_file_enabled     = SNOOPY_FALSE,
-    .config_file_path        = "",
+    .configfile_enabled     = SNOOPY_FALSE,
+    .configfile_path        = "",
 #endif
-    .config_file_found       = SNOOPY_FALSE,
-    .config_file_parsed      = SNOOPY_FALSE,
+    .configfile_found       = SNOOPY_FALSE,
+    .configfile_parsed      = SNOOPY_FALSE,
 
 #ifdef SNOOPY_ERROR_LOGGING_ENABLED
     .error_logging_enabled   = SNOOPY_TRUE,
@@ -104,8 +104,8 @@ snoopy_configuration_type   snoopy_configuration = {
 void snoopy_configuration_ctor ()
 {
     /* Parse INI file if enabled */
-#ifdef SNOOPY_CONFIG_FILE_ENABLED
-    snoopy_configfile_load(snoopy_configuration.config_file_path);
+#ifdef SNOOPY_CONFIGFILE_ENABLED
+    snoopy_configfile_load(snoopy_configuration.configfile_path);
 #endif
 }
 

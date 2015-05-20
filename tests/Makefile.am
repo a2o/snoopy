@@ -9,7 +9,7 @@ include   $(top_srcdir)/build/Makefile.am.common
 SUBDIRS      =
 
 SUBDIRS     += bin
-if CONFIG_FILE_ENABLED
+if CONFIGFILE_ENABLED
     SUBDIRS += configfile
 endif
 SUBDIRS     += datasource

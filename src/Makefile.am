@@ -45,7 +45,7 @@ libsnoopy_no_execve_la_LIBADD = \
 	output/libsnoopy_outputs_all.la
 
 # If config file is enabled, build and link these too
-if CONFIG_FILE_ENABLED
+if CONFIGFILE_ENABLED
 libsnoopy_no_execve_la_SOURCES += \
 	configfile.c \
 	configfile.h

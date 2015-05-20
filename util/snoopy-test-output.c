@@ -59,14 +59,14 @@ int main (int argc, char **argv)
     snoopy_inputdatastorage_store_filename(argv[0]);
     snoopy_inputdatastorage_store_argv(argv);
 
-    if (SNOOPY_TRUE == snoopy_configuration.config_file_enabled) {
-        printf("Configuration file is enabled: %s\n", snoopy_configuration.config_file_path);
-        if (SNOOPY_TRUE == snoopy_configuration.config_file_found) {
+    if (SNOOPY_TRUE == snoopy_configuration.configfile_enabled) {
+        printf("Configuration file is enabled: %s\n", snoopy_configuration.configfile_path);
+        if (SNOOPY_TRUE == snoopy_configuration.configfile_found) {
             printf("Configuration file found.\n");
         } else {
             printf("WARNING: Configuration file does not exist!\n");
         }
-        if (SNOOPY_TRUE == snoopy_configuration.config_file_parsed) {
+        if (SNOOPY_TRUE == snoopy_configuration.configfile_parsed) {
             printf("Configuration file was parsed sucessfully.\n");
         } else {
             printf("WARNING: Configuration file parsing FAILED!\n");

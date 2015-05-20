@@ -79,7 +79,7 @@ int main (int argc, char **argv)
 
 
     /* Initialize Snoopy, which parses configuration file too */
-    snoopy_configuration.config_file_path = iniFilePath;
+    snoopy_configuration.configfile_path = iniFilePath;
     snoopy_configuration_ctor();
 
 

@@ -68,7 +68,7 @@ int snoopy_configfile_load (
 
 
     /* Tell snoopy we are using configuration file */
-    snoopy_configuration.config_file_path = iniFilePath;
+    snoopy_configuration.configfile_path = iniFilePath;
 
     /* Parse the INI configuration file first */
     ini = iniparser_load(iniFilePath);
@@ -76,7 +76,7 @@ int snoopy_configfile_load (
         // TODO snoopy error handling
         return -1;
     }
-    snoopy_configuration.config_file_found = SNOOPY_TRUE;
+    snoopy_configuration.configfile_found = SNOOPY_TRUE;
 
 
     /* Pick out snoopy configuration variables */
@@ -114,7 +114,7 @@ int snoopy_configfile_load (
 
 
     /* Housekeeping */
-    snoopy_configuration.config_file_parsed = SNOOPY_TRUE;   // We have sucessfully parsed configuration file
+    snoopy_configuration.configfile_parsed = SNOOPY_TRUE;   // We have sucessfully parsed configuration file
     iniparser_freedict(ini);
     return 0;
 }

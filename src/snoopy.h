@@ -202,16 +202,16 @@
 
 
 /**
- * SNOOPY_CONFIG_FILE_*
+ * SNOOPY_CONFIGFILE_*
  *
  * Path to INI configuration file, if enabled
  *
  * If configuration file is enabled, this constant is defined
  * and holds absolute path to it
  */
-#ifdef SNOOPY_CONF_CONFIG_FILE_ENABLED
-#define   SNOOPY_CONFIG_FILE_ENABLED   1
-#define   SNOOPY_CONFIG_FILE_PATH      SNOOPY_CONF_CONFIG_FILE_PATH
+#ifdef SNOOPY_CONF_CONFIGFILE_ENABLED
+#define   SNOOPY_CONFIGFILE_ENABLED   1
+#define   SNOOPY_CONFIGFILE_PATH      SNOOPY_CONF_CONFIGFILE_PATH
 #endif
 
 

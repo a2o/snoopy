@@ -222,33 +222,33 @@ AC_ARG_ENABLE(config-file,
     )],
     [
         if test "x$enableval" = "xyes"; then
-            config_file_enabled=yes
-            config_file_path="$SYSCONFDIR/snoopy.ini"
+            configfile_enabled=yes
+            configfile_path="$SYSCONFDIR/snoopy.ini"
         elif test "x$enableval" = "xno"; then
-            config_file_enabled="no"
-            config_file_path=""
+            configfile_enabled="no"
+            configfile_path=""
         else
             AC_MSG_ERROR([--enable-config-file does not take an argument. Use --sysconfdir to set config file path. Got: $enableval])
         fi
     ],
     # Not specified on command line
     [
-        config_file_enabled="no"
-        config_file_path=""
+        configfile_enabled="no"
+        configfile_path=""
     ]
 )
 
-AC_MSG_NOTICE([Snoopy config file enabled: $config_file_enabled])
-AS_IF([test "x$config_file_enabled" == "xyes"], [
-    AC_DEFINE_UNQUOTED(SNOOPY_CONF_CONFIG_FILE_ENABLED, 1,                   [Is config file parsing enabled?])
-    AC_DEFINE_UNQUOTED(SNOOPY_CONF_CONFIG_FILE_PATH,    "$config_file_path", [INI configuration file path to use])
-    AC_MSG_NOTICE([Snoopy config file path: $config_file_path])
+AC_MSG_NOTICE([Snoopy config file enabled: $configfile_enabled])
+AS_IF([test "x$configfile_enabled" == "xyes"], [
+    AC_DEFINE_UNQUOTED(SNOOPY_CONF_CONFIGFILE_ENABLED, 1,                   [Is config file parsing enabled?])
+    AC_DEFINE_UNQUOTED(SNOOPY_CONF_CONFIGFILE_PATH,    "$configfile_path",  [INI configuration file path to use])
+    AC_MSG_NOTICE([Snoopy config file path: $configfile_path])
 ])
 
-dnl CONFIG_FILE_ENABLED is used in:
+dnl CONFIGFILE_ENABLED is used in:
 dnl - src/Makefile.am
 dnl - etc/Makefile.am
-AM_CONDITIONAL([CONFIG_FILE_ENABLED], [test "x$config_file_enabled" == "xyes"])
+AM_CONDITIONAL([CONFIGFILE_ENABLED], [test "x$configfile_enabled" == "xyes"])
 
 
 

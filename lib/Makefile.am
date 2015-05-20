@@ -6,7 +6,7 @@ include   $(top_srcdir)/build/Makefile.am.common
 
 ### INI file parser
 #
-if CONFIG_FILE_ENABLED
+if CONFIGFILE_ENABLED
 noinst_LTLIBRARIES = \
     libiniparser.la
 

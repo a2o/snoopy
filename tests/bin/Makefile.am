@@ -19,7 +19,7 @@ LDADD           = ../../src/libsnoopy_no_execve.la
 
 ### Programs that are needed for testing suite
 #
-if CONFIG_FILE_ENABLED
+if CONFIGFILE_ENABLED
 noinst_PROGRAMS                    += snoopy-test-configfile
 snoopy_test_configfile_SOURCES      = snoopy-test-configfile.c
 endif

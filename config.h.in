@@ -114,10 +114,10 @@
 #undef PACKAGE_VERSION
 
 /* Is config file parsing enabled? */
-#undef SNOOPY_CONF_CONFIG_FILE_ENABLED
+#undef SNOOPY_CONF_CONFIGFILE_ENABLED
 
 /* INI configuration file path to use */
-#undef SNOOPY_CONF_CONFIG_FILE_PATH
+#undef SNOOPY_CONF_CONFIGFILE_PATH
 
 /* Is datasource "cmdline" available? */
 #undef SNOOPY_CONF_DATASOURCE_ENABLED_cmdline

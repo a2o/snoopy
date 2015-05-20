@@ -25,7 +25,7 @@ ACLOCAL_AMFLAGS = -I build/m4
 # there if config file is enabled.
 #
 SUBDIRS  =
-if CONFIG_FILE_ENABLED
+if CONFIGFILE_ENABLED
 SUBDIRS += etc
 SUBDIRS += lib
 endif
