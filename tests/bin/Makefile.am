@@ -32,7 +32,7 @@ noinst_PROGRAMS                    += snoopy-test-filter
 snoopy_test_filter_SOURCES          = snoopy-test-filter.c
 endif
 
-noinst_PROGRAMS                    += snoopy-test-message-format
-snoopy_test_message_format_SOURCES  = snoopy-test-message-format.c
-noinst_PROGRAMS                    += snoopy-test-output
-snoopy_test_output_SOURCES          = snoopy-test-output.c
+#noinst_PROGRAMS                    += snoopy-test-message-format
+#snoopy_test_message_format_SOURCES  = snoopy-test-message-format.c
+#noinst_PROGRAMS                    += snoopy-test-output
+#snoopy_test_output_SOURCES          = snoopy-test-output.c
