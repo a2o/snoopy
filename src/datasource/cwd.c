@@ -55,5 +55,5 @@ int snoopy_datasource_cwd (char *result, char *arg)
     if (getcwd(cwdBuf, PATH_MAX+1)) {
         return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "%s", cwdBuf);
     }
-    return -1;
+    return SNOOPY_DATASOURCE_FAILURE;
 }

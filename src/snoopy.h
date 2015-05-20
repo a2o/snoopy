@@ -78,6 +78,18 @@
 
 
 /**
+ * SNOOPY_DATASOURCE_(SUCCESS|FAILURE|...)
+ *
+ * Datasource results
+ */
+#define   SNOOPY_DATASOURCE_SUCCESS              1
+#define   SNOOPY_DATASOURCE_FAILURE             -1
+#define   SNOOPY_DATASOURCE_SUCCEEDED(retVal)   (retVal >= 0)
+#define   SNOOPY_DATASOURCE_FAILED(retVal)      (retVal <  0)
+
+
+
+/**
  * SNOOPY_FILTER_CHAIN_MAX_SIZE
  *
  * Maximum length of filter chain definition

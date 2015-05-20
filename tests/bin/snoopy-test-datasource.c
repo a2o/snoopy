@@ -49,6 +49,7 @@ int main (int argc, char **argv)
     char *datasourceName;
     char *datasourceArg;
     char  datasourceResult[SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE];
+    int   retVal;
 
 
     /* Initialize Snoopy */
@@ -78,7 +79,10 @@ int main (int argc, char **argv)
 
 
     /* Call the datasource */
-    snoopy_datasourceregistry_call(datasourceName, datasourceResult, datasourceArg);
+    retVal = snoopy_datasourceregistry_call(datasourceName, datasourceResult, datasourceArg);
+    if (SNOOPY_DATASOURCE_FAILED(retVal)) {
+        return fatalError("Datasource failed");
+    }
 
 
     /* Display and return */
