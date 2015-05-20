@@ -62,6 +62,7 @@ void snoopy_message_generateFromFormat (
     char *fmtPos_nextFormatTag;
     char *fmtPos_nextFormatTagClose;
     char *msgPos_cur;
+    int   retVal;
 
     fmtPos_cur           = logMessageFormat;
     fmtPos_nextFormatTag = logMessageFormat;
@@ -130,8 +131,14 @@ void snoopy_message_generateFromFormat (
 
         // Call the provider, and append the results to log message
         dataSourceMsg[0] = '\0';
-        snoopy_datasourceregistry_call(dataSourceNamePtr, dataSourceMsg, dataSourceArgPtr);
-        snoopy_message_append(logMessage, dataSourceMsg);
+        retVal = snoopy_datasourceregistry_call(dataSourceNamePtr, dataSourceMsg, dataSourceArgPtr);
+        if (SNOOPY_DATASOURCE_FAILED(retVal)) {
+            snoopy_message_append(logMessage, "ERROR(Data source failed, msg:");
+            snoopy_message_append(logMessage, dataSourceMsg);
+            snoopy_message_append(logMessage, ")");
+        } else {
+            snoopy_message_append(logMessage, dataSourceMsg);
+        }
 
         // Where to start next iteration
         fmtPos_cur = fmtPos_nextFormatTagClose + 1;
