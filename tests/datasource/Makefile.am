@@ -25,7 +25,6 @@ endif
 # This one is failing because there seems to be a bug in snoopy datasource implementation
 if DATASOURCE_ENABLED_domain
     TESTS += $(SCRIPT_PREFIX)_domain.sh
-    XFAIL_TESTS += $(SCRIPT_PREFIX)_domain.sh
 endif
 
 if DATASOURCE_ENABLED_egid

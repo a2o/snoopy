@@ -32,11 +32,19 @@
 #include "domain.h"
 
 #include "snoopy.h"
+#include "datasource/hostname.h"
 
-#include   <errno.h>
 #include   <stdio.h>
 #include   <string.h>
-#include   <sys/utsname.h>
+
+
+
+/*
+ * Local defines
+ */
+#define   HOSTS_PATH            "/etc/hosts"
+#define   HOSTS_LINE_SIZE_MAX   1024
+#define   HOSTS_LINE_POS_MAX    1023
 
 
 
@@ -55,11 +63,69 @@
  */
 int snoopy_datasource_domain (char *result, char *arg)
 {
-    struct utsname unameData;
+    FILE *fp;
+    char  hostname[SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE+1];   // +1 - we add "." to the end of string
+    char  line[HOSTS_LINE_SIZE_MAX];
+    int   retVal;
+    int   tmpInt;
 
-    if (0 != uname(&unameData)) {
-        return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "(error @ uname(): %d)", errno);
+    /* Get my hostname first */
+    retVal = snoopy_datasource_hostname(hostname, "");
+    if (SNOOPY_DATASOURCE_FAILED(retVal)) {
+        snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "Unable to get hostname");
+        return SNOOPY_DATASOURCE_FAILURE;
+    }
+    if (0 == strlen(hostname)) {
+        snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "Got empty hostname");
+        return SNOOPY_DATASOURCE_FAILURE;
+    }
+    /* Add a dot at the end of hostname, that is what we are searching for */
+    tmpInt = strlen(hostname);
+    hostname[tmpInt] = '.';
+    hostname[tmpInt+1] = '\0';
+
+
+    /* Check access to hosts file */
+    if (-1 == access(HOSTS_PATH, R_OK)) {
+        snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "File not found or not readable: %s", HOSTS_PATH);
+        return SNOOPY_DATASOURCE_FAILURE;
     }
 
-    return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "%s", unameData.domainname);
+    /* Try to open file in read mode */
+    fp = fopen(HOSTS_PATH, "r");
+    if (NULL == fp) {
+        snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "Unable to open file for reading: %s", HOSTS_PATH);
+        return SNOOPY_OUTPUT_FAILURE;
+    }
+
+
+    /* Read line by line */
+    char *linePtr;
+    char *lineEntryPtr;
+    char *tokenPtr;
+    char *savePtr;
+    char *domainPtr;
+
+    while (NULL != (linePtr = fgets(line, sizeof(line), fp))) {
+
+        /* Try to find "hostname." there */
+        lineEntryPtr = strcasestr(linePtr, hostname);
+        if (NULL != lineEntryPtr) {
+            tokenPtr = strtok_r(lineEntryPtr, " \t\n\r", &savePtr);
+            if (NULL != tokenPtr) {
+                /* Found. Strtok created \0 where appropriate */
+                domainPtr = lineEntryPtr + strlen(hostname);
+                break;
+            } else {
+                /* Token was not found, but this might be just the end of file. */
+                domainPtr = lineEntryPtr + strlen(hostname);
+                break;
+            }
+        }
+    }
+
+
+    /* Cleanup and return */
+    fclose(fp);
+    return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "%s", domainPtr);
 }
