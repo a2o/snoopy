@@ -147,7 +147,6 @@ AC_CHECK_FUNCS([ \
     strdup    \
     strstr    \
     strtol    \
-    uname     \
 ])
 
 dnl Substitute these variables when creating (Make)files below - GENERIC
