@@ -107,14 +107,24 @@ AC_CHECK_LIB([dl], [main])
 
 dnl Checks for header files.
 AC_CHECK_HEADERS([ \
-    limits.h     \
-    stdlib.h     \
-    string.h     \
+    ctype.h \
+    dlfcn.h \
+    errno.h \
+    features.h \
+    grp.h \
+    limits.h \
+    pwd.h \
+    stdio.h \
+    stdlib.h \
+    string.h \
+    syslog.h \
     sys/socket.h \
-    sys/time.h   \
-    syslog.h     \
-    time.h       \
-    unistd.h     \
+    sys/stat.h \
+    sys/time.h \
+    sys/types.h \
+    sys/un.h \
+    time.h \
+    unistd.h \
 ])
 
 dnl Checks for typedefs, structures, and compiler characteristics.
