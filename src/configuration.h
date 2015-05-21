@@ -49,6 +49,8 @@ typedef struct {
 
     int   syslog_facility;
     int   syslog_level;
+    int   syslog_ident_malloced;
+    char *syslog_ident;
 } snoopy_configuration_type;
 extern   snoopy_configuration_type   snoopy_configuration;
 

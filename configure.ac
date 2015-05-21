@@ -714,6 +714,32 @@ AC_ARG_WITH(syslog-level,
 AC_DEFINE_UNQUOTED(SNOOPY_CONF_SYSLOG_LEVEL, [$syslog_level], [Syslog level to use by default])
 AC_MSG_NOTICE([Snoopy default syslog level:    $syslog_level])
 
+
+dnl ============================================================================
+AC_ARG_WITH(syslog-ident,
+    [AC_HELP_STRING(
+        [--with-syslog-ident=STRING],
+        [syslog identity to use when logging. [default=snoopy]]
+    )],
+    [
+        if test "x$withval" = "x" -o "x$withval" = "xyes"; then
+            # Enabled, but without explicit value
+            AC_MSG_ERROR([--with-syslog-ident requires a value])
+        elif test "x$withval" = "xno"; then
+            # Explicitly disabled: --without-...
+            AC_MSG_ERROR([using --without-syslog-ident is not supported, syslog ident is required. Either define it explicitly, or, to use the default value, remove this argument from ./configure line.])
+        else
+            # Enabled with explicit value definition
+            syslog_ident="$withval"
+        fi
+    ],
+    # Not specified on command line
+    [syslog_ident="snoopy"]
+)
+
+AC_DEFINE_UNQUOTED(SNOOPY_CONF_SYSLOG_IDENT,  ["$syslog_ident"], [Syslog ident to use by default])
+AC_MSG_NOTICE([Snoopy default syslog ident:    "$syslog_ident"])
+
 dnl ============================================================================
 dnl ============================================================================
 dnl ======= END section: SYSLOG ================================================

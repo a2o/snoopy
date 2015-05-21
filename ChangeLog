@@ -5,6 +5,8 @@
 
 2015-05-XX - Version 2.3.X - FIXME
 --------------------------
+o Feature: syslog ident string is now configurable, via ./configure line
+    or via snoopy.ini.
 o Feature: added two new data sources: hostname and domain.
 o Feature: added a new output: devtty - writes to /dev/tty directly.
 o Feature: added two new outputs: stderr and stdout.

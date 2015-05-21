@@ -162,6 +162,21 @@
 
 
 
+;;; Syslog Ident
+;
+; What syslog ident (program name) to use.
+;
+; Possible values:
+;   Any non-spaced string.
+;
+; Default value:
+;   "snoopy" (unless changed by ./configure --with-syslog-ident="other")
+;
+; Example:
+;syslog_ident = "my-ident-string"
+
+
+
 ;;; Syslog Level
 ;
 ; What syslog level to use. Can be prefixed with 'LOG_'.

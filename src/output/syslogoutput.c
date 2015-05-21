@@ -61,7 +61,7 @@ int snoopy_output_syslogoutput (char *logMessage, int errorOrMessage, char *arg)
     }
 
     /* Prepare logging stuff */
-    openlog("snoopy", LOG_PID, snoopy_configuration.syslog_facility);
+    openlog(snoopy_configuration.syslog_ident, LOG_PID, snoopy_configuration.syslog_facility);
 
     /* Log error or ordinary message */
     if (SNOOPY_LOG_ERROR == errorOrMessage) {

@@ -275,6 +275,9 @@
 /* Syslog facility to use by default */
 #undef SNOOPY_CONF_SYSLOG_FACILITY
 
+/* Syslog ident to use by default */
+#undef SNOOPY_CONF_SYSLOG_IDENT
+
 /* Syslog level to use by default */
 #undef SNOOPY_CONF_SYSLOG_LEVEL
 

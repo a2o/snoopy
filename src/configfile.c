@@ -107,6 +107,12 @@ int snoopy_configfile_load (
         snoopy_configfile_parse_syslog_facility(confValString);
     }
 
+    confValString = iniparser_getstring(ini, "snoopy:syslog_ident", NULL);
+    if (NULL != confValString) {
+        snoopy_configuration.syslog_ident          = strdup(confValString);
+        snoopy_configuration.syslog_ident_malloced = SNOOPY_TRUE;
+    }
+
     confValString = iniparser_getstring(ini, "snoopy:syslog_level", NULL);
     if (NULL != confValString) {
         snoopy_configfile_parse_syslog_level(confValString);

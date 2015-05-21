@@ -101,6 +101,9 @@ int main (int argc, char **argv)
     } else if (0 == strcmp(showConfigVar, "syslog_facility")) {
         printf("%s\n", snoopy_syslog_convert_facilityToStr(snoopy_configuration.syslog_facility));
 
+    } else if (0 == strcmp(showConfigVar, "syslog_ident")) {
+        printf("%s\n", snoopy_configuration.syslog_ident);
+
     } else if (0 == strcmp(showConfigVar, "syslog_level")) {
         printf("%s\n", snoopy_syslog_convert_levelToStr(snoopy_configuration.syslog_level));
 
