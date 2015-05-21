@@ -17,3 +17,5 @@ TESTS        += $(SCRIPT_PREFIX)-output-file.sh
 TESTS        += $(SCRIPT_PREFIX)-output-invalid.sh
 XFAIL_TESTS  += $(SCRIPT_PREFIX)-output-invalid.sh
 TESTS        += $(SCRIPT_PREFIX)-output-socket.sh
+TESTS        += $(SCRIPT_PREFIX)-syslog_facility.sh
+TESTS        += $(SCRIPT_PREFIX)-syslog_level.sh

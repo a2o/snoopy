@@ -30,6 +30,7 @@
 #include "snoopy.h"
 #include "inputdatastorage.h"
 #include "configuration.h"
+#include "misc.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -96,6 +97,12 @@ int main (int argc, char **argv)
             printf(":%s", snoopy_configuration.output_arg);
         }
         printf("\n");
+
+    } else if (0 == strcmp(showConfigVar, "syslog_facility")) {
+        printf("%s\n", snoopy_syslog_convert_facilityToStr(snoopy_configuration.syslog_facility));
+
+    } else if (0 == strcmp(showConfigVar, "syslog_level")) {
+        printf("%s\n", snoopy_syslog_convert_levelToStr(snoopy_configuration.syslog_level));
 
     } else {
         return fatalError("Unknown configuration variable given");

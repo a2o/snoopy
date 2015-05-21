@@ -44,5 +44,7 @@ void snoopy_string_append (
 /*
  * Syslog functions
  */
-int  snoopy_syslog_convert_facilityToInt (char *facilityStr);
-int  snoopy_syslog_convert_levelToInt    (char *levelStr);
+int         snoopy_syslog_convert_facilityToInt (char *facilityStr);
+const char* snoopy_syslog_convert_facilityToStr (int   facilityInt);
+int         snoopy_syslog_convert_levelToInt    (char *levelStr);
+const char* snoopy_syslog_convert_levelToStr    (int   levelInt);

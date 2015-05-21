@@ -29,6 +29,7 @@ export SNOOPY_TEST_OUTPUT="${SNOOPY_TEST_BIN_PREFIX}-output"
 #
 # Currently executing test filename
 export SNOOPY_CUR_TEST_FILENAME=`basename $0`
+export SNOOPY_CUR_TEST_DIR=`dirname $0`
 
 
 

@@ -170,6 +170,53 @@ int snoopy_syslog_convert_facilityToInt (
 
 
 /*
+ * snoopy_syslog_convert_facilityToStr
+ *
+ * Description:
+ *     Convert syslog facility from integer code to corresponding string.
+ *
+ * Params:
+ *     facilityInt   Syslog facility to convert
+ *
+ * Return:
+ *     const char*   Corresponding syslog facility string
+ */
+const char* snoopy_syslog_convert_facilityToStr (
+    int   facilityInt
+) {
+    char *facilityStr;
+
+    // Evaluate and set return value
+    if      (LOG_AUTH     == facilityInt) { facilityStr = "AUTH";     }
+    else if (LOG_AUTHPRIV == facilityInt) { facilityStr = "AUTHPRIV"; }
+    else if (LOG_CRON     == facilityInt) { facilityStr = "CRON";     }
+    else if (LOG_DAEMON   == facilityInt) { facilityStr = "DAEMON";   }
+    else if (LOG_FTP      == facilityInt) { facilityStr = "FTP";      }
+    else if (LOG_KERN     == facilityInt) { facilityStr = "KERN";     }
+    else if (LOG_LOCAL0   == facilityInt) { facilityStr = "LOCAL0";   }
+    else if (LOG_LOCAL1   == facilityInt) { facilityStr = "LOCAL1";   }
+    else if (LOG_LOCAL2   == facilityInt) { facilityStr = "LOCAL2";   }
+    else if (LOG_LOCAL3   == facilityInt) { facilityStr = "LOCAL3";   }
+    else if (LOG_LOCAL4   == facilityInt) { facilityStr = "LOCAL4";   }
+    else if (LOG_LOCAL5   == facilityInt) { facilityStr = "LOCAL5";   }
+    else if (LOG_LOCAL6   == facilityInt) { facilityStr = "LOCAL6";   }
+    else if (LOG_LOCAL7   == facilityInt) { facilityStr = "LOCAL7";   }
+    else if (LOG_LPR      == facilityInt) { facilityStr = "LPR";      }
+    else if (LOG_MAIL     == facilityInt) { facilityStr = "MAIL";     }
+    else if (LOG_NEWS     == facilityInt) { facilityStr = "NEWS";     }
+    else if (LOG_SYSLOG   == facilityInt) { facilityStr = "SYSLOG";   }
+    else if (LOG_USER     == facilityInt) { facilityStr = "USER";     }
+    else if (LOG_UUCP     == facilityInt) { facilityStr = "UUCP";     }
+    else {
+        facilityStr = "(invalid)";
+    }
+
+    return facilityStr;
+}
+
+
+
+/*
  * snoopy_syslog_convert_levelToInt
  *
  * Description:
@@ -194,7 +241,7 @@ int snoopy_syslog_convert_levelToInt (
         levelStrAdj = &levelStr[4];
     }
 
-    // Evaluate and set configuration flag
+    // Evaluate and set return value
     if      (strcmp(levelStrAdj, "EMERG")   == 0) { levelInt = LOG_EMERG;   }
     else if (strcmp(levelStrAdj, "ALERT")   == 0) { levelInt = LOG_ALERT;   }
     else if (strcmp(levelStrAdj, "CRIT")    == 0) { levelInt = LOG_CRIT;    }
@@ -208,4 +255,39 @@ int snoopy_syslog_convert_levelToInt (
     }
 
     return levelInt;
+}
+
+
+
+/*
+ * snoopy_syslog_convert_levelToStr
+ *
+ * Description:
+ *     Convert syslog level from integer code to corresponding string.
+ *
+ * Params:
+ *     levelInt      Syslog level to convert
+ *
+ * Return:
+ *     const char*   Corresponding syslog facility string
+ */
+const char* snoopy_syslog_convert_levelToStr (
+    int   levelInt
+) {
+    char *levelStr;
+
+    // Evaluate and set return value
+    if      (LOG_EMERG   == levelInt) { levelStr = "EMERG";   }
+    else if (LOG_ALERT   == levelInt) { levelStr = "ALERT";   }
+    else if (LOG_CRIT    == levelInt) { levelStr = "CRIT";    }
+    else if (LOG_ERR     == levelInt) { levelStr = "ERR";     }
+    else if (LOG_WARNING == levelInt) { levelStr = "WARNING"; }
+    else if (LOG_NOTICE  == levelInt) { levelStr = "NOTICE";  }
+    else if (LOG_INFO    == levelInt) { levelStr = "INFO";    }
+    else if (LOG_DEBUG   == levelInt) { levelStr = "DEBUG";   }
+    else {
+        levelStr = "(invalid)";
+    }
+
+    return levelStr;
 }
