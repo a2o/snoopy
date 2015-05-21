@@ -226,8 +226,8 @@ dnl ======= ENABLE CONFIG FILE =================================================
 dnl ============================================================================
 AC_ARG_ENABLE(config-file,
     [AC_HELP_STRING(
-        [--enable-config-file],
-        [enable INI configuration file parsing. If enabled, then path is SYSCONFDIR/snoopy.ini [default=disabled]]
+        [--disable-config-file],
+        [disable INI configuration file parsing. If enabled, then path is SYSCONFDIR/snoopy.ini [default=enabled] [default location=SYSCONFDIR/snoopy.ini]]
     )],
     [
         if test "x$enableval" = "xyes"; then
@@ -237,13 +237,13 @@ AC_ARG_ENABLE(config-file,
             configfile_enabled="no"
             configfile_path=""
         else
-            AC_MSG_ERROR([--enable-config-file does not take an argument. Use --sysconfdir to set config file path. Got: $enableval])
+            AC_MSG_ERROR([--disable-config-file does not take an argument. Use --sysconfdir to set config file path. Got: $enableval])
         fi
     ],
     # Not specified on command line
     [
-        configfile_enabled="no"
-        configfile_path=""
+        configfile_enabled="yes"
+        configfile_path="$SYSCONFDIR/snoopy.ini"
     ]
 )
 
@@ -254,9 +254,6 @@ AS_IF([test "x$configfile_enabled" == "xyes"], [
     AC_MSG_NOTICE([Snoopy config file path: $configfile_path])
 ])
 
-dnl CONFIGFILE_ENABLED is used in:
-dnl - src/Makefile.am
-dnl - etc/Makefile.am
 AM_CONDITIONAL([CONFIGFILE_ENABLED], [test "x$configfile_enabled" == "xyes"])
 
 
