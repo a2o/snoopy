@@ -24,6 +24,14 @@ fi
 
 
 
+### Adjust data
+#
+if [ "$VAL_SNOOPY" == "(none)" ]; then
+    VAL_SNOOPY=""
+fi
+
+
+
 ### Evaluate
 #
 snoopy_test_compareValues "$VAL_SNOOPY" "$VAL_REAL"
