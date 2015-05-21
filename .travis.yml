@@ -47,17 +47,6 @@ env:
 script:
   - "./configure $SNOOPY_CONFIGURE_OPTS"
   - "make -j$MAKE_J"
-
-  - "hostname"
-  - "hostname -a"
-  - "hostname -d"
-  - "hostname -f"
-  - "hostname -s"
-  - "cat /etc/hosts"
-  - "ip addr show"
-  - "ip route show"
-  - "ip -6 route show"
-
   - "make -j$MAKE_J check"
 
 
