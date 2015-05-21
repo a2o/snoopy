@@ -19,7 +19,7 @@ VAL_SNOOPY=`$SNOOPY_TEST_DATASOURCE domain`
 VAL_REAL=`hostname -d`
 if [ "$VAL_REAL" == "" ]; then
     SNOOPY_HOSTNAME=`hostname`
-    VAL_REAL=`cat /etc/hosts | sed -e 's/#.*//' | grep -Eo "$SNOOPY_HOSTNAME\.[-_.a-z0-9]+" | sed -e "s/$SNOOPY_HOSTNAME\.//"`
+    VAL_REAL=`cat /etc/hosts | sed -e 's/#.*//' | grep -Eo "$SNOOPY_HOSTNAME\.[-_.a-z0-9]+" | sed -e "s/$SNOOPY_HOSTNAME\.//" | head -n1`
 fi
 
 
