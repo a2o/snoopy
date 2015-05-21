@@ -95,11 +95,17 @@ int snoopy_datasource_domain (char *result, char *arg)
 
     /* Read line by line */
     char *linePtr;
+    char *hashPtr;
     char *lineEntryPtr;
     char *savePtr;
     char *domainPtr = NULL;
 
     while (NULL != (linePtr = fgets(line, sizeof(line), fp))) {
+
+        /* Is line a comment - ignore everything after '#' character */
+        if (NULL != (hashPtr = strchr(linePtr, '#'))) {
+            hashPtr = '\0';
+        }
 
         /* Try to find "hostname." there */
         lineEntryPtr = strcasestr(linePtr, hostname);
