@@ -30,6 +30,7 @@
 #include "snoopy.h"
 #include "configfile.h"
 #include "configuration.h"
+#include "misc.h"
 #include "outputregistry.h"
 
 #include "lib/iniparser/src/iniparser.h"
@@ -41,7 +42,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sys/types.h>
-#include <syslog.h>
 #include <unistd.h>
 
 
@@ -207,33 +207,17 @@ void snoopy_configfile_parse_syslog_facility (
     char *confVal
 ) {
     char *confValCleaned;
+    int   facilityInt;
 
     // First cleanup the value
     confValCleaned = snoopy_configfile_syslog_value_cleanup(confVal);
 
     // Evaluate and set configuration flag
-    if      (strcmp(confValCleaned, "AUTH")     == 0) { snoopy_configuration.syslog_facility = LOG_AUTH;     }
-    else if (strcmp(confValCleaned, "AUTHPRIV") == 0) { snoopy_configuration.syslog_facility = LOG_AUTHPRIV; }
-    else if (strcmp(confValCleaned, "CRON")     == 0) { snoopy_configuration.syslog_facility = LOG_CRON;     }
-    else if (strcmp(confValCleaned, "DAEMON")   == 0) { snoopy_configuration.syslog_facility = LOG_DAEMON;   }
-    else if (strcmp(confValCleaned, "FTP")      == 0) { snoopy_configuration.syslog_facility = LOG_FTP;      }
-    else if (strcmp(confValCleaned, "KERN")     == 0) { snoopy_configuration.syslog_facility = LOG_KERN;     }
-    else if (strcmp(confValCleaned, "LOCAL0")   == 0) { snoopy_configuration.syslog_facility = LOG_LOCAL0;   }
-    else if (strcmp(confValCleaned, "LOCAL1")   == 0) { snoopy_configuration.syslog_facility = LOG_LOCAL1;   }
-    else if (strcmp(confValCleaned, "LOCAL2")   == 0) { snoopy_configuration.syslog_facility = LOG_LOCAL2;   }
-    else if (strcmp(confValCleaned, "LOCAL3")   == 0) { snoopy_configuration.syslog_facility = LOG_LOCAL3;   }
-    else if (strcmp(confValCleaned, "LOCAL4")   == 0) { snoopy_configuration.syslog_facility = LOG_LOCAL4;   }
-    else if (strcmp(confValCleaned, "LOCAL5")   == 0) { snoopy_configuration.syslog_facility = LOG_LOCAL5;   }
-    else if (strcmp(confValCleaned, "LOCAL6")   == 0) { snoopy_configuration.syslog_facility = LOG_LOCAL6;   }
-    else if (strcmp(confValCleaned, "LOCAL7")   == 0) { snoopy_configuration.syslog_facility = LOG_LOCAL7;   }
-    else if (strcmp(confValCleaned, "LPR")      == 0) { snoopy_configuration.syslog_facility = LOG_LPR;      }
-    else if (strcmp(confValCleaned, "MAIL")     == 0) { snoopy_configuration.syslog_facility = LOG_MAIL;     }
-    else if (strcmp(confValCleaned, "NEWS")     == 0) { snoopy_configuration.syslog_facility = LOG_NEWS;     }
-    else if (strcmp(confValCleaned, "SYSLOG")   == 0) { snoopy_configuration.syslog_facility = LOG_SYSLOG;   }
-    else if (strcmp(confValCleaned, "USER")     == 0) { snoopy_configuration.syslog_facility = LOG_USER;     }
-    else if (strcmp(confValCleaned, "UUCP")     == 0) { snoopy_configuration.syslog_facility = LOG_UUCP;     }
-    else {
+    facilityInt = snoopy_syslog_convert_facilityToInt(confValCleaned);
+    if (-1 == facilityInt) {
         snoopy_configuration.syslog_facility = SNOOPY_SYSLOG_FACILITY;
+    } else {
+        snoopy_configuration.syslog_facility = facilityInt;
     }
 }
 
@@ -257,21 +241,17 @@ void snoopy_configfile_parse_syslog_level (
     char *confVal
 ) {
     char *confValCleaned;
+    int   levelInt;
 
     // First cleanup the value
     confValCleaned = snoopy_configfile_syslog_value_cleanup(confVal);
 
     // Evaluate and set configuration flag
-    if      (strcmp(confValCleaned, "EMERG")   == 0) { snoopy_configuration.syslog_level = LOG_EMERG;   }
-    else if (strcmp(confValCleaned, "ALERT")   == 0) { snoopy_configuration.syslog_level = LOG_ALERT;   }
-    else if (strcmp(confValCleaned, "CRIT")    == 0) { snoopy_configuration.syslog_level = LOG_CRIT;    }
-    else if (strcmp(confValCleaned, "ERR")     == 0) { snoopy_configuration.syslog_level = LOG_ERR;     }
-    else if (strcmp(confValCleaned, "WARNING") == 0) { snoopy_configuration.syslog_level = LOG_WARNING; }
-    else if (strcmp(confValCleaned, "NOTICE")  == 0) { snoopy_configuration.syslog_level = LOG_NOTICE;  }
-    else if (strcmp(confValCleaned, "INFO")    == 0) { snoopy_configuration.syslog_level = LOG_INFO;    }
-    else if (strcmp(confValCleaned, "DEBUG")   == 0) { snoopy_configuration.syslog_level = LOG_DEBUG;   }
-    else {
+    levelInt = snoopy_syslog_convert_levelToInt(confValCleaned);
+    if (-1 == levelInt) {
         snoopy_configuration.syslog_level = SNOOPY_SYSLOG_LEVEL;
+    } else {
+        snoopy_configuration.syslog_level = levelInt;
     }
 }
 

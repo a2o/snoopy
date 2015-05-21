@@ -38,3 +38,11 @@ void snoopy_string_append (
     char *appendThis,
     int   destStringMaxLength
 );
+
+
+
+/*
+ * Syslog functions
+ */
+int  snoopy_syslog_convert_facilityToInt (char *facilityStr);
+int  snoopy_syslog_convert_levelToInt    (char *levelStr);

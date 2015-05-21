@@ -22,13 +22,6 @@
 
 
 /**
- * Include ./configured constants
- */
-#include "config.h"
-
-
-
-/**
  * Include all required system headers
  */
 
@@ -42,10 +35,19 @@
 #undef   _XOPEN_SOURCE
 #endif
 #define  _XOPEN_SOURCE   500
-#include <unistd.h>
+#include <features.h>   /* Needed for GLIBC macros here */
+#include <syslog.h>     /* Needed for syslog defaults */
+#include <unistd.h>     /* Needed for _SC_ARG_MAX constant */
 
-/* Needed for GLIBC macros here */
-#include <features.h>
+
+
+/**
+ * Include ./configured constants
+ *
+ * At least <syslog.h> must be included before including this file, as
+ * LOG_... constants are needed.
+ */
+#include "config.h"
 
 
 

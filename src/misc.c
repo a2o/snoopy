@@ -34,6 +34,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <syslog.h>
 
 
 
@@ -109,4 +110,102 @@ void snoopy_string_append (
 
     /* Copy to the destination string */
     strcat(&destString[destStringSize], appendThis);
+}
+
+
+
+/*
+ * snoopy_syslog_convert_facilityToInt
+ *
+ * Description:
+ *     Returns corresponding integer for each syslog facility, or -1 on failure.
+ *
+ * Params:
+ *     facilityStr   Syslog facility string to convert
+ *
+ * Return:
+ *     int           Corresponding syslog facility id, or -1 if not found
+ */
+int snoopy_syslog_convert_facilityToInt (
+    char *facilityStr
+) {
+    char *facilityStrAdj;
+    int   facilityInt;
+
+    facilityStrAdj = facilityStr;
+
+    // If there is LOG_ prefix, loose it.
+    if ('_' == facilityStr[3]) {
+        facilityStrAdj = &facilityStr[4];
+    }
+
+    // Evaluate
+    if      (strcmp(facilityStrAdj, "AUTH")     == 0) { facilityInt = LOG_AUTH;     }
+    else if (strcmp(facilityStrAdj, "AUTHPRIV") == 0) { facilityInt = LOG_AUTHPRIV; }
+    else if (strcmp(facilityStrAdj, "CRON")     == 0) { facilityInt = LOG_CRON;     }
+    else if (strcmp(facilityStrAdj, "DAEMON")   == 0) { facilityInt = LOG_DAEMON;   }
+    else if (strcmp(facilityStrAdj, "FTP")      == 0) { facilityInt = LOG_FTP;      }
+    else if (strcmp(facilityStrAdj, "KERN")     == 0) { facilityInt = LOG_KERN;     }
+    else if (strcmp(facilityStrAdj, "LOCAL0")   == 0) { facilityInt = LOG_LOCAL0;   }
+    else if (strcmp(facilityStrAdj, "LOCAL1")   == 0) { facilityInt = LOG_LOCAL1;   }
+    else if (strcmp(facilityStrAdj, "LOCAL2")   == 0) { facilityInt = LOG_LOCAL2;   }
+    else if (strcmp(facilityStrAdj, "LOCAL3")   == 0) { facilityInt = LOG_LOCAL3;   }
+    else if (strcmp(facilityStrAdj, "LOCAL4")   == 0) { facilityInt = LOG_LOCAL4;   }
+    else if (strcmp(facilityStrAdj, "LOCAL5")   == 0) { facilityInt = LOG_LOCAL5;   }
+    else if (strcmp(facilityStrAdj, "LOCAL6")   == 0) { facilityInt = LOG_LOCAL6;   }
+    else if (strcmp(facilityStrAdj, "LOCAL7")   == 0) { facilityInt = LOG_LOCAL7;   }
+    else if (strcmp(facilityStrAdj, "LPR")      == 0) { facilityInt = LOG_LPR;      }
+    else if (strcmp(facilityStrAdj, "MAIL")     == 0) { facilityInt = LOG_MAIL;     }
+    else if (strcmp(facilityStrAdj, "NEWS")     == 0) { facilityInt = LOG_NEWS;     }
+    else if (strcmp(facilityStrAdj, "SYSLOG")   == 0) { facilityInt = LOG_SYSLOG;   }
+    else if (strcmp(facilityStrAdj, "USER")     == 0) { facilityInt = LOG_USER;     }
+    else if (strcmp(facilityStrAdj, "UUCP")     == 0) { facilityInt = LOG_UUCP;     }
+    else {
+        facilityInt = -1;
+    }
+
+    return facilityInt;
+}
+
+
+
+/*
+ * snoopy_syslog_convert_levelToInt
+ *
+ * Description:
+ *     Returns corresponding integer for each syslog level, or -1 on failure.
+ *
+ * Params:
+ *     levelStr   Syslog level string to convert
+ *
+ * Return:
+ *     int        Corresponding syslog level id, or -1 if not found
+ */
+int snoopy_syslog_convert_levelToInt (
+    char *levelStr
+) {
+    char *levelStrAdj;
+    int   levelInt;
+
+    levelStrAdj = levelStr;
+
+    // If there is LOG_ prefix, loose it.
+    if ('_' == levelStr[3]) {
+        levelStrAdj = &levelStr[4];
+    }
+
+    // Evaluate and set configuration flag
+    if      (strcmp(levelStrAdj, "EMERG")   == 0) { levelInt = LOG_EMERG;   }
+    else if (strcmp(levelStrAdj, "ALERT")   == 0) { levelInt = LOG_ALERT;   }
+    else if (strcmp(levelStrAdj, "CRIT")    == 0) { levelInt = LOG_CRIT;    }
+    else if (strcmp(levelStrAdj, "ERR")     == 0) { levelInt = LOG_ERR;     }
+    else if (strcmp(levelStrAdj, "WARNING") == 0) { levelInt = LOG_WARNING; }
+    else if (strcmp(levelStrAdj, "NOTICE")  == 0) { levelInt = LOG_NOTICE;  }
+    else if (strcmp(levelStrAdj, "INFO")    == 0) { levelInt = LOG_INFO;    }
+    else if (strcmp(levelStrAdj, "DEBUG")   == 0) { levelInt = LOG_DEBUG;   }
+    else {
+        levelInt = SNOOPY_SYSLOG_LEVEL;
+    }
+
+    return levelInt;
 }
