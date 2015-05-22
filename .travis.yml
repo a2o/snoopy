@@ -39,9 +39,9 @@ env:
 
   matrix:
     - SNOOPY_CONFIGURE_OPTS=""
-    - SNOOPY_CONFIGURE_OPTS="--enable-config-file"
-    - SNOOPY_CONFIGURE_OPTS="--enable-filtering"
-    - SNOOPY_CONFIGURE_OPTS="--enable-config-file --enable-filtering"
+    - SNOOPY_CONFIGURE_OPTS="--disable-config-file"
+    - SNOOPY_CONFIGURE_OPTS="--disable-filtering"
+    - SNOOPY_CONFIGURE_OPTS="--disable-config-file --disable-filtering"
 
 
 script:
@@ -59,6 +59,6 @@ addons:
       name: "a2o/snoopy"
       description: "Build submitted via Travis CI"
     notification_email: bostjan@a2o.si
-    build_command_prepend: "./bootstrap.sh && ./configure && make distclean && ./configure --enable-config-file --enable-filtering"
+    build_command_prepend: "./bootstrap.sh && ./configure && make distclean && ./configure --enable-output-syslog"
     build_command: "make -j$MAKE_J"
     branch_pattern: coverity_scan
