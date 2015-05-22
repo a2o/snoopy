@@ -419,8 +419,8 @@ dnl ======= ENABLE FILTERING ===================================================
 dnl ============================================================================
 AC_ARG_ENABLE(filtering,
     [AC_HELP_STRING(
-        [--enable-filtering],
-        [enable general message filtering [default=disabled]]
+        [--disable-filtering],
+        [disable general message filtering [default=enabled]]
     )],
     [
         if test "x$enableval" = "xyes"; then
@@ -428,10 +428,10 @@ AC_ARG_ENABLE(filtering,
         elif test "x$enableval" = "xno"; then
             enable_filtering=no
         else
-            AC_MSG_ERROR([--enable-filtering does not take an argument: $enableval])
+            AC_MSG_ERROR([--disable-filtering does not take an argument: $enableval])
         fi
     ],
-    [enable_filtering=no]
+    [enable_filtering=yes]
 )
 
 AS_IF([test "x$enable_filtering" = "xyes"], [
