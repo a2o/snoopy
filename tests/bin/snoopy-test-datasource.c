@@ -32,6 +32,7 @@
 #include "datasourceregistry.h"
 
 #include <stdio.h>
+#include <string.h>
 
 
 
@@ -60,9 +61,23 @@ int main (int argc, char **argv)
     /* Check if there is a data source name passed as an argument */
     if (argc < 2) {
         displayHelp();
-        return fatalError("Missing argument: datasource name");
+        return fatalError("Missing argument: datasource name or '--list'");
     }
     datasourceName = argv[1];
+
+
+    /* Is second argument --list? */
+    if (0 == strcmp(argv[1], "--list")) {
+
+        /* Loop throught all data sources and just append the output */
+        int i = 0;
+        while (strcmp(snoopy_datasourceregistry_names[i], "") != 0) {
+            printf("%s\n", snoopy_datasourceregistry_names[i]);
+            i++;
+        }
+        return 0;
+    }
+
 
     /* Check if what we got is a valid datasource name */
     if (SNOOPY_FALSE == snoopy_datasourceregistry_isRegistered(datasourceName)) {
@@ -109,6 +124,7 @@ void displayHelp ()
     printf("\n");
     printf("Usage: \n");
     printf("    snoopy-test-datasource DATASOURCE [DATASOURCE_ARG]\n");
+    printf("    snoopy-test-datasource --list\n");
     printf("\n");
 
     printf("Available datasources:\n");
