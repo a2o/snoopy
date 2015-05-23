@@ -221,6 +221,31 @@ AC_MSG_NOTICE([=================================================================
 
 
 
+# ============================================================================
+# ======= ENABLE EVERYTHING ==================================================
+# ============================================================================
+AC_ARG_ENABLE(everything,
+    [AC_HELP_STRING(
+        [--enable-everything],
+        [enable/disable all Snoopy features with one argument. Mainly useful for testing Snoopy builds. Individual features can still be enabled/disabled. [default=depends]]
+    )],
+[
+    SNOOPY_CONFIGURE_ENABLE_EVERYTHING_SET([$enableval])],   # Specified on command line
+    SNOOPY_CONFIGURE_ENABLE_EVERYTHING_SET([unspecified])    # Not specified on command line
+)
+AS_IF([test "x$enable_everything" = "xyes"],
+    [AC_MSG_NOTICE([Snoopy all features enabled/disabled: yes - enabled])],
+    [
+        AS_IF([test "x$enable_everything" = "xno"],
+            [AC_MSG_NOTICE([Snoopy all features enabled/disabled: yes - disabled])],
+            [AC_MSG_NOTICE([Snoopy all features enabled/disabled: no - using defaults])]
+        )
+    ]
+)
+AC_MSG_NOTICE([-])
+
+
+
 dnl ============================================================================
 dnl ======= ENABLE CONFIG FILE =================================================
 dnl ============================================================================
@@ -229,26 +254,13 @@ AC_ARG_ENABLE(config-file,
         [--disable-config-file],
         [disable INI configuration file parsing. If enabled, then path is SYSCONFDIR/snoopy.ini [default=enabled] [default location=SYSCONFDIR/snoopy.ini]]
     )],
-    [
-        if test "x$enableval" = "xyes"; then
-            configfile_enabled=yes
-            configfile_path="$SYSCONFDIR/snoopy.ini"
-        elif test "x$enableval" = "xno"; then
-            configfile_enabled="no"
-            configfile_path=""
-        else
-            AC_MSG_ERROR([--disable-config-file does not take an argument. Use --sysconfdir to set config file path. Got: $enableval])
-        fi
-    ],
-    # Not specified on command line
-    [
-        configfile_enabled="yes"
-        configfile_path="$SYSCONFDIR/snoopy.ini"
-    ]
+    SNOOPY_CONFIGURE_ENABLE_GENERIC_SPECIFIED(  [config-file], [configfile_enabled], [$enableval], [Use --sysconfdir to set config file path.]),
+    SNOOPY_CONFIGURE_ENABLE_GENERIC_UNSPECIFIED([config-file], [configfile_enabled], [$enable_everything], [yes])
 )
 
 AC_MSG_NOTICE([Snoopy config file enabled: $configfile_enabled])
 AS_IF([test "x$configfile_enabled" == "xyes"], [
+    configfile_path="$SYSCONFDIR/snoopy.ini"
     AC_DEFINE_UNQUOTED(SNOOPY_CONF_CONFIGFILE_ENABLED, 1,                   [Is config file parsing enabled?])
     AC_DEFINE_UNQUOTED(SNOOPY_CONF_CONFIGFILE_PATH,    "$configfile_path",  [INI configuration file path to use])
     AC_MSG_NOTICE([Snoopy config file path: $configfile_path])
@@ -266,16 +278,8 @@ AC_ARG_ENABLE(error-logging,
         [--enable-error-logging],
         [enable error logging through configured output - use only if you are developing Snoopy or having problems configuring it [default=disabled]]
     )],
-    [
-        if test "x$enableval" = "xyes"; then
-            enable_error_logging=yes   # Specified as --enable-error-logging
-        elif test "x$enableval" = "xno"; then
-            enable_error_logging=no    # Specified as --disable-error-logging
-        else
-            AC_MSG_ERROR([--enable-error-logging does not take an argument: $enableval])
-        fi
-    ],
-    [enable_error_logging=no]          # Unspecified as ./configure argument
+    SNOOPY_CONFIGURE_ENABLE_GENERIC_SPECIFIED(  [error-logging], [enable_error_logging], [$enableval], []),
+    SNOOPY_CONFIGURE_ENABLE_GENERIC_UNSPECIFIED([error-logging], [enable_error_logging], [$enable_everything], [no])
 )
 
 AS_IF([test "x$enable_error_logging" = "xyes"], [
@@ -296,24 +300,16 @@ AC_MSG_NOTICE([-])
 
 
 
-dnl ============================================================================
-dnl ======= Enable/disable all data sources at once ============================
-dnl ============================================================================
+# ==============================================================================
+# ======= Enable/disable all data sources at once ==============================
+# ==============================================================================
 AC_ARG_ENABLE(all-datasources,
     [AC_HELP_STRING(
         [--disable-all-datasources],
         [disables all data sources at once. Use --enable-datasource-NAME to reenable individual data sources. [default=enabled]]
     )],
-    [
-        if test "x$enableval" = "xyes"; then
-            enable_all_datasources=yes
-        elif test "x$enableval" = "xno"; then
-            enable_all_datasources=no
-        else
-            AC_MSG_ERROR([--enable-all-datasources does not take an argument: $enableval])
-        fi
-    ],
-    [enable_all_datasources=yes]
+    SNOOPY_CONFIGURE_ENABLE_GENERIC_SPECIFIED(  [all-datasources], [enable_all_datasources], [$enableval], [Use --enable/--disable-datasource-NAME to reenable/disable individual data sources.]),
+    SNOOPY_CONFIGURE_ENABLE_GENERIC_UNSPECIFIED([all-datasources], [enable_all_datasources], [$enable_everything], [unspecified])
 )
 
 
@@ -422,23 +418,10 @@ AC_ARG_ENABLE(filtering,
         [--disable-filtering],
         [disable general message filtering [default=enabled]]
     )],
-    [
-        if test "x$enableval" = "xyes"; then
-            enable_filtering=yes
-        elif test "x$enableval" = "xno"; then
-            enable_filtering=no
-        else
-            AC_MSG_ERROR([--disable-filtering does not take an argument: $enableval])
-        fi
-    ],
-    [enable_filtering=yes]
+    SNOOPY_CONFIGURE_ENABLE_GENERIC_SPECIFIED(  [filtering], [enable_filtering], [$enableval], []),
+    SNOOPY_CONFIGURE_ENABLE_GENERIC_UNSPECIFIED([filtering], [enable_filtering], [$enable_everything], [yes])
 )
-
-AS_IF([test "x$enable_filtering" = "xyes"], [
-    AC_DEFINE(SNOOPY_CONF_FILTERING_ENABLED, 1, [Enable filtering])
-])
-AM_CONDITIONAL([FILTERING_ENABLED], [test "x$enable_filtering" == "xyes"])
-AC_MSG_NOTICE([Snoopy filtering subsystem enabled: $enable_filtering])
+SNOOPY_CONFIGURE_ENABLE_GENERIC_EVALUATE([$enable_filtering], [FILTERING_ENABLED], [filtering subsystem])
 
 
 
@@ -450,22 +433,8 @@ AC_ARG_ENABLE(all-filters,
         [--disable-all-filters],
         [disables all filters at once. This does not disable filtering in general. It only causes that none of filters is going to be built unless explicitly enabling it by specifying --enable-filter-NAME at ./confgure time. [default=enabled]]
     )],
-    [
-        if test "x$enableval" = "xyes"; then
-            enable_all_filters=yes
-        elif test "x$enableval" = "xno"; then
-            enable_all_filters=no
-        else
-            AC_MSG_ERROR([--enable-all-filters does not take an argument: $enableval])
-        fi
-    ],
-    [
-        if test "x$enable_filtering" = "xyes"; then
-            enable_all_filters=yes
-        else
-            enable_all_filters=no
-        fi
-    ]
+    SNOOPY_CONFIGURE_ENABLE_GENERIC_SPECIFIED(  [all-filters], [enable_all_filters], [$enableval], []),
+    SNOOPY_CONFIGURE_ENABLE_GENERIC_UNSPECIFIED([all-filters], [enable_all_filters], [$enable_filtering], [yes])
 )
 
 
@@ -538,18 +507,10 @@ AC_MSG_NOTICE([-])
 AC_ARG_ENABLE(all-outputs,
     [AC_HELP_STRING(
         [--disable-all-outputs],
-        [disables all outputs at once. Use --enable-output-NAME to reenable individual outputs. [default=enabled]]
+        [disables all outputs at once. Use --enable-output-NAME to reenable individual output. [default=enabled]]
     )],
-    [
-        if test "x$enableval" = "xyes"; then
-            enable_all_outputs=yes
-        elif test "x$enableval" = "xno"; then
-            enable_all_outputs=no
-        else
-            AC_MSG_ERROR([--enable-all-outputs does not take an argument: $enableval])
-        fi
-    ],
-    [enable_all_outputs=yes]
+    SNOOPY_CONFIGURE_ENABLE_GENERIC_SPECIFIED(  [all-outputs], [enable_all_outputs], [$enableval], [Use --enable/--disable-output-NAME to reenable/disable individual data sources.]),
+    SNOOPY_CONFIGURE_ENABLE_GENERIC_UNSPECIFIED([all-outputs], [enable_all_outputs], [$enable_everything], [unspecified])
 )
 
 
@@ -557,13 +518,13 @@ AC_ARG_ENABLE(all-outputs,
 # ==============================================================================
 # ======= START section: ENABLE INDIVIDUAL OUTPUTS =============================
 # ==============================================================================
-SNOOPY_CONFIGURE_OUTPUT_ENABLE(       [devlog],         [This is the default output of Snoopy.])
-SNOOPY_CONFIGURE_OUTPUT_ENABLE(       [devtty],         [Write to current console via /dev/tty.])
-SNOOPY_CONFIGURE_OUTPUT_ENABLE(       [file],           [Write directly to file.])
-SNOOPY_CONFIGURE_OUTPUT_ENABLE_FORCE( [socket],         [Output "socket" is mandatory!])
-SNOOPY_CONFIGURE_OUTPUT_ENABLE(       [stderr],         [Write to stderr])
-SNOOPY_CONFIGURE_OUTPUT_ENABLE(       [stdout],         [Write to stdout])
-SNOOPY_CONFIGURE_OUTPUT_DISABLE(      [syslog],         [WARNING: This output is causing system hangs with SystemD. Do not use it unless you are absolutely certain you know better!])
+SNOOPY_CONFIGURE_OUTPUT_ENABLE(  [devlog],         [This is the default output of Snoopy.])
+SNOOPY_CONFIGURE_OUTPUT_ENABLE(  [devtty],         [Write to current console via /dev/tty.])
+SNOOPY_CONFIGURE_OUTPUT_ENABLE(  [file],           [Write directly to file.])
+SNOOPY_CONFIGURE_OUTPUT_FORCE(   [socket],         [Output "socket" is mandatory!])
+SNOOPY_CONFIGURE_OUTPUT_ENABLE(  [stderr],         [Write to stderr])
+SNOOPY_CONFIGURE_OUTPUT_ENABLE(  [stdout],         [Write to stdout])
+SNOOPY_CONFIGURE_OUTPUT_DISABLE( [syslog],         [WARNING: This output is causing system hangs with SystemD. Do not use it unless you are absolutely certain you know better!])
 # ==============================================================================
 # ======= END section: ENABLE INDIVIDUAL OUTPUTS ===============================
 # ==============================================================================
@@ -618,7 +579,7 @@ AS_IF([test "x$default_output" != "x"], [
     AC_DEFINE_UNQUOTED(SNOOPY_CONF_OUTPUT_DEFAULT,     ["$default_output"],     [Default output provider])
     AC_DEFINE_UNQUOTED(SNOOPY_CONF_OUTPUT_DEFAULT_ARG, ["$default_output_arg"], [Default output arguments])
 ])
-AC_MSG_NOTICE([Snoopy default output: ${default_output:-(default, system dependent)}])
+AC_MSG_NOTICE([Snoopy default output:          ${default_output:-default (system dependent)}])
 AC_MSG_NOTICE([Snoopy default output argument: ${default_output_arg:-(none)}])
 
 

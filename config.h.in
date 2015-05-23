@@ -194,7 +194,7 @@
 /* Is datasource "sid" available? */
 #undef SNOOPY_CONF_DATASOURCE_ENABLED_sid
 
-/* Is datasource "snoopy_version" available? */
+/* Is datasource "snoopy_version" available? Forced "Yes". */
 #undef SNOOPY_CONF_DATASOURCE_ENABLED_snoopy_version
 
 /* Is datasource "timestamp" available? */
@@ -224,7 +224,7 @@
 /* Enable error logging */
 #undef SNOOPY_CONF_ERROR_LOGGING_ENABLED
 
-/* Enable filtering */
+/* filtering subsystem */
 #undef SNOOPY_CONF_FILTERING_ENABLED
 
 /* Filter chain to use */
