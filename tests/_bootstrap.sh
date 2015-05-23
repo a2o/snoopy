@@ -55,6 +55,17 @@ snoopy_testResult_fail()
 
 
 
+### Result function: SKIP
+#
+snoopy_testResult_skip()
+{
+    MSG="$1"
+    echo "SKIPPED: $MSG"
+    exit 77
+}
+
+
+
 ### Comparison function: PASS
 #
 snoopy_test_compareValues()

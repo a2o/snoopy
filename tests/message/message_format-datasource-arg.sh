@@ -10,6 +10,15 @@ set -u
 
 
 
+### Check if there is ENV datasource available
+#
+RES=`$SNOOPY_TEST_DATASOURCE --list | grep -E '^(snoopy_version|env)$' -c`
+if [ "$RES" -eq "1" ]; then
+    snoopy_testResult_skip "Required datasource 'env' is not available"
+fi
+
+
+
 ### Get data
 #
 VAR_NAME="SNOOPY_TEST_MESSAGE_FORMAT_`date +%s`"
