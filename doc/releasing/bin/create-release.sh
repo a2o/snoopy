@@ -55,7 +55,7 @@ fi
 ### Check if git remote with required name exists
 RES=`git remote | grep "^$PUBLIC_GIT_REMOTE_NAME\$" -c`
 if [ "$RES" -ne "1" ]; then
-    echo "ERROR: Required git remote not found: '$GIT_REMOTE_NAME'"
+    echo "ERROR: Required git remote not found: '$PUBLIC_GIT_REMOTE_NAME'"
     exit 2
 fi
 
