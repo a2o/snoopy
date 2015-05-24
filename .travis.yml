@@ -38,10 +38,11 @@ env:
     - MAKE_J: "16"
 
   matrix:
+    - SNOOPY_CONFIGURE_OPTS="--enable-everything"
     - SNOOPY_CONFIGURE_OPTS=""
     - SNOOPY_CONFIGURE_OPTS="--disable-config-file"
     - SNOOPY_CONFIGURE_OPTS="--disable-filtering"
-    - SNOOPY_CONFIGURE_OPTS="--disable-config-file --disable-filtering"
+    - SNOOPY_CONFIGURE_OPTS="--disable-everything"
 
 
 script:
