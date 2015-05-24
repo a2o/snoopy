@@ -3,7 +3,7 @@
 -------------------------------------------------------------------------------
 
 
-2015-05-xx - Version 2.3.x
+2015-05-24 - Version 2.3.1
 --------------------------
 o Bugfix (#68 @ GitHub): fixed build failure on SLES - mismatching prototype
     in error.c/.h (reported by GitHub user @tparkercbn).

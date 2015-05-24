@@ -9,7 +9,7 @@
 AC_PREREQ([2.63])
 AC_INIT(
     [Snoopy Logger],
-    [2.3.0],
+    [2.3.1],
     [https://github.com/a2o/snoopy/issues/],
     [snoopy],
     [https://github.com/a2o/snoopy/])
