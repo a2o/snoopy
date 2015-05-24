@@ -25,4 +25,4 @@
 /*
  * Error-handling functions
  */
-void snoopy_error_handler();
+void snoopy_error_handler(char *errorMsg);
