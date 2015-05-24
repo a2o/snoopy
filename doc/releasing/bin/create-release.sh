@@ -139,10 +139,12 @@ fi
 
 ### Remember current git branch
 GIT_BRANCH_CUR=`git rev-parse --abbrev-ref HEAD`
+echo "RELEASING: Currently on git branch '$GIT_BRANCH_CUR', will return to it at the end..."
 
 
 
 ### Checkout
+echo "RELEASING: Checking out git tag '$RELEASE_TAG'..."
 git checkout $RELEASE_TAG
 
 
@@ -179,11 +181,13 @@ make distcheck &&
 
 
 ### Checkout back master branch
+echo "RELEASING: Restoring original git branch '$GIT_BRANCH_CUR'..."
 git checkout $GIT_BRANCH_CUR &&
 
 
 
 ### Create package
+echo "RELEASING: Creating release tarball hashes..."
 md5sum  $FILENAME_RELEASE > $FILE_RELEASE_MD5  &&
 sha1sum $FILENAME_RELEASE > $FILE_RELEASE_SHA1 &&
 wc -c   $FILENAME_RELEASE > $FILE_RELEASE_SIZE &&
