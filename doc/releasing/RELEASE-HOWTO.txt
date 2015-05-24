@@ -10,16 +10,28 @@ Steps:
 1. Run these tools to ensure that code quality consistency:
 
     1a. Run autoscan and compare results:
+        - before runnint autoscan, do this:
+            -> ./bootstrap
+            -> ./configure --enable-everything
+            -> (reason: sometimes more things are detected as needed this way)
         - 'autoscan'
         - use 'git diff' to see if anything changed from previous run
         - add suggestions to configure.ac
         - compare configure.scan to configure.ac
         - update config.h.in
         - commit
+        - cleanup:
+            -> make maintainer-clean
 
-    1b. Create build and upload it to Coverity:
-        - ./doc/releasing/bin/submit-to-coverity.sh
-        - check coverity for errors, fix them
+    1b. Push latest changes to GitHub, wait for Travis to confirm that builds are
+        passing successfully.
+
+    1c. Create build and upload it to Coverity:
+        - two ways, either
+            -> merge to-be-released branch to coverity_scan branch, or
+            -> ./doc/releasing/bin/submit-to-coverity.sh
+        - wait for coverity scan to complete
+        - check for errors, fix them, rinse and repeat until no more errors are found
 
 
 2. Update documentation TOCs
