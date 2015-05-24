@@ -6,4 +6,7 @@ MAINTAINERCLEANFILES = Makefile.in
 
 ### Automake defaults
 #
-AM_CFLAGS = -Wall -Werror -std=c99 -pedantic
+# Note:
+# -I$(top_srcdir) is here for #include 'lib/iniparser/src/iniparser.h' to work
+#
+AM_CFLAGS = -Wall -Werror -std=c99 -pedantic -I$(top_srcdir)
