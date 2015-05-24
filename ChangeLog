@@ -3,7 +3,7 @@
 -------------------------------------------------------------------------------
 
 
-2015-05-XX - Version 2.3.X - FIXME
+2015-05-XX - Version 2.4.x - FIXME
 --------------------------
 o Change: configuration file (snoopy.ini) support is now enabled by default.
 o Change: filtering support is now enabled by default.
@@ -20,6 +20,12 @@ o Removal of deprecated feature: removed ./configure flag --enable-root-only.
     An error message will be emited by ./configure if this deprecated flag
     is encountered. General filtering should be used instead, like this:
         --enable-filtering --with-filter-chain="only_uid:0".
+
+
+2015-05-24 - Version 2.3.1
+--------------------------
+o Bugfix (#68 @ GitHub): fixed build failure on SLES - mismatching prototype
+    in error.c/.h (reported by GitHub user @tparkercbn).
 
 
 2015-05-11 - Version 2.3.0
