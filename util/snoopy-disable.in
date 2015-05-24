@@ -4,7 +4,8 @@
 
 # This is a script that disables system-wide snoopy installation.
 # You have to run this script as a privileged user.
-# This script is also run when you execute "make disable".
+# This script is also run when you execute "make disable" or
+# implicitly when running "make uninstall".
 
 
 
@@ -14,12 +15,24 @@ LIBDIR="@SNOOPY_LIBDIR@"
 
 
 
-### Check user that is running this script
+### If unprivileged user is running this script?
+#
+MY_UID=`id -a | grep -Eo 'uid=[0-9]+' | grep -Eo '[0-9]+'`
+if [ "$MY_UID" != "0" ]; then
+    echo
+    echo 'SNOOPY WARNING: NOT running as privileged user.'
+    echo
+    exit 0
+fi
+
+
+
+### Check if writeable /etc/ld.so.preload
 #
 touch /etc/ld.so.preload
 if [ ! -w /etc/ld.so.preload ]; then
     echo
-    echo 'SNOOPY ERROR: /etc/ld.so.preload not writable - are you running this script as a unprivileged user?'
+    echo 'SNOOPY ERROR: /etc/ld.so.preload not writable!'
     echo
     exit 1
 fi
