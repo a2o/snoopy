@@ -23,3 +23,10 @@ if FILTER_ENABLED_only_uid
     TESTS += $(SCRIPT_PREFIX)_only_uid-drop.sh
     TESTS += $(SCRIPT_PREFIX)_only_uid-drop-multi.sh
 endif
+
+
+
+### Include tests in distribution archive
+#
+EXTRA_DIST  = _bootstrap.sh
+EXTRA_DIST += $(TESTS)

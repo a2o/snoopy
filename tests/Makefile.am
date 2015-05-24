@@ -18,3 +18,9 @@ if FILTERING_ENABLED
 endif
 SUBDIRS     += message
 SUBDIRS     += output
+
+
+
+### Include tests in distribution archive
+#
+EXTRA_DIST  = _bootstrap.sh

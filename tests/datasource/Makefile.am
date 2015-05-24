@@ -122,3 +122,10 @@ endif
 if DATASOURCE_ENABLED_username
     TESTS += $(SCRIPT_PREFIX)_username.sh
 endif
+
+
+
+### Include tests in distribution archive
+#
+EXTRA_DIST  = _bootstrap.sh
+EXTRA_DIST += $(TESTS)

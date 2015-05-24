@@ -20,3 +20,10 @@ TESTS        += $(SCRIPT_PREFIX)-output-socket.sh
 TESTS        += $(SCRIPT_PREFIX)-syslog_facility.sh
 TESTS        += $(SCRIPT_PREFIX)-syslog_ident.sh
 TESTS        += $(SCRIPT_PREFIX)-syslog_level.sh
+
+
+
+### Include tests in distribution archive
+#
+EXTRA_DIST  = _bootstrap.sh
+EXTRA_DIST += $(TESTS)
