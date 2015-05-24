@@ -174,7 +174,7 @@ fi
 ./bootstrap.sh &&
 ./configure &&
 make clean &&
-make dist &&
+make distcheck &&
 
 
 
