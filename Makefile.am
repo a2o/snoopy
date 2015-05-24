@@ -56,12 +56,12 @@ tests:  check
 #
 enable: install
 	echo ; \
-	$(top_srcdir)/util/snoopy-enable ; \
+	$(top_builddir)/util/snoopy-enable ; \
 	echo ;
 
 disable:
 	echo ; \
-	$(top_srcdir)/util/snoopy-disable \
+	$(top_builddir)/util/snoopy-disable \
 	echo ;
 
 # Disable it if we are uninstalling it, to avoid error messages
