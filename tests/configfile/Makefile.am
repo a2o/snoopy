@@ -26,4 +26,5 @@ TESTS        += $(SCRIPT_PREFIX)-syslog_level.sh
 ### Include tests in distribution archive
 #
 EXTRA_DIST  = _bootstrap.sh
+EXTRA_DIST += configfile-generic.sh
 EXTRA_DIST += $(TESTS)
