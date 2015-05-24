@@ -7,29 +7,46 @@
 set -e
 set -u
 
+#echo ${BASH_SOURCE[1]}
+
+
+### Get variables about current test
+#
+SNOOPY_CUR_TEST_PATH=`readlink -e $0`
+SNOOPY_CUR_TEST_DIR=`dirname $SNOOPY_CUR_TEST_PATH`
+SNOOPY_CUR_TEST_FILENAME=`basename $SNOOPY_CUR_TEST_PATH`
+SNOOPY_CUR_TEST_NAME=`echo $SNOOPY_CUR_TEST_FILENAME | sed -e 's/\.sh$//'`
+SNOOPY_CUR_TEST_GROUP_PATH=`dirname $SNOOPY_CUR_TEST_PATH`
+SNOOPY_CUR_TEST_GROUP_NAME=`basename $SNOOPY_CUR_TEST_GROUP_PATH`
+
+
 
 
 ### Configure paths
 #
-# Get own location
-THIS_FILE="$BASH_SOURCE"
-THIS_FILE_PATH=`readlink -e $THIS_FILE`
+SNOOPY_TESTS_ROOTDIR=`dirname $SNOOPY_CUR_TEST_GROUP_PATH`
 #
-# Dirs
-export SNOOPY_TESTS_ROOTDIR=`dirname $THIS_FILE_PATH`
-export SNOOPY_TESTS_BINDIR="$SNOOPY_TESTS_ROOTDIR/bin"
+# Current working directory might not be the same,
+# if build is being done outside of source tree.
 #
-# Test suite helpers
-export SNOOPY_TEST_BIN_PREFIX="$SNOOPY_TESTS_BINDIR/snoopy-test"
-export SNOOPY_TEST_CONFIGFILE="${SNOOPY_TEST_BIN_PREFIX}-configfile"
-export SNOOPY_TEST_DATASOURCE="${SNOOPY_TEST_BIN_PREFIX}-datasource"
-export SNOOPY_TEST_FILTER="${SNOOPY_TEST_BIN_PREFIX}-filter"
-export SNOOPY_TEST_MESSAGE_FORMAT="${SNOOPY_TEST_BIN_PREFIX}-message-format"
-export SNOOPY_TEST_OUTPUT="${SNOOPY_TEST_BIN_PREFIX}-output"
+# Also now there is an assumption that all tests are placed in subdirs of
+# root tests/ directory.
 #
-# Currently executing test filename
-export SNOOPY_CUR_TEST_FILENAME=`basename $0`
-export SNOOPY_CUR_TEST_DIR=`dirname $0`
+# Do not use "readlink -e $THIS_FILE_PATH" - PWD differs when building outside of source dir
+#
+SNOOPY_CUR_TEST_WORKDIR=`pwd`
+SNOOPY_TESTS_BINDIR="$SNOOPY_CUR_TEST_WORKDIR/../bin"
+SNOOPY_TESTS_BIN_PREFIX="$SNOOPY_TESTS_BINDIR/snoopy-test"
+
+
+
+### Configure paths to test helpers
+#
+export SNOOPY_TEST_CONFIGFILE="${SNOOPY_TESTS_BIN_PREFIX}-configfile"
+export SNOOPY_TEST_DATASOURCE="${SNOOPY_TESTS_BIN_PREFIX}-datasource"
+export SNOOPY_TEST_FILTER="${SNOOPY_TESTS_BIN_PREFIX}-filter"
+export SNOOPY_TEST_MESSAGE_FORMAT="${SNOOPY_TESTS_BIN_PREFIX}-message-format"
+export SNOOPY_TEST_OUTPUT="${SNOOPY_TESTS_BIN_PREFIX}-output"
 
 
 
