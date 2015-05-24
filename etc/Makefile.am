@@ -38,4 +38,12 @@ install-exec-local:
 	        chmod 644 $(DESTDIR)$(sysconfdir)/snoopy.ini.NEW ; \
 	    fi ; \
 	fi ;
+
+uninstall-local:
+	if [ -f $(DESTDIR)$(sysconfdir)/snoopy.ini ]; then \
+	    echo ; \
+	    echo "Removing configuration file: $(DESTDIR)$(sysconfdir)/snoopy.ini" ; \
+	    echo ; \
+	    rm -f $(DESTDIR)$(sysconfdir)/snoopy.ini ; \
+	fi ;
 endif
