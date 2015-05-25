@@ -19,7 +19,12 @@ Stable:
     * [2. Output](#2-output)
     * [3. Configuration](#3-configuration)
     * [4. Support](#4-support)
-      * [4.1 Commercial support](#41-commercial-support)
+      * [4.1 Keep all communication public](#41-all-keep-communication-public)
+      * [4.2 Supported Snoopy versions](#42-supported-snoopy-versions)
+      * [4.3 Reporting bugs](#43-reporting-bugs)
+      * [4.4 Feature requests](#44-feature-requests)
+      * [4.5 Free support](#45-free-support)
+      * [4.6 Commercial support](#43-commercial-support)
     * [5. How does Snoopy actually work?](#5-how-does-snoopy-actually-work)
     * [6. Contributing to Snoopy development](#6-contributing-to-snoopy-development)
     * [7. License](#7-license)
@@ -105,30 +110,85 @@ For additional information consult comments in default configuration file
 
 ## 4. Support
 
+### 4.1 Keep all communication public
+
+Due to the fact that you need support, there is a good chance someone else will
+stumble upon the same issue soon. For this reason it is crucial that all
+communication is kept public. Search engines can then pick this content up,
+index it, and hopefully present it to the next soul with the same problem.
+
+GitHub is currently *the* meeting point for all Snoopy-related content.
+Therefore you should use GitHub issues for any kind of communication about
+Snoopy, with the sole exception of commercial support - that should be the only
+reason for contacting maintainer directly via email.
+
+### 4.2 Supported Snoopy versions
+
 **Only latest released version of Snoopy is "supported"!**
 Any version that is not the latest (stable or development) is not supported.
-Please do not submit any bugfix/feature/change requests related to old (unsupported) Snoopy versions.
+Please do not submit any bugfix/feature/change requests related to old and thus
+unsupported Snoopy versions.
+
+
+### 4.3 Reporting bugs
 
 **If you encounter an issue with Snoopy, proceed with the following steps:**
 
 1. make sure you are using the latest version of Snoopy!
   1. this DOES NOT mean the last version 'apt-get install snoopy' provides,
-  2. this means the latest version available at https://github.com/a2o/snoopy/!
+  2. this means the latest version available at https://github.com/a2o/snoopy/
 2. consult FAQ first: [doc/FAQ.md](doc/FAQ.md),
 3. search the internets (using Google for example),
 4. search the Snoopy issue tracker: https://github.com/a2o/snoopy/issues/,
-5. if the problem still persist, create a new issue, but you must:
+5. if the problem still persist, create a new issue on GitHub, but you must:
   1. make sure your issue is reproducible using the latest version of Snoopy,
   2. provide the following data:
     1. Snoopy version used and how did you install it?
     2. Linux distribution you are using?
     3. Which software is crashing because of Snoopy (whole system, one program)?
     4. Trace of your program that crashes.
-  3. if possible, provide a patch that fixes (or at least tries to fix) the issue.
+  3. if possible, provide a patch (by creating a pull request on GitHub) that
+        fixes (or at least tries to fix) the reported issue.
 
-### 4.1 Commercial support
 
-Commercial support for Snoopy is available. Contact current maintainer via email for details.
+### 4.4 Feature requests
+
+"I need Snoopy to do this and that!"
+
+Heard too many times. This is Open Source software. It is created, maintained
+and contributed to by people who donate their time and expertise to the project.
+Therefore donated time is primarily spent on topics of their interest,
+so naturally Snoopy is subjected to FOSS toilet paradox: designing a futuristic
+toilet is fun, but fixing it when it gets clogged is something no one is willing
+to do for free. You can read the extensive explanation of this analogy here:
+http://blog.enfranchisedmind.com/2009/07/fyi-my-open-source-users/
+
+If you need a specific feature that is currently not implemented, you have three
+options:
+
+1. Implement it yourself. Once done, you can:
+  1. contribute it back to Snoopy by creating a pull request - you are welcome to do so;
+  2. keep your code private, no one is stopping you (but make sure you comply with license restrictions).
+2. Ask someone (who has required expertise) to do it. Payment may be expected.
+3. Commercial support.
+
+**However**, if you think you have came up with a very nice feature, but you
+do not know how to implement it, yet you think other people might find use for
+it, do not hesitate and open an Issue on GitHub: https://github.com/a2o/snoopy/issues
+That way the idea will be kept around and maybe someone will pick it up and
+implement it.
+
+
+### 4.5 Free support
+
+Use GitHub Issues: https://github.com/a2o/snoopy/issues
+Do not send email to maintainers for free support.
+
+
+### 4.6 Commercial support
+
+Commercial support for Snoopy is available. Contact current maintainer via email
+for details.
 
 
 
