@@ -18,6 +18,16 @@ if FILTERING_ENABLED
 endif
 SUBDIRS     += message
 SUBDIRS     += output
+#
+# Functional tests at last
+#
+if CONFIGFILE_ENABLED
+if DATASOURCE_ENABLED_cmdline
+if OUTPUT_ENABLED_file
+SUBDIRS     += combined
+endif
+endif
+endif
 
 
 
