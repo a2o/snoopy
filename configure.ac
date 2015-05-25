@@ -24,6 +24,14 @@ m4_include([build/snoopy.m4])
 AM_INIT_AUTOMAKE([1.11 gnu silent-rules subdir-objects -Wall -Werror])
 
 
+### Silent make output
+#
+# Use it by default, but use version here that is backwards-compatible.
+# Must be used after AM_INIT_AUTOMAKE
+#AM_SILENT_RULES([yes])
+m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
+
+
 dnl Option AM_PROG_AR
 dnl
 dnl Required for building Snoopy from git on Ubuntu 14.04 (for development, and
