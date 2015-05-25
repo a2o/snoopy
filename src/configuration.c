@@ -133,7 +133,9 @@ void snoopy_configuration_dtor ()
      *
      * This might get changed by libsnoopy-test.so library.
      */
+#ifdef SNOOPY_CONFIGFILE_ENABLED
     snoopy_configuration.configfile_path = SNOOPY_CONFIGFILE_PATH;
+#endif
 
 
     /*
