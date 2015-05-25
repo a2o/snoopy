@@ -75,8 +75,7 @@ uninstall-local: disable
 
 # Clean release files
 clean-local:
-	chmod -R u+w snoopy-[0-9].[0-9].* ; \
-	rm -rf       snoopy-[0-9].[0-9].* ; \
+	rm -rf snoopy-[0-9].[0-9].* ; \
 	rm -f  snoopy-*.tar.gz* ; \
 	rm -f  snoopy-latest-*.txt ; \
 	rm -rf cov-int* ;
