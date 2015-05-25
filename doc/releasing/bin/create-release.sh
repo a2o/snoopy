@@ -63,11 +63,11 @@ fi
 
 ### Check for uncommited changes in the current repo
 #
-# Uncommited changes are allowed, but only in special locations
+# Uncommited changes are NOT allowed
 #
-RES=`git status -s | grep -v ' doc/releasing/' | grep -c .`
+RES=`git describe --always --dirty | grep -- '-dirty$' | grep -c .`
 if [ "$RES" -ne "0" ]; then
-    echo "ERROR: There are unallowed uncommited changes in git repository. Please commit/stash and try again."
+    echo "ERROR: There are uncommited changes in the repository. Commit/stash them and try again."
     echo
     git status -s
     echo
