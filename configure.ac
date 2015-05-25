@@ -9,7 +9,7 @@
 AC_PREREQ([2.63])
 AC_INIT(
     [Snoopy Logger],
-    [2.3.1],
+    m4_esyscmd_s(echo $(./build/get-git-version.sh)),
     [https://github.com/a2o/snoopy/issues/],
     [snoopy],
     [https://github.com/a2o/snoopy/])
