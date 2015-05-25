@@ -129,6 +129,14 @@ void snoopy_configuration_ctor ()
 void snoopy_configuration_dtor ()
 {
     /*
+     * Reset config setting: configfile_path
+     *
+     * This might get changed by libsnoopy-test.so library.
+     */
+    snoopy_configuration.configfile_path = SNOOPY_CONFIGFILE_PATH;
+
+
+    /*
      * Reset config setting: message_format
      */
     if (SNOOPY_TRUE == snoopy_configuration.message_format_malloced) {
@@ -215,4 +223,43 @@ void snoopy_configuration_dtor ()
         snoopy_configuration.syslog_ident_malloced = SNOOPY_FALSE;               /* Set this to false         - REQUIRED (see above) */
         snoopy_configuration.syslog_ident          = SNOOPY_CONF_SYSLOG_IDENT;   /* Set this to default value - REQUIRED (see above) */
     }
+}
+
+
+
+/*
+ * snoopy_configuration_set_configfile_path_from_env
+ *
+ * Description:
+ *     Parses environment for SNOOPY_INI and if found, checks if
+ *     file exists and is readable, and sets path to snoopy.ini
+ *     accordingly.
+ *
+ * Params:
+ *     (none)
+ *
+ * Return:
+ *     void
+ */
+void snoopy_configuration_set_configfile_path_from_env ()
+{
+    char *valuePtr;
+
+    valuePtr = getenv("SNOOPY_INI");
+
+    /* Does environmental variable exist? */
+    if (NULL == valuePtr) {
+        /* Nope. */
+        return;
+    }
+
+    /* Is file readable? */
+    if (0 != access(valuePtr, R_OK)) {
+        /* Nope. */
+        return;
+    }
+
+    /* Store it */
+    /* FIXME does this have to be copied to malloced local variable? */
+    snoopy_configuration.configfile_path = valuePtr;
 }
