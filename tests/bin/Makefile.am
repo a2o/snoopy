@@ -36,3 +36,22 @@ noinst_PROGRAMS                    += snoopy-test-message-format
 snoopy_test_message_format_SOURCES  = snoopy-test-message-format.c
 noinst_PROGRAMS                    += snoopy-test-output
 snoopy_test_output_SOURCES          = snoopy-test-output.c
+
+
+
+### Create test library, whole
+#
+# Exclude -pedantic from CFLAGS because casing object pointer received from
+# dlsym to function pointer is not allowed by ISO C.
+#
+# This library reads path to snoopy.ini from SNOOPY_INI environmental variable.
+#
+noinst_LTLIBRARIES        = libsnoopy-test.la
+libsnoopy_test_la_SOURCES = libsnoopy-test.c
+libsnoopy_test_la_CFLAGS  = `echo $(AM_CFLAGS) | sed -e 's/-pedantic//'`
+libsnoopy_test_la_LIBADD  = $(top_builddir)/src/libsnoopy_no_execve.la
+#
+# This needs to be added as automake does not create shared library for
+# things in noinst_LTLIBRARIES.
+#
+libsnoopy_test_la_LDFLAGS = -module -rpath /nowhere
