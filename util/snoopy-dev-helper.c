@@ -23,14 +23,6 @@
 
 
 /*
- * Include all required C resources
- */
-#include <stdio.h>
-#include <stdlib.h>
-
-
-
-/*
  * Include all snoopy-related resources
  */
 #include "snoopy.h"
@@ -38,6 +30,16 @@
 #include "inputdatastorage.h"
 #include "message.h"
 #include "misc.h"
+#include "parser.h"
+
+
+
+/*
+ * Include all required C resources
+ */
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 
 
@@ -61,6 +63,22 @@ int main (int argc, char **argv)
     snoopy_message_generateFromFormat(logMessage, SNOOPY_MESSAGE_FORMAT);
     printf("Produced output:\n%s\n\n", logMessage);
 
+
+    char *argListRaw;
+    argListRaw = strdup(argv[1]);
+    int charCount;
+    charCount = snoopy_string_countChars(argListRaw, ',');
+    printf("CC: %d\n", charCount);
+
+    int argCount;
+    char **argListParsed = NULL;
+    argCount = snoopy_parser_argList_csv(argListRaw, &argListParsed);
+    printf("AC: %d\n", argCount);
+    printf("ARG1: '%s'\n", argListParsed[0]);
+    printf("ARG2: '%s'\n", argListParsed[1]);
+    printf("ARG3: '%s'\n", argListParsed[2]);
+    free(argListRaw);
+    free(argListParsed);
 
     /* Housekeeping */
     free(logMessage);
