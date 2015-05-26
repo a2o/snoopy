@@ -81,8 +81,8 @@ int snoopy_filter_exclude_spawns_of(char *msg, char *arg)
     // Turn comma-separated arg into array of program name strings
     losp = string_to_token_array(arg);
     if (losp == NULL) {
-	// If failure, we cannot filter anything, just pass the message
-	return SNOOPY_FILTER_PASS;
+        // If failure, we cannot filter anything, just pass the message
+        return SNOOPY_FILTER_PASS;
     }
 
     // Check if one of the program names in losp is an ancestor
@@ -126,44 +126,44 @@ int find_ancestor_in_list(char **name_list)
     char st_state;
 
     if (name_list == NULL) {
-	return -1;
+        return -1;
     }
     ppid = getppid(); // We start with the parent
     while (ppid != 1) {
-	// Create the path to /proc/<ppid>/stat
-	sprintf(stat_path, "/proc/%d/stat", ppid);
-	statf = fopen(stat_path, "r");
-	if (statf == NULL) {
-	    return -1;
-	}
+        // Create the path to /proc/<ppid>/stat
+        sprintf(stat_path, "/proc/%d/stat", ppid);
+        statf = fopen(stat_path, "r");
+        if (statf == NULL) {
+            return -1;
+        }
 
-	// Grab the first few elements from the stat pseudo-file. Format from man 5 proc.
-	st_comm = st_commBuff;
-	rc = fscanf(statf, "%d %"ST_COMM_SCANF_PRECISION_S"s %c %d", &st_pid, st_comm, &st_state, &ppid);
-	if (rc == EOF) {
-	    fclose(statf);
-	    return -1;
-	}
+        // Grab the first few elements from the stat pseudo-file. Format from man 5 proc.
+        st_comm = st_commBuff;
+        rc = fscanf(statf, "%d %"ST_COMM_SCANF_PRECISION_S"s %c %d", &st_pid, st_comm, &st_state, &ppid);
+        if (rc == EOF) {
+            fclose(statf);
+            return -1;
+        }
         /*
          * Do not worry about %31s not being enough if command name in
          * /proc/PID/stat exceeds it. fscanf() returns OK, it just shortens
          * the resulting string to 31+\0.
          */
 
-	// Secure string ending, just in case (this should be done by fscanf())
-	st_comm[ST_COMM_LAST_CHAR_POS] = '\0';
+        // Secure string ending, just in case (this should be done by fscanf())
+        st_comm[ST_COMM_LAST_CHAR_POS] = '\0';
 
-	// stat provides st_comm as the name between parentheses. Get rid of the parens.
-	ancestor_name = st_comm + 1;
-	st_comm[strlen(st_comm) - 1] = '\0';
-	found = find_string_in_array(ancestor_name, name_list);
+        // stat provides st_comm as the name between parentheses. Get rid of the parens.
+        ancestor_name = st_comm + 1;
+        st_comm[strlen(st_comm) - 1] = '\0';
+        found = find_string_in_array(ancestor_name, name_list);
 
-	if (found) {
-	    fclose(statf);
-	    return 1;
-	}
+        if (found) {
+            fclose(statf);
+            return 1;
+        }
 
-	fclose(statf);
+        fclose(statf);
     }
 
     return 0; // Nothing found
@@ -182,14 +182,14 @@ int find_ancestor_in_list(char **name_list)
 int find_string_in_array(char *str, char **str_array)
 {
     if ((str == NULL) || (str_array == NULL)) {
-	return 0;
+        return 0;
     }
     char **p = str_array;
     while (*p != NULL) {
-	if (strcmp(str, *p) == 0) {
-	    return 1;
-	}
-	p++;
+        if (strcmp(str, *p) == 0) {
+            return 1;
+        }
+        p++;
     }
     return 0;
 }
@@ -217,29 +217,29 @@ char **string_to_token_array(char *str)
     char *saveptr = NULL; // For strtok_r()
 
     if ((str == NULL) || (*str == '\0')) {
-	return NULL;
+        return NULL;
     }
 
     // Count the occurences of PROGLISTSEP
     p = strchr(str, PROGLISTSEP);
     while (p != NULL) {
-	sepcount++;
-	p=strchr(p+1, PROGLISTSEP);
+        sepcount++;
+        p=strchr(p+1, PROGLISTSEP);
     }
 
     // Allocate storage for token_array: one more than the separator count, and one more for the NULL delimiter.
     token_count = sepcount +1;
     token_array = calloc(token_count + 1, sizeof(p));
     if (token_array == NULL) {
-	return NULL;
+        return NULL;
     }
 
     // Fill in token_array with ptrs to individual tokens
     char delim[] = { PROGLISTSEP, '\0'}; // Make a string of delimiters
     p = str;
     for (i = 0; i < token_count; i++) {
-	token_array[i] = strtok_r(p, delim, &saveptr);
-	p = NULL;
+        token_array[i] = strtok_r(p, delim, &saveptr);
+        p = NULL;
     }
     token_array[token_count] = NULL;
     return(token_array);
