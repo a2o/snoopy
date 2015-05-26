@@ -38,6 +38,8 @@ libsnoopy_no_execve_la_SOURCES = \
 	misc.h \
 	outputregistry.c \
 	outputregistry.h \
+	parser.c \
+	parser.h \
 	snoopy.h
 
 libsnoopy_no_execve_la_LIBADD = \

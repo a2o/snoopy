@@ -115,6 +115,36 @@ void snoopy_string_append (
 
 
 /*
+ * snoopy_string_countChars
+ *
+ * Description:
+ *     Counts number of occurences of specified character in a given string.
+ *
+ * Params:
+ *     stringToSearch:   string to look into
+ *     characterToCount: search for this character
+ *
+ * Return:
+ *     int   Number of occurences
+ */
+int  snoopy_string_countChars (const char *stringToSearch, char characterToCount)
+{
+    const char *strPtr = stringToSearch;
+    int charCount      = 0;
+
+    while ('\0' != *strPtr) {
+        if (*strPtr == characterToCount) {
+            charCount++;
+        }
+        strPtr++;
+    }
+
+    return charCount;
+}
+
+
+
+/*
  * snoopy_syslog_convert_facilityToInt
  *
  * Description:

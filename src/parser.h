@@ -1,9 +1,9 @@
 /*
  * SNOOPY LOGGER
  *
- * File: misc.h
+ * File: parser.h
  *
- * Copyright (c) 2014-2015 Bostjan Skufca <bostjan@a2o.si>
+ * Copyright (c) 2015 Bostjan Skufca <bostjan@a2o.si>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,25 +23,6 @@
 
 
 /*
- * Init/shutdown functions
+ * Parser functions
  */
-void snoopy_init    ();
-void snoopy_cleanup ();
-
-
-
-/*
- * String functions
- */
-void snoopy_string_append     (char *destString, char *appendThis, int destStringMaxLength);
-int  snoopy_string_countChars (const char *stringToSearch, char characterToCount);
-
-
-
-/*
- * Syslog functions
- */
-int         snoopy_syslog_convert_facilityToInt (char *facilityStr);
-const char* snoopy_syslog_convert_facilityToStr (int   facilityInt);
-int         snoopy_syslog_convert_levelToInt    (char *levelStr);
-const char* snoopy_syslog_convert_levelToStr    (int   levelInt);
+int snoopy_parser_argList_csv (char *argListRaw, char ***argListParsed);
