@@ -28,6 +28,7 @@
 #include "exclude_uid.h"
 
 #include "snoopy.h"
+#include "parser.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -53,36 +54,34 @@
 int snoopy_filter_exclude_uid (char *msg, char *arg)
 {
     uid_t  curUid;     // Actual UID of running process
-    int    j;
-    char  *str1;
-
-    // Do not assign null to it explicitly, as you get "Explicit null dereference" Coverity error.
-    // If you do not assign it, Coverity complains with "Uninitialized pointer read".
-    char  *saveptr1 = "";
+    char  *argDup    = NULL;
+    char **argParsed = NULL;
+    int    argCount  = 0;
 
 
     /* Get uid of current process */
     curUid = getuid();
 
-    /* Loop through all UIDs passed to the filter as argument */
-    for (j=1, str1=arg;  ; j++, str1=NULL) {
-        char  *argCurUidStr;   // Literal UID
-        uid_t  argCurUid;      // Actual UID to be used for comparison
+    /* Parse arguments - values are malloc()-ed */
+    argDup   = strdup(arg);
+    argCount = snoopy_parser_argList_csv(argDup, &argParsed);
 
-        // Get next literal UID
-        argCurUidStr = strtok_r(str1, ",", &saveptr1);
-        if (NULL == argCurUidStr) {
-            break;
-        }
+    /* Loop through all UIDs passed to the filter as argument */
+    for (int i=0 ; i<argCount ; i++) {
+        uid_t  argCurUid; // Actual UID to be used for comparison
 
         // Convert literal UID to numeric type
-        argCurUid = atol(argCurUidStr);
+        argCurUid = atol(argParsed[i]);
 
         // If UID matches, drop the message
         if (argCurUid == curUid) {
             return SNOOPY_FILTER_DROP;
         }
     }
+
+    /* Cleanup */
+    free(argDup);
+    free(argParsed);
 
     // None of the UIDs matched so far, therefore we are passing this message on
     return SNOOPY_FILTER_PASS;
