@@ -118,7 +118,9 @@ SNOOPY_PROG_CHECK([wc],       [WC],       [Needed for "make check" test suite.])
 
 dnl Checks for libraries.
 dnl FIXME: Replace `main' with a function in `-ldl':
-AC_CHECK_LIB([dl], [main])
+AC_CHECK_LIB([dl], [dlsym], [], [
+    AC_MSG_ERROR([A library is missing. Unable to continue.])
+])
 
 dnl Checks for header files.
 AC_CHECK_HEADERS([ \
@@ -140,6 +142,8 @@ AC_CHECK_HEADERS([ \
     sys/un.h \
     time.h \
     unistd.h \
+], [], [
+    AC_MSG_ERROR([A header file is missing. Unable to continue.])
 ])
 
 dnl Checks for typedefs, structures, and compiler characteristics.
@@ -162,6 +166,8 @@ AC_CHECK_FUNCS([ \
     strdup    \
     strstr    \
     strtol    \
+], [], [
+    AC_MSG_ERROR([A function is missing. Unable to continue.])
 ])
 
 dnl Substitute these variables when creating (Make)files below - GENERIC
@@ -274,7 +280,7 @@ AC_ARG_ENABLE(config-file,
     SNOOPY_CONFIGURE_ENABLE_GENERIC_UNSPECIFIED([config-file], [configfile_enabled], [$enable_everything], [yes])
 )
 
-AC_MSG_NOTICE([Snoopy config file enabled: $configfile_enabled])
+    AC_MSG_NOTICE([Snoopy config file enabled: $configfile_enabled])
 AS_IF([test "x$configfile_enabled" == "xyes"], [
     configfile_path="$SYSCONFDIR/snoopy.ini"
     AC_DEFINE_UNQUOTED(SNOOPY_CONF_CONFIGFILE_ENABLED, 1,                   [Is config file parsing enabled?])
@@ -783,7 +789,7 @@ AS_IF([test "x$enable_datasource_tid" = "xyes"], [
         AC_MSG_ERROR([A header file is missing. Unable to continue.])
     ])
     AC_CHECK_LIB([pthread], [pthread_self], [], [
-        AC_MSG_ERROR([Function pthread_self() in/or pthread library is missing, needed by "tid" datasource.])
+        AC_MSG_ERROR([A library is missing. Unable to continue. (Needed by "tid" datasource.)])
     ])
 ])
 
