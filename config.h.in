@@ -200,6 +200,9 @@
 /* Is datasource "sid" available? */
 #undef SNOOPY_CONF_DATASOURCE_ENABLED_sid
 
+/* Is datasource "snoopy_literal" available? */
+#undef SNOOPY_CONF_DATASOURCE_ENABLED_snoopy_literal
+
 /* Is datasource "snoopy_version" available? Forced "Yes". */
 #undef SNOOPY_CONF_DATASOURCE_ENABLED_snoopy_version
 

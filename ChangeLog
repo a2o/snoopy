@@ -5,6 +5,8 @@
 
 2015-05-XX - Version 2.4.x - FIXME
 --------------------------
+o Feature: added new dummy data source: snoopy_literal. Returns its own
+    argument.
 o Feature: added new data source: tid (Thread ID).
 o Feature: added new data source: tid_kernel (Thread ID, as retured by Linux
     kernel).

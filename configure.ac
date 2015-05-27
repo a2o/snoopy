@@ -359,6 +359,7 @@ SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [pid],            [PID of process performing
 SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [ppid],           [parent PID of process performing the execution])
 SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [rpname],         [real parent name found up the process tree])
 SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [sid],            [session leader PID])
+SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [snoopy_literal], [dummy data source - only returns what it receives as argument])
 SNOOPY_CONFIGURE_DATASOURCE_FORCE(  [snoopy_version], [installed Snoopy version])
 SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [tid],            [Thread ID of process performing the execution])
 SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [tid_kernel],     [Thread ID of process performing the execution, as retured by kernel via syscall])
