@@ -3,6 +3,13 @@
 -------------------------------------------------------------------------------
 
 
+2015-05-xx - Version 2.3.x
+--------------------------
+o Bugfix (#73 @ GitHub): fixed installation problem on systems that do not set
+    executable flag for shared library files.
+    (reported by Evgenii Terechkov - evgkrsk @ GitHub)
+
+
 2015-05-24 - Version 2.3.1
 --------------------------
 o Bugfix (#68 @ GitHub): fixed build failure on SLES - mismatching prototype
