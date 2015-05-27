@@ -12,6 +12,7 @@ Table of Contents
 =================
 
   * [Contributing to Snoopy development](#contributing-to-snoopy-development)
+    * [OS for development](#os-for-development)
     * [Git branches](#git-branches)
     * [Data source development](#data-source-development)
     * [Filter development](#filter-development)
@@ -19,6 +20,21 @@ Table of Contents
     * [Useful helpers](#useful-helpers)
     * [Creating feature documentation](#creating-feature-documentation)
     * [Creating pull requests for upstream merges](#creating-pull-requests-for-upstream-merges)
+
+
+
+## OS for development
+
+Development of Snoopy is (and should) be done on fairly recent OS releases.
+Ubuntu 14.04 would be a good choice ATM, or RedHat/CentOS 7.
+
+Required versions of software:
+- automake 1.11
+- autoconf 2.69
+
+With a few tweaks Snoopy can be built from git repository on older systems too.
+Just run ./bootstrap.sh and fix the issues that crop up. Patches/pull requests
+that "fix" build process on these obsolete OSes will be rejected.
 
 
 
