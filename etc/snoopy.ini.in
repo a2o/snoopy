@@ -34,6 +34,7 @@
 ; - %{sid}            ; (available=@enable_datasource_sid@) Process id of session group process leader
 ; - %{snoopy_version} ; (available=@enable_datasource_snoopy_version@) Snoopy version
 ; - %{tid}            ; (available=@enable_datasource_tid@) Thread ID of process that executed the command
+; - %{tid_kernel}     ; (available=@enable_datasource_tid_kernel@) Thread ID of process that executed the command, as returned by Linux kernel
 ; - %{timestamp}      ; (available=@enable_datasource_timestamp@) Current Unix timestamp
 ; - %{timestamp_ms}   ; (available=@enable_datasource_timestamp_ms@) Millisecond part of current Unix timestamp
 ; - %{timestamp_us}   ; (available=@enable_datasource_timestamp_us@) Microsecond part of current Unix timestamp

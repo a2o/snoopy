@@ -193,6 +193,14 @@ libsnoopy_datasources_all_la_SOURCES += \
 libsnoopy_datasources_all_la_LDFLAGS += -lpthread
 endif
 
+# Data source: tid_kernel
+#
+if DATASOURCE_ENABLED_tid_kernel
+libsnoopy_datasources_all_la_SOURCES += \
+	tid_kernel.c \
+	tid_kernel.h
+endif
+
 # Data source: timestamp
 #
 if DATASOURCE_ENABLED_timestamp

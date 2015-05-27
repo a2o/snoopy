@@ -94,6 +94,9 @@
 /* Define to 1 if you have the <sys/stat.h> header file. */
 #undef HAVE_SYS_STAT_H
 
+/* Define to 1 if you have the <sys/syscall.h> header file. */
+#undef HAVE_SYS_SYSCALL_H
+
 /* Define to 1 if you have the <sys/time.h> header file. */
 #undef HAVE_SYS_TIME_H
 
@@ -202,6 +205,9 @@
 
 /* Is datasource "tid" available? */
 #undef SNOOPY_CONF_DATASOURCE_ENABLED_tid
+
+/* Is datasource "tid_kernel" available? */
+#undef SNOOPY_CONF_DATASOURCE_ENABLED_tid_kernel
 
 /* Is datasource "timestamp" available? */
 #undef SNOOPY_CONF_DATASOURCE_ENABLED_timestamp

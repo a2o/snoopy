@@ -95,6 +95,10 @@ if DATASOURCE_ENABLED_tid
     TESTS += $(SCRIPT_PREFIX)_tid.sh
 endif
 
+if DATASOURCE_ENABLED_tid_kernel
+    TESTS += $(SCRIPT_PREFIX)_tid_kernel.sh
+endif
+
 if DATASOURCE_ENABLED_timestamp
     TESTS += $(SCRIPT_PREFIX)_timestamp.sh
 endif

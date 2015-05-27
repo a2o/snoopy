@@ -137,6 +137,7 @@ AC_CHECK_HEADERS([ \
     syslog.h \
     sys/socket.h \
     sys/stat.h \
+    sys/syscall.h \
     sys/time.h \
     sys/types.h \
     sys/un.h \
@@ -360,6 +361,7 @@ SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [rpname],         [real parent name found up
 SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [sid],            [session leader PID])
 SNOOPY_CONFIGURE_DATASOURCE_FORCE(  [snoopy_version], [installed Snoopy version])
 SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [tid],            [Thread ID of process performing the execution])
+SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [tid_kernel],     [Thread ID of process performing the execution, as retured by kernel via syscall])
 SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [timestamp],      [current Unix timestamp])
 SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [timestamp_ms],   [millisecond part of current Unix timestamp])
 SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [timestamp_us],   [microsecond part of current Unix timestamp])
