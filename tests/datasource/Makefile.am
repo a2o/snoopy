@@ -91,6 +91,10 @@ if DATASOURCE_ENABLED_snoopy_version
     TESTS += $(SCRIPT_PREFIX)_snoopy_version.sh
 endif
 
+if DATASOURCE_ENABLED_tid
+    TESTS += $(SCRIPT_PREFIX)_tid.sh
+endif
+
 if DATASOURCE_ENABLED_timestamp
     TESTS += $(SCRIPT_PREFIX)_timestamp.sh
 endif

@@ -96,6 +96,9 @@
 #ifdef SNOOPY_CONF_DATASOURCE_ENABLED_snoopy_version
 #include "datasource/snoopy_version.h"
 #endif
+#ifdef SNOOPY_CONF_DATASOURCE_ENABLED_tid
+#include "datasource/tid.h"
+#endif
 #ifdef SNOOPY_CONF_DATASOURCE_ENABLED_timestamp
 #include "datasource/timestamp.h"
 #endif
@@ -187,6 +190,9 @@ char *snoopy_datasourceregistry_names[] = {
 #ifdef SNOOPY_CONF_DATASOURCE_ENABLED_snoopy_version
     "snoopy_version",
 #endif
+#ifdef SNOOPY_CONF_DATASOURCE_ENABLED_tid
+    "tid",
+#endif
 #ifdef SNOOPY_CONF_DATASOURCE_ENABLED_timestamp
     "timestamp",
 #endif
@@ -274,6 +280,9 @@ int (*snoopy_datasourceregistry_ptrs []) (char *result, char *arg) = {
 #endif
 #ifdef SNOOPY_CONF_DATASOURCE_ENABLED_snoopy_version
     snoopy_datasource_snoopy_version,
+#endif
+#ifdef SNOOPY_CONF_DATASOURCE_ENABLED_tid
+    snoopy_datasource_tid,
 #endif
 #ifdef SNOOPY_CONF_DATASOURCE_ENABLED_timestamp
     snoopy_datasource_timestamp,

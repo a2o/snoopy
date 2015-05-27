@@ -5,6 +5,7 @@
 
 2015-05-XX - Version 2.4.x - FIXME
 --------------------------
+o Feature: added new data source: tid (Thread ID).
 o Change: configuration file (snoopy.ini) support is now enabled by default.
 o Change: filtering support is now enabled by default.
 o Feature: syslog ident string is now configurable, via ./configure line

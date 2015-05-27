@@ -17,6 +17,8 @@ AC_PROG_MAKE_SET
 AC_PROG_RANLIB
 
 # Checks for libraries.
+# FIXME: Replace `main' with a function in `-lpthread':
+AC_CHECK_LIB([pthread], [main])
 
 # Checks for header files.
 AC_CHECK_HEADERS([limits.h stdlib.h string.h sys/socket.h sys/time.h syslog.h unistd.h])

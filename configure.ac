@@ -353,6 +353,7 @@ SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [ppid],           [parent PID of process per
 SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [rpname],         [real parent name found up the process tree])
 SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [sid],            [session leader PID])
 SNOOPY_CONFIGURE_DATASOURCE_FORCE(  [snoopy_version], [installed Snoopy version])
+SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [tid],            [Thread ID of process performing the execution])
 SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [timestamp],      [current Unix timestamp])
 SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [timestamp_ms],   [millisecond part of current Unix timestamp])
 SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [timestamp_us],   [microsecond part of current Unix timestamp])
@@ -763,6 +764,35 @@ dnl ============================================================================
 dnl ======= END CONFIGURATION SUMMARY OUTPUT ===================================
 dnl ============================================================================
 AC_MSG_NOTICE([======================================================================])
+
+
+
+
+
+dnl ============================================================================
+dnl ============================================================================
+dnl ======= START: Check for config-dependent things ===========================
+dnl ============================================================================
+dnl ============================================================================
+
+
+### Datasource tid - check for pthread library
+#
+AS_IF([test "x$enable_datasource_tid" = "xyes"], [
+    AC_CHECK_HEADER([pthread.h], [], [
+        AC_MSG_ERROR([A header file is missing. Unable to continue.])
+    ])
+    AC_CHECK_LIB([pthread], [pthread_self], [], [
+        AC_MSG_ERROR([Function pthread_self() in/or pthread library is missing, needed by "tid" datasource.])
+    ])
+])
+
+
+dnl ============================================================================
+dnl ============================================================================
+dnl ======= END: Check for config-dependent things =============================
+dnl ============================================================================
+dnl ============================================================================
 
 
 

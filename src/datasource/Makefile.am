@@ -21,6 +21,7 @@ noinst_LTLIBRARIES = libsnoopy_datasources_all.la
 # Please maintain alphabetical order, equal to what `ls` would do.
 #
 libsnoopy_datasources_all_la_SOURCES =
+libsnoopy_datasources_all_la_LDFLAGS =
 
 # Data source: cmdline
 #
@@ -180,6 +181,16 @@ if DATASOURCE_ENABLED_snoopy_version
 libsnoopy_datasources_all_la_SOURCES += \
 	snoopy_version.c \
 	snoopy_version.h
+endif
+
+# Data source: tid
+#
+if DATASOURCE_ENABLED_tid
+libsnoopy_datasources_all_la_SOURCES += \
+	tid.c \
+	tid.h
+# This one seems to be added automatically recently.
+libsnoopy_datasources_all_la_LDFLAGS += -lpthread
 endif
 
 # Data source: timestamp
