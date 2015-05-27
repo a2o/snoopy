@@ -63,7 +63,11 @@ dnl
 dnl The removal was considered for Snoopy 2.3.0, but was ultimately rejected because
 dnl of arguments specified above.
 dnl
-AM_PROG_AR
+dnl Update:
+dnl A better solution was stumbled upon later on, which is now presented below:
+dnl - if macro is defined, use it, otherwise do not.
+dnl
+m4_ifdef([AM_PROG_AR], [AM_PROG_AR])
 
 dnl Enable libtool
 LT_INIT([disable-static])
