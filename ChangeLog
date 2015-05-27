@@ -3,7 +3,7 @@
 -------------------------------------------------------------------------------
 
 
-2015-05-xx - Version 2.3.x
+2015-05-28 - Version 2.3.2
 --------------------------
 o Bugfix (#73 @ GitHub): fixed installation problem on systems that do not set
     executable flag for shared library files.
