@@ -25,6 +25,13 @@ o Removal of deprecated feature: removed ./configure flag --enable-root-only.
         --enable-filtering --with-filter-chain="only_uid:0".
 
 
+2015-05-28 - Version 2.3.2
+--------------------------
+o Bugfix (#73 @ GitHub): fixed installation problem on systems that do not set
+    executable flag for shared library files.
+    (reported by Evgenii Terechkov - evgkrsk @ GitHub)
+
+
 2015-05-24 - Version 2.3.1
 --------------------------
 o Bugfix (#68 @ GitHub): fixed build failure on SLES - mismatching prototype
