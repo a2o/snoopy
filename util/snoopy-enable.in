@@ -18,7 +18,7 @@ LIBDIR="@SNOOPY_LIBDIR@"
 #
 if [ ! -r $LIBDIR/libsnoopy.so ]; then
     echo
-    echo "SNOOPY ERROR: $LIBDIR/libsnoopy.so is not installed or is not executable"
+    echo "SNOOPY ERROR: $LIBDIR/libsnoopy.so is not installed or is not readable"
     echo
     exit 1
 fi
