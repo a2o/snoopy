@@ -278,11 +278,8 @@
 /**
  * SNOOPY_SYSLOG_*
  *
- * Syslog configuration settings
- *
- * If error logging is enabled, then all errors that occur when using Snoopy
- * will be sent to syslog. This is to aid developers and integrators with
- * their endeavours.
+ * Default syslog configuration settings
  */
 #define   SNOOPY_SYSLOG_FACILITY   SNOOPY_CONF_SYSLOG_FACILITY
+#define   SNOOPY_SYSLOG_IDENT      SNOOPY_CONF_SYSLOG_IDENT
 #define   SNOOPY_SYSLOG_LEVEL      SNOOPY_CONF_SYSLOG_LEVEL

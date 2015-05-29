@@ -80,10 +80,10 @@ snoopy_configuration_type   snoopy_configuration = {
     .output_arg              = SNOOPY_OUTPUT_DEFAULT_ARG,
     .output_arg_malloced     = SNOOPY_FALSE,
 
-    .syslog_facility         = SNOOPY_CONF_SYSLOG_FACILITY,
-    .syslog_ident            = SNOOPY_CONF_SYSLOG_IDENT,
+    .syslog_facility         = SNOOPY_SYSLOG_FACILITY,
+    .syslog_ident            = SNOOPY_SYSLOG_IDENT,
     .syslog_ident_malloced   = SNOOPY_FALSE,
-    .syslog_level            = SNOOPY_CONF_SYSLOG_LEVEL,
+    .syslog_level            = SNOOPY_SYSLOG_LEVEL,
 };
 
 
@@ -222,8 +222,8 @@ void snoopy_configuration_dtor ()
      */
     if (SNOOPY_TRUE == snoopy_configuration.syslog_ident_malloced) {
         free(snoopy_configuration.syslog_ident);
-        snoopy_configuration.syslog_ident_malloced = SNOOPY_FALSE;               /* Set this to false         - REQUIRED (see above) */
-        snoopy_configuration.syslog_ident          = SNOOPY_CONF_SYSLOG_IDENT;   /* Set this to default value - REQUIRED (see above) */
+        snoopy_configuration.syslog_ident_malloced = SNOOPY_FALSE;          /* Set this to false         - REQUIRED (see above) */
+        snoopy_configuration.syslog_ident          = SNOOPY_SYSLOG_IDENT;   /* Set this to default value - REQUIRED (see above) */
     }
 }
 
