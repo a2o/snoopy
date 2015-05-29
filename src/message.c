@@ -30,7 +30,6 @@
 #include "snoopy.h"
 #include "configuration.h"
 #include "error.h"
-#include "inputdatastorage.h"
 #include "datasourceregistry.h"
 #include "misc.h"
 
