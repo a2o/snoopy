@@ -19,10 +19,9 @@ if DATASOURCE_ENABLED_cwd
 endif
 
 if DATASOURCE_ENABLED_datetime
-TESTS += $(SCRIPT_PREFIX)_datetime.sh
+    TESTS += $(SCRIPT_PREFIX)_datetime.sh
 endif
 
-# This one is failing because there seems to be a bug in Snoopy datasource implementation
 if DATASOURCE_ENABLED_domain
     TESTS += $(SCRIPT_PREFIX)_domain.sh
 endif
@@ -32,7 +31,7 @@ if DATASOURCE_ENABLED_egid
 endif
 
 if DATASOURCE_ENABLED_egroup
-TESTS += $(SCRIPT_PREFIX)_egroup.sh
+    TESTS += $(SCRIPT_PREFIX)_egroup.sh
 endif
 
 if DATASOURCE_ENABLED_env_all
