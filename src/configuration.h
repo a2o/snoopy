@@ -23,7 +23,7 @@
 
 
 /*
- * Array holding snoopy configuration data in one place
+ * Array holding Snoopy configuration data in one place
  */
 typedef struct {
     int   initialized;
