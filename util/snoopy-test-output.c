@@ -49,7 +49,7 @@ int main (int argc, char **argv)
 {
     char *logMessage       = NULL;
 
-    /* Initialize snoopy */
+    /* Initialize Snoopy */
     snoopy_init();
 
     /* Initialize empty log message */
@@ -95,8 +95,8 @@ int main (int argc, char **argv)
 #endif
         snoopy_log_dispatch(logMessage, SNOOPY_LOG_MESSAGE);
         printf("Message sent to output '%s(%s)'.\n", snoopy_configuration.output, snoopy_configuration.output_arg);
-        printf("If snoopy is already enabled on your system, you should see two identical messages.\n");
-        printf("If you are testing snoopy via LD_PRELOAD environmental variable, you will see another identical message.\n");
+        printf("If Snoopy is already enabled on your system, you should see two identical messages.\n");
+        printf("If you are testing Snoopy via LD_PRELOAD environmental variable, you will see another identical message.\n");
 #if defined(SNOOPY_FILTERING_ENABLED)
     } else {
             printf("Message NOT sent to syslog. One of the filters dropped it.\n");

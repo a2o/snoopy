@@ -2,7 +2,7 @@
 
 
 
-# This is a script that enables snoopy system-wide.
+# This is a script that enables Snoopy system-wide.
 # You have to run this script as a privileged user.
 # This script is also run when you execute "make enable".
 
@@ -14,7 +14,7 @@ LIBDIR="@SNOOPY_LIBDIR@"
 
 
 
-### Check snoopy installation
+### Check Snoopy installation
 #
 if [ ! -r $LIBDIR/libsnoopy.so ]; then
     echo
@@ -52,6 +52,6 @@ elif [ "$COUNT" -eq "1" ]; then
 fi
 echo "SNOOPY: Adding to /etc/ld.so.preload:     $LIBDIR/libsnoopy.so"
 echo "$LIBDIR/libsnoopy.so" >> /etc/ld.so.preload
-echo "SNOOPY: Hint #1: Reboot your machine to load snoopy system-wide."
+echo "SNOOPY: Hint #1: Reboot your machine to load Snoopy system-wide."
 echo "SNOOPY: Hint #2: Check your log files for output."
 echo "SNOOPY: Enabled."

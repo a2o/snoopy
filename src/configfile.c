@@ -50,7 +50,7 @@
  * snoopy_configfile_load_file
  *
  * Description:
- *     Parses INI configuration file and overrides snoopy
+ *     Parses INI configuration file and overrides Snoopy
  *     configuration with changed values.
  *
  * Params:
@@ -67,19 +67,19 @@ int snoopy_configfile_load (
     int         confValInt;      // Temporary query result space
 
 
-    /* Tell snoopy we are using configuration file */
+    /* Tell Snoopy we are using configuration file */
     snoopy_configuration.configfile_path = iniFilePath;
 
     /* Parse the INI configuration file first */
     ini = iniparser_load(iniFilePath);
     if (NULL == ini) {
-        // TODO snoopy error handling
+        // TODO Snoopy error handling
         return -1;
     }
     snoopy_configuration.configfile_found = SNOOPY_TRUE;
 
 
-    /* Pick out snoopy configuration variables */
+    /* Pick out Snoopy configuration variables */
     confValInt = iniparser_getboolean(ini, "snoopy:error_logging", -1);
     if (-1 != confValInt) {
         snoopy_configuration.error_logging_enabled = confValInt;

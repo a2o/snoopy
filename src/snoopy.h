@@ -131,7 +131,7 @@
 /**
  * SNOOPY_LOG_MESSAGE_FORMAT_default
  *
- * Default format of snoopy log message
+ * Default format of Snoopy log message
  */
 #define   SNOOPY_VERSION   PACKAGE_VERSION
 
@@ -221,7 +221,7 @@
 /**
  * SNOOPY_OUTPUT
  *
- * Where is the outlet of snoopy messages
+ * Where is the outlet of Snoopy messages
  *
  * By default, messages get sent to syslog. Groundwork for other outputs
  * is provided to facilitate unforseen uses.
@@ -265,7 +265,7 @@
  *
  * Whether errors are logged or not?
  *
- * If error logging is enabled, then all errors that occur when using snoopy
+ * If error logging is enabled, then all errors that occur when using Snoopy
  * will be sent to syslog. This is to aid developers and integrators with
  * their endeavours.
  */
@@ -280,7 +280,7 @@
  *
  * Syslog configuration settings
  *
- * If error logging is enabled, then all errors that occur when using snoopy
+ * If error logging is enabled, then all errors that occur when using Snoopy
  * will be sent to syslog. This is to aid developers and integrators with
  * their endeavours.
  */

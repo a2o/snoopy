@@ -42,7 +42,7 @@
 
 
 /*
- * Storage of snoopy configuration, with default values
+ * Storage of Snoopy configuration, with default values
  */
 snoopy_configuration_type   snoopy_configuration = {
     .initialized             = SNOOPY_TRUE,
@@ -148,8 +148,8 @@ void snoopy_configuration_dtor ()
          * Set this to false - REQUIRED
          *
          * This needs to be done as a special condition can occur at boot/shutdown:
-         * - snoopy is loaded when snoopy.ini is visible (mounted, present)
-         * - snoopy parses it, and sets message_format and ..._malloced to TRUE
+         * - Snoopy is loaded when snoopy.ini is visible (mounted, present)
+         * - Snoopy parses it, and sets message_format and ..._malloced to TRUE
          * - on shutdown, snoopy.ini might disappear
          * - snoopy_configuration_ctor() tries to parse config file, and as it is
          *     not found, it does no alteration of snoopy_configuraton struct
@@ -163,7 +163,7 @@ void snoopy_configuration_dtor ()
          * Set this to default value - REQUIRED
          *
          * Otherwise on next Snoopy run there will be no message format defined,
-         * which would in best-case scenario cause no snoopy output, but in
+         * which would in best-case scenario cause no Snoopy output, but in
          * worst-case scenarion there would be a segfault and possible system
          * crash.
          */

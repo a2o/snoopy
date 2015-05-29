@@ -54,7 +54,7 @@ int  snoopy_get_datasource_name_length_max ();
 
 int main (int argc, char **argv)
 {
-    /* Initialize snoopy */
+    /* Initialize Snoopy */
     snoopy_init();
     snoopy_inputdatastorage_store_filename(argv[0]);
     snoopy_inputdatastorage_store_argv(argv);

@@ -47,7 +47,7 @@ int main (int argc, char **argv)
 {
     char *logMessage = NULL;
 
-    /* Initialize snoopy */
+    /* Initialize Snoopy */
     snoopy_init();
 
     /* Fake init */

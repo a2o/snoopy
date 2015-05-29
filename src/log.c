@@ -116,7 +116,7 @@ void snoopy_log_syscall_exec (
 ) {
     char *logMessage = NULL;
 
-    /* Initialize snoopy */
+    /* Initialize Snoopy */
     snoopy_init();
 
     // Store arguments passed to execv(e)()

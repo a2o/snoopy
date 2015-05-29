@@ -22,7 +22,7 @@ if DATASOURCE_ENABLED_datetime
 TESTS += $(SCRIPT_PREFIX)_datetime.sh
 endif
 
-# This one is failing because there seems to be a bug in snoopy datasource implementation
+# This one is failing because there seems to be a bug in Snoopy datasource implementation
 if DATASOURCE_ENABLED_domain
     TESTS += $(SCRIPT_PREFIX)_domain.sh
 endif

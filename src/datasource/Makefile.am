@@ -10,7 +10,7 @@ AM_CFLAGS += -I$(top_srcdir)/src
 
 
 
-### Create one library with all snoopy data sources collected in it
+### Create one library with all Snoopy data sources collected in it
 #
 noinst_LTLIBRARIES = libsnoopy_datasources_all.la
 

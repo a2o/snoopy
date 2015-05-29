@@ -43,7 +43,7 @@
  * snoopy_init
  *
  * Description:
- *     Handles snoopy initialization/startup specifics
+ *     Handles Snoopy initialization/startup specifics
  *
  * Params:
  *     (none)
@@ -63,7 +63,7 @@ void snoopy_init ()
  * snoopy_cleanup
  *
  * Description:
- *     Handles all snoopy deinitialization/shutdown specifics
+ *     Handles all Snoopy deinitialization/shutdown specifics
  *
  * Params:
  *     (none)

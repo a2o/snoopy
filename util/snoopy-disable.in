@@ -2,7 +2,7 @@
 
 
 
-# This is a script that disables system-wide snoopy installation.
+# This is a script that disables system-wide Snoopy installation.
 # You have to run this script as a privileged user.
 # This script is also run when you execute "make disable" or
 # implicitly when running "make uninstall".
@@ -52,7 +52,7 @@ elif [ "$COUNT" -eq "1" ]; then
     cat /etc/ld.so.preload | grep -E "/(lib)?snoopy.so"
     sed -i "/\/\(lib\)\?snoopy.so/d" /etc/ld.so.preload
     echo "SNOOPY: Disabled."
-    echo "SNOOPY: Hint: Your system needs to be restarted to finish snoopy cleanup."
+    echo "SNOOPY: Hint: Your system needs to be restarted to finish Snoopy cleanup."
 else
     echo "SNOOPY: Snoopy is NOT enabled on this system."
 fi

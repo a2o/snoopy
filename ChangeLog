@@ -79,7 +79,7 @@ o Bug #49 (GitHub): reset configuration values back to their corresponding
     next Snoopy invocations when config file is not found anymore.
 o Enhancement #48: do not include code for config file in the final library
     when config file is not enabled at all (via ./configure argument).
-o Feature #45: new filter that excludes snoopy log entries from certain
+o Feature #45: new filter that excludes Snoopy log entries from certain
     processes.
     (Code contributed by Frederic Mora)
 o Bug #44 / Enhancement #42: upgraded iniparser compotent to latest git

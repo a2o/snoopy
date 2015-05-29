@@ -10,7 +10,7 @@ AM_CFLAGS += -I$(top_srcdir)/src
 
 
 
-### Create one library with all snoopy filters collected in it
+### Create one library with all Snoopy filters collected in it
 #
 noinst_LTLIBRARIES = libsnoopy_filters_all.la
 

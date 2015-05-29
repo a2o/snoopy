@@ -60,7 +60,7 @@ run this command:
 
 ### 2. Installing Snoopy from distribution package repositories
 
-This is generally simple, if some maintainer already created snoopy package for you.
+This is generally simple, if some maintainer already packaged Snoopy for you.
 How to install distribution-provided packages is out of scope of this manual.
 
 Generally you would do something like this:
