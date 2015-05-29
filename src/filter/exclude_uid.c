@@ -57,6 +57,7 @@ int snoopy_filter_exclude_uid (char *msg, char *arg)
     char  *argDup    = NULL;
     char **argParsed = NULL;
     int    argCount  = 0;
+    int    retVal    = -1;
 
 
     /* Get uid of current process */
@@ -75,14 +76,19 @@ int snoopy_filter_exclude_uid (char *msg, char *arg)
 
         // If UID matches, drop the message
         if (argCurUid == curUid) {
-            return SNOOPY_FILTER_DROP;
+            retVal = SNOOPY_FILTER_DROP;
+            goto RETURN_AND_FREE_ALL;
         }
     }
+    retVal = SNOOPY_FILTER_PASS;
+    goto RETURN_AND_FREE_ALL;
 
+
+RETURN_AND_FREE_ALL:
     /* Cleanup */
     free(argDup);
     free(argParsed);
 
     // None of the UIDs matched so far, therefore we are passing this message on
-    return SNOOPY_FILTER_PASS;
+    return retVal;
 }
