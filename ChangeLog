@@ -5,26 +5,64 @@
 
 2015-05-XX - Version 2.4.x - FIXME
 --------------------------
+o Change: configuration file (snoopy.ini) support is now enabled by default.
+o Change: filtering support is now enabled by default.
+o Change: Removal of deprecated feature: removed ./configure flag
+    --enable-root-only.
+    An error message will be emited by ./configure if this deprecated flag
+    is encountered. General filtering should be used instead, like this:
+        --enable-filtering --with-filter-chain="only_uid:0".
+
 o Feature: added new dummy data source: snoopy_literal. Returns its own
     argument.
 o Feature: added new data source: tid (Thread ID).
 o Feature: added new data source: tid_kernel (Thread ID, as retured by Linux
     kernel).
-o Change: configuration file (snoopy.ini) support is now enabled by default.
-o Change: filtering support is now enabled by default.
 o Feature: syslog ident string is now configurable, via ./configure line
     or via snoopy.ini.
 o Feature: added two new data sources: hostname and domain.
 o Feature: added a new output: devtty - writes to /dev/tty directly.
 o Feature: added two new outputs: stderr and stdout.
-o Refactoring: optimize configuration process, output relevant settings for
-    review.
-o Refactoring: enabled -std=c99 and -pedantic build flags, to catch even more
+o Feature: added new data source: snoopy_literal (dummy)
+o Feature: Full test suite is now implemented. It contains unit tests
+    for every datasource, filter and all outputs that can actually be
+    tested (testing syslog output provider is a bit inconvenient, for example).
+    Additionally there are combined tests that check Snoopy functionality as
+    a whole, as much as this can be done.
+    Config file parsing is tested too.
+    This test suite is now used at the following occasions:
+    - when installing Snoopy via snoopy-install.sh script,
+    - when submitting contribution pull request on GitHub,
+    - when creating release package.
+
+o Bugfixes: see git history for details.
+
+o Internal feature: created generic argument parser. It should be used by all
+    subcomponents that require CSV argument parsing.
+
+o Build bugfix: actually halt if some required header file, function or library
+    is missing. Before this fix it only displayed "checking for X... no" error
+    message and the process went on (not for all resources, but for many).
+o Build refactoring: do not build development tools by default
+o Build refactoring: now supports --enable-everything configuration flag.
+o Build refactoring: optimize configuration process, output relevant settings
+    for review.
+o Build refactoring: optimized configure.ac to use way less code than before.
+    This was achieved by abstracting common stuff into special macros stored
+    in build/snoopy.m4.
+o Build refactoring: switched to non-verbose build output by default. Use
+    'make V=1' to revert to the old (verbose) behaviour.
+o Build refactoring: enabled -std=c99 and -pedantic build flags, to catch even more
     potential errors.
-o Removal of deprecated feature: removed ./configure flag --enable-root-only.
-    An error message will be emited by ./configure if this deprecated flag
-    is encountered. General filtering should be used instead, like this:
-        --enable-filtering --with-filter-chain="only_uid:0".
+o Release process: all release packages are now checked with CI
+    provided by Travis-CI.org.
+o Release process: all release packages are now checked with Coverity Scan.
+o Release process: all release packages are now checked with "make distcheck"
+    make target, to ensure proper builds.
+o Contribution process: all pull requests are automatically checked by
+    Travis-CI.
+release packages are now checked with CI
+    provided by Travis-CI.org.
 
 
 2015-05-28 - Version 2.3.2
