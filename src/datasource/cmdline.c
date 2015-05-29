@@ -64,13 +64,13 @@ int snoopy_datasource_cmdline (char *result, char *arg)
     int     n;
 
     /* Count number of arguments */
-    for (cmdLineArgCount=0 ; *(snoopy_inputdatastorage_argv+cmdLineArgCount) != '\0' ; cmdLineArgCount++);
+    for (cmdLineArgCount=0 ; *(snoopy_inputdatastorage.argv+cmdLineArgCount) != '\0' ; cmdLineArgCount++);
 
     /* Calculate memory requirement for cmdLine */
     cmdLineSizeSum = 0;
     for (i=0 ; i<cmdLineArgCount ; i++) {
         /* Argument length + space */
-        cmdLineSizeSum += strlen(snoopy_inputdatastorage_argv[i]) + 1;
+        cmdLineSizeSum += strlen(snoopy_inputdatastorage.argv[i]) + 1;
     }
     /* Last space will be converted to \0 */
     cmdLineSizeRet = min(SNOOPY_SYSCONF_ARG_MAX, cmdLineSizeSum);
@@ -84,7 +84,7 @@ int snoopy_datasource_cmdline (char *result, char *arg)
         if (n >= cmdLineSizeRet) {
             break;
         }
-        n += snprintf(cmdLine+n, cmdLineSizeRet-n, "%s", snoopy_inputdatastorage_argv[i]);
+        n += snprintf(cmdLine+n, cmdLineSizeRet-n, "%s", snoopy_inputdatastorage.argv[i]);
 
         if (n >= cmdLineSizeRet) {
             break;

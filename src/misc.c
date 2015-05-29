@@ -29,6 +29,7 @@
 
 #include "snoopy.h"
 #include "configuration.h"
+#include "inputdatastorage.h"
 #include "error.h"
 
 #include <stdio.h>
@@ -53,6 +54,7 @@
 void snoopy_init ()
 {
     snoopy_configuration_ctor();
+    snoopy_inputdatastorage_ctor();
 }
 
 
@@ -71,6 +73,7 @@ void snoopy_init ()
  */
 void snoopy_cleanup ()
 {
+    snoopy_inputdatastorage_dtor();
     snoopy_configuration_dtor();
 }
 

@@ -34,8 +34,11 @@ void snoopy_log_syscall_execve (
     char *const  argv[],
     char *const  envp[]
 );
-void snoopy_log_syscall (
-    const char  *syscallName
+void snoopy_log_syscall_exec (
+    const char  *syscallName,
+    const char  *filename,
+    char *const  argv[],
+    char *const  envp[]
 );
 
 

@@ -19,28 +19,34 @@
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-#include "snoopy.h"
 
 
 
 /*
  * Store execution data for inputs to consume
  */
-extern const char *snoopy_inputdatastorage_filename;
-extern char **snoopy_inputdatastorage_argv;
-extern char **snoopy_inputdatastorage_envp;
+typedef struct {
+    const char  *filename;
+    char       **argv;
+    char       **envp;
+} snoopy_inputdatastorage_type;
+extern   snoopy_inputdatastorage_type   snoopy_inputdatastorage;
+
 
 
 
 /*
- * Functions to use to do the actual storing
+ * Init functions
  */
-void snoopy_inputdatastorage_store_filename (
-    const char *filename
-);
-void snoopy_inputdatastorage_store_argv (
-    char * argv[]
-);
-void snoopy_inputdatastorage_store_envp (
-    char * envp[]
-);
+void snoopy_inputdatastorage_ctor  ();
+void snoopy_inputdatastorage_dtor  ();
+void snoopy_inputdatastorage_reset ();
+
+
+
+/*
+ * Functions that do the actual data storing
+ */
+void snoopy_inputdatastorage_store_filename (const char *filename);
+void snoopy_inputdatastorage_store_argv     (      char *argv[]  );
+void snoopy_inputdatastorage_store_envp     (      char *envp[]  );

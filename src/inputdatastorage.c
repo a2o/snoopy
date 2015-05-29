@@ -26,16 +26,89 @@
  * Includes order: from local to global
  */
 #include "inputdatastorage.h"
-#include "snoopy.h"
+
+
+
+/*
+ * Common definitions
+ */
+#define   EMPTY_FILENAME      ""
+#define   EMPTY_STRINGARRAY   (char *[]){'\0'}
 
 
 
 /*
  * Create these storage locations for inputs to consume
  */
-const char *snoopy_inputdatastorage_filename;
-char **snoopy_inputdatastorage_argv;
-char **snoopy_inputdatastorage_envp;
+snoopy_inputdatastorage_type   snoopy_inputdatastorage = {
+    .filename = EMPTY_FILENAME,
+    .argv     = EMPTY_STRINGARRAY,
+    .envp     = EMPTY_STRINGARRAY,
+};
+
+
+
+/*
+ * snoopy_inputdatastorage_ctor
+ *
+ * Description:
+ *     Populates snoopy_inputdatastorage struct with default empty
+ *     data, in order to prevent data leaks between execv(e) calls.
+ *
+ * Params:
+ *     (none)
+ *
+ * Return:
+ *     void
+ */
+void snoopy_inputdatastorage_ctor ()
+{
+    snoopy_inputdatastorage_reset();
+}
+
+
+
+/*
+ * snoopy_inputdatastorage_dtor
+ *
+ * Description:
+ *     Populates snoopy_inputdatastorage struct with default empty
+ *     data, in order to prevent data leaks between execv(e) calls.
+ *
+ *     NOTE: This is intentional behaviour. Reset in ctor and in
+ *           dtor too.
+ *
+ * Params:
+ *     (none)
+ *
+ * Return:
+ *     void
+ */
+void snoopy_inputdatastorage_dtor ()
+{
+    snoopy_inputdatastorage_reset();
+}
+
+
+
+/*
+ * snoopy_inputdatastorage_reset()
+ *
+ * Description:
+ *     Resets the input data storage to default values
+ *
+ * Params:
+ *     (none)
+ *
+ * Return:
+ *     void
+ */
+void snoopy_inputdatastorage_reset ()
+{
+    snoopy_inputdatastorage.filename = EMPTY_FILENAME;
+    snoopy_inputdatastorage.argv     = EMPTY_STRINGARRAY;
+    snoopy_inputdatastorage.envp     = EMPTY_STRINGARRAY;
+}
 
 
 
@@ -54,7 +127,7 @@ char **snoopy_inputdatastorage_envp;
 void snoopy_inputdatastorage_store_filename (
     const char *filename
 ) {
-    snoopy_inputdatastorage_filename = filename;
+    snoopy_inputdatastorage.filename = filename;
 }
 
 
@@ -74,7 +147,7 @@ void snoopy_inputdatastorage_store_filename (
 void snoopy_inputdatastorage_store_argv (
     char * argv[]
 ) {
-    snoopy_inputdatastorage_argv = argv;
+    snoopy_inputdatastorage.argv = argv;
 }
 
 
@@ -94,5 +167,5 @@ void snoopy_inputdatastorage_store_argv (
 void snoopy_inputdatastorage_store_envp (
     char * envp[]
 ) {
-    snoopy_inputdatastorage_envp = envp;
+    snoopy_inputdatastorage.envp = envp;
 }
