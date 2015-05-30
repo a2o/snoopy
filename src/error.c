@@ -55,8 +55,15 @@
  */
 void snoopy_error_handler (char *errorMsg)
 {
+    snoopy_configuration_t *CFG;
+
+
+    /* Get config pointer */
+    CFG = snoopy_configuration_get();
+
+
     /* Only send error to syslog if configured like that */
-    if (SNOOPY_TRUE == snoopy_configuration.error_logging_enabled) {
+    if (SNOOPY_TRUE == CFG->error_logging_enabled) {
         snoopy_log_dispatch(errorMsg, SNOOPY_LOG_ERROR);
     }
 }

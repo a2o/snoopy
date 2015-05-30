@@ -44,7 +44,7 @@
 /*
  * Storage of Snoopy configuration, with default values
  */
-snoopy_configuration_type   snoopy_configuration = {
+snoopy_configuration_t   snoopy_configuration_data = {
     .initialized             = SNOOPY_TRUE,
 
 #ifdef SNOOPY_CONFIGFILE_ENABLED
@@ -105,9 +105,16 @@ snoopy_configuration_type   snoopy_configuration = {
  */
 void snoopy_configuration_ctor ()
 {
+    snoopy_configuration_t *CFG;
+
+
+    /* Get config pointer */
+    CFG = snoopy_configuration_get();
+
+
     /* Parse INI file if enabled */
 #ifdef SNOOPY_CONFIGFILE_ENABLED
-    snoopy_configfile_load(snoopy_configuration.configfile_path);
+    snoopy_configfile_load(CFG->configfile_path);
 #endif
 }
 
@@ -128,21 +135,28 @@ void snoopy_configuration_ctor ()
  */
 void snoopy_configuration_dtor ()
 {
+    snoopy_configuration_t *CFG;
+
+
+    /* Get config pointer */
+    CFG = snoopy_configuration_get();
+
+
     /*
      * Reset config setting: configfile_path
      *
      * This might get changed by libsnoopy-test.so library.
      */
 #ifdef SNOOPY_CONFIGFILE_ENABLED
-    snoopy_configuration.configfile_path = SNOOPY_CONFIGFILE_PATH;
+    CFG->configfile_path = SNOOPY_CONFIGFILE_PATH;
 #endif
 
 
     /*
      * Reset config setting: message_format
      */
-    if (SNOOPY_TRUE == snoopy_configuration.message_format_malloced) {
-        free(snoopy_configuration.message_format);
+    if (SNOOPY_TRUE == CFG->message_format_malloced) {
+        free(CFG->message_format);
 
         /*
          * Set this to false - REQUIRED
@@ -153,11 +167,11 @@ void snoopy_configuration_dtor ()
          * - on shutdown, snoopy.ini might disappear
          * - snoopy_configuration_ctor() tries to parse config file, and as it is
          *     not found, it does no alteration of snoopy_configuraton struct
-         * - snoopy_configuration.message_format_malloced is left set to TRUE
+         * - CFG->message_format_malloced is left set to TRUE
          * - when snoopy_configuration_dtor() is called, it tries to free the
          *     const char[] that contains the compiled-in message format
          */
-        snoopy_configuration.message_format_malloced = SNOOPY_FALSE;
+        CFG->message_format_malloced = SNOOPY_FALSE;
 
         /*
          * Set this to default value - REQUIRED
@@ -167,24 +181,24 @@ void snoopy_configuration_dtor ()
          * worst-case scenarion there would be a segfault and possible system
          * crash.
          */
-        snoopy_configuration.message_format = SNOOPY_MESSAGE_FORMAT;
+        CFG->message_format = SNOOPY_MESSAGE_FORMAT;
     }
 
 
     /*
      * Reset config setting: filter_chain
      */
-    if (SNOOPY_TRUE == snoopy_configuration.filter_chain_malloced) {
-        free(snoopy_configuration.filter_chain);
+    if (SNOOPY_TRUE == CFG->filter_chain_malloced) {
+        free(CFG->filter_chain);
 
         /* Set this to false - REQUIRED (see above) */
-        snoopy_configuration.filter_chain_malloced = SNOOPY_FALSE;
+        CFG->filter_chain_malloced = SNOOPY_FALSE;
 
         /* Set this to default value - REQUIRED (see above) */
 #ifdef SNOOPY_FILTERING_ENABLED
-        snoopy_configuration.filter_chain = SNOOPY_FILTER_CHAIN;
+        CFG->filter_chain = SNOOPY_FILTER_CHAIN;
 #else
-        snoopy_configuration.filter_chain = "";
+        CFG->filter_chain = "";
 #endif
     }
 
@@ -192,38 +206,38 @@ void snoopy_configuration_dtor ()
     /*
      * Reset config setting: output
      */
-    if (SNOOPY_TRUE == snoopy_configuration.output_malloced) {
-        free(snoopy_configuration.output);
+    if (SNOOPY_TRUE == CFG->output_malloced) {
+        free(CFG->output);
 
         /* Set this to false - REQUIRED (see above) */
-        snoopy_configuration.output_malloced = SNOOPY_FALSE;
+        CFG->output_malloced = SNOOPY_FALSE;
 
         /* Set this to default value - REQUIRED (see above) */
-        snoopy_configuration.output = SNOOPY_OUTPUT_DEFAULT;
+        CFG->output = SNOOPY_OUTPUT_DEFAULT;
     }
 
 
     /*
      * Reset config setting: output_arg
      */
-    if (SNOOPY_TRUE == snoopy_configuration.output_arg_malloced) {
-        free(snoopy_configuration.output_arg);
+    if (SNOOPY_TRUE == CFG->output_arg_malloced) {
+        free(CFG->output_arg);
 
         /* Set this to false - REQUIRED (see above) */
-        snoopy_configuration.output_arg_malloced = SNOOPY_FALSE;
+        CFG->output_arg_malloced = SNOOPY_FALSE;
 
         /* Set this to default value - REQUIRED (see above) */
-        snoopy_configuration.output_arg = SNOOPY_OUTPUT_DEFAULT_ARG;
+        CFG->output_arg = SNOOPY_OUTPUT_DEFAULT_ARG;
     }
 
 
     /*
      * Reset config setting: syslog_ident
      */
-    if (SNOOPY_TRUE == snoopy_configuration.syslog_ident_malloced) {
-        free(snoopy_configuration.syslog_ident);
-        snoopy_configuration.syslog_ident_malloced = SNOOPY_FALSE;          /* Set this to false         - REQUIRED (see above) */
-        snoopy_configuration.syslog_ident          = SNOOPY_SYSLOG_IDENT;   /* Set this to default value - REQUIRED (see above) */
+    if (SNOOPY_TRUE == CFG->syslog_ident_malloced) {
+        free(CFG->syslog_ident);
+        CFG->syslog_ident_malloced = SNOOPY_FALSE;          /* Set this to false         - REQUIRED (see above) */
+        CFG->syslog_ident          = SNOOPY_SYSLOG_IDENT;   /* Set this to default value - REQUIRED (see above) */
     }
 }
 
@@ -245,7 +259,13 @@ void snoopy_configuration_dtor ()
  */
 void snoopy_configuration_set_configfile_path_from_env ()
 {
+    snoopy_configuration_t *CFG;
     char *valuePtr;
+
+
+    /* Get config pointer */
+    CFG = snoopy_configuration_get();
+
 
     valuePtr = getenv("SNOOPY_INI");
 
@@ -263,5 +283,24 @@ void snoopy_configuration_set_configfile_path_from_env ()
 
     /* Store it */
     /* FIXME does this have to be copied to malloced local variable? */
-    snoopy_configuration.configfile_path = valuePtr;
+    CFG->configfile_path = valuePtr;
+}
+
+
+
+/*
+ * snoopy_configuration_get()
+ *
+ * Description:
+ *     Retrieve pointer configuration struct.
+ *
+ * Params:
+ *     envp:   environment array pointer to store
+ *
+ * Return:
+ *     void
+ */
+snoopy_configuration_t* snoopy_configuration_get ()
+{
+    return &snoopy_configuration_data;
 }

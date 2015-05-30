@@ -51,11 +51,15 @@ int main (int argc, char **argv)
 {
     char *iniFilePath;
     char *showConfigVar;
+    snoopy_configuration_t *CFG;
 
 
     /* Initialize Snoopy */
     snoopy_inputdatastorage_store_filename(argv[0]);
     snoopy_inputdatastorage_store_argv(argv);
+
+    /* Get config pointer */
+    CFG = snoopy_configuration_get();
 
 
     /* Check if all arguments are present */
@@ -80,32 +84,32 @@ int main (int argc, char **argv)
 
 
     /* Initialize Snoopy, which parses configuration file too */
-    snoopy_configuration.configfile_path = iniFilePath;
+    CFG->configfile_path = iniFilePath;
     snoopy_configuration_ctor();
 
 
     /* Output appropriate value */
     if        (0 == strcmp(showConfigVar, "message_format")) {
-        printf("%s\n", snoopy_configuration.message_format);
+        printf("%s\n", CFG->message_format);
 
     } else if (0 == strcmp(showConfigVar, "filter_chain")) {
-        printf("%s\n", snoopy_configuration.filter_chain);
+        printf("%s\n", CFG->filter_chain);
 
     } else if (0 == strcmp(showConfigVar, "output")) {
-        printf("%s", snoopy_configuration.output);
-        if ('\0' != snoopy_configuration.output_arg[0]) {
-            printf(":%s", snoopy_configuration.output_arg);
+        printf("%s", CFG->output);
+        if ('\0' != CFG->output_arg[0]) {
+            printf(":%s", CFG->output_arg);
         }
         printf("\n");
 
     } else if (0 == strcmp(showConfigVar, "syslog_facility")) {
-        printf("%s\n", snoopy_syslog_convert_facilityToStr(snoopy_configuration.syslog_facility));
+        printf("%s\n", snoopy_syslog_convert_facilityToStr(CFG->syslog_facility));
 
     } else if (0 == strcmp(showConfigVar, "syslog_ident")) {
-        printf("%s\n", snoopy_configuration.syslog_ident);
+        printf("%s\n", CFG->syslog_ident);
 
     } else if (0 == strcmp(showConfigVar, "syslog_level")) {
-        printf("%s\n", snoopy_syslog_convert_levelToStr(snoopy_configuration.syslog_level));
+        printf("%s\n", snoopy_syslog_convert_levelToStr(CFG->syslog_level));
 
     } else {
         return fatalError("Unknown configuration variable given");

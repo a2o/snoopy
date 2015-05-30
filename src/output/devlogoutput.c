@@ -55,13 +55,19 @@ int snoopy_output_devlogoutput (char *logMessage, int errorOrMessage, char *arg)
 {
     char  *logMessageWithPrefix = NULL;
     int    retVal;
+    snoopy_configuration_t *CFG;
+
+
+    /* Get config pointer */
+    CFG = snoopy_configuration_get();
+
 
     /* Generate final message - add prefix which is otherwise added by syslog() syscall */
     logMessageWithPrefix    = malloc(SNOOPY_LOG_MESSAGE_MAX_SIZE + 100);   // +100 ought to be enough
     logMessageWithPrefix[0] = '\0';
     sprintf(logMessageWithPrefix, "<%d>%s[%d]: %s",
-        snoopy_configuration.syslog_facility | snoopy_configuration.syslog_level,
-        snoopy_configuration.syslog_ident,
+        CFG->syslog_facility | CFG->syslog_level,
+        CFG->syslog_ident,
         getpid(),
         logMessage
     );

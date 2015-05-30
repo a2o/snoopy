@@ -55,19 +55,26 @@
  */
 int snoopy_output_syslogoutput (char *logMessage, int errorOrMessage, char *arg)
 {
+    snoopy_configuration_t *CFG;
+
+
+    /* Get config pointer */
+    CFG = snoopy_configuration_get();
+
+
     /* Dispatch only if non-zero size */
     if (0 == strlen(logMessage)) {
         return SNOOPY_OUTPUT_GRACEFUL_DISCARD;
     }
 
     /* Prepare logging stuff */
-    openlog(snoopy_configuration.syslog_ident, LOG_PID, snoopy_configuration.syslog_facility);
+    openlog(CFG->syslog_ident, LOG_PID, CFG->syslog_facility);
 
     /* Log error or ordinary message */
     if (SNOOPY_LOG_ERROR == errorOrMessage) {
         syslog(LOG_ERR, "ERROR: %s", logMessage);
     } else {
-        syslog(snoopy_configuration.syslog_level, "%s", logMessage);
+        syslog(CFG->syslog_level, "%s", logMessage);
     }
 
     /* Close the syslog file descriptor */

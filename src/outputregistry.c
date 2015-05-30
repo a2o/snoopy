@@ -192,11 +192,17 @@ int snoopy_outputregistry_call (char *providerName, char *logMessage, int errorO
 int snoopy_outputregistry_dispatch (char *logMessage, int errorOrMessage)
 {
     int idx;
+    snoopy_configuration_t *CFG;
 
-    idx = snoopy_outputregistry_getIndex(snoopy_configuration.output);
+
+    /* Get config pointer */
+    CFG = snoopy_configuration_get();
+
+
+    idx = snoopy_outputregistry_getIndex(CFG->output);
     if (idx == -1) {
         return -1;
     }
 
-    return snoopy_outputregistry_ptrs[idx](logMessage, errorOrMessage, snoopy_configuration.output_arg);
+    return snoopy_outputregistry_ptrs[idx](logMessage, errorOrMessage, CFG->output_arg);
 }

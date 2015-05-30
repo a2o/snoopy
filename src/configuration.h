@@ -51,14 +51,20 @@ typedef struct {
     int   syslog_level;
     int   syslog_ident_malloced;
     char *syslog_ident;
-} snoopy_configuration_type;
-extern   snoopy_configuration_type   snoopy_configuration;
+} snoopy_configuration_t;
 
 
 
 /*
- * Functions to manage and utilise configuration
+ * Management functions
  */
 void  snoopy_configuration_ctor ();
 void  snoopy_configuration_dtor ();
 void  snoopy_configuration_set_configfile_path_from_env ();
+
+
+
+/*
+ * Retrieval functions
+ */
+snoopy_configuration_t*   snoopy_configuration_get ();

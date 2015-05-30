@@ -65,10 +65,15 @@ int snoopy_configfile_load (
     dictionary *ini ;
     char       *confValString;   // Temporary query result space
     int         confValInt;      // Temporary query result space
+    snoopy_configuration_t *CFG;
+
+
+    /* Get config pointer */
+    CFG = snoopy_configuration_get();
 
 
     /* Tell Snoopy we are using configuration file */
-    snoopy_configuration.configfile_path = iniFilePath;
+    CFG->configfile_path = iniFilePath;
 
     /* Parse the INI configuration file first */
     ini = iniparser_load(iniFilePath);
@@ -76,25 +81,25 @@ int snoopy_configfile_load (
         // TODO Snoopy error handling
         return -1;
     }
-    snoopy_configuration.configfile_found = SNOOPY_TRUE;
+    CFG->configfile_found = SNOOPY_TRUE;
 
 
     /* Pick out Snoopy configuration variables */
     confValInt = iniparser_getboolean(ini, "snoopy:error_logging", -1);
     if (-1 != confValInt) {
-        snoopy_configuration.error_logging_enabled = confValInt;
+        CFG->error_logging_enabled = confValInt;
     }
 
     confValString = iniparser_getstring(ini, "snoopy:message_format", NULL);
     if (NULL != confValString) {
-        snoopy_configuration.message_format          = strdup(confValString);
-        snoopy_configuration.message_format_malloced = SNOOPY_TRUE;
+        CFG->message_format          = strdup(confValString);
+        CFG->message_format_malloced = SNOOPY_TRUE;
     }
 
     confValString = iniparser_getstring(ini, "snoopy:filter_chain", NULL);
     if (NULL != confValString) {
-        snoopy_configuration.filter_chain          = strdup(confValString);
-        snoopy_configuration.filter_chain_malloced = SNOOPY_TRUE;
+        CFG->filter_chain          = strdup(confValString);
+        CFG->filter_chain_malloced = SNOOPY_TRUE;
     }
 
     confValString = iniparser_getstring(ini, "snoopy:output", NULL);
@@ -109,8 +114,8 @@ int snoopy_configfile_load (
 
     confValString = iniparser_getstring(ini, "snoopy:syslog_ident", NULL);
     if (NULL != confValString) {
-        snoopy_configuration.syslog_ident          = strdup(confValString);
-        snoopy_configuration.syslog_ident_malloced = SNOOPY_TRUE;
+        CFG->syslog_ident          = strdup(confValString);
+        CFG->syslog_ident_malloced = SNOOPY_TRUE;
     }
 
     confValString = iniparser_getstring(ini, "snoopy:syslog_level", NULL);
@@ -120,7 +125,7 @@ int snoopy_configfile_load (
 
 
     /* Housekeeping */
-    snoopy_configuration.configfile_parsed = SNOOPY_TRUE;   // We have sucessfully parsed configuration file
+    CFG->configfile_parsed = SNOOPY_TRUE;   // We have sucessfully parsed configuration file
     iniparser_freedict(ini);
     return 0;
 }
@@ -148,6 +153,12 @@ void snoopy_configfile_parse_output (
     char  *outputName;
     char  *outputArg;
     int    outputArgFound = SNOOPY_FALSE;
+    snoopy_configuration_t *CFG;
+
+
+    /* Get config pointer */
+    CFG = snoopy_configuration_get();
+
 
     // Do not assign null to it explicitly, as you get "Explicit null dereference" Coverity error.
     // If you do not assign it, Coverity complains with "Uninitialized pointer read".
@@ -159,8 +170,8 @@ void snoopy_configfile_parse_output (
     // Check if configured value contains argument(s)
     if (NULL == strchr(confVal, ':')) {
         outputName = confVal;
-        snoopy_configuration.output_arg          = "";
-        snoopy_configuration.output_arg_malloced = SNOOPY_FALSE;
+        CFG->output_arg          = "";
+        CFG->output_arg_malloced = SNOOPY_FALSE;
         outputArg  = "";
     } else {
         // Separate output name from its arguments
@@ -172,21 +183,21 @@ void snoopy_configfile_parse_output (
 
     // Determine output name
     if (SNOOPY_TRUE == snoopy_outputregistry_isRegistered(outputName)) {
-        snoopy_configuration.output          = strdup(outputName);
-        snoopy_configuration.output_malloced = SNOOPY_TRUE;
+        CFG->output          = strdup(outputName);
+        CFG->output_malloced = SNOOPY_TRUE;
 
         if (SNOOPY_TRUE == outputArgFound) {
             // THINK What if conf.output_arg was set in previous call to this function,
             // and is already malloced? We need to detect that and free previous
             // allocation.
-            snoopy_configuration.output_arg          = strdup(outputArg);
-            snoopy_configuration.output_arg_malloced = SNOOPY_TRUE;
+            CFG->output_arg          = strdup(outputArg);
+            CFG->output_arg_malloced = SNOOPY_TRUE;
         }
     } else {
-        snoopy_configuration.output              = SNOOPY_OUTPUT_DEFAULT;
-        snoopy_configuration.output_malloced     = SNOOPY_FALSE;
-        snoopy_configuration.output_arg          = SNOOPY_OUTPUT_DEFAULT_ARG;
-        snoopy_configuration.output_arg_malloced = SNOOPY_FALSE;
+        CFG->output              = SNOOPY_OUTPUT_DEFAULT;
+        CFG->output_malloced     = SNOOPY_FALSE;
+        CFG->output_arg          = SNOOPY_OUTPUT_DEFAULT_ARG;
+        CFG->output_arg_malloced = SNOOPY_FALSE;
     }
 
     // Housekeeping
@@ -214,6 +225,12 @@ void snoopy_configfile_parse_syslog_facility (
 ) {
     char *confValCleaned;
     int   facilityInt;
+    snoopy_configuration_t *CFG;
+
+
+    /* Get config pointer */
+    CFG = snoopy_configuration_get();
+
 
     // First cleanup the value
     confValCleaned = snoopy_configfile_syslog_value_cleanup(confVal);
@@ -221,9 +238,9 @@ void snoopy_configfile_parse_syslog_facility (
     // Evaluate and set configuration flag
     facilityInt = snoopy_syslog_convert_facilityToInt(confValCleaned);
     if (-1 == facilityInt) {
-        snoopy_configuration.syslog_facility = SNOOPY_SYSLOG_FACILITY;
+        CFG->syslog_facility = SNOOPY_SYSLOG_FACILITY;
     } else {
-        snoopy_configuration.syslog_facility = facilityInt;
+        CFG->syslog_facility = facilityInt;
     }
 }
 
@@ -248,6 +265,12 @@ void snoopy_configfile_parse_syslog_level (
 ) {
     char *confValCleaned;
     int   levelInt;
+    snoopy_configuration_t *CFG;
+
+
+    /* Get config pointer */
+    CFG = snoopy_configuration_get();
+
 
     // First cleanup the value
     confValCleaned = snoopy_configfile_syslog_value_cleanup(confVal);
@@ -255,9 +278,9 @@ void snoopy_configfile_parse_syslog_level (
     // Evaluate and set configuration flag
     levelInt = snoopy_syslog_convert_levelToInt(confValCleaned);
     if (-1 == levelInt) {
-        snoopy_configuration.syslog_level = SNOOPY_SYSLOG_LEVEL;
+        CFG->syslog_level = SNOOPY_SYSLOG_LEVEL;
     } else {
-        snoopy_configuration.syslog_level = levelInt;
+        CFG->syslog_level = levelInt;
     }
 }
 

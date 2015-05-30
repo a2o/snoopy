@@ -115,9 +115,14 @@ void snoopy_log_syscall_exec (
     char *const envp[]
 ) {
     char *logMessage = NULL;
+    snoopy_configuration_t *CFG;
+
 
     /* Initialize Snoopy */
     snoopy_init();
+
+    /* Get config pointer */
+    CFG = snoopy_configuration_get();
 
     // Store arguments passed to execv(e)()
     snoopy_inputdatastorage_store_filename(filename);
@@ -129,17 +134,17 @@ void snoopy_log_syscall_exec (
     logMessage[0] = '\0';
 
     /* Generate log message in specified format */
-    snoopy_message_generateFromFormat(logMessage, snoopy_configuration.message_format);
+    snoopy_message_generateFromFormat(logMessage, CFG->message_format);
 
 #if defined(SNOOPY_FILTERING_ENABLED)
     /* Should message be passed to syslog or not? */
     if (
-        (SNOOPY_FALSE == snoopy_configuration.filtering_enabled)
+        (SNOOPY_FALSE == CFG->filtering_enabled)
         ||
         (
-            (SNOOPY_TRUE == snoopy_configuration.filtering_enabled)
+            (SNOOPY_TRUE == CFG->filtering_enabled)
             &&
-            (SNOOPY_FILTER_PASS == snoopy_filtering_check_chain(logMessage, snoopy_configuration.filter_chain))
+            (SNOOPY_FILTER_PASS == snoopy_filtering_check_chain(logMessage, CFG->filter_chain))
         )
     ) {
 #endif

@@ -48,9 +48,15 @@
 int main (int argc, char **argv)
 {
     char *logMessage       = NULL;
+    snoopy_configuration_t *CFG;
+
 
     /* Initialize Snoopy */
     snoopy_init();
+
+    /* Get config pointer */
+    CFG = snoopy_configuration_get();
+
 
     /* Initialize empty log message */
     logMessage    = malloc(SNOOPY_LOG_MESSAGE_MAX_SIZE);
@@ -59,14 +65,14 @@ int main (int argc, char **argv)
     snoopy_inputdatastorage_store_filename(argv[0]);
     snoopy_inputdatastorage_store_argv(argv);
 
-    if (SNOOPY_TRUE == snoopy_configuration.configfile_enabled) {
-        printf("Configuration file is enabled: %s\n", snoopy_configuration.configfile_path);
-        if (SNOOPY_TRUE == snoopy_configuration.configfile_found) {
+    if (SNOOPY_TRUE == CFG->configfile_enabled) {
+        printf("Configuration file is enabled: %s\n", CFG->configfile_path);
+        if (SNOOPY_TRUE == CFG->configfile_found) {
             printf("Configuration file found.\n");
         } else {
             printf("WARNING: Configuration file does not exist!\n");
         }
-        if (SNOOPY_TRUE == snoopy_configuration.configfile_parsed) {
+        if (SNOOPY_TRUE == CFG->configfile_parsed) {
             printf("Configuration file was parsed sucessfully.\n");
         } else {
             printf("WARNING: Configuration file parsing FAILED!\n");
@@ -75,7 +81,7 @@ int main (int argc, char **argv)
         printf("INFO: Configuration file is NOT enabled.\n");
     }
 
-    snoopy_message_generateFromFormat(logMessage, snoopy_configuration.message_format);
+    snoopy_message_generateFromFormat(logMessage, CFG->message_format);
     printf("Message generated:\n");
     printf("\n");
     printf("%s\n", logMessage);
@@ -84,17 +90,17 @@ int main (int argc, char **argv)
 #if defined(SNOOPY_FILTERING_ENABLED)
     /* Should message be passed to syslog or not? */
     if (
-        (SNOOPY_FALSE == snoopy_configuration.filtering_enabled)
+        (SNOOPY_FALSE == CFG->filtering_enabled)
         ||
         (
-            (SNOOPY_TRUE == snoopy_configuration.filtering_enabled)
+            (SNOOPY_TRUE == CFG->filtering_enabled)
             &&
-            (SNOOPY_FILTER_PASS == snoopy_filtering_check_chain(logMessage, snoopy_configuration.filter_chain))
+            (SNOOPY_FILTER_PASS == snoopy_filtering_check_chain(logMessage, CFG->filter_chain))
         )
     ) {
 #endif
         snoopy_log_dispatch(logMessage, SNOOPY_LOG_MESSAGE);
-        printf("Message sent to output '%s(%s)'.\n", snoopy_configuration.output, snoopy_configuration.output_arg);
+        printf("Message sent to output '%s(%s)'.\n", CFG->output, CFG->output_arg);
         printf("If Snoopy is already enabled on your system, you should see two identical messages.\n");
         printf("If you are testing Snoopy via LD_PRELOAD environmental variable, you will see another identical message.\n");
 #if defined(SNOOPY_FILTERING_ENABLED)
