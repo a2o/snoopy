@@ -49,5 +49,10 @@
  */
 int snoopy_datasource_filename (char *result, char *arg)
 {
-    return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "%s", snoopy_inputdatastorage.filename);
+    snoopy_inputdatastorage_t   *snoopy_inputdatastorage;
+
+    /* Get argument data of execv/e() call */
+    snoopy_inputdatastorage = snoopy_inputdatastorage_get();
+
+    return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "%s", snoopy_inputdatastorage->filename);
 }

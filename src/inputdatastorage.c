@@ -38,9 +38,9 @@
 
 
 /*
- * Create these storage locations for inputs to consume
+ * Create input data storage space.
  */
-snoopy_inputdatastorage_type   snoopy_inputdatastorage = {
+snoopy_inputdatastorage_t   snoopy_inputdatastorage_data = {
     .filename = EMPTY_FILENAME,
     .argv     = EMPTY_STRINGARRAY,
     .envp     = EMPTY_STRINGARRAY,
@@ -105,9 +105,12 @@ void snoopy_inputdatastorage_dtor ()
  */
 void snoopy_inputdatastorage_reset ()
 {
-    snoopy_inputdatastorage.filename = EMPTY_FILENAME;
-    snoopy_inputdatastorage.argv     = EMPTY_STRINGARRAY;
-    snoopy_inputdatastorage.envp     = EMPTY_STRINGARRAY;
+    snoopy_inputdatastorage_t *IDS;
+
+    IDS           = snoopy_inputdatastorage_get();
+    IDS->filename = EMPTY_FILENAME;
+    IDS->argv     = EMPTY_STRINGARRAY;
+    IDS->envp     = EMPTY_STRINGARRAY;
 }
 
 
@@ -127,7 +130,10 @@ void snoopy_inputdatastorage_reset ()
 void snoopy_inputdatastorage_store_filename (
     const char *filename
 ) {
-    snoopy_inputdatastorage.filename = filename;
+    snoopy_inputdatastorage_t *IDS;
+
+    IDS           = snoopy_inputdatastorage_get();
+    IDS->filename = filename;
 }
 
 
@@ -145,9 +151,12 @@ void snoopy_inputdatastorage_store_filename (
  *     void
  */
 void snoopy_inputdatastorage_store_argv (
-    char * argv[]
+    char *argv[]
 ) {
-    snoopy_inputdatastorage.argv = argv;
+    snoopy_inputdatastorage_t *IDS;
+
+    IDS       = snoopy_inputdatastorage_get();
+    IDS->argv = argv;
 }
 
 
@@ -165,7 +174,29 @@ void snoopy_inputdatastorage_store_argv (
  *     void
  */
 void snoopy_inputdatastorage_store_envp (
-    char * envp[]
+    char *envp[]
 ) {
-    snoopy_inputdatastorage.envp = envp;
+    snoopy_inputdatastorage_t *IDS;
+
+    IDS       = snoopy_inputdatastorage_get();
+    IDS->envp = envp;
+}
+
+
+
+/*
+ * snoopy_inputdatastorage_get()
+ *
+ * Description:
+ *     Retrieve inpudatastorage struct pointer
+ *
+ * Params:
+ *     (none)
+ *
+ * Return:
+ *     snoopy_inputdatastorage_t*:   Pointer to inputdatastorage struct
+ */
+snoopy_inputdatastorage_t* snoopy_inputdatastorage_get ()
+{
+    return &snoopy_inputdatastorage_data;
 }

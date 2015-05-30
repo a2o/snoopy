@@ -29,9 +29,7 @@ typedef struct {
     const char  *filename;
     char       **argv;
     char       **envp;
-} snoopy_inputdatastorage_type;
-extern   snoopy_inputdatastorage_type   snoopy_inputdatastorage;
-
+} snoopy_inputdatastorage_t;
 
 
 
@@ -50,3 +48,10 @@ void snoopy_inputdatastorage_reset ();
 void snoopy_inputdatastorage_store_filename (const char *filename);
 void snoopy_inputdatastorage_store_argv     (      char *argv[]  );
 void snoopy_inputdatastorage_store_envp     (      char *envp[]  );
+
+
+
+/*
+ * Retrieval functions
+ */
+snoopy_inputdatastorage_t*   snoopy_inputdatastorage_get ();
