@@ -60,6 +60,7 @@ typedef struct {
  */
 void  snoopy_configuration_ctor ();
 void  snoopy_configuration_dtor ();
+void  snoopy_configuration_setDefaults (snoopy_configuration_t *CFG);
 void  snoopy_configuration_set_configfile_path_from_env ();
 
 

@@ -26,6 +26,7 @@
  * Store execution data for inputs to consume
  */
 typedef struct {
+    int          initialized;
     const char  *filename;
     char       **argv;
     char       **envp;
@@ -36,9 +37,9 @@ typedef struct {
 /*
  * Init functions
  */
-void snoopy_inputdatastorage_ctor  ();
-void snoopy_inputdatastorage_dtor  ();
-void snoopy_inputdatastorage_reset ();
+void snoopy_inputdatastorage_ctor        ();
+void snoopy_inputdatastorage_dtor        ();
+void snoopy_inputdatastorage_setDefaults ();
 
 
 

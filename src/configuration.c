@@ -45,45 +45,7 @@
  * Storage of Snoopy configuration, with default values
  */
 snoopy_configuration_t   snoopy_configuration_data = {
-    .initialized             = SNOOPY_TRUE,
-
-#ifdef SNOOPY_CONFIGFILE_ENABLED
-    .configfile_enabled     = SNOOPY_TRUE,
-    .configfile_path        = SNOOPY_CONFIGFILE_PATH,
-#else
-    .configfile_enabled     = SNOOPY_FALSE,
-    .configfile_path        = "",
-#endif
-    .configfile_found       = SNOOPY_FALSE,
-    .configfile_parsed      = SNOOPY_FALSE,
-
-#ifdef SNOOPY_ERROR_LOGGING_ENABLED
-    .error_logging_enabled   = SNOOPY_TRUE,
-#else
-    .error_logging_enabled   = SNOOPY_FALSE,
-#endif
-
-    .message_format          = SNOOPY_MESSAGE_FORMAT,
-    .message_format_malloced = SNOOPY_FALSE,
-
-#ifdef SNOOPY_FILTERING_ENABLED
-    .filtering_enabled       = SNOOPY_TRUE,
-    .filter_chain            = SNOOPY_FILTER_CHAIN,
-#else
-    .filtering_enabled       = SNOOPY_FALSE,
-    .filter_chain            = "",
-#endif
-    .filter_chain_malloced   = SNOOPY_FALSE,
-
-    .output                  = SNOOPY_OUTPUT_DEFAULT,
-    .output_malloced         = SNOOPY_FALSE,
-    .output_arg              = SNOOPY_OUTPUT_DEFAULT_ARG,
-    .output_arg_malloced     = SNOOPY_FALSE,
-
-    .syslog_facility         = SNOOPY_SYSLOG_FACILITY,
-    .syslog_ident            = SNOOPY_SYSLOG_IDENT,
-    .syslog_ident_malloced   = SNOOPY_FALSE,
-    .syslog_level            = SNOOPY_SYSLOG_LEVEL,
+    .initialized = SNOOPY_FALSE,
 };
 
 
@@ -105,11 +67,8 @@ snoopy_configuration_t   snoopy_configuration_data = {
  */
 void snoopy_configuration_ctor ()
 {
-    snoopy_configuration_t *CFG;
-
-
     /* Get config pointer */
-    CFG = snoopy_configuration_get();
+    snoopy_configuration_t *CFG = snoopy_configuration_get();
 
 
     /* Parse INI file if enabled */
@@ -244,6 +203,67 @@ void snoopy_configuration_dtor ()
 
 
 /*
+ * snoopy_configuration_setDefaults
+ *
+ * Description:
+ *     Sets the default values for all configuration variables.
+ *     Defaults are primarily defined by Snoopy, and possibly overridden by
+ *     ./configure flags.
+ *
+ * Params:
+ *     (none)
+ *
+ * Return:
+ *     void
+ */
+void snoopy_configuration_setDefaults
+(
+    snoopy_configuration_t *CFG
+) {
+    CFG->initialized             = SNOOPY_TRUE;
+
+#ifdef SNOOPY_CONFIGFILE_ENABLED
+    CFG->configfile_enabled      = SNOOPY_TRUE;
+    CFG->configfile_path         = SNOOPY_CONFIGFILE_PATH;
+#else
+    CFG->configfile_enabled      = SNOOPY_FALSE;
+    CFG->configfile_path         = "";
+#endif
+    CFG->configfile_found        = SNOOPY_FALSE;
+    CFG->configfile_parsed       = SNOOPY_FALSE;
+
+#ifdef SNOOPY_ERROR_LOGGING_ENABLED
+    CFG->error_logging_enabled   = SNOOPY_TRUE;
+#else
+    CFG->error_logging_enabled   = SNOOPY_FALSE;
+#endif
+
+    CFG->message_format          = SNOOPY_MESSAGE_FORMAT;
+    CFG->message_format_malloced = SNOOPY_FALSE;
+
+#ifdef SNOOPY_FILTERING_ENABLED
+    CFG->filtering_enabled       = SNOOPY_TRUE;
+    CFG->filter_chain            = SNOOPY_FILTER_CHAIN;
+#else
+    CFG->filtering_enabled       = SNOOPY_FALSE;
+    CFG->filter_chain            = "";
+#endif
+    CFG->filter_chain_malloced   = SNOOPY_FALSE;
+
+    CFG->output                  = SNOOPY_OUTPUT_DEFAULT;
+    CFG->output_malloced         = SNOOPY_FALSE;
+    CFG->output_arg              = SNOOPY_OUTPUT_DEFAULT_ARG;
+    CFG->output_arg_malloced     = SNOOPY_FALSE;
+
+    CFG->syslog_facility         = SNOOPY_SYSLOG_FACILITY;
+    CFG->syslog_ident            = SNOOPY_SYSLOG_IDENT;
+    CFG->syslog_ident_malloced   = SNOOPY_FALSE;
+    CFG->syslog_level            = SNOOPY_SYSLOG_LEVEL;
+}
+
+
+
+/*
  * snoopy_configuration_set_configfile_path_from_env
  *
  * Description:
@@ -302,5 +322,8 @@ void snoopy_configuration_set_configfile_path_from_env ()
  */
 snoopy_configuration_t* snoopy_configuration_get ()
 {
+    if (SNOOPY_TRUE != snoopy_configuration_data.initialized) {
+        snoopy_configuration_setDefaults(&snoopy_configuration_data);
+    }
     return &snoopy_configuration_data;
 }
