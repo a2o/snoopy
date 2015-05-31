@@ -90,10 +90,25 @@ maintainer-clean-local:
 
 
 
-### Bootstrap target
+### Maintainer targets
 #
-# Simplify maintainer life
+#
+# Bootstrap: simplify maintainer's life
 #
 .PHONY: bootstrap
 bootstrap: maintainer-clean
 	./bootstrap.sh
+#
+#
+# Valgrind: run valgrind
+#
+.PHONY: valgrind
+valgrind: all
+	valgrind \
+	--error-exitcode=1 \
+	--track-fds=yes \
+	--smc-check=all \
+	--leak-check=full \
+	--undef-value-errors=yes \
+	--track-origins=yes \
+	./util/snoopy-test-all-data-sources ;

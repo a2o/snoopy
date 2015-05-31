@@ -26,7 +26,13 @@ Steps:
     1b. Push latest changes to GitHub, wait for Travis to confirm that builds are
         passing successfully.
 
-    1c. Create build and upload it to Coverity:
+    1c. Check build with valgrind:
+        - ./configure --enable-everything
+        - make valgrind
+        - fix anny errors that valgrind reports
+        - commit
+
+    1d. Create build and upload it to Coverity:
         - two ways, either
             -> merge to-be-released branch to coverity_scan branch, or
             -> ./doc/releasing/bin/submit-to-coverity.sh
