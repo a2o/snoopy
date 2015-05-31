@@ -20,7 +20,9 @@ CONFIGURE_ARGS_MATRIX=(
     '--enable-everything --disable-config-file --disable-filtering'
     '--disable-everything'
     '--disable-everything --enable-config-file'
+    '--disable-everything --enable-config-file --enable-output-file'
     '--disable-everything --enable-filtering'
+    '--disable-everything --enable-filtering --enable-datasource-uid'
     '--disable-everything --enable-config-file --enable-filtering'
 )
 
