@@ -7,7 +7,7 @@
 Steps:
 
 
-1. Run these tools to ensure that code quality consistency:
+1. Run these tools to ensure code quality and consistency:
 
     1a. Run autoscan and compare results:
         - before runnint autoscan, do this:
@@ -38,6 +38,9 @@ Steps:
             -> ./doc/releasing/bin/submit-to-coverity.sh
         - wait for coverity scan to complete
         - check for errors, fix them, rinse and repeat until no more errors are found
+
+    1e. Check extended build matrix locally (Travis has limited resources):
+        - ./doc/releasing/bin/test-build-matrix.sh
 
 
 2. Update documentation TOCs
