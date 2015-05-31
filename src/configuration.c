@@ -67,12 +67,12 @@ snoopy_configuration_t   snoopy_configuration_data = {
  */
 void snoopy_configuration_ctor ()
 {
+#ifdef SNOOPY_CONFIGFILE_ENABLED
     /* Get config pointer */
     snoopy_configuration_t *CFG = snoopy_configuration_get();
 
 
     /* Parse INI file if enabled */
-#ifdef SNOOPY_CONFIGFILE_ENABLED
     snoopy_configfile_load(CFG->configfile_path);
 #endif
 }
