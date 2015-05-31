@@ -13,7 +13,9 @@ XFAIL_TESTS   =
 TESTS        += $(SCRIPT_PREFIX)-filter_chain-1.sh
 TESTS        += $(SCRIPT_PREFIX)-message_format-1.sh
 TESTS        += $(SCRIPT_PREFIX)-output-devlog.sh
+if OUTPUT_ENABLED_file
 TESTS        += $(SCRIPT_PREFIX)-output-file.sh
+endif
 TESTS        += $(SCRIPT_PREFIX)-output-invalid.sh
 XFAIL_TESTS  += $(SCRIPT_PREFIX)-output-invalid.sh
 TESTS        += $(SCRIPT_PREFIX)-output-socket.sh
