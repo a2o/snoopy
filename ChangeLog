@@ -63,8 +63,6 @@ o Release process: all release packages are now checked with "make distcheck"
     make target, to ensure proper builds.
 o Contribution process: all pull requests are automatically checked by
     Travis-CI.
-release packages are now checked with CI
-    provided by Travis-CI.org.
 
 
 2015-05-28 - Version 2.3.2
