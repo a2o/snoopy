@@ -63,7 +63,7 @@ int snoopy_configfile_load (
     char *iniFilePath
 ) {
     dictionary *ini ;
-    char       *confValString;   // Temporary query result space
+    const char *confValString;   // Temporary query result space
     int         confValInt;      // Temporary query result space
     snoopy_configuration_t *CFG;
 
@@ -147,7 +147,7 @@ int snoopy_configfile_load (
  *     void
  */
 void snoopy_configfile_parse_output (
-    char *confValOrig
+    const char *confValOrig
 ) {
     char  *confVal;
     char  *outputName;
@@ -221,8 +221,9 @@ void snoopy_configfile_parse_output (
  *     void
  */
 void snoopy_configfile_parse_syslog_facility (
-    char *confVal
+    const char *confValOrig
 ) {
+    char *confVal;
     char *confValCleaned;
     int   facilityInt;
     snoopy_configuration_t *CFG;
@@ -231,6 +232,8 @@ void snoopy_configfile_parse_syslog_facility (
     /* Get config pointer */
     CFG = snoopy_configuration_get();
 
+    // Duplicate the iniparser value, as we need to modify it
+    confVal = strdup(confValOrig);
 
     // First cleanup the value
     confValCleaned = snoopy_configfile_syslog_value_cleanup(confVal);
@@ -242,6 +245,9 @@ void snoopy_configfile_parse_syslog_facility (
     } else {
         CFG->syslog_facility = facilityInt;
     }
+
+    /* Housekeeping */
+    free(confVal);
 }
 
 
@@ -261,8 +267,9 @@ void snoopy_configfile_parse_syslog_facility (
  *     void
  */
 void snoopy_configfile_parse_syslog_level (
-    char *confVal
+    const char *confValOrig
 ) {
+    char *confVal;
     char *confValCleaned;
     int   levelInt;
     snoopy_configuration_t *CFG;
@@ -271,6 +278,8 @@ void snoopy_configfile_parse_syslog_level (
     /* Get config pointer */
     CFG = snoopy_configuration_get();
 
+    // Duplicate the iniparser value, as we need to modify it
+    confVal = strdup(confValOrig);
 
     // First cleanup the value
     confValCleaned = snoopy_configfile_syslog_value_cleanup(confVal);
@@ -282,6 +291,9 @@ void snoopy_configfile_parse_syslog_level (
     } else {
         CFG->syslog_level = levelInt;
     }
+
+    /* Housekeeping */
+    free(confVal);
 }
 
 

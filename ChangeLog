@@ -39,6 +39,8 @@ o Bugfixes: see git history for details.
 
 o Internal feature: created generic argument parser. It should be used by all
     subcomponents that require CSV argument parsing.
+o Internal enhancement: iniparser upgraded to version 4.0. Also migrated to git
+    submodule.
 
 o Build bugfix: actually halt if some required header file, function or library
     is missing. Before this fix it only displayed "checking for X... no" error
