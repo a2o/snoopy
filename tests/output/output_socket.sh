@@ -29,7 +29,9 @@ SOCAT_PID=$!
 if [ ! -e $FILE_SOCKET ]; then
     sleep 0.2
 elif [ ! -S $FILE_SOCKET ]; then
-    sleep 0.2
+    sleep 0.5
+elif [ ! -S $FILE_SOCKET ]; then
+    sleep 2
 fi
 
 # Send content to this socket
