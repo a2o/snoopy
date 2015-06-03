@@ -182,7 +182,7 @@ void snoopy_configfile_parse_output (
     }
 
     // Determine output name
-    if (SNOOPY_TRUE == snoopy_outputregistry_isRegistered(outputName)) {
+    if (SNOOPY_TRUE == snoopy_outputregistry_doesNameExist(outputName)) {
         CFG->output          = strdup(outputName);
         CFG->output_malloced = SNOOPY_TRUE;
 

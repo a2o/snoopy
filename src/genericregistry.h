@@ -1,7 +1,7 @@
 /*
  * SNOOPY LOGGER
  *
- * File: filterregistry.h
+ * File: genericregistry.h
  *
  * Copyright (c) 2014-2015 Bostjan Skufca <bostjan@a2o.si>
  *
@@ -23,13 +23,10 @@
 
 
 /*
- * Functions to manage and utilise filters
+ * Generic registry functions
  */
-int   snoopy_filterregistry_getCount      ();
-int   snoopy_filterregistry_doesIdExist   (int   filterId);
-int   snoopy_filterregistry_doesNameExist (char *filterName);
-int   snoopy_filterregistry_getIdFromName (char *filterName);
-char* snoopy_filterregistry_getName       (int   filterId);
-
-int   snoopy_filterregistry_callById      (int   filterId,   char *logMessage, char *filterArg);
-int   snoopy_filterregistry_callByName    (char *filterName, char *logMessage, char *filterArg);
+int   snoopy_genericregistry_getCount      (char *regArray[]);
+int   snoopy_genericregistry_doesIdExist   (char *regArray[], int   itemId);
+int   snoopy_genericregistry_doesNameExist (char *regArray[], char *itemName);
+int   snoopy_genericregistry_getIdFromName (char *regArray[], char *itemName);
+char* snoopy_genericregistry_getName       (char *regArray[], int   itemId);

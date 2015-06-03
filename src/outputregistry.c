@@ -29,6 +29,7 @@
 
 #include "snoopy.h"
 #include "configuration.h"
+#include "genericregistry.h"
 
 #include <string.h>
 
@@ -129,57 +130,96 @@ int (*snoopy_outputregistry_ptrs []) (char *logMessage, int errorOrMessage, char
 
 
 /*
- * isRegistered()
+ * getCount()
  *
- * Return true if output provider exists, otherwise return false
+ * Return number of available outputs
  */
-int snoopy_outputregistry_isRegistered (char *providerName)
+int snoopy_outputregistry_getCount ()
 {
-    if (snoopy_outputregistry_getIndex(providerName) == -1) {
-        return SNOOPY_FALSE;
-    } else {
-        return SNOOPY_TRUE;
-    }
+    return snoopy_genericregistry_getCount(snoopy_outputregistry_names);
 }
 
 
 
 /*
- * getIndex()
+ * doesIdExist()
  *
- * Return index of given output provider, or -1 if not found
+ * Return true if output exists (by id), otherwise return false
  */
-int snoopy_outputregistry_getIndex (char *providerName)
+int snoopy_outputregistry_doesIdExist (int outputId)
 {
-    int i;
-
-    i = 0;
-    while (strcmp(snoopy_outputregistry_names[i], "") != 0) {
-        if (strcmp(snoopy_outputregistry_names[i], providerName) == 0) {
-            return i;
-        }
-        i++;
-    }
-    return -1;
+    return snoopy_genericregistry_doesIdExist(snoopy_outputregistry_names, outputId);
 }
 
 
 
 /*
- * call()
+ * doesNameExist()
  *
- * Dispatch the message to named outputProvider
+ * Return true if output exists (by name), otherwise return false
  */
-int snoopy_outputregistry_call (char *providerName, char *logMessage, int errorOrMessage, char *providerArg)
+int snoopy_outputregistry_doesNameExist (char *outputName)
 {
-    int idx;
+    return snoopy_genericregistry_doesNameExist(snoopy_outputregistry_names, outputName);
+}
 
-    idx = snoopy_outputregistry_getIndex(providerName);
-    if (idx == -1) {
+
+
+/*
+ * getIdFromName()
+ *
+ * Return index of given output, or -1 if not found
+ */
+int snoopy_outputregistry_getIdFromName (char *outputName)
+{
+    return snoopy_genericregistry_getIdFromName(snoopy_outputregistry_names, outputName);
+}
+
+
+
+/*
+ * getName()
+ *
+ * Return name of given output, or NULL
+ */
+char* snoopy_outputregistry_getName (int outputId)
+{
+    return snoopy_genericregistry_getName(snoopy_outputregistry_names, outputId);
+}
+
+
+
+/*
+ * callById()
+ *
+ * Call the given output by id and return its output
+ */
+int snoopy_outputregistry_callById (int outputId, char *logMessage, int errorOrMessage, char *outputArg)
+{
+    if (SNOOPY_FALSE == snoopy_outputregistry_doesIdExist(outputId)) {
         return -1;
     }
 
-    return snoopy_outputregistry_ptrs[idx](logMessage, errorOrMessage, providerArg);
+    return snoopy_outputregistry_ptrs[outputId](logMessage, errorOrMessage, outputArg);
+}
+
+
+
+/*
+ * callByName()
+ *
+ * Call the given output by name and return its output
+ */
+int snoopy_outputregistry_callByName (char *outputName, char *logMessage, int errorOrMessage, char *outputArg)
+{
+    int outputId;
+
+    outputId = snoopy_outputregistry_getIdFromName(outputName);
+    if (outputId == -1) {
+        return -1;
+    }
+
+    return snoopy_outputregistry_ptrs[outputId](logMessage, errorOrMessage, outputArg);
 }
 
 
@@ -191,18 +231,11 @@ int snoopy_outputregistry_call (char *providerName, char *logMessage, int errorO
  */
 int snoopy_outputregistry_dispatch (char *logMessage, int errorOrMessage)
 {
-    int idx;
     snoopy_configuration_t *CFG;
-
 
     /* Get config pointer */
     CFG = snoopy_configuration_get();
 
-
-    idx = snoopy_outputregistry_getIndex(CFG->output);
-    if (idx == -1) {
-        return -1;
-    }
-
-    return snoopy_outputregistry_ptrs[idx](logMessage, errorOrMessage, CFG->output_arg);
+    /* Dispatch */
+    return snoopy_outputregistry_callByName(CFG->output, logMessage, errorOrMessage, CFG->output_arg);
 }

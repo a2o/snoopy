@@ -28,6 +28,7 @@
 #include "datasourceregistry.h"
 
 #include "snoopy.h"
+#include "genericregistry.h"
 
 #include <string.h>
 
@@ -331,55 +332,94 @@ int (*snoopy_datasourceregistry_ptrs []) (char *result, char *arg) = {
 
 
 /*
- * isRegistered()
+ * getCount()
  *
- * Return true if data source exists, otherwise return false
+ * Return number of available datasources
  */
-int snoopy_datasourceregistry_isRegistered (char *providerName)
+int snoopy_datasourceregistry_getCount ()
 {
-    if (snoopy_datasourceregistry_getIndex(providerName) == -1) {
-        return SNOOPY_FALSE;
-    } else {
-        return SNOOPY_TRUE;
-    }
+    return snoopy_genericregistry_getCount(snoopy_datasourceregistry_names);
 }
 
 
 
 /*
- * getIndex()
+ * doesIdExist()
  *
- * Return index of given data source, or -1 if not found
+ * Return true if datasource exists (by id), otherwise return false
  */
-int snoopy_datasourceregistry_getIndex (char *providerName)
+int snoopy_datasourceregistry_doesIdExist (int datasourceId)
 {
-    int i;
-
-    i = 0;
-    while (strcmp(snoopy_datasourceregistry_names[i], "") != 0) {
-        if (strcmp(snoopy_datasourceregistry_names[i], providerName) == 0) {
-            return i;
-        }
-        i++;
-    }
-    return -1;
+    return snoopy_genericregistry_doesIdExist(snoopy_datasourceregistry_names, datasourceId);
 }
 
 
 
 /*
- * call()
+ * doesNameExist()
  *
- * Call the given data source and return its output
+ * Return true if datasource exists (by name), otherwise return false
  */
-int snoopy_datasourceregistry_call (char *providerName, char *returnMessage, char *providerArg)
+int snoopy_datasourceregistry_doesNameExist (char *datasourceName)
 {
-    int idx;
+    return snoopy_genericregistry_doesNameExist(snoopy_datasourceregistry_names, datasourceName);
+}
 
-    idx = snoopy_datasourceregistry_getIndex(providerName);
-    if (idx == -1) {
+
+
+/*
+ * getIdFromName()
+ *
+ * Return index of given datasource, or -1 if not found
+ */
+int snoopy_datasourceregistry_getIdFromName (char *datasourceName)
+{
+    return snoopy_genericregistry_getIdFromName(snoopy_datasourceregistry_names, datasourceName);
+}
+
+
+
+/*
+ * getName()
+ *
+ * Return name of given datasource, or NULL
+ */
+char* snoopy_datasourceregistry_getName (int datasourceId)
+{
+    return snoopy_genericregistry_getName(snoopy_datasourceregistry_names, datasourceId);
+}
+
+
+
+/*
+ * callById()
+ *
+ * Call the given datasource by id and return its output
+ */
+int snoopy_datasourceregistry_callById (int datasourceId, char *logMessage, char *datasourceArg)
+{
+    if (SNOOPY_FALSE == snoopy_datasourceregistry_doesIdExist(datasourceId)) {
         return -1;
     }
 
-    return snoopy_datasourceregistry_ptrs[idx](returnMessage, providerArg);
+    return snoopy_datasourceregistry_ptrs[datasourceId](logMessage, datasourceArg);
+}
+
+
+
+/*
+ * callByName()
+ *
+ * Call the given datasource by name and return its output
+ */
+int snoopy_datasourceregistry_callByName (char *datasourceName, char *logMessage, char *datasourceArg)
+{
+    int datasourceId;
+
+    datasourceId = snoopy_datasourceregistry_getIdFromName(datasourceName);
+    if (datasourceId == -1) {
+        return -1;
+    }
+
+    return snoopy_datasourceregistry_ptrs[datasourceId](logMessage, datasourceArg);
 }

@@ -28,8 +28,7 @@
 #include "filterregistry.h"
 
 #include "snoopy.h"
-
-#include <string.h>
+#include "genericregistry.h"
 
 
 
@@ -88,55 +87,94 @@ int (*snoopy_filterregistry_ptrs []) (char *logMessage, char *arg) = {
 
 
 /*
- * isRegistered()
+ * getCount()
  *
- * Return true if filter filter exists, otherwise return false
+ * Return number of available filters
  */
-int snoopy_filterregistry_isRegistered (char *filterName)
+int snoopy_filterregistry_getCount ()
 {
-    if (snoopy_filterregistry_getIndex(filterName) == -1) {
-        return SNOOPY_FALSE;
-    } else {
-        return SNOOPY_TRUE;
-    }
+    return snoopy_genericregistry_getCount(snoopy_filterregistry_names);
 }
 
 
 
 /*
- * getIndex()
+ * doesIdExist()
+ *
+ * Return true if filter exists (by id), otherwise return false
+ */
+int snoopy_filterregistry_doesIdExist (int filterId)
+{
+    return snoopy_genericregistry_doesIdExist(snoopy_filterregistry_names, filterId);
+}
+
+
+
+/*
+ * doesNameExist()
+ *
+ * Return true if filter exists (by name), otherwise return false
+ */
+int snoopy_filterregistry_doesNameExist (char *filterName)
+{
+    return snoopy_genericregistry_doesNameExist(snoopy_filterregistry_names, filterName);
+}
+
+
+
+/*
+ * getIdFromName()
  *
  * Return index of given filter, or -1 if not found
  */
-int snoopy_filterregistry_getIndex (char *filterName)
+int snoopy_filterregistry_getIdFromName (char *filterName)
 {
-    int i;
-
-    i = 0;
-    while (strcmp(snoopy_filterregistry_names[i], "") != 0) {
-        if (strcmp(snoopy_filterregistry_names[i], filterName) == 0) {
-            return i;
-        }
-        i++;
-    }
-    return -1;
+    return snoopy_genericregistry_getIdFromName(snoopy_filterregistry_names, filterName);
 }
 
 
 
 /*
- * call()
+ * getName()
  *
- * Call the given filter and return its output
+ * Return name of given filter, or NULL
  */
-int snoopy_filterregistry_call (char *filterName, char *logMessage, char *filterArg)
+char* snoopy_filterregistry_getName (int filterId)
 {
-    int idx;
+    return snoopy_genericregistry_getName(snoopy_filterregistry_names, filterId);
+}
 
-    idx = snoopy_filterregistry_getIndex(filterName);
-    if (idx == -1) {
+
+
+/*
+ * callById()
+ *
+ * Call the given filter by id and return its output
+ */
+int snoopy_filterregistry_callById (int filterId, char *logMessage, char *filterArg)
+{
+    if (SNOOPY_FALSE == snoopy_filterregistry_doesIdExist(filterId)) {
         return -1;
     }
 
-    return snoopy_filterregistry_ptrs[idx](logMessage, filterArg);
+    return snoopy_filterregistry_ptrs[filterId](logMessage, filterArg);
+}
+
+
+
+/*
+ * callByName()
+ *
+ * Call the given filter by name and return its output
+ */
+int snoopy_filterregistry_callByName (char *filterName, char *logMessage, char *filterArg)
+{
+    int filterId;
+
+    filterId = snoopy_filterregistry_getIdFromName(filterName);
+    if (filterId == -1) {
+        return -1;
+    }
+
+    return snoopy_filterregistry_ptrs[filterId](logMessage, filterArg);
 }

@@ -121,7 +121,7 @@ void snoopy_message_generateFromFormat (
         }
 
         // Check if data source actually exists
-        if (! snoopy_datasourceregistry_isRegistered(dataSourceNamePtr)) {
+        if (! snoopy_datasourceregistry_doesNameExist(dataSourceNamePtr)) {
             snoopy_message_append(logMessage, "ERROR(Data source not found - ");
             snoopy_message_append(logMessage, dataSourceNamePtr);
             snoopy_message_append(logMessage, ")");
@@ -130,7 +130,7 @@ void snoopy_message_generateFromFormat (
 
         // Call the provider, and append the results to log message
         dataSourceMsg[0] = '\0';
-        retVal = snoopy_datasourceregistry_call(dataSourceNamePtr, dataSourceMsg, dataSourceArgPtr);
+        retVal = snoopy_datasourceregistry_callByName(dataSourceNamePtr, dataSourceMsg, dataSourceArgPtr);
         if (SNOOPY_DATASOURCE_FAILED(retVal)) {
             snoopy_message_append(logMessage, "ERROR(Data source failed, msg:");
             snoopy_message_append(logMessage, dataSourceMsg);

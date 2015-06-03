@@ -79,13 +79,13 @@ int main (int argc, char **argv)
 
 
     /* Check if what we got is a valid output name */
-    if (SNOOPY_FALSE == snoopy_outputregistry_isRegistered(outputName)) {
+    if (SNOOPY_FALSE == snoopy_outputregistry_doesNameExist(outputName)) {
         displayHelp();
         return fatalError("Invalid output name given");
     }
 
     /* Dispatch message to output */
-    retVal = snoopy_outputregistry_call(outputName, message, SNOOPY_LOG_MESSAGE, outputArg);
+    retVal = snoopy_outputregistry_callByName(outputName, message, SNOOPY_LOG_MESSAGE, outputArg);
     if (SNOOPY_OUTPUT_FAILED(retVal)) {
         return fatalError("Output failure");
     }
@@ -116,8 +116,9 @@ void displayHelp ()
     printf("\n");
 
     printf("Available outputs:\n");
-    for (int i=0 ; '\0' != snoopy_outputregistry_names[i][0] ; i++) {
-        printf("    %s\n", snoopy_outputregistry_names[i]);
+    int oCount = snoopy_outputregistry_getCount();
+    for (int i=0 ; i<oCount ; i++) {
+        printf("    %s\n", snoopy_outputregistry_getName(i));
     }
     printf("\n");
 }

@@ -23,16 +23,13 @@
 
 
 /*
- * Two arrays holding data about datasource functions
+ * Functions to manage and utilise datasources
  */
-extern char *snoopy_datasourceregistry_names[];
-extern int (*snoopy_datasourceregistry_ptrs []) (char *datasource, char *arg);
+int   snoopy_datasourceregistry_getCount      ();
+int   snoopy_datasourceregistry_doesIdExist   (int   datasourceId);
+int   snoopy_datasourceregistry_doesNameExist (char *datasourceName);
+int   snoopy_datasourceregistry_getIdFromName (char *datasourceName);
+char* snoopy_datasourceregistry_getName       (int   datasourceId);
 
-
-
-/*
- * Functions to manage and utilise datasource providers
- */
-int snoopy_datasourceregistry_call         (char *providerName, char *returnMessage, char *providerArg);
-int snoopy_datasourceregistry_getIndex     (char *providerName);
-int snoopy_datasourceregistry_isRegistered (char *providerName);
+int   snoopy_datasourceregistry_callById      (int   datasourceId,   char *logMessage, char *datasourceArg);
+int   snoopy_datasourceregistry_callByName    (char *datasourceName, char *logMessage, char *datasourceArg);

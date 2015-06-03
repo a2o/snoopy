@@ -23,17 +23,15 @@
 
 
 /*
- * Two arrays holding data about output functions
+ * Functions to manage and utilise outputs
  */
-extern char *snoopy_outputregistry_names[];
-extern int (*snoopy_outputregistry_ptrs []) (char *logMessage, int errorOrMessage, char *arg);
+int   snoopy_outputregistry_getCount      ();
+int   snoopy_outputregistry_doesIdExist   (int   outputId);
+int   snoopy_outputregistry_doesNameExist (char *outputName);
+int   snoopy_outputregistry_getIdFromName (char *outputName);
+char* snoopy_outputregistry_getName       (int   outputId);
 
+int   snoopy_outputregistry_callById      (int   outputId,   char *logMessage, int errorOrMessage, char *outputArg);
+int   snoopy_outputregistry_callByName    (char *outputName, char *logMessage, int errorOrMessage, char *outputArg);
 
-
-/*
- * Functions to manage and utilise output providers
- */
-int snoopy_outputregistry_isRegistered (char *providerName);
-int snoopy_outputregistry_getIndex     (char *providerName);
-int snoopy_outputregistry_call         (char *providerName, char *logMessage, int errorOrMessage, char *providerArg);
-int snoopy_outputregistry_dispatch     (char *logMessage, int errorOrMessage);
+int   snoopy_outputregistry_dispatch      (char *logMessage, int errorOrMessage);

@@ -70,17 +70,16 @@ int main (int argc, char **argv)
     if (0 == strcmp(argv[1], "--list")) {
 
         /* Loop throught all data sources and just append the output */
-        int i = 0;
-        while (strcmp(snoopy_datasourceregistry_names[i], "") != 0) {
-            printf("%s\n", snoopy_datasourceregistry_names[i]);
-            i++;
+        int dCount = snoopy_datasourceregistry_getCount();
+        for (int i=0 ; i<dCount ; i++) {
+            printf("%s\n", snoopy_datasourceregistry_getName(i));
         }
         return 0;
     }
 
 
     /* Check if what we got is a valid datasource name */
-    if (SNOOPY_FALSE == snoopy_datasourceregistry_isRegistered(datasourceName)) {
+    if (SNOOPY_FALSE == snoopy_datasourceregistry_doesNameExist(datasourceName)) {
         displayHelp();
         return fatalError("Invalid datasource name given");
     }
@@ -94,7 +93,7 @@ int main (int argc, char **argv)
 
 
     /* Call the datasource */
-    retVal = snoopy_datasourceregistry_call(datasourceName, datasourceResult, datasourceArg);
+    retVal = snoopy_datasourceregistry_callByName(datasourceName, datasourceResult, datasourceArg);
     if (SNOOPY_DATASOURCE_FAILED(retVal)) {
         return fatalError("Datasource failed");
     }
@@ -128,8 +127,9 @@ void displayHelp ()
     printf("\n");
 
     printf("Available datasources:\n");
-    for (int i=0 ; '\0' != snoopy_datasourceregistry_names[i][0] ; i++) {
-        printf("    %s\n", snoopy_datasourceregistry_names[i]);
+    int dCount = snoopy_datasourceregistry_getCount();
+    for (int i=0 ; i<dCount ; i++) {
+        printf("    %s\n", snoopy_datasourceregistry_getName(i));
     }
     printf("\n");
 }

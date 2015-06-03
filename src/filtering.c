@@ -109,7 +109,7 @@ int snoopy_filtering_check_chain (
         }
 
         // Check if filter actually exists
-        if (! snoopy_filterregistry_isRegistered(filterNamePtr)) {
+        if (SNOOPY_FALSE == snoopy_filterregistry_doesNameExist(filterNamePtr)) {
             snoopy_message_append(logMessage, "ERROR(Filter not found - ");
             snoopy_message_append(logMessage, filterNamePtr);
             snoopy_message_append(logMessage, ")");
@@ -117,7 +117,7 @@ int snoopy_filtering_check_chain (
         }
 
         // Consult the filter, and return immediately if message should be dropped
-        if (SNOOPY_FILTER_DROP == snoopy_filterregistry_call(filterNamePtr, logMessage, filterArgPtr)) {
+        if (SNOOPY_FILTER_DROP == snoopy_filterregistry_callByName(filterNamePtr, logMessage, filterArgPtr)) {
             return SNOOPY_FILTER_DROP;
         }
     }

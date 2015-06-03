@@ -79,13 +79,13 @@ int main (int argc, char **argv)
 
 
     /* Check if what we got is a valid filter name */
-    if (SNOOPY_FALSE == snoopy_filterregistry_isRegistered(filterName)) {
+    if (SNOOPY_FALSE == snoopy_filterregistry_doesNameExist(filterName)) {
         displayHelp();
         return fatalError("Invalid filter name given");
     }
 
     /* Call the filter */
-    filterResult = snoopy_filterregistry_call(filterName, message, filterArg);
+    filterResult = snoopy_filterregistry_callByName(filterName, message, filterArg);
 
 
     /* Display and return */
@@ -120,8 +120,9 @@ void displayHelp ()
     printf("\n");
 
     printf("Available filters:\n");
-    for (int i=0 ; '\0' != snoopy_filterregistry_names[i][0] ; i++) {
-        printf("    %s\n", snoopy_filterregistry_names[i]);
+    int fCount = snoopy_filterregistry_getCount();
+    for (int i=0 ; i<fCount ; i++) {
+        printf("    %s\n", snoopy_filterregistry_getName(i));
     }
     printf("\n");
 }
