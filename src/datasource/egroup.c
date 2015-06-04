@@ -55,7 +55,7 @@ int snoopy_datasource_egroup (char *result, char *arg)
     struct group   gr;
     struct group  *gr_gid         = NULL;
     char          *buffgr_gid     = NULL;
-    size_t         buffgrsize_gid = 0;
+    long           buffgrsize_gid = 0;
     int            messageLength  = 0;
 
     /* Allocate memory */

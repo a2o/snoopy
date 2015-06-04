@@ -88,7 +88,7 @@ void snoopy_message_generateFromFormat (
 
         // Otherwise copy text up to the next data source tag
         lengthToCopy = fmtPos_nextFormatTag - fmtPos_cur + 1; // + 1 for null termination
-        if (lengthToCopy > SNOOPY_LOG_MESSAGE_MAX_SIZE-strlen(logMessage)) {
+        if (lengthToCopy > (int)(SNOOPY_LOG_MESSAGE_MAX_SIZE-strlen(logMessage))) {
             lengthToCopy = SNOOPY_LOG_MESSAGE_MAX_SIZE-strlen(logMessage);
         }
         fmtStaticText[0] = '\0';

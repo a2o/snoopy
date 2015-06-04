@@ -78,7 +78,7 @@ int snoopy_datasource_env_all (char *result, char *arg)
 
         // Do we append whole environmental variable, or just part of it?
         // +3 to account for ... and +1 for null character
-        if (strlen(envItem) + 3 + 1 < remResultSize) {
+        if ((int)(strlen(envItem) + 3 + 1) < remResultSize) {
             int strSizeCopied = 0;
 
             // Append whole ENV variable

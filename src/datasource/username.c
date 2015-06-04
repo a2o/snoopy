@@ -55,7 +55,7 @@ int snoopy_datasource_username (char *result, char *arg)
     struct passwd  pwd;
     struct passwd *pwd_uid = NULL;
     char          *buffpwd_uid = NULL;
-    size_t         buffpwdsize_uid = 0;
+    long           buffpwdsize_uid = 0;
     int            messageLength   = 0;
 
     /* Allocate memory */
