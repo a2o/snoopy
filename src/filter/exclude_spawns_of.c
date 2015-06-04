@@ -74,12 +74,15 @@ char **string_to_token_array(char *str);
  *     SNOOPY_FILTER_PASS or SNOOPY_FILTER_DROP
  */
 int snoopy_filter_exclude_spawns_of(char *msg, char *arg)
+//int snoopy_filter_exclude_spawns_of(char *msg, const char * const arg)
 {
+    char  *argDup;   // Must not alter arg
     char **losp; // List of specified programs derived from arg
     int is_ancestor_in_list = 0;
 
     // Turn comma-separated arg into array of program name strings
-    losp = string_to_token_array(arg);
+    argDup = strdup(arg);
+    losp = string_to_token_array(argDup);
     if (losp == NULL) {
         // If failure, we cannot filter anything, just pass the message
         return SNOOPY_FILTER_PASS;
@@ -88,6 +91,7 @@ int snoopy_filter_exclude_spawns_of(char *msg, char *arg)
     // Check if one of the program names in losp is an ancestor
     is_ancestor_in_list = find_ancestor_in_list(losp);
     free(losp);
+    free(argDup);
     return (is_ancestor_in_list == 1) ? SNOOPY_FILTER_DROP : SNOOPY_FILTER_PASS; // Error means pass
 }
 
