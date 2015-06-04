@@ -38,7 +38,7 @@
 #include "configuration.h"
 #include "error.h"
 #include "inputdatastorage.h"
-#include "datasourceregistry.h"
+#include "libsnoopy-debug-addons.h"
 #include "misc.h"
 
 
@@ -60,102 +60,9 @@ int main (int argc, char **argv)
     snoopy_inputdatastorage_store_argv(argv);
 
     /* Run the main function */
-    snoopy_test_all_datasources();
+    snoopy_debug_test_all_datasources();
 
     /* Housekeeping */
     snoopy_cleanup();
     return 0;
-}
-
-
-
-/*
- * snoopy_test_all_datasources
- *
- * Description:
- *     Loops through all data source and prints what they return
- *
- * Params:
- *     (none)
- *
- * Return:
- *     void
- */
-void snoopy_test_all_datasources ()
-{
-    int   datasourceNameLengthMax;
-    char *datasourceResult = NULL;
-    char *datasourceArgs    = NULL;
-    int   i;
-    int   j;
-
-    /* Initialize variables and spaces */
-    datasourceResult       = malloc(SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE + 1);
-    datasourceNameLengthMax = snoopy_get_datasource_name_length_max();
-
-    /* Loop throught all data sources and just append the output */
-    i = 0;
-    while (strcmp(snoopy_datasourceregistry_names[i], "") != 0) {
-        datasourceResult[0]  = '\0';
-        int datasourceResultSize = -1;
-
-        /* Which arguments to pass to data source */
-        if (strcmp(snoopy_datasourceregistry_names[i], "env") == 0) {
-            datasourceArgs = "HOME";
-        } else {
-            datasourceArgs = "";
-        }
-
-        /* Execute the data source function */
-        datasourceResultSize = snoopy_datasourceregistry_ptrs[i](datasourceResult, datasourceArgs);
-        if (datasourceResultSize > SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE) {
-            snoopy_error_handler("Maximum data source message size exceeded");
-        }
-
-        /* Copy content, append */
-        printf("%s:", snoopy_datasourceregistry_names[i]);
-        for (j=0 ; j<=(datasourceNameLengthMax-strlen(snoopy_datasourceregistry_names[i])) ; j++) {
-            printf(" ");
-        }
-        printf("%s\n", datasourceResult);
-
-        /* Go to next data source */
-        i++;
-    }
-
-    /* Memory housekeeping */
-    free(datasourceResult);
-}
-
-
-
-/*
- * snoopy_get_max_datasource_name_length
- *
- * Description:
- *     Loops through all data sources and returns length of the longest data source name
- *
- * Params:
- *     (none)
- *
- * Return:
- *     int   max data source name length
- */
-int snoopy_get_datasource_name_length_max ()
-{
-    int   datasourceNameLengthMax;
-    int   i;
-
-    datasourceNameLengthMax = 0;
-    i = 0;
-    while (strcmp(snoopy_datasourceregistry_names[i], "") != 0) {
-        if (strlen(snoopy_datasourceregistry_names[i]) > datasourceNameLengthMax) {
-            datasourceNameLengthMax = strlen(snoopy_datasourceregistry_names[i]);
-        }
-
-        /* Go to next data source provider */
-        i++;
-    }
-
-    return datasourceNameLengthMax;
 }

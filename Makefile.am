@@ -111,4 +111,4 @@ valgrind: all
 	--leak-check=full \
 	--undef-value-errors=yes \
 	--track-origins=yes \
-	./util/snoopy-test-all-data-sources ;
+	./util/snoopy-run-everything ;

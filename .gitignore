@@ -61,6 +61,7 @@ Makefile
 /tests/bin/snoopy-test-output
 /util/snoopy-disable
 /util/snoopy-enable
+/util/snoopy-run-everything
 /util/snoopy-test-all-data-sources
 /util/snoopy-test-output
 /util/snoopy-detect
