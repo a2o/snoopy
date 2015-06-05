@@ -791,7 +791,7 @@ dnl ============================================================================
 #
 AS_IF([test "x$configfile_enabled" == "xyes"], [
     ac_configure_args_snoopy="$ac_configure_args"
-    ac_configure_args_lib_iniparser="--enable-subpackage"
+    ac_configure_args_lib_iniparser="--enable-subpackage --disable-documentation"
     ac_configure_args="$ac_configure_args_lib_iniparser"
 
     AC_CONFIG_COMMANDS_PRE([ac_configure_args="$ac_configure_args_snoopy"])

@@ -31,6 +31,9 @@ fi
 if [ ! -d build/m4 ]; then
     mkdir -p build/m4
 fi
+if [ ! -d lib/iniparser/build/m4 ]; then
+    mkdir -p lib/iniparser/build/m4
+fi
 
 
 
