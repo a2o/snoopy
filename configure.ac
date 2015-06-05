@@ -785,6 +785,23 @@ dnl ============================================================================
 dnl ============================================================================
 
 
+### Config file - include lib/iniparser
+#
+# Also, configure it statically
+#
+AS_IF([test "x$configfile_enabled" == "xyes"], [
+    ac_configure_args_snoopy="$ac_configure_args"
+    ac_configure_args_lib_iniparser="--enable-subpackage"
+    ac_configure_args="$ac_configure_args_lib_iniparser"
+
+    AC_CONFIG_COMMANDS_PRE([ac_configure_args="$ac_configure_args_snoopy"])
+    AC_CONFIG_COMMANDS_POST([ac_configure_args="$ac_configure_args_lib_iniparser"])
+    AC_CONFIG_SUBDIRS(lib/iniparser)
+
+    ac_configure_args="$ac_configure_args_snoopy"
+])
+
+
 ### Datasource tid - check for pthread library
 #
 AS_IF([test "x$enable_datasource_tid" = "xyes"], [

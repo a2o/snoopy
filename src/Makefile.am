@@ -54,7 +54,7 @@ libsnoopy_no_execve_la_SOURCES += \
 	configfile.c \
 	configfile.h
 libsnoopy_no_execve_la_LIBADD += \
-	../lib/libiniparser.la
+	../lib/iniparser/src/libiniparser.la
 endif
 
 # If filtering is enabled, add these too
