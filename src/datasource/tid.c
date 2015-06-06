@@ -47,7 +47,7 @@
  * Return:
  *     number of characters in the returned string, or SNOOPY_DATASOURCE_FAILURE
  */
-int snoopy_datasource_tid (char *result, char *arg)
+int snoopy_datasource_tid (char * const result, char const * const arg)
 {
     pthread_t tid = pthread_self();
 

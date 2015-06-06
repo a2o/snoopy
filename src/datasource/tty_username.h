@@ -25,4 +25,4 @@
 /*
  * SNOOPY DATA SOURCE: tty_username
  */
-int snoopy_datasource_tty_username (char *result, char *arg);
+int snoopy_datasource_tty_username (char * const result, char const * const arg);

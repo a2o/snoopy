@@ -25,4 +25,4 @@
 /*
  * SNOOPY DATA SOURCE: pid
  */
-int snoopy_datasource_pid (char *result, char *arg);
+int snoopy_datasource_pid (char * const result, char const * const arg);

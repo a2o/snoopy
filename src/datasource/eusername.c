@@ -50,7 +50,7 @@
  * Return:
  *     number of characters in the returned string, or SNOOPY_DATASOURCE_FAILURE
  */
-int snoopy_datasource_eusername (char *result, char *arg)
+int snoopy_datasource_eusername (char * const result, char const * const arg)
 {
     struct passwd  pwd;
     struct passwd *pwd_uid         = NULL;

@@ -25,4 +25,4 @@
 /*
  * SNOOPY DATA SOURCE: datetime
  */
-int snoopy_datasource_datetime (char *result, char *arg);
+int snoopy_datasource_datetime (char * const result, char const * const arg);

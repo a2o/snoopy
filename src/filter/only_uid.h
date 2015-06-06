@@ -25,4 +25,4 @@
 /*
  * SNOOPY FILTER: only_uid
  */
-int snoopy_filter_only_uid (char *msg, char *arg);
+int snoopy_filter_only_uid (char *msg, char const * const arg);

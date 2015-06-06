@@ -25,4 +25,4 @@
 /*
  * SNOOPY DATA SOURCE: eusername
  */
-int snoopy_datasource_eusername (char *result, char *arg);
+int snoopy_datasource_eusername (char * const result, char const * const arg);

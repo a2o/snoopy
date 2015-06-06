@@ -72,7 +72,7 @@ int snoopy_genericregistry_doesIdExist (char *regArray[], int itemId)
  *
  * Return true if item exists (by name) in the registry, otherwise return false
  */
-int snoopy_genericregistry_doesNameExist (char *regArray[], char *itemName)
+int snoopy_genericregistry_doesNameExist (char *regArray[], char const * const itemName)
 {
     if (snoopy_genericregistry_getIdFromName(regArray, itemName) == -1) {
         return SNOOPY_FALSE;
@@ -88,7 +88,7 @@ int snoopy_genericregistry_doesNameExist (char *regArray[], char *itemName)
  *
  * Return id of given item, or -1 if not found
  */
-int snoopy_genericregistry_getIdFromName (char *regArray[], char *itemName)
+int snoopy_genericregistry_getIdFromName (char *regArray[], char const * const itemName)
 {
     for (int i=0 ; 0 != strcmp(regArray[i], "") ; i++) {
         if (strcmp(regArray[i], itemName) == 0) {

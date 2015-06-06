@@ -48,7 +48,7 @@
  * Return:
  *     number of characters in the returned string, or SNOOPY_DATASOURCE_FAILURE
  */
-int snoopy_datasource_cwd (char *result, char *arg)
+int snoopy_datasource_cwd (char * const result, char const * const arg)
 {
     char cwdBuf[PATH_MAX+1];
 

@@ -25,4 +25,4 @@
 /*
  * SNOOPY DATA SOURCE: sid
  */
-int snoopy_datasource_sid (char *result, char *arg);
+int snoopy_datasource_sid (char * const result, char const * const arg);

@@ -47,7 +47,7 @@
  * Return:
  *     number of characters in the returned string, or SNOOPY_DATASOURCE_FAILURE
  */
-int snoopy_datasource_tty (char *result, char *arg)
+int snoopy_datasource_tty (char * const result, char const * const arg)
 {
     char *ttyName = NULL;
 

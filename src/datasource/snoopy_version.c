@@ -51,7 +51,7 @@
  * Return:
  *     number of characters in the returned string, or SNOOPY_DATASOURCE_FAILURE
  */
-int snoopy_datasource_snoopy_version (char *result, char *arg)
+int snoopy_datasource_snoopy_version (char * const result, char const * const arg)
 {
     return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "%s", SNOOPY_VERSION);
 }

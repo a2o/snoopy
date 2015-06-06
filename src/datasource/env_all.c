@@ -55,7 +55,7 @@ extern char **environ;
  * Return:
  *     number of characters in the returned string, or SNOOPY_DATASOURCE_FAILURE
  */
-int snoopy_datasource_env_all (char *result, char *arg)
+int snoopy_datasource_env_all (char * const result, char const * const arg)
 {
     int resultSize = 0; // Current size of message to be returned back - does not include trailing null character
 

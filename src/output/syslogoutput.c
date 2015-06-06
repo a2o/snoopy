@@ -53,7 +53,7 @@
  * Return:
  *     int:        See snoopy.h (SNOOPY_OUTPUT_*) for details.
  */
-int snoopy_output_syslogoutput (char *logMessage, int errorOrMessage, char *arg)
+int snoopy_output_syslogoutput (char const * const logMessage, int errorOrMessage, char const * const arg)
 {
     snoopy_configuration_t *CFG;
 

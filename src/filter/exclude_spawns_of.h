@@ -26,5 +26,4 @@
 /*
  * SNOOPY FILTER: exclude_spawns_of
  */
-//int snoopy_filter_exclude_spawns_of (char *msg, const char * const arg);
-int snoopy_filter_exclude_spawns_of (char *msg, char *arg);
+int snoopy_filter_exclude_spawns_of (char *msg, char const * const arg);

@@ -25,4 +25,4 @@
 /*
  * SNOOPY DATA SOURCE: snoopy_version
  */
-int snoopy_datasource_snoopy_version (char *result, char *arg);
+int snoopy_datasource_snoopy_version (char * const result, char const * const arg);

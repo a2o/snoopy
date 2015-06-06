@@ -25,4 +25,4 @@
 /*
  * SNOOPY DATA SOURCE: group
  */
-int snoopy_datasource_group (char *result, char *arg);
+int snoopy_datasource_group (char * const result, char const * const arg);

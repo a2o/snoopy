@@ -27,9 +27,9 @@
  */
 int   snoopy_filterregistry_getCount      ();
 int   snoopy_filterregistry_doesIdExist   (int   filterId);
-int   snoopy_filterregistry_doesNameExist (char *filterName);
-int   snoopy_filterregistry_getIdFromName (char *filterName);
+int   snoopy_filterregistry_doesNameExist (char const * const filterName);
+int   snoopy_filterregistry_getIdFromName (char const * const filterName);
 char* snoopy_filterregistry_getName       (int   filterId);
 
-int   snoopy_filterregistry_callById      (int   filterId,   char *logMessage, char *filterArg);
-int   snoopy_filterregistry_callByName    (char *filterName, char *logMessage, char *filterArg);
+int   snoopy_filterregistry_callById      (int                filterId,   char * logMessage, char const * const filterArg);
+int   snoopy_filterregistry_callByName    (char const * const filterName, char * logMessage, char const * const filterArg);

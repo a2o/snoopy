@@ -25,4 +25,4 @@
 /*
  * SNOOPY DATA SOURCE: egid
  */
-int snoopy_datasource_egid (char *result, char *arg);
+int snoopy_datasource_egid (char * const result, char const * const arg);

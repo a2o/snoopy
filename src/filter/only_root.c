@@ -48,7 +48,7 @@
  * Return:
  *     SNOOPY_FILTER_PASS or SNOOPY_FILTER_DROP
  */
-int snoopy_filter_only_root (char *msg, char *arg)
+int snoopy_filter_only_root (char *msg, char const * const arg)
 {
     if (0 == getuid()) {
         return SNOOPY_FILTER_PASS;

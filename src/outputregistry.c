@@ -100,7 +100,7 @@ char *snoopy_outputregistry_names[] = {
     "",
 };
 
-int (*snoopy_outputregistry_ptrs []) (char *logMessage, int errorOrMessage, char *arg) = {
+int (*snoopy_outputregistry_ptrs []) (char const * const logMessage, int errorOrMessage, char const * const arg) = {
 #ifdef SNOOPY_CONF_OUTPUT_ENABLED_devlog
     snoopy_output_devlogoutput,
 #endif
@@ -158,7 +158,7 @@ int snoopy_outputregistry_doesIdExist (int outputId)
  *
  * Return true if output exists (by name), otherwise return false
  */
-int snoopy_outputregistry_doesNameExist (char *outputName)
+int snoopy_outputregistry_doesNameExist (char const * const outputName)
 {
     return snoopy_genericregistry_doesNameExist(snoopy_outputregistry_names, outputName);
 }
@@ -170,7 +170,7 @@ int snoopy_outputregistry_doesNameExist (char *outputName)
  *
  * Return index of given output, or -1 if not found
  */
-int snoopy_outputregistry_getIdFromName (char *outputName)
+int snoopy_outputregistry_getIdFromName (char const * const outputName)
 {
     return snoopy_genericregistry_getIdFromName(snoopy_outputregistry_names, outputName);
 }
@@ -194,7 +194,7 @@ char* snoopy_outputregistry_getName (int outputId)
  *
  * Call the given output by id and return its output
  */
-int snoopy_outputregistry_callById (int outputId, char *logMessage, int errorOrMessage, char *outputArg)
+int snoopy_outputregistry_callById (int outputId, char const * const logMessage, int errorOrMessage, char const * const outputArg)
 {
     if (SNOOPY_FALSE == snoopy_outputregistry_doesIdExist(outputId)) {
         return -1;
@@ -210,7 +210,7 @@ int snoopy_outputregistry_callById (int outputId, char *logMessage, int errorOrM
  *
  * Call the given output by name and return its output
  */
-int snoopy_outputregistry_callByName (char *outputName, char *logMessage, int errorOrMessage, char *outputArg)
+int snoopy_outputregistry_callByName (char const * const outputName, char const * const logMessage, int errorOrMessage, char const * const outputArg)
 {
     int outputId;
 
@@ -229,7 +229,7 @@ int snoopy_outputregistry_callByName (char *outputName, char *logMessage, int er
  *
  * Dispatch the message to configured outputProvider
  */
-int snoopy_outputregistry_dispatch (char *logMessage, int errorOrMessage)
+int snoopy_outputregistry_dispatch (char const * const logMessage, int errorOrMessage)
 {
     snoopy_configuration_t *CFG;
 

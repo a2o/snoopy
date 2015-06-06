@@ -25,4 +25,4 @@
 /*
  * SNOOPY DATA SOURCE: tid
  */
-int snoopy_datasource_tid (char *result, char *arg);
+int snoopy_datasource_tid (char * const result, char const * const arg);

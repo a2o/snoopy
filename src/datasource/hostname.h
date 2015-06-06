@@ -25,4 +25,4 @@
 /*
  * SNOOPY DATA SOURCE: hostname
  */
-int snoopy_datasource_hostname (char *result, char *arg);
+int snoopy_datasource_hostname (char * const result, char const * const arg);

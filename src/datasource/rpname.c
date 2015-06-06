@@ -82,7 +82,7 @@ char* read_proc_property (int pid, char* prop_name);
  * Return:
  *     number of characters in the returned string, or SNOOPY_DATASOURCE_FAILURE
  */
-int snoopy_datasource_rpname (char *result, char *arg)
+int snoopy_datasource_rpname (char * const result, char const * const arg)
 {
     return get_rpname(getpid(), result);
 }

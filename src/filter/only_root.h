@@ -25,4 +25,4 @@
 /*
  * SNOOPY FILTER: only_root
  */
-int snoopy_filter_only_root (char *msg, char *arg);
+int snoopy_filter_only_root (char *msg, char const * const arg);

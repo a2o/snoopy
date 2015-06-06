@@ -27,6 +27,6 @@
  */
 int   snoopy_genericregistry_getCount      (char *regArray[]);
 int   snoopy_genericregistry_doesIdExist   (char *regArray[], int   itemId);
-int   snoopy_genericregistry_doesNameExist (char *regArray[], char *itemName);
-int   snoopy_genericregistry_getIdFromName (char *regArray[], char *itemName);
+int   snoopy_genericregistry_doesNameExist (char *regArray[], char const * const itemName);
+int   snoopy_genericregistry_getIdFromName (char *regArray[], char const * const itemName);
 char* snoopy_genericregistry_getName       (char *regArray[], int   itemId);

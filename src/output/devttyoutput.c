@@ -45,7 +45,7 @@
  * Return:
  *     int:        See snoopy.h (SNOOPY_OUTPUT_*) for details.
  */
-int snoopy_output_devttyoutput (char *logMessage, int errorOrMessage, char *arg)
+int snoopy_output_devttyoutput (char const * const logMessage, int errorOrMessage, char const * const arg)
 {
     return snoopy_output_fileoutput(logMessage, errorOrMessage, "/dev/tty");
 }

@@ -25,4 +25,4 @@
 /*
  * SNOOPY DATA SOURCE: domain
  */
-int snoopy_datasource_domain (char *result, char *arg);
+int snoopy_datasource_domain (char * const result, char const * const arg);

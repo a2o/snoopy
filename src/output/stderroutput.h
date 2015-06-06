@@ -25,4 +25,4 @@
 /*
  * SNOOPY OUTPUT: write to stderr
  */
-int snoopy_output_stderroutput (char *logMessage, int errorOrMessage, char *arg);
+int snoopy_output_stderroutput (char const * const logMessage, int errorOrMessage, char const * const arg);

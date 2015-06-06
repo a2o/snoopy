@@ -25,4 +25,4 @@
 /*
  * SNOOPY DATA SOURCE: ppid
  */
-int snoopy_datasource_ppid (char *result, char *arg);
+int snoopy_datasource_ppid (char * const result, char const * const arg);

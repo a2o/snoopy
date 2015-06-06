@@ -136,7 +136,7 @@
 /*
  * Two arrays holding data about all data sources
  */
-char *snoopy_datasourceregistry_names[] = {
+char* snoopy_datasourceregistry_names[] = {
 #ifdef SNOOPY_CONF_DATASOURCE_ENABLED_cmdline
     "cmdline",
 #endif
@@ -233,7 +233,7 @@ char *snoopy_datasourceregistry_names[] = {
     "",
 };
 
-int (*snoopy_datasourceregistry_ptrs []) (char *result, char *arg) = {
+int (*snoopy_datasourceregistry_ptrs []) (char * const result, char const * const arg) = {
 #ifdef SNOOPY_CONF_DATASOURCE_ENABLED_cmdline
     snoopy_datasource_cmdline,
 #endif
@@ -360,7 +360,7 @@ int snoopy_datasourceregistry_doesIdExist (int datasourceId)
  *
  * Return true if datasource exists (by name), otherwise return false
  */
-int snoopy_datasourceregistry_doesNameExist (char *datasourceName)
+int snoopy_datasourceregistry_doesNameExist (char const * const datasourceName)
 {
     return snoopy_genericregistry_doesNameExist(snoopy_datasourceregistry_names, datasourceName);
 }
@@ -372,7 +372,7 @@ int snoopy_datasourceregistry_doesNameExist (char *datasourceName)
  *
  * Return index of given datasource, or -1 if not found
  */
-int snoopy_datasourceregistry_getIdFromName (char *datasourceName)
+int snoopy_datasourceregistry_getIdFromName (char const * const datasourceName)
 {
     return snoopy_genericregistry_getIdFromName(snoopy_datasourceregistry_names, datasourceName);
 }
@@ -396,13 +396,13 @@ char* snoopy_datasourceregistry_getName (int datasourceId)
  *
  * Call the given datasource by id and return its output
  */
-int snoopy_datasourceregistry_callById (int datasourceId, char *logMessage, char *datasourceArg)
+int snoopy_datasourceregistry_callById (int datasourceId, char * const result, char const * const datasourceArg)
 {
     if (SNOOPY_FALSE == snoopy_datasourceregistry_doesIdExist(datasourceId)) {
         return -1;
     }
 
-    return snoopy_datasourceregistry_ptrs[datasourceId](logMessage, datasourceArg);
+    return snoopy_datasourceregistry_ptrs[datasourceId](result, datasourceArg);
 }
 
 
@@ -412,7 +412,7 @@ int snoopy_datasourceregistry_callById (int datasourceId, char *logMessage, char
  *
  * Call the given datasource by name and return its output
  */
-int snoopy_datasourceregistry_callByName (char *datasourceName, char *logMessage, char *datasourceArg)
+int snoopy_datasourceregistry_callByName (char const * const datasourceName, char * const result, char const * const datasourceArg)
 {
     int datasourceId;
 
@@ -421,5 +421,5 @@ int snoopy_datasourceregistry_callByName (char *datasourceName, char *logMessage
         return -1;
     }
 
-    return snoopy_datasourceregistry_ptrs[datasourceId](logMessage, datasourceArg);
+    return snoopy_datasourceregistry_ptrs[datasourceId](result, datasourceArg);
 }

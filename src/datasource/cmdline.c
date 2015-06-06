@@ -54,7 +54,7 @@
  * Return:
  *     number of characters in the returned string, or SNOOPY_DATASOURCE_FAILURE
  */
-int snoopy_datasource_cmdline (char *result, char *arg)
+int snoopy_datasource_cmdline (char * const result, char const * const arg)
 {
     char   *cmdLine = NULL;
     int     cmdLineArgCount;

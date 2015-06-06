@@ -51,7 +51,7 @@
  * Return:
  *     number of characters in the returned string, or SNOOPY_DATASOURCE_FAILURE
  */
-int snoopy_datasource_tid_kernel (char *result, char *arg)
+int snoopy_datasource_tid_kernel (char * const result, char const * const arg)
 {
     pid_t tid = syscall(SYS_gettid);
 

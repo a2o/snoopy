@@ -27,9 +27,9 @@
  */
 int   snoopy_datasourceregistry_getCount      ();
 int   snoopy_datasourceregistry_doesIdExist   (int   datasourceId);
-int   snoopy_datasourceregistry_doesNameExist (char *datasourceName);
-int   snoopy_datasourceregistry_getIdFromName (char *datasourceName);
+int   snoopy_datasourceregistry_doesNameExist (char const * const datasourceName);
+int   snoopy_datasourceregistry_getIdFromName (char const * const datasourceName);
 char* snoopy_datasourceregistry_getName       (int   datasourceId);
 
-int   snoopy_datasourceregistry_callById      (int   datasourceId,   char *logMessage, char *datasourceArg);
-int   snoopy_datasourceregistry_callByName    (char *datasourceName, char *logMessage, char *datasourceArg);
+int   snoopy_datasourceregistry_callById      (int                datasourceId,   char * const result, char const * const datasourceArg);
+int   snoopy_datasourceregistry_callByName    (char const * const datasourceName, char * const result, char const * const datasourceArg);

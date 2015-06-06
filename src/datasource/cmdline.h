@@ -25,4 +25,4 @@
 /*
  * SNOOPY DATA SOURCE: cmdline
  */
-int snoopy_datasource_cmdline (char *result, char *arg);
+int snoopy_datasource_cmdline (char * const result, char const * const arg);

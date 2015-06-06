@@ -50,7 +50,7 @@
  * Return:
  *     int:        See snoopy.h (SNOOPY_OUTPUT_*) for details.
  */
-int snoopy_output_fileoutput (char *logMessage, int errorOrMessage, char *arg)
+int snoopy_output_fileoutput (char const * const logMessage, int errorOrMessage, char const * const arg)
 {
     FILE  *fp;
     int    charCount;

@@ -54,7 +54,7 @@
  * Return:
  *     int:        See snoopy.h (SNOOPY_OUTPUT_*) for details.
  */
-int snoopy_output_socketoutput (char *logMessage, int errorOrMessage, char *arg)
+int snoopy_output_socketoutput (char const * const logMessage, int errorOrMessage, char const * const arg)
 {
     int                  s;
     struct sockaddr_un   remote;

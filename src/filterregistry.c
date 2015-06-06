@@ -69,7 +69,7 @@ char *snoopy_filterregistry_names[] = {
     "",
 };
 
-int (*snoopy_filterregistry_ptrs []) (char *logMessage, char *arg) = {
+int (*snoopy_filterregistry_ptrs []) (char *logMessage, char const * const arg) = {
 #ifdef SNOOPY_CONF_FILTER_ENABLED_exclude_spawns_of
     snoopy_filter_exclude_spawns_of,
 #endif
@@ -115,7 +115,7 @@ int snoopy_filterregistry_doesIdExist (int filterId)
  *
  * Return true if filter exists (by name), otherwise return false
  */
-int snoopy_filterregistry_doesNameExist (char *filterName)
+int snoopy_filterregistry_doesNameExist (char const * const filterName)
 {
     return snoopy_genericregistry_doesNameExist(snoopy_filterregistry_names, filterName);
 }
@@ -127,7 +127,7 @@ int snoopy_filterregistry_doesNameExist (char *filterName)
  *
  * Return index of given filter, or -1 if not found
  */
-int snoopy_filterregistry_getIdFromName (char *filterName)
+int snoopy_filterregistry_getIdFromName (char const * const filterName)
 {
     return snoopy_genericregistry_getIdFromName(snoopy_filterregistry_names, filterName);
 }
@@ -151,7 +151,7 @@ char* snoopy_filterregistry_getName (int filterId)
  *
  * Call the given filter by id and return its output
  */
-int snoopy_filterregistry_callById (int filterId, char *logMessage, char *filterArg)
+int snoopy_filterregistry_callById (int filterId, char *logMessage, char const * const filterArg)
 {
     if (SNOOPY_FALSE == snoopy_filterregistry_doesIdExist(filterId)) {
         return -1;
@@ -167,7 +167,7 @@ int snoopy_filterregistry_callById (int filterId, char *logMessage, char *filter
  *
  * Call the given filter by name and return its output
  */
-int snoopy_filterregistry_callByName (char *filterName, char *logMessage, char *filterArg)
+int snoopy_filterregistry_callByName (char const * const filterName, char * logMessage, char const * const filterArg)
 {
     int filterId;
 

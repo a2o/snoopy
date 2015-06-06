@@ -51,7 +51,7 @@
  * Return:
  *     int:        See snoopy.h (SNOOPY_OUTPUT_*) for details.
  */
-int snoopy_output_devlogoutput (char *logMessage, int errorOrMessage, char *arg)
+int snoopy_output_devlogoutput (char const * const logMessage, int errorOrMessage, char const * const arg)
 {
     char  *logMessageWithPrefix = NULL;
     int    retVal;

@@ -42,6 +42,8 @@ o Internal feature: created generic argument parser. It should be used by all
 o Internal enhancement: iniparser upgraded to version 4.0. Also migrated to git
     submodule.
 o Internal enhancement: iniparser migrated to nested autotools subpackage.
+o Internal refactoring: make all arguments (that are applicable to be changed)
+    to datasources, filters and outputs, constant string pointers.
 
 o Build bugfix: actually halt if some required header file, function or library
     is missing. Before this fix it only displayed "checking for X... no" error

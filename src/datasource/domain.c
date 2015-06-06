@@ -61,7 +61,7 @@
  * Return:
  *     number of characters in the returned string, or SNOOPY_DATASOURCE_FAILURE
  */
-int snoopy_datasource_domain (char *result, char *arg)
+int snoopy_datasource_domain (char * const result, char const * const arg)
 {
     FILE *fp;
     char  hostname[SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE+1];   // +1 - we add "." to the end of string

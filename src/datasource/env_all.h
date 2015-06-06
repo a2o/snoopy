@@ -25,4 +25,4 @@
 /*
  * SNOOPY DATA SOURCE: env_all
  */
-int snoopy_datasource_env_all (char *result, char *arg);
+int snoopy_datasource_env_all (char * const result, char const * const arg);

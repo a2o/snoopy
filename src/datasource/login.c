@@ -56,7 +56,7 @@
  * Return:
  *     number of characters in the returned string, or SNOOPY_DATASOURCE_FAILURE
  */
-int snoopy_datasource_login (char *result, char *arg)
+int snoopy_datasource_login (char * const result, char const * const arg)
 {
     int          loginSizeMaxWithoutNull = SNOOPY_DATASOURCE_LOGIN_loginSizeMaxWithoutNull;
     int          loginSizeMaxWithNull    = SNOOPY_DATASOURCE_LOGIN_loginSizeMaxWithNull;

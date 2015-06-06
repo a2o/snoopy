@@ -25,4 +25,4 @@
 /*
  * SNOOPY DATA SOURCE: gid
  */
-int snoopy_datasource_gid (char *result, char *arg);
+int snoopy_datasource_gid (char * const result, char const * const arg);

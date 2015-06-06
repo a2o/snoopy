@@ -25,4 +25,4 @@
 /*
  * SNOOPY DATA SOURCE: cwd
  */
-int snoopy_datasource_cwd (char *result, char *arg);
+int snoopy_datasource_cwd (char * const result, char const * const arg);

@@ -25,4 +25,4 @@
 /*
  * SNOOPY DATA SOURCE: filename
  */
-int snoopy_datasource_filename (char *result, char *arg);
+int snoopy_datasource_filename (char * const result, char const * const arg);

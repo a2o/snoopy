@@ -25,4 +25,4 @@
 /*
  * SNOOPY DATA SOURCE: rpname
  */
-int   snoopy_datasource_rpname (char *result, char *arg);
+int   snoopy_datasource_rpname (char * const result, char const * const arg);

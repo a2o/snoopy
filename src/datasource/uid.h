@@ -25,4 +25,4 @@
 /*
  * SNOOPY DATA SOURCE: uid
  */
-int snoopy_datasource_uid (char *result, char *arg);
+int snoopy_datasource_uid (char * const result, char const * const arg);
