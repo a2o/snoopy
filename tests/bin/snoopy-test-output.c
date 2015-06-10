@@ -28,7 +28,9 @@
 //#include "snoopy-test-output.h"
 
 #include "snoopy.h"
+
 #include "inputdatastorage.h"
+#include "misc.h"
 #include "outputregistry.h"
 
 #include <stdio.h>
@@ -53,6 +55,7 @@ int main (int argc, char **argv)
 
 
     /* Initialize Snoopy */
+    snoopy_init();
     snoopy_inputdatastorage_store_filename(argv[0]);
     snoopy_inputdatastorage_store_argv(argv);
 
@@ -90,7 +93,9 @@ int main (int argc, char **argv)
         return fatalError("Output failure");
     }
 
-    /* Display and return */
+
+    /* Housekeeping and return */
+    snoopy_cleanup();
     return 0;
 }
 

@@ -29,8 +29,11 @@
 
 #include "snoopy.h"
 #include "configuration.h"
-#include "inputdatastorage.h"
 #include "error.h"
+#include "inputdatastorage.h"
+#ifdef SNOOPY_CONF_THREAD_SAFETY_ENABLED
+#include "tsrm.h"
+#endif
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -43,7 +46,9 @@
  * snoopy_init
  *
  * Description:
- *     Handles Snoopy initialization/startup specifics
+ *     Handles Snoopy initialization/startup specifics.
+ *     This method must be called when initializing anything that is
+ *     Snoopy-based. This is especially true for thread-safe Snoopy builds.
  *
  * Params:
  *     (none)
@@ -53,6 +58,9 @@
  */
 void snoopy_init ()
 {
+#ifdef SNOOPY_CONF_THREAD_SAFETY_ENABLED
+    snoopy_tsrm_ctor();
+#endif
     snoopy_configuration_ctor();
     snoopy_inputdatastorage_ctor();
 }
@@ -73,8 +81,12 @@ void snoopy_init ()
  */
 void snoopy_cleanup ()
 {
+    /* Reverse order from ctor */
     snoopy_inputdatastorage_dtor();
     snoopy_configuration_dtor();
+#ifdef SNOOPY_CONF_THREAD_SAFETY_ENABLED
+    snoopy_tsrm_dtor();
+#endif
 }
 
 

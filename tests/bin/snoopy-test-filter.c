@@ -28,8 +28,10 @@
 //#include "snoopy-test-filter.h"
 
 #include "snoopy.h"
-#include "inputdatastorage.h"
+
 #include "filterregistry.h"
+#include "inputdatastorage.h"
+#include "misc.h"
 
 #include <stdio.h>
 
@@ -53,6 +55,7 @@ int main (int argc, char **argv)
 
 
     /* Initialize Snoopy */
+    snoopy_init();
     snoopy_inputdatastorage_store_filename(argv[0]);
     snoopy_inputdatastorage_store_argv(argv);
 
@@ -86,6 +89,10 @@ int main (int argc, char **argv)
 
     /* Call the filter */
     filterResult = snoopy_filterregistry_callByName(filterName, message, filterArg);
+
+
+    /* Housekeeping */
+    snoopy_cleanup();
 
 
     /* Display and return */

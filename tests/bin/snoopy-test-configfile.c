@@ -55,6 +55,7 @@ int main (int argc, char **argv)
 
 
     /* Initialize Snoopy */
+    snoopy_init();
     snoopy_inputdatastorage_store_filename(argv[0]);
     snoopy_inputdatastorage_store_argv(argv);
 
@@ -116,8 +117,8 @@ int main (int argc, char **argv)
     }
 
 
-    /* Cleanup and return */
-    snoopy_configuration_dtor();
+    /* Housekeeping and return */
+    snoopy_cleanup();
     return 0;
 }
 

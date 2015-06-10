@@ -13,6 +13,8 @@ o Change: Removal of deprecated feature: removed ./configure flag
     is encountered. General filtering should be used instead, like this:
         --enable-filtering --with-filter-chain="only_uid:0".
 
+o Enhancement: EXPERIMENTAL support for thread-safety added.
+
 o Feature: added new dummy data source: snoopy_literal. Returns its own
     argument.
 o Feature: added new data source: tid (Thread ID).

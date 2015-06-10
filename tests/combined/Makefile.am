@@ -31,3 +31,11 @@ endif
 EXTRA_DIST    = _bootstrap.sh
 EXTRA_DIST   += combined-generic.sh
 EXTRA_DIST   += $(TESTS)
+
+
+
+### Remove stale temporary test files, if tests got stuck
+#
+clean-local:
+	rm -f *.ini ;
+	rm -f *.out ;

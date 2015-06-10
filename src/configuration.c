@@ -31,6 +31,9 @@
 #ifdef SNOOPY_CONFIGFILE_ENABLED
 #include "configfile.h"
 #endif
+#ifdef SNOOPY_CONF_THREAD_SAFETY_ENABLED
+#include "tsrm.h"
+#endif
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -41,12 +44,22 @@
 
 
 
+
 /*
- * Storage of Snoopy configuration, with default values
+ * Should alternate configuration file be loaded?
  */
+char *snoopy_configuration_altConfigFilePath = NULL;
+
+
+
+/*
+ * Storage of Snoopy configuration for non-thread-safe builds
+ */
+#ifndef SNOOPY_CONF_THREAD_SAFETY_ENABLED
 snoopy_configuration_t   snoopy_configuration_data = {
     .initialized = SNOOPY_FALSE,
 };
+#endif
 
 
 
@@ -71,9 +84,13 @@ void snoopy_configuration_ctor ()
     /* Get config pointer */
     snoopy_configuration_t *CFG = snoopy_configuration_get();
 
-
     /* Parse INI file if enabled */
-    snoopy_configfile_load(CFG->configfile_path);
+    if (NULL != snoopy_configuration_altConfigFilePath) {
+        // This is used by Snoopy testing suite - combined tests
+        snoopy_configfile_load(snoopy_configuration_altConfigFilePath);
+    } else {
+        snoopy_configfile_load(CFG->configfile_path);
+    }
 #endif
 }
 
@@ -203,6 +220,27 @@ void snoopy_configuration_dtor ()
 
 
 /*
+ * snoopy_configuration_setUninitialized
+ *
+ * Description:
+ *     Sets state of configuration array to uninitialized.
+ *
+ * Params:
+ *     (none)
+ *
+ * Return:
+ *     void
+ */
+void snoopy_configuration_setUninitialized
+(
+    snoopy_configuration_t *CFG
+) {
+    CFG->initialized = SNOOPY_FALSE;
+}
+
+
+
+/*
  * snoopy_configuration_setDefaults
  *
  * Description:
@@ -279,17 +317,11 @@ void snoopy_configuration_setDefaults
  */
 void snoopy_configuration_set_configfile_path_from_env ()
 {
-    snoopy_configuration_t *CFG;
     char *valuePtr;
 
 
-    /* Get config pointer */
-    CFG = snoopy_configuration_get();
-
-
-    valuePtr = getenv("SNOOPY_INI");
-
     /* Does environmental variable exist? */
+    valuePtr = getenv("SNOOPY_INI");
     if (NULL == valuePtr) {
         /* Nope. */
         return;
@@ -303,7 +335,7 @@ void snoopy_configuration_set_configfile_path_from_env ()
 
     /* Store it */
     /* FIXME does this have to be copied to malloced local variable? */
-    CFG->configfile_path = valuePtr;
+    snoopy_configuration_altConfigFilePath = valuePtr;
 }
 
 
@@ -318,12 +350,21 @@ void snoopy_configuration_set_configfile_path_from_env ()
  *     envp:   environment array pointer to store
  *
  * Return:
- *     void
+ *     snoopy_configuration_t*
  */
 snoopy_configuration_t* snoopy_configuration_get ()
 {
-    if (SNOOPY_TRUE != snoopy_configuration_data.initialized) {
-        snoopy_configuration_setDefaults(&snoopy_configuration_data);
+    snoopy_configuration_t *CFG;
+
+#ifdef SNOOPY_CONF_THREAD_SAFETY_ENABLED
+    CFG = snoopy_tsrm_get_configuration();
+#else
+    CFG = &snoopy_configuration_data;
+#endif
+
+    if (SNOOPY_TRUE != CFG->initialized) {
+        snoopy_configuration_setDefaults(CFG);
     }
-    return &snoopy_configuration_data;
+
+    return CFG;
 }

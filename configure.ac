@@ -281,12 +281,12 @@ AC_ARG_ENABLE(config-file,
     SNOOPY_CONFIGURE_ENABLE_GENERIC_UNSPECIFIED([config-file], [configfile_enabled], [$enable_everything], [yes])
 )
 
-    AC_MSG_NOTICE([Snoopy config file enabled: $configfile_enabled])
+AC_MSG_NOTICE([Snoopy config file enabled:   $configfile_enabled])
 AS_IF([test "x$configfile_enabled" == "xyes"], [
     configfile_path="$SYSCONFDIR/snoopy.ini"
     AC_DEFINE_UNQUOTED(SNOOPY_CONF_CONFIGFILE_ENABLED, 1,                   [Is config file parsing enabled?])
     AC_DEFINE_UNQUOTED(SNOOPY_CONF_CONFIGFILE_PATH,    "$configfile_path",  [INI configuration file path to use])
-    AC_MSG_NOTICE([Snoopy config file path: $configfile_path])
+    AC_MSG_NOTICE([Snoopy config file path:      $configfile_path])
 ])
 
 AM_CONDITIONAL([CONFIGFILE_ENABLED], [test "x$configfile_enabled" == "xyes"])
@@ -309,6 +309,21 @@ AS_IF([test "x$enable_error_logging" = "xyes"], [
     AC_DEFINE_UNQUOTED(SNOOPY_CONF_ERROR_LOGGING_ENABLED, 1, [Enable error logging])
 ])
 AC_MSG_NOTICE([Snoopy error logging enabled: $enable_error_logging])
+
+
+
+dnl ============================================================================
+dnl ======= ENABLE THREAD SAFETY ===============================================
+dnl ============================================================================
+AC_ARG_ENABLE(thread-safety,
+    [AC_HELP_STRING(
+        [--enable-thread-safety],
+        [EXPERIMENTAL: enable parts of code that ensure safe multi-threaded operation [default=disabled]]
+    )],
+    SNOOPY_CONFIGURE_ENABLE_GENERIC_SPECIFIED(  [thread_safety], [thread_safety_enabled], [$enableval], []),
+    SNOOPY_CONFIGURE_ENABLE_GENERIC_UNSPECIFIED([thread_safety], [thread_safety_enabled], [$enable_everything], [no])
+)
+SNOOPY_CONFIGURE_ENABLE_GENERIC_EVALUATE([$thread_safety_enabled], [THREAD_SAFETY_ENABLED], [thread safety])
 
 
 

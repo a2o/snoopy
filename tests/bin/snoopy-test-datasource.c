@@ -28,8 +28,9 @@
 //#include "snoopy-test-datasource.h"
 
 #include "snoopy.h"
-#include "inputdatastorage.h"
 #include "datasourceregistry.h"
+#include "inputdatastorage.h"
+#include "misc.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -54,6 +55,7 @@ int main (int argc, char **argv)
 
 
     /* Initialize Snoopy */
+    snoopy_init();
     snoopy_inputdatastorage_store_filename(argv[0]);
     snoopy_inputdatastorage_store_argv(argv);
 
@@ -99,8 +101,12 @@ int main (int argc, char **argv)
     }
 
 
-    /* Display and return */
+    /* Display */
     printf("%s\n", datasourceResult);
+
+
+    /* Housekeeping and return */
+    snoopy_cleanup();
     return 0;
 }
 

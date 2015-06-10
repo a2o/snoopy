@@ -28,8 +28,10 @@
 //#include "snoopy-test-message-format.h"
 
 #include "snoopy.h"
+
 #include "inputdatastorage.h"
 #include "message.h"
+#include "misc.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -51,6 +53,7 @@ int main (int argc, char **argv)
 
 
     /* Initialize Snoopy */
+    snoopy_init();
     snoopy_inputdatastorage_store_filename(argv[0]);
     snoopy_inputdatastorage_store_argv(argv);
 
@@ -72,9 +75,13 @@ int main (int argc, char **argv)
     snoopy_message_generateFromFormat(message, messageFormat);
 
 
-    /* Display, cleanup and return */
+    /* Display result */
     printf("%s\n", message);
+
+
+    /* Housekeeping and return */
     free(message);
+    snoopy_cleanup();
     return 0;
 }
 

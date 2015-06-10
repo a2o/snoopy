@@ -23,6 +23,14 @@
 
 
 /*
+ * START: Prevent cyclic inclusions
+ */
+#ifndef __SNOOPY_INPUTDATASTORAGE_H
+#define __SNOOPY_INPUTDATASTORAGE_H
+
+
+
+/*
  * Store execution data for inputs to consume
  */
 typedef struct {
@@ -37,9 +45,10 @@ typedef struct {
 /*
  * Init functions
  */
-void snoopy_inputdatastorage_ctor        ();
-void snoopy_inputdatastorage_dtor        ();
-void snoopy_inputdatastorage_setDefaults ();
+void snoopy_inputdatastorage_ctor             ();
+void snoopy_inputdatastorage_dtor             ();
+void snoopy_inputdatastorage_setUninitialized (snoopy_inputdatastorage_t *IDS);
+void snoopy_inputdatastorage_setDefaults      (snoopy_inputdatastorage_t *IDS);
 
 
 
@@ -56,3 +65,10 @@ void snoopy_inputdatastorage_store_envp     (      char *envp[]  );
  * Retrieval functions
  */
 snoopy_inputdatastorage_t*   snoopy_inputdatastorage_get ();
+
+
+
+/*
+ * END: Prevent cyclic inclusion
+ */
+#endif   /* Cyclic inclusion */
