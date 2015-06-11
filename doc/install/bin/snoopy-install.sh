@@ -171,8 +171,8 @@ set -u
 #
 rm -f $SNOOPY_INSTALL_LOGFILE
 touch $SNOOPY_INSTALL_LOGFILE
-echo "SNOOPY INSTALL: Starting installation, log file name: $SNOOPY_INSTALL_LOGFILE"
-echo "SNOOPY INSTALL: Installation mode: $SNOOPY_INSTALL_MODE"
+echo "SNOOPY INSTALL: Starting installation, log file name: $SNOOPY_INSTALL_LOGFILE" | tee -a $SNOOPY_INSTALL_LOGFILE
+echo "SNOOPY INSTALL: Installation mode: $SNOOPY_INSTALL_MODE"                       | tee -a $SNOOPY_INSTALL_LOGFILE
 
 
 
@@ -180,25 +180,25 @@ echo "SNOOPY INSTALL: Installation mode: $SNOOPY_INSTALL_MODE"
 #
 if [ "$SNOOPY_INSTALL_MODE" == "git" ]; then
 
-    echo "SNOOPY INSTALL: Cloning git repository: $SNOOPY_GIT_ORIGIN_URI"
+    echo "SNOOPY INSTALL: Cloning git repository: $SNOOPY_GIT_ORIGIN_URI" | tee -a $SNOOPY_INSTALL_LOGFILE
     SNOOPY_LOCAL_GIT_DIR="snoopy-install-from.git"
 
     rm -rf ./$SNOOPY_LOCAL_GIT_DIR
     git clone $SNOOPY_GIT_ORIGIN_URI $SNOOPY_LOCAL_GIT_DIR >> $SNOOPY_INSTALL_LOGFILE 2>&1
     cd $SNOOPY_LOCAL_GIT_DIR
 
-    echo "SNOOPY INSTALL: Checking out git ref: $SNOOPY_GIT_REF_TO_INSTALL"
+    echo "SNOOPY INSTALL: Checking out git ref: $SNOOPY_GIT_REF_TO_INSTALL" | tee -a $SNOOPY_INSTALL_LOGFILE
     git checkout $SNOOPY_GIT_REF_TO_INSTALL >> $SNOOPY_INSTALL_LOGFILE 2>&1
 
     # Submodules are in use since iniparser was moved to own git repo
     if [ -f .gitmodules ]; then
-        echo "SNOOPY INSTALL: Git submodules: initilizing... "
+        echo "SNOOPY INSTALL: Git submodules: initilizing... " | tee -a $SNOOPY_INSTALL_LOGFILE
         git submodule init     >> $SNOOPY_INSTALL_LOGFILE 2>&1
-        echo "SNOOPY INSTALL: Git submodules: updating... "
+        echo "SNOOPY INSTALL: Git submodules: updating... "    | tee -a $SNOOPY_INSTALL_LOGFILE
         git submodule update   >> $SNOOPY_INSTALL_LOGFILE 2>&1
     fi
 
-    echo "SNOOPY INSTALL: Bootstraping installation procedure (autoreconf etc.)..."
+    echo "SNOOPY INSTALL: Bootstraping installation procedure (autoreconf etc.)..." | tee -a $SNOOPY_INSTALL_LOGFILE
     if [ -x bootstrap.sh ]; then
         ./bootstrap.sh         >> $SNOOPY_INSTALL_LOGFILE 2>&1
 
@@ -214,8 +214,8 @@ if [ "$SNOOPY_INSTALL_MODE" == "git" ]; then
         true
 
     else
-        echo "SNOOPY INSTALL ERROR: This git ref is too old to be supported by this installation procedure."
-        echo "SNOOPY INSTALL ERROR: You will have to install it manually."
+        echo "SNOOPY INSTALL ERROR: This git ref is too old to be supported by this installation procedure." | tee -a $SNOOPY_INSTALL_LOGFILE
+        echo "SNOOPY INSTALL ERROR: You will have to install it manually." | tee -a $SNOOPY_INSTALL_LOGFILE
         exit 1
     fi
 
@@ -224,34 +224,34 @@ else
     ### Determine version to install
     #
     if [ "$SNOOPY_INSTALL_MODE" == "package-latest-stable" ]; then
-        echo -n "SNOOPY INSTALL: Getting latest Snoopy version: "
+        echo -n "SNOOPY INSTALL: Getting latest Snoopy version: " | tee -a $SNOOPY_INSTALL_LOGFILE
         SNOOPY_PACKAGE_VERSION=`wget -q -O - $SNOOPY_PACKAGE_DOWNLOAD_URI_PREFIX/snoopy-latest-version.txt`
         SNOOPY_PACKAGE_FILENAME=`wget -q -O - $SNOOPY_PACKAGE_DOWNLOAD_URI_PREFIX/snoopy-latest-package-filename.txt`
     fi
 
     if [ "$SNOOPY_INSTALL_MODE" == "package-exact-version" ]; then
-        echo -n "SNOOPY INSTALL: Will install the following package: "
+        echo -n "SNOOPY INSTALL: Will install the following package: " | tee -a $SNOOPY_INSTALL_LOGFILE
         SNOOPY_PACKAGE_VERSION="$SNOOPY_VERSION_TO_INSTALL"
         SNOOPY_PACKAGE_FILENAME="snoopy-$SNOOPY_PACKAGE_VERSION.tar.gz"
     fi
     SNOOPY_PACKAGE_URI="$SNOOPY_PACKAGE_DOWNLOAD_URI_PREFIX/$SNOOPY_PACKAGE_FILENAME"
     SNOOPY_PACKAGE_DIRNAME=`echo "$SNOOPY_PACKAGE_FILENAME" | sed -e 's/\.tar.gz$//'`
-    echo "$SNOOPY_PACKAGE_FILENAME"
+    echo "$SNOOPY_PACKAGE_FILENAME" | tee -a $SNOOPY_INSTALL_LOGFILE
 
     ### Download Snoopy package
     #
-    echo -n "SNOOPY INSTALL: Downloading $SNOOPY_PACKAGE_URI... "
+    echo -n "SNOOPY INSTALL: Downloading $SNOOPY_PACKAGE_URI... " | tee -a $SNOOPY_INSTALL_LOGFILE
     rm -f $SNOOPY_PACKAGE_FILENAME
     wget $SNOOPY_PACKAGE_URI >> $SNOOPY_INSTALL_LOGFILE 2>&1
-    echo "done."
+    echo "done." | tee -a $SNOOPY_INSTALL_LOGFILE
 
     ### Untar, build and configure
     #
-    echo -n "SNOOPY INSTALL: Unpacking $SNOOPY_PACKAGE_FILENAME... "
+    echo -n "SNOOPY INSTALL: Unpacking $SNOOPY_PACKAGE_FILENAME... " | tee -a $SNOOPY_INSTALL_LOGFILE
     rm -rf $SNOOPY_PACKAGE_DIRNAME
     tar -xzf $SNOOPY_PACKAGE_FILENAME
     cd $SNOOPY_PACKAGE_DIRNAME
-    echo "done."
+    echo "done." | tee -a $SNOOPY_INSTALL_LOGFILE
 fi
 
 
@@ -267,29 +267,29 @@ else
     SNOOPY_INSTALL_CONFIGURE_FLAG_FILTERING="--enable-filter"   # Older variation
 fi
 
-echo -n "SNOOPY INSTALL: Configuring... "
+echo -n "SNOOPY INSTALL: Configuring... " | tee -a $SNOOPY_INSTALL_LOGFILE
 ./configure \
     --enable-config-file \
     --sysconfdir=/etc \
     $SNOOPY_INSTALL_CONFIGURE_FLAG_FILTERING \
     >> $SNOOPY_INSTALL_LOGFILE 2>&1
-echo "done."
+echo "done." | tee -a $SNOOPY_INSTALL_LOGFILE
 
-echo -n "SNOOPY INSTALL: Building... "
+echo -n "SNOOPY INSTALL: Building... " | tee -a $SNOOPY_INSTALL_LOGFILE
 make         >> $SNOOPY_INSTALL_LOGFILE 2>&1
-echo "done."
+echo "done." | tee -a $SNOOPY_INSTALL_LOGFILE
 
-echo -n "SNOOPY INSTALL: Testing build... "
+echo -n "SNOOPY INSTALL: Testing build... " | tee -a $SNOOPY_INSTALL_LOGFILE
 make check   >> $SNOOPY_INSTALL_LOGFILE 2>&1
-echo "done."
+echo "done." | tee -a $SNOOPY_INSTALL_LOGFILE
 
-echo -n "SNOOPY INSTALL: Installing... "
+echo -n "SNOOPY INSTALL: Installing... " | tee -a $SNOOPY_INSTALL_LOGFILE
 make install >> $SNOOPY_INSTALL_LOGFILE 2>&1
-echo "done."
+echo "done." | tee -a $SNOOPY_INSTALL_LOGFILE
 
-echo -n "SNOOPY INSTALL: Enabling... "
+echo -n "SNOOPY INSTALL: Enabling... " | tee -a $SNOOPY_INSTALL_LOGFILE
 make enable  >> $SNOOPY_INSTALL_LOGFILE 2>&1
-echo "done."
+echo "done." | tee -a $SNOOPY_INSTALL_LOGFILE
 
 
 
