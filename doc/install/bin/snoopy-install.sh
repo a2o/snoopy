@@ -190,6 +190,14 @@ if [ "$SNOOPY_INSTALL_MODE" == "git" ]; then
     echo "SNOOPY INSTALL: Checking out git ref: $SNOOPY_GIT_REF_TO_INSTALL"
     git checkout $SNOOPY_GIT_REF_TO_INSTALL >> $SNOOPY_INSTALL_LOGFILE 2>&1
 
+    # Submodules are in use since iniparser was moved to own git repo
+    if [ -f .gitmodules ]; then
+        echo "SNOOPY INSTALL: Git submodules: initilizing... "
+        git submodule init     >> $SNOOPY_INSTALL_LOGFILE 2>&1
+        echo "SNOOPY INSTALL: Git submodules: updating... "
+        git submodule update   >> $SNOOPY_INSTALL_LOGFILE 2>&1
+    fi
+
     echo "SNOOPY INSTALL: Bootstraping installation procedure (autoreconf etc.)..."
     if [ -x bootstrap.sh ]; then
         ./bootstrap.sh         >> $SNOOPY_INSTALL_LOGFILE 2>&1
