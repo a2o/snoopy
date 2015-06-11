@@ -30,7 +30,7 @@ AC_TYPE_UID_T
 
 # Checks for library functions.
 AC_FUNC_MALLOC
-AC_CHECK_FUNCS([getcwd gethostname gettimeofday memmove memset socket strchr strdup strstr strtol])
+AC_CHECK_FUNCS([getcwd gethostname gettimeofday socket strchr strdup strstr])
 
 AC_CONFIG_FILES([Makefile
                  doc/Makefile
@@ -50,4 +50,5 @@ AC_CONFIG_FILES([Makefile
                  tests/message/Makefile
                  tests/output/Makefile
                  util/Makefile])
+AC_CONFIG_SUBDIRS([lib/iniparser])
 AC_OUTPUT

@@ -160,13 +160,10 @@ AC_CHECK_FUNCS([ \
     gethostname \
     getsid    \
     gettimeofday \
-    memmove   \
-    memset    \
     socket    \
     strchr    \
     strdup    \
     strstr    \
-    strtol    \
 ], [], [
     AC_MSG_ERROR([A function is missing. Unable to continue.])
 ])
