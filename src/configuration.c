@@ -46,9 +46,19 @@
 
 
 /*
+ * Flag that enables/disables configuration file parsing
+ *
+ * This is a runtime flag, used by binaries in tests/bin/ directory.
+ * ./configure flags are wrapped around this.
+ */
+int snoopy_configuration_configFileParsingEnabled = SNOOPY_TRUE;
+
+
+
+/*
  * Should alternate configuration file be loaded?
  */
-char *snoopy_configuration_altConfigFilePath = NULL;
+char * snoopy_configuration_altConfigFilePath = NULL;
 
 
 
@@ -60,6 +70,87 @@ snoopy_configuration_t   snoopy_configuration_data = {
     .initialized = SNOOPY_FALSE,
 };
 #endif
+
+
+
+/*
+ * snoopy_configuration_preinit_disableConfigFileParsing
+ *
+ * Description:
+ *     Disables configuration file parsing at runtime.
+ *
+ * Params:
+ *     (none)
+ *
+ * Return:
+ *     void
+ */
+void snoopy_configuration_preinit_disableConfigFileParsing ()
+{
+    snoopy_configuration_configFileParsingEnabled = SNOOPY_FALSE;
+}
+
+
+
+/*
+ * snoopy_configuration_preinit_enableConfigFileParsing
+ *
+ * Description:
+ *     Enables configuration file parsing at runtime. Optionally sets
+ *     alternative config file path.
+ *
+ * Params:
+ *     altConfigFilePath:   path to alternate config file
+ *
+ * Return:
+ *     void
+ */
+void snoopy_configuration_preinit_enableAltConfigFileParsing (char * const altConfigFilePath)
+{
+    if (NULL != altConfigFilePath) {
+        snoopy_configuration_altConfigFilePath = altConfigFilePath;
+    }
+    snoopy_configuration_configFileParsingEnabled = SNOOPY_TRUE;
+}
+
+
+
+/*
+ * snoopy_configuration_preinit_setConfigFilePathFromEnv
+ *
+ * Description:
+ *     Parses environment for SNOOPY_INI and if found, checks if
+ *     file exists and is readable, and sets path to snoopy.ini
+ *     accordingly. Also it enables runtime config file parsing.
+ *
+ * Params:
+ *     (none)
+ *
+ * Return:
+ *     void
+ */
+void snoopy_configuration_preinit_setConfigFilePathFromEnv ()
+{
+    char *valuePtr;
+
+
+    /* Does environmental variable exist? */
+    valuePtr = getenv("SNOOPY_INI");
+    if (NULL == valuePtr) {
+        /* Nope. */
+        return;
+    }
+
+    /* Is file readable? */
+    if (0 != access(valuePtr, R_OK)) {
+        /* Nope. */
+        return;
+    }
+
+    /* Store it */
+    /* FIXME does this have to be copied to malloced local variable? */
+    snoopy_configuration_preinit_enableAltConfigFileParsing(valuePtr);
+}
 
 
 
@@ -81,6 +172,11 @@ snoopy_configuration_t   snoopy_configuration_data = {
 void snoopy_configuration_ctor ()
 {
 #ifdef SNOOPY_CONFIGFILE_ENABLED
+    /* Is config file parsing disabled at runtime? */
+    if (SNOOPY_FALSE == snoopy_configuration_configFileParsingEnabled) {
+        return;
+    }
+
     /* Get config pointer */
     snoopy_configuration_t *CFG = snoopy_configuration_get();
 
@@ -297,45 +393,6 @@ void snoopy_configuration_setDefaults
     CFG->syslog_ident            = SNOOPY_SYSLOG_IDENT;
     CFG->syslog_ident_malloced   = SNOOPY_FALSE;
     CFG->syslog_level            = SNOOPY_SYSLOG_LEVEL;
-}
-
-
-
-/*
- * snoopy_configuration_set_configfile_path_from_env
- *
- * Description:
- *     Parses environment for SNOOPY_INI and if found, checks if
- *     file exists and is readable, and sets path to snoopy.ini
- *     accordingly.
- *
- * Params:
- *     (none)
- *
- * Return:
- *     void
- */
-void snoopy_configuration_set_configfile_path_from_env ()
-{
-    char *valuePtr;
-
-
-    /* Does environmental variable exist? */
-    valuePtr = getenv("SNOOPY_INI");
-    if (NULL == valuePtr) {
-        /* Nope. */
-        return;
-    }
-
-    /* Is file readable? */
-    if (0 != access(valuePtr, R_OK)) {
-        /* Nope. */
-        return;
-    }
-
-    /* Store it */
-    /* FIXME does this have to be copied to malloced local variable? */
-    snoopy_configuration_altConfigFilePath = valuePtr;
 }
 
 

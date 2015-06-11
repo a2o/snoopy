@@ -29,6 +29,7 @@
 
 #include "snoopy.h"
 
+#include "configuration.h"
 #include "filterregistry.h"
 #include "inputdatastorage.h"
 #include "misc.h"
@@ -55,6 +56,7 @@ int main (int argc, char **argv)
 
 
     /* Initialize Snoopy */
+    snoopy_configuration_preinit_disableConfigFileParsing();
     snoopy_init();
     snoopy_inputdatastorage_store_filename(argv[0]);
     snoopy_inputdatastorage_store_argv(argv);

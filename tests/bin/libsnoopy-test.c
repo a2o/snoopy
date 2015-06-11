@@ -59,7 +59,7 @@ int execv (const char *filename, char *const argv[]) {
     static int (*func)(const char *, char **);
 
     FN(func, int, "execv", (const char *, char **const));
-    snoopy_configuration_set_configfile_path_from_env();
+    snoopy_configuration_preinit_setConfigFilePathFromEnv();
     snoopy_log_syscall_execv(filename, argv);
 
     return (*func) (filename, (char **) argv);
@@ -75,7 +75,7 @@ int execve (const char *filename, char *const argv[], char *const envp[])
     static int (*func)(const char *, char **, char **);
 
     FN(func, int, "execve", (const char *, char **const, char **const));
-    snoopy_configuration_set_configfile_path_from_env();
+    snoopy_configuration_preinit_setConfigFilePathFromEnv();
     snoopy_log_syscall_execve(filename, argv, envp);
 
     return (*func) (filename, (char**) argv, (char **) envp);
