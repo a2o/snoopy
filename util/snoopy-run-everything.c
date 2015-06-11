@@ -31,7 +31,9 @@
 #include "libsnoopy-debug-addons.h"
 
 #include "configuration.h"
+#ifdef SNOOPY_FILTERING_ENABLED
 #include "filtering.h"
+#endif
 #include "log.h"
 #include "message.h"
 #include "misc.h"
@@ -70,8 +72,10 @@ int main (int argc, char **argv)
     /* TODO: Parse config file with all settings */
     printf("-----[ Datasources ]-----------------------------------\n");
     snoopy_debug_test_all_datasources();
+#ifdef SNOOPY_FILTERING_ENABLED
     printf("-----[ Filters ]---------------------------------------\n");
     snoopy_debug_test_all_filters();
+#endif
     printf("-----[ Outputs ]---------------------------------------\n");
     snoopy_debug_test_all_outputs();
 

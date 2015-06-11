@@ -31,7 +31,9 @@
 //#include "configuration.h"
 #include "datasourceregistry.h"
 #include "error.h"
+#ifdef SNOOPY_FILTERING_ENABLED
 #include "filterregistry.h"
+#endif
 #include "inputdatastorage.h"
 //#include "misc.h"
 #include "outputregistry.h"
@@ -98,6 +100,7 @@ void snoopy_debug_test_all_datasources ()
 
 
 
+#ifdef SNOOPY_FILTERING_ENABLED
 /*
  * snoopy_debug_test_all_filters
  *
@@ -159,6 +162,7 @@ void snoopy_debug_test_all_filters ()
     /* Memory housekeeping */
     free(message);
 }
+#endif
 
 
 
@@ -188,7 +192,7 @@ void snoopy_debug_test_all_outputs ()
     message  = malloc(SNOOPY_LOG_MESSAGE_MAX_SIZE + 1);
     snprintf(message, SNOOPY_LOG_MESSAGE_MAX_SIZE, "Snoopy output debugging");
 
-    /* Loop throught all filters and run them with bogus arguments */
+    /* Loop throught all outputs and run them with bogus arguments */
     iCount = snoopy_outputregistry_getCount();
     for (i=0 ; i<iCount ; i++) {
 
@@ -204,7 +208,7 @@ void snoopy_debug_test_all_outputs ()
             itemArgs = "";
         }
 
-        /* Execute the filter function */
+        /* Execute the output function */
         itemResult = snoopy_outputregistry_callById(i, message, SNOOPY_LOG_MESSAGE, itemArgs);
 
         /* Evaluate */
