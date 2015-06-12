@@ -18,6 +18,9 @@ if FILTERING_ENABLED
 endif
 SUBDIRS     += message
 SUBDIRS     += output
+if THREAD_SAFETY_ENABLED
+    SUBDIRS += threads
+endif
 #
 # Functional tests at last
 #
