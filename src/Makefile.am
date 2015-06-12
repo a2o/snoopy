@@ -90,3 +90,12 @@ lib_LTLIBRARIES      = libsnoopy.la
 libsnoopy_la_SOURCES = libsnoopy.c libsnoopy.h
 libsnoopy_la_CFLAGS  = `echo $(AM_CFLAGS) | sed -e 's/-pedantic//'`
 libsnoopy_la_LIBADD  = libsnoopy_no_execve.la
+
+
+
+### Create debugging helper library
+#
+noinst_LTLIBRARIES                += libsnoopy-debug-addons.la
+libsnoopy_debug_addons_la_SOURCES  = libsnoopy-debug-addons.c \
+                                     libsnoopy-debug-addons.h
+libsnoopy_debug_addons_la_LIBADD   = libsnoopy_no_execve.la
