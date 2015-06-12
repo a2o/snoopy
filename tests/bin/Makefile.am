@@ -43,7 +43,7 @@ noinst_PROGRAMS                    += snoopy-test-exec-in-threads
 snoopy_test_exec_in_threads_SOURCES = snoopy-test-exec-in-threads.c
 noinst_PROGRAMS                    += snoopy-test-threads
 snoopy_test_threads_SOURCES         = snoopy-test-threads.c
-snoopy_test_threads_LDADD           = $(top_builddir)/util/libsnoopy-debug-addons.la
+snoopy_test_threads_LDADD           = $(top_builddir)/src/libsnoopy-debug-addons.la
 endif
 
 
