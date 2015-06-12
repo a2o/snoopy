@@ -375,6 +375,7 @@ SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [ppid],           [parent PID of process per
 SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [rpname],         [real parent name found up the process tree])
 SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [sid],            [session leader PID])
 SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [snoopy_literal], [dummy data source - only returns what it receives as argument])
+SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [snoopy_threads], [number of threads that Snoopy currently is initialized for])
 SNOOPY_CONFIGURE_DATASOURCE_FORCE(  [snoopy_version], [installed Snoopy version])
 SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [tid],            [Thread ID of process performing the execution])
 SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [tid_kernel],     [Thread ID of process performing the execution, as retured by kernel via syscall])
@@ -814,6 +815,15 @@ AS_IF([test "x$configfile_enabled" == "xyes"], [
     AC_CONFIG_SUBDIRS(lib/iniparser)
 
     ac_configure_args="$ac_configure_args_snoopy"
+])
+
+
+### Datasource snoopy_threads
+#
+# Bail out if this datasource is explicitly enabled, but thread_safety is not
+#
+AS_IF([test "x$enable_datasource_explicit_snoopy_threads" = "xyes" -a "x$thread_safety_enabled" = "xno"], [
+    AC_MSG_ERROR([For datasource snoopy_threads to be enabled, thread safety must be enabled too. Unable to continue.])
 ])
 
 

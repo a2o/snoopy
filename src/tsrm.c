@@ -362,3 +362,38 @@ snoopy_inputdatastorage_t*   snoopy_tsrm_get_inputdatastorage ()
 
     return tData->inputdatastorage;
 }
+
+
+
+/*
+ * snoopy_tsrm_get_threadCount()
+ *
+ * Description:
+ *     Retrieves number of currently configured threads.
+ *
+ * Params:
+ *     (none)
+ *
+ * Return:
+ *     snoopy_inputdatastorage_t*:   Pointer to thread-specific input data storage structure
+ */
+int   snoopy_tsrm_get_threadCount ()
+{
+    int   threadCount;
+
+    // If repo is still uninitialized?
+    if (NULL == snoopy_tsrm_threadRepo) {
+        return 0;
+    }
+
+    // Mutex START
+    pthread_mutex_lock(&snoopy_tsrm_threadRepo_mutex);
+
+    // Get count
+    threadCount = snoopy_tsrm_threadRepo->count;
+
+    // Mutex END
+    pthread_mutex_unlock(&snoopy_tsrm_threadRepo_mutex);
+
+    return threadCount;
+}

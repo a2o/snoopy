@@ -203,6 +203,9 @@
 /* Is datasource "snoopy_literal" available? */
 #undef SNOOPY_CONF_DATASOURCE_ENABLED_snoopy_literal
 
+/* Is datasource "snoopy_threads" available? */
+#undef SNOOPY_CONF_DATASOURCE_ENABLED_snoopy_threads
+
 /* Is datasource "snoopy_version" available? Forced "Yes". */
 #undef SNOOPY_CONF_DATASOURCE_ENABLED_snoopy_version
 

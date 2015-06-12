@@ -183,6 +183,16 @@ libsnoopy_datasources_all_la_SOURCES += \
 	snoopy_literal.h
 endif
 
+# Data source: snoopy_threads
+#
+if THREAD_SAFETY_ENABLED
+if DATASOURCE_ENABLED_snoopy_threads
+libsnoopy_datasources_all_la_SOURCES += \
+	snoopy_threads.c \
+	snoopy_threads.h
+endif
+endif
+
 # Data source: snoopy_version
 #
 if DATASOURCE_ENABLED_snoopy_version

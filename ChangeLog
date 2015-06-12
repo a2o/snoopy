@@ -14,6 +14,8 @@ o Change: Removal of deprecated feature: removed ./configure flag
         --enable-filtering --with-filter-chain="only_uid:0".
 
 o Enhancement: EXPERIMENTAL support for thread-safety added.
+o Feature: added new datasource snoopy_threads, that returns count of threads
+    that sonopy is currently configured for.
 
 o Feature: added new dummy data source: snoopy_literal. Returns its own
     argument.

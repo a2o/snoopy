@@ -69,6 +69,7 @@ void   snoopy_tsrm_dtor ();
  */
 snoopy_configuration_t*    snoopy_tsrm_get_configuration    ();
 snoopy_inputdatastorage_t* snoopy_tsrm_get_inputdatastorage ();
+int                        snoopy_tsrm_get_threadCount      ();
 
 
 

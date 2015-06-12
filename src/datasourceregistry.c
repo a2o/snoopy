@@ -97,6 +97,11 @@
 #ifdef SNOOPY_CONF_DATASOURCE_ENABLED_snoopy_literal
 #include "datasource/snoopy_literal.h"
 #endif
+#ifdef SNOOPY_CONF_THREAD_SAFETY_ENABLED
+#ifdef SNOOPY_CONF_DATASOURCE_ENABLED_snoopy_threads
+#include "datasource/snoopy_threads.h"
+#endif
+#endif
 #ifdef SNOOPY_CONF_DATASOURCE_ENABLED_snoopy_version
 #include "datasource/snoopy_version.h"
 #endif
@@ -197,6 +202,11 @@ char* snoopy_datasourceregistry_names[] = {
 #ifdef SNOOPY_CONF_DATASOURCE_ENABLED_snoopy_literal
     "snoopy_literal",
 #endif
+#ifdef SNOOPY_CONF_THREAD_SAFETY_ENABLED
+#ifdef SNOOPY_CONF_DATASOURCE_ENABLED_snoopy_threads
+    "snoopy_threads",
+#endif
+#endif
 #ifdef SNOOPY_CONF_DATASOURCE_ENABLED_snoopy_version
     "snoopy_version",
 #endif
@@ -293,6 +303,11 @@ int (*snoopy_datasourceregistry_ptrs []) (char * const result, char const * cons
 #endif
 #ifdef SNOOPY_CONF_DATASOURCE_ENABLED_snoopy_literal
     snoopy_datasource_snoopy_literal,
+#endif
+#ifdef SNOOPY_CONF_THREAD_SAFETY_ENABLED
+#ifdef SNOOPY_CONF_DATASOURCE_ENABLED_snoopy_threads
+    snoopy_datasource_snoopy_threads,
+#endif
 #endif
 #ifdef SNOOPY_CONF_DATASOURCE_ENABLED_snoopy_version
     snoopy_datasource_snoopy_version,
