@@ -229,14 +229,18 @@ AU_DEFUN([SNOOPY_CONFIGURE_DATASOURCE_ENABLEDISABLE],
         )],
         [
             if   test "x$enableval" == "xyes"; then
+                enable_datasource_explicit_$1="yes"
                 enable_datasource_$1="yes"
             elif test "x$enableval" == "xno" ; then
+                enable_datasource_explicit_$1="no"
                 enable_datasource_$1="no"
             else
                 AC_MSG_ERROR([--$4-datasource-$1 does not take any arguments, got: $enableval])
             fi
         ],
         [
+            enable_datasource_explicit_$1="undef"
+
             if   test "x$enable_all_datasources" == "xyes"; then
                 enable_datasource_$1="yes"
             elif test "x$enable_all_datasources" == "xno" ; then
@@ -311,6 +315,7 @@ AU_DEFUN([SNOOPY_CONFIGURE_FILTER_ENABLEDISABLE],
             [$4 filter "$1". This filter provides $2. [default=$3]]
         )],
         [
+
             if test   "x$enableval" == "xyes"; then
                 enable_filter_$1=yes
             elif test "x$enableval" == "xno" ; then
