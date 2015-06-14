@@ -13,7 +13,7 @@ set -u
 ### Default config
 #
 ITERATIONS="100"
-THREADS="100"
+THREADS="200"
 
 
 
