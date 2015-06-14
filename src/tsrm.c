@@ -159,6 +159,11 @@ void snoopy_tsrm_dtor ()
 int   snoopy_tsrm_doesThreadRepoEntryExist (snoopy_tsrm_threadId_t threadId)
 {
     snoopy_tsrm_threadData_t   *tData;
+    int                         retVal = SNOOPY_FALSE;
+
+    // Mutex START
+    // Do not use mutex here - it should be used in caller
+    //pthread_mutex_lock(&snoopy_tsrm_threadRepo_mutex);
 
     LIST_FOREACH(snoopy_tsrm_threadRepo, first, next, cur) {
         if (NULL == cur->value) {
@@ -166,13 +171,19 @@ int   snoopy_tsrm_doesThreadRepoEntryExist (snoopy_tsrm_threadId_t threadId)
         }
         tData = cur->value;
         if (0 != pthread_equal(threadId, tData->threadId)) {
+
             /* Thread ID matches */
-            return SNOOPY_TRUE;
+            retVal = SNOOPY_TRUE;
+            goto FOUND;
         }
     }
 
-    /* Thread ID not found */
-    return SNOOPY_FALSE;
+FOUND:
+    // Mutex END
+    // See comment above at lock
+    //pthread_mutex_unlock(&snoopy_tsrm_threadRepo_mutex);
+
+    return retVal;
 }
 
 
@@ -244,10 +255,15 @@ snoopy_tsrm_threadId_t   snoopy_tsrm_getCurrentThreadId ()
 ListNode*   snoopy_tsrm_getCurrentThreadRepoEntry ()
 {
     snoopy_tsrm_threadId_t      myThreadId;
+    ListNode                   *tRepoEntry = NULL;
     snoopy_tsrm_threadData_t   *tData;
 
     // This is the thread ID we are looking for
     myThreadId = snoopy_tsrm_getCurrentThreadId();
+
+    // Mutex START
+    pthread_mutex_lock(&snoopy_tsrm_threadRepo_mutex);
+
     LIST_FOREACH(snoopy_tsrm_threadRepo, first, next, cur) {
 
         // This should not happen, but maybe, just maybe, there is another thread
@@ -258,12 +274,17 @@ ListNode*   snoopy_tsrm_getCurrentThreadRepoEntry ()
         tData = cur->value;
 
         if (0 != pthread_equal(myThreadId, tData->threadId)) {
-            return cur;
+            tRepoEntry = cur;
+            goto FOUND;
         }
     }
 
-    // This part should never be reached
-    return NULL;
+FOUND:
+    // Mutex END
+    pthread_mutex_unlock(&snoopy_tsrm_threadRepo_mutex);
+
+    // Return
+    return tRepoEntry;
 }
 
 
