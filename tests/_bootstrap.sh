@@ -58,6 +58,9 @@ export SNOOPY_LIBSNOOPY_TEST_SO_PATH="${SNOOPY_TESTS_BINDIR}/.libs/libsnoopy-tes
 snoopy_testResult_pass()
 {
     echo "PASS"
+    if [ ! -z "${1:-}" ]; then
+        echo "$1"
+    fi
     exit 0
 }
 
