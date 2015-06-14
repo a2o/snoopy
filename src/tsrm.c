@@ -41,8 +41,7 @@
 /*
  * Global variables
  */
-int                snoopy_tsrm_threadRepo_mutex_initialized = SNOOPY_FALSE;
-pthread_mutex_t    snoopy_tsrm_threadRepo_mutex;
+pthread_mutex_t    snoopy_tsrm_threadRepo_mutex = PTHREAD_MUTEX_INITIALIZER;
 List              *snoopy_tsrm_threadRepo = NULL;
 
 
@@ -74,12 +73,6 @@ void snoopy_tsrm_ctor ()
 {
     snoopy_tsrm_threadId_t      curTid;
     snoopy_tsrm_threadData_t   *tData;
-
-    // Initialize mutex if applicable
-    if (SNOOPY_FALSE == snoopy_tsrm_threadRepo_mutex_initialized) {
-        pthread_mutex_init(&snoopy_tsrm_threadRepo_mutex, NULL);
-        snoopy_tsrm_threadRepo_mutex_initialized = SNOOPY_TRUE;
-    }
 
     // Mutex START
     pthread_mutex_lock(&snoopy_tsrm_threadRepo_mutex);
