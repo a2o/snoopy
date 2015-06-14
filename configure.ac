@@ -154,6 +154,7 @@ AC_TYPE_SIZE_T
 AC_TYPE_UID_T
 
 dnl Checks for library functions.
+AC_FUNC_FORK
 AC_FUNC_MALLOC
 AC_CHECK_FUNCS([ \
     getcwd    \
