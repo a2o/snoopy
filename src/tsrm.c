@@ -303,21 +303,6 @@ snoopy_tsrm_threadData_t*   snoopy_tsrm_getCurrentThreadData ()
 
 
 /*
- * snoopy_tsrm_get_my_threadid()
- *
- * Description:
- *     Retrieve id of current thread
- *
- * Params:
- *     (none)
- *
- * Return:
- *     snoopy_tsrm_threaddata*:   Pointer to thread data structure
- */
-
-
-
-/*
  * snoopy_tsrm_get_configuration()
  *
  * Description:
