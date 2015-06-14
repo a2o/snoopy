@@ -380,13 +380,13 @@ int   snoopy_tsrm_get_threadCount ()
 {
     int   threadCount;
 
+    // Mutex START
+    pthread_mutex_lock(&snoopy_tsrm_threadRepo_mutex);
+
     // If repo is still uninitialized?
     if (NULL == snoopy_tsrm_threadRepo) {
         return 0;
     }
-
-    // Mutex START
-    pthread_mutex_lock(&snoopy_tsrm_threadRepo_mutex);
 
     // Get count
     threadCount = snoopy_tsrm_threadRepo->count;
