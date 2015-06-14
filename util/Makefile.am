@@ -44,7 +44,7 @@ snoopy_test_all_data_sources_LDADD    = ../src/libsnoopy_no_execve.la \
 noinst_PROGRAMS                      += snoopy-run-everything
 snoopy_run_everything_SOURCES         = snoopy-run-everything.c
 snoopy_run_everything_LDADD           = ../src/libsnoopy_no_execve.la \
-                                        libsnoopy-debug-addons.la
+                                        ../src/libsnoopy-debug-addons.la
 
 noinst_PROGRAMS                      += snoopy-dev-helper
 snoopy_dev_helper_SOURCES             = snoopy-dev-helper.c
