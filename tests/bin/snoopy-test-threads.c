@@ -26,8 +26,12 @@
  * Includes order: from local to global
  */
 #define   _XOPEN_SOURCE   500
+#define   _GNU_SOURCE
+
+#include <snoopy.h>
 
 #include <configuration.h>
+#include <datasourceregistry.h>
 #include <misc.h>
 #include <tsrm.h>
 
@@ -35,6 +39,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/syscall.h>
 #include <sys/types.h>
 #include <unistd.h>
 #include <wait.h>
@@ -61,6 +66,7 @@ int    main        (int argc, char **argv);
 void   displayHelp ();
 int    fatalError  (char *errorMsg);
 void * threadMain  (void *arg);
+int    randomNumberInclusive (int idMin, int idMax);
 
 
 
@@ -107,15 +113,15 @@ int main (int argc, char **argv)
 
 
     // Create threads and run the function in them
-    printf("M: Starting threads:\n");
+    printf("M: Starting threads... ");
     for (i=0 ; i<threadsToCreate ; i++) {
         tData_t *tArgs = malloc(sizeof *tArgs);
         tArgs->seqNr   = i;
 //        printf(" M: Starting thread #%d:\n", i+1);
         retVal = pthread_create(&tRepo[i], NULL, &threadMain, tArgs);
     }
-    printf("M: All threads started.\n");
-    printf("M: Threads still alive right after thread creation was completed: %d\n", threadCountAliveNow);
+    printf("done.\n");
+    printf("M: Threads alive right after thread creation was completed: %d\n", threadCountAliveNow);
 
 
     // Sleep a bit, and get thread count, should be max
@@ -128,13 +134,13 @@ int main (int argc, char **argv)
 //    printf("M: Threads after all threads are supposedly finished: %d\n", snoopy_tsrm_get_threadCount());
 
     // Wait for threads to finish
-    printf("M: Waiting for all threads to finish:\n");
+    printf("M: Waiting for all threads to finish... ");
     for (i=0 ; i<threadsToCreate ; i++) {
         pthread_join(tRepo[i], NULL);
 //        printf("M: Thread joined: #%d\n", i+1);
 //        printf(" M: Thread #%d joined.\n", i+1);
     }
-    printf("M: All threads have finished.\n");
+    printf("done.\n");
 
     printf("M: Number of threads created:        %d\n", threadCountCreated);
     printf("M: Max threads alive simultaneously: %d\n", threadCountAliveMax);
@@ -174,8 +180,16 @@ int main (int argc, char **argv)
 void* threadMain (void *args)
 {
     tData_t  *tArgs    = args;
-//    int       seqNr    = tArgs->seqNr;
-//    int       seqNrPub = seqNr + 1;
+
+    int       seqNr    = tArgs->seqNr;
+    int       seqNrPub = seqNr + 1;
+
+    int       dsCount;
+    int       dsId;
+    char     *dsName;
+    char     *dsArg = "";
+    char      dsResult[SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE];
+    int       retVal;
 
 
     // Initialize thread
@@ -196,6 +210,19 @@ void* threadMain (void *args)
 //    printf("    t%d %llu : Threads before snoopy_init():    %d\n", seqNrPub, (unsigned long long)pthread_self(), snoopy_tsrm_get_threadCount());
     snoopy_init();
 //    printf("    t%d %llu : Threads after  snoopy_init():    %d\n", seqNrPub, (unsigned long long)pthread_self(), snoopy_tsrm_get_threadCount());
+
+
+    // Run a random snoopy datasource
+    dsCount = snoopy_datasourceregistry_getCount();
+    dsId    = randomNumberInclusive(0, dsCount-1);
+    dsName  = snoopy_datasourceregistry_getName(dsId);
+    retVal  = snoopy_datasourceregistry_callById(dsId, dsResult, dsArg);
+
+    if (0 > retVal) {
+        printf("    t%d %llu : Datasource %s returned negative result: %d\n", seqNrPub, (unsigned long long)pthread_self(), dsName, retVal);
+    } else {
+        printf("    t%d %llu : DS result: %30s = %s\n", seqNrPub, (unsigned long long)pthread_self(), dsName, dsResult);
+    }
 
 
     // Retest at thread end
@@ -259,4 +286,32 @@ int fatalError (char *errorMsg)
     printf("ERROR: %s\n", errorMsg);
     printf("\n");
     return 127;
+}
+
+
+
+/*
+ * randomNumberInclusive()
+ *
+ * Description:
+ *     Return random number between idMin and idMax inclusive
+ *
+ * Params:
+ *
+ * Return:
+ *     int        Random number
+ */
+int randomNumberInclusive (int nMin, int nMax)
+{
+    unsigned int rndSeed;
+    int          randomNr;
+
+    // Seed
+    rndSeed = (unsigned int) (pthread_self() + getpid() + syscall(SYS_gettid) + time(NULL));
+    srand(rndSeed);
+
+    // Generate
+    randomNr = ( rand() % (nMax - nMin + 1) ) + nMin;
+
+    return randomNr;
 }
