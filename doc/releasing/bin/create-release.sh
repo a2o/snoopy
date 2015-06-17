@@ -167,7 +167,7 @@ fi
 
 ### Create release package
 ./bootstrap.sh &&
-./configure &&
+./configure --enable-everything &&
 make clean &&
 make distcheck &&
 
