@@ -3,6 +3,12 @@
 -------------------------------------------------------------------------------
 
 
+2015-06-xx - Version 2.4.x - FIXME
+--------------------------
+o Bugfix: tests/datasource/snoopy_version was failing because regex was untested
+    on full-release (non-development/preview) versions. Fixed.
+
+
 2015-06-18 - Version 2.4.0
 --------------------------
 o Change: configuration file (snoopy.ini) support is now enabled by default.
