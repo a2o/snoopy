@@ -48,12 +48,31 @@ set -u
 
 
 
-### Get current Snoopy version
+### Get current Snoopy version from git, if applicable
 #
-CURRENT_PACKAGE_VERSION=`git describe --tags --dirty | sed -e 's/^snoopy-//'`
-
-
-
-### Final output
+# Used for building from git, and for making RC packages
 #
-echo $CURRENT_PACKAGE_VERSION
+if [ -d .git ]; then
+    CURRENT_PACKAGE_VERSION=`git describe --tags --dirty | sed -e 's/^snoopy-//'`
+    echo $CURRENT_PACKAGE_VERSION
+    exit 0
+fi
+
+
+
+### Otherwise get it from ChangeLog
+#
+# Used only if ./bootstrap.sh is run from distribution package, not from git
+#
+if [ -f ChangeLog ]; then
+    CURRENT_PACKAGE_VERSION=`cat ChangeLog | grep -E '^[-0-9]+ - Version [.0-9]+$' | head -n1 | awk '{print $4}'`
+    echo $CURRENT_PACKAGE_VERSION
+    exit 0
+fi
+
+
+
+### Signal error
+#
+echo "Unable to determine Snoopy version"
+exit 1

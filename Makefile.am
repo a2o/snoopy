@@ -40,6 +40,7 @@ SUBDIRS += tests
 #
 EXTRA_DIST = \
 	bootstrap.sh \
+	build/get-version.sh \
 	README.md
 
 

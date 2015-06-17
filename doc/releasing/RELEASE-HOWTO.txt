@@ -56,7 +56,7 @@ Steps:
         create git tag "snoopy-X.Y.Z
         Actual commands to run:
 
-export REL_VERSION=`cat ChangeLog | grep -E '^[-0-9]+ - Version [.0-9]+$' | head -n1 | awk '{print $4}'` &&
+export REL_VERSION=`./build/get-version.sh` &&
 git add ChangeLog README.md &&
 git commit -s -m "Release $REL_VERSION" &&
 git tag "snoopy-$REL_VERSION" &&
