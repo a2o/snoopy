@@ -48,20 +48,17 @@ Steps:
     - commit
 
 
-3. Update version info:
-    - 1. in ChangeLog
-    - 2. in configure.ac - OBSOLETE! This one gets assigned automatically.
-    - 3. in README.md (displayed on GitHub front page)
-    - commit with sign-off, with exact message "Release X.Y.Z" on the first line
-    - git add ChangeLog configure.ac README.md
-    - git commit -s -m "Release X.Y.Z"
+3. Update version info and release:
+    a) Edit files:
+        1. ChangeLog
+        2. README.md (latest version(s) displayed on GitHub front page)
+    b) Commit with sign-off, with exact message "Release X.Y.Z" on the first line,
+        create git tag "snoopy-X.Y.Z
+        Actual commands to run:
 
-
-4. Create git tag:
-    - called 'snoopy-X.Y.Z'   # For github to provide proper Snoopy release tarball name - we do not use that anymore
-    - git tag snoopy-X.Y.Z
-
-
-5. Release it
-    - cd to the repo root
-    - run "./doc/releasing/bin/create-release.sh snoopy-x.y.z"
+export REL_VERSION=`cat ChangeLog | grep -E '^[-0-9]+ - Version [.0-9]+$' | head -n1 | awk '{print $4}'` &&
+git add ChangeLog README.md &&
+git commit -s -m "Release $REL_VERSION" &&
+git tag "snoopy-$REL_VERSION" &&
+./doc/releasing/bin/create-release.sh "snoopy-$REL_VERSION" &&
+unset REL_VERSION
