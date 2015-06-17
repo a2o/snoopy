@@ -3,7 +3,7 @@
 -------------------------------------------------------------------------------
 
 
-2015-05-XX - Version 2.4.x - FIXME
+2015-06-18 - Version 2.4.0
 --------------------------
 o Change: configuration file (snoopy.ini) support is now enabled by default.
 o Change: filtering support is now enabled by default.

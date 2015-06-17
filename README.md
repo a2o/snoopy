@@ -34,11 +34,17 @@ Stable:
 
 ## 0. News
 
+2015-06-18:
+**Snoopy 2.4.0 released!**
+Many changes, see the ChangeLog. Experimental thread safety added.
+All users are encouraged to upgrade to Snoopy version 2.4.0+ immediately.
+
 2015-05-12:
 **Snoopy 2.3.0 released!** This Snoopy version contains many
 improvements, bugfixes, new features and quite improved build process.
 All users are encouraged to upgrade to Snoopy version 2.3.0+ as soon
 as possible.
+
 
 
 ## 1. Installation
@@ -67,7 +73,7 @@ Detailed installation instructions are available here: [doc/INSTALL.md](doc/INST
 ### 1.1 Version information
 
 Latest Snoopy version information:
-* stable: http://source.a2o.si/download/snoopy/snoopy-2.3.2.tar.gz
+* stable: http://source.a2o.si/download/snoopy/snoopy-2.4.0.tar.gz
 
 <!---
 * development: http://source.a2o.si/download/snoopy/snoopy-2.3.0.tar.gz

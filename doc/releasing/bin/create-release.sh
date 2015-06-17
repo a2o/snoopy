@@ -149,13 +149,6 @@ git checkout $RELEASE_TAG
 
 
 
-### Check for release in configure.ac
-RES=`cat configure.ac | fgrep $RELEASE_VERSION | cat`
-if [ "x$RES" == "x" ]; then
-    echo "ERROR: Release tag $RELEASE_TAG not found in configure.ac file."
-    exit 20
-fi
-
 ### Check for release in ChangeLog
 RES=`cat ChangeLog | grep "$RELEASE_VERSION\$" | cat`
 if [ "x$RES" == "x" ]; then
