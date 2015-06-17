@@ -46,14 +46,8 @@
    to 0 otherwise. */
 #undef HAVE_MALLOC
 
-/* Define to 1 if you have the `memmove' function. */
-#undef HAVE_MEMMOVE
-
 /* Define to 1 if you have the <memory.h> header file. */
 #undef HAVE_MEMORY_H
-
-/* Define to 1 if you have the `memset' function. */
-#undef HAVE_MEMSET
 
 /* Define to 1 if you have the <pwd.h> header file. */
 #undef HAVE_PWD_H
@@ -84,9 +78,6 @@
 
 /* Define to 1 if you have the `strstr' function. */
 #undef HAVE_STRSTR
-
-/* Define to 1 if you have the `strtol' function. */
-#undef HAVE_STRTOL
 
 /* Define to 1 if you have the <syslog.h> header file. */
 #undef HAVE_SYSLOG_H
