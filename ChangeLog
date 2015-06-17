@@ -25,6 +25,7 @@ o Feature: added new data source: tid_kernel (Thread ID, as retured by Linux
 o Feature: syslog ident string is now configurable, via ./configure line
     or via snoopy.ini.
 o Feature: added two new data sources: hostname and domain.
+o Feature: added a new output: devnull - writes to /dev/null black hole.
 o Feature: added a new output: devtty - writes to /dev/tty directly.
 o Feature: added two new outputs: stderr and stdout.
 o Feature: added new data source: snoopy_literal (dummy)

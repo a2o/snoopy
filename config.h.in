@@ -287,6 +287,9 @@
 /* Is output "devlog" available? */
 #undef SNOOPY_CONF_OUTPUT_ENABLED_devlog
 
+/* Is output "devnull" available? */
+#undef SNOOPY_CONF_OUTPUT_ENABLED_devnull
+
 /* Is output "devtty" available? */
 #undef SNOOPY_CONF_OUTPUT_ENABLED_devtty
 

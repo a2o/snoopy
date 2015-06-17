@@ -10,6 +10,10 @@ SCRIPT_PREFIX = output
 TESTS  =
 XFAIL_TESTS  =
 
+if OUTPUT_ENABLED_devnull
+    TESTS += $(SCRIPT_PREFIX)_devnull.sh
+endif
+
 if OUTPUT_ENABLED_file
     TESTS += $(SCRIPT_PREFIX)_file.sh
 endif

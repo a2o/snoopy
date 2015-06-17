@@ -43,6 +43,9 @@
 #ifdef SNOOPY_CONF_OUTPUT_ENABLED_devlog
 #include "output/devlogoutput.h"
 #endif
+#ifdef SNOOPY_CONF_OUTPUT_ENABLED_devnull
+#include "output/devnulloutput.h"
+#endif
 #ifdef SNOOPY_CONF_OUTPUT_ENABLED_devtty
 #include "output/devttyoutput.h"
 #endif
@@ -76,6 +79,9 @@ char *snoopy_outputregistry_names[] = {
 #ifdef SNOOPY_CONF_OUTPUT_ENABLED_devlog
     "devlog",
 #endif
+#ifdef SNOOPY_CONF_OUTPUT_ENABLED_devnull
+    "devnull",
+#endif
 #ifdef SNOOPY_CONF_OUTPUT_ENABLED_devtty
     "devtty",
 #endif
@@ -103,6 +109,9 @@ char *snoopy_outputregistry_names[] = {
 int (*snoopy_outputregistry_ptrs []) (char const * const logMessage, int errorOrMessage, char const * const arg) = {
 #ifdef SNOOPY_CONF_OUTPUT_ENABLED_devlog
     snoopy_output_devlogoutput,
+#endif
+#ifdef SNOOPY_CONF_OUTPUT_ENABLED_devnull
+    snoopy_output_devnulloutput,
 #endif
 #ifdef SNOOPY_CONF_OUTPUT_ENABLED_devtty
     snoopy_output_devttyoutput,
