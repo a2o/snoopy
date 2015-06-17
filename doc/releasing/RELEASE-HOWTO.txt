@@ -50,7 +50,7 @@ Steps:
 
 3. Update version info:
     - 1. in ChangeLog
-    - 2. in configure.ac
+    - 2. in configure.ac - OBSOLETE! This one gets assigned automatically.
     - 3. in README.md (displayed on GitHub front page)
     - commit with sign-off, with exact message "Release X.Y.Z" on the first line
     - git add ChangeLog configure.ac README.md
