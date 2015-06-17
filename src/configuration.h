@@ -23,6 +23,14 @@
 
 
 /*
+ * START: Prevent cyclic inclusions
+ */
+#ifndef __SNOOPY_CONFIGURATION_H
+#define __SNOOPY_CONFIGURATION_H
+
+
+
+/*
  * Array holding Snoopy configuration data in one place
  */
 typedef struct {
@@ -56,12 +64,24 @@ typedef struct {
 
 
 /*
+ * Pre-initialization functions
+ *
+ * Used by testing binaries, to disable config file parsing, or set alternate
+ * config file path.
+ */
+void  snoopy_configuration_preinit_disableConfigFileParsing();
+void  snoopy_configuration_preinit_enableAltConfigFileParsing(char * const altConfigFilePath);
+void  snoopy_configuration_preinit_setConfigFilePathFromEnv();
+
+
+
+/*
  * Management functions
  */
 void  snoopy_configuration_ctor ();
 void  snoopy_configuration_dtor ();
-void  snoopy_configuration_setDefaults (snoopy_configuration_t *CFG);
-void  snoopy_configuration_set_configfile_path_from_env ();
+void  snoopy_configuration_setUninitialized (snoopy_configuration_t *CFG);
+void  snoopy_configuration_setDefaults      (snoopy_configuration_t *CFG);
 
 
 
@@ -69,3 +89,10 @@ void  snoopy_configuration_set_configfile_path_from_env ();
  * Retrieval functions
  */
 snoopy_configuration_t*   snoopy_configuration_get ();
+
+
+
+/*
+ * END: Prevent cyclic inclusion
+ */
+#endif   /* Cyclic inclusion */

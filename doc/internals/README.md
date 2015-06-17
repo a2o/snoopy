@@ -34,3 +34,43 @@ are working to find out why.
 * Data sources are located here: [../../src/datasource/](../../src/datasource/).
 * Filters are located here: [../../src/filter/](../../src/filter/).
 * Outputs are located here: [../../src/output/](../../src/output/).
+
+
+## Data storage list
+
+When thread safety is DISABLED (default), data is stored in the following global
+variables:
+- snoopy_configuration_data
+- snoopy_inputdatastorage_data
+These variables must not be accessed directly, but rather by their corresponding
+snoopy_*_get() functions. These functions, when thread safety is enabled, return
+pointers to thread-specific instances of these variables.
+
+
+When thread-safety is enabled, all configuration data is stored in single global
+registry, and its structure looks something like this:
+
+- *tsrm_threadRepo (of type List ptr):
+    - main threadRepo/list data structure
+    - the only production global variable (there is another for testing purposes - altConfigFilePath)
+    - malloced in tsrm_ctor(), if necessary, with mutex
+    - freed in tsrm_dtor(), if necessary, with mutex
+    - *firstNode (null or ListNode ptr)
+    - *lastNode  (null or ListNode ptr): pointer to tsrm_threadRepo's last node
+    - ListNode structure:
+        - *prevNode
+        - *nextNode
+        - *value: pointer to malloced tsrm_threadData_t
+        - (*value structure):
+            - (malloced in tsrm_createNewThreadData())
+            - tid (id of thread for this threadData
+            - *configuration   : malloced in tsrm_createNewThreadData()
+            - *inputdatastorage: malloced in tsrm_createNewThreadData()
+            - (*configuration structure):
+                - defaults in configuration_setDefaults()
+                - see structure in configuration.h
+            - (*inputdatastorage structure):
+                - defaults in inputdatastorage_setDefaults()
+                - see structure in inputdatastorage.h
+                    - *argv
+                    - *envp

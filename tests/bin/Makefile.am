@@ -34,8 +34,17 @@ endif
 
 noinst_PROGRAMS                    += snoopy-test-message-format
 snoopy_test_message_format_SOURCES  = snoopy-test-message-format.c
+
 noinst_PROGRAMS                    += snoopy-test-output
 snoopy_test_output_SOURCES          = snoopy-test-output.c
+
+if THREAD_SAFETY_ENABLED
+noinst_PROGRAMS                    += snoopy-test-exec-in-threads
+snoopy_test_exec_in_threads_SOURCES = snoopy-test-exec-in-threads.c
+noinst_PROGRAMS                    += snoopy-test-threads
+snoopy_test_threads_SOURCES         = snoopy-test-threads.c
+snoopy_test_threads_LDADD           = $(top_builddir)/src/libsnoopy-debug-addons.la
+endif
 
 
 

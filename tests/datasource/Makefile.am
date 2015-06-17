@@ -90,6 +90,12 @@ if DATASOURCE_ENABLED_snoopy_literal
     TESTS += $(SCRIPT_PREFIX)_snoopy_literal.sh
 endif
 
+if THREAD_SAFETY_ENABLED
+if DATASOURCE_ENABLED_snoopy_threads
+    TESTS += $(SCRIPT_PREFIX)_snoopy_threads.sh
+endif
+endif
+
 if DATASOURCE_ENABLED_snoopy_version
     TESTS += $(SCRIPT_PREFIX)_snoopy_version.sh
 endif

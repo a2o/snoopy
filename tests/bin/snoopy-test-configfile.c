@@ -28,8 +28,8 @@
 //#include "snoopy-test-filter.h"
 
 #include "snoopy.h"
-#include "inputdatastorage.h"
 #include "configuration.h"
+#include "inputdatastorage.h"
 #include "misc.h"
 
 #include <stdio.h>
@@ -54,14 +54,6 @@ int main (int argc, char **argv)
     snoopy_configuration_t *CFG;
 
 
-    /* Initialize Snoopy */
-    snoopy_inputdatastorage_store_filename(argv[0]);
-    snoopy_inputdatastorage_store_argv(argv);
-
-    /* Get config pointer */
-    CFG = snoopy_configuration_get();
-
-
     /* Check if all arguments are present */
     if (argc < 2) {
         displayHelp();
@@ -83,9 +75,15 @@ int main (int argc, char **argv)
     }
 
 
-    /* Initialize Snoopy, which parses configuration file too */
-    CFG->configfile_path = iniFilePath;
-    snoopy_configuration_ctor();
+    /* Initialize Snoopy, which parses alternate configuration file too */
+    snoopy_configuration_preinit_enableAltConfigFileParsing(iniFilePath);
+    snoopy_init();
+    snoopy_inputdatastorage_store_filename(argv[0]);
+    snoopy_inputdatastorage_store_argv(argv);
+
+
+    /* Get config pointer */
+    CFG = snoopy_configuration_get();
 
 
     /* Output appropriate value */
@@ -116,8 +114,8 @@ int main (int argc, char **argv)
     }
 
 
-    /* Cleanup and return */
-    snoopy_configuration_dtor();
+    /* Housekeeping and return */
+    snoopy_cleanup();
     return 0;
 }
 

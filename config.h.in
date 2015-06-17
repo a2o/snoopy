@@ -12,6 +12,9 @@
 /* Define to 1 if you have the <features.h> header file. */
 #undef HAVE_FEATURES_H
 
+/* Define to 1 if you have the `fork' function. */
+#undef HAVE_FORK
+
 /* Define to 1 if you have the `getcwd' function. */
 #undef HAVE_GETCWD
 
@@ -112,6 +115,18 @@
 /* Define to 1 if you have the <unistd.h> header file. */
 #undef HAVE_UNISTD_H
 
+/* Define to 1 if you have the `vfork' function. */
+#undef HAVE_VFORK
+
+/* Define to 1 if you have the <vfork.h> header file. */
+#undef HAVE_VFORK_H
+
+/* Define to 1 if `fork' works. */
+#undef HAVE_WORKING_FORK
+
+/* Define to 1 if `vfork' works. */
+#undef HAVE_WORKING_VFORK
+
 /* Define to the sub-directory in which libtool stores uninstalled libraries.
    */
 #undef LT_OBJDIR
@@ -202,6 +217,9 @@
 
 /* Is datasource "snoopy_literal" available? */
 #undef SNOOPY_CONF_DATASOURCE_ENABLED_snoopy_literal
+
+/* Is datasource "snoopy_threads" available? */
+#undef SNOOPY_CONF_DATASOURCE_ENABLED_snoopy_threads
 
 /* Is datasource "snoopy_version" available? Forced "Yes". */
 #undef SNOOPY_CONF_DATASOURCE_ENABLED_snoopy_version
@@ -296,6 +314,9 @@
 /* Syslog level to use by default */
 #undef SNOOPY_CONF_SYSLOG_LEVEL
 
+/* thread safety */
+#undef SNOOPY_CONF_THREAD_SAFETY_ENABLED
+
 /* Define to 1 if you have the ANSI C header files. */
 #undef STDC_HEADERS
 
@@ -322,3 +343,6 @@
 
 /* Define to `int' if <sys/types.h> doesn't define. */
 #undef uid_t
+
+/* Define as `fork' if `vfork' does not work. */
+#undef vfork

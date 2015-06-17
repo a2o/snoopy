@@ -154,6 +154,7 @@ AC_TYPE_SIZE_T
 AC_TYPE_UID_T
 
 dnl Checks for library functions.
+AC_FUNC_FORK
 AC_FUNC_MALLOC
 AC_CHECK_FUNCS([ \
     getcwd    \
@@ -207,7 +208,9 @@ AC_CONFIG_FILES([Makefile
                  tests/datasource/Makefile
                  tests/filter/Makefile
                  tests/message/Makefile
-                 tests/output/Makefile])
+                 tests/output/Makefile
+                 tests/threads/Makefile
+])
 AC_CONFIG_FILES([util/snoopy-disable], [chmod +x util/snoopy-disable])
 AC_CONFIG_FILES([util/snoopy-enable],  [chmod +x util/snoopy-enable])
 
@@ -278,12 +281,12 @@ AC_ARG_ENABLE(config-file,
     SNOOPY_CONFIGURE_ENABLE_GENERIC_UNSPECIFIED([config-file], [configfile_enabled], [$enable_everything], [yes])
 )
 
-    AC_MSG_NOTICE([Snoopy config file enabled: $configfile_enabled])
+AC_MSG_NOTICE([Snoopy config file enabled:   $configfile_enabled])
 AS_IF([test "x$configfile_enabled" == "xyes"], [
     configfile_path="$SYSCONFDIR/snoopy.ini"
     AC_DEFINE_UNQUOTED(SNOOPY_CONF_CONFIGFILE_ENABLED, 1,                   [Is config file parsing enabled?])
     AC_DEFINE_UNQUOTED(SNOOPY_CONF_CONFIGFILE_PATH,    "$configfile_path",  [INI configuration file path to use])
-    AC_MSG_NOTICE([Snoopy config file path: $configfile_path])
+    AC_MSG_NOTICE([Snoopy config file path:      $configfile_path])
 ])
 
 AM_CONDITIONAL([CONFIGFILE_ENABLED], [test "x$configfile_enabled" == "xyes"])
@@ -306,6 +309,21 @@ AS_IF([test "x$enable_error_logging" = "xyes"], [
     AC_DEFINE_UNQUOTED(SNOOPY_CONF_ERROR_LOGGING_ENABLED, 1, [Enable error logging])
 ])
 AC_MSG_NOTICE([Snoopy error logging enabled: $enable_error_logging])
+
+
+
+dnl ============================================================================
+dnl ======= ENABLE THREAD SAFETY ===============================================
+dnl ============================================================================
+AC_ARG_ENABLE(thread-safety,
+    [AC_HELP_STRING(
+        [--enable-thread-safety],
+        [EXPERIMENTAL: enable parts of code that ensure safe multi-threaded operation [default=disabled]]
+    )],
+    SNOOPY_CONFIGURE_ENABLE_GENERIC_SPECIFIED(  [thread_safety], [thread_safety_enabled], [$enableval], []),
+    SNOOPY_CONFIGURE_ENABLE_GENERIC_UNSPECIFIED([thread_safety], [thread_safety_enabled], [$enable_everything], [no])
+)
+SNOOPY_CONFIGURE_ENABLE_GENERIC_EVALUATE([$thread_safety_enabled], [THREAD_SAFETY_ENABLED], [thread safety])
 
 
 
@@ -357,6 +375,7 @@ SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [ppid],           [parent PID of process per
 SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [rpname],         [real parent name found up the process tree])
 SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [sid],            [session leader PID])
 SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [snoopy_literal], [dummy data source - only returns what it receives as argument])
+SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [snoopy_threads], [number of threads that Snoopy currently is initialized for])
 SNOOPY_CONFIGURE_DATASOURCE_FORCE(  [snoopy_version], [installed Snoopy version])
 SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [tid],            [Thread ID of process performing the execution])
 SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [tid_kernel],     [Thread ID of process performing the execution, as retured by kernel via syscall])
@@ -796,6 +815,15 @@ AS_IF([test "x$configfile_enabled" == "xyes"], [
     AC_CONFIG_SUBDIRS(lib/iniparser)
 
     ac_configure_args="$ac_configure_args_snoopy"
+])
+
+
+### Datasource snoopy_threads
+#
+# Bail out if this datasource is explicitly enabled, but thread_safety is not
+#
+AS_IF([test "x$enable_datasource_explicit_snoopy_threads" = "xyes" -a "x$thread_safety_enabled" = "xno"], [
+    AC_MSG_ERROR([For datasource snoopy_threads to be enabled, thread safety must be enabled too. Unable to continue.])
 ])
 
 

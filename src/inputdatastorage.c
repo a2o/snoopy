@@ -28,6 +28,9 @@
 #include "inputdatastorage.h"
 
 #include "snoopy.h"
+#ifdef SNOOPY_CONF_THREAD_SAFETY_ENABLED
+#include "tsrm.h"
+#endif
 
 
 
@@ -40,11 +43,13 @@
 
 
 /*
- * Create input data storage space.
+ * Storage of Snoopy's input data for non-thread-safe builds
  */
+#ifndef SNOOPY_CONF_THREAD_SAFETY_ENABLED
 snoopy_inputdatastorage_t   snoopy_inputdatastorage_data = {
     .initialized = SNOOPY_FALSE,
 };
+#endif
 
 
 
@@ -93,6 +98,27 @@ void snoopy_inputdatastorage_dtor ()
     snoopy_inputdatastorage_t *IDS = snoopy_inputdatastorage_get();
 
     snoopy_inputdatastorage_setDefaults(IDS);
+}
+
+
+
+/*
+ * snoopy_inputdatastorage_setUninitialized()
+ *
+ * Description:
+ *     Sets the state of IDS to uninitialized.
+ *
+ * Params:
+ *     (none)
+ *
+ * Return:
+ *     void
+ */
+void snoopy_inputdatastorage_setUninitialized
+(
+    snoopy_inputdatastorage_t *IDS
+) {
+    IDS->initialized = SNOOPY_FALSE;
 }
 
 
@@ -207,9 +233,17 @@ void snoopy_inputdatastorage_store_envp (
  */
 snoopy_inputdatastorage_t* snoopy_inputdatastorage_get ()
 {
-    if (SNOOPY_TRUE != snoopy_inputdatastorage_data.initialized) {
-        snoopy_inputdatastorage_setDefaults(&snoopy_inputdatastorage_data);
+    snoopy_inputdatastorage_t *IDS;
+
+#ifdef SNOOPY_CONF_THREAD_SAFETY_ENABLED
+    IDS = snoopy_tsrm_get_inputdatastorage();
+#else
+    IDS = &snoopy_inputdatastorage_data;
+#endif
+
+    if (SNOOPY_TRUE != IDS->initialized) {
+        snoopy_inputdatastorage_setDefaults(IDS);
     }
 
-    return &snoopy_inputdatastorage_data;
+    return IDS;
 }

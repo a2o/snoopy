@@ -39,6 +39,7 @@ env:
 
   matrix:
     - SNOOPY_CONFIGURE_OPTS="--enable-everything"
+    - SNOOPY_CONFIGURE_OPTS="--enable-thread-safety"
     - SNOOPY_CONFIGURE_OPTS=""
     - SNOOPY_CONFIGURE_OPTS="--disable-config-file"
     - SNOOPY_CONFIGURE_OPTS="--disable-filtering"

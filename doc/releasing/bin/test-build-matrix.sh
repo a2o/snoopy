@@ -18,12 +18,14 @@ CONFIGURE_ARGS_MATRIX=(
     '--enable-everything --disable-config-file'
     '--enable-everything --disable-filtering'
     '--enable-everything --disable-config-file --disable-filtering'
+    '--enable-everything --disable-thread-safety'
     '--disable-everything'
     '--disable-everything --enable-config-file'
     '--disable-everything --enable-config-file --enable-output-file'
     '--disable-everything --enable-filtering'
     '--disable-everything --enable-filtering --enable-datasource-uid'
     '--disable-everything --enable-config-file --enable-filtering'
+    '--disable-everything --enable-thread-safety'
 )
 
 
@@ -82,6 +84,10 @@ EOF
 
     ./configure $CONFIGURE_ARGS
     make -j16 check
+
+    # Clean with this, otherwise it fails.
+    # This probably has to do something with iniparser being a subpackage.
+    ./configure --enable-everything
     make distclean
 
     i=$((i + 1))
