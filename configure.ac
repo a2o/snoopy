@@ -81,10 +81,8 @@ dnl     Sometimes autoscan will suggest removing them, next time it will change
 dnl     its mind and suggest putting them back in. Let's just keep them and be
 dnl     done with it already.
 dnl
-AC_PROG_CXX
 AC_PROG_AWK
 AC_PROG_CC
-AC_PROG_CPP
 AC_PROG_GREP
 AC_PROG_INSTALL
 AC_PROG_LIBTOOL
