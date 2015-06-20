@@ -11,6 +11,17 @@ o Thread safety: all localtime() function calls were replaced with their
     thread-safe counterparts - localtime_r().
 o Thread safety: all ttyname() functions were replaced with their thread-safe
     counterparts - ttyname_r().
+o Thread safety info: the remaining non-thread-safe functions that are used
+    are:
+        - getenv()
+        - strerror()
+    getenv() does not have any thread-safe counterpart, so it was left as it
+    was. If anyone uses threaded programs that do lots of execv() calls,
+    then these programs should modify environment and execute programs in
+    mutexed manner.
+    strerror() is used in lib/liblcthw as define, therefore an easy fix is not
+    possible. This doubly linked list implementation needs a general overhaul
+    anyway.
 
 
 2015-06-18 - Version 2.4.3
