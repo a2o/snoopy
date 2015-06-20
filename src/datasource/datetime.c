@@ -51,6 +51,7 @@
 int snoopy_datasource_datetime (char * const result, char const * const arg)
 {
     time_t     curTime;
+    struct tm  curLocalTimeBuf;
     struct tm *curLocalTime;
     char       timeBuffer[80];
 
@@ -60,9 +61,9 @@ int snoopy_datasource_datetime (char * const result, char const * const arg)
     }
 
     // Convert to local time
-    curLocalTime = localtime( &curTime);
+    curLocalTime = localtime_r(&curTime, &curLocalTimeBuf);
     if (NULL == curLocalTime) {
-        return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "(error @ localtime())");
+        return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "(error @ localtime_r())");
     }
 
     // Format it
