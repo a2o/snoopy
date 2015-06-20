@@ -5,6 +5,8 @@
 
 2015-06-xx - Version 2.4.NEXT
 --------------------------
+o Thread safety: all remaining strtok() function calls were replaced with their
+    thread-safe counterparts - strtok_r().
 o Thread safety: all localtime() function calls were replaced with their
     thread-safe counterparts - localtime_r().
 o Thread safety: all ttyname() functions were replaced with their thread-safe
