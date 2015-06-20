@@ -23,6 +23,14 @@
 
 
 /*
+ * Local defines
+ */
+#define   SNOOPY_DATASOURCE_TTY_sizeMaxWithoutNull   4096   // PATH_MAX does not work here?
+#define   SNOOPY_DATASOURCE_TTY_sizeMaxWithNull      4097
+
+
+
+/*
  * SNOOPY DATA SOURCE: tty
  */
 int snoopy_datasource_tty (char * const result, char const * const arg);

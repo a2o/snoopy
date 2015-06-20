@@ -25,10 +25,11 @@
 /*
  * Includes order: from local to global
  */
-#include "tty.h"
+#include "src/datasource/tty.h"
 
 #include "snoopy.h"
 
+#include <errno.h>
 #include <stdio.h>
 #include <unistd.h>
 
@@ -49,12 +50,23 @@
  */
 int snoopy_datasource_tty (char * const result, char const * const arg)
 {
-    char *ttyName = NULL;
+    char    ttyPath[SNOOPY_DATASOURCE_TTY_sizeMaxWithNull];
+    size_t  ttyPathLen = SNOOPY_DATASOURCE_TTY_sizeMaxWithoutNull;
+    int     retVal;
 
-    ttyName = ttyname(0);
-    if (NULL == ttyName) {
-        return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "(none)");
+    retVal = ttyname_r(0, ttyPath, ttyPathLen);
+    if (0 != retVal) {
+        if (EBADF == retVal) {
+            return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "ERROR(ttyname_r->EBADF)");
+        }
+        if (ERANGE == retVal) {
+            return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "ERROR(ttyname_r->ERANGE)");
+        }
+        if (ENOTTY == retVal) {
+            return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "(none)");
+        }
+        return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "ERROR(ttyname_r->EUNKNOWN)");
     }
 
-    return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "%s", ttyName);
+    return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "%s", ttyPath);
 }

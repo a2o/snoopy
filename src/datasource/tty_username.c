@@ -27,8 +27,11 @@
  */
 #include "tty_username.h"
 
+#include "tty.h"
+
 #include "snoopy.h"
 
+#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/types.h>
@@ -54,7 +57,9 @@
 int snoopy_datasource_tty_username (char * const result, char const * const arg)
 {
     /* Variables for tty-to-uid conversion */
-    char   *ttyPath = NULL;
+    char    ttyPath[SNOOPY_DATASOURCE_TTY_sizeMaxWithNull];
+    size_t  ttyPathLen = SNOOPY_DATASOURCE_TTY_sizeMaxWithoutNull;
+    int     retVal;
     struct  stat statbuffer;
     uid_t   ttyUid;
 
@@ -66,10 +71,20 @@ int snoopy_datasource_tty_username (char * const result, char const * const arg)
     int            messageLength   = 0;
 
     /* Get tty path */
-    ttyPath = ttyname(0);
-    if (NULL == ttyPath) {
-        return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "(none)");
+    retVal = ttyname_r(0, ttyPath, ttyPathLen);
+    if (0 != retVal) {
+        if (EBADF == retVal) {
+            return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "ERROR(ttyname_r->EBADF)");
+        }
+        if (ERANGE == retVal) {
+            return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "ERROR(ttyname_r->ERANGE)");
+        }
+        if (ENOTTY == retVal) {
+            return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "(none)");
+        }
+        return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "ERROR(ttyname_r->EUNKNOWN)");
     }
+
 
     /* Get UID of tty */
     if (-1 == stat(ttyPath, &statbuffer)) {
