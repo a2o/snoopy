@@ -62,3 +62,10 @@ git commit -s -m "Release $REL_VERSION" &&
 git tag "snoopy-$REL_VERSION" &&
 ./doc/releasing/bin/create-release.sh "snoopy-$REL_VERSION" &&
 unset REL_VERSION
+
+
+# 4. Merge changes into "stable" branch:
+
+git checkout stable
+git merge --ff master
+(or git merge snopy-X.Y.Z <--- UNTESTED)
