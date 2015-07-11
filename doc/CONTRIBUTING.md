@@ -13,7 +13,8 @@ Table of Contents
 
   * [Contributing to Snoopy development](#contributing-to-snoopy-development)
     * [OS for development](#os-for-development)
-    * [Git branches](#git-branches)
+    * [Git branches - persistent](#git-branches-persistent)
+    * [Git branches - transient](#git-branches-transient)
     * [Data source development](#data-source-development)
     * [Filter development](#filter-development)
     * [Output development](#output-development)
@@ -38,9 +39,9 @@ that "fix" build process on these obsolete OSes will be rejected.
 
 
 
-## Git branches
+## Git branches - persistent
 
-The following git branches are persist in main Snoopy repository:
+The following git branches are always available in main Snoopy repository:
 
 - master: contains latest Snoopy development efforts. All new features
     snould be based on this branch.
@@ -62,14 +63,24 @@ The following git branches are persist in main Snoopy repository:
     only.
 
 
-The following branches are transient branches, usually found in contributor's
+## Git branches - transient
 
-Snoopy repo clones:
+The following branch-naming patterns are intended for branches whose sole
+purpose of existence is pull request submission. These branches should have
+concise naming. Main reason for this is clean git history. When one-line-per-
+commit history view shows "Merge branch 'contributor/master'" our dear history
+viewer has no idea what is going on there. But, if instead of that, the first
+line of that commit message is "Merge branch 'bugfix/invalid-data-from-ttyname'"
+then a single glance is enough to understand the big picture.
+
+Thus pull requests should only be made for concise-named branches that follow
+these patterns:
 - bugfix/*:        pull request branch, contains one bugfix,
 - documentation/*: pull request branch, contains documentation work,
 - enhancement/*:   pull request branch, contains one enhancement (not a new feature, but improvement nonetheless)
 - feature/*:       pull request branch, contains a new feature,
 - refactoring/*:   pull request branch, contains code refactoring,
+
 
 
 ### On what branch should you base your contribution to Snoopy?
