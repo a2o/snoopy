@@ -13,8 +13,8 @@ Table of Contents
 
   * [Contributing to Snoopy development](#contributing-to-snoopy-development)
     * [OS for development](#os-for-development)
-    * [Git branches - persistent](#git-branches-persistent)
-    * [Git branches - transient](#git-branches-transient)
+    * [Git branches - persistent](#git-branches---persistent)
+    * [Git branches - transient](#git-branches---transient)
     * [Data source development](#data-source-development)
     * [Filter development](#filter-development)
     * [Output development](#output-development)
