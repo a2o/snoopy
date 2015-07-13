@@ -206,7 +206,7 @@ See [doc/internals/README.md](doc/internals/README.md)
 
 ## 6. Contributing to Snoopy development
 
-See [doc/CONTRIBUTING.md](doc/CONTRIBUTING.md)
+See [CONTRIBUTING.md](CONTRIBUTING.md)
 
 
 
