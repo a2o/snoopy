@@ -279,9 +279,9 @@ echo -n "SNOOPY INSTALL: Building... " | tee -a $SNOOPY_INSTALL_LOGFILE
 make         >> $SNOOPY_INSTALL_LOGFILE 2>&1
 echo "done." | tee -a $SNOOPY_INSTALL_LOGFILE
 
-echo -n "SNOOPY INSTALL: Testing build... " | tee -a $SNOOPY_INSTALL_LOGFILE
-make check   >> $SNOOPY_INSTALL_LOGFILE 2>&1
-echo "done." | tee -a $SNOOPY_INSTALL_LOGFILE
+#echo -n "SNOOPY INSTALL: Testing build... " | tee -a $SNOOPY_INSTALL_LOGFILE
+#make check   >> $SNOOPY_INSTALL_LOGFILE 2>&1
+#echo "done." | tee -a $SNOOPY_INSTALL_LOGFILE
 
 echo -n "SNOOPY INSTALL: Installing... " | tee -a $SNOOPY_INSTALL_LOGFILE
 make install >> $SNOOPY_INSTALL_LOGFILE 2>&1
