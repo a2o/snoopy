@@ -26,6 +26,9 @@ fi
 
 ### Adjust data
 #
+if [ "$VAL_REAL" == "(none)" ]; then
+    VAL_REAL=""
+fi
 if [ "$VAL_SNOOPY" == "(none)" ]; then
     VAL_SNOOPY=""
 fi
