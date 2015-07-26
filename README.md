@@ -230,6 +230,11 @@ will be required.
 Snoopy development is currently located at the following URI:
     http://github.com/a2o/snoopy/
 
+Additional git mirrors (read-only) are available here:
+    https://gitlab.com/a2o/snoopy/
+    https://bitbucket.org/bostjan/snoopy/
+    https://git.teon.si/a2o/snoopy/
+
 Snoopy Logger was originally created and maintained by:
     Marius Aamodt Eriksen <marius@umich.edu>
     Mike Baker <mbm@linux.com>
