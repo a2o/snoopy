@@ -98,3 +98,15 @@ operation, which is not unexpected.
 This is the reason why we removed implementation of data source called 'legacy'
 from Snoopy, as maintaining redundant code seems pointless for 10% performance
 gain.
+
+
+
+
+
+### 5. I see no Snoopy output after initial user login
+
+Your user probably has LD_PRELOAD environmental variable set to something non-
+empty in their profile script. Remove it, or set libsnoopy.so as part of that
+preload environment variable, like this (UNTESTED):
+
+LD_PRELOAD="/path/to/libsnoopy.so /path/to/otherlib.so"
