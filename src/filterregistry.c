@@ -44,6 +44,9 @@
 #ifdef SNOOPY_CONF_FILTER_ENABLED_only_root
 #include "filter/only_root.h"
 #endif
+#ifdef SNOOPY_CONF_FILTER_ENABLED_only_tty
+#include "filter/only_tty.h"
+#endif
 #ifdef SNOOPY_CONF_FILTER_ENABLED_only_uid
 #include "filter/only_uid.h"
 #endif
@@ -63,6 +66,9 @@ char *snoopy_filterregistry_names[] = {
 #ifdef SNOOPY_CONF_FILTER_ENABLED_only_root
     "only_root",
 #endif
+#ifdef SNOOPY_CONF_FILTER_ENABLED_only_tty
+    "only_tty",
+#endif
 #ifdef SNOOPY_CONF_FILTER_ENABLED_only_uid
     "only_uid",
 #endif
@@ -78,6 +84,9 @@ int (*snoopy_filterregistry_ptrs []) (char *logMessage, char const * const arg) 
 #endif
 #ifdef SNOOPY_CONF_FILTER_ENABLED_only_root
     snoopy_filter_only_root,
+#endif
+#ifdef SNOOPY_CONF_FILTER_ENABLED_only_tty
+    snoopy_filter_only_tty,
 #endif
 #ifdef SNOOPY_CONF_FILTER_ENABLED_only_uid
     snoopy_filter_only_uid,

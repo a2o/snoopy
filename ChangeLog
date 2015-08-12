@@ -24,6 +24,8 @@ o Thread safety info: the remaining non-thread-safe functions that are used
     strerror() is used in lib/liblcthw as define, therefore an easy fix is not
     possible. This doubly linked list implementation needs a general overhaul
     anyway.
+o Feature: added new filter only_tty.
+    Logs only commands associated with a TTY.
 
 
 2015-06-18 - Version 2.4.3
