@@ -8,7 +8,7 @@
       * [2. Installing Snoopy from distribution package repositories](#2-installing-snoopy-from-distribution-package-repositories)
         * [2.1 Building distribution-specific packages yourself](#21-building-distribution-specific-packages-yourself)
       * [3. Building Snoopy from sources](#3-building-snoopy-from-sources)
-        * [3.1 Download options](#31-download-options)
+        * [3.1 Downloading source](#31-downloading-source)
         * [3.2 Installation procedure](#32-installation-procedure)
         * [3.3 Build configuration](#33-build-configuration)
           * [3.3.1 Configuring log output](#331-configuring-log-output)
@@ -92,10 +92,13 @@ however are gladly accepted.
 #### 3.1 Downloading source
 
 You can download Snoopy release tarballs from this location: http://source.a2o.si/download/snoopy/
-
-You can clone the latest Snoopy sources from GitHub:
+Alternatively, you can clone the latest Snoopy sources from GitHub.
+**DO NOT FORGET TO INITIALIZE GIT SUBMODULES**:
 ```
 git clone https://github.com/a2o/snoopy.git
+cd snoopy
+git submodule init
+git submodule update
 ```
 
 
