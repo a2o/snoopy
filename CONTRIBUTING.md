@@ -39,6 +39,13 @@ that "fix" build process on these obsolete OSes will be rejected.
 
 
 
+## Clone git repository
+
+File [INSTALL.md](INSTALL.md) contains necessary instructions about git repository
+cloning and git submodule initialization.
+
+
+
 ## Git branches - persistent
 
 The following git branches are always available in main Snoopy repository:
@@ -55,7 +62,7 @@ The following git branches are always available in main Snoopy repository:
     performed using this branch. Usually it lazily follows master
     branch. Coverity has a limited build submission frequency, thus
     a dedicated branch has been created to trigger analysis on
-    an-needed basis.
+    as-needed basis.
 - legacy: orphaned branch, which contains imported Snoopy releases from
     1.00 to 1.6.1 + changes to bring it in sync with initial commit
     from master branch. This is a lousy attempt to recreate lost
