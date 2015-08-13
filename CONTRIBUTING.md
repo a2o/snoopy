@@ -41,8 +41,19 @@ that "fix" build process on these obsolete OSes will be rejected.
 
 ## Clone git repository
 
-File [INSTALL.md](INSTALL.md) contains necessary instructions about git repository
-cloning and git submodule initialization.
+File [INSTALL.md](INSTALL.md) contains detailed instructions about git repository
+cloning and git submodule initialization. Also, do not forget to run ./bootstrap.sh
+after submodules have been updated.
+
+Recap of the steps:
+```shell
+git clone https://github.com/a2o/snoopy.git
+cd snoopy
+git submodule init
+git submodule update
+./bootstrap.sh
+
+```
 
 
 

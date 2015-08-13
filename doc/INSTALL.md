@@ -99,6 +99,9 @@ git clone https://github.com/a2o/snoopy.git
 cd snoopy
 git submodule init
 git submodule update
+
+# This generates ./configure script
+./bootstrap.sh
 ```
 
 
