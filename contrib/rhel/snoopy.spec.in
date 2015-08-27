@@ -19,7 +19,7 @@ make %{?_smp_mflags}
 %install
 %make_install
 
-mkdir %{buildroot}/etc
+mkdir -p %{buildroot}/etc
 install -m 0644 etc/snoopy.ini %{buildroot}/%{_sysconfdir}/snoopy.ini
 
 %files
