@@ -127,8 +127,11 @@ char* read_proc_property (int pid, char* prop_name)
         /*
          * Separate line content into two tokens: key and value
          * If separation fails, continue to the next line ("Groups:" key is one such example)
+         *
+         * Explicitly initialized as pointer to "", otherwise coverity complains with
+         * "Uninitialized pointer read (UNINIT)".
          */
-        char *savePtr;
+        char *savePtr = "";
         k = strtok_r(line, ":", &savePtr);
         v = strtok_r(NULL, ":", &savePtr);
         if (NULL == v) {
