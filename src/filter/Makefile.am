@@ -46,6 +46,14 @@ libsnoopy_filters_all_la_SOURCES += \
 	only_root.h
 endif
 
+### Filter: only_tty
+#
+if FILTER_ENABLED_only_tty
+libsnoopy_filters_all_la_SOURCES += \
+	only_tty.c \
+	only_tty.h
+endif
+
 ### Filter: only_uid
 #
 if FILTER_ENABLED_only_uid

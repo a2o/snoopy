@@ -263,6 +263,9 @@
 /* Is filter "only_root" available? */
 #undef SNOOPY_CONF_FILTER_ENABLED_only_root
 
+/* Is filter "only_tty" available? */
+#undef SNOOPY_CONF_FILTER_ENABLED_only_tty
+
 /* Is filter "only_uid" available? */
 #undef SNOOPY_CONF_FILTER_ENABLED_only_uid
 

@@ -74,6 +74,7 @@
 ; - exclude_spawns_of   ; (available=@enable_filter_exclude_spawns_of@) Exclude log entries that occur in specified process trees
 ; - exclude_uid         ; (available=@enable_filter_exclude_uid@) Exclude these UIDs from logging
 ; - only_root           ; (available=@enable_filter_only_root@) Only log root commands
+; - only_tty            ; (available=@enable_filter_only_tty@) Only log commands associated with a TTY
 ; - only_uid            ; (available=@enable_filter_only_uid@) Only log commands executed by these UIDs
 ;
 ; Availability (yes/no):
