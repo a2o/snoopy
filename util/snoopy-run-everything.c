@@ -101,5 +101,11 @@ int main (int argc, char **argv)
     /* Cleanup and return */
     free(logMessage);
     snoopy_cleanup();
+
+    /* Close these FDs too, otherwise valgrind complains */
+    fclose(stdin);
+    fclose(stdout);
+    fclose(stderr);
+
     return 0;
 }

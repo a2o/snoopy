@@ -28,6 +28,8 @@ o RH packaging bugfix: do not fail the installation if directory already exists.
     (Brendan Germain - bcg62@github)
 o Feature: added new filter only_tty. Logs only commands associated with a TTY.
     (Jack DeLoach - urq@github)
+o Bugfix (#92 @ GitHub): fix false warning about open file descriptors when
+    running valgrind.
 
 
 2015-06-18 - Version 2.4.3
