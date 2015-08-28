@@ -53,7 +53,7 @@ Steps:
         1. ChangeLog
         2. README.md (latest version(s) displayed on GitHub front page)
     b) Commit with sign-off, with exact message "Release X.Y.Z" on the first line,
-        create git tag "snoopy-X.Y.Z
+        create git tag "snoopy-X.Y.Z"
         Actual commands to run:
 
 export REL_VERSION=`./build/get-version.sh changelog` &&
