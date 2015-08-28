@@ -3,10 +3,13 @@
 -------------------------------------------------------------------------------
 
 
-2015-06-xx - Version 2.4.NEXT
+201x-xx-xx - Version 2.4.NEXT
 --------------------------
 o TODO: Reenable 'make check' in install-snoopy.sh, but disable ds_domain check by default.
 
+
+2015-08-28 - Version 2.4.4
+--------------------------
 o Thread safety: all remaining strtok() function calls were replaced with their
     thread-safe counterparts - strtok_r().
 o Thread safety: all localtime() function calls were replaced with their
