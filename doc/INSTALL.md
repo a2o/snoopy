@@ -238,7 +238,7 @@ of the library in the appropriate paths.
 #### 4.4 For multilib systems with LD_PRELOAD_* environmental variables
 
 On systems that support LD_PRELOAD_32 and LD_PRELOAD_64  you  can  use
-those variables to force loading of Snoopy. If you with to  enable  it
+those variables to force loading of Snoopy. If you wish to  enable  it
 system-wide, ensure that correct values are held  by  those  variables
 at boot time. Consult section  4.a  of  this  README  on  how  to  set
 environmental variables. Setting them at boot time is usually  distro-
