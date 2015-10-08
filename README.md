@@ -15,7 +15,7 @@ Stable:
   * [Snoopy Logger](#snoopy-logger)
     * [0. News](#1-news)
     * [1. Installation](#1-installation)
-      * [1.1 Version information](#11-version-information)
+      * [1.1 Version information and download links](#11-version-information-and-download-links)
     * [2. Output](#2-output)
     * [3. Configuration](#3-configuration)
     * [4. Support](#4-support)
@@ -75,14 +75,14 @@ That is it.
 Detailed installation instructions are available here: [doc/INSTALL.md](doc/INSTALL.md)
 
 
-### 1.1 Version information
+### 1.1 Version information and download links
 
-Latest Snoopy version information:
-* stable: http://source.a2o.si/download/snoopy/snoopy-2.4.4.tar.gz
+| Version                      | Download URI                                               |
+| ---------------------------- | ---------------------------------------------------------- |
+| Latest stable release        | http://source.a2o.si/download/snoopy/snoopy-2.4.4.tar.gz   |
+| Latest development release   | (N/A, clone this git repo, use master branch)              |
+| All releases                 | http://source.a2o.si/download/snoopy/                      |
 
-<!---
-* development: http://source.a2o.si/download/snoopy/snoopy-2.3.0.tar.gz
--->
 
 
 
