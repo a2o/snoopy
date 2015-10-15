@@ -110,3 +110,22 @@ empty in their profile script. Remove it, or set libsnoopy.so as part of that
 preload environment variable, like this (UNTESTED):
 
 LD_PRELOAD="/path/to/libsnoopy.so /path/to/otherlib.so"
+
+
+
+
+
+### 5. How do I go about developing new data source/filter/output?
+
+Please see [HACKING.md](HACKING.md) for more information.
+
+
+
+### 6. I want to contribute - how should I do it?
+
+Contributions are welcome. Please see [../CONTRIBUGING.md](CONTRIBUTING.md) for
+additional details about how to properly submit patches so they are merged as
+fast as possible.
+If your contribution is refactoring Snoopy's internal structure, it might take
+a while to review it. Adding new data source, filter or output does not count
+as refactoring.
