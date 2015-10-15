@@ -5,4 +5,4 @@ when done so, GitHub displays link to contributing guidelines when creating
 a new issue.
 
 Direct link:
-[https://github.com/a2o/snoopy/blob/master/CONTRIBUTING.md](CONTRIBUTING.md)
+[../CONTRIBUTING.md](../CONTRIBUTING.md)
