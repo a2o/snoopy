@@ -12,10 +12,7 @@ set -e
 
 ### Check autotools version
 #
-autoreconf --version
 RES=`autoreconf --version | head -n1 | cut -d' ' -f4 | sed -e 's/\.//'`
-echo $RES
-
 if [ "$RES" -lt "269" ]; then
     IGNORE_OLD_TOOLCHAIN="${1:-no}"
     if [[ "$IGNORE_OLD_TOOLCHAIN" != "geezer-os" ]] && [[ "$IGNORE_OLD_TOOLCHAIN" != "old-fart" ]] ; then
