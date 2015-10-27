@@ -18,7 +18,7 @@ VAL_SNOOPY=`$SNOOPY_TEST_DATASOURCE snoopy_version`
 
 ### Evaluate
 #
-if [[ $VAL_SNOOPY =~ ^[0-9]+\.[0-9]+\.[0-9]+(rc[0-9]+)?(-[0-9]+-[0-9a-z]+)?(-dirty)?$ ]]; then
+if [[ $VAL_SNOOPY =~ ^[0-9]+\.[0-9]+\.[0-9]+ ]]; then
     snoopy_testResult_pass
 else
     snoopy_testResult_fail "$VAL_SNOOPY"
