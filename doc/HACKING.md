@@ -15,6 +15,7 @@ Table of Contents
 
   * [Hacking Snoopy](#hacking-snoopy)
     * [OS for development](#os-for-development)
+      * [Older OSes](#older-oses)
     * [Clone git repository and initialize git submodules](#clone-git-repository-and-initialize-git-submodules)
     * [Data source development](#data-source-development)
     * [Filter development](#filter-development)
@@ -31,6 +32,9 @@ Ubuntu 14.04 would be a good choice ATM, or RedHat/CentOS 7.
 Required versions of software:
 - automake 1.11
 - autoconf 2.69
+
+
+### Older OSes
 
 With a few tweaks Snoopy can be built from git repository on older systems too.
 

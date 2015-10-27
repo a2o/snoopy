@@ -24,7 +24,7 @@ if [ "$RES" -lt "269" ]; then
         echo "### ERROR:"
         echo "###"
         echo "### More information and workaround is available here:"
-        echo "###     https://github.com/a2o/snoopy/blob/master/doc/HACKING.md#os-for-development"
+        echo "###     https://github.com/a2o/snoopy/blob/master/doc/HACKING.md#older-oses"
         echo "###"
         echo "### After you have made the proper code adjustments, you may run this ./bootstrap.sh"
         echo "### with an argument to avoid this error message:"
