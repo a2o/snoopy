@@ -33,8 +33,35 @@ Required versions of software:
 - autoconf 2.69
 
 With a few tweaks Snoopy can be built from git repository on older systems too.
-Just run ./bootstrap.sh and fix the issues that crop up. Patches/pull requests
-that "fix" build process on these obsolete OSes will be rejected.
+
+The main incompatibility is that older autotools can not use external command
+to determine version of current Snoopy code your are building. Here is the diff
+of required change:     
+```diff
+diff --git a/configure.ac b/configure.ac
+index b71aa32..07edd5a 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -9,7 +9,7 @@
+ AC_PREREQ([2.63])
+ AC_INIT(
+     [Snoopy Logger],
+-    m4_esyscmd_s(echo $(./build/get-version.sh)),
++    [2.4.4-my-dev-version],
+     [https://github.com/a2o/snoopy/issues/],
+     [snoopy],
+     [https://github.com/a2o/snoopy/])
+```
+
+After you have performed this change, you may re-run ./bootstrap.sh with an
+argument to ignore too-old version of autotools:
+```shell
+./bootstrap.sh geezer-os
+```
+
+Pull requests that "fix" this build process "bug" on these obsolete OSes
+(by removing usage of external command and replacing it with static string)
+will be rejected.
 
 
 
