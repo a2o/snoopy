@@ -22,9 +22,9 @@ if DATASOURCE_ENABLED_datetime
     TESTS += $(SCRIPT_PREFIX)_datetime.sh
 endif
 
-if DATASOURCE_ENABLED_domain
-    TESTS += $(SCRIPT_PREFIX)_domain.sh
-endif
+#if DATASOURCE_ENABLED_domain
+#    TESTS += $(SCRIPT_PREFIX)_domain.sh
+#endif
 
 if DATASOURCE_ENABLED_egid
     TESTS += $(SCRIPT_PREFIX)_egid.sh
