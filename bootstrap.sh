@@ -22,7 +22,7 @@ set -x
 #
 if [ ! -e lib/initparser/.git ]; then
     git submodule init
-    gut submodule update
+    git submodule update
 fi
 
 
