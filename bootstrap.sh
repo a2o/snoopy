@@ -18,6 +18,15 @@ set -x
 
 
 
+### Check if submodules are checked out, and do it if not
+#
+if [ ! -e lib/initparser/.git ]; then
+    git submodule init
+    gut submodule update
+fi
+
+
+
 ### Clear cache
 #
 if [ -d autom4te.cache ]; then
