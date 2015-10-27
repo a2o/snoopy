@@ -40,7 +40,7 @@ With a few tweaks Snoopy can be built from git repository on older systems too.
 
 The main incompatibility is that older autotools can not use external command
 to determine version of current Snoopy code your are building. Here is the diff
-of required change:     
+of required change to make it work:
 ```diff
 diff --git a/configure.ac b/configure.ac
 index b71aa32..07edd5a 100644
