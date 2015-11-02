@@ -26,7 +26,7 @@ fi
 ### Evaluate
 #
 VAL_DIFF=`expr $VAL_SNOOPY_2 - $VAL_SNOOPY_1`
-if [[ "$VAL_DIFF" -gt "5" ]] && [[ "$VAL_DIFF" -lt "500" ]]; then
+if [[ "$VAL_DIFF" -ge "5" ]] && [[ "$VAL_DIFF" -lt "500" ]]; then
     snoopy_testResult_pass "$VAL_DIFF"
 else
     snoopy_testResult_fail "${VAL_SNOOPY_1}ms ${VAL_SNOOPY_2}ms"
