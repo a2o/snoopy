@@ -2,6 +2,9 @@ snoopy (2:2.4.4-debian) UNRELEASED; urgency=medium
 
   * Fix rules for deleting no existant dir
   * Fix ms rounding
+  * Add missing info to debian build README
+  * Update to allow -debian tags
+  * Update version to allow backported versions
 
  -- Alasdair Campbell <alasdair@COLONEL-K>  Mon, 02 Nov 2015 16:04:35 +0000
 
