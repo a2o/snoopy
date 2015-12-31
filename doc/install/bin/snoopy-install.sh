@@ -102,8 +102,14 @@ else
         exit 1
     fi
 
+    if ! which file &> /dev/null; then
+        echo "SNOOPY INSTALL ERROR: 'file' program not found!"
+        echo "SNOOPY INSTALL ERROR: Install it and rerun this installer."
+        exit 1
+    fi
+
     if ! which socat &> /dev/null; then
-        echo "SNOOPY INSTALL ERROR: 'socat' not found!"
+        echo "SNOOPY INSTALL ERROR: 'socat' program not found!"
         echo "SNOOPY INSTALL ERROR: Install it and rerun this installer."
         exit 1
     fi
