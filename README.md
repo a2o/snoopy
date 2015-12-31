@@ -15,27 +15,29 @@ environment to avoid logging by Snoopy. See (this FAQ entry)[https://github.com/
 
 
 
+## Table of contents
+
   * [Snoopy Logger](#snoopy-logger)
-    * [0. News](#1-news)
-    * [1. Installation](#1-installation)
-      * [1.1 Version information and download links](#11-version-information-and-download-links)
-    * [2. Output](#2-output)
-    * [3. Configuration](#3-configuration)
-    * [4. Support](#4-support)
-      * [4.1 Keep all communication public](#41-all-keep-communication-public)
-      * [4.2 Supported Snoopy versions](#42-supported-snoopy-versions)
-      * [4.3 Reporting bugs](#43-reporting-bugs)
-      * [4.4 Feature requests](#44-feature-requests)
-      * [4.5 Free support](#45-free-support)
-      * [4.6 Commercial support](#43-commercial-support)
-    * [5. How does Snoopy actually work?](#5-how-does-snoopy-actually-work)
-    * [6. Contributing to Snoopy development](#6-contributing-to-snoopy-development)
-    * [7. License](#7-license)
-    * [8. Credits](#8-credits)
+    * [Table of contents](#table-of-contents)
+    * [News](#news)
+    * [Installation](#installation)
+      * [I.1 Version information and download links](#i1-version-information-and-download-links)
+    * [Output](#output)
+    * [Configuration](#configuration)
+    * [Support](#support)
+      * [S.1 Keep all communication public](#s1-all-keep-communication-public)
+      * [S.2 Supported Snoopy versions](#s2-supported-snoopy-versions)
+      * [S.3 Reporting bugs](#s3-reporting-bugs)
+      * [S.4 Feature requests](#s4-feature-requests)
+      * [S.5 Free support](#s5-free-support)
+      * [S.6 Commercial support](#s6-commercial-support)
+    * [Contributing to Snoopy development](#contributing-to-snoopy-development)
+    * [License](#license)
+    * [Credits](#credits)
 
 
 
-## 0. News
+## News
 
 2015-08-28:
 **Snoopy 2.4.4 released!**
@@ -55,7 +57,7 @@ as possible.
 
 
 
-## 1. Installation
+## Installation
 
 The easiest way to start using Snoopy is to execute one of the following
 commands (as root).
@@ -78,7 +80,7 @@ That is it.
 Detailed installation instructions are available here: [doc/INSTALL.md](doc/INSTALL.md)
 
 
-### 1.1 Version information and download links
+### I.1 Version information and download links
 
 | Version                      | Download URI                                               |
 | ---------------------------- | ---------------------------------------------------------- |
@@ -89,7 +91,7 @@ Detailed installation instructions are available here: [doc/INSTALL.md](doc/INST
 
 
 
-## 2. Output
+## Output
 
 This is what typical Snoopy output looks like:
 
@@ -108,7 +110,7 @@ For actual output destination check your syslog configuration.
 
 
 
-## 3. Configuration
+## Configuration
 
 Most parts of Snoopy are/can be/should be configured at build time.
 
@@ -122,9 +124,9 @@ For additional information consult comments in default configuration file
 
 
 
-## 4. Support
+## Support
 
-### 4.1 Keep all communication public
+### S.1 Keep all communication public
 
 Due to the fact that you need support, there is a good chance someone else will
 stumble upon the same issue soon too. For this reason it is crucial that all
@@ -136,7 +138,7 @@ Therefore you should use GitHub issues for any kind of communication about
 Snoopy, with the sole exception of commercial support - that should be the only
 reason for contacting maintainer directly via email.
 
-### 4.2 Supported Snoopy versions
+### S.2 Supported Snoopy versions
 
 **Only latest released version of Snoopy is "supported"!**
 Any version that is not the latest (stable or development) is not supported.
@@ -144,7 +146,7 @@ Please do not submit any bugfix/feature/change requests related to old and thus
 unsupported Snoopy versions.
 
 
-### 4.3 Reporting bugs
+### S.3 Reporting bugs
 
 **If you encounter an issue with Snoopy, proceed with the following steps:**
 
@@ -165,7 +167,7 @@ unsupported Snoopy versions.
         fixes (or at least tries to fix) the reported issue.
 
 
-### 4.4 Feature requests
+### S.4 Feature requests
 
 "I need Snoopy to do this and that!"
 
@@ -193,20 +195,20 @@ That way the idea will be kept around and maybe someone will pick it up and
 implement it.
 
 
-### 4.5 Free support
+### S.5 Free support
 
 Use GitHub Issues: https://github.com/a2o/snoopy/issues
 Do not send email to maintainers for free support.
 
 
-### 4.6 Commercial support
+### S.6 Commercial support
 
 Commercial support for Snoopy is available. Contact current maintainer via email
 for details.
 
 
 
-## 5. Contributing to Snoopy development
+## Contributing to Snoopy development
 
 See [CONTRIBUTING.md](CONTRIBUTING.md).
 
@@ -215,7 +217,7 @@ internal structure of Snoopy and how all pieces fit together.
 
 
 
-## 6. License
+## License
 
 Snoopy is released under GNU General Public License version 2.
 
@@ -230,7 +232,7 @@ will be required.
 
 
 
-## 7. Credits
+## Credits
 
 Snoopy development is currently located at the following URI:
     http://github.com/a2o/snoopy/
