@@ -8,6 +8,8 @@
 o TODO: Reenable 'make check' in install-snoopy.sh, but disable ds_domain check
     by default.
 
+o Install (#90 @ GitHub): Add support for installing local Snoopy packages with
+    install script.
 o Install (#98 @ GitHub): Add support for bootstrapping git builds on older OS
     releases (i.e. CentOS 6). Package builds are not affected by this.
     This is now done automatically by bootstrap.sh script.

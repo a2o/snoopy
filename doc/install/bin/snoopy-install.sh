@@ -32,19 +32,31 @@ case $ARG_INSTALL_MODE in
         SNOOPY_INSTALL_MODE="package-exact-version"
         SNOOPY_VERSION_TO_INSTALL="$ARG_INSTALL_MODE"
         ;;
+
     *)
-        echo "SNOOPY INSTALL ERROR: Unknown installation mode."
-        echo
-        echo "Possible options:"
-        echo "- 'stable'    ; installs latest stable version"
-#        echo "- 'preview'   ; installs latest preview version, if available"
-        echo "- 'X.Y.Z'     ; installs specific version from release package"
-        echo "- 'git-REF'   ; install directly from git, where REF is either:"
-        echo "     - a branch name,"
-        echo "     - tag or"
-        echo "     - commit SHA hash."
-        echo
-        exit 1
+        # Check if file name/path has been passed - perform a local install
+        if [[ $ARG_INSTALL_MODE =~ snoopy-[-_.0-9a-zA-Z]+\.tar\.gz$ ]] && [[ -f $ARG_INSTALL_MODE ]]; then
+
+            SNOOPY_INSTALL_MODE="package-local"
+            SNOOPY_PACKAGE_PATH="$ARG_INSTALL_MODE"
+
+        else
+
+            echo "SNOOPY INSTALL ERROR: Unknown installation mode."
+            echo
+            echo "Possible options:"
+            echo "- 'stable'    ; installs latest stable version"
+#            echo "- 'preview'   ; installs latest preview version, if available"
+            echo "- 'X.Y.Z'     ; installs specific version from release package"
+            echo "- 'git-REF'   ; install directly from git, where REF is either:"
+            echo "     - a branch name,"
+            echo "     - tag or"
+            echo "     - commit SHA hash."
+            echo "- 'path/to/snoopy-X.Y.Z.tar.gz'     ; installs specific local Snoopy release package"
+            echo
+            exit 1
+
+        fi
         ;;
 esac
 
@@ -117,7 +129,7 @@ fi
 
 
 
-### If building from git, check for some more stuff
+### If building from git, check for additional required software
 #
 if [ "$SNOOPY_INSTALL_MODE" == "git" ]; then
     echo "SNOOPY INSTALL: Installing distro-specific packages: autoconf, git, libtool, m4..."
@@ -224,6 +236,23 @@ if [ "$SNOOPY_INSTALL_MODE" == "git" ]; then
         echo "SNOOPY INSTALL ERROR: You will have to install it manually." | tee -a $SNOOPY_INSTALL_LOGFILE
         exit 1
     fi
+
+elif [ "$SNOOPY_INSTALL_MODE" == "package-local" ]; then
+
+    echo -n "SNOOPY INSTALL: Will install the following local package: " | tee -a $SNOOPY_INSTALL_LOGFILE
+    echo "$SNOOPY_PACKAGE_PATH" | tee -a $SNOOPY_INSTALL_LOGFILE
+
+    SNOOPY_PACKAGE_FILENAME=`basename $SNOOPY_PACKAGE_PATH`
+    SNOOPY_PACKAGE_DIRNAME=`echo "$SNOOPY_PACKAGE_FILENAME" | sed -e 's/\.tar.gz$//'`
+    SNOOPY_PACKAGE_VERSION=`echo $SNOOPY_PACKAGE_FILENAME | sed -e 's/^snoopy-//' | sed -e 's/.tar.gz$//'`
+
+    ### Untar, build and configure
+    #
+    echo -n "SNOOPY INSTALL: Unpacking $SNOOPY_PACKAGE_FILENAME... " | tee -a $SNOOPY_INSTALL_LOGFILE
+    rm -rf $SNOOPY_PACKAGE_DIRNAME
+    tar -xzf $SNOOPY_PACKAGE_FILENAME
+    cd $SNOOPY_PACKAGE_DIRNAME
+    echo "done." | tee -a $SNOOPY_INSTALL_LOGFILE
 
 else
 
