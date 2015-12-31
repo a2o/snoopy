@@ -10,6 +10,9 @@ Master:
 Stable:
 [![Build Status - Stable](https://travis-ci.org/a2o/snoopy.svg?branch=stable)](https://travis-ci.org/a2o/snoopy/branches)
 
+INFO: Snoopy is not a secure audition solution. Rogue users can easily manipulate
+environment to avoid logging by Snoopy. See (this FAQ entry)[https://github.com/a2o/snoopy/blob/master/doc/FAQ.md#5-i-see-no-snoopy-output-after-initial-user-login].
+
 
 
   * [Snoopy Logger](#snoopy-logger)
@@ -124,7 +127,7 @@ For additional information consult comments in default configuration file
 ### 4.1 Keep all communication public
 
 Due to the fact that you need support, there is a good chance someone else will
-stumble upon the same issue soon. For this reason it is crucial that all
+stumble upon the same issue soon too. For this reason it is crucial that all
 communication is kept public. Search engines can then pick this content up,
 index it, and hopefully present it to the next soul with the same problem.
 
@@ -203,19 +206,16 @@ for details.
 
 
 
-## 5. How does Snoopy actually work?
+## 5. Contributing to Snoopy development
 
-See [doc/internals/README.md](doc/internals/README.md)
+See [CONTRIBUTING.md](CONTRIBUTING.md).
 
-
-
-## 6. Contributing to Snoopy development
-
-See [CONTRIBUTING.md](CONTRIBUTING.md)
+See [doc/internals/README.md](doc/internals/README.md) for information about
+internal structure of Snoopy and how all pieces fit together.
 
 
 
-## 7. License
+## 6. License
 
 Snoopy is released under GNU General Public License version 2.
 
@@ -230,7 +230,7 @@ will be required.
 
 
 
-## 8. Credits
+## 7. Credits
 
 Snoopy development is currently located at the following URI:
     http://github.com/a2o/snoopy/
