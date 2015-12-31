@@ -7,6 +7,15 @@
 ### Initialize autotools
 #
 AC_PREREQ([2.63])
+
+# If you are running older OS and trying to build Snoopy from git,
+# ./bootstrap.sh will change the line below from script-based version
+# determination of Snoopy version to fixed string. DO NOT COMMIT THIS CHANGE!
+# Pull requests with this change will be rejected.
+# Correct line content that follows is:
+#
+#   m4_esyscmd_s(echo $(./build/get-version.sh)),
+#
 AC_INIT(
     [Snoopy Logger],
     m4_esyscmd_s(echo $(./build/get-version.sh)),

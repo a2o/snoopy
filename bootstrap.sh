@@ -19,21 +19,19 @@ if [ "$RES" -lt "268" ]; then
 
         echo
         echo "###"
-        echo "### ERROR:"
-        echo "### ERROR: Your autotools version is too old."
-        echo "### ERROR:"
+        echo "### WARNING:"
+        echo "### WARNING: Your autotools version is too old."
+        echo "### WARNING:"
         echo "###"
         echo "### More information and workaround is available here:"
         echo "###     https://github.com/a2o/snoopy/blob/master/doc/HACKING.md#older-oses"
         echo "###"
-        echo "### After you have made the proper code adjustments, you may run this ./bootstrap.sh"
-        echo "### with an argument to avoid this error message:"
+        echo "### The workaround is now performed by ./bootstrap.sh automatically."
+        echo "### This warning can be suppressed by using the following command:"
         echo "###"
         echo "###     ./bootstrap.sh geezer-os"
         echo "###"
         echo
-
-        exit 1
 
     else
 
@@ -42,6 +40,16 @@ if [ "$RES" -lt "268" ]; then
         echo
     fi
 
+    echo    "BOOTSTRAP: Adjusting configure.ac for old OS:"
+    MYDIR=`dirname $0`
+    SNOOPY_VERSION_LITERAL=`$MYDIR/build/get-version.sh | sed -e 's/$/-geezer-os/'`
+    SNOOPY_VERSION_CONFIGURE_AC=`echo "$SNOOPY_VERSION_LITERAL" | sed -e 's/^/    [/' | sed -e 's/$/],/'`
+    echo -n "BOOTSTRAP:   - version from script to literal string '$SNOOPY_VERSION_LITERAL'... "
+    sed -i "s/^    m4_esyscmd_s.*/$SNOOPY_VERSION_CONFIGURE_AC/" configure.ac
+    echo "done."
+    echo "BOOTSTRAP:   All done."
+    echo "BOOTSTRAP: IMPORTANT NOTICE: Do not commit these changes!"
+    echo
 fi
 
 

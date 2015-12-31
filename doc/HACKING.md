@@ -57,12 +57,15 @@ index b71aa32..07edd5a 100644
      [https://github.com/a2o/snoopy/])
 ```
 
-After you have performed this change, you may re-run ./bootstrap.sh with an
-argument to ignore too-old version of autotools:
+~~After you have performed this change, you may re-run ./bootstrap.sh with an
+argument to ignore too-old version of autotools:~~
+**This change is now performed automatically by bootstrap.sh,** and a warning
+is emitted. If you would like to get rid of the warning too, use this:
 ```shell
 ./bootstrap.sh geezer-os
 ```
 
+**IMPORTANT NOTICE:**
 Pull requests that "fix" this build process "bug" on these obsolete OSes
 (by removing usage of external command and replacing it with static string)
 will be rejected.

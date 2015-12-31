@@ -7,6 +7,9 @@
 --------------------------
 o TODO: Reenable 'make check' in install-snoopy.sh, but disable ds_domain check by default.
 
+o Install (#98 @ GitHub): Add support for bootstrapping git builds on older OS
+    releases (i.e. CentOS 6). Package builds are not affected by this.
+    This is now done automatically by bootstrap.sh script.
 o Infrastructure (#94 @ GitHub): Migrated Travis-CI to container-based builds. Builds are not
     much faster, but their startup is indeed speedier.
 
