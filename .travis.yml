@@ -14,9 +14,12 @@ branches:
     - coverity_scan
 
 
-before_install:
-  - sudo apt-get update  -qq
-  - sudo apt-get install -qq socat
+### Package installation was moved to addons.apt.packages setting, to utilize new container infrastructure
+#
+#before_install:
+#  - sudo apt-get update  -qq
+#  - sudo apt-get install -qq socat
+sudo: false
 
 
 before_script:
@@ -53,6 +56,13 @@ script:
 
 
 addons:
+  #
+  # Install packages:
+  #
+  apt:
+    packages:
+      - socat
+
   #
   # Coverity integration
   #
