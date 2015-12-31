@@ -7,6 +7,9 @@
 --------------------------
 o TODO: Reenable 'make check' in install-snoopy.sh, but disable ds_domain check by default.
 
+o Infrastructure (#94 @ GitHub): Migrated Travis-CI to container-based builds. Builds are not
+    much faster, but their startup is indeed speedier.
+
 
 2015-08-28 - Version 2.4.4
 --------------------------
