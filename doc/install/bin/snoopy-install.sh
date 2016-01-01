@@ -7,6 +7,7 @@
 SNOOPY_GIT_ORIGIN_URI="https://github.com/a2o/snoopy.git"
 SNOOPY_PACKAGE_DOWNLOAD_URI_PREFIX="http://source.a2o.si/download/snoopy"
 SNOOPY_INSTALL_LOGFILE="`pwd`/snoopy-install.log"
+SNOOPY_TRAVIS_BUILD=${SNOOPY_TRAVIS_BUILD:-false}
 
 
 
@@ -67,7 +68,11 @@ esac
 if [ "`id -u`" != "0" ]; then
     echo "SNOOPY INSTALL ERROR: This installation must be run as root."
     echo "Hint: 'sudo COMMAND' perhaps?"
-    exit 1
+    if [ "$SNOOPY_TRAVIS_BUILD" == "true" ]; then
+        echo "SNOOPY INSTALL: Ignoring error above, we are running inside Travis CI."
+    else
+        exit 1
+    fi
 fi
 
 
@@ -294,6 +299,16 @@ fi
 ### Configure, build, install, enable
 #
 
+# Detect travis
+#
+if [ "$SNOOPY_TRAVIS_BUILD" == "true" ]; then
+    SNOOPY_INSTALL_CONFIGURE_PREFIX="--prefix=$HOME/usr/local"
+    SNOOPY_INSTALL_CONFIGURE_SYSCONFDIR="--sysconfdir=$HOME/etc"
+else
+    SNOOPY_INSTALL_CONFIGURE_PREFIX=""
+    SNOOPY_INSTALL_CONFIGURE_SYSCONFDIR="--sysconfdir=/etc"
+fi
+
 # Which configure flag is the right one
 #
 if ./configure --help | grep enable-filtering > /dev/null; then
@@ -305,7 +320,8 @@ fi
 echo -n "SNOOPY INSTALL: Configuring... " | tee -a $SNOOPY_INSTALL_LOGFILE
 ./configure \
     --enable-config-file \
-    --sysconfdir=/etc \
+    $SNOOPY_INSTALL_CONFIGURE_PREFIX \
+    $SNOOPY_INSTALL_CONFIGURE_SYSCONFDIR \
     $SNOOPY_INSTALL_CONFIGURE_FLAG_FILTERING \
     >> $SNOOPY_INSTALL_LOGFILE 2>&1
 echo "done." | tee -a $SNOOPY_INSTALL_LOGFILE
@@ -322,31 +338,35 @@ echo -n "SNOOPY INSTALL: Installing... " | tee -a $SNOOPY_INSTALL_LOGFILE
 make install >> $SNOOPY_INSTALL_LOGFILE 2>&1
 echo "done." | tee -a $SNOOPY_INSTALL_LOGFILE
 
-echo -n "SNOOPY INSTALL: Enabling... " | tee -a $SNOOPY_INSTALL_LOGFILE
-make enable  >> $SNOOPY_INSTALL_LOGFILE 2>&1
-echo "done." | tee -a $SNOOPY_INSTALL_LOGFILE
+if [ "$SNOOPY_TRAVIS_BUILD" == "true" ]; then
+    echo "SNOOPY INSTALL: NOT enabling, as we are not running as root (Travis-CI build)." | tee -a $SNOOPY_INSTALL_LOGFILE
+else
+    echo -n "SNOOPY INSTALL: Enabling... " | tee -a $SNOOPY_INSTALL_LOGFILE
+    make enable  >> $SNOOPY_INSTALL_LOGFILE 2>&1
+    echo "done." | tee -a $SNOOPY_INSTALL_LOGFILE
 
 
 
-### Tell the user what to do next
-#
-echo
-echo "SNOOPY LOGGER is now installed and enabled."
-echo
-echo "TIP #1: If Snoopy is to be enabled for all processes, you need"
-echo "        to restart your system, or at least all services on it."
-echo
-echo "TIP #2: If you ever need to disable Snoopy, you should use provided"
-echo "        'snoopy-disable' script. Use 'snoopy-enable' to reenable it."
-echo
-echo "TIP #3: Snoopy output can usually be found somewhere in /var/log/*"
-echo "        Check your syslog configuration for details."
-echo
-echo "TIP #4: Configuration file location: /etc/snoopy.ini"
-echo "        See included comments for additional configuration options."
-echo
-echo "Snoopy wishes you a happy logging experience:)"
-echo
+    ### Tell the user what to do next
+    #
+    echo
+    echo "SNOOPY LOGGER is now installed and enabled."
+    echo
+    echo "TIP #1: If Snoopy is to be enabled for all processes, you need"
+    echo "        to restart your system, or at least all services on it."
+    echo
+    echo "TIP #2: If you ever need to disable Snoopy, you should use provided"
+    echo "        'snoopy-disable' script. Use 'snoopy-enable' to reenable it."
+    echo
+    echo "TIP #3: Snoopy output can usually be found somewhere in /var/log/*"
+    echo "        Check your syslog configuration for details."
+    echo
+    echo "TIP #4: Configuration file location: /etc/snoopy.ini"
+    echo "        See included comments for additional configuration options."
+    echo
+    echo "Snoopy wishes you a happy logging experience:)"
+    echo
+fi
 
 
 
@@ -356,8 +376,8 @@ echo
 if [ "$?" != "0" ]; then
     echo
     echo
-    echo "Last 5 lines of Snoopy installation log file:"
-    tail -n5 $SNOOPY_INSTALL_LOGFILE
+    echo "Last 10 lines of Snoopy installation log file:"
+    tail -n10 $SNOOPY_INSTALL_LOGFILE
     echo
     echo "SNOOPY INSTALL ERROR: Something weird happened!"
     echo "SNOOPY INSTALL ERROR: Please inspect log file for details ($SNOOPY_INSTALL_LOGFILE)"

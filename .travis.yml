@@ -40,6 +40,10 @@ env:
     #
     - MAKE_J: "16"
 
+    # Signal to snoopy-install.sh that it is running inside Travis-CI build
+    - SNOOPY_TRAVIS_BUILD="true"
+
+
   matrix:
     # Test builds
     - SNOOPY_TRAVIS_OPTS="build --enable-everything"
