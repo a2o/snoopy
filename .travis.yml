@@ -41,18 +41,22 @@ env:
     - MAKE_J: "16"
 
   matrix:
-    - SNOOPY_CONFIGURE_OPTS="--enable-everything"
-    - SNOOPY_CONFIGURE_OPTS="--enable-thread-safety"
-    - SNOOPY_CONFIGURE_OPTS=""
-    - SNOOPY_CONFIGURE_OPTS="--disable-config-file"
-    - SNOOPY_CONFIGURE_OPTS="--disable-filtering"
-    - SNOOPY_CONFIGURE_OPTS="--disable-everything"
+    # Test builds
+    - SNOOPY_TRAVIS_OPTS="build --enable-everything"
+    - SNOOPY_TRAVIS_OPTS="build --enable-thread-safety"
+    - SNOOPY_TRAVIS_OPTS="build"
+    - SNOOPY_TRAVIS_OPTS="build --disable-config-file"
+    - SNOOPY_TRAVIS_OPTS="build --disable-filtering"
+    - SNOOPY_TRAVIS_OPTS="build --disable-everything"
+    # Test snoopy-install.sh script
+    - SNOOPY_TRAVIS_OPTS="install-script-local  release-latest-stable"
+    - SNOOPY_TRAVIS_OPTS="install-script-local  local"
+    - SNOOPY_TRAVIS_OPTS="install-script-remote release-latest-stable"
+    - SNOOPY_TRAVIS_OPTS="install-script-remote git-master"
 
 
 script:
-  - "./configure $SNOOPY_CONFIGURE_OPTS"
-  - "make -j$MAKE_J"
-  - "make -j$MAKE_J check"
+  - "./build/travis.sh $SNOOPY_TRAVIS_OPTS"
 
 
 addons:
