@@ -16,7 +16,10 @@ set -u
 #   if [[ $- == *i* ]]; then
 #   if [ -t 1 ]; then
 #
-RES="$(tty)"
+# In $(tty), tty is a program. When test suite is run with -j1, it runs in
+# interactive shell. If -j16 is used, then it runs in background.
+#
+RES="$(tty)" || RES="not-on-tty"   # This || is here to compensate for non-zero exit status.
 if [[ $RES == /dev/* ]]; then
     ON_TTY="true"
 else
