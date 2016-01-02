@@ -31,6 +31,7 @@ function _snoopy_install_showHelp()
     echo "     - tag,"
     echo "     - commit SHA hash."
     echo "- 'path/to/snoopy-X.Y.Z.tar.gz'     ; installs specific pre-downloaded Snoopy release package"
+    echo "- 'download'  ; only downloads latest Snoopy release package"
 }
 
 
@@ -54,8 +55,16 @@ case $ARG_INSTALL_MODE in
         SNOOPY_GIT_REF_TO_INSTALL="master"
         ;;
 
-    latest-stable|stable|stable-latest)
+    latest-stable|stable|stable-latest|latest)
         SNOOPY_INSTALL_MODE="package-latest-stable"
+        SNOOPY_SOURCE_TYPE="package"
+        SNOOPY_DOWNLOAD_MODE="package-download"
+        SNOOPY_PACKAGE_DOWNLOAD="true"
+        SNOOPY_VERSION_TO_INSTALL="latest"
+        ;;
+
+    download|download-only)
+        SNOOPY_INSTALL_MODE="download-only"
         SNOOPY_SOURCE_TYPE="package"
         SNOOPY_DOWNLOAD_MODE="package-download"
         SNOOPY_PACKAGE_DOWNLOAD="true"
@@ -256,6 +265,14 @@ elif [[ "$SNOOPY_SOURCE_TYPE" == "package" ]] && [[ "$SNOOPY_DOWNLOAD_MODE" == "
     else
         echo -n "SNOOPY INSTALL: Will install the following local package: " | tee -a $SNOOPY_INSTALL_LOGFILE
         echo "$SNOOPY_PACKAGE_PATH" | tee -a $SNOOPY_INSTALL_LOGFILE
+    fi
+
+
+    ### Exit if in download-only mode
+    #
+    if [ "$SNOOPY_INSTALL_MODE" == "download-only" ]; then
+        echo "SNOOPY INSTALL: Download-only mode detected, exiting." | tee -a $SNOOPY_INSTALL_LOGFILE
+        exit 0
     fi
 
 

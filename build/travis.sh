@@ -78,6 +78,11 @@ if [ "$MODE" == "install-script-local" ]; then
         exit 0
     fi
 
+    if [ "$INSTALL_WHAT" == "download-only" ]; then
+        ./doc/install/bin/snoopy-install.sh download
+        exit 0
+    fi
+
 
     echo "ERROR: Invalid run submode: $INSTALL_WHAT"
     exit 1
@@ -102,6 +107,14 @@ if [ "$MODE" == "install-script-remote" ]; then
         wget -q -O snoopy-install.sh https://github.com/a2o/snoopy/raw/install/doc/install/bin/snoopy-install.sh &&
         chmod 755 snoopy-install.sh &&
         ./snoopy-install.sh git-master
+        exit 0
+    fi
+
+    if [ "$INSTALL_WHAT" == "download-only" ]; then
+        rm -f snoopy-install.sh &&
+        wget -q -O snoopy-install.sh https://github.com/a2o/snoopy/raw/install/doc/install/bin/snoopy-install.sh &&
+        chmod 755 snoopy-install.sh &&
+        ./snoopy-install.sh download
         exit 0
     fi
 

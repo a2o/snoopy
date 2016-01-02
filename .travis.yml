@@ -55,8 +55,10 @@ env:
     # Test snoopy-install.sh script
     - SNOOPY_TRAVIS_OPTS="install-script-local  release-latest-stable"
     - SNOOPY_TRAVIS_OPTS="install-script-local  local"
+    - SNOOPY_TRAVIS_OPTS="install-script-local  download-only"
     - SNOOPY_TRAVIS_OPTS="install-script-remote release-latest-stable"
     - SNOOPY_TRAVIS_OPTS="install-script-remote git-master"
+    - SNOOPY_TRAVIS_OPTS="install-script-remote download-only"
 
 
 script:
