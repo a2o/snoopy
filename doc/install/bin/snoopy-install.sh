@@ -114,8 +114,12 @@ fi
 
 ### Install distro-dependent build prerequisites, if missing
 #
-#REQUIRED_PROGRAMS="gcc gzip make socat tar wget" # 'socat' is needed for test suite
-REQUIRED_PROGRAMS="gcc gzip make tar wget"
+# 'socat' is not strictly needed. It is used by test suite, and is thus required
+# by autotools too.
+# If you remove it from this list, remove it from configure.ac too, or installations
+# performed by this script will fail.
+#
+REQUIRED_PROGRAMS="gcc gzip make socat tar wget"
 if [ "$SNOOPY_SOURCE_TYPE" == "git" ]; then
     REQUIRED_PROGRAMS_GITINSTALL="autoconf git libtool m4"
     REQUIRED_PROGRAMS="$REQUIRED_PROGRAMS $REQUIRED_PROGRAMS_GITINSTALL"
