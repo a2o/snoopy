@@ -53,5 +53,10 @@ int snoopy_filter_only_tty(char *msg, char const * const arg)
     char    ttyPath[SNOOPY_DATASOURCE_TTY_sizeMaxWithNull];
     size_t  ttyPathLen = SNOOPY_DATASOURCE_TTY_sizeMaxWithoutNull;
     int retVal = ttyname_r(0, ttyPath, ttyPathLen);
-    return (ENOTTY == retVal) ? SNOOPY_FILTER_DROP : SNOOPY_FILTER_PASS;
+
+    // Only pass in this case
+    if (0 == retVal) {
+        return SNOOPY_FILTER_PASS;
+    }
+    return SNOOPY_FILTER_DROP;
 }
