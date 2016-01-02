@@ -94,13 +94,15 @@ if [ "$MODE" == "install-script-remote" ]; then
         wget -q -O snoopy-install.sh https://github.com/a2o/snoopy/raw/install/doc/install/bin/snoopy-install.sh &&
         chmod 755 snoopy-install.sh &&
         ./snoopy-install.sh stable
+        exit 0
     fi
 
     if [ "$INSTALL_WHAT" == "git-master" ]; then
         rm -f snoopy-install.sh &&
         wget -q -O snoopy-install.sh https://github.com/a2o/snoopy/raw/install/doc/install/bin/snoopy-install.sh &&
         chmod 755 snoopy-install.sh &&
-        ./snoopy-install.sh stable
+        ./snoopy-install.sh git-master
+        exit 0
     fi
 
 
