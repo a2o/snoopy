@@ -65,14 +65,14 @@ commands (as root).
 To install the latest **STABLE** version of Snoopy, use this command:
 
     rm -f snoopy-install.sh &&
-    wget -q -O snoopy-install.sh https://github.com/a2o/snoopy/raw/install/doc/install/bin/snoopy-install.sh &&
+    wget -O snoopy-install.sh https://github.com/a2o/snoopy/raw/install/doc/install/bin/snoopy-install.sh &&
     chmod 755 snoopy-install.sh &&
     ./snoopy-install.sh stable
 
 To install the latest **DEVELOPMENT** version of Snoopy, use this:
 
     rm -f snoopy-install.sh &&
-    wget -q -O snoopy-install.sh https://github.com/a2o/snoopy/raw/install/doc/install/bin/snoopy-install.sh &&
+    wget -O snoopy-install.sh https://github.com/a2o/snoopy/raw/install/doc/install/bin/snoopy-install.sh &&
     chmod 755 snoopy-install.sh &&
     ./snoopy-install.sh git-master
 
