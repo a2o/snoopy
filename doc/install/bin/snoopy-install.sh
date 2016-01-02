@@ -2,6 +2,14 @@
 
 
 
+### Shell configuration
+#
+set -e
+set -u
+set -o pipefail
+
+
+
 ### Configuration
 #
 SNOOPY_GIT_ORIGIN_URI="https://github.com/a2o/snoopy.git"
@@ -11,26 +19,54 @@ SNOOPY_TRAVIS_BUILD=${SNOOPY_TRAVIS_BUILD:-false}
 
 
 
+### Help method
+function _snoopy_install_showHelp()
+{
+    echo "Possible installation arguments/modes:"
+    echo "- 'stable'    ; installs latest stable version"
+    echo "- 'preview'   ; installs latest preview version (defaults to git-master most of the time)"
+    echo "- 'X.Y.Z'     ; installs specific version from release package"
+    echo "- 'git-REF'   ; install directly from git, where REF is either:"
+    echo "     - branch name,"
+    echo "     - tag,"
+    echo "     - commit SHA hash."
+    echo "- 'path/to/snoopy-X.Y.Z.tar.gz'     ; installs specific pre-downloaded Snoopy release package"
+}
+
+
+
 ### What to install?
 #
-ARG_INSTALL_MODE="$1"
+ARG_INSTALL_MODE="${1:-unspecified}"
 case $ARG_INSTALL_MODE in
 
     git-*)
-        SNOOPY_INSTALL_MODE="git"
+        SNOOPY_INSTALL_MODE="git-REFERENCE"
+        SNOOPY_SOURCE_TYPE="git"
+        SNOOPY_DOWNLOAD_MODE="git-clone"
         SNOOPY_GIT_REF_TO_INSTALL=`echo "$ARG_INSTALL_MODE" | sed -e 's/^git-//'`
         ;;
 
-    latest-stable|stable|stable-latest)
-        SNOOPY_INSTALL_MODE="package-latest-stable";
+    latest-preview|preview|preview-latest)
+        SNOOPY_INSTALL_MODE="git-latest-preview"
+        SNOOPY_SOURCE_TYPE="git"
+        SNOOPY_DOWNLOAD_MODE="git-clone"
+        SNOOPY_GIT_REF_TO_INSTALL="master"
         ;;
 
-#    latest-preview|preview|preview-latest)
-#        SNOOPY_INSTALL_MODE="package-latest-preview";
-#        ;;
+    latest-stable|stable|stable-latest)
+        SNOOPY_INSTALL_MODE="package-latest-stable"
+        SNOOPY_SOURCE_TYPE="package"
+        SNOOPY_DOWNLOAD_MODE="package-download"
+        SNOOPY_PACKAGE_DOWNLOAD="true"
+        SNOOPY_VERSION_TO_INSTALL="latest"
+        ;;
 
     [1-9].[0-9]*.[0-9]*)
-        SNOOPY_INSTALL_MODE="package-exact-version"
+        SNOOPY_INSTALL_MODE="package-specific-version"
+        SNOOPY_SOURCE_TYPE="package"
+        SNOOPY_DOWNLOAD_MODE="package-download"
+        SNOOPY_PACKAGE_DOWNLOAD="true"
         SNOOPY_VERSION_TO_INSTALL="$ARG_INSTALL_MODE"
         ;;
 
@@ -38,22 +74,19 @@ case $ARG_INSTALL_MODE in
         # Check if file name/path has been passed - perform a local install
         if [[ $ARG_INSTALL_MODE =~ snoopy-[-_.0-9a-zA-Z]+\.tar\.gz$ ]] && [[ -f $ARG_INSTALL_MODE ]]; then
 
-            SNOOPY_INSTALL_MODE="package-local"
+            SNOOPY_INSTALL_MODE="local-package-file"
+            SNOOPY_SOURCE_TYPE="package"
+            SNOOPY_DOWNLOAD_MODE="package-download"
+            SNOOPY_PACKAGE_DOWNLOAD="false"
             SNOOPY_PACKAGE_PATH="$ARG_INSTALL_MODE"
+            SNOOPY_VERSION_TO_INSTALL=`basename $SNOOPY_PACKAGE_PATH | sed -e 's/^snoopy-//' | sed -e 's/.tar.gz$//'`
 
         else
 
+            echo
             echo "SNOOPY INSTALL ERROR: Unknown installation mode."
             echo
-            echo "Possible options:"
-            echo "- 'stable'    ; installs latest stable version"
-#            echo "- 'preview'   ; installs latest preview version, if available"
-            echo "- 'X.Y.Z'     ; installs specific version from release package"
-            echo "- 'git-REF'   ; install directly from git, where REF is either:"
-            echo "     - a branch name,"
-            echo "     - tag or"
-            echo "     - commit SHA hash."
-            echo "- 'path/to/snoopy-X.Y.Z.tar.gz'     ; installs specific local Snoopy release package"
+            _snoopy_install_showHelp
             echo
             exit 1
 
@@ -65,7 +98,9 @@ esac
 
 ### Check if running as root
 #
+SNOOPY_INSTALL_RUNNING_AS_ROOT="true"
 if [ "`id -u`" != "0" ]; then
+    SNOOPY_INSTALL_RUNNING_AS_ROOT="false"
     echo "SNOOPY INSTALL ERROR: This installation must be run as root."
     echo "Hint: 'sudo COMMAND' perhaps?"
     if [ "$SNOOPY_TRAVIS_BUILD" == "true" ]; then
@@ -77,108 +112,43 @@ fi
 
 
 
-### Install distro-dependent build prerequisites
+### Install distro-dependent build prerequisites, if missing
 #
-echo "SNOOPY INSTALL: Installing distro-specific packages 'gcc' and 'make'..."
-if [ -f /etc/debian_version ]; then
-    # Debian, Ubuntu
-    # About /dev/null: http://askubuntu.com/questions/372810/how-to-prevent-script-not-to-stop-after-apt-get
-    apt-get -y install gcc gzip make socat tar wget < "/dev/null"
-elif [ -f /etc/redhat-release ]; then
-    # RHEL, Fedora, CentOS
-    yum install -y gcc gzip make socat tar wget
+#REQUIRED_PROGRAMS="gcc gzip make socat tar wget" # 'socat' is needed for test suite
+REQUIRED_PROGRAMS="gcc gzip make tar wget"
+if [ "$SNOOPY_SOURCE_TYPE" == "git" ]; then
+    REQUIRED_PROGRAMS_GITINSTALL="autoconf git libtool m4"
+    REQUIRED_PROGRAMS="$REQUIRED_PROGRAMS $REQUIRED_PROGRAMS_GITINSTALL"
+fi
+
+if which $REQUIRED_PROGRAMS &> /dev/null; then
+    echo "SNOOPY INSTALL: Required programs already present: $REQUIRED_PROGRAMS"
 else
-    # Check if gcc and make are present
-    if ! which which &> /dev/null; then
-        echo "SNOOPY INSTALL ERROR: 'which' program not found!"
-        echo "SNOOPY INSTALL ERROR: Install it and rerun this installer."
-        exit 1
-    fi
-
-    if ! which gcc &> /dev/null; then
-        echo "SNOOPY INSTALL ERROR: GCC compiler not found!"
-        echo "SNOOPY INSTALL ERROR: Install it and rerun this installer."
-        exit 1
-    fi
-
-    if ! which make &> /dev/null; then
-        echo "SNOOPY INSTALL ERROR: 'make' program not found!"
-        echo "SNOOPY INSTALL ERROR: Install it and rerun this installer."
-        exit 1
-    fi
-
-    if ! which tar &> /dev/null; then
-        echo "SNOOPY INSTALL ERROR: 'tar' program not found!"
-        echo "SNOOPY INSTALL ERROR: Install it and rerun this installer."
-        exit 1
-    fi
-
-    if ! which gzip &> /dev/null; then
-        echo "SNOOPY INSTALL ERROR: 'gzip' program not found!"
-        echo "SNOOPY INSTALL ERROR: Install it and rerun this installer."
-        exit 1
-    fi
-
-    if ! which file &> /dev/null; then
-        echo "SNOOPY INSTALL ERROR: 'file' program not found!"
-        echo "SNOOPY INSTALL ERROR: Install it and rerun this installer."
-        exit 1
-    fi
-
-    if ! which socat &> /dev/null; then
-        echo "SNOOPY INSTALL ERROR: 'socat' program not found!"
-        echo "SNOOPY INSTALL ERROR: Install it and rerun this installer."
-        exit 1
-    fi
-fi
-
-
-
-### If building from git, check for additional required software
-#
-if [ "$SNOOPY_INSTALL_MODE" == "git" ]; then
-    echo "SNOOPY INSTALL: Installing distro-specific packages: autoconf, git, libtool, m4..."
-    if [ -f /etc/debian_version ]; then
-        # Debian, Ubuntu
-        # About /dev/null: http://askubuntu.com/questions/372810/how-to-prevent-script-not-to-stop-after-apt-get
-        apt-get -y install autoconf git libtool m4 < "/dev/null"
-    elif [ -f /etc/redhat-release ]; then
-        # RHEL, Fedora, CentOS
-        yum install -y autoconf git libtool
+    if [ "$SNOOPY_INSTALL_RUNNING_AS_ROOT" != "true" ]; then
+        echo "SNOOPY INSTALL: Unable to run package installation, not root"
     else
-        # Check manually
-        if ! which autoreconf &> /dev/null; then
-            echo "SNOOPY INSTALL ERROR: 'autoreconf' not found!"
-            echo "SNOOPY INSTALL ERROR: Install it and rerun this installer."
-            exit 1
-        fi
-
-        if ! which git &> /dev/null; then
-            echo "SNOOPY INSTALL ERROR: 'git' not found!"
-            echo "SNOOPY INSTALL ERROR: Install it and rerun this installer."
-            exit 1
-        fi
-
-        if ! which libtool &> /dev/null; then
-            echo "SNOOPY INSTALL ERROR: 'libtool' not found!"
-            echo "SNOOPY INSTALL ERROR: Install it and rerun this installer."
-            exit 1
-        fi
-
-        if ! which m4 &> /dev/null; then
-            echo "SNOOPY INSTALL ERROR: 'm4' not found!"
-            echo "SNOOPY INSTALL ERROR: Install it and rerun this installer."
-            exit 1
-        fi
-
-
-        if ! which gzip &> /dev/null; then
-            echo "SNOOPY INSTALL ERROR: 'gzip' program not found!"
-            echo "SNOOPY INSTALL ERROR: Install it and rerun this installer."
-            exit 1
+        echo "SNOOPY INSTALL: Installing distro-specific packages for programs: $REQUIRED_PROGRAMS"
+        if [ -f /etc/debian_version ]; then
+            # Debian, Ubuntu
+            # About /dev/null: http://askubuntu.com/questions/372810/how-to-prevent-script-not-to-stop-after-apt-get
+            apt-get -y install $REQUIRED_PROGRAMS < "/dev/null"
+        elif [ -f /etc/redhat-release ]; then
+            # RHEL, Fedora, CentOS
+            yum install -y $REQUIRED_PROGRAMS
         fi
     fi
+
+    # Check again
+    for PROGRAM in `echo "which $REQUIRED_PROGRAMS"`; do
+        if ! which $PROGRAM &> /dev/null; then
+            echo "SNOOPY INSTALL ERROR: '$PROGRAM' program not found!"
+            echo "SNOOPY INSTALL ERROR: Install it and rerun this installer."
+            exit 1
+        fi
+    done
 fi
+
+
 
 
 
@@ -194,14 +164,14 @@ set -u
 #
 rm -f $SNOOPY_INSTALL_LOGFILE
 touch $SNOOPY_INSTALL_LOGFILE
-echo "SNOOPY INSTALL: Starting installation, log file name: $SNOOPY_INSTALL_LOGFILE" | tee -a $SNOOPY_INSTALL_LOGFILE
-echo "SNOOPY INSTALL: Installation mode: $SNOOPY_INSTALL_MODE"                       | tee -a $SNOOPY_INSTALL_LOGFILE
+echo "SNOOPY INSTALL: Starting installation, log file: $SNOOPY_INSTALL_LOGFILE" | tee -a $SNOOPY_INSTALL_LOGFILE
+echo "SNOOPY INSTALL: Installation mode: $SNOOPY_INSTALL_MODE"                  | tee -a $SNOOPY_INSTALL_LOGFILE
 
 
 
 ### Obtain source code
 #
-if [ "$SNOOPY_INSTALL_MODE" == "git" ]; then
+if [[ "$SNOOPY_SOURCE_TYPE" == "git" ]] && [[ "$SNOOPY_DOWNLOAD_MODE" == "git-clone" ]]; then
 
     echo "SNOOPY INSTALL: Cloning git repository: $SNOOPY_GIT_ORIGIN_URI" | tee -a $SNOOPY_INSTALL_LOGFILE
     SNOOPY_LOCAL_GIT_DIR="snoopy-install-from.git"
@@ -221,7 +191,7 @@ if [ "$SNOOPY_INSTALL_MODE" == "git" ]; then
         git submodule update   >> $SNOOPY_INSTALL_LOGFILE 2>&1
     fi
 
-    echo "SNOOPY INSTALL: Bootstraping installation procedure (autoreconf etc.)..." | tee -a $SNOOPY_INSTALL_LOGFILE
+    echo -n "SNOOPY INSTALL: Bootstraping build environment... " | tee -a $SNOOPY_INSTALL_LOGFILE
     if [ -x bootstrap.sh ]; then
         ./bootstrap.sh         >> $SNOOPY_INSTALL_LOGFILE 2>&1
 
@@ -241,63 +211,71 @@ if [ "$SNOOPY_INSTALL_MODE" == "git" ]; then
         echo "SNOOPY INSTALL ERROR: You will have to install it manually." | tee -a $SNOOPY_INSTALL_LOGFILE
         exit 1
     fi
+    echo "done." | tee -a $SNOOPY_INSTALL_LOGFILE
 
-elif [ "$SNOOPY_INSTALL_MODE" == "package-local" ]; then
 
-    echo -n "SNOOPY INSTALL: Will install the following local package: " | tee -a $SNOOPY_INSTALL_LOGFILE
-    echo "$SNOOPY_PACKAGE_PATH" | tee -a $SNOOPY_INSTALL_LOGFILE
+elif [[ "$SNOOPY_SOURCE_TYPE" == "package" ]] && [[ "$SNOOPY_DOWNLOAD_MODE" == "package-download" ]]; then
 
-    SNOOPY_PACKAGE_FILENAME=`basename $SNOOPY_PACKAGE_PATH`
+
+    ### If 'latest', determine version to install
+    #
+    if [ "$SNOOPY_VERSION_TO_INSTALL" == "latest" ]; then
+        echo -n "SNOOPY INSTALL: Getting latest Snoopy version... " | tee -a $SNOOPY_INSTALL_LOGFILE
+        SNOOPY_VERSION_TO_INSTALL=`wget -q -O - $SNOOPY_PACKAGE_DOWNLOAD_URI_PREFIX/snoopy-latest-version.txt`
+        echo "got it, $SNOOPY_VERSION_TO_INSTALL" | tee -a $SNOOPY_INSTALL_LOGFILE
+    else
+        echo -n "SNOOPY INSTALL: Snoopy version to be installed... " | tee -a $SNOOPY_INSTALL_LOGFILE
+        echo "$SNOOPY_VERSION_TO_INSTALL" | tee -a $SNOOPY_INSTALL_LOGFILE
+    fi
+
+
+    ### Determine version from local package
+    #
+    if [ "$SNOOPY_PACKAGE_DOWNLOAD" == "false" ]; then
+        SNOOPY_PACKAGE_FILENAME=`basename $SNOOPY_PACKAGE_PATH`
+    else
+        SNOOPY_PACKAGE_FILENAME="snoopy-$SNOOPY_VERSION_TO_INSTALL.tar.gz"
+    fi
     SNOOPY_PACKAGE_DIRNAME=`echo "$SNOOPY_PACKAGE_FILENAME" | sed -e 's/\.tar.gz$//'`
     SNOOPY_PACKAGE_VERSION=`echo $SNOOPY_PACKAGE_FILENAME | sed -e 's/^snoopy-//' | sed -e 's/.tar.gz$//'`
 
-    ### Untar, build and configure
-    #
-    echo -n "SNOOPY INSTALL: Unpacking $SNOOPY_PACKAGE_FILENAME... " | tee -a $SNOOPY_INSTALL_LOGFILE
-    rm -rf $SNOOPY_PACKAGE_DIRNAME
-    tar -xzf $SNOOPY_PACKAGE_FILENAME
-    cd $SNOOPY_PACKAGE_DIRNAME
-    echo "done." | tee -a $SNOOPY_INSTALL_LOGFILE
-
-else
-
-    ### Determine version to install
-    #
-    if [ "$SNOOPY_INSTALL_MODE" == "package-latest-stable" ]; then
-        echo -n "SNOOPY INSTALL: Getting latest Snoopy version: " | tee -a $SNOOPY_INSTALL_LOGFILE
-        SNOOPY_PACKAGE_VERSION=`wget -q -O - $SNOOPY_PACKAGE_DOWNLOAD_URI_PREFIX/snoopy-latest-version.txt`
-        SNOOPY_PACKAGE_FILENAME=`wget -q -O - $SNOOPY_PACKAGE_DOWNLOAD_URI_PREFIX/snoopy-latest-package-filename.txt`
-    fi
-
-    if [ "$SNOOPY_INSTALL_MODE" == "package-exact-version" ]; then
-        echo -n "SNOOPY INSTALL: Will install the following package: " | tee -a $SNOOPY_INSTALL_LOGFILE
-        SNOOPY_PACKAGE_VERSION="$SNOOPY_VERSION_TO_INSTALL"
-        SNOOPY_PACKAGE_FILENAME="snoopy-$SNOOPY_PACKAGE_VERSION.tar.gz"
-    fi
-    SNOOPY_PACKAGE_URI="$SNOOPY_PACKAGE_DOWNLOAD_URI_PREFIX/$SNOOPY_PACKAGE_FILENAME"
-    SNOOPY_PACKAGE_DIRNAME=`echo "$SNOOPY_PACKAGE_FILENAME" | sed -e 's/\.tar.gz$//'`
-    echo "$SNOOPY_PACKAGE_FILENAME" | tee -a $SNOOPY_INSTALL_LOGFILE
 
     ### Download Snoopy package
     #
-    echo -n "SNOOPY INSTALL: Downloading $SNOOPY_PACKAGE_URI... " | tee -a $SNOOPY_INSTALL_LOGFILE
-    rm -f $SNOOPY_PACKAGE_FILENAME
-    wget $SNOOPY_PACKAGE_URI >> $SNOOPY_INSTALL_LOGFILE 2>&1
-    echo "done." | tee -a $SNOOPY_INSTALL_LOGFILE
+    if [ "$SNOOPY_PACKAGE_DOWNLOAD" == "true" ]; then
+        SNOOPY_PACKAGE_URI="$SNOOPY_PACKAGE_DOWNLOAD_URI_PREFIX/$SNOOPY_PACKAGE_FILENAME"
+        echo -n "SNOOPY INSTALL: Downloading from $SNOOPY_PACKAGE_URI... " | tee -a $SNOOPY_INSTALL_LOGFILE
+        rm -f $SNOOPY_PACKAGE_FILENAME
+        wget $SNOOPY_PACKAGE_URI >> $SNOOPY_INSTALL_LOGFILE 2>&1
+        echo "done." | tee -a $SNOOPY_INSTALL_LOGFILE
+        SNOOPY_PACKAGE_PATH="./$SNOOPY_PACKAGE_FILENAME"
+    else
+        echo -n "SNOOPY INSTALL: Will install the following local package: " | tee -a $SNOOPY_INSTALL_LOGFILE
+        echo "$SNOOPY_PACKAGE_PATH" | tee -a $SNOOPY_INSTALL_LOGFILE
+    fi
+
 
     ### Untar, build and configure
     #
-    echo -n "SNOOPY INSTALL: Unpacking $SNOOPY_PACKAGE_FILENAME... " | tee -a $SNOOPY_INSTALL_LOGFILE
+    echo -n "SNOOPY INSTALL: Unpacking $SNOOPY_PACKAGE_PATH... " | tee -a $SNOOPY_INSTALL_LOGFILE
     rm -rf $SNOOPY_PACKAGE_DIRNAME
-    tar -xzf $SNOOPY_PACKAGE_FILENAME
+    tar -xzf $SNOOPY_PACKAGE_PATH
     cd $SNOOPY_PACKAGE_DIRNAME
     echo "done." | tee -a $SNOOPY_INSTALL_LOGFILE
+
+
+else
+
+    echo -n "SNOOPY INSTALL ERROR: Internal error - undetermined download method" | tee -a $SNOOPY_INSTALL_LOGFILE
+    exit 1
+
 fi
 
 
 
+###
 ### Configure, build, install, enable
-#
+###
 
 # Detect travis
 #
