@@ -46,12 +46,19 @@ env:
 
   matrix:
     # Test builds
-    - SNOOPY_TRAVIS_OPTS="build --enable-everything"
-    - SNOOPY_TRAVIS_OPTS="build --enable-thread-safety"
     - SNOOPY_TRAVIS_OPTS="build"
+    - SNOOPY_TRAVIS_OPTS="build --enable-thread-safety"
     - SNOOPY_TRAVIS_OPTS="build --disable-config-file"
     - SNOOPY_TRAVIS_OPTS="build --disable-filtering"
+    - SNOOPY_TRAVIS_OPTS="build --disable-config-file --disable-filtering"
+    - SNOOPY_TRAVIS_OPTS="build --enable-everything"
+    - SNOOPY_TRAVIS_OPTS="build --enable-everything --disable-thread-safety"
     - SNOOPY_TRAVIS_OPTS="build --disable-everything"
+    - SNOOPY_TRAVIS_OPTS="build --disable-everything --enable-config-file"
+    - SNOOPY_TRAVIS_OPTS="build --disable-everything --enable-filtering"
+    - SNOOPY_TRAVIS_OPTS="build --disable-everything --enable-filtering --enable-datasource-uid"
+    - SNOOPY_TRAVIS_OPTS="build --disable-everything --enable-thread-safety"
+    - SNOOPY_TRAVIS_OPTS="build --disable-everything --enable-config-file --enable-filtering --enable-thread-safety"
     # Test snoopy-install.sh script
     - SNOOPY_TRAVIS_OPTS="install-script-local  release-latest-stable"
     - SNOOPY_TRAVIS_OPTS="install-script-local  local"
@@ -59,6 +66,23 @@ env:
     - SNOOPY_TRAVIS_OPTS="install-script-remote release-latest-stable"
     - SNOOPY_TRAVIS_OPTS="install-script-remote git-master"
     - SNOOPY_TRAVIS_OPTS="install-script-remote download-only"
+    # Random build configuration flags
+    - SNOOPY_TRAVIS_OPTS="build-random 01"
+    - SNOOPY_TRAVIS_OPTS="build-random 02"
+    - SNOOPY_TRAVIS_OPTS="build-random 03"
+    - SNOOPY_TRAVIS_OPTS="build-random 04"
+    - SNOOPY_TRAVIS_OPTS="build-random 05"
+    - SNOOPY_TRAVIS_OPTS="build-random 06"
+    - SNOOPY_TRAVIS_OPTS="build-random 07"
+    - SNOOPY_TRAVIS_OPTS="build-random 08"
+    - SNOOPY_TRAVIS_OPTS="build-random 09"
+    - SNOOPY_TRAVIS_OPTS="build-random 10"
+    - SNOOPY_TRAVIS_OPTS="build-random 11"
+    - SNOOPY_TRAVIS_OPTS="build-random 12"
+    - SNOOPY_TRAVIS_OPTS="build-random 13"
+    - SNOOPY_TRAVIS_OPTS="build-random 14"
+    - SNOOPY_TRAVIS_OPTS="build-random 15"
+    - SNOOPY_TRAVIS_OPTS="build-random 16"
 
 
 script:

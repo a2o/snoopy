@@ -8,6 +8,7 @@
 #
 # Three modes of operation, separated by first argument:
 # - 'build':   build and run test suite
+# - 'build-random': build with random ./configure arguments
 # - 'install-script-local':  test local install script
 # - 'install-script-remote': test public install script, used in public production
 #
@@ -29,6 +30,14 @@ case $MODE in
 
     'build')
         CONFIGURE_FLAGS=`echo "$ALL_ARGS" | sed -e 's/^build//'`
+        ;;
+
+    'build-random')
+        MODE="build"   # Switch mode to normal build
+        MYDIR=`dirname $0`
+        CONFIGURE_FLAGS=`$MYDIR/get-random-configure-flags.sh`
+        echo "Build will use the following random configure flags:"
+        echo $CONFIGURE_FLAGS | sed -e 's/ /\n/g'| sed -e 's/^/    /'
         ;;
 
     'install-script-local')
