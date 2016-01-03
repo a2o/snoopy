@@ -54,6 +54,8 @@ for OPT in $ALL_CONFIGURE_OPTIONS; do
     esac
 done
 
+# Append required settings
+SELECTED_OPTIONS="$SELECTED_OPTIONS --enable-output-file --enable-output-socket"
 
 
 ### Final output
