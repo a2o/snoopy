@@ -32,10 +32,11 @@
 #include "domain.h"
 
 #include "snoopy.h"
-#include "datasource/hostname.h"
 
+#include   <errno.h>
 #include   <stdio.h>
 #include   <string.h>
+#include   <unistd.h>
 
 
 
@@ -69,12 +70,23 @@ int snoopy_datasource_domain (char * const result, char const * const arg)
     int   retVal;
     int   tmpInt;
 
+    /*
+     * START: COPY FROM datasource/hostname
+     */
     /* Get my hostname first */
-    retVal = snoopy_datasource_hostname(hostname, "");
-    if (SNOOPY_DATASOURCE_FAILED(retVal)) {
-        snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "Unable to get hostname");
-        return SNOOPY_DATASOURCE_FAILURE;
+    retVal = gethostname(hostname, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE);
+    if (0 != retVal) {
+        return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "(error @ gethostname(): %d)", errno);
     }
+
+    // If hostname was something alien (longer than 1024 characters),
+    // set last char to null just in case
+    hostname[SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE-1] = '\0';
+    /*
+     * END: Copy from datasource/hostname
+     */
+
+    /* Check hostname length */
     if (0 == strlen(hostname)) {
         snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "Got empty hostname");
         return SNOOPY_DATASOURCE_FAILURE;
