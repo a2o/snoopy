@@ -287,7 +287,7 @@
 /* Is output "devtty" available? */
 #undef SNOOPY_CONF_OUTPUT_ENABLED_devtty
 
-/* Is output "file" available? */
+/* Is output "file" available? Forced "Yes". */
 #undef SNOOPY_CONF_OUTPUT_ENABLED_file
 
 /* Is output "socket" available? Forced "Yes". */

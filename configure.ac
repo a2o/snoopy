@@ -571,7 +571,7 @@ AC_ARG_ENABLE(all-outputs,
 SNOOPY_CONFIGURE_OUTPUT_ENABLE(  [devlog],         [This is the default output of Snoopy.])
 SNOOPY_CONFIGURE_OUTPUT_ENABLE(  [devnull],        [Black hole])
 SNOOPY_CONFIGURE_OUTPUT_ENABLE(  [devtty],         [Write to current console via /dev/tty.])
-SNOOPY_CONFIGURE_OUTPUT_ENABLE(  [file],           [Write directly to file.])
+SNOOPY_CONFIGURE_OUTPUT_FORCE(   [file],           [Write directly to file.])
 SNOOPY_CONFIGURE_OUTPUT_FORCE(   [socket],         [Output "socket" is mandatory!])
 SNOOPY_CONFIGURE_OUTPUT_ENABLE(  [stderr],         [Write to stderr])
 SNOOPY_CONFIGURE_OUTPUT_ENABLE(  [stdout],         [Write to stdout])
