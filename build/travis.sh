@@ -37,7 +37,8 @@ case $MODE in
         MYDIR=`dirname $0`
         CONFIGURE_FLAGS=`$MYDIR/get-random-configure-flags.sh`
         echo "Build will use the following random configure flags:"
-        echo $CONFIGURE_FLAGS | sed -e 's/ /\n/g'| sed -e 's/^/    /'
+        echo "./configure \\"
+        echo $CONFIGURE_FLAGS | sed -e 's/ / \\\n/g'| sed -e 's/^/    /'
         ;;
 
     'install-script-local')
