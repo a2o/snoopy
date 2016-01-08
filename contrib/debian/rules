@@ -28,5 +28,4 @@ override_dh_auto_configure:
 override_dh_install:
 	dh_install
 	rm \
-	 	debian/libsnoopy/bin/snoopy-test-output \
 	 	debian/libsnoopy/lib/libsnoopy.la

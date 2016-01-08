@@ -11,11 +11,24 @@ project root directory. You also need to install all build dependencies:
 
 The package is built into parent directory. You can install it using `dpkg`.
 
+Tests fail when not run as root, and when building as root will fail on signing.
+
+To sign, copy your keyring to root
+
+    sudo cp -r /home/username/.gnupg /root/
+
+Create a /root/.devscripts file to specify the correct key with the contents
+
+    DEBUILD_DPKG_BUILDPACKAGE_OPTS="-k'Your Name<your@email.address>' -sa"
+    DEBSIGN_KEYID=YOUR_KEY_ID
+
 Basically you need to run following commands:
 
+    git submodule init && git submodule update
     ln -nfs contrib/debian .
     apt-get install devscripts debhelper autoconf dh-autoreconf
-    debuild --no-tgz-check -I.git -i'\.git/'
+    ./bootstrap.sh
+    sudo debuild --no-tgz-check -I.git -i'\.git/'
     dpkg -i ../libsnoopy_2.0.0rc5-1_amd64.deb
 
 
