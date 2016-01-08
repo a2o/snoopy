@@ -13,15 +13,20 @@ set -u
 ### Get data
 #
 VAL_SNOOPY=`$SNOOPY_TEST_DATASOURCE timestamp`
+snoopy_testRun_info "Snoopy value: $VAL_SNOOPY"
 VAL_REAL=`date +"%s"`
-
-# If they differ, just do it again - maybe we were lucky :)
-if [ "$VAL_REAL" != "$VAL_SNOOPY" ]; then
-    VAL_SNOOPY=`$SNOOPY_TEST_DATASOURCE timestamp`
-fi
+snoopy_testRun_info "Real value:   $VAL_REAL"
+VAL_DIFF=`expr $VAL_SNOOPY - $VAL_REAL | sed -e 's/^-//'`
+snoopy_testRun_info "Difference:   $VAL_DIFF"
 
 
 
 ### Evaluate
 #
-snoopy_test_compareValues "$VAL_SNOOPY" "$VAL_REAL"
+# We allow 3 seconds of difference, just in case.
+#
+if [ "$VAL_DIFF" -le "3" ]; then
+    snoopy_testResult_pass
+else
+    snoopy_testResult_fail "Too much difference (diff=\"$VAL_DIFF\", snoopy=\"$VAL_SNOOPY\", real=\"$VAL_REAL\")"
+fi

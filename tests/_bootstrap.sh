@@ -53,6 +53,15 @@ export SNOOPY_LIBSNOOPY_TEST_SO_PATH="${SNOOPY_TESTS_BINDIR}/.libs/libsnoopy-tes
 
 
 
+### Test run function: info output
+#
+snoopy_testRun_info()
+{
+    echo "$1"
+}
+
+
+
 ### Result function: PASS
 #
 snoopy_testResult_pass()
