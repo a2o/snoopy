@@ -20,7 +20,11 @@ noinst_LTLIBRARIES = libsnoopy_outputs_all.la
 #
 # Please maintain alphabetical order, equal to what `ls` would do.
 #
-libsnoopy_outputs_all_la_SOURCES =
+libsnoopy_outputs_all_la_SOURCES = \
+    noopoutput.c \
+    noopoutput.h
+
+
 
 # Output: devlog
 #

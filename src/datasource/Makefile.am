@@ -20,8 +20,12 @@ noinst_LTLIBRARIES = libsnoopy_datasources_all.la
 #
 # Please maintain alphabetical order, equal to what `ls` would do.
 #
-libsnoopy_datasources_all_la_SOURCES =
+libsnoopy_datasources_all_la_SOURCES = \
+	noop.c \
+	noop.h
 libsnoopy_datasources_all_la_LDFLAGS =
+
+
 
 # Data source: cmdline
 #

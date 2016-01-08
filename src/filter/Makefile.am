@@ -20,7 +20,11 @@ noinst_LTLIBRARIES = libsnoopy_filters_all.la
 #
 # Please maintain alphabetical order, equal to what `ls` would do
 #
-libsnoopy_filters_all_la_SOURCES =
+libsnoopy_filters_all_la_SOURCES = \
+	noop.c \
+	noop.h
+
+
 
 ### Filter: exclude_spawns_of
 #

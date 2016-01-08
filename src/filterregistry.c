@@ -51,6 +51,9 @@
 #include "filter/only_uid.h"
 #endif
 
+/* This prevents "ISO C forbids empty initializer braces" error */
+#include "filter/noop.h"
+
 
 
 /*
@@ -72,6 +75,9 @@ char *snoopy_filterregistry_names[] = {
 #ifdef SNOOPY_CONF_FILTER_ENABLED_only_uid
     "only_uid",
 #endif
+
+    /* This prevents "ISO C forbids empty initializer braces" error */
+    "noop",
     "",
 };
 
@@ -91,6 +97,9 @@ int (*snoopy_filterregistry_ptrs []) (char *logMessage, char const * const arg) 
 #ifdef SNOOPY_CONF_FILTER_ENABLED_only_uid
     snoopy_filter_only_uid,
 #endif
+
+    /* This prevents "ISO C forbids empty initializer braces" error */
+    snoopy_filter_noop,
 };
 
 

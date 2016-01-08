@@ -68,6 +68,9 @@
 #include "output/syslogoutput.h"
 #endif
 
+/* This prevents "ISO C forbids empty initializer braces" error */
+#include "output/noopoutput.h"
+
 
 
 /*
@@ -103,6 +106,9 @@ char *snoopy_outputregistry_names[] = {
 #ifdef SNOOPY_CONF_OUTPUT_ENABLED_syslog
     "syslog",
 #endif
+
+    /* This prevents "ISO C forbids empty initializer braces" error */
+    "noop",
     "",
 };
 
@@ -134,6 +140,9 @@ int (*snoopy_outputregistry_ptrs []) (char const * const logMessage, int errorOr
 #ifdef SNOOPY_CONF_OUTPUT_ENABLED_syslog
     snoopy_output_syslogoutput,
 #endif
+
+    /* This prevents "ISO C forbids empty initializer braces" error */
+    snoopy_output_noopoutput,
 };
 
 
