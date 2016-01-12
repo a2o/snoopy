@@ -115,13 +115,13 @@ LD_PRELOAD="/path/to/libsnoopy.so /path/to/otherlib.so"
 
 
 
-### 5. How do I go about developing new data source/filter/output?
+### 6. How do I go about developing new data source/filter/output?
 
 Please see [HACKING.md](HACKING.md) for more information.
 
 
 
-### 6. I want to contribute - how should I do it?
+### 7. I want to contribute - how should I do it?
 
 Contributions are welcome. Please see [../CONTRIBUGING.md](CONTRIBUTING.md) for
 additional details about how to properly submit patches so they are merged as
@@ -129,3 +129,11 @@ fast as possible.
 If your contribution is refactoring Snoopy's internal structure, it might take
 a while to review it. Adding new data source, filter or output does not count
 as refactoring.
+
+
+
+### 8. I do not see any non-root Snoopy entries in my logs
+
+If you have configured `file` output provider, make sure it has proper permissions
+set for writing into it. This usually means chmodding it to 0666 which is quite
+insecure setting. You may want to reconfigure Snoopy to use `devlog` output.

@@ -108,7 +108,7 @@
 ; - devlog   ; (available=@enable_output_devlog@) Default, writes directly to /dev/log.
 ; - devnull  ; (available=@enable_output_devnull@) Black hole.
 ; - devtty   ; (available=@enable_output_devtty@) Write to current tty via /dev/tty.
-; - file     ; (available=@enable_output_file@) Write directly to file.
+; - file     ; (available=@enable_output_file@) Write directly to file. (NOTICE: Make sure file has proper permissions set for non-root users.)
 ; - socket   ; (available=@enable_output_socket@) Built-in output. As argument it requires an absolute path of socket to write to.
 ; - stderr   ; (available=@enable_output_stderr@) Write to STDERR. Mainly useful for debugging purposes.
 ; - stdout   ; (available=@enable_output_stdout@) Write to STDOUT. Mainly useful for debugging purposes.
