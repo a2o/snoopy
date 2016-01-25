@@ -119,7 +119,7 @@ Snoopy's automated installation procedure enables configuration file support
 by default. Configuration file path is /etc/snoopy.ini.
 
 For additional information consult comments in default configuration file
-[etc/snoopy.ini](etc/snoopy.ini) and read appropriate sections of
+[etc/snoopy.ini](etc/snoopy.ini.in) and read appropriate sections of
 [doc/INSTALL.md](doc/INSTALL.md).
 
 
