@@ -24,6 +24,8 @@ o Infrastructure (#94 @ GitHub): Migrated Travis-CI to container-based builds.
 o Infrastructure: Added 16 builds to Travis-CI which use random selection of
     ./configure flags. This should ensure valid builds with all possible
     (valid) ./configure flag selections.
+o Refactoring: move src/libsnoopy.c/.h contents to more appropriate location:
+    src/eventsource/execve_wrapper.c/.h
 
 
 2015-08-28 - Version 2.4.4

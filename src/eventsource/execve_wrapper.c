@@ -1,7 +1,7 @@
 /*
  * SNOOPY LOGGER
  *
- * File: libsnoopy.c -- execve() logging wrapper
+ * File: snoopy/eventsource/execve_wrapper.c
  *
  * Copyright (c) 2000 Marius Aamodt Eriksen <marius@linux.com>
  * Copyright (c) 2000 Mike Baker <mbm@linux.com>
@@ -29,7 +29,7 @@
 /*
  * Includes order: from local to global
  */
-#include "libsnoopy.h"
+#include "execve_wrapper.h"
 
 #include "snoopy.h"
 #include "log.h"

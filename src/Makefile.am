@@ -7,6 +7,7 @@ include   $(top_srcdir)/build/Makefile.am.common
 ### Subdir processing order
 #
 SUBDIRS  =
+SUBDIRS += eventsource
 SUBDIRS += datasource
 if FILTERING_ENABLED
 SUBDIRS += filter
@@ -86,13 +87,11 @@ endif
 
 ### Create main library, whole
 #
-# Exclude -pedantic from CFLAGS because casing object pointer received from
-# dlsym to function pointer is not allowed by ISO C.
-#
 lib_LTLIBRARIES      = libsnoopy.la
-libsnoopy_la_SOURCES = libsnoopy.c libsnoopy.h
-libsnoopy_la_CFLAGS  = `echo $(AM_CFLAGS) | sed -e 's/-pedantic//'`
-libsnoopy_la_LIBADD  = libsnoopy_no_execve.la
+libsnoopy_la_SOURCES =
+libsnoopy_la_LIBADD  = \
+	libsnoopy_no_execve.la \
+	eventsource/libsnoopy_eventsource_execve_wrapper.la
 
 
 

@@ -23,7 +23,8 @@ are working to find out why.
 ## Further information
 
 * Read the code.
-* Start at [../../src/libsnoopy.c](../../src/libsnoopy.c). This is essential.
+* Start at [../../src/eventsource/execve_wrapper.c](../../src/eventsource/execve_wrapper.c).
+    This is essential.
     Here the execv()/execve() syscalls are intercepted and forwarded to internal
     Snoopy functions. Once Snoopy is done, execution is forwarded back to
     real execv()/execve() syscall.
@@ -34,6 +35,7 @@ are working to find out why.
 * Data sources are located here: [../../src/datasource/](../../src/datasource/).
 * Filters are located here: [../../src/filter/](../../src/filter/).
 * Outputs are located here: [../../src/output/](../../src/output/).
+
 
 
 ## Data storage list
