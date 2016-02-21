@@ -104,7 +104,7 @@ bootstrap: maintainer-clean
 #
 .PHONY: valgrind
 valgrind: all
-	valgrind \
+	valgrind -v \
 	--error-exitcode=1 \
 	--track-fds=yes \
 	--smc-check=all \
