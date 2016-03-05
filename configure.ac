@@ -673,7 +673,7 @@ AC_ARG_WITH(syslog-facility,
             with_syslog_facility_val="$withval"
 
             # Check for value correctness
-            syslog_facility_short=`echo "$with_syslog_facility_val" | awk '{print toupper($0)}' | sed -e 's/^LOG_//' | grep -E '^(AUTH|AUTHPRIV|CRON|DAEMON|FTP|KERN|LOCAL[0-7]|LPR|MAIL|NEWS|SYSLOG|USER|UUCP)$'`
+            syslog_facility_short=`echo "$with_syslog_facility_val" | awk '{print toupper($0)}' | sed -e 's/^LOG_//' | grep -E '^(AUTH|AUTHPRIV|CRON|DAEMON|FTP|KERN|LOCAL(0|1|2|3|4|5|6|7)|LPR|MAIL|NEWS|SYSLOG|USER|UUCP)$'`
             if test "x$syslog_facility_short" = "x"; then
                 AC_MSG_ERROR([--with-syslog-facility value provided is invalid: $with_syslog_facility_val])
             fi
