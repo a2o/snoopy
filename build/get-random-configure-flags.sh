@@ -96,6 +96,106 @@ done
 
 
 
+### Add --with-syslog-facility flag by chance - manual for now
+#
+RN=$[ RANDOM % 2 ]
+case $RN in
+    0)
+        # Skip
+        ;;
+    1)
+        SYSLOG_FACILITIES=(
+            "AUTH"
+            "AUTHPRIV"
+            "CRON"
+            "DAEMON"
+            "FTP"
+            "KERN"
+            "LOCAL0"
+            "LOCAL1"
+            "LOCAL2"
+            "LOCAL3"
+            "LOCAL4"
+            "LOCAL5"
+            "LOCAL6"
+            "LOCAL7"
+            "LPR"
+            "MAIL"
+            "NEWS"
+            "SYSLOG"
+            "USER"
+            "UUCP"
+        )
+        SELECTED_SYSLOG_FACILITY=${SYSLOG_FACILITIES[$RANDOM % ${#SYSLOG_FACILITIES[@]} ]}
+
+        # Also decide if we prefix it with LOG_ or not
+        RN=$[ RANDOM % 2 ]
+        case $RN in
+            0)
+                PREFIX="LOG_"
+                ;;
+            1)
+                PREFIX=""
+                ;;
+        esac
+        SELECTED_OPTS="$SELECTED_OPTS --with-syslog-facility=${PREFIX}${SELECTED_SYSLOG_FACILITY}"
+        ;;
+esac
+
+
+
+### Add --with-syslog-level flag by chance - manual for now
+#
+RN=$[ RANDOM % 2 ]
+case $RN in
+    0)
+        # Skip
+        ;;
+    1)
+        SYSLOG_LEVELS=(
+            "EMERG"
+            "ALERT"
+            "CRIT"
+            "ERR"
+            "WARNING"
+            "NOTICE"
+            "INFO"
+            "DEBUG"
+        )
+        SELECTED_SYSLOG_LEVEL=${SYSLOG_LEVELS[$RANDOM % ${#SYSLOG_LEVELS[@]} ]}
+
+        # Also decide if we prefix it with LOG_ or not
+        RN=$[ RANDOM % 2 ]
+        case $RN in
+            0)
+                PREFIX="LOG_"
+                ;;
+            1)
+                PREFIX=""
+                ;;
+        esac
+        SELECTED_OPTS="$SELECTED_OPTS --with-syslog-level=${PREFIX}${SELECTED_SYSLOG_LEVEL}"
+        ;;
+esac
+
+
+
+### Add --with-syslog-ident flag by chance - manual for now
+#
+RN=$[ RANDOM % 2 ]
+case $RN in
+    0)
+        # Skip
+        ;;
+    1)
+        SELECTED_OPTS="$SELECTED_OPTS --with-syslog-ident=FAKERANDOMSTRINGTODO"
+        ;;
+esac
+
+
+
+
+
 ### Final output
 #
 echo $SELECTED_OPTS

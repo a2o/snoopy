@@ -8,6 +8,11 @@
 o TODO: Reenable 'make check' in install-snoopy.sh, but disable ds_domain check
     by default.
 
+o Bugfix (#102 @ GitHub): fix broken validation of --with-syslog-facility
+    configure argument for LOCALx values. Build test updated to prevent
+    regressions. (reported by lhmerino @ GitHub)
+o Bugfix: filter/only_tty: treat errors as if command does not have a tty
+    associated with it
 o Bugfix: filter/only_tty: treat errors as if command does not have a tty
     associated with it
 o Tests: fix timestamp provider (ms) range test condition (bugfix found at user
