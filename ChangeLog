@@ -3,7 +3,7 @@
 -------------------------------------------------------------------------------
 
 
-201x-xx-xx - Version 2.4.NEXT
+2016-03-05 - Version 2.4.5
 --------------------------
 o Bugfix (#102 @ GitHub): fix broken validation of --with-syslog-facility
     configure argument for LOCALx values. Build test updated to prevent

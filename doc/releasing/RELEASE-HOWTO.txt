@@ -33,14 +33,12 @@ Steps:
         - commit
 
     1d. Create build and upload it to Coverity:
+        (- ./configure --enable-everything)
         - two ways, either
             -> merge to-be-released branch to coverity_scan branch, or
             -> ./doc/releasing/bin/submit-to-coverity.sh
         - wait for coverity scan to complete
         - check for errors, fix them, rinse and repeat until no more errors are found
-
-    1e. Check extended build matrix locally (Travis has limited resources):
-        - ./doc/releasing/bin/test-build-matrix.sh
 
 
 2. Update documentation TOCs
@@ -51,21 +49,32 @@ Steps:
 3. Update version info and release:
     a) Edit files:
         1. ChangeLog
-        2. README.md (latest version(s) displayed on GitHub front page)
+        2. README.md (a: update latest version(s), b: add to NEWS section)
     b) Commit with sign-off, with exact message "Release X.Y.Z" on the first line,
         create git tag "snoopy-X.Y.Z"
         Actual commands to run:
+    c) Run release script:
+        (see below)
+    d) Merge to stable branch and push:
+        (see below)
+
+    Command to run that does steps b) to d) automatically:
 
 export REL_VERSION=`./build/get-version.sh changelog` &&
 git add ChangeLog README.md &&
 git commit -s -m "Release $REL_VERSION" &&
 git tag "snoopy-$REL_VERSION" &&
 ./doc/releasing/bin/create-release.sh "snoopy-$REL_VERSION" &&
+
+git checkout stable &&
+git pull &&
+git merge --ff master &&
+git push &&
+git checkout master &&
+#(or git merge snoopy-$REL_VERSION <--- UNTESTED)
+
 unset REL_VERSION
 
 
-# 4. Merge changes into "stable" branch:
 
-git checkout stable
-git merge --ff master
-(or git merge snopy-X.Y.Z <--- UNTESTED)
+4. All done.

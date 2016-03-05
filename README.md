@@ -39,6 +39,10 @@ environment to avoid logging by Snoopy. See (this FAQ entry)[https://github.com/
 
 ## News
 
+2016-03-05:
+**Snoopy 2.4.5 released!**
+Maintenance release.
+
 2015-08-28:
 **Snoopy 2.4.4 released!**
 Mainly maintenance release, with new filter: only_tty, which should cut down
@@ -84,7 +88,7 @@ Detailed installation instructions are available here: [doc/INSTALL.md](doc/INST
 
 | Version                      | Download URI                                               |
 | ---------------------------- | ---------------------------------------------------------- |
-| Latest stable release        | http://source.a2o.si/download/snoopy/snoopy-2.4.4.tar.gz   |
+| Latest stable release        | http://source.a2o.si/download/snoopy/snoopy-2.4.5.tar.gz   |
 | Latest development release   | (N/A, clone this git repo, use master branch)              |
 | All releases                 | http://source.a2o.si/download/snoopy/                      |
 
