@@ -5,9 +5,6 @@
 
 201x-xx-xx - Version 2.4.NEXT
 --------------------------
-o TODO: Reenable 'make check' in install-snoopy.sh, but disable ds_domain check
-    by default.
-
 o Bugfix (#102 @ GitHub): fix broken validation of --with-syslog-facility
     configure argument for LOCALx values. Build test updated to prevent
     regressions. (reported by lhmerino @ GitHub)
@@ -21,6 +18,9 @@ o Install (#90 @ GitHub): Add support for installing local Snoopy packages with
     install script. (Suggested by PSKyne@Github)
 o Install (#90 @ GitHub): snoopy-install.sh now has a download-only mode.
     (Suggested by PSKyne@github)
+o Install: Reenabled 'make check' in install-snoopy.sh. The test that was
+    was causing the most grief was datasource_domain test, which is disabled
+    now.
 o Install (#98 @ GitHub): Add support for bootstrapping git builds on older OS
     releases (i.e. CentOS 6). Package builds are not affected by this.
     This is now done automatically by bootstrap.sh script.
