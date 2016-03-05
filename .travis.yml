@@ -105,6 +105,6 @@ addons:
       name: "a2o/snoopy"
       description: "Build submitted via Travis CI"
     notification_email: bostjan@a2o.si
-    build_command_prepend: "./bootstrap.sh && ./configure && make distclean && ./configure --enable-output-syslog"
+    build_command_prepend: "./bootstrap.sh && ./configure && make distclean && ./configure --enable-everything"
     build_command: "make -j$MAKE_J"
     branch_pattern: coverity_scan
