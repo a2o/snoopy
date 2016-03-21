@@ -11,7 +11,7 @@ Stable:
 [![Build Status - Stable](https://travis-ci.org/a2o/snoopy.svg?branch=stable)](https://travis-ci.org/a2o/snoopy/branches)
 
 INFO: Snoopy is not a reliable auditing solution. Rogue users can easily manipulate
-environment to avoid logging by Snoopy. See (this FAQ entry)[https://github.com/a2o/snoopy/blob/master/doc/FAQ.md#5-i-see-no-snoopy-output-after-initial-user-login].
+environment to avoid logging by Snoopy. See [this FAQ entry](https://github.com/a2o/snoopy/blob/master/doc/FAQ.md#5-i-see-no-snoopy-output-after-initial-user-login).
 
 
 
