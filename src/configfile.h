@@ -26,9 +26,16 @@
  * Functions to load/parse config file
  */
 int   snoopy_configfile_load (char *iniFilePath);
+int   snoopy_configfile_parser_callback (
+    void* sth,
+    const char* section,
+    const char* name,
+    const char* confValString
+);
 void  snoopy_configfile_parse_output               (const char *confVal);
 void  snoopy_configfile_parse_syslog_facility      (const char *confVal);
 void  snoopy_configfile_parse_syslog_level         (const char *confVal);
 char *snoopy_configfile_syslog_value_cleanup       (char *confVal);
 char *snoopy_configfile_syslog_value_remove_prefix (char *confVal);
 void  snoopy_configfile_strtoupper (char *s);
+int   snoopy_configfile_getboolean (const char *c, int notfound);

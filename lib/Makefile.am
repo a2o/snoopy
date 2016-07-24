@@ -7,5 +7,5 @@ SUBDIRS =
 ### INI file parser
 #
 if CONFIGFILE_ENABLED
-SUBDIRS += iniparser
+SUBDIRS += inih
 endif
