@@ -4,11 +4,9 @@ include   $(top_srcdir)/build/Makefile.am.common
 
 
 
-### Create main library, but without execve() wrappers
+### Create library "libinih"
 #
-#noinst_LTLIBRARIES = \
-#    libini.la
-lib_LTLIBRARIES = \
+noinst_LTLIBRARIES = \
     libinih.la
 
 libinih_la_SOURCES = \
