@@ -1,3 +1,0 @@
-[submodule "lib/iniparser"]
-	path = lib/iniparser
-	url = https://github.com/a2o/iniparser.git
