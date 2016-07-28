@@ -10,6 +10,9 @@ Master:
 Stable:
 [![Build Status - Stable](https://travis-ci.org/a2o/snoopy.svg?branch=stable)](https://travis-ci.org/a2o/snoopy/branches)
 
+Chat:
+[![Join the chat at https://gitter.im/a2o/snoopy](https://badges.gitter.im/a2o/snoopy.svg)](https://gitter.im/a2o/snoopy?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 INFO: Snoopy is not a reliable auditing solution. Rogue users can easily manipulate
 environment to avoid logging by Snoopy. See [this FAQ entry](https://github.com/a2o/snoopy/blob/master/doc/FAQ.md#5-i-see-no-snoopy-output-after-initial-user-login).
 
