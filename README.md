@@ -1,5 +1,7 @@
 # Snoopy Logger
 
+[![Join the chat at https://gitter.im/a2o/snoopy](https://badges.gitter.im/a2o/snoopy.svg)](https://gitter.im/a2o/snoopy?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 Snoopy is a tiny library that logs all executed commands (+ arguments) on your system.
 [![Flattr Snoopy Logger project](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=a2o&url=https://github.com/a2o/snoopy&title=Snoopy Logger)
 
