@@ -33,7 +33,7 @@
 #include "misc.h"
 #include "outputregistry.h"
 
-#include "lib/iniparser/src/iniparser.h"
+#include "lib/inih/src/ini.h"
 
 #ifndef   _XOPEN_SOURCE   // For strdup
 #define   _XOPEN_SOURCE   500
@@ -62,9 +62,7 @@
 int snoopy_configfile_load (
     char *iniFilePath
 ) {
-    dictionary *ini ;
-    const char *confValString;   // Temporary query result space
-    int         confValInt;      // Temporary query result space
+    int         iniParseStatus;
     snoopy_configuration_t *CFG;
 
 
@@ -76,58 +74,108 @@ int snoopy_configfile_load (
     CFG->configfile_path = iniFilePath;
 
     /* Parse the INI configuration file first */
-    ini = iniparser_load(iniFilePath);
-    if (NULL == ini) {
+    iniParseStatus = ini_parse(iniFilePath, snoopy_configfile_parser_callback, CFG);
+    if (0 != iniParseStatus) {
         // TODO Snoopy error handling
         return -1;
     }
     CFG->configfile_found = SNOOPY_TRUE;
 
 
-    /* Pick out Snoopy configuration variables */
-    confValInt = iniparser_getboolean(ini, "snoopy:error_logging", -1);
-    if (-1 != confValInt) {
-        CFG->error_logging_enabled = confValInt;
-    }
-
-    confValString = iniparser_getstring(ini, "snoopy:message_format", NULL);
-    if (NULL != confValString) {
-        CFG->message_format          = strdup(confValString);
-        CFG->message_format_malloced = SNOOPY_TRUE;
-    }
-
-    confValString = iniparser_getstring(ini, "snoopy:filter_chain", NULL);
-    if (NULL != confValString) {
-        CFG->filter_chain          = strdup(confValString);
-        CFG->filter_chain_malloced = SNOOPY_TRUE;
-    }
-
-    confValString = iniparser_getstring(ini, "snoopy:output", NULL);
-    if (NULL != confValString) {
-        snoopy_configfile_parse_output(confValString);
-    }
-
-    confValString = iniparser_getstring(ini, "snoopy:syslog_facility", NULL);
-    if (NULL != confValString) {
-        snoopy_configfile_parse_syslog_facility(confValString);
-    }
-
-    confValString = iniparser_getstring(ini, "snoopy:syslog_ident", NULL);
-    if (NULL != confValString) {
-        CFG->syslog_ident          = strdup(confValString);
-        CFG->syslog_ident_malloced = SNOOPY_TRUE;
-    }
-
-    confValString = iniparser_getstring(ini, "snoopy:syslog_level", NULL);
-    if (NULL != confValString) {
-        snoopy_configfile_parse_syslog_level(confValString);
-    }
-
-
     /* Housekeeping */
     CFG->configfile_parsed = SNOOPY_TRUE;   // We have sucessfully parsed configuration file
-    iniparser_freedict(ini);
     return 0;
+}
+
+
+
+
+/*
+ * snoopy_configfile_parser_callback
+ *
+ * Description:
+ *     Callback function for each found ini value in parsed config file.
+ *
+ * Params:
+ * //    file   Path log INI configuration file
+ *
+ * Return:
+ * //    int    0 on success, -1 on error openinf file, other int for other errors
+ */
+int snoopy_configfile_parser_callback (
+    void* sth,
+    const char* section,
+    const char* name,
+    const char* confValString
+) {
+    int confValInt;
+
+
+    /* Qualify pointer? */
+    snoopy_configuration_t* CFG = (snoopy_configuration_t*)sth;
+
+
+    /* Skip unknown sections */
+    if (0 != strcmp(section, "snoopy")) {
+        return 1;
+    }
+
+
+
+    /* Do the name matching */
+    #define MATCHNAME(n) strcmp(name, n) == 0
+
+
+    if (MATCHNAME("error_logging")) {
+        confValInt = snoopy_configfile_getboolean(confValString, -1);
+        if (-1 != confValInt) {
+            CFG->error_logging_enabled = confValInt;
+        }
+        return 1;
+    }
+
+
+    if (MATCHNAME("message_format")) {
+        CFG->message_format          = strdup(confValString);
+        CFG->message_format_malloced = SNOOPY_TRUE;
+        return 1;
+    }
+
+
+    if (MATCHNAME("filter_chain")) {
+        CFG->filter_chain          = strdup(confValString);
+        CFG->filter_chain_malloced = SNOOPY_TRUE;
+        return 1;
+    }
+
+
+    if (MATCHNAME("output")) {
+        snoopy_configfile_parse_output(confValString);
+        return 1;
+    }
+
+
+    if (MATCHNAME("syslog_facility")) {
+        snoopy_configfile_parse_syslog_facility(confValString);
+        return 1;
+    }
+
+
+    if (MATCHNAME("syslog_ident")) {
+        CFG->syslog_ident          = strdup(confValString);
+        CFG->syslog_ident_malloced = SNOOPY_TRUE;
+        return 1;
+    }
+
+
+    if (MATCHNAME("syslog_level")) {
+        snoopy_configfile_parse_syslog_level(confValString);
+        return 1;
+    }
+
+
+    /* Why are we returning 1 instead of zero everywhere? */
+    return 1;
 }
 
 
@@ -373,4 +421,55 @@ void snoopy_configfile_strtoupper (char *s)
         }
         s++;
     }
+}
+
+
+
+/*-------------------------------------------------------------------------*/
+/**
+  @origin   Literally copy-pasted from ndevilla's iniparser
+
+
+  @brief    Get the string associated to a key, convert to a boolean
+  @param    d Dictionary to search
+  @param    key Key string to look for
+  @param    notfound Value to return in case of error
+  @return   integer
+
+  This function queries a dictionary for a key. A key as read from an
+  ini file is given as "section:key". If the key cannot be found,
+  the notfound value is returned.
+
+  A true boolean is found if one of the following is matched:
+
+  - A string starting with 'y'
+  - A string starting with 'Y'
+  - A string starting with 't'
+  - A string starting with 'T'
+  - A string starting with '1'
+
+  A false boolean is found if one of the following is matched:
+
+  - A string starting with 'n'
+  - A string starting with 'N'
+  - A string starting with 'f'
+  - A string starting with 'F'
+  - A string starting with '0'
+
+  The notfound value returned if no boolean is identified, does not
+  necessarily have to be 0 or 1.
+ */
+/*--------------------------------------------------------------------------*/
+int snoopy_configfile_getboolean (const char *c, int notfound)
+{
+    int   ret;
+
+    if (c[0]=='y' || c[0]=='Y' || c[0]=='1' || c[0]=='t' || c[0]=='T') {
+        ret = 1 ;
+    } else if (c[0]=='n' || c[0]=='N' || c[0]=='0' || c[0]=='f' || c[0]=='F') {
+        ret = 0 ;
+    } else {
+        ret = notfound ;
+    }
+    return ret;
 }
