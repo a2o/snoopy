@@ -3,7 +3,7 @@
 -------------------------------------------------------------------------------
 
 
-2016-08-014 - Version 2.4.6
+2016-08-14 - Version 2.4.6
 --------------------------
 o Bugfix (#106 @ GitHub): fix segmentation faults of Network Manager on
     CentOS 7 when using DHCP address configuration.
