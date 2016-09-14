@@ -38,6 +38,8 @@ AC_CONFIG_FILES([Makefile
                  doc/internals/Makefile
                  etc/Makefile
                  lib/Makefile
+                 lib/inih/Makefile
+                 lib/inih/src/Makefile
                  src/Makefile
                  src/datasource/Makefile
                  src/eventsource/Makefile
@@ -53,5 +55,4 @@ AC_CONFIG_FILES([Makefile
                  tests/output/Makefile
                  tests/threads/Makefile
                  util/Makefile])
-AC_CONFIG_SUBDIRS([lib/iniparser])
 AC_OUTPUT
