@@ -3,6 +3,16 @@
 -------------------------------------------------------------------------------
 
 
+2016-08-014 - Version 2.4.6
+--------------------------
+o Bugfix (#106 @ GitHub): fix segmentation faults of Network Manager on
+    CentOS 7 when using DHCP address configuration.
+    (thanks tkimball83, p64 @ GitHub for reporting it, and jmtysonjr @ GitHub
+    for verifying the bugfix)
+o Internal: replace ini parsing library iniparser with inih
+    (triggered by #106 @ Github)
+
+
 2016-03-05 - Version 2.4.5
 --------------------------
 o Bugfix (#102 @ GitHub): fix broken validation of --with-syslog-facility

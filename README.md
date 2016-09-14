@@ -42,6 +42,10 @@ environment to avoid logging by Snoopy. See [this FAQ entry](https://github.com/
 
 ## News
 
+2016-09-14:
+**Snoopy 2.4.6 released!**
+Maintenance release.
+
 2016-03-05:
 **Snoopy 2.4.5 released!**
 Maintenance release.
@@ -55,12 +59,6 @@ noise from non-tty processes considerably.
 **Snoopy 2.4.0 released!**
 Many changes, see the ChangeLog. Experimental thread safety added.
 All users are encouraged to upgrade to Snoopy version 2.4.0+ immediately.
-
-2015-05-12:
-**Snoopy 2.3.0 released!** This Snoopy version contains many
-improvements, bugfixes, new features and quite improved build process.
-All users are encouraged to upgrade to Snoopy version 2.3.0+ as soon
-as possible.
 
 
 
@@ -91,7 +89,7 @@ Detailed installation instructions are available here: [doc/INSTALL.md](doc/INST
 
 | Version                      | Download URI                                               |
 | ---------------------------- | ---------------------------------------------------------- |
-| Latest stable release        | http://source.a2o.si/download/snoopy/snoopy-2.4.5.tar.gz   |
+| Latest stable release        | http://source.a2o.si/download/snoopy/snoopy-2.4.6.tar.gz   |
 | Latest development release   | (N/A, clone this git repo, use master branch)              |
 | All releases                 | http://source.a2o.si/download/snoopy/                      |
 
