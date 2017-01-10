@@ -28,7 +28,7 @@ environment to avoid logging by Snoopy. See [this FAQ entry](https://github.com/
     * [Output](#output)
     * [Configuration](#configuration)
     * [Support](#support)
-      * [S.1 Keep all communication public](#s1-all-keep-communication-public)
+      * [S.1 Keep all communication public](#s1-keep-all-communication-public)
       * [S.2 Supported Snoopy versions](#s2-supported-snoopy-versions)
       * [S.3 Reporting bugs](#s3-reporting-bugs)
       * [S.4 Feature requests](#s4-feature-requests)
