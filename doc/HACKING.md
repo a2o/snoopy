@@ -32,6 +32,7 @@ Ubuntu 14.04 would be a good choice ATM, or RedHat/CentOS 7.
 Required versions of software:
 - automake 1.11
 - autoconf 2.69
+- libtool
 
 
 ### Older OSes
