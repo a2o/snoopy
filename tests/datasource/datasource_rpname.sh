@@ -29,7 +29,7 @@ while [ "$NEW_PPID" != "1" ]; do
 done
 
 # Get root parent process name
-VAL_REAL=`cat /proc/$CUR_PID/status | grep '^Name:' | awk '{print $2}'`
+VAL_REAL=`cat /proc/$CUR_PID/status | grep '^Name:' | sed 's/^Name:\t//'`
 
 
 
