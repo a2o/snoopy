@@ -10,23 +10,35 @@ I confirm that:
 
 ## Issue description - Environment basics
 
-(replace 'FILLIN' with actual values from your environment)
+    Guide:
+    - Remove this guide
+    - x86 is not supported anymore
+    - Replace 'FILLIN' with actual values from your environment
+    - Bug reports related to non-latest Snoopy releases will be closed as invalid.
+    - Using snoopy-install.sh enables Snoopy config file by default
+    - Threading support is not automatically enabled as of v2.4.4.
 
 | Key                                 | Value             | Comments                         |
 | ----------------------------------- | ----------------- | ---------------------------------|
-| Architecture:                       | x86_64            | x86 is not supported anymore     |
+| Architecture:                       | x86_64            | |
 | Linux distribution:                 | FILLIN            | |
 | Distribution version:               | FILLIN            | |
 | Snoopy version:                     | FILLIN            | |
-| Snoopy config file was used:        | FILLIN (yes|no)   | snoopy-install.sh enables this by default |
-| Snoopy threading support enabled:   | FILLIN (yes|no)   | not enabled by default as of v2.4.4       |
+| Snoopy config file was used:        | FILLIN (yes|no)   | |
+| Snoopy threading support enabled:   | FILLIN (yes|no)   | |
 
 
 
 ## Issue description - How was Snoopy installed
 
+    Guide:
+    - Remove this guide
+    - Describe installation method, was it:
+        - snoopy-install.sh?
+        - custom built (provide configure arguments)?
+        - distro package (is the version not supported anymore)?
+
 FILLIN
-(describe installation method - snoopy-install.sh, custom built (provide configure arguments), distro package)
 
 
 
