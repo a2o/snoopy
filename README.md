@@ -1,7 +1,7 @@
 # Snoopy Logger
 
 Snoopy is a tiny library that logs all executed commands (+ arguments) on your system.
-[![Flattr Snoopy Logger project](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=a2o&url=https://github.com/a2o/snoopy&title=Snoopy Logger)
+[![Flattr Snoopy Logger project](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=a2o&url=https://github.com/a2o/snoopy&title=Snoopy%20Logger)
 
 Master:
 [![Build Status - Master](https://travis-ci.org/a2o/snoopy.svg?branch=master)](https://travis-ci.org/a2o/snoopy/branches)
