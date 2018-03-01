@@ -108,7 +108,7 @@ Directory /doc/:
     src/filter/complex_filter_name.c;
 
 Directory /doc/internals/:
-- location of documetation useful to Snoopy developers and contributors;
+- location of documentation useful to Snoopy developers and contributors;
 - /doc/internals/README.md: main document about Snoopy internals
 
 
@@ -143,4 +143,4 @@ Pull requests:
 
 
 
-That is it. May the successfull-patch-submission-force be with you! :)
+That is it. May the successful-patch-submission-force be with you! :)

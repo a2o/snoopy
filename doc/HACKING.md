@@ -104,7 +104,7 @@ git submodule update
 - all data sources must build with -Wall -Werror -strict -std=c99 flags
     (enabled by default);
 - code indentation: 4 spaces, no tabs;
-- reserverd data source names:
+- reserved data source names:
     - snoopy*
 - IMPORTANT: Every data source must have corresponding test(s) in tests/datasource/
     directory, which enables automated testing for all upcoming changes. This

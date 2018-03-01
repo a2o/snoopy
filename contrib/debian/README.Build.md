@@ -32,7 +32,7 @@ Basically you need to run following commands:
     dpkg -i ../libsnoopy_2.0.0rc5-1_amd64.deb
 
 
-NOTES: Debian package versionning is tricky when working on git
+NOTES: Debian package versioning is tricky when working on git
 repositories. You can keep track on per-commit version number using `git
 describe --tags`.
 
