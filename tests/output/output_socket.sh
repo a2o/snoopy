@@ -25,14 +25,17 @@ touch $FILE_OUT
 socat UNIX-LISTEN:$FILE_SOCKET OPEN:$FILE_OUT &
 SOCAT_PID=$!
 
-# Sleep a bit, if socket file, or sometimes this fails as socket is not yet present
-if [ ! -e $FILE_SOCKET ]; then
-    sleep 0.2
-elif [ ! -S $FILE_SOCKET ]; then
-    sleep 0.5
-elif [ ! -S $FILE_SOCKET ]; then
-    sleep 2
-fi
+# Wait for the socket file to appear
+i=0
+while [ ! -e $FILE_SOCKET ]; do
+    i=`expr $i + 1`
+    snoopy_testRun_info "Waiting for socket ($i)..."
+    sleep 0.1
+
+    if [ "$i" -gt "100" ]; then
+        snoopy_testResult_fail "Socat listening socket $FILE_SOCKET did not appear."
+    fi
+done
 
 # Send content to this socket
 echo "$VAL_REAL" | socat - UNIX-CONNECT:$FILE_SOCKET
