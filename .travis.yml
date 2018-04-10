@@ -88,6 +88,8 @@ env:
 script:
   - "./build/travis.sh $SNOOPY_TRAVIS_OPTS"
 
+after_failure:
+  - "./build/travis-show-debug-output.sh"
 
 addons:
   #
