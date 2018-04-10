@@ -65,7 +65,7 @@ int snoopy_datasource_tty (char * const result, char const * const arg)
         if (ENOTTY == retVal) {
             return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "(none)");
         }
-        return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "ERROR(ttyname_r->EUNKNOWN)");
+        return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "(unknown)");
     }
 
     return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "%s", ttyPath);
