@@ -17,6 +17,9 @@ if ! tty -s; then
     VAL_REAL="(none)"
 else
     VAL_REAL=`tty`
+    if [ "not a tty" == "$VAL_REAL" ]; then
+        VAL_REAL="(none)"
+    fi
 fi
 
 

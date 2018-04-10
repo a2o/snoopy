@@ -18,7 +18,10 @@ VAL_SNOOPY=`$SNOOPY_TEST_DATASOURCE rpname`
 CUR_PID=$$
 NEW_PPID=`snoopy_test_getValue_fromPs "$CUR_PID" "ppid"`
 I=0
-while [ "$NEW_PPID" != "1" ]; do
+# Stop at:
+# - PID 1: init
+# - PID 0: appears in container when attached to it from the host
+while [[ "$NEW_PPID" != "1" ]] && [[ "$NEW_PPID" != "0" ]]; do
     I=`expr $I + 1`
     if [ "$I" -gt "100" ]; then
         snoopy_testResult_fail "Endless loop".

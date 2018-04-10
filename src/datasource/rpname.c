@@ -48,7 +48,8 @@
  * Local defines
  */
 #define PID_ROOT                1
-#define PID_EMPTY               0
+#define PID_ZERO                0 // In containers, if attached from the host
+#define PID_UNKNOWN             -1
 
 #define PROC_PID_STATUS_KEY_NAME        "Name"
 #define PROC_PID_STATUS_KEY_PPID        "PPid"
@@ -190,7 +191,7 @@ int get_parent_pid (int pid)
         return ppid_int;
     }
 
-    return PID_EMPTY;
+    return PID_UNKNOWN;
 }
 
 
@@ -203,7 +204,7 @@ int get_rpname (int pid, char *result)
     size_t  nameLen;
 
     parentPid = get_parent_pid(pid);
-    if (PID_ROOT == parentPid) {
+    if ((PID_ROOT == parentPid) || (PID_ZERO == parentPid)) {
         name = read_proc_property(pid, PROC_PID_STATUS_KEY_NAME);
         if (NULL != name) {
             nameLen = snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "%s", name);
@@ -212,7 +213,7 @@ int get_rpname (int pid, char *result)
             nameLen = snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "%s", UNKNOWN_STR);
         }
         return nameLen;
-    } else if (PID_EMPTY == parentPid) {
+    } else if (PID_UNKNOWN == parentPid) {
         return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "%s", UNKNOWN_STR);
     } else {
         return get_rpname(parentPid, result);

@@ -16,7 +16,12 @@ VAL_SNOOPY=`$SNOOPY_TEST_DATASOURCE tty_username`
 if ! tty -s; then
     VAL_REAL="(none)"
 else
-    VAL_REAL=`tty | xargs ls -la | awk '{print $3}'`
+    VAL_REAL=`tty`
+    if [ "not a tty" == "$VAL_REAL" ]; then
+        VAL_REAL="(none)"
+    else
+        VAL_REAL=`echo "$VAL_REAL" | xargs ls -la | awk '{print $3}'`
+    fi
 fi
 
 
