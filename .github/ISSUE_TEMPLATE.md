@@ -48,6 +48,14 @@ FILLIN
 
 
 
+## Steps to reproduce
+
+FILLIN - DO NOT SKIP THIS SECTION
+(Produce a guide for maintainers to reproduce your issue on their workstation.)
+(Using containers [LXC, Docker] is the best way to do it.)
+
+
+
 ## Expected result
 
 FILLIN
@@ -55,11 +63,5 @@ FILLIN
 
 
 ## Actual result
-
-FILLIN
-
-
-
-## Steps to reproduce
 
 FILLIN
