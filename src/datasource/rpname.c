@@ -152,7 +152,7 @@ char* read_proc_property (int pid, char* prop_name)
                 strncpy(returnValue, v, PROC_PID_STATUS_VAL_MAX_LENGTH);
                 returnValue[PROC_PID_STATUS_VAL_MAX_LENGTH_STR-1] = 0; // Change newline into null character
             } else {
-                strncpy(returnValue, v, PROC_PID_STATUS_VAL_MAX_LENGTH_STR);
+                strncpy(returnValue, v, PROC_PID_STATUS_VAL_MAX_LENGTH_STR-1);
             }
 
             // Do a cleanup and return a string duplicate, which should be freed by the caller
