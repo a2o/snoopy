@@ -7,10 +7,19 @@
 set -e
 set -u
 GITORIGINURL="https://github.com/benhoyt/inih.git"
-GITORIGINREF="master"
+GITREF="master"
 TMPGITDIR="./_tmp-inih-git"
 DESTDIR="."
 DESTDIRSRC="./src"
+
+
+
+### Parse arguments
+#
+if [ "${1:-}" != "" ]; then
+    GITREF="$1"
+fi
+echo "Using gitref: $GITREF"
 
 
 
@@ -18,6 +27,7 @@ DESTDIRSRC="./src"
 #
 rm -rf $TMPGITDIR
 git clone   $GITORIGINURL   $TMPGITDIR
+(cd $TMPGITDIR && git checkout $GITREF)
 
 
 
