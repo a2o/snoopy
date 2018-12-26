@@ -1,9 +1,7 @@
-diff --git a/lib/inih/src/ini.c b/lib/inih/src/ini.c
-index 27ca85b..2c015c8 100644
---- a/lib/inih/src/ini.c
-+++ b/lib/inih/src/ini.c
-@@ -149,6 +149,17 @@ int ini_parse_stream(ini_reader reader, void* stream, ini_handler handler,
- #endif
+--- src/ini.c.orig	2018-12-26 21:08:15.289767000 +0000
++++ src/ini.c	2018-12-26 21:07:25.707778000 +0000
+@@ -187,6 +187,17 @@
+                 value = lskip(value);
                  rstrip(value);
  
 +                /* Strip surrounding double and single quotes */
@@ -19,4 +17,4 @@ index 27ca85b..2c015c8 100644
 +
                  /* Valid name[=:]value pair found, call handler */
                  strncpy0(prev_name, name, sizeof(prev_name));
-                 if (!handler(user, section, name, value) && !error)
+                 if (!HANDLER(user, section, name, value) && !error)

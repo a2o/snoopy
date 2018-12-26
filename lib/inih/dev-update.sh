@@ -40,7 +40,7 @@ cp $TMPGITDIR/ini.h $DESTDIRSRC
 
 ### Apply patches
 #
-patch -p3 < ./patches/0001-strip-value-quotes.diff
+patch -p0 < ./patches/0001-strip-value-quotes.diff
 
 
 
