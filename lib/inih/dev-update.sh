@@ -7,10 +7,19 @@
 set -e
 set -u
 GITORIGINURL="https://github.com/benhoyt/inih.git"
-GITORIGINREF="master"
+GITREF="master"
 TMPGITDIR="./_tmp-inih-git"
 DESTDIR="."
 DESTDIRSRC="./src"
+
+
+
+### Parse arguments
+#
+if [ "${1:-}" != "" ]; then
+    GITREF="$1"
+fi
+echo "Using gitref: $GITREF"
 
 
 
@@ -18,6 +27,7 @@ DESTDIRSRC="./src"
 #
 rm -rf $TMPGITDIR
 git clone   $GITORIGINURL   $TMPGITDIR
+(cd $TMPGITDIR && git checkout $GITREF)
 
 
 
@@ -30,7 +40,7 @@ cp $TMPGITDIR/ini.h $DESTDIRSRC
 
 ### Apply patches
 #
-patch -p3 < ./patches/0001-strip-value-quotes.diff
+patch -p0 < ./patches/0001-strip-value-quotes.diff
 
 
 
