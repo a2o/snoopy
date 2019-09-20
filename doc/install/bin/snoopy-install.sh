@@ -12,8 +12,8 @@ set -o pipefail
 
 ### Configuration
 #
-SNOOPY_GIT_ORIGIN_URI="https://github.com/a2o/snoopy.git"
-SNOOPY_PACKAGE_DOWNLOAD_URI_PREFIX="http://source.a2o.si/download/snoopy"
+SNOOPY_GIT_ORIGIN_URI="https://github.com/ronsilver/snoopy.git"
+#SNOOPY_PACKAGE_DOWNLOAD_URI_PREFIX="http://source.a2o.si/download/snoopy"
 SNOOPY_INSTALL_LOGFILE="`pwd`/snoopy-install.log"
 SNOOPY_TRAVIS_BUILD=${SNOOPY_TRAVIS_BUILD:-false}
 
