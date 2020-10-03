@@ -13,7 +13,7 @@ set -o pipefail
 ### Configuration
 #
 SNOOPY_GIT_ORIGIN_URI="https://github.com/a2o/snoopy.git"
-SNOOPY_PACKAGE_DOWNLOAD_URI_PREFIX="http://source.a2o.si/download/snoopy"
+SNOOPY_PACKAGE_DOWNLOAD_URI_PREFIX="https://github.com/a2o/snoopy/releases/download"
 SNOOPY_INSTALL_LOGFILE="`pwd`/snoopy-install.log"
 SNOOPY_TRAVIS_BUILD=${SNOOPY_TRAVIS_BUILD:-false}
 
@@ -234,7 +234,7 @@ elif [[ "$SNOOPY_SOURCE_TYPE" == "package" ]] && [[ "$SNOOPY_DOWNLOAD_MODE" == "
     #
     if [ "$SNOOPY_VERSION_TO_INSTALL" == "latest" ]; then
         echo -n "SNOOPY INSTALL: Getting latest Snoopy version... " | tee -a $SNOOPY_INSTALL_LOGFILE
-        SNOOPY_VERSION_TO_INSTALL=`wget -q -O - $SNOOPY_PACKAGE_DOWNLOAD_URI_PREFIX/snoopy-latest-version.txt`
+        SNOOPY_VERSION_TO_INSTALL=`wget -q -O - --header "Accept: application/vnd.github.v3+json" https://api.github.com/repos/a2o/snoopy/releases/latest | grep '"name"' | head -n1 | cut -d '"' -f4 | cut -d'-' -f2`
         echo "got it, $SNOOPY_VERSION_TO_INSTALL" | tee -a $SNOOPY_INSTALL_LOGFILE
     else
         echo -n "SNOOPY INSTALL: Snoopy version to be installed... " | tee -a $SNOOPY_INSTALL_LOGFILE
@@ -256,7 +256,8 @@ elif [[ "$SNOOPY_SOURCE_TYPE" == "package" ]] && [[ "$SNOOPY_DOWNLOAD_MODE" == "
     ### Download Snoopy package
     #
     if [ "$SNOOPY_PACKAGE_DOWNLOAD" == "true" ]; then
-        SNOOPY_PACKAGE_URI="$SNOOPY_PACKAGE_DOWNLOAD_URI_PREFIX/$SNOOPY_PACKAGE_FILENAME"
+        SNOOPY_GITHUB_RELEASE_NAME="snoopy-$SNOOPY_VERSION_TO_INSTALL"
+        SNOOPY_PACKAGE_URI="$SNOOPY_PACKAGE_DOWNLOAD_URI_PREFIX/$SNOOPY_GITHUB_RELEASE_NAME/$SNOOPY_PACKAGE_FILENAME"
         echo -n "SNOOPY INSTALL: Downloading from $SNOOPY_PACKAGE_URI... " | tee -a $SNOOPY_INSTALL_LOGFILE
         rm -f $SNOOPY_PACKAGE_FILENAME
         wget $SNOOPY_PACKAGE_URI >> $SNOOPY_INSTALL_LOGFILE 2>&1
