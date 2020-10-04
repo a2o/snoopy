@@ -3,6 +3,14 @@
 -------------------------------------------------------------------------------
 
 
+2020-10-04 - Version 2.4.8
+--------------------------
+o Bugfix (#157 @ GitHub): Make Snoopy build with GCC 10.x.
+    (Thanks Marcos Fouces (@MarcosFouces @ GitHub) for the report.)
+o Bugfix (#151 @ GitHub): Fix incorrect comparison in cmdline.c.
+    (Thanks Mark Garrett (@gcsgithub @ GitHub) for the PR.)
+
+
 2020-10-04 - Version 2.4.7
 --------------------------
 o Enhancement (#125 @ GitHub): Permit longer message_format in the .ini file.
