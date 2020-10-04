@@ -3,6 +3,24 @@
 -------------------------------------------------------------------------------
 
 
+2020-10-04 - Version 2.4.7
+--------------------------
+o Enhancement (#125 @ GitHub): Permit longer message_format in the .ini file.
+    (Thanks Miguel Scapolla (@migueloangelo @ GitHub) for the PR.)
+o Bugfix (#126 @ GitHub): Fix datasource_rpname.c to correctly handle test suite
+    running from tmux.
+    (Thanks Lukas Schwaighofer (@lukas227 @ GitHub) for the PR.)
+o Bugfix (#122 @ GitHub): Fix build on GCC 7.x.
+    (Thanks Alexander F Rødseth (@xyproto @ GitHub) for the PR.)
+o Change: Adjust unknown TTY handling (generates a nicer text now).
+o Enhancement (#142, #143 @ GitHub): Fix issues reported by GCC 8.x (mainly by
+    upgrading the .ini parsing library).
+    (Thanks @PaulCombal for reporting this.)
+o Change: Adjust unknown TTY handling (generates a nicer text now).
+o Bugfix (#146 @ GitHub): Fix the main deployment method, by moving all release
+    packages to GitHub.
+
+
 2016-08-14 - Version 2.4.6
 --------------------------
 o Bugfix (#106 @ GitHub): fix segmentation faults of Network Manager on

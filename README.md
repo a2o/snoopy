@@ -42,6 +42,10 @@ environment to avoid logging by Snoopy. See [this FAQ entry](https://github.com/
 
 ## News
 
+2020-10-04:
+**Snoopy 2.4.7 released!**
+Maintenance release.
+
 2016-09-14:
 **Snoopy 2.4.6 released!**
 Maintenance release.
@@ -87,11 +91,11 @@ Detailed installation instructions are available here: [doc/INSTALL.md](doc/INST
 
 ### I.1 Version information and download links
 
-| Version                      | Download URI                                               |
-| ---------------------------- | ---------------------------------------------------------- |
-| Latest stable release        | http://source.a2o.si/download/snoopy/snoopy-2.4.6.tar.gz   |
-| Latest development release   | (N/A, clone this git repo, use master branch)              |
-| All releases                 | http://source.a2o.si/download/snoopy/                      |
+| Version                      | Download URI                                                                       |
+| ---------------------------- | ---------------------------------------------------------------------------------- |
+| Latest stable release        | https://github.com/a2o/snoopy/releases/download/snoopy-2.4.7/snoopy-2.4.7.tar.gz   |
+| Latest development release   | (N/A, clone this git repo, use master branch)                                      |
+| All releases                 | http://source.a2o.si/download/snoopy/                                              |
 
 
 
