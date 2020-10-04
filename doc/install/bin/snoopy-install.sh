@@ -130,8 +130,10 @@ fi
 #
 REQUIRED_PROGRAMS="gcc gzip make socat tar wget"
 if [ "$SNOOPY_SOURCE_TYPE" == "git" ]; then
-    REQUIRED_PROGRAMS_GITINSTALL="autoconf git libtool m4"
+    REQUIRED_PROGRAMS_GITINSTALL="autoconf git libtoolize m4"
+    REQUIRED_PACKAGES_GITINSTALL="autoconf git libtool m4"
     REQUIRED_PROGRAMS="$REQUIRED_PROGRAMS $REQUIRED_PROGRAMS_GITINSTALL"
+    REQUIRED_PACKAGES="$REQUIRED_PROGRAMS $REQUIRED_PACKAGES_GITINSTALL"
 fi
 
 if which $REQUIRED_PROGRAMS &> /dev/null; then
@@ -140,14 +142,14 @@ else
     if [ "$SNOOPY_INSTALL_RUNNING_AS_ROOT" != "true" ]; then
         echo "SNOOPY INSTALL: Unable to run package installation, not root"
     else
-        echo "SNOOPY INSTALL: Installing distro-specific packages for programs: $REQUIRED_PROGRAMS"
+        echo "SNOOPY INSTALL: Installing distro-specific packages for programs: $REQUIRED_PACKAGES"
         if [ -f /etc/debian_version ]; then
             # Debian, Ubuntu
             # About /dev/null: http://askubuntu.com/questions/372810/how-to-prevent-script-not-to-stop-after-apt-get
-            apt-get -y install $REQUIRED_PROGRAMS < "/dev/null"
+            apt-get -y install $REQUIRED_PACKAGES < "/dev/null"
         elif [ -f /etc/redhat-release ]; then
             # RHEL, Fedora, CentOS
-            yum install -y $REQUIRED_PROGRAMS
+            yum install -y $REQUIRED_PACKAGES
         fi
     fi
 
