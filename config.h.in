@@ -55,6 +55,10 @@
 /* Define to 1 if you have the <pwd.h> header file. */
 #undef HAVE_PWD_H
 
+/* Define to 1 if your system has a GNU libc compatible `realloc' function,
+   and to 0 otherwise. */
+#undef HAVE_REALLOC
+
 /* Define to 1 if you have the `socket' function. */
 #undef HAVE_SOCKET
 
@@ -336,6 +340,9 @@
 
 /* Define to `int' if <sys/types.h> does not define. */
 #undef pid_t
+
+/* Define to rpl_realloc if the replacement function should be used. */
+#undef realloc
 
 /* Define to `unsigned int' if <sys/types.h> does not define. */
 #undef size_t

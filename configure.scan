@@ -31,6 +31,7 @@ AC_TYPE_UID_T
 # Checks for library functions.
 AC_FUNC_FORK
 AC_FUNC_MALLOC
+AC_FUNC_REALLOC
 AC_CHECK_FUNCS([getcwd gethostname gettimeofday localtime_r socket strchr strdup strstr])
 
 AC_CONFIG_FILES([Makefile
