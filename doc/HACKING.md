@@ -27,7 +27,7 @@ Table of Contents
 ## OS for development
 
 Development of Snoopy is (and should) be done on fairly recent OS releases.
-Ubuntu 14.04 would be a good choice ATM, or RedHat/CentOS 7.
+Ubuntu 18.04 would be a good choice ATM, or RedHat/CentOS 8.
 
 Required versions of software:
 - automake 1.11
