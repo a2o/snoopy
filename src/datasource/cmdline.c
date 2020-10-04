@@ -68,7 +68,7 @@ int snoopy_datasource_cmdline (char * const result, char const * const arg)
     snoopy_inputdatastorage = snoopy_inputdatastorage_get();
 
     /* Count number of arguments */
-    for (cmdLineArgCount=0 ; *(snoopy_inputdatastorage->argv+cmdLineArgCount) != 0 ; cmdLineArgCount++);
+    for (cmdLineArgCount=0 ; *(snoopy_inputdatastorage->argv+cmdLineArgCount) != (char *) 0 ; cmdLineArgCount++);
 
     /* Calculate memory requirement for cmdLine */
     cmdLineSizeSum = 1;
