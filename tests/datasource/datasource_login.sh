@@ -14,7 +14,7 @@ set -u
 #
 VAL_SNOOPY=`$SNOOPY_TEST_DATASOURCE login`
 
-if ! tty -s; then
+if ! logname 2>/dev/null; then
     VAL_REAL=""
 else
     VAL_REAL=`logname`

@@ -3,6 +3,12 @@
 -------------------------------------------------------------------------------
 
 
+202X-XX-XX - Version 2.4.NEXT
+--------------------------
+o Bugfix (#152 @ GitHub): Fix datasource_login test to work inside Docker container.
+    (Thanks John-Mark Allen (@jmaargh @ GitHub) for the PR.)
+
+
 2020-10-04 - Version 2.4.8
 --------------------------
 o Bugfix (#157 @ GitHub): Make Snoopy build with GCC 10.x.
