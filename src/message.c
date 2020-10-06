@@ -136,7 +136,19 @@ void snoopy_message_generateFromFormat (
             snoopy_message_append(logMessage, dataSourceMsg);
             snoopy_message_append(logMessage, ")");
         } else {
-            snoopy_message_append(logMessage, dataSourceMsg);
+            // snoopy_message_append(logMessage, dataSourceMsg);
+            /* escape double-quote for JSON structure */
+            char *p,*q;
+
+            for(p=(char *)dataSourceMsg, q=logMessage + strlen(logMessage); (q-logMessage)<SNOOPY_LOG_MESSAGE_MAX_SIZE && *p; p++) {
+                if (SNOOPY_MESSAGE_ESCAPE && *p == '"') {
+                    *q++='\\'; // escape double-quote
+                }
+                *q++=*p;
+            }
+            *q=0;
+
+
         }
 
         // Where to start next iteration
