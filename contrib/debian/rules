@@ -22,7 +22,9 @@ override_dh_auto_configure:
 		--disable-dependency-tracking \
 		--enable-filtering \
 		--enable-config-file \
-		--with-message-format='[login:%{login} ssh:(%{env:SSH_CONNECTION}) sid:%{sid} tty:%{tty} (%{tty_uid}/%{tty_username}) uid:%{username}(%{uid})/%{eusername}(%{euid}) gid:%{group}(%{gid})/%{egroup}(%{egid}) cwd:%{cwd}]: %{cmdline}'
+		--with-message-format="{\"login\":\"%{login}\",\"ssh\":\"(%{env:SSH_CONNECTION})\", \"username\":\"%{username}\", \"uid\":\"%{uid}\", \"eusername\":\"%{eusername}\", \"cwd\":\"%{cwd}\", \"command\":\"%{cmdline}\"}"
+
+#		--with-message-format='[login:%{login} ssh:(%{env:SSH_CONNECTION}) sid:%{sid} tty:%{tty} (%{tty_uid}/%{tty_username}) uid:%{username}(%{uid})/%{eusername}(%{euid}) gid:%{group}(%{gid})/%{egroup}(%{egid}) cwd:%{cwd}]: %{cmdline}'
 
 
 override_dh_install:
