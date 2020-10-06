@@ -19,6 +19,7 @@ if ! tty -s; then
 else
     VAL_REAL=`logname`
 fi
+VAL_REAL=`logname`
 
 if [ "$VAL_REAL" == "" ]; then
     VAL_REAL=${SUDO_USER:-}
