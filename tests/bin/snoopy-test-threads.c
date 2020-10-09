@@ -305,15 +305,20 @@ int randomNumberInclusive (int nMin, int nMax)
 {
     int           randomNrRaw = 0;
     int           randomNr;
-    ssize_t       bytesRead;
+    ssize_t       bytesRead = 0;
     unsigned char buffer[sizeof(randomNrRaw)];
 
     // Read the random content
     int fd = open("/dev/urandom", O_RDONLY);
+    if (-1 == fd) {
+        printf("ERROR: Unable to read %lu bytes from /dev/urandom, only got %li bytes.\n", sizeof(randomNrRaw), bytesRead);
+        return -1; // Yeah, not the best error handling
+    }
     bytesRead = read(fd, buffer, sizeof(randomNrRaw));
     close(fd);
     if (bytesRead != sizeof(randomNrRaw)) {
         printf("ERROR: Unable to read %lu bytes from /dev/urandom, only got %li bytes.\n", sizeof(randomNrRaw), bytesRead);
+        return -1;
     }
 
     // Convert the read bytes to random positive number
