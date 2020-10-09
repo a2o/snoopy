@@ -35,6 +35,7 @@
 #include <misc.h>
 #include <tsrm.h>
 
+#include <fcntl.h>
 #include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -43,7 +44,6 @@
 #include <sys/types.h>
 #include <unistd.h>
 #include <wait.h>
-
 
 
 #define   THREAD_COUNT_MAX   10000
@@ -303,15 +303,29 @@ int fatalError (char *errorMsg)
  */
 int randomNumberInclusive (int nMin, int nMax)
 {
-    unsigned int rndSeed;
-    int          randomNr;
+    int           randomNrRaw = 0;
+    int           randomNr;
+    ssize_t       bytesRead;
+    unsigned char buffer[sizeof(randomNrRaw)];
 
-    // Seed
-    rndSeed = (unsigned int) (pthread_self() + getpid() + syscall(SYS_gettid) + time(NULL));
-    srand(rndSeed);
+    // Read the random content
+    int fd = open("/dev/urandom", O_RDONLY);
+    bytesRead = read(fd, buffer, sizeof(randomNrRaw));
+    close(fd);
+    if (bytesRead != sizeof(randomNrRaw)) {
+        printf("ERROR: Unable to read %lu bytes from /dev/urandom, only got %li bytes.\n", sizeof(randomNrRaw), bytesRead);
+    }
+
+    // Convert the read bytes to random positive number
+    for (unsigned int i=0 ; i<sizeof(randomNrRaw) ; ++i) {
+        randomNrRaw += (int) buffer[i] << i*8;
+    }
+    if (randomNrRaw < 0) {
+        randomNrRaw = -randomNrRaw;
+    }
 
     // Generate
-    randomNr = ( rand() % (nMax - nMin + 1) ) + nMin;
+    randomNr = ( randomNrRaw % (nMax - nMin + 1) ) + nMin;
 
     return randomNr;
 }
