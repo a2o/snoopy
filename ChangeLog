@@ -5,7 +5,15 @@
 
 202X-XX-XX - Version 2.4.NEXT
 --------------------------
-o Bugfix (#152 @ GitHub): Fix datasource_login test to work inside Docker container.
+o Bugfix (#161 @ GitHub):
+    Fixed regressions introduced by upgrading inih library in PR #143:
+    - Removing surrounding single quotes from ini values stopped working;
+    - The ini line length limit was reduced back down to 199 bytes.
+    Additionally, line length limit was raised to 1023 bytes.
+    (Thanks to @arstercz @ GitHub for pointing this out.)
+
+o Bugfix (#152 @ GitHub):
+    Fix datasource_login test to work inside Docker container.
     (Thanks John-Mark Allen (@jmaargh @ GitHub) for the PR.)
 
 
