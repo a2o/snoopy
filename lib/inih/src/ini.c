@@ -192,7 +192,7 @@ int ini_parse_stream(ini_reader reader, void* stream, ini_handler handler,
                     value[strlen(value) - 1] = '\0';
                     value += 1;
                 } else {
-                    if ((*value == '"') && (value[strlen(value) - 1] == '"')) {
+                    if ((*value == '\'') && (value[strlen(value) - 1] == '\'')) {
                         value[strlen(value) - 1] = '\0';
                         value += 1;
                     }
