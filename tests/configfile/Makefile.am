@@ -10,6 +10,9 @@ SCRIPT_PREFIX = configfile
 TESTS         =
 XFAIL_TESTS   =
 
+TESTS        += $(SCRIPT_PREFIX)-line-length-1023.sh
+TESTS        += $(SCRIPT_PREFIX)-line-length-1024.sh
+XFAIL_TESTS  += $(SCRIPT_PREFIX)-line-length-1024.sh
 TESTS        += $(SCRIPT_PREFIX)-filter_chain-1.sh
 TESTS        += $(SCRIPT_PREFIX)-message_format-1.sh
 TESTS        += $(SCRIPT_PREFIX)-message_format-unquoted.sh
