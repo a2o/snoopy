@@ -1,5 +1,5 @@
---- src/ini.c.orig	2018-12-26 21:08:15.289767000 +0000
-+++ src/ini.c	2018-12-26 21:07:25.707778000 +0000
+--- src/ini.c.ORIG	2020-11-12 23:40:31.773490733 +0100
++++ src/ini.c	2020-11-12 23:41:06.825555329 +0100
 @@ -187,6 +187,17 @@
                  value = lskip(value);
                  rstrip(value);
@@ -9,7 +9,7 @@
 +                    value[strlen(value) - 1] = '\0';
 +                    value += 1;
 +                } else {
-+                    if ((*value == '"') && (value[strlen(value) - 1] == '"')) {
++                    if ((*value == '\'') && (value[strlen(value) - 1] == '\'')) {
 +                        value[strlen(value) - 1] = '\0';
 +                        value += 1;
 +                    }

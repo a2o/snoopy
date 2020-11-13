@@ -10,8 +10,14 @@ SCRIPT_PREFIX = configfile
 TESTS         =
 XFAIL_TESTS   =
 
+TESTS        += $(SCRIPT_PREFIX)-line-length-1023.sh
+TESTS        += $(SCRIPT_PREFIX)-line-length-1024.sh
+XFAIL_TESTS  += $(SCRIPT_PREFIX)-line-length-1024.sh
 TESTS        += $(SCRIPT_PREFIX)-filter_chain-1.sh
 TESTS        += $(SCRIPT_PREFIX)-message_format-1.sh
+TESTS        += $(SCRIPT_PREFIX)-message_format-unquoted.sh
+TESTS        += $(SCRIPT_PREFIX)-message_format-single-quoted.sh
+TESTS        += $(SCRIPT_PREFIX)-message_format-double-quoted.sh
 TESTS        += $(SCRIPT_PREFIX)-output-devlog.sh
 if OUTPUT_ENABLED_file
 TESTS        += $(SCRIPT_PREFIX)-output-file.sh
