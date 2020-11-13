@@ -136,6 +136,7 @@ AC_CHECK_HEADERS([ \
     ctype.h \
     dlfcn.h \
     errno.h \
+    fcntl.h \
     features.h \
     grp.h \
     limits.h \
@@ -160,6 +161,7 @@ dnl Checks for typedefs, structures, and compiler characteristics.
 AC_C_INLINE
 AC_TYPE_PID_T
 AC_TYPE_SIZE_T
+AC_TYPE_SSIZE_T
 AC_TYPE_UID_T
 
 dnl Checks for library functions.

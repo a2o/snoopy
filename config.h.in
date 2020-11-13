@@ -9,6 +9,9 @@
 /* Define to 1 if you have the <errno.h> header file. */
 #undef HAVE_ERRNO_H
 
+/* Define to 1 if you have the <fcntl.h> header file. */
+#undef HAVE_FCNTL_H
+
 /* Define to 1 if you have the <features.h> header file. */
 #undef HAVE_FEATURES_H
 
@@ -346,6 +349,9 @@
 
 /* Define to `unsigned int' if <sys/types.h> does not define. */
 #undef size_t
+
+/* Define to `int' if <sys/types.h> does not define. */
+#undef ssize_t
 
 /* Define to `int' if <sys/types.h> doesn't define. */
 #undef uid_t
