@@ -3,7 +3,7 @@
 -------------------------------------------------------------------------------
 
 
-202X-XX-XX - Version 2.4.NEXT
+2020-11-13 - Version 2.4.9
 --------------------------
 o Bugfix (#161 @ GitHub):
     Fixed regressions introduced by upgrading inih library in PR #143:

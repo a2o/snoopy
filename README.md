@@ -39,6 +39,14 @@ environment to avoid logging by Snoopy. See [this FAQ entry](https://github.com/
 
 ## News
 
+2020-11-13:
+**Snoopy 2.4.9 released!**
+Maintenance release. On Friday 13th - let's hope for the best! ;)
+
+2020-10-04:
+**Snoopy 2.4.8 released!**
+Maintenance release.
+
 2020-10-04:
 **Snoopy 2.4.7 released!**
 Maintenance release.
@@ -46,20 +54,6 @@ Maintenance release.
 2016-09-14:
 **Snoopy 2.4.6 released!**
 Maintenance release.
-
-2016-03-05:
-**Snoopy 2.4.5 released!**
-Maintenance release.
-
-2015-08-28:
-**Snoopy 2.4.4 released!**
-Mainly maintenance release, with new filter: only_tty, which should cut down
-noise from non-tty processes considerably.
-
-2015-06-18:
-**Snoopy 2.4.0 released!**
-Many changes, see the ChangeLog. Experimental thread safety added.
-All users are encouraged to upgrade to Snoopy version 2.4.0+ immediately.
 
 
 
@@ -90,7 +84,7 @@ Detailed installation instructions are available here: [doc/INSTALL.md](doc/INST
 
 | Version                      | Download URI                                                                       |
 | ---------------------------- | ---------------------------------------------------------------------------------- |
-| Latest stable release        | https://github.com/a2o/snoopy/releases/download/snoopy-2.4.8/snoopy-2.4.8.tar.gz   |
+| Latest stable release        | https://github.com/a2o/snoopy/releases/download/snoopy-2.4.9/snoopy-2.4.9.tar.gz   |
 | Latest development release   | (N/A, clone this git repo, use master branch)                                      |
 | All releases                 | http://source.a2o.si/download/snoopy/                                              |
 
