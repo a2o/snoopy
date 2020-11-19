@@ -16,6 +16,7 @@ Makefile.in
 /build/m4/libtool.m4
 /build/m4/lt*.m4
 /configure
+/config.cache
 /config.h
 /config.log
 /config.status
