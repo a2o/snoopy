@@ -5,6 +5,10 @@
 
 202x-xx-xx - Version 2.4.x
 --------------------------
+o Enhancement (GH #113 & #164):
+    Store the ./configure command used to build the Snoopy and provide access
+    to the data via the snoopy_configure_command data source.
+
 o Bugfix (GH #160 & #163):
     Allow double quotes and backslashes in message format defined
     via `./configure --with-message-format="..."`

@@ -32,6 +32,7 @@
 ; - %{ppid}           ; (available=@enable_datasource_ppid@) Parent process ID of process that executed the command
 ; - %{rpname}         ; (available=@enable_datasource_rpname@) Root process name of process that executed the command
 ; - %{sid}            ; (available=@enable_datasource_sid@) Process id of session group process leader
+; - %{snoopy_configure_command} ; (available=@enable_datasource_snoopy_configure_command@) The ./configure command that was used to build Snoopy
 ; - %{snoopy_threads} ; (available=@enable_datasource_snoopy_threads@) Number of threads that Snoopy currently is configured for
 ; - %{snoopy_version} ; (available=@enable_datasource_snoopy_version@) Snoopy version
 ; - %{snoopy_literal:arg} ; (available=@enable_datasource_snoopy_literal@) Dummy data source, only returns its argument literally
