@@ -63,7 +63,7 @@ cat <<EOF
 EOF
 ./bootstrap.sh
 ./configure --enable-everything
-make maintainer-clean
+make gitclean
 ./bootstrap.sh
 
 

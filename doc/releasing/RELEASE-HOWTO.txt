@@ -21,7 +21,7 @@ Steps:
         - update config.h.in
         - commit
         - cleanup:
-            -> make maintainer-clean
+            -> make gitclean
 
     1b. Push latest changes to GitHub, wait for Travis to confirm that builds are
         passing successfully.
