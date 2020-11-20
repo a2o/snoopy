@@ -10,18 +10,22 @@ Steps:
 1. Run these tools to ensure code quality and consistency:
 
     1a. Run autoscan and compare results:
-        - before runnint autoscan, do this:
-            -> ./bootstrap
-            -> ./configure --enable-everything
-            -> (reason: sometimes more things are detected as needed this way)
-        - 'autoscan'
-        - use 'git diff' to see if anything changed from previous run
-        - add suggestions to configure.ac
-        - compare configure.scan to configure.ac
-        - update config.h.in
-        - commit
-        - cleanup:
-            -> make gitclean
+        - Clean out the repository, or else autoscan picks up unrelated
+          dependencies from build/aux/ltmain.sh, namely AC_PROG_CPP, AC_PROG_CXX
+          and AC_PROG_RANLIB. The bootstrap+configure steps are there to bring
+          the repository into a known-good state, or else `make gitclean` might
+          simply not work:
+            -> `./bootstrap.sh`
+            -> `./configure --enable-everything`
+            -> `make gitclean`
+        - Run autoscan now:
+            -> `autoscan`
+        - Use `git diff` to see if anything changed from previous run:
+            - add suggestions to configure.ac
+            - compare configure.scan to configure.ac
+        - Update config.h.in with:
+            -> `./bootstrap.sh`
+        - Commit
 
     1b. Push latest changes to GitHub, wait for Travis to confirm that builds are
         passing successfully.
