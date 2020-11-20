@@ -3,6 +3,14 @@
 -------------------------------------------------------------------------------
 
 
+202x-xx-xx - Version 2.4.x
+--------------------------
+o Bugfix (GH #160 & #163):
+    Allow double quotes and backslashes in message format defined
+    via `./configure --with-message-format="..."`
+    (Thanks to Pascal Trouvin (@ptrouvin @ GH) for the inital PR.)
+
+
 2020-11-13 - Version 2.4.9
 --------------------------
 o Bugfix (#161 @ GitHub):
