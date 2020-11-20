@@ -258,6 +258,13 @@ AC_MSG_NOTICE([=================================================================
 
 
 
+dnl ============================================================================
+dnl ======= START section: DATASOURCES & MESSAGE FORMAT ========================
+dnl ============================================================================
+AC_DEFINE_UNQUOTED(SNOOPY_CONFIGURE_COMMAND, "./configure $(echo $ac_configure_args | sed 's/\\/\\\\/g' | sed 's/"/\\"/g')", [Configure command that was used to build Snoopy])
+AC_MSG_NOTICE([Snoopy build configuration command: ./configure $ac_configure_args])
+AC_MSG_NOTICE([-])
+
 
 
 # ============================================================================
@@ -390,6 +397,7 @@ SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [pid],            [PID of process performing
 SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [ppid],           [parent PID of process performing the execution])
 SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [rpname],         [real parent name found up the process tree])
 SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [sid],            [session leader PID])
+SNOOPY_CONFIGURE_DATASOURCE_FORCE(  [snoopy_configure_command], [returns the ./configure command that was used to build Snoopy])
 SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [snoopy_literal], [dummy data source - only returns what it receives as argument])
 SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [snoopy_threads], [number of threads that Snoopy currently is initialized for])
 SNOOPY_CONFIGURE_DATASOURCE_FORCE(  [snoopy_version], [installed Snoopy version])

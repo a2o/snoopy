@@ -94,6 +94,9 @@
 #ifdef SNOOPY_CONF_DATASOURCE_ENABLED_sid
 #include "datasource/sid.h"
 #endif
+#ifdef SNOOPY_CONF_DATASOURCE_ENABLED_snoopy_configure_command
+#include "datasource/snoopy_configure_command.h"
+#endif
 #ifdef SNOOPY_CONF_DATASOURCE_ENABLED_snoopy_literal
 #include "datasource/snoopy_literal.h"
 #endif
@@ -202,6 +205,9 @@ char* snoopy_datasourceregistry_names[] = {
 #ifdef SNOOPY_CONF_DATASOURCE_ENABLED_sid
     "sid",
 #endif
+#ifdef SNOOPY_CONF_DATASOURCE_ENABLED_snoopy_configure_command
+    "snoopy_configure_command",
+#endif
 #ifdef SNOOPY_CONF_DATASOURCE_ENABLED_snoopy_literal
     "snoopy_literal",
 #endif
@@ -306,6 +312,9 @@ int (*snoopy_datasourceregistry_ptrs []) (char * const result, char const * cons
 #endif
 #ifdef SNOOPY_CONF_DATASOURCE_ENABLED_sid
     snoopy_datasource_sid,
+#endif
+#ifdef SNOOPY_CONF_DATASOURCE_ENABLED_snoopy_configure_command
+    snoopy_datasource_snoopy_configure_command,
 #endif
 #ifdef SNOOPY_CONF_DATASOURCE_ENABLED_snoopy_literal
     snoopy_datasource_snoopy_literal,

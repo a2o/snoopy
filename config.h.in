@@ -152,6 +152,9 @@
 /* Define to the version of this package. */
 #undef PACKAGE_VERSION
 
+/* Configure command that was used to build Snoopy */
+#undef SNOOPY_CONFIGURE_COMMAND
+
 /* Is config file parsing enabled? */
 #undef SNOOPY_CONF_CONFIGFILE_ENABLED
 
@@ -214,6 +217,9 @@
 
 /* Is datasource "sid" available? */
 #undef SNOOPY_CONF_DATASOURCE_ENABLED_sid
+
+/* Is datasource "snoopy_configure_command" available? Forced "Yes". */
+#undef SNOOPY_CONF_DATASOURCE_ENABLED_snoopy_configure_command
 
 /* Is datasource "snoopy_literal" available? */
 #undef SNOOPY_CONF_DATASOURCE_ENABLED_snoopy_literal

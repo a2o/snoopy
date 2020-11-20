@@ -179,6 +179,14 @@ libsnoopy_datasources_all_la_SOURCES += \
 	sid.h
 endif
 
+# Data source: snoopy_configure_command
+#
+if DATASOURCE_ENABLED_snoopy_configure_command
+libsnoopy_datasources_all_la_SOURCES += \
+	snoopy_configure_command.c \
+	snoopy_configure_command.h
+endif
+
 # Data source: snoopy_literal
 #
 if DATASOURCE_ENABLED_snoopy_literal

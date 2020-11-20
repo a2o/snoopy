@@ -86,6 +86,10 @@ if DATASOURCE_ENABLED_sid
     TESTS += $(SCRIPT_PREFIX)_sid.sh
 endif
 
+if DATASOURCE_ENABLED_snoopy_configure_command
+    TESTS += $(SCRIPT_PREFIX)_snoopy_configure_command.sh
+endif
+
 if DATASOURCE_ENABLED_snoopy_literal
     TESTS += $(SCRIPT_PREFIX)_snoopy_literal.sh
 endif
