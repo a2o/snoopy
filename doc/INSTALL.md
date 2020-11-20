@@ -93,12 +93,9 @@ however are gladly accepted.
 
 You can download Snoopy release tarballs from this location: http://source.a2o.si/download/snoopy/
 Alternatively, you can clone the latest Snoopy sources from GitHub.
-**DO NOT FORGET TO INITIALIZE GIT SUBMODULES**:
 ```
 git clone https://github.com/a2o/snoopy.git
 cd snoopy
-git submodule init
-git submodule update
 
 # This generates ./configure script
 ./bootstrap.sh

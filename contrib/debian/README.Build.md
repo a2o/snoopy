@@ -24,7 +24,6 @@ Create a /root/.devscripts file to specify the correct key with the contents
 
 Basically you need to run following commands:
 
-    git submodule init && git submodule update
     ln -nfs contrib/debian .
     apt-get install devscripts debhelper autoconf dh-autoreconf
     ./bootstrap.sh

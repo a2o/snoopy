@@ -212,7 +212,7 @@ void snoopy_configfile_parse_output (
     // If you do not assign it, Coverity complains with "Uninitialized pointer read".
     char  *saveptr1 = "";
 
-    // First clone the config value, as it gets freed by iniparser
+    // First clone the config value, as it gets freed by ini parsing library
     confVal = strdup(confValOrig);
 
     // Check if configured value contains argument(s)
@@ -280,7 +280,7 @@ void snoopy_configfile_parse_syslog_facility (
     /* Get config pointer */
     CFG = snoopy_configuration_get();
 
-    // Duplicate the iniparser value, as we need to modify it
+    // Duplicate the ini value, as we need to modify it
     confVal = strdup(confValOrig);
 
     // First cleanup the value
@@ -326,7 +326,7 @@ void snoopy_configfile_parse_syslog_level (
     /* Get config pointer */
     CFG = snoopy_configuration_get();
 
-    // Duplicate the iniparser value, as we need to modify it
+    // Duplicate the ini value, as we need to modify it
     confVal = strdup(confValOrig);
 
     // First cleanup the value

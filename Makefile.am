@@ -17,11 +17,11 @@ ACLOCAL_AMFLAGS = -I build/m4
 #
 # If Snoopy has config file enabled, then there is a small time frame
 # between installation of library and subsequent installation of
-# initial configuration file where iniparser emits an error about
+# initial configuration file where ini parsing library emits an error about
 # configuration file not being found. Therefore we first install
 # configuration file and only then the Snoopy library itself.
 #
-# Also, lib/ must be processed before src/, as iniparser is needed
+# Also, lib/ must be processed before src/, as ini parsing library is needed
 # there if config file is enabled.
 #
 SUBDIRS  =

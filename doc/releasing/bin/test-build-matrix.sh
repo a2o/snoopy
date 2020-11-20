@@ -84,10 +84,6 @@ EOF
 
     ./configure $CONFIGURE_ARGS
     make -j16 check
-
-    # Clean with this, otherwise it fails.
-    # This probably has to do something with iniparser being a subpackage.
-    ./configure --enable-everything
     make distclean
 
     i=$((i + 1))

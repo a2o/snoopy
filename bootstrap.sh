@@ -54,19 +54,6 @@ fi
 
 
 
-### Check if submodules are checked out, and do it if not
-#
-if [ ! -e lib/iniparser/.git ]; then
-    echo "###"
-    echo "### Cloning git submodules:"
-    echo "###"
-    echo
-    git submodule init
-    git submodule update
-fi
-
-
-
 ### Clear cache
 #
 if [ -d autom4te.cache ]; then
@@ -79,9 +66,6 @@ fi
 #
 if [ ! -d build/m4 ]; then
     mkdir -p build/m4
-fi
-if [ ! -d lib/iniparser/build/m4 ]; then
-    mkdir -p lib/iniparser/build/m4
 fi
 
 

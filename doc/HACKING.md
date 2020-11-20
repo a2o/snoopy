@@ -16,7 +16,7 @@ Table of Contents
   * [Hacking Snoopy](#hacking-snoopy)
     * [OS for development](#os-for-development)
       * [Older OSes](#older-oses)
-    * [Clone git repository and initialize git submodules](#clone-git-repository-and-initialize-git-submodules)
+    * [Clone git repository](#clone-git-repository)
     * [Data source development](#data-source-development)
     * [Filter development](#filter-development)
     * [Output development](#output-development)
@@ -73,20 +73,16 @@ will be rejected.
 
 
 
-## Clone git repository and initialize git submodules
+## Clone git repository
 
 File [INSTALL.md](INSTALL.md) contains detailed instructions about git repository
-cloning and git submodule initialization. Also, do not forget to run ./bootstrap.sh
-after submodules have been updated.
+cloning. Also, do not forget to run ./bootstrap.sh:
 
 Recap of the steps:
 ```shell
 git clone https://github.com/a2o/snoopy.git
 cd snoopy
-git submodule init
-git submodule update
 ./bootstrap.sh
-
 ```
 
 
