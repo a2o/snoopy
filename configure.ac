@@ -428,8 +428,7 @@ AC_ARG_WITH(message-format,
     ],
     [with_message_format="@<:@uid:%{uid} sid:%{sid} tty:%{tty} cwd:%{cwd} filename:%{filename}@:>@: %{cmdline}"]
 )
-#AC_DEFINE_UNQUOTED(SNOOPY_CONF_MESSAGE_FORMAT, "$with_message_format", [Custom message format to use])
-AC_DEFINE_UNQUOTED(SNOOPY_CONF_MESSAGE_FORMAT, "$(echo $with_message_format | sed 's/"/\\"/g')", [Custom message format to use])
+AC_DEFINE_UNQUOTED(SNOOPY_CONF_MESSAGE_FORMAT, "$(echo $with_message_format | sed 's/\\/\\\\/g' | sed 's/"/\\"/g')", [Custom message format to use])
 AC_SUBST([SNOOPY_CONF_MESSAGE_FORMAT], [$with_message_format])
 AC_MSG_NOTICE([Snoopy default message format: "$with_message_format"])
 
