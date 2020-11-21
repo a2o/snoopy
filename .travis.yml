@@ -10,7 +10,6 @@ compiler:
 branches:
   only:
     - master
-    - stable
     - coverity_scan
 
 

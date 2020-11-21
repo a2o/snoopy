@@ -59,8 +59,6 @@ Steps:
         Actual commands to run:
     c) Run release script:
         (see below)
-    d) Merge to stable branch and push:
-        (see below)
 
     Command to run that does steps b) to d) automatically:
 
@@ -69,13 +67,6 @@ git add ChangeLog README.md &&
 git commit -s -m "Release $REL_VERSION" &&
 git tag "snoopy-$REL_VERSION" &&
 ./doc/releasing/bin/create-release.sh "snoopy-$REL_VERSION" &&
-
-git checkout stable &&
-git pull &&
-git merge --ff master &&
-git push &&
-git checkout master &&
-#(or git merge snoopy-$REL_VERSION <--- UNTESTED)
 
 unset REL_VERSION
 
