@@ -39,7 +39,7 @@ SUBDIRS += tests
 ### Additional files to distribute in distribution package
 #
 EXTRA_DIST = \
-	build/get-version.sh \
+	dev-tools/libexec/get-release-version.sh \
 	README.md
 
 

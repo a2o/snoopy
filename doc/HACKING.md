@@ -51,7 +51,7 @@ index b71aa32..07edd5a 100644
  AC_PREREQ([2.63])
  AC_INIT(
      [Snoopy Logger],
--    m4_esyscmd_s(echo $(./build/get-version.sh)),
+-    m4_esyscmd_s(echo $(./dev-tools/libexec/get-release-version.sh)),
 +    [2.4.4-my-dev-version],
      [https://github.com/a2o/snoopy/issues/],
      [snoopy],

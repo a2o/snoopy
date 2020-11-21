@@ -14,11 +14,11 @@ AC_PREREQ([2.63])
 # Pull requests with this change will be rejected.
 # Correct line content that follows is:
 #
-#   m4_esyscmd_s(echo $(./build/get-version.sh)),
+#   m4_esyscmd_s(echo $(./dev-tools/libexec/get-release-version.sh)),
 #
 AC_INIT(
     [Snoopy Logger],
-    m4_esyscmd_s(echo $(./build/get-version.sh)),
+    m4_esyscmd_s(echo $(./dev-tools/libexec/get-release-version.sh)),
     [https://github.com/a2o/snoopy/issues/],
     [snoopy],
     [https://github.com/a2o/snoopy/])

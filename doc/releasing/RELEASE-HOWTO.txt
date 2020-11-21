@@ -64,7 +64,7 @@ Steps:
 
     Command to run that does steps b) to d) automatically:
 
-export REL_VERSION=`./build/get-version.sh changelog` &&
+export REL_VERSION=`./dev-tools/libexec/get-release-version.sh changelog` &&
 git add ChangeLog README.md &&
 git commit -s -m "Release $REL_VERSION" &&
 git tag "snoopy-$REL_VERSION" &&

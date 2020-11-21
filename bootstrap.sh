@@ -42,7 +42,7 @@ if [ "$RES" -lt "268" ]; then
 
     echo    "BOOTSTRAP: Adjusting configure.ac for old OS:"
     MYDIR=`dirname $0`
-    SNOOPY_VERSION_LITERAL=`$MYDIR/build/get-version.sh | sed -e 's/$/-geezer-os/'`
+    SNOOPY_VERSION_LITERAL=`$MYDIR/dev-tools/libexec/get-release-version.sh | sed -e 's/$/-geezer-os/'`
     SNOOPY_VERSION_CONFIGURE_AC=`echo "$SNOOPY_VERSION_LITERAL" | sed -e 's/^/    [/' | sed -e 's/$/],/'`
     echo -n "BOOTSTRAP:   - version from script to literal string '$SNOOPY_VERSION_LITERAL'... "
     sed -i "s/^    m4_esyscmd_s.*/$SNOOPY_VERSION_CONFIGURE_AC/" configure.ac
