@@ -191,7 +191,6 @@ AC_CONFIG_FILES([Makefile
                  contrib/rhel/snoopy.spec
                  contrib/sles/snoopy.spec
                  doc/Makefile
-                 doc/internals/Makefile
                  etc/Makefile
                  etc/snoopy.ini
                  lib/Makefile
