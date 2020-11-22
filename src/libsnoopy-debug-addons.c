@@ -68,7 +68,7 @@ void snoopy_debug_test_all_datasources ()
     /* Initialize variables and spaces */
     itemResult = malloc(SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE + 1);
 
-    /* Loop throught all datasources and just send to output */
+    /* Loop through all datasources and just send to output */
     dCount = snoopy_datasourceregistry_getCount();
     for (i=0 ; i<dCount ; i++) {
 

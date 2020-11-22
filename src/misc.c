@@ -133,14 +133,14 @@ void snoopy_string_append (
  * snoopy_string_countChars
  *
  * Description:
- *     Counts number of occurences of specified character in a given string.
+ *     Counts number of occurrences of specified character in a given string.
  *
  * Params:
  *     stringToSearch:   string to look into
  *     characterToCount: search for this character
  *
  * Return:
- *     int   Number of occurences
+ *     int   Number of occurrences
  */
 int  snoopy_string_countChars (const char *stringToSearch, char characterToCount)
 {

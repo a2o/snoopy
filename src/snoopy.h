@@ -25,7 +25,7 @@
  * Include all required system headers
  */
 
-/* This should generaly be done wherever unistd.h is required. */
+/* This should generally be done wherever unistd.h is required. */
 /* But sysconf is needed here, and all files include snoopy.h. */
 /* Needed to get getpgid and getsid on older glibc */
 /* This must be the first file to be included, or implicit inclusion

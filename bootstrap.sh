@@ -95,7 +95,7 @@ rm -f config.h.in~
 #
 echo
 echo "###"
-echo "### AutoTools run was completed sucessfully."
+echo "### AutoTools run was completed successfully."
 echo "### You should run ./configure now."
 echo "###"
 echo

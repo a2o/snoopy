@@ -83,7 +83,7 @@ int snoopy_configfile_load (
 
 
     /* Housekeeping */
-    CFG->configfile_parsed = SNOOPY_TRUE;   // We have sucessfully parsed configuration file
+    CFG->configfile_parsed = SNOOPY_TRUE;   // We have successfully parsed configuration file
     return 0;
 }
 
