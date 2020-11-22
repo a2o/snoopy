@@ -211,7 +211,7 @@ if [[ "$SNOOPY_SOURCE_TYPE" == "git" ]] && [[ "$SNOOPY_DOWNLOAD_MODE" == "git-cl
         ./autogen.sh           >> $SNOOPY_INSTALL_LOGFILE 2>&1
 
     elif [ -x configure ]; then
-        # Do nothing, ./configure is commited
+        # Do nothing, ./configure is committed
         true
 
     else
