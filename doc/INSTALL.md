@@ -91,7 +91,7 @@ however are gladly accepted.
 
 #### 3.1 Downloading source
 
-You can download Snoopy release tarballs from this location: http://source.a2o.si/download/snoopy/
+You can download Snoopy release tarballs from this location: https://github.com/a2o/snoopy/releases
 Alternatively, you can clone the latest Snoopy sources from GitHub.
 ```
 git clone https://github.com/a2o/snoopy.git

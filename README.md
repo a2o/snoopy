@@ -82,7 +82,7 @@ Detailed installation instructions are available here: [doc/INSTALL.md](doc/INST
 | ---------------------------- | ---------------------------------------------------------------------------------- |
 | Latest stable release        | https://github.com/a2o/snoopy/releases/download/snoopy-2.4.9/snoopy-2.4.9.tar.gz   |
 | Latest development release   | (N/A, clone this git repo, use master branch)                                      |
-| All releases                 | http://source.a2o.si/download/snoopy/                                              |
+| All releases                 | https://github.com/a2o/snoopy/releases                                             |
 
 
 
