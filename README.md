@@ -59,10 +59,10 @@ All historic releases can be found over there :point_right: in the [Releases](ht
 
 The fastest way to start using Snoopy is to execute the following commands (as root):
 ```shell
-rm -f snoopy-install.sh &&
-wget -O snoopy-install.sh https://github.com/a2o/snoopy/raw/install/doc/install/bin/snoopy-install.sh &&
-chmod 755 snoopy-install.sh &&
-./snoopy-install.sh stable
+rm -f install-snoopy.sh &&
+wget -O install-snoopy.sh https://github.com/a2o/snoopy/raw/install/install/install-snoopy.sh &&
+chmod 755 install-snoopy.sh &&
+./install-snoopy.sh stable
 ```
 That is it.
 
