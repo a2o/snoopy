@@ -13,6 +13,7 @@
 * [Installation](#installation)
 * [Sample output](#sample-output)
 * [Configuration](#configuration)
+* [FAQ - Frequently asked questions](#faq-frequently-asked-questions)
 * [Security disclaimer](#security-disclaimer)
 * [Contributing to Snoopy development](#contributing-to-snoopy-development)
 * [Getting support](#getting-support)
@@ -100,6 +101,12 @@ Snoopy can be reconfigured on-the-fly.
 The configuration file is (most likely, but depending on the build) located at `/etc/snoopy.ini`.
 
 Explanations of available configuration directives are available in the [default configuration file](etc/snoopy.ini.in).
+
+
+
+## FAQ - Frequently asked questions
+
+Frequently asked questions and answers are collected in the [doc/FAQ.md](https://github.com/a2o/snoopy/blob/master/doc/FAQ.md) file in this repository.
 
 
 
