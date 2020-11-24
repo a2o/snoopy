@@ -7,7 +7,7 @@ About pull request itself:
 - [ ] I have read and understood CONTRIBUTING guide @ https://github.com/a2o/snoopy/blob/master/.github/CONTRIBUTING.md
 
 Code quality:
-(not applicable for non-code fixes of course)
+(not applicable for non-code fixes)
 - [ ] My submission is passing test suite run (./configure --enable-everything && make tests) - test suite reports zero unexpected failures.
 - [ ] My submission is passing Valgrind check (./configure --enable-everything --enable-dev-tools && make valgrind) - Valgrind reports "ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)".
 
@@ -16,11 +16,11 @@ Commits:
 - [ ] My commits follow the KISS principle: do one thing, and do it well.
 
 Licensing:
-- [ ] I am the author of submission or have been authorized by submission copyright holder to issue this pull request.
+- [ ] I am the author of this submission or I have been authorized by the submission copyright holder to issue this pull request. By issuing this pull request the copyright holder agrees that their contribution is included in Snoopy and released under the current Snoopy license (currently GPLv2).
 
 Branching:
-- [ ] My submission is based on master branch.
-- [ ] My submission is compatible with latest master branch updates (no conflicts, I did a rebase if it was necessary).
+- [ ] My submission is based on `master` branch.
+- [ ] My submission is compatible with latest `master` branch updates (no conflicts, I did a rebase if it was necessary).
 - [ ] The name of the branch I want to merge upstream is not 'master' (except for only the most trivial fixes, like typos and such).
 - [ ] My branch name is *feature/my-shiny-new-snoopy-feature-title* (for new features).
 - [ ] My branch name is *bugfix/my-totally-non-hackish-workaround* (for bugfixes).

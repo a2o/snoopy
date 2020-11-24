@@ -1,23 +1,19 @@
 # Contributing to Snoopy development
 
-[![Flattr Snoopy Logger project](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=a2o&url=https://github.com/a2o/snoopy&title=Snoopy Logger)
-
 New ideas are welcome. Most of change requests so far were about additional
 log data or filtering capabilities, therefore most of development/changes
 is expected in that area.
 
-Initial information about Snoopy hacking is available here: [doc/HACKING.md](doc/HACKING.md)
+Initial information about Snoopy hacking is available here: [doc/HACKING-OVERVIEW.md](../doc/HACKING-OVERVIEW.md)
 
 
 
-Table of Contents
-=================
+## Table of Contents
 
-  * [Contributing to Snoopy development](#contributing-to-snoopy-development)
-    * [Git branches - persistent](#git-branches---persistent)
-    * [Git branches - transient](#git-branches---transient)
-    * [Creating feature documentation](#creating-feature-documentation)
-    * [Creating pull requests for upstream merges](#creating-pull-requests-for-upstream-merges)
+* [Git branches - persistent](#git-branches---persistent)
+* [Git branch naming for pull requests](#git-branch-naming-for-pull-requests)
+* [Creating feature documentation](#creating-feature-documentation)
+* [Creating a pull request](#creating-a-pull-request)
 
 
 
@@ -25,20 +21,17 @@ Table of Contents
 
 The following git branches are always available in main Snoopy repository:
 
-- master: contains latest Snoopy development efforts. All new features
-    snould be based on this branch.
-- stable: present when master branch has sufficiently drifted from latest
-    stable release, but is still far away from becoming stable. Used
-    for quick bugfixes and stable release maintenance.
-- install: branch dedicated to Snoopy automated install procedure. When
+- `master`: contains latest Snoopy development efforts. All new features
+    should be based on this branch.
+- `install`: branch dedicated to Snoopy automated install procedure. When
     you use it, install-snoopy.sh script is downloaded from this
     branch.
-- coverity_scan: when Coverity analysis of a build is required, it is
+- `coverity_scan`: when Coverity analysis of a build is required, it is
     performed using this branch. Usually it lazily follows master
     branch. Coverity has a limited build submission frequency, thus
     a dedicated branch has been created to trigger analysis on
     as-needed basis.
-- legacy: orphaned branch, which contains imported Snoopy releases from
+- `legacy`: orphaned branch, which contains imported Snoopy releases from
     1.00 to 1.6.1 + changes to bring it in sync with initial commit
     from master branch. This is a lousy attempt to recreate lost
     SVN history (commits 1-31). Present for historical completeness
@@ -46,7 +39,7 @@ The following git branches are always available in main Snoopy repository:
 
 
 
-## Git branches - transient
+## Git branch naming for pull requests
 
 The following branch-naming patterns are intended for branches whose sole
 purpose of existence is pull request submission. These branches should have
@@ -68,12 +61,7 @@ these patterns:
 
 ### On what branch should you base your contribution to Snoopy?
 
-**As a general rule, base your contribution on MASTER branch.**
-
-Exception:
-- you found a bug that impacts current stable release - base your work on
-    **stable** branch, if it is currently present in Snoopy repo. Maintainer
-    will merge it into master branch.
+**As a general rule, base your contribution on the `master` branch.**
 
 Non-exception:
 - you have developed a new feature and would like it to land in the next bugfix
@@ -86,61 +74,52 @@ Non-exception:
 
 ## Creating feature documentation
 
-Here is a brief description of Snoopy documentation structure.
+Here is a brief description of Snoopy documentation structure in the [doc/](../doc) directory:
 
-File /README.md:
-- general information and quick install instructions;
+- [doc/INSTALL.md](../doc/INSTALL.md): detailed installation instructions;
+- [doc/FAQ.md](../doc/FAQ.md): location of answers to frequently asked questions;
 
-Directory /doc/:
-- documentation which is useful to average Snoopy user;
-- /doc/INSTALL.md: detailed installation instructions;
-- /doc/FAQ.md: location of answers to frequently asked questions;
-
-- /doc/DATA-SOURCES.md: general, data-sources-specific information;
-- /doc/DATA-SOURCE_complex_data_source_name.md: documentation for advanced
+- `doc/DATA-SOURCES.md`: general, data-sources-specific information;
+- `doc/DATA-SOURCE_complex_data_source_name.md`: documentation for advanced
     and configurable data source called "complex_data_source_name", which
-    has its code located in src/datasource/complex_data_source_name.c;
+    has its code located in `src/datasource/complex_data_source_name.c`;
     (also, do not include "_name" suffix in data source's name:);
 
-- /doc/FILTERING.md: filtering-specific information;
-- /doc/FILTER_complex_filter_name.md: documentation for advanced filter called
+- `doc/FILTERING.md`: filtering-specific information;
+- `doc/FILTER_complex_filter_name.md`: documentation for advanced filter called
     "complex_filter_name", which has its code located in
     src/filter/complex_filter_name.c;
 
-Directory /doc/internals/:
-- location of documentation useful to Snoopy developers and contributors;
-- /doc/internals/README.md: main document about Snoopy internals
+- `doc/HACKING-*.md`: location of documentation useful to Snoopy developers and contributors;
 
 
 
-## Creating pull requests for upstream merges
+## Creating a pull request
 
 Commits:
-- your commits should be easily readable, with concise comments;
-- your commits should follow the KISS principle: do one thing, and do it well.
+- Commits should follow the KISS principle: do one thing, and do it well (keep it simple, stupid).
+- Commit messages should be easily readable, imperative style ("Fix memory leak in...", not "FixES mem...")
 
-Branching:
-- see section about branches above.
-- branch your contribution branch from Snoopy's master branch;
-- branch name: feature/my-shiny-new-snoopy-feature-title for new features;
-- branch name: bugfix/my-totally-non-hackish-workaround for bugfixes;
-- branch name: master (avoiding creating dedicated branch) may only be used for trivial fixes.
+Branching and PR branch naming:
+- Branch your contribution branch from Snoopy's `master` branch;
+- Consult the sections about branch naming above;
+- Branch name example #1: `feature/my-shiny-new-snoopy-feature-title` for new features;
+- branch name example #2: `bugfix/my-totally-non-hackish-workaround` for bugfixes;
 
 Pull requests:
-- do not create pull requests from master branch;
-- one pull request should contain one change only
+- Do not create pull requests for merging your master branch - see PR branch naming section above;
+- One pull request should contain one logical change only
     (one bugfix or one feature at a time);
-- if you have developed multiple features and/or bugfixes, create separate
+- If you have developed multiple features and/or bugfixes, create separate
     branches for each one of them, and request merges for each branch;
 - Snoopy uses Travis-CI for testing builds. When you submit a pull request,
     wait for Travis-CI to finish the build and see if everything went
     smoothly.
-- the cleaner you code/change/changeset is,
+- The cleaner you code/change/changeset is,
     the faster it will be merged.
-- Coverity scan is run on as-needed basis, but keep in mind that you might be
-    "called to court:)" - contacted to defend your contribution should Coverity
-    point out some defects in your code.
+- Coverity scan is run on an as-needed basis, but keep in mind that you might be
+    "called to court" ;)
 
 
 
-That is it. May the successful-patch-submission-force be with you! :)
+That is it. Your pull requests are welcome! ;)

@@ -1,10 +1,10 @@
 ## Checklist before I submit this issue report
 
 I confirm that:
-- [ ] I have tested this with the latest version of Snoopy available @ https://github.com/a2o/snoopy#i1-version-information-and-download-links (not the latest Snoopy version packaged by your favorite distribution, it might be out of date)
-- [ ] I have read Snoopy documentation @ https://github.com/a2o/snoopy/blob/master/README.md & https://github.com/a2o/snoopy/tree/master/doc
+- [ ] I have tested this with the latest version of Snoopy available @ https://github.com/a2o/snoopy#latest-version (not the latest Snoopy version packaged by your favorite distribution, which might be out of date)
+- [ ] I have read Snoopy's documentation @ https://github.com/a2o/snoopy/blob/master/README.md & https://github.com/a2o/snoopy/tree/master/doc
 - [ ] I have checked FAQ entries @ https://github.com/a2o/snoopy/blob/master/doc/FAQ.md
-- [ ] I have checked existing Snoopy issues for duplicates and found none @ https://github.com/a2o/snoopy/issues?q=is%3Aissue
+- [ ] I have searched existing Snoopy issues for duplicates and found none @ https://github.com/a2o/snoopy/issues?q=is%3Aissue
 
 
 

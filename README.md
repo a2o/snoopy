@@ -121,10 +121,12 @@ Consult [this FAQ entry](https://github.com/a2o/snoopy/blob/master/doc/FAQ.md#5-
 
 ## Contributing to Snoopy development
 
-Consult the [CONTRIBUTING.md](.github/CONTRIBUTING.md) document for the process.
+Consult the following documents for information related to Snoopy development:
 
-Consult [HACKING.md](doc/HACKING.md) and [HACKING-INTERNALS.md](doc/HACKING-INTERNALS.md) documents
-for a brief description of internal structure and how all the pieces fit together.
+- [CONTRIBUTING.md](.github/CONTRIBUTING.md)
+- [HACKING-OVERVIEW.md](doc/HACKING-OVERVIEW.md)
+- [HACKING-INTERNALS.md](doc/HACKING-INTERNALS.md)
+- [HACKING-QA.md](doc/HACKING-QA.md) (Autoscan, Travis-CI and Valgrind-related sections)
 
 
 

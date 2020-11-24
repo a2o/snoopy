@@ -6,7 +6,7 @@ is expected in that area, and the workflow is optimised for it too.
 
 More advanced changes or change proposals are also welcome. You are advised to
 read this document first, and then if you still have questions, proceed to
-[internals/README.md](internals/README.md) and then to Snoopy source code itself.
+[HACKING-INTERNALS.md](HACKING-INTERNALS.md) and then to Snoopy source code itself.
 
 
 
