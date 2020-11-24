@@ -27,7 +27,7 @@
 
 Snoopy is a small library that logs all program executions on your Linux/BSD system.
 
-[Developer documentation](doc/INTERNALS.md) outlines how it actually does that (a fairly technical read).
+[Developer documentation](doc/HACKING-INTERNALS.md) outlines how it actually does that (a fairly technical read).
 And don't miss the [security disclaimer](#security-disclaimer) about it.
 
 
@@ -123,7 +123,7 @@ Consult [this FAQ entry](https://github.com/a2o/snoopy/blob/master/doc/FAQ.md#5-
 
 Consult the [CONTRIBUTING.md](.github/CONTRIBUTING.md) document for the process.
 
-Consult [HACKING.md](doc/HACKING.md) and [INTERNALS.md](doc/INTERNALS.md) documents
+Consult [HACKING.md](doc/HACKING.md) and [HACKING-INTERNALS.md](doc/HACKING-INTERNALS.md) documents
 for a brief description of internal structure and how all the pieces fit together.
 
 
