@@ -51,9 +51,9 @@
 /*
  * Non-public function prototypes
  */
-int find_ancestor_in_list(char **name_list);
-int find_string_in_array(char *str, char **str_array);
-char **string_to_token_array(char *str);
+static int find_ancestor_in_list(char **name_list);
+static int find_string_in_array(char *str, char **str_array);
+static char **string_to_token_array(char *str);
 
 
 
@@ -107,7 +107,7 @@ int snoopy_filter_exclude_spawns_of(char *msg, char const * const arg)
  *    0 if there are no ancestor that have a name found in name_list
  *   -1 if error.
  */
-int find_ancestor_in_list(char **name_list)
+static int find_ancestor_in_list(char **name_list)
 {
     pid_t ppid;
     char stat_path[32]; // Path "/proc/nnnn/stat" where nnnn = some PID
@@ -182,7 +182,7 @@ int find_ancestor_in_list(char **name_list)
  *    1 if str matches one of the strings in str_array
  *    0 if there are no matches or if either argument is NULL.
  */
-int find_string_in_array(char *str, char **str_array)
+static int find_string_in_array(char *str, char **str_array)
 {
     if ((str == NULL) || (str_array == NULL)) {
         return 0;
@@ -210,7 +210,7 @@ int find_string_in_array(char *str, char **str_array)
  *    If str is NULL or empty, or if error, returns NULL.
  */
 
-char **string_to_token_array(char *str)
+static char **string_to_token_array(char *str)
 {
     char *p;
     int i;
