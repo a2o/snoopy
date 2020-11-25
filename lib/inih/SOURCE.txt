@@ -1,3 +1,0 @@
-git-origin-url = 'https://github.com/benhoyt/inih.git'
-git-origin-ref = 'tags/r42-0-g9d1af9d'
-patches-dir = 'patches/'

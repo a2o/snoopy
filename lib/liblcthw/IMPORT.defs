@@ -1,0 +1,17 @@
+#!/bin/bash
+
+set -e
+set -u
+
+EXTLIB_GIT_REPO_URL="https://github.com/zedshaw/liblcthw.git"
+EXTLIB_GIT_REF="b0abccd39"
+
+_snoopy_extlib_import()
+{
+    SRCDIR="$1"
+    DESTDIR="$2"
+
+    cp $SRCDIR/LICENSE            $DESTDIR/LICENSE
+    cp $SRCDIR/src/lcthw/list.c   $DESTDIR/src/list.c
+    cp $SRCDIR/src/lcthw/list.h   $DESTDIR/src/list.h
+}

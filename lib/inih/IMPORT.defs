@@ -1,0 +1,17 @@
+#!/bin/bash
+
+set -e
+set -u
+
+EXTLIB_GIT_REPO_URL="https://github.com/benhoyt/inih.git"
+EXTLIB_GIT_REF="tags/r42-0-g9d1af9d"
+
+_snoopy_extlib_import()
+{
+    SRCDIR="$1"
+    DESTDIR="$2"
+
+    cp $SRCDIR/LICENSE.txt $DESTDIR/LICENSE
+    cp $SRCDIR/ini.c       $DESTDIR/src/ini.c
+    cp $SRCDIR/ini.h       $DESTDIR/src/ini.h
+}
