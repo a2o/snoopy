@@ -98,6 +98,7 @@ AC_PROG_LIBTOOL
 AC_PROG_LN_S
 AC_PROG_MAKE_SET
 AC_PROG_MKDIR_P
+AC_PROG_NM
 AC_PROG_SED
 
 
@@ -208,6 +209,7 @@ AC_CONFIG_FILES([Makefile
                  tests/configfile/Makefile
                  tests/datasource/Makefile
                  tests/filter/Makefile
+                 tests/general/Makefile
                  tests/message/Makefile
                  tests/output/Makefile
                  tests/threads/Makefile
