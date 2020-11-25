@@ -18,7 +18,7 @@ AC_PREREQ([2.63])
 #
 AC_INIT(
     [Snoopy Logger],
-    m4_esyscmd_s(echo $(./dev-tools/libexec/get-release-version.sh)),
+    [m4_esyscmd_s(echo $(./dev-tools/libexec/get-release-version.sh))],
     [https://github.com/a2o/snoopy/issues/],
     [snoopy],
     [https://github.com/a2o/snoopy/])
