@@ -6,7 +6,7 @@ is expected in that area, and the workflow is optimised for it too.
 
 More advanced changes or change proposals are also welcome. You are advised to
 read this document first, and then if you still have questions, proceed to
-[internals/README.md](internals/README.md) and then to Snoopy source code itself.
+[HACKING-INTERNALS.md](HACKING-INTERNALS.md) and then to Snoopy source code itself.
 
 
 
@@ -51,7 +51,7 @@ index b71aa32..07edd5a 100644
  AC_PREREQ([2.63])
  AC_INIT(
      [Snoopy Logger],
--    m4_esyscmd_s(echo $(./build/get-version.sh)),
+-    m4_esyscmd_s(echo $(./dev-tools/libexec/get-release-version.sh)),
 +    [2.4.4-my-dev-version],
      [https://github.com/a2o/snoopy/issues/],
      [snoopy],

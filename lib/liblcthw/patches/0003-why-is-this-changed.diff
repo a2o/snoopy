@@ -1,0 +1,13 @@
+--- src/list.c.ORIG	2020-11-25 21:23:40.623260931 +0100
++++ src/list.c	2020-11-25 21:23:45.855301827 +0100
+@@ -96,8 +98,8 @@
+ {
+     void *result = NULL;
+ 
+-    check(list->first && list->last, "List is empty.");
+-    check(node, "node can't be NULL");
++    check(list->first && list->last, "List is empty.%s", "");
++    check(node, "Node can't be NULL.%s", "");
+ 
+     if(node == list->first && node == list->last) {
+         list->first = NULL;

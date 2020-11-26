@@ -4,23 +4,41 @@
 
 ### Description
 #
-# Expected output:
-#   1. 2.3.1
-#   2. 2.3.1-dirty
-#   3. snoopy-2.3.1-146-gCOMMIT
-#   4. snoopy-2.3.1-146-gCOMMIT-dirty
+# Return the version representing the state of the working directory.
 #
-# Options 1. and 2. are presented when current commit corresponds to explicit git tag.
-# Options 3. and 4. are for other occasions.
-# If tree is dirty, then add "-dirty" suffix.
+# Expected output variants:
+#   - 2.3.1
+#   - 2.3.1-dirty
+#   - 2.3.1-146-COMMITID
+#   - 2.3.1-146-COMMITID-dirty
 #
+# The "-dirty" suffix is added whenever there are uncommitted changes in the
+# working directory.
+#
+# The "-xxx-COMMITID" part is added whenever the currently checked out commit
+# does not have an associated git tag. "xxx" represents the number of commits
+# since the latest tag. "COMMITID" is a hash representing the current commit.
 
 
 
-### Configure shell first
+### Shell configuration and error handler
 #
 set -e
 set -u
+
+_fatalError() {
+    MSG="$1"
+    echo "ERROR($0): $MSG" 1>&2
+    exit 1
+}
+
+
+
+### Check the runtime environment
+#
+if [ ! -d dev-tools ]; then
+    _fatalError "This script must be run from the root of either git repository or uncompressed distribution package directory"
+fi
 
 
 
@@ -35,10 +53,8 @@ case $MODE in
         ;;
     'changelog')
         ;;
-
     *)
-        echo "ERROR: Invalid mode: $MODE"
-        exit 1
+        _fatalError "Invalid run mode: '$MODE'. Only 'git', 'changelog' or 'all' options are supported."
         ;;
 esac
 
@@ -74,8 +90,8 @@ esac
 #
 if [ "$MODE" == "all" -o "$MODE" == "git" ]; then
     if [ -d .git ]; then
-        CURRENT_PACKAGE_VERSION=`git describe --tags --dirty | sed -e 's/^snoopy-//'`
-        echo $CURRENT_PACKAGE_VERSION
+        SNOOPY_RELEASE_VERSION=`git describe --tags --dirty | sed -e 's/^snoopy-//'`
+        echo $SNOOPY_RELEASE_VERSION
         exit 0
     fi
 fi
@@ -88,8 +104,8 @@ fi
 #
 if [ "$MODE" == "all" -o "$MODE" == "changelog" ]; then
     if [ -f ChangeLog ]; then
-        CURRENT_PACKAGE_VERSION=`cat ChangeLog | grep -E '^[-0-9]+ - Version [.0-9]+$' | head -n1 | awk '{print $4}'`
-        echo $CURRENT_PACKAGE_VERSION
+        SNOOPY_RELEASE_VERSION=`cat ChangeLog | grep -E '^[-0-9]+ - Version [.0-9]+$' | head -n1 | awk '{print $4}'`
+        echo $SNOOPY_RELEASE_VERSION
         exit 0
     fi
 fi
@@ -98,5 +114,4 @@ fi
 
 ### Signal error
 #
-echo "Unable to determine Snoopy version (mode=$MODE)!"
-exit 1
+_fatalError "Unable to determine Snoopy version (mode=$MODE)"

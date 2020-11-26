@@ -75,7 +75,7 @@ fi
 if [ "$MODE" == "install-script-local" ]; then
 
     if [ "$INSTALL_WHAT" == "release-latest-stable" ]; then
-        ./doc/install/bin/snoopy-install.sh stable
+        ./install/install-snoopy.sh stable
         exit 0
     fi
 
@@ -84,12 +84,12 @@ if [ "$MODE" == "install-script-local" ]; then
         make -j16
         make -j16 check
         make dist
-        ./doc/install/bin/snoopy-install.sh snoopy-*.tar.gz
+        ./install/install-snoopy.sh snoopy-*.tar.gz
         exit 0
     fi
 
     if [ "$INSTALL_WHAT" == "download-only" ]; then
-        ./doc/install/bin/snoopy-install.sh download
+        ./install/install-snoopy.sh download
         exit 0
     fi
 
@@ -105,26 +105,26 @@ fi
 if [ "$MODE" == "install-script-remote" ]; then
 
     if [ "$INSTALL_WHAT" == "release-latest-stable" ]; then
-        rm -f snoopy-install.sh &&
-        wget -q -O snoopy-install.sh https://github.com/a2o/snoopy/raw/install/doc/install/bin/snoopy-install.sh &&
-        chmod 755 snoopy-install.sh &&
-        ./snoopy-install.sh stable
+        rm -f install-snoopy.sh &&
+        wget -q -O install-snoopy.sh https://github.com/a2o/snoopy/raw/install/install/install-snoopy.sh &&
+        chmod 755 install-snoopy.sh &&
+        ./install-snoopy.sh stable
         exit 0
     fi
 
     if [ "$INSTALL_WHAT" == "git-master" ]; then
-        rm -f snoopy-install.sh &&
-        wget -q -O snoopy-install.sh https://github.com/a2o/snoopy/raw/install/doc/install/bin/snoopy-install.sh &&
-        chmod 755 snoopy-install.sh &&
-        ./snoopy-install.sh git-master
+        rm -f install-snoopy.sh &&
+        wget -q -O install-snoopy.sh https://github.com/a2o/snoopy/raw/install/install/install-snoopy.sh &&
+        chmod 755 install-snoopy.sh &&
+        ./install-snoopy.sh git-master
         exit 0
     fi
 
     if [ "$INSTALL_WHAT" == "download-only" ]; then
-        rm -f snoopy-install.sh &&
-        wget -q -O snoopy-install.sh https://github.com/a2o/snoopy/raw/install/doc/install/bin/snoopy-install.sh &&
-        chmod 755 snoopy-install.sh &&
-        ./snoopy-install.sh download
+        rm -f install-snoopy.sh &&
+        wget -q -O install-snoopy.sh https://github.com/a2o/snoopy/raw/install/install/install-snoopy.sh &&
+        chmod 755 install-snoopy.sh &&
+        ./install-snoopy.sh download
         exit 0
     fi
 

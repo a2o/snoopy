@@ -78,7 +78,7 @@ o Tests: fix timestamp provider (ms) range test condition (bugfix found at user
     alasdairdc @ GitHub).
 o Install (#90 @ GitHub): Add support for installing local Snoopy packages with
     install script. (Suggested by PSKyne@Github)
-o Install (#90 @ GitHub): snoopy-install.sh now has a download-only mode.
+o Install (#90 @ GitHub): install-snoopy.sh now has a download-only mode.
     (Suggested by PSKyne@github)
 o Install: Reenabled 'make check' in install-snoopy.sh. The test that was
     was causing the most grief was datasource_domain test, which is disabled
@@ -172,7 +172,7 @@ o Feature: Full test suite is now implemented. It contains unit tests
     a whole, as much as this can be done.
     Config file parsing is tested too.
     This test suite is now used at the following occasions:
-    - when installing Snoopy via snoopy-install.sh script,
+    - when installing Snoopy via install-snoopy.sh script,
     - when submitting contribution pull request on GitHub,
     - when creating release package.
 

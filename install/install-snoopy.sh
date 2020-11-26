@@ -14,7 +14,7 @@ set -o pipefail
 #
 SNOOPY_GIT_ORIGIN_URI="https://github.com/a2o/snoopy.git"
 SNOOPY_PACKAGE_DOWNLOAD_URI_PREFIX="https://github.com/a2o/snoopy/releases/download"
-SNOOPY_INSTALL_LOGFILE="`pwd`/snoopy-install.log"
+SNOOPY_INSTALL_LOGFILE="`pwd`/install-snoopy.log"
 SNOOPY_TRAVIS_BUILD=${SNOOPY_TRAVIS_BUILD:-false}
 
 
@@ -190,7 +190,7 @@ echo "SNOOPY INSTALL: Installation mode: $SNOOPY_INSTALL_MODE"                  
 if [[ "$SNOOPY_SOURCE_TYPE" == "git" ]] && [[ "$SNOOPY_DOWNLOAD_MODE" == "git-clone" ]]; then
 
     echo "SNOOPY INSTALL: Cloning git repository: $SNOOPY_GIT_ORIGIN_URI" | tee -a $SNOOPY_INSTALL_LOGFILE
-    SNOOPY_LOCAL_GIT_DIR="snoopy-install-from.git"
+    SNOOPY_LOCAL_GIT_DIR="install-snoopy-git-repo"
 
     rm -rf ./$SNOOPY_LOCAL_GIT_DIR
     git clone $SNOOPY_GIT_ORIGIN_URI $SNOOPY_LOCAL_GIT_DIR >> $SNOOPY_INSTALL_LOGFILE 2>&1

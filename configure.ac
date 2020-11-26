@@ -14,11 +14,11 @@ AC_PREREQ([2.63])
 # Pull requests with this change will be rejected.
 # Correct line content that follows is:
 #
-#   m4_esyscmd_s(echo $(./build/get-version.sh)),
+#   m4_esyscmd_s(echo $(./dev-tools/libexec/get-release-version.sh)),
 #
 AC_INIT(
     [Snoopy Logger],
-    m4_esyscmd_s(echo $(./build/get-version.sh)),
+    [m4_esyscmd_s(echo $(./dev-tools/libexec/get-release-version.sh))],
     [https://github.com/a2o/snoopy/issues/],
     [snoopy],
     [https://github.com/a2o/snoopy/])
@@ -92,26 +92,12 @@ dnl     done with it already.
 dnl
 AC_PROG_AWK
 AC_PROG_CC
-AC_PROG_CPP
-AC_PROG_CXX
 AC_PROG_GREP
 AC_PROG_INSTALL
 AC_PROG_LIBTOOL
 AC_PROG_LN_S
 AC_PROG_MAKE_SET
 AC_PROG_MKDIR_P
-dnl
-dnl AC_PROG_RANLIB
-dnl
-dnl bootstrap.sh output:
-dnl   libtoolize: `AC_PROG_RANLIB' is rendered obsolete by `LT_INIT'
-dnl autoscan output:
-dnl   configure.ac: warning: missing AC_PROG_RANLIB wanted by: ltmain.sh:2455
-dnl
-dnl Libtoolize warning seems less harmful, therefore we leave this option in, for now.
-dnl
-AC_PROG_RANLIB
-
 AC_PROG_SED
 
 
@@ -205,7 +191,6 @@ AC_CONFIG_FILES([Makefile
                  contrib/rhel/snoopy.spec
                  contrib/sles/snoopy.spec
                  doc/Makefile
-                 doc/internals/Makefile
                  etc/Makefile
                  etc/snoopy.ini
                  lib/Makefile

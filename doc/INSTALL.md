@@ -39,18 +39,18 @@
 To start automated installation procedure for **STABLE** version of Snoopy,
 run this command:
 
-    rm -f snoopy-install.sh &&
-    wget -q -O snoopy-install.sh https://github.com/a2o/snoopy/raw/install/doc/install/bin/snoopy-install.sh &&
-    chmod 755 snoopy-install.sh &&
-    ./snoopy-install.sh stable
+    rm -f install-snoopy.sh &&
+    wget -q -O install-snoopy.sh https://github.com/a2o/snoopy/raw/install/install/install-snoopy.sh &&
+    chmod 755 install-snoopy.sh &&
+    ./install-snoopy.sh stable
 
 To start automated installation procedure for **DEVELOPMENT** version of Snoopy,
 run this command:
 
-    rm -f snoopy-install.sh &&
-    wget -q -O snoopy-install.sh https://github.com/a2o/snoopy/raw/install/doc/install/bin/snoopy-install.sh &&
-    chmod 755 snoopy-install.sh &&
-    ./snoopy-install.sh git-master
+    rm -f install-snoopy.sh &&
+    wget -q -O install-snoopy.sh https://github.com/a2o/snoopy/raw/install/install/install-snoopy.sh &&
+    chmod 755 install-snoopy.sh &&
+    ./install-snoopy.sh git-master
 
 **WARNING: This manual is for latest Snoopy version only. Any version that is not the latest is not supported. Please do not submit any bug/feature/change requests related to unsupported versions.**
 
@@ -91,7 +91,7 @@ however are gladly accepted.
 
 #### 3.1 Downloading source
 
-You can download Snoopy release tarballs from this location: http://source.a2o.si/download/snoopy/
+You can download Snoopy release tarballs from this location: https://github.com/a2o/snoopy/releases
 Alternatively, you can clone the latest Snoopy sources from GitHub.
 ```
 git clone https://github.com/a2o/snoopy.git

@@ -10,7 +10,6 @@ compiler:
 branches:
   only:
     - master
-    - stable
     - coverity_scan
 
 
@@ -40,7 +39,7 @@ env:
     #
     - MAKE_J: "16"
 
-    # Signal to snoopy-install.sh that it is running inside Travis-CI build
+    # Signal to install-snoopy.sh that it is running inside Travis-CI build
     - SNOOPY_TRAVIS_BUILD="true"
 
 
@@ -59,7 +58,7 @@ env:
     - SNOOPY_TRAVIS_OPTS="build --disable-everything --enable-filtering --enable-datasource-uid"
     - SNOOPY_TRAVIS_OPTS="build --disable-everything --enable-thread-safety"
     - SNOOPY_TRAVIS_OPTS="build --disable-everything --enable-config-file --enable-filtering --enable-thread-safety"
-    # Test snoopy-install.sh script
+    # Test install-snoopy.sh script
     - SNOOPY_TRAVIS_OPTS="install-script-local  release-latest-stable"
     - SNOOPY_TRAVIS_OPTS="install-script-local  local"
     - SNOOPY_TRAVIS_OPTS="install-script-local  download-only"

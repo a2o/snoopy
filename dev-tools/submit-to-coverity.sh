@@ -115,7 +115,7 @@ EOF
 # Clean
 ./bootstrap.sh
 ./configure
-make maintainer-clean
+make gitclean
 
 # Configure for real
 ./bootstrap.sh
