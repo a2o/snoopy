@@ -42,9 +42,16 @@
  * Local defines
  */
 #define   PROGLISTSEP               ','
-#define   ST_COMM_SIZE_MAX           32   // Keep these 3 in sync
-#define   ST_COMM_SCANF_PRECISION_S "31"  // Keep these 3 in sync
-#define   ST_COMM_LAST_CHAR_POS      31   // Keep these 3 in sync
+// Max bytes for command, including null
+#define   ST_COMM_SIZE_MAX           32
+// Max bytes needed from /proc/<pid>/stat, including null:
+// 20 digit PID, space, command in parens, space, 1 char state, space,
+// 20 digit PPID, null
+#define   ST_BUF_SIZE               (46 + ST_COMM_SIZE_MAX)
+// Min valid bytes from /proc/<pid>/stat, excluding null:
+// 1 digit PID, space, empty parens, space, 1 char state, space,
+// 1 digit PPID
+#define   ST_SIZE_MIN                 8
 
 
 
@@ -113,19 +120,21 @@ static int find_ancestor_in_list(char **name_list)
     char stat_path[32]; // Path "/proc/nnnn/stat" where nnnn = some PID
     FILE *statf;
     int rc, found;
-    char *ancestor_name;
+    char *left, *right;
+    size_t len;
 
     /*
      * The following vars are read from /proc/PID/stat
      *
+     * st_buf:
+     * Buffer for PID, command, state, and PPID
      * st_comm:
-     * Buffer for exec file name. In kernel/include/linux/sched.h is this
+     * Buffer for command. In kernel/include/linux/sched.h this is
      * defined as 16 byte string, but let's keep a bit of spare room if
      * something suddenly changes in the kernel.
      */
-    char st_commBuff[ST_COMM_SIZE_MAX];
-    char *st_comm;
-    pid_t st_pid;
+    char st_buf[ST_BUF_SIZE];
+    char st_comm_buf[ST_COMM_SIZE_MAX];
     char st_state;
 
     if (name_list == NULL) {
@@ -140,33 +149,40 @@ static int find_ancestor_in_list(char **name_list)
             return -1;
         }
 
-        // Grab the first few elements from the stat pseudo-file. Format from man 5 proc.
-        st_comm = st_commBuff;
-        rc = fscanf(statf, "%d %"ST_COMM_SCANF_PRECISION_S"s %c %d", &st_pid, st_comm, &st_state, &ppid);
-        if (rc == EOF) {
-            fclose(statf);
+        // Grab the first few elements from the stat pseudo-file
+        rc = fread(st_buf, 1, ST_BUF_SIZE - 1, statf);
+        st_buf[rc] = '\0';
+        fclose(statf);
+        if (rc < ST_SIZE_MIN) {
             return -1;
         }
-        /*
-         * Do not worry about %31s not being enough if command name in
-         * /proc/PID/stat exceeds it. fscanf() returns OK, it just shortens
-         * the resulting string to 31+\0.
-         */
 
-        // Secure string ending, just in case (this should be done by fscanf())
-        st_comm[ST_COMM_LAST_CHAR_POS] = '\0';
-
-        // stat provides st_comm as the name between parentheses. Get rid of the parens.
-        ancestor_name = st_comm + 1;
-        st_comm[strlen(st_comm) - 1] = '\0';
-        found = find_string_in_array(ancestor_name, name_list);
-
-        if (found) {
-            fclose(statf);
-            return 1;
+        // Find the first opening paren and the last closing paren
+        left = strchr(st_buf, '(');
+        right = strrchr(st_buf, ')');
+        if (left == NULL || right == NULL) {
+            return -1;
+        }
+        len = right - left - 1;
+        if (len <= 0 || len >= ST_COMM_SIZE_MAX) {
+            return -1;
         }
 
-        fclose(statf);
+        // Copy the command
+        memcpy(st_comm_buf, left + 1, len);
+        st_comm_buf[len] = '\0';
+
+        // Parse the PPID
+        rc = sscanf(right + 1, " %c %d", &st_state, &ppid);
+        if (rc != 2) {
+            return -1;
+        }
+
+        found = find_string_in_array(st_comm_buf, name_list);
+
+        if (found) {
+            return 1;
+        }
     }
 
     return 0; // Nothing found
