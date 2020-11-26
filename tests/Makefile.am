@@ -16,6 +16,7 @@ SUBDIRS     += datasource
 if FILTERING_ENABLED
     SUBDIRS += filter
 endif
+SUBDIRS     += general
 SUBDIRS     += message
 SUBDIRS     += output
 if THREAD_SAFETY_ENABLED

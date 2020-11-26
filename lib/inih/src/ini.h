@@ -10,6 +10,13 @@ https://github.com/benhoyt/inih
 #ifndef __INI_H__
 #define __INI_H__
 
+/* START For Snoopy - redefine function names, to avoid symbol name collisions */
+#define ini_parse          snoopy_ini_parse
+#define ini_parse_file     snoopy_ini_parse_file
+#define ini_parse_stream   snoopy_ini_parse_stream
+#define ini_parse_string   snoopy_ini_parse_string
+/* END For Snoopy */
+
 /* Make this header file easier to include in C++ code */
 #ifdef __cplusplus
 extern "C" {

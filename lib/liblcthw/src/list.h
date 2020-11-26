@@ -1,6 +1,18 @@
 #ifndef lcthw_List_h
 #define lcthw_List_h
 
+/* START For Snoopy - redefine function names, to avoid symbol name collisions */
+#define List_clear           snoopy_List_clear
+#define List_clear_destroy   snoopy_List_clear_destroy
+#define List_create          snoopy_List_create
+#define List_destroy         snoopy_List_destroy
+#define List_pop             snoopy_List_pop
+#define List_push            snoopy_List_push
+#define List_remove          snoopy_List_remove
+#define List_shift           snoopy_List_shift
+#define List_unshift         snoopy_List_unshift
+/* END For Snoopy */
+
 #include <stdlib.h>
 
 struct ListNode;

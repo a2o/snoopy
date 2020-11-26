@@ -49,6 +49,7 @@ AC_CONFIG_FILES([Makefile
                  tests/configfile/Makefile
                  tests/datasource/Makefile
                  tests/filter/Makefile
+                 tests/general/Makefile
                  tests/message/Makefile
                  tests/output/Makefile
                  tests/threads/Makefile

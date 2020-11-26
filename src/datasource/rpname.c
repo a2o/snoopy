@@ -64,9 +64,9 @@
 /*
  * Non-public function prototypes
  */
-int   get_parent_pid (int pid);
-int   get_rpname (int pid, char *result);
-char* read_proc_property (int pid, char* prop_name);
+static int   get_parent_pid (int pid);
+static int   get_rpname (int pid, char *result);
+static char* read_proc_property (int pid, char* prop_name);
 
 
 
@@ -91,7 +91,7 @@ int snoopy_datasource_rpname (char * const result, char const * const arg)
 
 
 /* Read /proc/{pid}/status file and extract the property */
-char* read_proc_property (int pid, char* prop_name)
+static char* read_proc_property (int pid, char* prop_name)
 {
     char    pid_file[50];
     FILE   *fp;
@@ -179,7 +179,7 @@ char* read_proc_property (int pid, char* prop_name)
 
 
 /* Get parent pid */
-int get_parent_pid (int pid)
+static int get_parent_pid (int pid)
 {
     char *ppid_str;
     int   ppid_int;
@@ -197,7 +197,7 @@ int get_parent_pid (int pid)
 
 
 /* Find root process name */
-int get_rpname (int pid, char *result)
+static int get_rpname (int pid, char *result)
 {
     int     parentPid;
     char   *name;
