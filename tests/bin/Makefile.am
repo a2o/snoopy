@@ -46,6 +46,19 @@ snoopy_test_threads_SOURCES         = snoopy-test-threads.c
 snoopy_test_threads_LDADD           = $(top_builddir)/src/libsnoopy-debug-addons.la
 endif
 
+noinst_PROGRAMS                    += spaceparent
+spaceparent_SOURCES                 = spaceparent.c
+
+
+
+### Create a program called "space parent", for testing filter exclude_spawns_of
+#
+all-local:
+	cp spaceparent "space parent"
+
+clean-local:
+	rm "space parent"
+
 
 
 ### Create test library, whole
