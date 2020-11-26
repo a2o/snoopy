@@ -49,4 +49,9 @@ The following assumptions are, well, assumed, by the releasing scripts:
     ./dev-tools/publish-release.sh
 
 
+5. Go to GitHub and close the corresponding milestone:
+
+    https://github.com/a2o/snoopy/milestones
+
+
 6. All done.
