@@ -141,7 +141,7 @@ static int find_ancestor_in_list(char **name_list)
         return -1;
     }
     ppid = getppid(); // We start with the parent
-    while (ppid != 1) {
+    while (ppid != 0) {
         // Create the path to /proc/<ppid>/stat
         sprintf(stat_path, "/proc/%d/stat", ppid);
         statf = fopen(stat_path, "r");
