@@ -108,6 +108,7 @@ AC_PROG_SED
 SNOOPY_PROG_CHECK([dirname],  [DIRNAME],  [Needed for "make check" test suite.])
 SNOOPY_PROG_CHECK([readlink], [READLINK], [Needed for "make check" test suite.])
 SNOOPY_PROG_CHECK([socat],    [SOCAT],    [Needed for "make check" test suite.])
+SNOOPY_PROG_CHECK([ps],       [PS],       [Needed for "make check" test suite.])
 SNOOPY_PROG_CHECK([wc],       [WC],       [Needed for "make check" test suite.])
 
 
