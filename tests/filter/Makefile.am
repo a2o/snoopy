@@ -15,8 +15,10 @@ if FILTER_ENABLED_exclude_spawns_of
     TESTS += $(SCRIPT_PREFIX)_exclude_spawns_of-mustdrop-multiarg-last.sh
     TESTS += $(SCRIPT_PREFIX)_exclude_spawns_of-mustdrop-multiarg-mid.sh
     TESTS += $(SCRIPT_PREFIX)_exclude_spawns_of-mustdrop-singlearg.sh
+    TESTS += $(SCRIPT_PREFIX)_exclude_spawns_of-mustdrop-spaceparent.sh
     TESTS += $(SCRIPT_PREFIX)_exclude_spawns_of-mustlog-multiarg.sh
     TESTS += $(SCRIPT_PREFIX)_exclude_spawns_of-mustlog-singlearg.sh
+    TESTS += $(SCRIPT_PREFIX)_exclude_spawns_of-mustlog-spaceparent.sh
 endif
 
 if DATASOURCE_ENABLED_uid
