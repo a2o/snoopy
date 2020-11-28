@@ -35,14 +35,6 @@
 
 
 /*
- * Common definitions
- */
-#define   EMPTY_FILENAME      ""
-#define   EMPTY_STRINGARRAY   (char *[]){'\0'}
-
-
-
-/*
  * Storage of Snoopy's input data for non-thread-safe builds
  */
 #ifndef SNOOPY_CONF_THREAD_SAFETY_ENABLED
@@ -139,10 +131,13 @@ void snoopy_inputdatastorage_setDefaults
 (
     snoopy_inputdatastorage_t *IDS
 ) {
+    static char * empty_string = "";
+    static char * empty_string_array[] = { NULL };
+
     IDS->initialized = SNOOPY_TRUE;
-    IDS->filename    = EMPTY_FILENAME;
-    IDS->argv        = EMPTY_STRINGARRAY;
-    IDS->envp        = EMPTY_STRINGARRAY;
+    IDS->filename    = empty_string;
+    IDS->argv        = empty_string_array;
+    IDS->envp        = empty_string_array;
 }
 
 
