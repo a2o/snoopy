@@ -1,0 +1,65 @@
+name: Install QA - install-snoopy.sh
+
+
+
+on:
+  workflow_dispatch:
+
+  push:
+    branches:
+      - master
+      - install
+    paths:
+      - 'install/install-snoopy.sh'
+
+  pull_request:
+    branches:
+      - master
+      - install
+    paths:
+      - 'install/install-snoopy.sh'
+
+
+
+jobs:
+  build:
+
+    name: Test install-snoopy.sh ${{matrix.install_mode}}
+    runs-on: ubuntu-20.04
+    container: ubuntu:20.04
+    strategy:
+      matrix:
+        install_mode:
+          - stable
+          - git-master
+          - download
+
+
+
+    ###
+    ### Steps to run
+    ###
+    steps:
+
+
+
+      ### Fetch the code
+      #
+      - uses: actions/checkout@v2
+
+
+
+      ### Install build environment tools
+      #
+      - run: apt-get update -y
+        env:
+          DEBIAN_FRONTEND: noninteractive
+      - run: apt-get install -y   wget tar gzip
+        env:
+          DEBIAN_FRONTEND: noninteractive
+
+
+
+      ### Install
+      #
+      - run: ./install/install-snoopy.sh ${{install_mode}}

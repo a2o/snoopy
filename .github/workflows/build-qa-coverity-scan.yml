@@ -1,0 +1,88 @@
+name: Build QA - Coverity Scan
+
+
+
+on:
+  workflow_dispatch:
+
+  push:
+    branches:
+      - coverity-scan
+
+
+
+jobs:
+  build:
+    name: Coverity Scan
+    runs-on: ubuntu-20.04
+    container: ubuntu:20.04
+
+
+
+    ###
+    ### Steps to run
+    ###
+    steps:
+
+
+
+      ### Fetch the code
+      #
+      - uses: actions/checkout@v2
+
+
+
+      ### Install build environment tools
+      #
+      - run: apt-get update -y
+        env:
+          DEBIAN_FRONTEND: noninteractive
+      - run: apt-get install -y   gcc gzip make procps socat tar wget   autoconf git libtool m4
+        env:
+          DEBIAN_FRONTEND: noninteractive
+
+
+
+      ### Download and install coverity
+      #
+      - name: Download Coverity Build Tool
+        run: |
+          wget -q https://scan.coverity.com/download/cxx/linux64 --post-data "token=$TOKEN&project=a2o%2Fsnoopy" -O cov-analysis-linux64.tar.gz
+          mkdir cov-analysis-linux64
+          tar xzf cov-analysis-linux64.tar.gz --strip 1 -C cov-analysis-linux64
+        env:
+          TOKEN: ${{ secrets.COVERITY_SCAN_TOKEN }}
+
+
+
+      ### Configure
+      #
+      - run: ./bootstrap.sh
+      - run: ./configure --enable-everything
+
+
+
+      ### Build with cov-build
+      #
+      - name: Build with cov-build
+        run: |
+          export PATH=`pwd`/cov-analysis-linux64/bin:$PATH
+          cov-build --dir cov-int make
+
+
+
+      ### Submit to Coverity Scan
+      #
+      - name: Submit the result to Coverity Scan
+        run: |
+          tar -czf snoopy-$GITHUB_SHA.tar.gz cov-int
+          curl \
+            --form project=a2o%2Fsnoopy \
+            --form token=$TOKEN \
+            --form email=bostjan@skufca.si \
+            --form file=@snoopy-$GITHUB_SHA.tar.gz \
+            --form version=$GITHUB_SHA \
+            --form description=$GITHUB_SHA \
+            https://scan.coverity.com/builds?project=a2o%2Fsnoopy
+        env:
+          TOKEN: ${{ secrets.COVERITY_SCAN_TOKEN }}

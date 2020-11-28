@@ -12,7 +12,7 @@ set -o pipefail
 
 ### Settings
 #
-COVERITY_SETTINGS_FILE="./build/coverity-settings.conf"
+COVERITY_SETTINGS_FILE="./dev-tools/submit-to-coverity.conf"
 BUILD_DIR="cov-int"
 BUILD_FILE_PREFIX="cov-int-snoopy"
 
@@ -114,14 +114,12 @@ EOF
 
 # Clean
 ./bootstrap.sh
-./configure
+./configure --enable-everything
 make gitclean
 
 # Configure for real
 ./bootstrap.sh
-./configure \
-    --enable-config-file \
-    --enable-filtering
+./configure --enable-everything
 
 rm -rf $BUILD_DIR
 mkdir -p $BUILD_DIR

@@ -1,0 +1,57 @@
+name: Install QA - README.md
+
+
+
+on:
+  workflow_dispatch:
+
+  push:
+    branches:
+      - master
+    paths:
+      - 'README.md'
+
+  pull_request:
+    branches:
+      - master
+    paths:
+      - 'README.md'
+
+
+
+jobs:
+  build:
+
+    name: Test install steps from README.md
+    runs-on: ubuntu-20.04
+    container: ubuntu:20.04
+
+
+
+    ###
+    ### Steps to run
+    ###
+    steps:
+
+
+
+      ### Fetch the code
+      #
+      - uses: actions/checkout@v2
+
+
+
+      ### Install build environment tools
+      #
+      - run: apt-get update -y
+        env:
+          DEBIAN_FRONTEND: noninteractive
+      - run: apt-get install -y   wget tar gzip
+        env:
+          DEBIAN_FRONTEND: noninteractive
+
+
+
+      ### Install
+      #
+      - run: ./dev-tools/libexec/extract-and-run-install-steps-from-readme.sh

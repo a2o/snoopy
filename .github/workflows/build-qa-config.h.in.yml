@@ -1,0 +1,64 @@
+name: Build QA - config.h.in
+
+
+
+on:
+  workflow_dispatch:
+
+  push:
+    branches:
+      - master
+    tags:
+      - '*'
+    paths:
+      - 'configure.scan'
+
+  pull_request:
+    branches:
+      - master
+    paths:
+      - 'configure.scan'
+
+
+
+jobs:
+  build:
+
+    name: Build QA - config.h.in
+    runs-on: ubuntu-20.04
+    container: ubuntu:20.04
+
+
+
+    ###
+    ### Steps to run
+    ###
+    steps:
+
+
+
+      ### Fetch the code
+      #
+      - uses: actions/checkout@v2
+
+
+
+      ### Install build environment tools
+      #
+      - run: apt-get update -y
+        env:
+          DEBIAN_FRONTEND: noninteractive
+      - run: apt-get install -y   gcc gzip make procps socat tar wget   autoconf git libtool m4
+        env:
+          DEBIAN_FRONTEND: noninteractive
+
+
+
+      ### Run config.h.in generator
+      #
+      - run: cp config.h.in config.h.in.GIT
+      - run: ./bootstrap.sh
+      - run: diff -u config.h.in.GIT config.h.in
+      - name: 'Failed? Read this for what to do next:'
+        if: failure()
+        run: 'echo -e "Check the autoscan-related section in this document:\n\n    https://github.com/a2o/snoopy/blob/master/doc/HACKING-QA.md#autoscan\n\n"'

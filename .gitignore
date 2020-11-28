@@ -82,7 +82,7 @@ Makefile
 ### Coverity files
 #
 /cov-int*
-/build/coverity-settings.conf
+/dev-tools/submit-to-coverity.conf
 
 
 ### Distribution related files
