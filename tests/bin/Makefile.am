@@ -57,7 +57,7 @@ all-local: spaceparent
 	@cp spaceparent "space parent"
 
 clean-local:
-	rm "space parent"
+	rm -f "space parent"
 
 
 
