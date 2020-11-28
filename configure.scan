@@ -10,7 +10,6 @@ AC_CONFIG_HEADERS([config.h])
 AC_PROG_AWK
 AC_PROG_CC
 AC_PROG_INSTALL
-AC_PROG_LN_S
 AC_PROG_MAKE_SET
 
 # Checks for libraries.
@@ -30,7 +29,7 @@ AC_TYPE_UID_T
 AC_FUNC_FORK
 AC_FUNC_MALLOC
 AC_FUNC_REALLOC
-AC_CHECK_FUNCS([getcwd gethostname gettimeofday localtime_r socket strchr strdup strstr])
+AC_CHECK_FUNCS([getcwd gethostname gettimeofday localtime_r socket strchr strdup strrchr strstr])
 
 AC_CONFIG_FILES([Makefile
                  doc/Makefile

@@ -95,7 +95,6 @@ AC_PROG_CC
 AC_PROG_GREP
 AC_PROG_INSTALL
 AC_PROG_LIBTOOL
-AC_PROG_LN_S
 AC_PROG_MAKE_SET
 AC_PROG_MKDIR_P
 AC_PROG_NM
@@ -165,6 +164,7 @@ AC_CHECK_FUNCS([ \
     socket    \
     strchr    \
     strdup    \
+    strrchr   \
     strstr    \
 ], [], [
     AC_MSG_ERROR([A function is missing. Unable to continue.])
