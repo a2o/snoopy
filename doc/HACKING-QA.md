@@ -3,10 +3,24 @@
 A short guide on how to run Snoopy code/builds through some of the common
 Quality Assurance tools.
 
+* [Test suite](#test-suite)
 * [Autoscan](#autoscan)
 * [Travis-CI](#travis-ci)
 * [valgring](#valgrind)
 * [coverity](#coverity)
+
+
+
+## Test suite
+
+Start the in-repository test suite like this:
+```shell
+./configure --enable-everything &&
+make &&
+make tests
+```
+If there are errors, each test case has a corresponding .log file right next to
+it, where additional information about the error is (usually) available.
 
 
 
