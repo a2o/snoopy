@@ -45,10 +45,10 @@ if [ "$RES" -lt "268" ]; then
     SNOOPY_VERSION_LITERAL=`$MYDIR/dev-tools/libexec/get-release-version.sh | sed -e 's/$/-geezer-os/'`
     SNOOPY_VERSION_CONFIGURE_AC=`echo "$SNOOPY_VERSION_LITERAL" | sed -e 's/^/    [/' | sed -e 's/$/],/'`
     echo -n "BOOTSTRAP:   - version from script to literal string '$SNOOPY_VERSION_LITERAL'... "
-    sed -i "s/^    m4_esyscmd_s.*/$SNOOPY_VERSION_CONFIGURE_AC/" configure.ac
+    sed -i "s/^    \[m4_esyscmd_s.*/$SNOOPY_VERSION_CONFIGURE_AC/" configure.ac
     echo "done."
     echo "BOOTSTRAP:   All done."
-    echo "BOOTSTRAP: IMPORTANT NOTICE: Do not commit these changes!"
+    echo "BOOTSTRAP: IMPORTANT NOTICE: Do not commit this change!"
     echo
 fi
 

@@ -74,6 +74,7 @@ jobs:
           - opensuse/leap:15.2
           - opensuse/tumbleweed:latest
 
+          - centos:6
           - centos:7
           - centos:8
 
@@ -118,6 +119,8 @@ jobs:
           DEBIAN_FRONTEND: noninteractive
 
       # CentOS
+      - run: yum install -y   epel-release
+        if: ${{ startsWith(matrix.container, 'centos:6') }}
       - run: yum install -y   gcc gzip make procps socat tar wget   autoconf git libtool m4
         if: ${{ startsWith(matrix.container, 'centos:') }}
 
