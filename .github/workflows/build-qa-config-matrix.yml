@@ -12,6 +12,7 @@ on:
       - '*'
     paths-ignore:
       - '.github/*.md'
+      - '.github/workflows/**'
       - '.gitignore'
       - 'ChangeLog'
       - 'COPYING'
@@ -31,6 +32,7 @@ on:
       - master
     paths-ignore:
       - '.github/*.md'
+      - '.github/workflows/**'
       - '.gitignore'
       - 'ChangeLog'
       - 'COPYING'
