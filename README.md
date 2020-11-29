@@ -33,7 +33,7 @@ And don't miss the [security disclaimer](#security-disclaimer) about it.
 
 | Date         | What?                    | Details   |
 | ------------ | ------------------------ | --------- |
-| 2020-11-30   | Snoopy 2.4.10 released!  | <br/> **IMPORTANT NOTICE:** This Snoopy version contains a bugfix for a condition (#119) that can make your systems unstable in specific situations. **All users are encouraged to upgrade to this version of Snoopy ASAP**. |
+| 2020-11-30   | Snoopy 2.4.10 released!  | <br/> **IMPORTANT NOTICE:** This Snoopy version contains a bugfix for a condition ([#119](https://github.com/a2o/snoopy/issues/119)) that can make your systems unstable in specific situations. <br/> **All users are encouraged to upgrade to this version of Snoopy ASAP**. |
 | 2020-11-13   | Snoopy 2.4.9 released!   | Maintenance release. On Friday 13th - let's hope for the best! :wink: |
 | 2020-10-04   | Snoopy 2.4.8 released!   | Maintenance release. |
 | 2020-10-04   | Snoopy 2.4.7 released!   | Maintenance release. |
