@@ -37,7 +37,7 @@ jobs:
       - run: apt-get update -y
         env:
           DEBIAN_FRONTEND: noninteractive
-      - run: apt-get install -y   gcc gzip make procps socat tar wget   autoconf git libtool m4
+      - run: apt-get install -y   gcc gzip make procps socat tar wget   autoconf git libtool m4   curl
         env:
           DEBIAN_FRONTEND: noninteractive
 
