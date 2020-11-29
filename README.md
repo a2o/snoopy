@@ -8,7 +8,7 @@
 * [News](#news)
 * [Latest version](#latest-version)
 * [Installation](#installation)
-* [Sample output](#sample-output)
+* [Output](#output)
 * [Configuration](#configuration)
 * [FAQ - Frequently asked questions](#faq-frequently-asked-questions)
 * [Security disclaimer](#security-disclaimer)
@@ -53,21 +53,23 @@ Consult [ChangeLog](ChangeLog) for more information.
 
 ## Installation
 
-The fastest way to start using Snoopy is to execute the following commands (as root):
+[![Install QA - README.md / master](https://github.com/a2o/snoopy/workflows/Install%20QA%20-%20README.md/badge.svg?branch=master)](https://github.com/a2o/snoopy/actions?query=workflow%3A%22Build+QA+-+README.md%22)
+[![Install QA - install-snoopy.sh / install](https://github.com/a2o/snoopy/workflows/Install%20QA%20-%20install-snoopy.sh/badge.svg?branch=install)](https://github.com/a2o/snoopy/actions?query=workflow%3A%22Install+QA+-+install-snoopy.sh%22)
+
+The simplest way to start using the latest version Snoopy is to execute the following commands (as root):
 ```shell
-rm -f install-snoopy.sh &&
 wget -O install-snoopy.sh https://github.com/a2o/snoopy/raw/install/install/install-snoopy.sh &&
 chmod 755 install-snoopy.sh &&
 ./install-snoopy.sh stable
 ```
-That is it.
+That's all.
 
 Other installation options (i.e. installing latest development version from this
-git repository) are described in the [doc/INSTALL.md](doc/INSTALL.md) file.
+git repository) are described in the [doc/INSTALL.md](doc/INSTALL.md) document.
 
 
 
-## Sample output
+## Output
 
 This is what typical Snoopy output looks like:
 
@@ -84,7 +86,7 @@ These are default output locations on various Linux distributions:
 | Ubuntu       | `/var/log/auth.log`    |                                   |
 | (others)     | `/var/log/messages`    | (potentially, could be elsewhere) |
 
-For actual output destination check your syslog configuration.
+For actual output format and destination, check your Snoopy and syslog configuration.
 
 
 
@@ -95,7 +97,7 @@ Snoopy can be reconfigured on-the-fly.
 
 The configuration file is (most likely, but depending on the build) located at `/etc/snoopy.ini`.
 
-Explanations of available configuration directives are available in the [default configuration file](etc/snoopy.ini.in).
+Supported configuration directives are explained in the [default configuration file](etc/snoopy.ini.in).
 
 
 
