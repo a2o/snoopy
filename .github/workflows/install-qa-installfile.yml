@@ -62,4 +62,4 @@ jobs:
 
       ### Install
       #
-      - run: ./install/install-snoopy.sh ${{install_mode}}
+      - run: ./install/install-snoopy.sh ${{matrix.install_mode}}
