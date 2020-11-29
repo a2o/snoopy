@@ -79,11 +79,14 @@ Makefile
 /tests/*/*.trs
 
 
-### Coverity files
+### Code analysis configuration and output files
 #
-/cov-int*
+/coverity-build-wrapper-output*
 /dev-tools/submit-to-coverity.conf
-
+/dev-tools/submit-to-sonarcloud.conf
+/.scannerwork/
+/sonar-cfamily.reproducer
+/sonarcloud-build-wrapper-output
 
 ### Distribution related files
 #

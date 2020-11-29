@@ -13,8 +13,8 @@ set -o pipefail
 ### Settings
 #
 COVERITY_SETTINGS_FILE="./dev-tools/submit-to-coverity.conf"
-BUILD_DIR="cov-int"
-BUILD_FILE_PREFIX="cov-int-snoopy"
+BUILD_DIR="coverity-build-wrapper-output"
+BUILD_FILE_PREFIX="coverity-build-wrapper-output-snoopy"
 
 
 
