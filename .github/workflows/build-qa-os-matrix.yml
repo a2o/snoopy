@@ -74,7 +74,6 @@ jobs:
           - opensuse/leap:15.2
           - opensuse/tumbleweed:latest
 
-          - centos:6
           - centos:7
           - centos:8
 
