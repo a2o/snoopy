@@ -8,6 +8,8 @@ on:
   push:
     branches:
       - master
+    tags:
+      - '*'
     paths-ignore:
       - '.github/*.md'
       - '.gitignore'
