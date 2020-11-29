@@ -3,16 +3,41 @@
 -------------------------------------------------------------------------------
 
 
-202x-xx-xx - Version 2.4.x
---------------------------
-o Enhancement (GH #113 & #164):
-    Store the ./configure command used to build the Snoopy and provide access
-    to the data via the snoopy_configure_command data source.
+2020-11-30 - Version 2.4.10
+---------------------------
+o Bugfix (GH #119, #168) - IMPORTANT:
+    Fix symbol leaks. Now all symbols that are present in the Snoopy's shared
+    .so library and declared as global have `snoopy_` prefix. Previous versions
+    of Snoopy were more likely to clash with other libraries' exported sybols,
+    causing unexpected program behavior.
+    (Thanks to @jibriss for reporting this.)
 
-o Bugfix (GH #160 & #163):
+o Bugfix (GH #145, #170):
+    Make exclude_spawns_of inspect PID 1 too. This enables the filter to work
+    correctly inside Docker containers where PID 1 is normally not an init
+    process.
+    (Thanks to @alex-ren for reporting this.)
+
+o Bugfix (GH #117, #118, #169):
+    Fix handling of program names with spaces in `exclude_spawns_of` filter.
+    (Thanks to @joaquimds for reporting this and to @akwizgran for a PR.)
+
+o Bugfix (GH #160, #163):
     Allow double quotes and backslashes in message format defined
     via `./configure --with-message-format="..."`
     (Thanks to Pascal Trouvin (@ptrouvin @ GH) for the inital PR.)
+
+o Bugfix:
+    Fix build tooling to enable successful builds from git on Debian systems.
+
+o Enhancement (GH #113, #164):
+    Store the ./configure command used to build the Snoopy and provide access
+    to the data via the snoopy_configure_command data source.
+
+o Enhancement (GH #171):
+    Migrate from Travis-CI to GitHub Actions, for simpler and faster access
+    to PR test results.
+
 
 
 2020-11-13 - Version 2.4.9
