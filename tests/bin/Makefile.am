@@ -53,11 +53,11 @@ spaceparent_SOURCES                 = spaceparent.c
 
 ### Create a program called "space parent", for testing filter exclude_spawns_of
 #
-all-local:
-	cp spaceparent "space parent"
+all-local: spaceparent
+	@cp spaceparent "space parent"
 
 clean-local:
-	rm "space parent"
+	rm -f "space parent"
 
 
 

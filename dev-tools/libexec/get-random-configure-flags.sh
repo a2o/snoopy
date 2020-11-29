@@ -28,9 +28,9 @@ all-outputs
 filtering
 all-filters
 "
-DATASOURCES=`cat $MYDIR/../configure.ac | grep SNOOPY_CONFIGURE_DATASOURCE_ | cut -d'[' -f2 | cut -d']' -f1 | sed -e 's/^/datasource-/'`
-FILTERS=`cat     $MYDIR/../configure.ac | grep SNOOPY_CONFIGURE_FILTER_     | cut -d'[' -f2 | cut -d']' -f1 | sed -e 's/^/filter-/'`
-OUTPUTS=`cat     $MYDIR/../configure.ac | grep SNOOPY_CONFIGURE_OUTPUT_     | cut -d'[' -f2 | cut -d']' -f1 | sed -e 's/^/output-/' | grep -Ev '^output-(file|socket)$'`
+DATASOURCES=`cat $MYDIR/../../configure.ac | grep SNOOPY_CONFIGURE_DATASOURCE_ | cut -d'[' -f2 | cut -d']' -f1 | sed -e 's/^/datasource-/' | grep -Ev '^datasource-snoopy_(configure_command|version)$'`
+FILTERS=`cat     $MYDIR/../../configure.ac | grep SNOOPY_CONFIGURE_FILTER_     | cut -d'[' -f2 | cut -d']' -f1 | sed -e 's/^/filter-/'`
+OUTPUTS=`cat     $MYDIR/../../configure.ac | grep SNOOPY_CONFIGURE_OUTPUT_     | cut -d'[' -f2 | cut -d']' -f1 | sed -e 's/^/output-/' | grep -Ev '^output-(file|socket)$'`
 ALL_CONFIGURE_OPTS="$OTHERS $DATASOURCES $FILTERS $OUTPUTS"
 
 # Make associative array for this

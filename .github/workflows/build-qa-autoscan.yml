@@ -1,0 +1,86 @@
+name: Build QA - Autoscan
+
+
+
+on:
+  workflow_dispatch:
+
+  push:
+    branches:
+      - master
+    paths-ignore:
+      - '.github/*.md'
+      - '.gitignore'
+      - 'ChangeLog'
+      - 'COPYING'
+#      - 'configure.scan'
+      - 'contrib/**'
+      - 'dev-tools/**'
+      - '!dev-tools/libexec/get-release-*.sh'
+      - 'doc/**'
+      - 'install/**'
+      - 'lib/*/IMPORT.defs'
+      - 'lib/*/LICENSE'
+      - 'README.md'
+
+  pull_request:
+    branches:
+      - master
+    paths-ignore:
+      - '.github/*.md'
+      - '.gitignore'
+      - 'ChangeLog'
+      - 'COPYING'
+#      - 'configure.scan'
+      - 'contrib/**'
+      - 'dev-tools/**'
+      - '!dev-tools/libexec/get-release-*.sh'
+      - 'doc/**'
+      - 'install/**'
+      - 'lib/*/IMPORT.defs'
+      - 'lib/*/LICENSE'
+      - 'README.md'
+
+
+
+jobs:
+  build:
+
+    name: Build QA - Autoscan
+    runs-on: ubuntu-20.04
+    container: ubuntu:20.04
+
+
+
+    ###
+    ### Steps to run
+    ###
+    steps:
+
+
+
+      ### Fetch the code
+      #
+      - uses: actions/checkout@v2
+
+
+
+      ### Install build environment tools
+      #
+      - run: apt-get update -y
+        env:
+          DEBIAN_FRONTEND: noninteractive
+      - run: apt-get install -y   autoconf
+        env:
+          DEBIAN_FRONTEND: noninteractive
+
+
+
+      ### Run autoscan
+      #
+      - run: cp configure.scan configure.scan.GIT
+      - run: autoscan
+      - run: diff -u configure.scan.GIT configure.scan
+      - name: 'Failed? Read this for what to do next:'
+        if: failure()
+        run: 'echo -e "Check the autoscan-related section in this document:\n\n    https://github.com/a2o/snoopy/blob/master/doc/HACKING-QA.md#autoscan\n\n"'

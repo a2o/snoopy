@@ -90,7 +90,7 @@ esac
 #
 if [ "$MODE" == "all" -o "$MODE" == "git" ]; then
     if [ -d .git ]; then
-        SNOOPY_RELEASE_VERSION=`git describe --tags --dirty | sed -e 's/^snoopy-//'`
+        SNOOPY_RELEASE_VERSION=`git describe --tags --dirty --always | sed -e 's/^snoopy-//'`
         echo $SNOOPY_RELEASE_VERSION
         exit 0
     fi

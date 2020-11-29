@@ -52,8 +52,12 @@ fi
 
 ### Check the `Latest version` section of README.md
 #
-if ! cat README.md | grep -E '^## Latest version$' -A10 | grep -E "https://github.com/a2o/snoopy/releases/download/snoopy-$RELEASE_VERSION/snoopy-$RELEASE_VERSION.tar.gz" > /dev/null; then
+if ! cat README.md | grep -E '^## Latest version$' -A10 | grep -E '^[|] +Stable +' | grep -E "[|] +$RELEASE_VERSION +[|]" > /dev/null; then
     _fatalError "Version $RELEASE_VERSION not mentioned in the 'Latest version' section of the README.md" $LINENO
+fi
+RES=`cat README.md | grep -E '^## Latest version$' -A10 | grep -E '^[|] +Stable +' | grep -E "[|] +$RELEASE_VERSION +[|]" | tr ' ' '\n' | grep -Eo "snoopy-[0-9.]+" | sed -e 's/^snoopy-//' | grep -Ev "^$RELEASE_VERSION\$" | grep -c . | cat`
+if [ "$RES" != "0" ]; then
+    _fatalError "Another version besides $RELEASE_VERSION is mentioned in the 'Latest version' section of the README.md" $LINENO
 fi
 
 

@@ -75,7 +75,7 @@
  * Maximum length of a string returned from any data source function,
  * including terminating null character.
  */
-#define SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE 1024
+#define SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE 2048
 
 
 

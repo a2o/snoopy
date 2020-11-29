@@ -10,9 +10,22 @@ set -u
 
 
 
+### Shell workaround
+#
+# CI usually runs commands in a way similar to `docker exec ...`, and certain
+# distro containers report shell in a process table as `sh` and not as `bash`.
+#
+PARENT_PROC_NAME="bash"
+. /etc/os-release
+if [[ $ID =~ ^(arch|centos|opensuse) ]]; then
+    PARENT_PROC_NAME="sh"
+fi
+
+
+
 ### Get data
 #
-if ! $SNOOPY_TEST_FILTER   "msg"   "exclude_spawns_of"   "aaaa,bash,bbbb" > /dev/null; then
+if ! $SNOOPY_TEST_FILTER   "msg"   "exclude_spawns_of"   "aaaa,$PARENT_PROC_NAME,bbbb" > /dev/null; then
     snoopy_testResult_pass
 else
     snoopy_testResult_fail "Message passed through when it shouldn't."

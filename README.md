@@ -1,8 +1,5 @@
 # Snoopy Logger
 
-[![Build Status - Master](https://travis-ci.org/a2o/snoopy.svg?branch=master)](https://travis-ci.org/a2o/snoopy/branches)
-[![Coverity Scan](https://scan.coverity.com/projects/4973/badge.svg?flat=1)](https://scan.coverity.com/projects/4973)
-
 
 
 ## Table of contents
@@ -47,12 +44,10 @@ Consult [ChangeLog](ChangeLog) for more information.
 
 ## Latest version
 
-| Version                      | Download URI                                                                     |
-| ---------------------------- | -------------------------------------------------------------------------------- |
-| Latest stable release        | https://github.com/a2o/snoopy/releases/download/snoopy-2.4.9/snoopy-2.4.9.tar.gz |
-| Latest development release   | (Clone [this](https://github.com/a2o/snoopy.git) git repository)                 |
-
-All historic releases can be found over there :point_right: in the [Releases](https://github.com/a2o/snoopy/releases) section.
+| Latest release | Version  | Status | Download location |
+| -------------- | -------- | ------ | ----------------- |
+| Stable         | 2.4.9    | ![Build QA - OS Matrix](https://github.com/a2o/snoopy/workflows/Build%20QA%20-%20OS%20Matrix/badge.svg?branch=snoopy-2.4.9) <br/> ![Build QA - Config Matrix](https://github.com/a2o/snoopy/workflows/Build%20QA%20-%20Config%20Matrix/badge.svg?branch=snoopy-2.4.9) <br/> ![Build QA - Valgrind](https://github.com/a2o/snoopy/workflows/Build%20QA%20-%20Valgrind/badge.svg?branch=snoopy-2.4.9) <br/> ![Build QA - Autoscan](https://github.com/a2o/snoopy/workflows/Build%20QA%20-%20Autoscan/badge.svg?branch=snoopy-2.4.9) | All release packages can be found over there :point_right: in the [Releases](https://github.com/a2o/snoopy/releases) section. |
+| Development    | `master` | ![Build QA - OS Matrix](https://github.com/a2o/snoopy/workflows/Build%20QA%20-%20OS%20Matrix/badge.svg?branch=master) <br/> ![Build QA - Config Matrix](https://github.com/a2o/snoopy/workflows/Build%20QA%20-%20Config%20Matrix/badge.svg?branch=master) <br/> ![Build QA - Valgrind](https://github.com/a2o/snoopy/workflows/Build%20QA%20-%20Valgrind/badge.svg?branch=master) <br/> ![Build QA - Autoscan](https://github.com/a2o/snoopy/workflows/Build%20QA%20-%20Autoscan/badge.svg?branch=master) | `git clone git:github.com:a2o/snoopy` |
 
 
 

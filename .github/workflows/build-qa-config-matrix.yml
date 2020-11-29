@@ -1,0 +1,132 @@
+name: Build QA - Config Matrix
+
+
+
+on:
+  workflow_dispatch:
+
+  push:
+    branches:
+      - master
+    tags:
+      - '*'
+    paths-ignore:
+      - '.github/*.md'
+      - '.gitignore'
+      - 'ChangeLog'
+      - 'COPYING'
+      - 'configure.scan'
+      - 'contrib/**'
+      - 'dev-tools/**'
+      - '!dev-tools/libexec/get-release-*.sh'
+      - 'doc/**'
+      - 'etc/**'
+      - 'install/**'
+      - 'lib/*/IMPORT.defs'
+      - 'lib/*/LICENSE'
+      - 'README.md'
+
+  pull_request:
+    branches:
+      - master
+    paths-ignore:
+      - '.github/*.md'
+      - '.gitignore'
+      - 'ChangeLog'
+      - 'COPYING'
+      - 'configure.scan'
+      - 'contrib/**'
+      - 'dev-tools/**'
+      - '!dev-tools/libexec/get-release-*.sh'
+      - 'doc/**'
+      - 'etc/**'
+      - 'install/**'
+      - 'lib/*/IMPORT.defs'
+      - 'lib/*/LICENSE'
+      - 'README.md'
+
+
+
+jobs:
+  build:
+
+    name: Build with configure flags ${{matrix.configure_flags}}
+    runs-on: ubuntu-20.04
+    container: ubuntu:20.04
+
+
+
+    ### Define the list of configure flag combinations to test out
+    #
+    strategy:
+      matrix:
+        configure_flags:
+          # Predefined configure flag combinations
+          - ""
+          - "--enable-thread-safety"
+          - "--disable-config-file"
+          - "--disable-filtering"
+          - "--disable-config-file --disable-filtering"
+          - "--enable-everything"
+          - "--enable-everything --disable-thread-safety"
+          - "--disable-everything"
+          - "--disable-everything --enable-config-file"
+          - "--disable-everything --enable-filtering --enable-datasource-uid"
+          - "--disable-everything --enable-thread-safety"
+          - "--disable-everything --enable-config-file --enable-filtering --enable-thread-safety"
+          # Random configure flag combinations
+          - "random-01"
+          - "random-02"
+          - "random-03"
+          - "random-04"
+          - "random-05"
+          - "random-06"
+          - "random-07"
+          - "random-08"
+          - "random-09"
+          - "random-10"
+
+
+
+    ###
+    ### Steps to run
+    ###
+    steps:
+
+
+
+      ### Fetch the code
+      #
+      - uses: actions/checkout@v2
+
+
+
+      ### Install build environment tools
+      #
+      - run: apt-get update -y
+        env:
+          DEBIAN_FRONTEND: noninteractive
+      - run: apt-get install -y   gcc gzip make procps socat tar wget   autoconf git libtool m4
+        env:
+          DEBIAN_FRONTEND: noninteractive
+
+
+
+      ### Build
+      #
+      - run: ./bootstrap.sh
+
+      - run: ./configure ${{matrix.configure_flags}}
+        if: ${{ ! startsWith(matrix.configure_flags, 'random') }}
+
+      - run: ./configure `./dev-tools/libexec/get-random-configure-flags.sh`
+        if: ${{ startsWith(matrix.configure_flags, 'random') }}
+
+      - run: make -j4
+      - run: make -j4 check
+
+      - uses: actions/upload-artifact@v2
+        if: failure()
+        with:
+          name: tests-directory
+          path: tests/
