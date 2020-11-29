@@ -201,7 +201,7 @@ RELEASE_VERSION=`echo "$RELEASE_TAG" | sed -e 's/snoopy-//'`
 
 
 
-### Check if the release tag and commit message on the local branch
+### Check if the release tag and commit message are present on the local branch
 #
 # Tag
 if ! git log --pretty="%h %d %s" | grep -E "(\(|, )tag: $RELEASE_TAG(\)|, )" > /dev/null; then
@@ -212,16 +212,20 @@ fi
 if ! git log --pretty="%h %d %s" | grep -E "(\(|, )tag: $RELEASE_TAG(\)|, )" | grep -E "\) Release $RELEASE_VERSION\$" > /dev/null; then
     _fatalError "Git tag '$RELEASE_TAG' does not seem to be representing a release commit." $LINENO
 fi
-RELEASE_COMMIT_ID=`git log --format="%h" snoopy-2.4.10 | head -n1`
+RELEASE_COMMIT_ID=`git log --format="%h" $RELEASE_TAG | head -n1`
 _echo "Release tag and commit ($RELEASE_COMMIT_ID) seem to be in order locally."
 
 
 
 ### Check if the release commit and tag already exists in remote, else push them
 #
+# Fetch
+_echo "Fetching from remote '$GIT_REMOTE_NAME'..."
+git fetch $GIT_REMOTE_NAME
+
 # Commit
 GIT_PUSH_COMMITS="false"
-if git branch -r --contains $RELEASE_COMMIT_ID > /dev/null; then
+if git branch -r --contains $RELEASE_COMMIT_ID | grep -E "$GIT_REMOTE_NAME/$CURRENT_GIT_BRANCH\$" > /dev/null; then
     _echo "Remote branch $GIT_REMOTE_NAME/$CURRENT_GIT_BRANCH already contains commit $RELEASE_COMMIT_ID, push will be skipped."
 else
     _echo "Will push commits from local branch '$CURRENT_GIT_BRANCH' to remote '$GIT_REMOTE_NAME'."
