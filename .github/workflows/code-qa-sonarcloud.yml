@@ -1,0 +1,159 @@
+name: Code QA - SonarCloud
+
+
+
+on:
+  workflow_dispatch:
+
+  push:
+    branches:
+      - master
+      - sonarcloud-scan
+    tags:
+      - '*'
+    paths-ignore:
+      - '.github/*.md'
+      - '.github/workflows/**'
+      - '.gitignore'
+      - 'ChangeLog'
+      - 'COPYING'
+      - 'configure.scan'
+      - 'contrib/**'
+      - 'dev-tools/**'
+#      - '!dev-tools/libexec/get-release-*.sh'
+      - 'doc/**'
+      - 'etc/**'
+      - 'install/**'
+      - 'lib/*/IMPORT.defs'
+      - 'lib/*/LICENSE'
+      - 'README.md'
+
+  pull_request_target:
+    branches:
+      - master
+    paths-ignore:
+      - '.github/*.md'
+      - '.github/workflows/**'
+      - '.gitignore'
+      - 'ChangeLog'
+      - 'COPYING'
+      - 'configure.scan'
+      - 'contrib/**'
+      - 'dev-tools/**'
+#      - '!dev-tools/libexec/get-release-*.sh'
+      - 'doc/**'
+      - 'etc/**'
+      - 'install/**'
+      - 'lib/*/IMPORT.defs'
+      - 'lib/*/LICENSE'
+      - 'README.md'
+
+
+
+jobs:
+  sonarcloud-analysis:
+
+    name: SonarCloud Analysis
+    runs-on: ubuntu-20.04
+    container: ubuntu:20.04
+
+    steps:
+
+
+
+      ### Install build environment tools (+ unzip for unpacking SonarCloud tools)
+      #
+      - run: apt-get update -y
+        env:
+          DEBIAN_FRONTEND: noninteractive
+      - run: apt-get install -y   gcc gzip make procps socat tar wget   autoconf git libtool m4   unzip
+        env:
+          DEBIAN_FRONTEND: noninteractive
+
+
+
+      ### Fetch the code
+      #
+      # Must be done _after_ git is installed in the container, or else a copy of
+      # relevant commit content is made instead, and the .git directory is missing.
+      #
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+
+
+
+      ### Bootstrap & configure the code
+      #
+      - run: ./bootstrap.sh
+      - run: ./configure --enable-everything
+
+
+
+      ### Install SonarCloud build & scan tools
+      #
+      - name: Install SonarCloud build wrapper
+        run: |
+          wget https://sonarcloud.io/static/cpp/build-wrapper-linux-x86.zip
+          unzip build-wrapper-linux-x86.zip
+        working-directory: /opt
+
+
+
+      ### Build with SonarCloud wrapper
+      #
+      - name: Build with SonarCloud build wrapper
+        run: |
+          /opt/build-wrapper-linux-x86/build-wrapper-linux-x86-64 \
+            --out-dir ../snoopy-sonarcloud-build-wrapper-output \
+            make -j4
+
+
+
+      ### Run the test suite
+      #
+      - name: Run tests
+        run: make tests -j4
+
+
+
+      ### Install SonarCloud scanner
+      #
+      # The installation of the scanner is deferred to this point for security reasons,
+      # as the build is done on a PR code that can easily mess with the scanner
+      # installation to reveal the tokens.
+      #
+      - name: Install SonarClound scanner
+        run: |
+          rm -rf sonar-scanner*
+          LATEST_SONAR_SCANNER_VERSION=`wget -q -O - --header "Accept: application/vnd.github.v3+json" https://api.github.com/repos/SonarSource/sonar-scanner-cli/releases/latest | grep '"name"' | head -n1 | cut -d '"' -f4 | cut -d'-' -f2`
+          echo "Got the latest Sonar Scanner version: $LATEST_SONAR_SCANNER_VERSION"
+          LATEST_SONAR_SCANNER_ZIP="sonar-scanner-cli-$LATEST_SONAR_SCANNER_VERSION-linux.zip"
+          LATEST_SONAR_SCANNER_DIR="sonar-scanner-$LATEST_SONAR_SCANNER_VERSION-linux"
+          wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/$LATEST_SONAR_SCANNER_ZIP
+          unzip $LATEST_SONAR_SCANNER_ZIP
+          ln -s $LATEST_SONAR_SCANNER_DIR/bin/sonar-scanner /opt/sonar-scanner
+        working-directory: /opt
+
+
+
+      ### Trigger the SonarCloudscan and submission
+      #
+      # We can't use `./dev-tools/libexec/get-release-tag.sh` here for security reasons either.
+      #
+      - name: Scan and submit to SonarCloud
+        run: |
+            RELEASE_TAG=`git describe --tags --dirty --always`
+            /opt/sonar-scanner \
+              -Dsonar.organization=a2o \
+              -Dsonar.projectKey=snoopy \
+              -Dsonar.sources=. \
+              -Dsonar.projectVersion=$RELEASE_TAG \
+              -Dsonar.cfamily.build-wrapper-output=../snoopy-sonarcloud-build-wrapper-output \
+              -Dsonar.cfamily.threads=4 \
+              -Dsonar.cfamily.cache.enabled=false \
+              -Dsonar.host.url=https://sonarcloud.io
+            echo "Submission tag: $RELEASE_TAG"
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
