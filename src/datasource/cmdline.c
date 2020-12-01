@@ -98,11 +98,12 @@ int snoopy_datasource_cmdline (char * const result, char const * const arg)
     }
 
     /*
-     * Conclude string - add \0 at the end
-     * - if last character is space
-     * - or if last character is ordinary character from incompletely copied argument
+     * Conclude string - add \0 at the end:
+     * - If the last character is space (added in the loop)
+     * - Or if the last character is an ordinary character from an incompletely copied argument
+     * Or set \0 at the start if the argument array was empty (this should only happen in unit tests).
      */
-    n--;
+    if (n > 0) n--;
     cmdLine[n] = '\0';
 
     /* Copy the result to the string pointed by return pointer */
