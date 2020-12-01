@@ -243,12 +243,8 @@ dnl ============================================================================
 dnl ======= START CONFIGURATION SUMMARY OUTPUT =================================
 dnl ============================================================================
 AC_MSG_NOTICE([======================================================================])
+AC_MSG_NOTICE([Snoopy version: AC_PACKAGE_VERSION])
 
-
-
-dnl ============================================================================
-dnl ======= START section: DATASOURCES & MESSAGE FORMAT ========================
-dnl ============================================================================
 AC_DEFINE_UNQUOTED(SNOOPY_CONFIGURE_COMMAND, "./configure $(echo $ac_configure_args | sed 's/\\/\\\\/g' | sed 's/"/\\"/g')", [Configure command that was used to build Snoopy])
 AC_MSG_NOTICE([Snoopy build configuration command: ./configure $ac_configure_args])
 AC_MSG_NOTICE([-])
