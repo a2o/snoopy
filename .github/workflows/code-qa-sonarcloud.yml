@@ -51,9 +51,9 @@ on:
 
 
 jobs:
-  sonarcloud-analysis:
+  code-qa-sonarcloud:
 
-    name: SonarCloud Analysis
+    name: Code QA - SonarCloud - Static Analysis
     runs-on: ubuntu-20.04
     container: ubuntu:20.04
 

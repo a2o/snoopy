@@ -1,4 +1,4 @@
-name: Build QA - Autoscan
+name: Code QA - Autoscan
 
 
 
@@ -16,10 +16,7 @@ on:
       - '.gitignore'
       - 'ChangeLog'
       - 'COPYING'
-#      - 'configure.scan'
       - 'contrib/**'
-      - 'dev-tools/**'
-      - '!dev-tools/libexec/get-release-*.sh'
       - 'doc/**'
       - 'install/**'
       - 'lib/*/IMPORT.defs'
@@ -35,10 +32,7 @@ on:
       - '.gitignore'
       - 'ChangeLog'
       - 'COPYING'
-#      - 'configure.scan'
       - 'contrib/**'
-      - 'dev-tools/**'
-      - '!dev-tools/libexec/get-release-*.sh'
       - 'doc/**'
       - 'install/**'
       - 'lib/*/IMPORT.defs'
@@ -48,17 +42,12 @@ on:
 
 
 jobs:
-  build:
+  code-qa-autoscan:
 
-    name: Build QA - Autoscan
+    name: Code QA - Autoscan - Scan for configure.ac changes
     runs-on: ubuntu-20.04
     container: ubuntu:20.04
 
-
-
-    ###
-    ### Steps to run
-    ###
     steps:
 
 
@@ -82,9 +71,17 @@ jobs:
 
       ### Run autoscan
       #
-      - run: cp configure.scan configure.scan.GIT
-      - run: autoscan
-      - run: diff -u configure.scan.GIT configure.scan
-      - name: 'Failed? Read this for what to do next:'
+      - name: Run autoscan, check for changes
+        run: |
+          cp configure.scan configure.scan.GIT
+          autoscan
+          diff -u configure.scan.GIT configure.scan
+
+
+
+      ### If changes are detected, show this help hint
+      #
+      - name: "Failed? Here's what you should do to fix the issue:"
         if: failure()
-        run: 'echo -e "Check the autoscan-related section in this document:\n\n    https://github.com/a2o/snoopy/blob/master/doc/HACKING-QA.md#autoscan\n\n"'
+        run: |
+          echo -e "Check the autoscan-related section in this document:\n\n    https://github.com/a2o/snoopy/blob/master/doc/HACKING-QA.md#autoscan\n\n"

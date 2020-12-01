@@ -1,0 +1,129 @@
+name: Build QA - OS Matrix (Large)
+
+
+
+on:
+  workflow_dispatch:
+
+  push:
+    branches:
+      - master
+    tags:
+      - '*'
+    paths-ignore:
+      - '.github/*.md'
+      - '.github/workflows/**'
+      - '.gitignore'
+      - 'ChangeLog'
+      - 'COPYING'
+      - 'configure.scan'
+      - 'contrib/**'
+      - 'dev-tools/**'
+      - '!dev-tools/libexec/get-release-*.sh'
+      - 'doc/**'
+      - 'install/**'
+      - 'lib/*/IMPORT.defs'
+      - 'lib/*/LICENSE'
+      - 'README.md'
+
+
+
+jobs:
+  build-qa-os-matrix-large:
+
+    name: Build QA - OS Matrix (L) - Build on ${{matrix.container}}
+    runs-on: ubuntu-20.04
+
+
+
+    ### Define the list of container images
+    #
+    container: ${{ matrix.container }}
+    strategy:
+      matrix:
+        container:
+          - ubuntu:16.04
+          - ubuntu:18.04
+          - ubuntu:20.04
+          - ubuntu:rolling
+
+          - debian:stretch
+          - debian:buster
+          - debian:bullseye
+          - debian:sid
+
+          - opensuse/leap:15.1
+          - opensuse/leap:15.2
+          - opensuse/tumbleweed:latest
+
+          - centos:7
+          - centos:8
+
+          - archlinux:base-devel
+
+
+
+    ###
+    ### Steps to run
+    ###
+    steps:
+
+
+
+      ### Workaround for OpenSUSE
+      #
+      # OpenSUSE Docker containers have no `gzip` and `tar` installed by default
+      # which makes git "checkout" actions/checkout@v2 fail.
+      #
+      - run: zypper -n install   gzip tar
+        if: ${{ startsWith(matrix.container, 'opensuse/') }}
+
+
+
+      ### Fetch the code
+      #
+      - uses: actions/checkout@v2
+
+
+
+      ### Install build environment tools
+      #
+
+      # Ubuntu / Debian
+      - run: apt-get update -y
+        if: ${{ startsWith(matrix.container, 'ubuntu:') || startsWith(matrix.container, 'debian:') }}
+        env:
+          DEBIAN_FRONTEND: noninteractive
+      - run: apt-get install -y   gcc gzip make procps socat tar wget   autoconf git libtool m4
+        if: ${{ startsWith(matrix.container, 'ubuntu:') || startsWith(matrix.container, 'debian:') }}
+        env:
+          DEBIAN_FRONTEND: noninteractive
+
+      # CentOS
+      - run: yum install -y   epel-release
+        if: ${{ startsWith(matrix.container, 'centos:6') }}
+      - run: yum install -y   gcc gzip make procps socat tar wget   autoconf git libtool m4
+        if: ${{ startsWith(matrix.container, 'centos:') }}
+
+      # OpenSUSE
+      - run: zypper -n install   gcc gzip make procps socat tar wget   autoconf git libtool m4   hostname
+        if: ${{ startsWith(matrix.container, 'opensuse/') }}
+
+      # Arch
+      - run: pacman -Syu --noconfirm   gcc gzip make procps socat tar wget   autoconf git libtool m4   inetutils
+        if: ${{ startsWith(matrix.container, 'archlinux:') }}
+
+
+
+      ### Build
+      #
+      - run: ./bootstrap.sh
+      - run: ./configure --enable-everything
+      - run: make -j4
+      - run: make -j4 check
+
+      - uses: actions/upload-artifact@v2
+        if: failure()
+        with:
+          name: tests-directory
+          path: tests/

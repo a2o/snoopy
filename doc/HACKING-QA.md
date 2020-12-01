@@ -1,17 +1,31 @@
 # Snoopy Hacking - QA
 
-A short guide on how to run Snoopy code/builds through some of the common
-Quality Assurance tools.
+TLDR version:
+- Most of the code quality checks will run automatically (via GitHub Actions)
+  on every PR and on every push to relevant branches. Find the automated
+  runs' outputs on GitHub (in PR, in a commit or directly in
+  the [Actions](https://github.com/a2o/snoopy/actions) tab.
+- If you want to run these checks locally, find the steps below.
 
 * [Test suite](#test-suite)
 * [Autoscan](#autoscan)
-* [Travis-CI](#travis-ci)
-* [valgring](#valgrind)
+* [Autoreconf](#autoreconf)
+* [Valgrind](#valgrind)
+* [SonarCloud](#sonarcloud)
 * [coverity](#coverity)
 
 
 
 ## Test suite
+
+Runs automaticaly on GitHub, for:
+- A matrix of common OSes
+- A matrix of argument combinations to `./configure`
+
+This is a suite of test cases for verifying sanity of Snoopy's basic functionality.
+
+
+### Test suite - running manually
 
 Start the in-repository test suite like this:
 ```shell
@@ -19,26 +33,22 @@ Start the in-repository test suite like this:
 make &&
 make tests
 ```
-If there are errors, each test case has a corresponding .log file right next to
+If there are errors, each test case has a corresponding `.log` file right next to
 it, where additional information about the error is (usually) available.
 
 
 
 ## Autoscan
 
+Runs automatically on GitHub.
+
 The `autoscan` tool scans the local sources and generates `configure.scan` file
 containing all detected dependelcies.
 
 
-### Autoscan on GitHub Actions
+### Autoscan - running manually
 
-For each PR and push to `master`, a GitHub action called `Autoscan` is triggered.
-Check your PR or find relevant run(s) among Snoopy's [GitHub Actions](https://github.com/a2o/snoopy/actions).
-
-
-### Autoscan steps
-
-A1: Clean out the repository, or else autoscan picks up unrelated dependencies
+AS1: Clean out the repository, or else autoscan picks up unrelated dependencies
 from build/aux/ltmain.sh, namely AC_PROG_CPP, AC_PROG_CXX and AC_PROG_RANLIB.
 The bootstrap+configure steps are present here to bring the repository into a
 known-good state, or else `make gitclean` might simply not work:
@@ -48,53 +58,51 @@ known-good state, or else `make gitclean` might simply not work:
 make gitclean
 ```
 
-A2: Run `autoscan` now:
+AS2: Run `autoscan` now:
 ```shell
 autoscan
 ```
 
-A3: The `configure.scan` file is already committed to the repository from the
+AS3: The `configure.scan` file is already committed to the repository from the
 previous `autoscan` run. This should make spotting newly-detected entries simple:
 ```shell
 git diff
 ```
 
-A4: If `git diff` points out any changes, you will most likely want to add them
+AS4: If `git diff` points out any changes, you will most likely want to add them
 to the `configure.ac` file.
 
-A5: Once the above additions are done, update `config.h.in` with:
+
+
+## Autoreconf
+
+Runs automatically on GitHub.
+
+The `autoreconf` tool (re)generates the `config.h.in` file from the latest
+`configure.ac` content (potentially updated by the [Autoscan](#autoscan) step above).
+
+
+### Autoreconf - running manually
+
+AR1: Once the above [Autoscan](#autoscan)-related additions are done, update
+the `config.h.in` file with:
 ```shell
 ./bootstrap.sh
 ```
 
-A6: Commit.
-
-
-
-## GitHub Actions
-
-GitHub Actions are used for ensuring build quality, by runing a build + test suite for
-a matrix of build configuration combinations and on multiple Linux distributions.
-
-To kick off these tests, all you need to do do is either:
-- Create/update a pull request
-- Push the code directly into the Snoopy upsteam repository (maintainers only)
+AR2: Commit.
 
 
 
 ## Valgrind
 
+Runs automatically on GitHub.
+
 Valgrind is a local diagnostic tool that checks the binary for any memory and/or
 file descriptor leaks.
 
 
-### Valgrind on GitHub
-
-Running Valgrind is configured as part of the test suite running on GitHub actions.
-Go to your PR and find the related entry in the list of checks.
-
-
-### Valgrind steps
+### Valgrind - running manually
 
 Run the valgrind check as follows:
 ```shell
@@ -106,14 +114,13 @@ make valgrind
 
 ## Coverity
 
+Exists as a GitHub workflow, but does **not** run automatically on GitHub.
+Maintainers can manually trigger this workflow when required (i.e. before releasing a new stable version).
+
 Coverity is a static code analysis tool.
 
 
-### Coverity steps
-
-Coverity analysis can be triggered by one of the following actions:
-- Manually upload the build to Coverity
-- GitHub Action - TODO
+### Coverity - running manually
 
 To manually upload the build to Coverity, the run the following:
 ```shell
