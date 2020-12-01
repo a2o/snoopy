@@ -1,0 +1,109 @@
+name: Release QA - OS Matrix - Install from source
+
+
+
+on:
+  workflow_dispatch:
+
+  release:
+    types: [published]
+
+  push:
+    branches:
+      - add-release-qa-os-matrix-install-from-source
+
+
+
+jobs:
+  release-qa-os-matrix-install-from-source:
+
+    name: Install on ${{matrix.container}}
+    runs-on: ubuntu-20.04
+
+
+
+    ### Define the list of container images
+    #
+    container: ${{ matrix.container }}
+    strategy:
+      matrix:
+        container:
+          - archlinux:base-devel
+
+          #- centos:6   # Cannot test this one due to non-working actions/checkout@v2 on CentOS 6 (incompatible glibc version)
+          - centos:7
+          - centos:8
+
+          - debian:stretch
+          - debian:buster
+          - debian:bullseye
+          - debian:sid
+
+          - opensuse/leap:15.1
+          - opensuse/leap:15.2
+          - opensuse/tumbleweed:latest
+
+          - ubuntu:16.04
+          - ubuntu:18.04
+          - ubuntu:20.04
+          - ubuntu:rolling
+
+
+
+    ###
+    ### Steps to run
+    ###
+    steps:
+
+
+
+      ### Install prerequisites
+      #
+
+      # Arch
+      - run: pacman -Syu --noconfirm   wget tar gzip
+        if: ${{ startsWith(matrix.container, 'archlinux:') }}
+
+      # CentOS
+      - run: yum install -y   epel-release
+        if: ${{ startsWith(matrix.container, 'centos:6') }}
+      - run: yum install -y   wget tar gzip
+        if: ${{ startsWith(matrix.container, 'centos:') }}
+
+      # Debian / Ubuntu
+      - run: |
+          DEBIAN_FRONTEND=noninteractive apt-get update -y
+          DEBIAN_FRONTEND=noninteractive apt-get install -y   wget tar gzip
+        if: ${{ startsWith(matrix.container, 'ubuntu:') || startsWith(matrix.container, 'debian:') }}
+
+      # OpenSUSE
+      - run: zypper -n install   wget tar gzip
+        if: ${{ startsWith(matrix.container, 'opensuse/') }}
+
+
+
+      ### Fetch the code
+      #
+      # This one is only needed to get that `extract-...` script.
+      # NOTICE: For SUSE, make sure to install tar+gzip before running this action
+      #
+      - uses: actions/checkout@v2
+
+
+
+      ### Install
+      #
+      # The '-r' switch ensures README.md content is pulled from https://github.com/a2o/snoopy
+      #
+      - run: ./dev-tools/libexec/extract-and-run-install-steps-from-readme.sh -r
+
+
+
+      ### Verify Snoopy operation
+      #
+      - name: Verify Snoopy operation
+        run: |
+          touch /var/log/snoopy.log
+          echo "output = file:/var/log/snoopy.log" >> /etc/snoopy.ini
+          /bin/echo "Snoopy is alive and well"
+          cat /var/log/snoopy.log | grep -v ': grep' | grep "Snoopy is alive and well"

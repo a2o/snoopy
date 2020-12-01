@@ -54,4 +54,10 @@ The following assumptions are, well, assumed, by the releasing scripts:
     https://github.com/a2o/snoopy/milestones
 
 
-6. All done.
+6. Go to Snoopy's [Actions](https://github.com/a2o/snoopy/actions) tab
+   on GitHub and monitor the following workflows:
+   - [Releasing QA - OS Matrix](https://github.com/a2o/snoopy/actions?query=workflow%3A%22Release+QA+-+OS+Matrix%22).
+   - [Install QA - README.md](https://github.com/a2o/snoopy/actions?query=workflow%3A%22Install+QA+-+README.md%22)
+
+
+7. All done.
