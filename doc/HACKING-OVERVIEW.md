@@ -51,7 +51,7 @@ index b71aa32..07edd5a 100644
  AC_PREREQ([2.63])
  AC_INIT(
      [Snoopy Logger],
--    m4_esyscmd_s(echo $(./dev-tools/libexec/get-release-version.sh)),
+-    [m4_esyscmd_s(echo $(./dev-tools/libexec/get-release-version.sh))],
 +    [2.4.4-my-dev-version],
      [https://github.com/a2o/snoopy/issues/],
      [snoopy],
@@ -83,6 +83,12 @@ Recap of the steps:
 git clone https://github.com/a2o/snoopy.git
 cd snoopy
 ./bootstrap.sh
+```
+
+If `./bootstrap.sh` reports an error, you're probably missing some development
+tools on your system. There is a helper available to install them quickly:
+```shell
+./dev-tools/install-dev-software.sh
 ```
 
 
