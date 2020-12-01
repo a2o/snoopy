@@ -30,7 +30,7 @@ on:
 jobs:
   build-qa-os-matrix-small:
 
-    name: Build QA - OS Matrix (S) - Build on ${{matrix.container}}
+    name: Build on ${{matrix.container}}
     runs-on: ubuntu-20.04
 
 

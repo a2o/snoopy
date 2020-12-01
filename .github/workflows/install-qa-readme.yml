@@ -22,7 +22,7 @@ on:
 jobs:
   install-qa-test-readme-steps:
 
-    name: Install QA - Test install steps from README.md
+    name: Test install steps from README.md
     runs-on: ubuntu-20.04
     container: ubuntu:20.04
 

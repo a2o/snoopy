@@ -26,7 +26,7 @@ on:
 jobs:
   code-qa-autoreconf:
 
-    name: Code QA - Autoreconf - Scan for config.h.in changes
+    name: Scan for config.h.in changes
     runs-on: ubuntu-20.04
     container: ubuntu:20.04
 

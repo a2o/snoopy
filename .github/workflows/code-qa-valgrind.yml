@@ -52,7 +52,7 @@ on:
 jobs:
   code-qa-valgrind:
 
-    name: Code QA - Valgrind - Check for leaks
+    name: Check for memory and fd leaks
     runs-on: ubuntu-20.04
     container: ubuntu:20.04
 

@@ -14,7 +14,7 @@ on:
 jobs:
   code-qa-coverity:
 
-    name: Code QA - Coverity - Static Analysis
+    name: Static code analysis
     runs-on: ubuntu-20.04
     container: ubuntu:20.04
 

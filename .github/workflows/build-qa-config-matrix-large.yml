@@ -32,7 +32,7 @@ on:
 jobs:
   build-qa-config-matrix-large:
 
-    name: "Build QA - Config Matrix (L) - Build flags: '${{matrix.configure_flags}}'"
+    name: "Build with flags: '${{matrix.configure_flags}}'"
     runs-on: ubuntu-20.04
     container: ubuntu:20.04
 

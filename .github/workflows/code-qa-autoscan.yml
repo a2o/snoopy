@@ -44,7 +44,7 @@ on:
 jobs:
   code-qa-autoscan:
 
-    name: Code QA - Autoscan - Scan for configure.ac changes
+    name: Scan for configure.ac changes
     runs-on: ubuntu-20.04
     container: ubuntu:20.04
 

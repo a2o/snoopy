@@ -30,7 +30,7 @@ on:
 jobs:
   build-qa-config-matrix-small:
 
-    name: "Build QA - Config Matrix (S) - Build flags: '${{matrix.configure_flags}}'"
+    name: "Build with flags: '${{matrix.configure_flags}}'"
     runs-on: ubuntu-20.04
     container: ubuntu:20.04
 
