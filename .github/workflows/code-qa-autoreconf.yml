@@ -54,7 +54,7 @@ jobs:
       ### Run autoreconf
       #
       - name: Run autoreconf (via boostrap.sh), check for changes in config.h.in
-      - run: |
+        run: |
           cp config.h.in config.h.in.GIT
           ./bootstrap.sh
           diff -u config.h.in.GIT config.h.in
