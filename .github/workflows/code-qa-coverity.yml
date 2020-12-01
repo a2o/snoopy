@@ -1,0 +1,94 @@
+name: Build QA - Coverity
+
+
+
+on:
+  workflow_dispatch:
+
+  push:
+    branches:
+      - coverity-scan
+
+
+
+jobs:
+  code-qa-coverity:
+
+    name: Code QA - Coverity - Static Analysis
+    runs-on: ubuntu-20.04
+    container: ubuntu:20.04
+
+    steps:
+
+
+
+      ### Install build environment tools (+ curl for uploading the scan results to Coverity)
+      #
+      - run: apt-get update -y
+        env:
+          DEBIAN_FRONTEND: noninteractive
+      - run: apt-get install -y   gcc gzip make procps socat tar wget   autoconf git libtool m4   curl
+        env:
+          DEBIAN_FRONTEND: noninteractive
+
+
+
+      ### Fetch the code
+      #
+      # Must be done _after_ git is installed in the container, or else a copy of
+      # relevant commit content is made instead, and the .git directory is missing.
+      #
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+
+
+
+      ### Download and install coverity
+      #
+      - name: Download the Coverity Build Tool
+        run: |
+          wget -q https://scan.coverity.com/download/cxx/linux64 --post-data "token=$COVERITY_SCAN_TOKEN&project=a2o%2Fsnoopy" -O cov-analysis-linux64.tar.gz
+          mkdir cov-analysis-linux64
+          tar xzf cov-analysis-linux64.tar.gz --strip 1 -C cov-analysis-linux64
+        working-directory: /opt
+        env:
+          COVERITY_SCAN_TOKEN: ${{ secrets.COVERITY_SCAN_TOKEN }}
+
+
+
+      ### Configure
+      #
+      - run: ./bootstrap.sh
+      - run: ./configure --enable-everything
+
+
+
+      ### Build with cov-build
+      #
+      - name: Build with cov-build
+        run: |
+          export PATH=/opt/cov-analysis-linux64/bin:$PATH
+          cov-build \
+            --dir coverity-build-wrapper-output \
+            make
+
+
+
+      ### Submit to Coverity Scan
+      #
+      - name: Submit the result to Coverity Scan
+        run: |
+          RELEASE_TAG=`./dev-tools/libexec/get-release-tag.sh`
+          tar -czf coverity-build-wrapper-output.tar.gz coverity-build-wrapper-output
+          curl \
+            --form project=a2o%2Fsnoopy \
+            --form token=$COVERITY_SCAN_TOKEN \
+            --form email=bostjan@skufca.si \
+            --form file=@coverity-build-wrapper-output.tar.gz \
+            --form version=$RELEASE_TAG \
+            --form description=$RELEASE_TAG \
+            https://scan.coverity.com/builds?project=a2o%2Fsnoopy
+          echo "Submission tag: $RELEASE_TAG"
+        env:
+          COVERITY_SCAN_TOKEN: ${{ secrets.COVERITY_SCAN_TOKEN }}

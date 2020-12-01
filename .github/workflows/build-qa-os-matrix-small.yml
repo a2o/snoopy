@@ -1,30 +1,9 @@
-name: Build QA - OS Matrix
+name: Build QA - OS Matrix (Small)
 
 
 
 on:
   workflow_dispatch:
-
-  push:
-    branches:
-      - master
-    tags:
-      - '*'
-    paths-ignore:
-      - '.github/*.md'
-      - '.github/workflows/**'
-      - '.gitignore'
-      - 'ChangeLog'
-      - 'COPYING'
-      - 'configure.scan'
-      - 'contrib/**'
-      - 'dev-tools/**'
-      - '!dev-tools/libexec/get-release-*.sh'
-      - 'doc/**'
-      - 'install/**'
-      - 'lib/*/IMPORT.defs'
-      - 'lib/*/LICENSE'
-      - 'README.md'
 
   pull_request:
     branches:
@@ -49,9 +28,9 @@ on:
 
 
 jobs:
-  build:
+  build-qa-os-matrix-small:
 
-    name: Build on ${{matrix.container }}
+    name: Build QA - OS Matrix (S) - Build on ${{matrix.container}}
     runs-on: ubuntu-20.04
 
 
@@ -62,21 +41,14 @@ jobs:
     strategy:
       matrix:
         container:
-          - ubuntu:16.04
-          - ubuntu:18.04
           - ubuntu:20.04
           - ubuntu:rolling
 
-          - debian:stretch
           - debian:buster
-          - debian:bullseye
           - debian:sid
 
-          - opensuse/leap:15.1
           - opensuse/leap:15.2
-          - opensuse/tumbleweed:latest
 
-          - centos:7
           - centos:8
 
           - archlinux:base-devel

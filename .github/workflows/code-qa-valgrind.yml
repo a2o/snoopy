@@ -1,4 +1,4 @@
-name: Build QA - Valgrind
+name: Code QA - Valgrind
 
 
 
@@ -50,17 +50,12 @@ on:
 
 
 jobs:
-  build:
+  code-qa-valgrind:
 
-    name: Valgrind
+    name: Code QA - Valgrind - Check for leaks
     runs-on: ubuntu-20.04
     container: ubuntu:20.04
 
-
-
-    ###
-    ### Steps to run
-    ###
     steps:
 
 
@@ -87,4 +82,8 @@ jobs:
       - run: ./bootstrap.sh
       - run: ./configure --enable-everything
       - run: make
+
+
+      ### Run the valgrind verification
+      #
       - run: make valgrind

@@ -22,9 +22,9 @@ on:
 
 
 jobs:
-  build:
+  install-qa-test-installfile:
 
-    name: Test install-snoopy.sh ${{matrix.install_mode}}
+    name: Install QA - Test install-snoopy.sh ${{matrix.install_mode}}
     runs-on: ubuntu-20.04
     container: ubuntu:20.04
     strategy:
