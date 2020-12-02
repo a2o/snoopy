@@ -181,29 +181,13 @@ _detectOperatingSystem()
     OS_ID=""
     OS_VERSION=""
 
-    if [ -f /etc/os-release ]; then
+    . /etc/os-release
+    OS_ID="$ID"
+    OS_VERSION="${VERSION_ID:-}"
 
-        . /etc/os-release
-        OS_ID="$ID"
-        OS_VERSION="${VERSION_ID:-}"
-
-        # Debian Sid quirk
-        if [[ $OS_ID == "debian" ]] && [[ "$OS_VERSION" == "" ]]; then
-            OS_VERSION="sid"
-        fi
-
-    else
-
-        # Try to detect RHEL/CentOS 6
-        if [ -f /etc/redhat-release ]; then
-            if fgrep "CentOS release 6." /etc/redhat-release > /dev/null; then
-                OS_ID="centos"
-                OS_VERSION="6"
-            elif fgrep "Red Hat Enterprise Linux Server release 6." /etc/redhat-release > /dev/null; then
-                OS_ID="rhel"
-                OS_VERSION="6"
-            fi
-        fi
+    # Debian Sid quirk
+    if [[ $OS_ID == "debian" ]] && [[ "$OS_VERSION" == "" ]]; then
+        OS_VERSION="sid"
     fi
 }
 
@@ -243,8 +227,6 @@ _installPackages()
             ;;
 
         rhel|centos)
-            #For v6, for what? TODO
-            #yum install -y epel-release
             $USE_SUDO yum install -y $PACKAGE_NAMES_REDHAT
             ;;
 
@@ -335,29 +317,13 @@ _detectOperatingSystem()
     OS_ID=""
     OS_VERSION=""
 
-    if [ -f /etc/os-release ]; then
+    . /etc/os-release
+    OS_ID="$ID"
+    OS_VERSION="${VERSION_ID:-}"
 
-        . /etc/os-release
-        OS_ID="$ID"
-        OS_VERSION="${VERSION_ID:-}"
-
-        # Debian Sid quirk
-        if [[ $OS_ID == "debian" ]] && [[ "$OS_VERSION" == "" ]]; then
-            OS_VERSION="sid"
-        fi
-
-    else
-
-        # Try to detect RHEL/CentOS 6
-        if [ -f /etc/redhat-release ]; then
-            if fgrep "CentOS release 6." /etc/redhat-release > /dev/null; then
-                OS_ID="centos"
-                OS_VERSION="6"
-            elif fgrep "Red Hat Enterprise Linux Server release 6." /etc/redhat-release > /dev/null; then
-                OS_ID="rhel"
-                OS_VERSION="6"
-            fi
-        fi
+    # Debian Sid quirk
+    if [[ $OS_ID == "debian" ]] && [[ "$OS_VERSION" == "" ]]; then
+        OS_VERSION="sid"
     fi
 }
 
@@ -397,8 +363,6 @@ _installPackages()
             ;;
 
         rhel|centos)
-            #For v6, for what? TODO
-            #yum install -y epel-release
             $USE_SUDO yum install -y $PACKAGE_NAMES_REDHAT
             ;;
 

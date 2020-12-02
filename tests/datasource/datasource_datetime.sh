@@ -10,30 +10,12 @@ set -u
 
 
 
-### Determine version of `date` utility
-#
-# On CentOS 6, coreutils v8.4 does not know how to handle the `+0000` timezone
-# specification correctly. We'll just cut it out.
-#
-DATE_VERSION_MAJOR=`date --version | head -n1 | cut -d' ' -f4 | cut -d. -f1`
-DATE_VERSION_MINOR=`date --version | head -n1 | cut -d' ' -f4 | cut -d. -f2`
-CUT_TZ_PART="false"
-if [[ "$DATE_VERSION_MAJOR" -lt "8" || ( "$DATE_VERSION_MAJOR" == "8" && "$DATE_VERSION_MINOR" -le "4" )]]; then
-    CUT_TZ_PART="true"
-fi
-
-
-
 ### Get data
 #
 VAL_SNOOPY=`$SNOOPY_TEST_DATASOURCE datetime`
 snoopy_testRun_info "Snoopy value: $VAL_SNOOPY"
 VAL_REAL=`date "+%Y-%m-%dT%H:%M:%S%z"`
 snoopy_testRun_info "Real value:   $VAL_REAL"
-if [ "$CUT_TZ_PART" == "true" ]; then
-    VAL_SNOOPY=`echo "$VAL_SNOOPY" | cut -d+ -f1`
-    VAL_REAL=`echo "$VAL_REAL" | cut -d+ -f1`
-fi
 VAL_SNOOPY_TS=`date --date="$VAL_SNOOPY"  "+%s"`
 VAL_REAL_TS=`  date --date="$VAL_REAL"    "+%s"`
 VAL_DIFF=`expr $VAL_SNOOPY_TS - $VAL_REAL_TS | sed -e 's/^-//'`

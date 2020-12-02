@@ -24,42 +24,8 @@ fi
 #
 RES=`autoreconf --version | head -n1 | cut -d' ' -f4 | sed -e 's/\.//'`
 if [ "$RES" -lt "268" ]; then
-    IGNORE_OLD_TOOLCHAIN="${1:-no}"
-    if [[ "$IGNORE_OLD_TOOLCHAIN" != "geezer-os" ]] && [[ "$IGNORE_OLD_TOOLCHAIN" != "old-fart" ]] ; then
-
-        echo
-        echo "###"
-        echo "### WARNING:"
-        echo "### WARNING: Your autotools version is too old."
-        echo "### WARNING:"
-        echo "###"
-        echo "### More information and workaround is available here:"
-        echo "###     https://github.com/a2o/snoopy/blob/master/doc/HACKING.md#older-oses"
-        echo "###"
-        echo "### The workaround is now performed by ./bootstrap.sh automatically."
-        echo "### This warning can be suppressed by using the following command:"
-        echo "###"
-        echo "###     ./bootstrap.sh geezer-os"
-        echo "###"
-        echo
-
-    else
-
-        echo
-        echo "### INFO: Ignoring too-old autotools suite."
-        echo
-    fi
-
-    echo    "BOOTSTRAP: Adjusting configure.ac for old OS:"
-    MYDIR=`dirname $0`
-    SNOOPY_VERSION_LITERAL=`$MYDIR/dev-tools/libexec/get-release-version.sh | sed -e 's/$/-geezer-os/'`
-    SNOOPY_VERSION_CONFIGURE_AC=`echo "$SNOOPY_VERSION_LITERAL" | sed -e 's/^/    [/' | sed -e 's/$/],/'`
-    echo -n "BOOTSTRAP:   - version from script to literal string '$SNOOPY_VERSION_LITERAL'... "
-    sed -i "s/^    \[m4_esyscmd_s.*/$SNOOPY_VERSION_CONFIGURE_AC/" configure.ac
-    echo "done."
-    echo "BOOTSTRAP:   All done."
-    echo "BOOTSTRAP: IMPORTANT NOTICE: Do not commit this change!"
-    echo
+    echo "ERROR: Your autotools version is too old. At least version 2.68 is required."
+    exit 1
 fi
 
 

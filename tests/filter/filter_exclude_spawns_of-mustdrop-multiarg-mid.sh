@@ -16,15 +16,9 @@ set -u
 # distro containers report shell in a process table as `sh` and not as `bash`.
 #
 PARENT_PROC_NAME="bash"
-if [ -f /etc/os-release ]; then
-    . /etc/os-release
-    if [[ $ID =~ ^(arch|centos|opensuse) ]]; then
-        PARENT_PROC_NAME="sh"
-    fi
-elif [ -f /etc/redhat-release ]; then
-    if fgrep "CentOS release 6." /etc/redhat-release > /dev/null; then
-        PARENT_PROC_NAME="sh"
-    fi
+. /etc/os-release
+if [[ $ID =~ ^(arch|centos|opensuse) ]]; then
+    PARENT_PROC_NAME="sh"
 fi
 
 
