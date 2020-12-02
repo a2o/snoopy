@@ -4,7 +4,7 @@
 
 
 
-2022-08-22 - Version 2.5.0rc2
+2022-08-xx - Version 2.5.0rc3
 --------------------------
 New features:
 =============
@@ -32,6 +32,8 @@ o A new datasource called `ipaddr` has been added. It reads the IP address
     Ref: https://github.com/a2o/snoopy/pull/235
 o The `file` output can now accept date format as part of a target filename.
     Ref: https://github.com/a2o/snoopy/pull/235
+o Building against musl libc is now supported.
+    Ref: https://github.com/a2o/snoopy/pull/244
 
 
 Bugfixes:

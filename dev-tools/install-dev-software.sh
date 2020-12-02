@@ -35,6 +35,7 @@ BOOTSTRAP_GIT_REPO_REQUIRED="false"
 # in the ../install/install-snoopy.sh file too.
 #
        PROGRAM_NAMES="autoconf aclocal  curl diff      file find      gcc git gzip hostname  libtoolize m4 make ps     socat tar wget"
+PACKAGE_NAMES_ALPINE="autoconf automake curl diffutils file           gcc git gzip           libtool    m4 make procps socat tar wget alpine-sdk"
   PACKAGE_NAMES_ARCH="autoconf automake curl diffutils file           gcc git gzip inetutils libtool    m4 make procps socat tar wget"
 PACKAGE_NAMES_DEBIAN="autoconf automake curl diffutils file           gcc git gzip           libtool    m4 make procps socat tar wget"
 PACKAGE_NAMES_REDHAT="autoconf automake curl diffutils file           gcc git gzip hostname  libtool    m4 make procps socat tar wget"
@@ -108,6 +109,7 @@ _installPackages()
     # Expects:
     #   - Global variable OS_ID
     #   - Global variable OS_VERSION
+    #   - Global variable PACKAGE_NAMES_ALPINE
     #   - Global variable PACKAGE_NAMES_ARCH
     #   - Global variable PACKAGE_NAMES_DEBIAN
     #   - Global variable PACKAGE_NAMES_REDHAT
@@ -125,6 +127,10 @@ _installPackages()
     fi
 
     case "$OS_ID" in
+        alpine)
+            $USE_SUDO apk add $PACKAGE_NAMES_ALPINE
+            ;;
+
         arch)
             $USE_SUDO sudo pacman -Syu --noconfirm $PACKAGE_NAMES_ARCH
             ;;

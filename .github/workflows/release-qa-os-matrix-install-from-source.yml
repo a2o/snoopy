@@ -28,6 +28,10 @@ jobs:
     strategy:
       matrix:
         container:
+          - alpine:3.14
+          - alpine:3.15
+          - alpine:3.16
+
           - archlinux:base-devel
 
           - almalinux/8-base:latest
@@ -61,6 +65,10 @@ jobs:
 
       ### Install prerequisites
       #
+
+      # Alpine
+      - run: apk add wget tar gzip
+        if: ${{ startsWith(matrix.container, 'alpine:') }}
 
       # Arch
       - run: pacman -Syu --noconfirm   wget tar gzip
