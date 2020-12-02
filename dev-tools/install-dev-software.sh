@@ -47,15 +47,15 @@ _areAllRequiredProgramsPresent()
 {
     REQUIRED_PROGRAMS="$1"
 
-    ALL_REQUIRED_PROGRAMS_INSTALLED="true"
-    for PROGRAM_NAME in $PROGRAM_NAMES; do
-        if ! command -v $PROGRAM_NAME > /dev/null; then
-            ALL_REQUIRED_PROGRAMS_INSTALLED="false"
-            _echo "The following program is missing: $PROGRAM_NAME"
+    ALL_REQUIRED_PROGRAMS_PRESENT="true"
+    for REQUIRED_PROGRAM in $REQUIRED_PROGRAMS; do
+        if ! command -v $REQUIRED_PROGRAM > /dev/null; then
+            ALL_REQUIRED_PROGRAMS_PRESENT="false"
+            _echo "The following program is missing: $REQUIRED_PROGRAM"
         fi
     done
 
-    if [ "$ALL_REQUIRED_PROGRAMS_INSTALLED" == "true" ]; then
+    if [ "$ALL_REQUIRED_PROGRAMS_PRESENT" == "true" ]; then
         true
     else
         false
@@ -141,7 +141,7 @@ esac
 ### Recheck
 #
 if ! _areAllRequiredProgramsPresent "$PROGRAM_NAMES"; then
-    _fatalError "Even after package installation, not all required programs are available. Seems like a bug."
+    _fatalError "Even after installation, at least some of the required programs are still not available. Seems like a bug in this script."
 else
     _echo "All required programs are now installed."
 fi

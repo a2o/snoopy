@@ -258,7 +258,7 @@ fi
 
 ### Check if access to GitHub API is working (via the "gh" CLI tool)
 #
-if ! which gh > /dev/null; then
+if ! command -v gh > /dev/null; then
     _fatalError "Unable to GitHub CLI tool called 'gh'." $LINENO
 fi
 if ! gh release list -R $GIT_REMOTE_GITHUB_ID > /dev/null; then
