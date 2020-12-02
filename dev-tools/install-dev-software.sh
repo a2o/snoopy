@@ -30,11 +30,15 @@ set -o pipefail
 
 ### Definitions
 #
+# NOTICE: Certain changes here must potentially be reflected
+# in the ../install/install-snoopy.sh file too.
+#
        PROGRAM_NAMES="autoconf curl gcc git gzip hostname  libtoolize m4 make ps     socat tar wget"
   PACKAGE_NAMES_ARCH="autoconf curl gcc git gzip inetutils libtool    m4 make procps socat tar wget"
 PACKAGE_NAMES_DEBIAN="autoconf curl gcc git gzip           libtool    m4 make procps socat tar wget"
 PACKAGE_NAMES_REDHAT="autoconf curl gcc git gzip           libtool    m4 make procps socat tar wget"
   PACKAGE_NAMES_SUSE="autoconf curl gcc git gzip hostname  libtool    m4 make procps socat tar wget"
+
 
 
 ### Check for presence
