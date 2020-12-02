@@ -41,10 +41,17 @@ PACKAGE_NAMES_REDHAT="autoconf curl gcc git gzip           libtool    m4 make pr
 
 
 
-### Check for presence
+### Software check & install functions
+#
+# NOTICE: Keep this code in sync in the following files:
+#   - dev-tools/install-dev-software.sh
+#   - install/install-snoopy.sh
 #
 _areAllRequiredProgramsPresent()
 {
+    # NOTICE: Keep this code in sync in the following files:
+    #   - dev-tools/install-dev-software.sh
+    #   - install/install-snoopy.sh
     REQUIRED_PROGRAMS="$1"
 
     ALL_REQUIRED_PROGRAMS_PRESENT="true"
@@ -62,79 +69,126 @@ _areAllRequiredProgramsPresent()
     fi
 }
 
+_detectOperatingSystem()
+{
+    # NOTICE: Keep this code in sync in the following files:
+    #   - dev-tools/install-dev-software.sh
+    #   - install/install-snoopy.sh
+    #
+    # Expects:
+    #   - Global variable OS_ID set to ""
+    #   - Global variable OS_VERSION set to ""
+    #
+    # Sets:
+    #   - Global variable OS_ID
+    #   - Global variable OS_VERSION
+    #
+    # Returns:
+    #   - (nothing)
+    OS_ID=""
+    OS_VERSION=""
+
+    if [ -f /etc/os-release ]; then
+
+        . /etc/os-release
+        OS_ID="$ID"
+        OS_VERSION="${VERSION_ID:-}"
+
+        # Debian Sid quirk
+        if [[ $OS_ID == "debian" ]] && [[ "$OS_VERSION" == "" ]]; then
+            OS_VERSION="sid"
+        fi
+
+    else
+
+        # Try to detect RHEL/CentOS 6
+        if [ -f /etc/redhat-release ]; then
+            if fgrep "CentOS release 6." /etc/redhat-release > /dev/null; then
+                OS_ID="centos"
+                OS_VERSION="6"
+            elif fgrep "Red Hat Enterprise Linux Server release 6." /etc/redhat-release > /dev/null; then
+                OS_ID="rhel"
+                OS_VERSION="6"
+            fi
+        fi
+    fi
+}
+
+_installPackages()
+{
+    # NOTICE: Keep this code in sync in the following files:
+    #   - dev-tools/install-dev-software.sh
+    #   - install/install-snoopy.sh
+    #
+    # Expects:
+    #   - Global variable OS_ID
+    #   - Global variable OS_VERSION
+    #   - Global variable PACKAGE_NAMES_ARCH
+    #   - Global variable PACKAGE_NAMES_DEBIAN
+    #   - Global variable PACKAGE_NAMES_REDHAT
+    #   - Global variable PACKAGE_NAMES_SUSE
+    #
+    # Sets:
+    #   - (nothing)
+    #
+    # Returns:
+    #   - false on error
+    USE_SUDO="sudo -n"
+    MY_UID=`id -u`
+    if [ "$MY_UID" == "0" ]; then
+        USE_SUDO=""
+    fi
+
+    case "$OS_ID" in
+        arch)
+            $USE_SUDO sudo pacman -Syu --noconfirm $PACKAGE_NAMES_ARCH
+            ;;
+
+        debian|ubuntu)
+            DEBIAN_FRONTEND="noninteractive" $USE_SUDO apt-get update -y
+            DEBIAN_FRONTEND="noninteractive" $USE_SUDO apt-get install -y $PACKAGE_NAMES_DEBIAN
+            ;;
+
+        rhel|centos)
+            #For v6, for what? TODO
+            #yum install -y epel-release
+            $USE_SUDO yum install -y $PACKAGE_NAMES_REDHAT
+            ;;
+
+        sles|opensuse-leap|opensuse-tumbleweed)
+            $USE_SUDO zypper -n install $PACKAGE_NAMES_SUSE
+            ;;
+
+        *)
+            _fatalError "Unknown OS: '$OS_ID'. Install the following programs manually: $PACKAGE_NAMES_DEBIAN"
+            ;;
+    esac
+}
+
+
+
+### Check programs presence
+#
 if _areAllRequiredProgramsPresent "$PROGRAM_NAMES"; then
     _echo "All required programs are already installed, nice."
     exit
 fi
 
 
-
-### Detect OS
+# Now run the OS detection
 #
 OS_ID=""
 OS_VERSION=""
-
-if [ -f /etc/os-release ]; then
-    . /etc/os-release
-    OS_ID="$ID"
-    OS_VERSION="${VERSION_ID:-}"
-
-    # Debian Sid quirk
-    if [[ $OS_ID == "debian" ]] && [[ "$OS_VERSION" == "" ]]; then
-        OS_VERSION="sid"
-    fi
-
-else
-    # Try to detect RHEL/CentOS 6
-    if [ -f /etc/redhat-release ]; then
-        if fgrep "CentOS release 6." /etc/redhat-release > /dev/null; then
-            OS_ID="centos"
-            OS_VERSION="6"
-        elif fgrep "Red Hat Enterprise Linux Server release 6." /etc/redhat-release > /dev/null; then
-            OS_ID="rhel"
-            OS_VERSION="6"
-        fi
-    fi
-fi
-
+_detectOperatingSystem
 if [ "$OS_ID" == "" ]; then
     _fatalError "Unable to detect your OS via /etc/os-release. Install the following programs manually: $PROGRAM_NAMES"
 fi
 
 
 
-### Install required packages
+### Now install the packages
 #
-USE_SUDO="sudo -n"
-MY_UID=`id -u`
-if [ "$MY_UID" == "0" ]; then
-    USE_SUDO=""
-fi
-
-case "$OS_ID" in
-    arch)
-        $USE_SUDO sudo pacman -Syu --noconfirm $PACKAGE_NAMES_ARCH
-        ;;
-
-    debian|ubuntu)
-        DEBIAN_FRONTEND="noninteractive" $USE_SUDO apt-get update -y
-        DEBIAN_FRONTEND="noninteractive" $USE_SUDO apt-get install -y $PACKAGE_NAMES_DEBIAN
-        ;;
-
-    rhel|centos)
-        #For v6, for what? TODO
-        #yum install -y epel-release
-        $USE_SUDO yum install -y $PACKAGE_NAMES_REDHAT
-        ;;
-
-
-    sles|opensuse-leap|opensuse-tumbleweed)
-        $USE_SUDO zypper -n install $PACKAGE_NAMES_SUSE
-        ;;
-
-    *)
-        _fatalError "Unknown OS: '$OS_ID'. Install the following programs manually: $PROGRAM_NAMES"
-esac
+_installPackages
 
 
 

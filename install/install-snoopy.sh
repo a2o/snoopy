@@ -40,6 +40,13 @@ _echo()
     echo "SNOOPY_INSTALL: ${1:-}"
 }
 
+_fatalError() {
+    ERR_FILE="$0"
+    ERR_MSG="$1"
+    echo "SNOOPY INSTALL ERROR: $ERR_MSG" 1>&2
+    exit 1
+}
+
 
 
 ### What to install?
@@ -127,29 +134,17 @@ fi
 
 
 
-### Install distro-dependent build prerequisites, if missing
+### Software check & install functions
 #
-# Since running a test suite has been removed from this script,
-# we don't look for 'ps' and 'socat' programs anymore.
+# NOTICE: Keep this code in sync in the following files:
+#   - dev-tools/install-dev-software.sh
+#   - install/install-snoopy.sh
 #
-# NOTICE: Certain changes here must potentially be reflected
-# in the ../dev-tools/install-dev-software.sh file too.
-#
-# NOTICE: Snoopy releases 2.4.10 and earlier actually _require_ `socat` and `ps`
-# to be present for the `./configure` step to succeed. Let's keep this here for
-# some time (at least until >2.4.10 is released).
-#
-REQUIRED_PROGRAMS="gcc gzip make ps     socat tar wget"
-REQUIRED_PACKAGES="gcc gzip make procps socat tar wget"
-if [ "$SNOOPY_SOURCE_TYPE" == "git" ]; then
-    REQUIRED_PROGRAMS_GITINSTALL="autoconf git libtoolize m4"
-    REQUIRED_PACKAGES_GITINSTALL="autoconf git libtool    m4"
-    REQUIRED_PROGRAMS="$REQUIRED_PROGRAMS $REQUIRED_PROGRAMS_GITINSTALL"
-    REQUIRED_PACKAGES="$REQUIRED_PACKAGES $REQUIRED_PACKAGES_GITINSTALL"
-fi
-
 _areAllRequiredProgramsPresent()
 {
+    # NOTICE: Keep this code in sync in the following files:
+    #   - dev-tools/install-dev-software.sh
+    #   - install/install-snoopy.sh
     REQUIRED_PROGRAMS="$1"
 
     ALL_REQUIRED_PROGRAMS_PRESENT="true"
@@ -167,25 +162,279 @@ _areAllRequiredProgramsPresent()
     fi
 }
 
-if _areAllRequiredProgramsPresent "$REQUIRED_PROGRAMS"; then
-    echo "SNOOPY INSTALL: Required programs already present: $REQUIRED_PROGRAMS"
-else
-    if [ "$SNOOPY_INSTALL_RUNNING_AS_ROOT" != "true" ]; then
-        echo "SNOOPY INSTALL: Unable to run package installation, not root"
+_detectOperatingSystem()
+{
+    # NOTICE: Keep this code in sync in the following files:
+    #   - dev-tools/install-dev-software.sh
+    #   - install/install-snoopy.sh
+    #
+    # Expects:
+    #   - Global variable OS_ID set to ""
+    #   - Global variable OS_VERSION set to ""
+    #
+    # Sets:
+    #   - Global variable OS_ID
+    #   - Global variable OS_VERSION
+    #
+    # Returns:
+    #   - (nothing)
+    OS_ID=""
+    OS_VERSION=""
+
+    if [ -f /etc/os-release ]; then
+
+        . /etc/os-release
+        OS_ID="$ID"
+        OS_VERSION="${VERSION_ID:-}"
+
+        # Debian Sid quirk
+        if [[ $OS_ID == "debian" ]] && [[ "$OS_VERSION" == "" ]]; then
+            OS_VERSION="sid"
+        fi
+
     else
-        echo "SNOOPY INSTALL: Installing distro-specific packages for programs: $REQUIRED_PACKAGES"
-        if [ -f /etc/debian_version ]; then
-            # Debian, Ubuntu
-            DEBIAN_FRONTEND=noninteractive apt-get -y update
-            DEBIAN_FRONTEND=noninteractive apt-get -y install $REQUIRED_PACKAGES
-        elif [ -f /etc/redhat-release ]; then
-            # RHEL, Fedora, CentOS
-            yum install -y $REQUIRED_PACKAGES
+
+        # Try to detect RHEL/CentOS 6
+        if [ -f /etc/redhat-release ]; then
+            if fgrep "CentOS release 6." /etc/redhat-release > /dev/null; then
+                OS_ID="centos"
+                OS_VERSION="6"
+            elif fgrep "Red Hat Enterprise Linux Server release 6." /etc/redhat-release > /dev/null; then
+                OS_ID="rhel"
+                OS_VERSION="6"
+            fi
         fi
     fi
+}
+
+_installPackages()
+{
+    # NOTICE: Keep this code in sync in the following files:
+    #   - dev-tools/install-dev-software.sh
+    #   - install/install-snoopy.sh
+    #
+    # Expects:
+    #   - Global variable OS_ID
+    #   - Global variable OS_VERSION
+    #   - Global variable PACKAGE_NAMES_ARCH
+    #   - Global variable PACKAGE_NAMES_DEBIAN
+    #   - Global variable PACKAGE_NAMES_REDHAT
+    #   - Global variable PACKAGE_NAMES_SUSE
+    #
+    # Sets:
+    #   - (nothing)
+    #
+    # Returns:
+    #   - false on error
+    USE_SUDO="sudo -n"
+    MY_UID=`id -u`
+    if [ "$MY_UID" == "0" ]; then
+        USE_SUDO=""
+    fi
+
+    case "$OS_ID" in
+        arch)
+            $USE_SUDO sudo pacman -Syu --noconfirm $PACKAGE_NAMES_ARCH
+            ;;
+
+        debian|ubuntu)
+            DEBIAN_FRONTEND="noninteractive" $USE_SUDO apt-get update -y
+            DEBIAN_FRONTEND="noninteractive" $USE_SUDO apt-get install -y $PACKAGE_NAMES_DEBIAN
+            ;;
+
+        rhel|centos)
+            #For v6, for what? TODO
+            #yum install -y epel-release
+            $USE_SUDO yum install -y $PACKAGE_NAMES_REDHAT
+            ;;
+
+        sles|opensuse-leap|opensuse-tumbleweed)
+            $USE_SUDO zypper -n install $PACKAGE_NAMES_SUSE
+            ;;
+
+        *)
+            _fatalError "Unknown OS: '$OS_ID'. Install the following programs manually: $PACKAGE_NAMES_DEBIAN"
+            ;;
+    esac
+}
+
+
+
+### Install distro-dependent build prerequisites, if missing
+#
+# Since running a test suite has been removed from this script,
+# we don't look for 'ps' and 'socat' programs anymore.
+#
+# NOTICE: Certain changes here must potentially be reflected
+# in the ../dev-tools/install-dev-software.sh file too.
+#
+# NOTICE: Snoopy releases 2.4.10 and earlier actually _require_ `socat` and `ps`
+# to be present for the `./configure` step to succeed. Let's keep this here for
+# some time (at least until >2.4.10 is released).
+#
+#
+       PROGRAM_NAMES="gcc gzip make ps     socat tar wget"
+  PACKAGE_NAMES_ARCH="gcc gzip make procps socat tar wget"
+PACKAGE_NAMES_DEBIAN="gcc gzip make procps socat tar wget"
+PACKAGE_NAMES_REDHAT="gcc gzip make procps socat tar wget"
+  PACKAGE_NAMES_SUSE="gcc gzip make procps socat tar wget"
+if [ "$SNOOPY_SOURCE_TYPE" == "git" ]; then
+           PROGRAM_NAMES="autoconf curl gcc git gzip hostname  libtoolize m4 make ps     socat tar wget"
+      PACKAGE_NAMES_ARCH="autoconf curl gcc git gzip inetutils libtool    m4 make procps socat tar wget"
+    PACKAGE_NAMES_DEBIAN="autoconf curl gcc git gzip           libtool    m4 make procps socat tar wget"
+    PACKAGE_NAMES_REDHAT="autoconf curl gcc git gzip           libtool    m4 make procps socat tar wget"
+      PACKAGE_NAMES_SUSE="autoconf curl gcc git gzip hostname  libtool    m4 make procps socat tar wget"
+fi
+
+
+
+### Software check & install functions
+#
+# NOTICE: Keep this code in sync in the following files:
+#   - dev-tools/install-dev-software.sh
+#   - install/install-snoopy.sh
+#
+_areAllRequiredProgramsPresent()
+{
+    # NOTICE: Keep this code in sync in the following files:
+    #   - dev-tools/install-dev-software.sh
+    #   - install/install-snoopy.sh
+    REQUIRED_PROGRAMS="$1"
+
+    ALL_REQUIRED_PROGRAMS_PRESENT="true"
+    for REQUIRED_PROGRAM in $REQUIRED_PROGRAMS; do
+        if ! command -v $REQUIRED_PROGRAM > /dev/null; then
+            ALL_REQUIRED_PROGRAMS_PRESENT="false"
+            _echo "The following program is missing: $REQUIRED_PROGRAM"
+        fi
+    done
+
+    if [ "$ALL_REQUIRED_PROGRAMS_PRESENT" == "true" ]; then
+        true
+    else
+        false
+    fi
+}
+
+_detectOperatingSystem()
+{
+    # NOTICE: Keep this code in sync in the following files:
+    #   - dev-tools/install-dev-software.sh
+    #   - install/install-snoopy.sh
+    #
+    # Expects:
+    #   - Global variable OS_ID set to ""
+    #   - Global variable OS_VERSION set to ""
+    #
+    # Sets:
+    #   - Global variable OS_ID
+    #   - Global variable OS_VERSION
+    #
+    # Returns:
+    #   - (nothing)
+    OS_ID=""
+    OS_VERSION=""
+
+    if [ -f /etc/os-release ]; then
+
+        . /etc/os-release
+        OS_ID="$ID"
+        OS_VERSION="${VERSION_ID:-}"
+
+        # Debian Sid quirk
+        if [[ $OS_ID == "debian" ]] && [[ "$OS_VERSION" == "" ]]; then
+            OS_VERSION="sid"
+        fi
+
+    else
+
+        # Try to detect RHEL/CentOS 6
+        if [ -f /etc/redhat-release ]; then
+            if fgrep "CentOS release 6." /etc/redhat-release > /dev/null; then
+                OS_ID="centos"
+                OS_VERSION="6"
+            elif fgrep "Red Hat Enterprise Linux Server release 6." /etc/redhat-release > /dev/null; then
+                OS_ID="rhel"
+                OS_VERSION="6"
+            fi
+        fi
+    fi
+}
+
+_installPackages()
+{
+    # NOTICE: Keep this code in sync in the following files:
+    #   - dev-tools/install-dev-software.sh
+    #   - install/install-snoopy.sh
+    #
+    # Expects:
+    #   - Global variable OS_ID
+    #   - Global variable OS_VERSION
+    #   - Global variable PACKAGE_NAMES_ARCH
+    #   - Global variable PACKAGE_NAMES_DEBIAN
+    #   - Global variable PACKAGE_NAMES_REDHAT
+    #   - Global variable PACKAGE_NAMES_SUSE
+    #
+    # Sets:
+    #   - (nothing)
+    #
+    # Returns:
+    #   - false on error
+    USE_SUDO="sudo -n"
+    MY_UID=`id -u`
+    if [ "$MY_UID" == "0" ]; then
+        USE_SUDO=""
+    fi
+
+    case "$OS_ID" in
+        arch)
+            $USE_SUDO sudo pacman -Syu --noconfirm $PACKAGE_NAMES_ARCH
+            ;;
+
+        debian|ubuntu)
+            DEBIAN_FRONTEND="noninteractive" $USE_SUDO apt-get update -y
+            DEBIAN_FRONTEND="noninteractive" $USE_SUDO apt-get install -y $PACKAGE_NAMES_DEBIAN
+            ;;
+
+        rhel|centos)
+            #For v6, for what? TODO
+            #yum install -y epel-release
+            $USE_SUDO yum install -y $PACKAGE_NAMES_REDHAT
+            ;;
+
+        sles|opensuse-leap|opensuse-tumbleweed)
+            $USE_SUDO zypper -n install $PACKAGE_NAMES_SUSE
+            ;;
+
+        *)
+            _fatalError "Unknown OS: '$OS_ID'. Install the following programs manually: $PACKAGE_NAMES_DEBIAN"
+            ;;
+    esac
+}
+
+
+
+### Check for, and potentiall install the missing software
+#
+if _areAllRequiredProgramsPresent "$PROGRAM_NAMES"; then
+    echo "SNOOPY INSTALL: Required programs already present: $PROGRAM_NAMES"
+else
+    if [ "$SNOOPY_INSTALL_RUNNING_AS_ROOT" != "true" ]; then
+        _fatalError "Unable to run package installation, not running as root"
+    fi
+
+    # Detect OS
+    OS_ID=""
+    OS_VERSION=""
+    _detectOperatingSystem
+    if [ "$OS_ID" == "" ]; then
+        _fatalError "Unable to detect your OS via /etc/os-release. Install the following programs manually: $PROGRAM_NAMES"
+    fi
+
+    _installPackages
 
     # Check again
-    if ! _areAllRequiredProgramsPresent "$REQUIRED_PROGRAMS"; then
+    if ! _areAllRequiredProgramsPresent "$PROGRAM_NAMES"; then
         echo "SNOOPY INSTALL ERROR: Even after installing it, the program above cannot be found."
         echo "SNOOPY INSTALL ERROR: Install it manually and rerun Snoopy installer."
         exit 1

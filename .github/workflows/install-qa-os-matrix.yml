@@ -1,0 +1,94 @@
+name: Install QA - OS Matrix
+
+
+
+on:
+  workflow_dispatch:
+
+  push:
+    branches:
+      - install
+    tags:
+      - '*'
+    paths:
+      - 'install/install-snoopy.sh'
+
+  pull_request:
+    branches:
+      - master
+    paths:
+      - 'install/install-snoopy.sh'
+
+
+
+jobs:
+  install-qa-os-matrix:
+
+    name: Install on ${{matrix.container}}
+    runs-on: ubuntu-20.04
+
+
+
+    ### Define the list of container images
+    #
+    container: ${{ matrix.container }}
+    strategy:
+      matrix:
+        container:
+          - archlinux:base-devel
+
+          #- centos:6   # Cannot test this one due to non-working actions/checkout@v2 on CentOS 6 (incompatible glibc version)
+          - centos:7
+          - centos:8
+
+          - debian:stretch
+          - debian:buster
+          - debian:bullseye
+          - debian:sid
+
+          - opensuse/leap:15.1
+          - opensuse/leap:15.2
+          - opensuse/tumbleweed:latest
+
+          - ubuntu:16.04
+          - ubuntu:18.04
+          - ubuntu:20.04
+          - ubuntu:rolling
+
+
+
+    ###
+    ### Steps to run
+    ###
+    steps:
+
+
+
+      ### Install requirements for the subsequent checkout action
+      #
+
+      # SUSE / OpenSUSE
+      - run: zypper -n install gzip tar
+        if: ${{ startsWith(matrix.container, 'opensuse/') }}
+
+
+
+      ### Fetch the code
+      #
+      - uses: actions/checkout@v2
+
+
+
+      ### Install
+      #
+      - run: ./install/install-snoopy.sh stable
+
+
+
+      ### Report debugging info on failure
+      #
+      - uses: actions/upload-artifact@v2
+        if: failure()
+        with:
+          name: install-snoopy.log
+          path: install-snoopy.log
