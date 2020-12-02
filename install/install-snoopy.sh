@@ -129,8 +129,12 @@ fi
 # NOTICE: Certain changes here must potentially be reflected
 # in the ../dev-tools/install-dev-software.sh file too.
 #
-REQUIRED_PROGRAMS="gcc gzip make tar wget"
-REQUIRED_PACKAGES="gcc gzip make tar wget"
+# NOTICE: Snoopy releases 2.4.10 and earlier actually _require_ `socat` and `ps`
+# to be present for the `./configure` step to succeed. Let's keep this here for
+# some time (at least until >2.4.10 is released).
+#
+REQUIRED_PROGRAMS="gcc gzip make ps     socat tar wget"
+REQUIRED_PACKAGES="gcc gzip make procps socat tar wget"
 if [ "$SNOOPY_SOURCE_TYPE" == "git" ]; then
     REQUIRED_PROGRAMS_GITINSTALL="autoconf git libtoolize m4"
     REQUIRED_PACKAGES_GITINSTALL="autoconf git libtool    m4"
