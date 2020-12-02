@@ -22,25 +22,25 @@ jobs:
 
 
 
-      ### Install build environment tools (+ curl for uploading the scan results to Coverity)
+      ### Install requirements for the subsequent checkout action
       #
-      - run: apt-get update -y
-        env:
-          DEBIAN_FRONTEND: noninteractive
-      - run: apt-get install -y   gcc gzip make procps socat tar wget   autoconf git libtool m4   curl
-        env:
-          DEBIAN_FRONTEND: noninteractive
+      - run: |
+          DEBIAN_FRONTEND=noninteractive apt-get update -y
+          DEBIAN_FRONTEND=noninteractive apt-get install -y git
 
 
 
       ### Fetch the code
       #
-      # Must be done _after_ git is installed in the container, or else a copy of
-      # relevant commit content is made instead, and the .git directory is missing.
-      #
       - uses: actions/checkout@v2
         with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+          fetch-depth: 0   # Shallow clones should be disabled for a better relevancy of analysis
+
+
+
+      ### Install build environment tools
+      #
+      - run: ./dev-tools/install-dev-software.sh
 
 
 

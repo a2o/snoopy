@@ -7,6 +7,16 @@
 # Treat all errors as fatal and trace the progress
 #
 set -e
+set -u
+
+
+
+### Check if autoconf is present on the system
+#
+if ! command -v autoreconf; then
+    echo "ERROR: Program 'autoreconf' not found. Consider running './dev-tools/install-dev-software.sh' to correct this."
+    exit 1
+fi
 
 
 

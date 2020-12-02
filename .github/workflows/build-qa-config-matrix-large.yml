@@ -76,25 +76,25 @@ jobs:
 
 
 
+      ### Install requirements for the subsequent checkout action
+      #
+      - run: |
+          DEBIAN_FRONTEND=noninteractive apt-get update -y
+          DEBIAN_FRONTEND=noninteractive apt-get install -y git
+
+
+
       ### Fetch the code
       #
       - uses: actions/checkout@v2
-
-
-
-      ### Install build environment tools
-      #
-      - run: apt-get update -y
-        env:
-          DEBIAN_FRONTEND: noninteractive
-      - run: apt-get install -y   gcc gzip make procps socat tar wget   autoconf git libtool m4
-        env:
-          DEBIAN_FRONTEND: noninteractive
+        with:
+          fetch-depth: 0
 
 
 
       ### Build
       #
+      - run: ./dev-tools/install-dev-software.sh
       - run: ./bootstrap.sh
 
       - run: ./configure ${{matrix.configure_flags}}

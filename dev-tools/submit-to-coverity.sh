@@ -78,7 +78,7 @@ else
 fi
 
 
-if ! which cov-build; then
+if ! command -v cov-build > /dev/null; then
     echo
     echo "ERROR: Unable to find cov-build."
     echo
@@ -86,7 +86,7 @@ if ! which cov-build; then
     echo
     exit 1
 fi
-if ! which curl; then
+if ! command -v curl > /dev/null; then
     echo
     echo "ERROR: Unable to find CURL. Please install it and rerun the process."
     echo

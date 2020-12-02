@@ -104,11 +104,11 @@ AC_PROG_SED
 
 ### Check for programs required for TEST suite
 #
-SNOOPY_PROG_CHECK([dirname],  [DIRNAME],  [Needed for "make check" test suite.])
-SNOOPY_PROG_CHECK([readlink], [READLINK], [Needed for "make check" test suite.])
-SNOOPY_PROG_CHECK([socat],    [SOCAT],    [Needed for "make check" test suite.])
-SNOOPY_PROG_CHECK([ps],       [PS],       [Needed for "make check" test suite.])
-SNOOPY_PROG_CHECK([wc],       [WC],       [Needed for "make check" test suite.])
+SNOOPY_PROG_REQUIRE([dirname],  [DIRNAME],  [Needed for "make check" test suite.])
+SNOOPY_PROG_REQUIRE([readlink], [READLINK], [Needed for "make check" test suite.])
+SNOOPY_PROG_SUGGEST([socat],    [SOCAT],    [Needed for "make check" test suite.])
+SNOOPY_PROG_SUGGEST([ps],       [PS],       [Needed for "make check" test suite.])
+SNOOPY_PROG_REQUIRE([wc],       [WC],       [Needed for "make check" test suite.])
 
 
 

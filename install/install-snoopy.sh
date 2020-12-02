@@ -19,7 +19,8 @@ SNOOPY_TRAVIS_BUILD=${SNOOPY_TRAVIS_BUILD:-false}
 
 
 
-### Help method
+### Helper functions
+#
 function _snoopy_install_showHelp()
 {
     echo "Possible installation arguments/modes:"
@@ -32,6 +33,11 @@ function _snoopy_install_showHelp()
     echo "     - commit SHA hash."
     echo "- 'path/to/snoopy-X.Y.Z.tar.gz'     ; installs specific pre-downloaded Snoopy release package"
     echo "- 'download'  ; only downloads latest Snoopy release package"
+}
+
+_echo()
+{
+    echo "SNOOPY_INSTALL: ${1:-}"
 }
 
 
@@ -123,10 +129,15 @@ fi
 
 ### Install distro-dependent build prerequisites, if missing
 #
-# 'socat' is not strictly needed. It is used by test suite, and is thus required
-# by autotools too.
-# If you remove it from this list, remove it from configure.ac too, or installations
-# performed by this script will fail.
+# Since running a test suite has been removed from this script,
+# we don't look for 'ps' and 'socat' programs anymore.
+#
+# NOTICE: Certain changes here must potentially be reflected
+# in the ../dev-tools/install-dev-software.sh file too.
+#
+# NOTICE: Snoopy releases 2.4.10 and earlier actually _require_ `socat` and `ps`
+# to be present for the `./configure` step to succeed. Let's keep this here for
+# some time (at least until >2.4.10 is released).
 #
 REQUIRED_PROGRAMS="gcc gzip make ps     socat tar wget"
 REQUIRED_PACKAGES="gcc gzip make procps socat tar wget"
@@ -137,7 +148,26 @@ if [ "$SNOOPY_SOURCE_TYPE" == "git" ]; then
     REQUIRED_PACKAGES="$REQUIRED_PACKAGES $REQUIRED_PACKAGES_GITINSTALL"
 fi
 
-if which $REQUIRED_PROGRAMS &> /dev/null; then
+_areAllRequiredProgramsPresent()
+{
+    REQUIRED_PROGRAMS="$1"
+
+    ALL_REQUIRED_PROGRAMS_PRESENT="true"
+    for REQUIRED_PROGRAM in $REQUIRED_PROGRAMS; do
+        if ! command -v $REQUIRED_PROGRAM > /dev/null; then
+            ALL_REQUIRED_PROGRAMS_PRESENT="false"
+            _echo "The following program is missing: $REQUIRED_PROGRAM"
+        fi
+    done
+
+    if [ "$ALL_REQUIRED_PROGRAMS_PRESENT" == "true" ]; then
+        true
+    else
+        false
+    fi
+}
+
+if _areAllRequiredProgramsPresent "$REQUIRED_PROGRAMS"; then
     echo "SNOOPY INSTALL: Required programs already present: $REQUIRED_PROGRAMS"
 else
     if [ "$SNOOPY_INSTALL_RUNNING_AS_ROOT" != "true" ]; then
@@ -146,8 +176,8 @@ else
         echo "SNOOPY INSTALL: Installing distro-specific packages for programs: $REQUIRED_PACKAGES"
         if [ -f /etc/debian_version ]; then
             # Debian, Ubuntu
-            # About /dev/null: http://askubuntu.com/questions/372810/how-to-prevent-script-not-to-stop-after-apt-get
-            apt-get -y install $REQUIRED_PACKAGES < "/dev/null"
+            DEBIAN_FRONTEND=noninteractive apt-get -y update
+            DEBIAN_FRONTEND=noninteractive apt-get -y install $REQUIRED_PACKAGES
         elif [ -f /etc/redhat-release ]; then
             # RHEL, Fedora, CentOS
             yum install -y $REQUIRED_PACKAGES
@@ -155,13 +185,11 @@ else
     fi
 
     # Check again
-    for PROGRAM in `echo "which $REQUIRED_PROGRAMS"`; do
-        if ! which $PROGRAM &> /dev/null; then
-            echo "SNOOPY INSTALL ERROR: '$PROGRAM' program not found!"
-            echo "SNOOPY INSTALL ERROR: Install it and rerun this installer."
-            exit 1
-        fi
-    done
+    if ! _areAllRequiredProgramsPresent "$REQUIRED_PROGRAMS"; then
+        echo "SNOOPY INSTALL ERROR: Even after installing it, the program above cannot be found."
+        echo "SNOOPY INSTALL ERROR: Install it manually and rerun Snoopy installer."
+        exit 1
+    fi
 fi
 
 

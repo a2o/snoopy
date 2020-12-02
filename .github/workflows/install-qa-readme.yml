@@ -38,17 +38,16 @@ jobs:
       ### Fetch the code
       #
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
 
 
 
-      ### Install build environment tools
+      ### Install tools required to download and run the script
       #
-      - run: apt-get update -y
-        env:
-          DEBIAN_FRONTEND: noninteractive
-      - run: apt-get install -y   wget tar gzip
-        env:
-          DEBIAN_FRONTEND: noninteractive
+      - run: |
+          DEBIAN_FRONTEND=noninteractive apt-get update -y
+          DEBIAN_FRONTEND=noninteractive apt-get install -y wget
 
 
 

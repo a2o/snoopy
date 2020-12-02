@@ -61,11 +61,11 @@ export SONAR_TOKEN
 
 ### Check for the presence of required tools
 #
-if ! which build-wrapper-linux-x86-64; then
+if ! command -v build-wrapper-linux-x86-64 > /dev/null; then
     echo "ERROR: Unable to find 'build-wrapper-linux-x86-64'."
     exit 1
 fi
-if ! which sonar-scanner; then
+if ! command -v sonar-scanner > /dev/null; then
     echo "ERROR: Unable to find 'sonar-scanner'."
     exit 1
 fi
