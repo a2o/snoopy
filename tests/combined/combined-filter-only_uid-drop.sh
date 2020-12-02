@@ -11,7 +11,7 @@ set -u
 
 ### Set test configuration
 #
-MY_UID=`id -a | grep -Eo 'uid=[0-9]+' | grep -Eo '[0-9]+'`
+MY_UID=`id -u`
 MY_UID_PLUS_1=`expr $MY_UID + 1`
 ARG_1="ls -la /"
 ARG_2="%{cmdline}"
