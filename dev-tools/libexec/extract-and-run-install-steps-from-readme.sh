@@ -11,9 +11,27 @@ MYDIR=`dirname $0`
 
 
 
+### Local or remote operation?
+#
+README_LOCATION="local"
+if [ "${1:-}" == "-r" ]; then
+    README_LOCATION="remote"
+fi
+
+
+
 ### Extract the install steps
 #
-INSTALL_STEPS=`cat $MYDIR/../../README.md | grep -E '## Installation' -A10 | grep -E '^\`\`\`shell$' -A10 | grep -E '^\`\`\`$' -B10 | grep -Ev '^\`\`\`' | sed -e 's/sudo //'`
+INSTALL_STEPS=""
+if [ "$README_LOCATION" == "remote" ]; then
+    echo "Extracting steps from local README.md."
+    SNOOPY_README_URL="https://raw.githubusercontent.com/a2o/snoopy/master/README.md"
+    INSTALL_STEPS=`wget -O - $SNOOPY_README_URL | grep -E '## Installation' -A10 | grep -E '^\`\`\`shell$' -A10 | grep -E '^\`\`\`$' -B10 | grep -Ev '^\`\`\`' | sed -e 's/sudo //'`
+else
+    echo "Extracting steps from local README.md at https://github.com/a2o/snoopy"
+    INSTALL_STEPS=`cat $MYDIR/../../README.md   | grep -E '## Installation' -A10 | grep -E '^\`\`\`shell$' -A10 | grep -E '^\`\`\`$' -B10 | grep -Ev '^\`\`\`' | sed -e 's/sudo //'`
+    echo
+fi
 echo "Extracted install steps ('sudo' was removed, not needed for CI):"
 echo "========================"
 echo "$INSTALL_STEPS"

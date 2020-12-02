@@ -1,28 +1,21 @@
-name: Install QA - OS Matrix
+name: Release QA - OS Matrix - Install from source
 
 
 
 on:
   workflow_dispatch:
 
+  release:
+    types: [published]
+
   push:
     branches:
-      - install
-    tags:
-      - '*'
-    paths:
-      - 'install/install-snoopy.sh'
-
-  pull_request:
-    branches:
-      - master
-    paths:
-      - 'install/install-snoopy.sh'
+      - add-release-qa-os-matrix-install-from-source
 
 
 
 jobs:
-  install-qa-os-matrix:
+  release-qa-os-matrix-install-from-source:
 
     name: Install on ${{matrix.container}}
     runs-on: ubuntu-20.04
@@ -64,16 +57,35 @@ jobs:
 
 
 
-      ### Install requirements for the subsequent checkout action
+      ### Install prerequisites
       #
 
-      # SUSE / OpenSUSE
-      - run: zypper -n install gzip tar
+      # Arch
+      - run: pacman -Syu --noconfirm   wget tar gzip
+        if: ${{ startsWith(matrix.container, 'archlinux:') }}
+
+      # CentOS
+      - run: yum install -y   epel-release
+        if: ${{ startsWith(matrix.container, 'centos:6') }}
+      - run: yum install -y   wget tar gzip
+        if: ${{ startsWith(matrix.container, 'centos:') }}
+
+      # Debian / Ubuntu
+      - run: |
+          DEBIAN_FRONTEND=noninteractive apt-get update -y
+          DEBIAN_FRONTEND=noninteractive apt-get install -y   wget tar gzip
+        if: ${{ startsWith(matrix.container, 'ubuntu:') || startsWith(matrix.container, 'debian:') }}
+
+      # OpenSUSE
+      - run: zypper -n install   wget tar gzip
         if: ${{ startsWith(matrix.container, 'opensuse/') }}
 
 
 
       ### Fetch the code
+      #
+      # This one is only needed to get that `extract-...` script.
+      # NOTICE: For SUSE, make sure to install tar+gzip before running this action
       #
       - uses: actions/checkout@v2
 
@@ -81,17 +93,9 @@ jobs:
 
       ### Install
       #
-      - run: ./install/install-snoopy.sh stable
-
-
-
-      ### Report debugging info on failure
+      # The '-r' switch ensures README.md content is pulled from https://github.com/a2o/snoopy
       #
-      - uses: actions/upload-artifact@v2
-        if: failure()
-        with:
-          name: install-snoopy.log
-          path: install-snoopy.log
+      - run: ./dev-tools/libexec/extract-and-run-install-steps-from-readme.sh -r
 
 
 
