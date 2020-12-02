@@ -38,8 +38,8 @@ rm -f $TMP_OUT
 touch $TMP_INI
 touch $TMP_OUT
 # Make paths absolute
-TMP_INI=`readlink -e $TMP_INI`
-TMP_OUT=`readlink -e $TMP_OUT`
+TMP_INI=`readlink -f $TMP_INI`
+TMP_OUT=`readlink -f $TMP_OUT`
 
 cat > $TMP_INI <<EOF
 [snoopy]
@@ -54,7 +54,7 @@ EOF
 #
 # Execute in subshell, to prevent output file polution
 #
-export SNOOPY_INI=`readlink -e $TMP_INI`
+export SNOOPY_INI=`readlink -f $TMP_INI`
 export LD_PRELOAD=$SNOOPY_LIBSNOOPY_TEST_SO_PATH
 (
     echo "$COMMAND" | bash > /dev/null
