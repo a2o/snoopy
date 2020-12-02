@@ -46,17 +46,8 @@ jobs:
       ### Fetch the code
       #
       - uses: actions/checkout@v2
-
-
-
-      ### Install build environment tools
-      #
-      - run: apt-get update -y
-        env:
-          DEBIAN_FRONTEND: noninteractive
-      - run: apt-get install -y   wget tar gzip
-        env:
-          DEBIAN_FRONTEND: noninteractive
+        with:
+          fetch-depth: 0
 
 
 

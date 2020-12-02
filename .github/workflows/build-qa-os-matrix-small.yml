@@ -41,17 +41,17 @@ jobs:
     strategy:
       matrix:
         container:
-          - ubuntu:20.04
-          - ubuntu:rolling
+          - archlinux:base-devel
+
+          - centos:8
 
           - debian:buster
           - debian:sid
 
           - opensuse/leap:15.2
 
-          - centos:8
-
-          - archlinux:base-devel
+          - ubuntu:20.04
+          - ubuntu:rolling
 
 
 
@@ -62,12 +62,25 @@ jobs:
 
 
 
-      ### Workaround for OpenSUSE
+      ### Install requirements for the subsequent checkout action
       #
-      # OpenSUSE Docker containers have no `gzip` and `tar` installed by default
-      # which makes git "checkout" actions/checkout@v2 fail.
-      #
-      - run: zypper -n install   gzip tar
+
+      # Arch
+      - run: pacman -Syu --noconfirm git
+        if: ${{ startsWith(matrix.container, 'archlinux:') }}
+
+      # Debian / Ubuntu
+      - run: |
+          DEBIAN_FRONTEND=noninteractive apt-get update -y
+          DEBIAN_FRONTEND=noninteractive apt-get install -y git
+        if: ${{ startsWith(matrix.container, 'debian:') || startsWith(matrix.container, 'ubuntu:') }}
+
+      # RedHat / CentOS
+      - run: yum install -y git
+        if: ${{ startsWith(matrix.container, 'centos:') }}
+
+      # SUSE / OpenSUSE
+      - run: zypper -n install git
         if: ${{ startsWith(matrix.container, 'opensuse/') }}
 
 
@@ -75,40 +88,14 @@ jobs:
       ### Fetch the code
       #
       - uses: actions/checkout@v2
-
-
-
-      ### Install build environment tools
-      #
-
-      # Ubuntu / Debian
-      - run: apt-get update -y
-        if: ${{ startsWith(matrix.container, 'ubuntu:') || startsWith(matrix.container, 'debian:') }}
-        env:
-          DEBIAN_FRONTEND: noninteractive
-      - run: apt-get install -y   gcc gzip make procps socat tar wget   autoconf git libtool m4
-        if: ${{ startsWith(matrix.container, 'ubuntu:') || startsWith(matrix.container, 'debian:') }}
-        env:
-          DEBIAN_FRONTEND: noninteractive
-
-      # CentOS
-      - run: yum install -y   epel-release
-        if: ${{ startsWith(matrix.container, 'centos:6') }}
-      - run: yum install -y   gcc gzip make procps socat tar wget   autoconf git libtool m4
-        if: ${{ startsWith(matrix.container, 'centos:') }}
-
-      # OpenSUSE
-      - run: zypper -n install   gcc gzip make procps socat tar wget   autoconf git libtool m4   hostname
-        if: ${{ startsWith(matrix.container, 'opensuse/') }}
-
-      # Arch
-      - run: pacman -Syu --noconfirm   gcc gzip make procps socat tar wget   autoconf git libtool m4   inetutils
-        if: ${{ startsWith(matrix.container, 'archlinux:') }}
+        with:
+          fetch-depth: 0
 
 
 
       ### Build
       #
+      - run: ./dev-tools/install-dev-software.sh
       - run: ./bootstrap.sh
       - run: ./configure --enable-everything
       - run: make -j4

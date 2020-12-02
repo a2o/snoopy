@@ -60,20 +60,26 @@ jobs:
 
 
 
+      ### Install requirements for the subsequent checkout action
+      #
+      - run: |
+          DEBIAN_FRONTEND=noninteractive apt-get update -y
+          DEBIAN_FRONTEND=noninteractive apt-get install -y git
+
+
+
       ### Fetch the code
       #
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
 
 
 
-      ### Install build environment tools
+      ### Install build environment tools + valgrind
       #
-      - run: apt-get update -y
-        env:
-          DEBIAN_FRONTEND: noninteractive
-      - run: apt-get install -y   gcc gzip make procps socat tar wget   autoconf git libtool m4   valgrind
-        env:
-          DEBIAN_FRONTEND: noninteractive
+      - run: ./dev-tools/install-dev-software.sh
+      - run: DEBIAN_FRONTEND=noninteractive apt-get install -y valgrind
 
 
 
