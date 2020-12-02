@@ -54,3 +54,14 @@ jobs:
       ### Install
       #
       - run: ./dev-tools/libexec/extract-and-run-install-steps-from-readme.sh
+
+
+
+      ### Verify Snoopy operation
+      #
+      - name: Verify Snoopy operation
+        run: |
+          touch /var/log/snoopy.log
+          echo "output = file:/var/log/snoopy.log" >> /etc/snoopy.ini
+          /bin/echo "Snoopy is alive and well"
+          cat /var/log/snoopy.log | grep -v ': grep' | grep "Snoopy is alive and well"
