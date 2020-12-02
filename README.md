@@ -61,7 +61,7 @@ The simplest way to start using the latest version Snoopy is to execute the foll
 ```shell
 wget -O install-snoopy.sh https://github.com/a2o/snoopy/raw/install/install/install-snoopy.sh &&
 chmod 755 install-snoopy.sh &&
-./install-snoopy.sh stable
+sudo ./install-snoopy.sh stable
 ```
 That's all.
 
