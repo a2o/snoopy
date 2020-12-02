@@ -255,6 +255,7 @@ _installPackages()
 # some time (at least until >2.4.10 is released).
 #
 #
+
        PROGRAM_NAMES="gcc gzip make ps     socat tar wget"
   PACKAGE_NAMES_ARCH="gcc gzip make procps socat tar wget"
 PACKAGE_NAMES_DEBIAN="gcc gzip make procps socat tar wget"
@@ -268,118 +269,6 @@ if [ "$SNOOPY_SOURCE_TYPE" == "git" ]; then
       PACKAGE_NAMES_SUSE="autoconf curl gcc git gzip hostname  libtool    m4 make procps socat tar wget"
 fi
 
-
-
-### Software check & install functions
-#
-# NOTICE: Keep this code in sync in the following files:
-#   - dev-tools/install-dev-software.sh
-#   - install/install-snoopy.sh
-#
-_areAllRequiredProgramsPresent()
-{
-    # NOTICE: Keep this code in sync in the following files:
-    #   - dev-tools/install-dev-software.sh
-    #   - install/install-snoopy.sh
-    REQUIRED_PROGRAMS="$1"
-
-    ALL_REQUIRED_PROGRAMS_PRESENT="true"
-    for REQUIRED_PROGRAM in $REQUIRED_PROGRAMS; do
-        if ! command -v $REQUIRED_PROGRAM > /dev/null; then
-            ALL_REQUIRED_PROGRAMS_PRESENT="false"
-            _echo "The following program is missing: $REQUIRED_PROGRAM"
-        fi
-    done
-
-    if [ "$ALL_REQUIRED_PROGRAMS_PRESENT" == "true" ]; then
-        true
-    else
-        false
-    fi
-}
-
-_detectOperatingSystem()
-{
-    # NOTICE: Keep this code in sync in the following files:
-    #   - dev-tools/install-dev-software.sh
-    #   - install/install-snoopy.sh
-    #
-    # Expects:
-    #   - Global variable OS_ID set to ""
-    #   - Global variable OS_VERSION set to ""
-    #
-    # Sets:
-    #   - Global variable OS_ID
-    #   - Global variable OS_VERSION
-    #
-    # Returns:
-    #   - (nothing)
-    OS_ID=""
-    OS_VERSION=""
-
-    . /etc/os-release
-    OS_ID="$ID"
-    OS_VERSION="${VERSION_ID:-}"
-
-    # Debian Sid quirk
-    if [[ $OS_ID == "debian" ]] && [[ "$OS_VERSION" == "" ]]; then
-        OS_VERSION="sid"
-    fi
-}
-
-_installPackages()
-{
-    # NOTICE: Keep this code in sync in the following files:
-    #   - dev-tools/install-dev-software.sh
-    #   - install/install-snoopy.sh
-    #
-    # Expects:
-    #   - Global variable OS_ID
-    #   - Global variable OS_VERSION
-    #   - Global variable PACKAGE_NAMES_ARCH
-    #   - Global variable PACKAGE_NAMES_DEBIAN
-    #   - Global variable PACKAGE_NAMES_REDHAT
-    #   - Global variable PACKAGE_NAMES_SUSE
-    #
-    # Sets:
-    #   - (nothing)
-    #
-    # Returns:
-    #   - false on error
-    USE_SUDO="sudo -n"
-    MY_UID=`id -u`
-    if [ "$MY_UID" == "0" ]; then
-        USE_SUDO=""
-    fi
-
-    case "$OS_ID" in
-        arch)
-            $USE_SUDO sudo pacman -Syu --noconfirm $PACKAGE_NAMES_ARCH
-            ;;
-
-        debian|ubuntu)
-            DEBIAN_FRONTEND="noninteractive" $USE_SUDO apt-get update -y
-            DEBIAN_FRONTEND="noninteractive" $USE_SUDO apt-get install -y $PACKAGE_NAMES_DEBIAN
-            ;;
-
-        rhel|centos)
-            $USE_SUDO yum install -y $PACKAGE_NAMES_REDHAT
-            ;;
-
-        sles|opensuse-leap|opensuse-tumbleweed)
-            $USE_SUDO zypper -n install $PACKAGE_NAMES_SUSE
-            ;;
-
-        *)
-            _fatalError "Unknown OS: '$OS_ID'. Install the following programs manually: $PACKAGE_NAMES_DEBIAN"
-            ;;
-    esac
-}
-
-
-
-### Check for, and potentiall install the missing software
-#
 if _areAllRequiredProgramsPresent "$PROGRAM_NAMES"; then
     echo "SNOOPY INSTALL: Required programs already present: $PROGRAM_NAMES"
 else
