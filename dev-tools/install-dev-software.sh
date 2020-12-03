@@ -24,6 +24,7 @@
 set -e
 set -u
 set -o pipefail
+BOOTSTRAP_GIT_REPO_REQUIRED="false"
 . `dirname $0`/_bootstrap.sh
 
 

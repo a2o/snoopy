@@ -57,6 +57,8 @@ _isReleaseVersionFormatValid() {
 
 ### Check the runtime environment
 #
-if [ ! -d .git ]; then
-    _fatalError "This script must be run from the root of the git repository"
+if [ "${BOOTSTRAP_GIT_REPO_REQUIRED:-true}" != "false" ]; then
+    if [ ! -d .git ]; then
+        _fatalError "This script must be run from the root of the git repository"
+    fi
 fi
