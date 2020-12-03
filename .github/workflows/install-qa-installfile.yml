@@ -57,7 +57,7 @@ jobs:
 
 
 
-      ### Verify Snoopy operation
+      ### Verify Snoopy operation (or successful download)
       #
       - name: Verify Snoopy operation
         run: |
@@ -65,3 +65,8 @@ jobs:
           echo "output = file:/var/log/snoopy.log" >> /etc/snoopy.ini
           /bin/echo "Snoopy is alive and well"
           cat /var/log/snoopy.log | grep -v ': grep' | grep "Snoopy is alive and well"
+        if: ${{ matrix.install_mode != 'download' }}
+
+      - name: Verify Snoopy download
+        run: ls -la snoopy-*.tar.gz
+        if: ${{ matrix.install_mode == 'download' }}

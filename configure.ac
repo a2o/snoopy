@@ -43,38 +43,14 @@ m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
 
 dnl Option AM_PROG_AR
 dnl
-dnl Required for building Snoopy from git on Ubuntu 14.04 (for development, and
-dnl by package build receipe. It must appear before LT_INIT.
+dnl Required for building Snoopy from git on Ubuntu (which is what is mainly
+dnl used for development).
 dnl
-dnl Snoopy development priorities:
-dnl - git/master version is targeted at modern Linux distributions - this
-dnl     means we mostly care if git/master is buildable on fresh/latest-version
-dnl     distros (ignore building on legacy systems here);
-dnl - source distribution packages are built on modern Linux distributions, thus
-dnl     what git/master contains follows this assumption;
-dnl - building Snoopy from source packages should be possible on as
-dnl     many Linux distros as feasible;
-dnl - compatibility for building distro-specific packages comes in only here and
-dnl     burden of bending the Snoopy source to distro-packaging-specific needs
-dnl     is placed on distro-specific package maintainer.
+dnl Some older platforms do not provide this macro, and there might be some
+dnl packaging issues (see issue #38 on GitHub), that is why we're including
+dnl it conditionally here.
 dnl
-dnl Given the priorities above, we include AM_PROG_AR as dependency, as it:
-dnl - is needed to build Snoopy from source on Ubuntu, which is somewhat used for
-dnl     Snoopy development;
-dnl - it does not interfere when building Snoopy from source packages;
-dnl - it only interferes when building Snoopy from git, and only on older
-dnl     platforms (RH/CentOS 6, see GitHub issue #38).
-dnl
-dnl Should someone have problems with AM_PROG_AR, they should either:
-dnl - figure a way to conditionally remove it from configure.ac on certain distros, or
-dnl - comment it out manually.
-dnl
-dnl The removal was considered for Snoopy 2.3.0, but was ultimately rejected because
-dnl of arguments specified above.
-dnl
-dnl Update:
-dnl A better solution was stumbled upon later on, which is now presented below:
-dnl - if macro is defined, use it, otherwise do not.
+dnl This option must appear before LT_INIT.
 dnl
 m4_ifdef([AM_PROG_AR], [AM_PROG_AR])
 

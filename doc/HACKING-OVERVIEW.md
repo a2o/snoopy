@@ -15,7 +15,6 @@ Table of Contents
 
   * [Hacking Snoopy](#hacking-snoopy)
     * [OS for development](#os-for-development)
-      * [Older OSes](#older-oses)
     * [Clone git repository](#clone-git-repository)
     * [Data source development](#data-source-development)
     * [Filter development](#filter-development)
@@ -27,49 +26,12 @@ Table of Contents
 ## OS for development
 
 Development of Snoopy is (and should) be done on fairly recent OS releases.
-Ubuntu 18.04 would be a good choice ATM, or RedHat/CentOS 8.
+Latest Ubuntu LST would be a good choice.
 
 Required versions of software:
 - automake 1.11
 - autoconf 2.69
 - libtool
-
-
-### Older OSes
-
-With a few tweaks Snoopy can be built from git repository on older systems too.
-
-The main incompatibility is that older autotools can not use external command
-to determine version of current Snoopy code your are building. Here is the diff
-of required change to make it work:
-```diff
-diff --git a/configure.ac b/configure.ac
-index b71aa32..07edd5a 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -9,7 +9,7 @@
- AC_PREREQ([2.63])
- AC_INIT(
-     [Snoopy Logger],
--    [m4_esyscmd_s(echo $(./dev-tools/libexec/get-release-version.sh))],
-+    [2.4.4-my-dev-version],
-     [https://github.com/a2o/snoopy/issues/],
-     [snoopy],
-     [https://github.com/a2o/snoopy/])
-```
-
-~~After you have performed this change, you may re-run ./bootstrap.sh with an
-argument to ignore too-old version of autotools:~~
-**This change is now performed automatically by bootstrap.sh,** and a warning
-is emitted. If you would like to get rid of the warning too, use this:
-```shell
-./bootstrap.sh geezer-os
-```
-
-**IMPORTANT NOTICE:**
-Pull requests that "fix" this build process "bug" on these obsolete OSes
-(by removing usage of external command and replacing it with static string)
-will be rejected.
 
 
 

@@ -45,7 +45,6 @@ jobs:
         container:
           - archlinux:base-devel
 
-          #- centos:6   # Cannot test this one due to non-working actions/checkout@v2 on CentOS 6 (incompatible glibc version)
           - centos:7
           - centos:8
 
