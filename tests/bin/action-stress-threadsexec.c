@@ -27,13 +27,16 @@
  */
 #include "action-common.h"
 
+#define _GNU_SOURCE
 #include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <time.h>
 #include <unistd.h>
+#include <errno.h>
 
 
 
@@ -46,6 +49,8 @@
  */
 typedef struct {
     int seqNr;
+    int verbose;
+    int joined;
 } tData_t;
 
 
@@ -53,7 +58,7 @@ typedef struct {
 /*
  * We do not use separate .h file here
  */
-void * snoopyTestCli_action_stress_threadsexec_threadMain  (void *arg);
+void * snoopyTestCli_action_stress_threadsexec_threadMain  (const void *args);
 
 
 
@@ -65,6 +70,7 @@ pthread_t   snoopyTestCli_action_stress_threadsexec_tRepo[THREAD_COUNT_MAX];
 
 
 
+tData_t    *tArgsRepo[THREAD_COUNT_MAX];
 
 
 
@@ -74,13 +80,14 @@ void snoopyTestCli_action_stress_threadsexec_showHelp ()
         "Snoopy TEST SUITE CLI utility :: Action `stress` :: Subsystem `threadsexec`\n"
         "\n"
         "Usage:\n"
-        "    snoopy-test stress threadsexec THREAD_COUNT CMD [CMD_ARGS]\n"
+        "    snoopy-test stress threadsexec [-v] THREAD_COUNT CMD [CMD_ARGS]\n"
         "\n"
         "Description:\n"
         "    Stresses Snoopy's threading implementation by creating and destroying THREAD_COUNT\n"
         "    threads as fast as possible and executing CMD from those threads.\n"
         "\n"
         "Arguments:\n"
+        "    -v                 Verbose mode (dangerous - using stdout while threading and forking can result in a deadlock)\n"
         "    THREAD_COUNT       Number of threads to create and destroy\n"
         "    CMD                External command to execute from each newly created thread\n"
         "    [CMD_ARGS]         Optional argument(s) for the external command\n"
@@ -95,8 +102,8 @@ void snoopyTestCli_action_stress_threadsexec_showHelp ()
 
 int snoopyTestCli_action_stress_threadsexec (int argc, char ** argv)
 {
+    int         verbose = 0;
     int         threadsToCreate;
-    int         i;
     int         retVal = 0;
 
 
@@ -105,6 +112,14 @@ int snoopyTestCli_action_stress_threadsexec (int argc, char ** argv)
         snoopyTestCli_action_stress_threadsexec_showHelp();
         fatalError("Missing argument: number of threads to run");
     }
+
+    /* Check for the -v flag - this is a bad way to avoid using getopt() */
+    if (strcmp(argv[0], "-v") == 0) {
+        verbose = 1;
+        argc--;
+        argv = &argv[1];
+    }
+
     threadsToCreate = atoi(argv[0]);
     if ((threadsToCreate < 1) || (threadsToCreate > THREAD_COUNT_MAX)) {
         snoopyTestCli_action_stress_threadsexec_showHelp();
@@ -118,22 +133,77 @@ int snoopyTestCli_action_stress_threadsexec (int argc, char ** argv)
     snoopyTestCli_action_stress_threadsexec_runCmdAndArgv = &argv[1];
 
 
+    printf("M: Allocating memory for each thread's args:\n");
+    for (int i=0 ; i<threadsToCreate ; i++) {
+        tData_t *tData = malloc(sizeof(tData_t));
+        tData->seqNr   = i;
+        tData->verbose = verbose;
+        tData->joined  = 0;
+        tArgsRepo[i]   = tData;
+    }
+
+
     // Create threads and run the function in them
     printf("M: Starting threads:\n");
-    for (i=0 ; i<threadsToCreate ; i++) {
-        tData_t *tArgs = malloc(sizeof *tArgs);
-        tArgs->seqNr   = i;
-        printf(" M: Starting thread #%d:\n", i+1);
-        retVal = pthread_create(&snoopyTestCli_action_stress_threadsexec_tRepo[i], NULL, &snoopyTestCli_action_stress_threadsexec_threadMain, tArgs);
+    if (!verbose) {
+        printf("M: From now on, the output supressed (use the dangerous -v flag to show it).\n");
     }
-    printf("M: All threads started\n");
+
+    for (int i=0 ; i<threadsToCreate ; i++) {
+        if (verbose) printf(" M: Starting thread #%d:\n", i+1);
+        retVal = pthread_create(&snoopyTestCli_action_stress_threadsexec_tRepo[i], NULL, (void *(*) (void *)) snoopyTestCli_action_stress_threadsexec_threadMain, tArgsRepo[i]);
+    }
+    if (verbose) printf("M: All threads started\n");
 
     // Wait for threads to finish
-    printf("M: Waiting for all threads to finish:\n");
-    for (i=0 ; i<threadsToCreate ; i++) {
-        pthread_join(snoopyTestCli_action_stress_threadsexec_tRepo[i], NULL);
-        printf(" M: Thread #%d joined.\n", i+1);
+    int pMax = threadsToCreate+10;
+    const struct timespec sleepTime = {
+        .tv_sec = 0,
+        .tv_nsec = 100000000,
+    };
+
+    if (verbose) printf("M: Waiting for all threads to finish (max %d * %ld ns):\n", pMax, sleepTime.tv_nsec);
+    if (verbose) fflush(stdout);
+    int p;
+    for (p=1 ; p<pMax ; p++) {
+        if (verbose) printf(" M: Thread join loop pass #%d start:\n", p);
+        if (verbose) fflush(stdout);
+
+        int threadsJoined = 0;
+        for (int i=0 ; i<threadsToCreate ; i++) {
+            if (tArgsRepo[i]->joined == 1) {
+                threadsJoined++;
+            } else {
+                int res;
+
+                res = pthread_tryjoin_np(snoopyTestCli_action_stress_threadsexec_tRepo[i], NULL);
+                if (res == EBUSY) {
+                    if (verbose) printf("  M: Thread #%d has not finished executing yet.\n", i+1);
+                    if (verbose) fflush(stdout);
+                } else {
+                    if (verbose) printf("  M: Thread #%d joined.\n", i+1);
+                    if (verbose) fflush(stdout);
+                    tArgsRepo[i]->joined = 1;
+                }
+            }
+        }
+        if (verbose) printf(" M: Thread join loop pass #%d done.\n", p);
+
+        if (threadsJoined == threadsToCreate) {
+            if (verbose) printf("M: All threads have joined, exiting the wait loop.\n");
+            break;
+        }
+
+        if (verbose) printf(" M: Not all threads have joined yet, sleeping for %ld ns now.\n", sleepTime.tv_nsec);
+        if (verbose) fflush(stdout);
+        nanosleep(&sleepTime, NULL);
     }
+
+    if (p >= pMax) {
+        printf("M: ERROR - Not all threads have joined (timeout after %d * %ld ns).\n", pMax, sleepTime.tv_nsec);
+        return 1;
+    }
+
     printf("M: All threads have finished.\n");
 
     /* Housekeeping and return */
@@ -155,13 +225,13 @@ int snoopyTestCli_action_stress_threadsexec (int argc, char ** argv)
  * Return:
  *     int        Exit status to return to calling process
  */
-void* snoopyTestCli_action_stress_threadsexec_threadMain (void *args)
+void* snoopyTestCli_action_stress_threadsexec_threadMain (const void *args)
 {
-    tData_t  *tArgs = args;
+    const tData_t *tArgs = args;
     char     *cmd;
     char    **argv;
 
-    printf("  t%d : Hello from thread #%d.\n", tArgs->seqNr+1, tArgs->seqNr+1);
+    if (tArgs->verbose) printf("  t%d : Hello from thread #%d.\n", tArgs->seqNr+1, tArgs->seqNr+1);
 
 
     // Fork
@@ -169,28 +239,27 @@ void* snoopyTestCli_action_stress_threadsexec_threadMain (void *args)
 
     if (pid > 0) {
         // Parent
-        printf("  t%dp: Hello from parent proc\n", tArgs->seqNr+1);
+        if (tArgs->verbose) printf("  t%dp: Hello from parent proc\n", tArgs->seqNr+1);
 
         int * status = 0;
         waitpid(pid, status, 0);
-        printf("  t%dp: Child proc has finished\n", tArgs->seqNr+1);
+        if (tArgs->verbose) printf("  t%dp: Child proc has finished\n", tArgs->seqNr+1);
 
     } else if (pid == 0) {
         // Child
-        printf("  t%dc: Hello from child proc\n", tArgs->seqNr+1);
+        if (tArgs->verbose) printf("  t%dc: Hello from child proc\n", tArgs->seqNr+1);
 
         // Set variables
         cmd  = snoopyTestCli_action_stress_threadsexec_runCmdAndArgv[0];
         argv = &snoopyTestCli_action_stress_threadsexec_runCmdAndArgv[0];
 
-        printf("  t%dc: running cmd %s %s\n", tArgs->seqNr+1, cmd, argv[0]);
+        if (tArgs->verbose) printf("  t%dc: running cmd %s %s\n", tArgs->seqNr+1, cmd, argv[0]);
         execv(cmd, argv);
 
     } else {
         // fork failed
-        printf("  t%d : Fork failed!\n", tArgs->seqNr+1);
+        if (tArgs->verbose) printf("  t%d : Fork failed!\n", tArgs->seqNr+1);
     }
 
-    free (tArgs);
     return NULL;
 }
