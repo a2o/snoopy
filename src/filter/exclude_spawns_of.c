@@ -52,7 +52,8 @@
 // 1 digit PID, space, empty parens, space, 1 char state, space,
 // 1 digit PPID
 #define   ST_SIZE_MIN                 8
-
+// Path "/proc/nnnn/stat" where nnnn = some PID
+#define   ST_PATH_SIZE_MAX           32
 
 
 /*
@@ -117,7 +118,7 @@ int snoopy_filter_exclude_spawns_of(char *msg, char const * const arg)
 static int find_ancestor_in_list(char **name_list)
 {
     pid_t ppid;
-    char stat_path[32]; // Path "/proc/nnnn/stat" where nnnn = some PID
+    char stat_path[ST_PATH_SIZE_MAX];
     FILE *statf;
     int rc, found;
     char *left, *right;
@@ -143,7 +144,7 @@ static int find_ancestor_in_list(char **name_list)
     ppid = getppid(); // We start with the parent
     while (ppid != 0) {
         // Create the path to /proc/<ppid>/stat
-        sprintf(stat_path, "/proc/%d/stat", ppid);
+        snprintf(stat_path, ST_PATH_SIZE_MAX, "/proc/%d/stat", ppid);
         statf = fopen(stat_path, "r");
         if (statf == NULL) {
             return -1;

@@ -47,6 +47,7 @@
 /*
  * Local defines
  */
+#define ST_PATH_SIZE_MAX       32   // Path "/proc/nnnn/stat" where nnnn = some PID
 #define PID_ROOT                1
 #define PID_ZERO                0 // In containers, if attached from the host
 #define PID_UNKNOWN             -1
@@ -93,7 +94,7 @@ int snoopy_datasource_rpname (char * const result, char const * const arg)
 /* Read /proc/{pid}/status file and extract the property */
 static char* read_proc_property (int pid, char* prop_name)
 {
-    char    pid_file[50];
+    char    pid_file[ST_PATH_SIZE_MAX];
     FILE   *fp;
     char   *line = NULL;
     size_t  lineLen = 0;
@@ -103,7 +104,7 @@ static char* read_proc_property (int pid, char* prop_name)
     char    returnValue[PROC_PID_STATUS_VAL_MAX_LENGTH_STR] = "";
 
     /* Open file or return */
-    sprintf(pid_file, "/proc/%d/status", pid);
+    snprintf(pid_file, ST_PATH_SIZE_MAX, "/proc/%d/status", pid);
     fp = fopen(pid_file, "r");
     if (NULL == fp) {
         return NULL;

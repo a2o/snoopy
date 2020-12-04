@@ -65,7 +65,10 @@ int snoopy_output_devlogoutput (char const * const logMessage, int errorOrMessag
     /* Generate final message - add prefix which is otherwise added by syslog() syscall */
     logMessageWithPrefix    = malloc(SNOOPY_LOG_MESSAGE_MAX_SIZE + 100);   // +100 ought to be enough
     logMessageWithPrefix[0] = '\0';
-    sprintf(logMessageWithPrefix, "<%d>%s[%d]: %s",
+    snprintf(
+        logMessageWithPrefix,
+        SNOOPY_LOG_MESSAGE_MAX_SIZE + 100,
+        "<%d>%s[%d]: %s",
         CFG->syslog_facility | CFG->syslog_level,
         CFG->syslog_ident,
         getpid(),
