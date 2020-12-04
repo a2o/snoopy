@@ -198,8 +198,8 @@ void snoopy_configfile_parse_output (
     const char *confValOrig
 ) {
     char  *confVal;
-    char  *outputName;
-    char  *outputArg;
+    const char * outputName;
+    const char * outputArg;
     int    outputArgFound = SNOOPY_FALSE;
     snoopy_configuration_t *CFG;
 

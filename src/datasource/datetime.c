@@ -52,7 +52,7 @@ int snoopy_datasource_datetime (char * const result, char const * const arg)
 {
     time_t     curTime;
     struct tm  curLocalTimeBuf;
-    struct tm *curLocalTime;
+    const struct tm *curLocalTime;
     char       timeBuffer[80];
 
     // Get current time

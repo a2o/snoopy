@@ -49,7 +49,7 @@
  */
 int snoopy_datasource_filename (char * const result, char const * const arg)
 {
-    snoopy_inputdatastorage_t   *snoopy_inputdatastorage;
+    const snoopy_inputdatastorage_t * snoopy_inputdatastorage;
 
     /* Get argument data of execv/e() call */
     snoopy_inputdatastorage = snoopy_inputdatastorage_get();

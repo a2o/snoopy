@@ -60,9 +60,8 @@ int snoopy_datasource_cmdline (char * const result, char const * const arg)
     int     cmdLineArgCount;
     int     cmdLineSizeSum;   // Size sum of all arguments and spaces in between
     int     cmdLineSizeRet;   // Size that will be returned
-    int     i;
     int     n;
-    snoopy_inputdatastorage_t   *snoopy_inputdatastorage;
+    const snoopy_inputdatastorage_t * snoopy_inputdatastorage;
 
     /* Get argument data of execv/e() call */
     snoopy_inputdatastorage = snoopy_inputdatastorage_get();
@@ -72,18 +71,19 @@ int snoopy_datasource_cmdline (char * const result, char const * const arg)
 
     /* Calculate memory requirement for cmdLine */
     cmdLineSizeSum = 1;
-    for (i=0 ; i<cmdLineArgCount ; i++) {
+    for (int i=0 ; i<cmdLineArgCount ; i++) {
         /* Argument length + space */
         cmdLineSizeSum += strlen(snoopy_inputdatastorage->argv[i]) + 1;
     }
     /* Last space will be converted to \0 */
-    cmdLineSizeRet = min(SNOOPY_SYSCONF_ARG_MAX, cmdLineSizeSum);
+    cmdLineSizeRet = (int) min(SNOOPY_SYSCONF_ARG_MAX, cmdLineSizeSum);
 
     /* Initialize cmdLine */
     cmdLine    = malloc(cmdLineSizeRet);
     cmdLine[0] = '\0';
 
-    for (i = n = 0 ; i<cmdLineArgCount ; i++) {
+    n = 0;
+    for (int i=0 ; i<cmdLineArgCount ; i++) {
         /* Did adding space in previous iteration cause this? */
         if (n >= cmdLineSizeRet) {
             break;
@@ -102,7 +102,7 @@ int snoopy_datasource_cmdline (char * const result, char const * const arg)
      * - if last character is space
      * - or if last character is ordinary character from incompletely copied argument
      */
-    n--;
+    if (n > 0) n--;
     cmdLine[n] = '\0';
 
     /* Copy the result to the string pointed by return pointer */
