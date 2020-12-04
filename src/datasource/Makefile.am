@@ -279,6 +279,14 @@ libsnoopy_datasources_all_la_SOURCES += \
 	tty_username.h
 endif
 
+# Common TTY-related code
+#
+if DATASOURCE_INCLUDE_tty__common
+libsnoopy_datasources_all_la_SOURCES += \
+	tty__common.c \
+	tty__common.h
+endif
+
 # Data source: uid
 #
 if DATASOURCE_ENABLED_uid
