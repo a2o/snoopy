@@ -96,14 +96,14 @@ build-wrapper-linux-x86-64 \
 
 ### Analyze and submit
 #
-RELEASE_TAG=`./dev-tools/libexec/get-release-tag.sh`
+SONARCLOUD_TAG=`./dev-tools/libexec/get-sonarcloud-tag.sh`
 sonar-scanner \
   -Dsonar.organization=a2o \
   -Dsonar.projectKey=snoopy \
   -Dsonar.sources=. \
-  -Dsonar.projectVersion=$RELEASE_TAG \
+  -Dsonar.projectVersion=$SONARCLOUD_TAG \
   -Dsonar.cfamily.build-wrapper-output=$BUILD_WRAPPER_OUTPUT_DIR \
   -Dsonar.cfamily.threads=1 \
   -Dsonar.cfamily.cache.enabled=false \
   -Dsonar.host.url=https://sonarcloud.io
-echo "INFO: Submission tag: $RELEASE_TAG"
+echo "INFO: Submission tag: $SONARCLOUD_TAG"

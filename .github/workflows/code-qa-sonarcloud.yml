@@ -144,17 +144,17 @@ jobs:
       #
       - name: Scan and submit to SonarCloud
         run: |
-            RELEASE_TAG=`git describe --tags --dirty --always`
+            SONARCLOUD_TAG=`./dev-tools/libexec/get-sonarcloud-tag.sh`
             /opt/sonar-scanner \
               -Dsonar.organization=a2o \
               -Dsonar.projectKey=snoopy \
               -Dsonar.sources=. \
-              -Dsonar.projectVersion=$RELEASE_TAG \
+              -Dsonar.projectVersion=$SONARCLOUD_TAG \
               -Dsonar.cfamily.build-wrapper-output=../snoopy-sonarcloud-build-wrapper-output \
               -Dsonar.cfamily.threads=4 \
               -Dsonar.cfamily.cache.enabled=false \
               -Dsonar.host.url=https://sonarcloud.io
-            echo "Submission tag: $RELEASE_TAG"
+            echo "Submission tag: $SONARCLOUD_TAG"
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
