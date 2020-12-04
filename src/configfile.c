@@ -97,10 +97,10 @@ int snoopy_configfile_load (
  *     Callback function for each found ini value in parsed config file.
  *
  * Params:
- * //    file   Path log INI configuration file
+ *     ...
  *
  * Return:
- * //    int    0 on success, -1 on error openinf file, other int for other errors
+ *     ...
  */
 int snoopy_configfile_parser_callback (
     void* sth,
@@ -362,9 +362,6 @@ void snoopy_configfile_parse_syslog_level (
 char *snoopy_configfile_syslog_value_cleanup (char *confVal)
 {
     char *confValCleaned;
-
-    // Initialize - just in case
-    confValCleaned = confVal;
 
     // Convert to upper case
     snoopy_configfile_strtoupper(confVal);

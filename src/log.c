@@ -64,7 +64,7 @@ void snoopy_log_syscall_execv (
     // a fake empty array to simulate it.
     char *envp[] = { NULL };
 
-    snoopy_log_syscall_exec("execv", filename, argv, envp);
+    snoopy_log_syscall_exec(filename, argv, envp);
 }
 
 
@@ -88,7 +88,7 @@ void snoopy_log_syscall_execve (
     char *const argv[],
     char *const envp[]
 ) {
-    snoopy_log_syscall_exec("execve", filename, argv, envp);
+    snoopy_log_syscall_exec(filename, argv, envp);
 }
 
 
@@ -109,7 +109,6 @@ void snoopy_log_syscall_execve (
  *     void
  */
 void snoopy_log_syscall_exec (
-    const char *syscallName,
     const char *filename,
     char *const argv[],
     char *const envp[]

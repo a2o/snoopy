@@ -60,12 +60,10 @@ void snoopy_message_generateFromFormat (
     char *fmtPos_cur;
     char *fmtPos_nextFormatTag;
     char *fmtPos_nextFormatTagClose;
-    char *msgPos_cur;
     int   retVal;
 
     fmtPos_cur           = logMessageFormat;
     fmtPos_nextFormatTag = logMessageFormat;
-    msgPos_cur           = logMessage;
 
     // Loop all the way to the end of log message format specification
     while (strlen(fmtPos_nextFormatTag) > 0) {
@@ -94,7 +92,6 @@ void snoopy_message_generateFromFormat (
         fmtStaticText[0] = '\0';
         snprintf(fmtStaticText, lengthToCopy, "%s", fmtPos_cur);
         snoopy_message_append(logMessage, fmtStaticText);
-        msgPos_cur += lengthToCopy;
 
         // Get data source tag
         fmtPos_nextFormatTagClose = strstr(fmtPos_nextFormatTag, "}");
@@ -141,7 +138,6 @@ void snoopy_message_generateFromFormat (
 
         // Where to start next iteration
         fmtPos_cur = fmtPos_nextFormatTagClose + 1;
-        msgPos_cur = fmtPos_nextFormatTagClose + 1;
     }
 }
 

@@ -74,8 +74,6 @@ int snoopy_datasource_env_all (char * const result, char const * const arg)
             remResultSize--;
         }
 
-        // TODO Add support for excluding certain environmental variables via *arg
-
         // Do we append whole environmental variable, or just part of it?
         // +3 to account for ... and +1 for null character
         if ((int)(strlen(envItem) + 3 + 1) < remResultSize) {

@@ -55,7 +55,7 @@
 #define PROC_PID_STATUS_KEY_NAME        "Name"
 #define PROC_PID_STATUS_KEY_PPID        "PPid"
 
-#define PROC_PID_STATUS_VAL_MAX_LENGTH          NAME_MAX      // Pid is max 2^2 (7-digit number), name can be max 255 bytes
+#define PROC_PID_STATUS_VAL_MAX_LENGTH          NAME_MAX      // Pid is max 2^22 (7-digit number), name can be max 255 bytes
 #define PROC_PID_STATUS_VAL_MAX_LENGTH_STR      PROC_PID_STATUS_VAL_MAX_LENGTH + 1   // +1 for null termination
 
 #define UNKNOWN_STR             "(unknown)"

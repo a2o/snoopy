@@ -123,7 +123,8 @@ int snoopy_datasource_domain (char * const result, char const * const arg)
     while (NULL != (linePtr = fgets(line, sizeof(line), fp))) {
 
         /* Is line a comment - ignore everything after '#' character */
-        if (NULL != (hashPtr = strchr(linePtr, '#'))) {
+        hashPtr = strchr(linePtr, '#');
+        if (NULL != hashPtr) {
             hashPtr = '\0';
         }
 
