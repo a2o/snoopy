@@ -131,7 +131,7 @@ void snoopy_inputdatastorage_setDefaults
 (
     snoopy_inputdatastorage_t *IDS
 ) {
-    static char * empty_string = "";
+    static const char * empty_string = "";
     static char * empty_string_array[] = { NULL };
 
     IDS->initialized = SNOOPY_TRUE;

@@ -46,6 +46,6 @@ void snoopy_log_syscall_exec (
  * Log message dispatching functions
  */
 int snoopy_log_dispatch (
-    char *logMessage,
+    const char *logMessage,
     int   errorOrMessage
 );

@@ -186,7 +186,7 @@ void snoopy_tsrm_init ()
  */
 int   snoopy_tsrm_doesThreadRepoEntryExist (snoopy_tsrm_threadId_t threadId, int mutex_already_locked)
 {
-    snoopy_tsrm_threadData_t   *tData;
+    const snoopy_tsrm_threadData_t   *tData;
     int                         retVal = SNOOPY_FALSE;
 
     // Mutex START
@@ -286,7 +286,7 @@ ListNode*   snoopy_tsrm_getCurrentThreadRepoEntry ()
 {
     snoopy_tsrm_threadId_t      myThreadId;
     ListNode                   *tRepoEntry = NULL;
-    snoopy_tsrm_threadData_t   *tData;
+    const snoopy_tsrm_threadData_t   *tData;
 
     // This is the thread ID we are looking for
     myThreadId = snoopy_tsrm_getCurrentThreadId();

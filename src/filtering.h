@@ -24,5 +24,5 @@
 
 int snoopy_filtering_check_chain (
     char *logMessage,
-    char *chain
+    const char *chain
 );

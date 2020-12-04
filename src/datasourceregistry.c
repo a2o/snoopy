@@ -379,7 +379,7 @@ int snoopy_datasourceregistry_getCount ()
 /*
  * doesIdExist()
  *
- * Return true if datasource exists (by id), otherwise return false
+ * True if datasource exists (by id), otherwise false
  */
 int snoopy_datasourceregistry_doesIdExist (int datasourceId)
 {
@@ -391,7 +391,7 @@ int snoopy_datasourceregistry_doesIdExist (int datasourceId)
 /*
  * doesNameExist()
  *
- * Return true if datasource exists (by name), otherwise return false
+ * True if datasource exists (by name), otherwise false
  */
 int snoopy_datasourceregistry_doesNameExist (char const * const datasourceName)
 {

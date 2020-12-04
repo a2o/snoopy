@@ -55,7 +55,7 @@
  */
 int snoopy_output_syslogoutput (char const * const logMessage, int errorOrMessage, char const * const arg)
 {
-    snoopy_configuration_t *CFG;
+    const snoopy_configuration_t *CFG;
 
 
     /* Get config pointer */
@@ -80,5 +80,5 @@ int snoopy_output_syslogoutput (char const * const logMessage, int errorOrMessag
     /* Close the syslog file descriptor */
     closelog();
 
-    return strlen(logMessage);
+    return (int) strlen(logMessage);
 }

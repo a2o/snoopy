@@ -173,7 +173,7 @@ void snoopy_log_syscall_exec (
  *     int:              See snoopy.h (SNOOPY_OUTPUT_*) for details.
  */
 int snoopy_log_dispatch (
-    char *logMessage,
+    const char *logMessage,
     int   errorOrMessage
 ) {
     /* Dispatch only if non-zero size */

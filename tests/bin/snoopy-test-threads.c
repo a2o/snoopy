@@ -187,7 +187,7 @@ void* threadMain (void *args)
     int       dsCount;
     int       dsId;
     char     *dsName;
-    char     *dsArg = "";
+    const char *dsArg = "";
     char      dsResult[SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE];
     int       retVal;
 

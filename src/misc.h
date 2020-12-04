@@ -33,7 +33,7 @@ void snoopy_cleanup ();
 /*
  * String functions
  */
-void snoopy_string_append     (char *destString, char *appendThis, int destStringMaxLength);
+void snoopy_string_append     (char *destString, const char *appendThis, int destStringMaxLength);
 int  snoopy_string_countChars (const char *stringToSearch, char characterToCount);
 
 

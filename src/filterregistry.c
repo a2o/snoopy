@@ -119,7 +119,7 @@ int snoopy_filterregistry_getCount ()
 /*
  * doesIdExist()
  *
- * Return true if filter exists (by id), otherwise return false
+ * True if filter exists (by id), otherwise false
  */
 int snoopy_filterregistry_doesIdExist (int filterId)
 {
@@ -131,7 +131,7 @@ int snoopy_filterregistry_doesIdExist (int filterId)
 /*
  * doesNameExist()
  *
- * Return true if filter exists (by name), otherwise return false
+ * True if filter exists (by name), otherwise false
  */
 int snoopy_filterregistry_doesNameExist (char const * const filterName)
 {

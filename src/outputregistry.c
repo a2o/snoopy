@@ -162,7 +162,7 @@ int snoopy_outputregistry_getCount ()
 /*
  * doesIdExist()
  *
- * Return true if output exists (by id), otherwise return false
+ * True if output exists (by id), otherwise false
  */
 int snoopy_outputregistry_doesIdExist (int outputId)
 {
@@ -174,7 +174,7 @@ int snoopy_outputregistry_doesIdExist (int outputId)
 /*
  * doesNameExist()
  *
- * Return true if output exists (by name), otherwise return false
+ * True if output exists (by name), otherwise false
  */
 int snoopy_outputregistry_doesNameExist (char const * const outputName)
 {
@@ -249,7 +249,7 @@ int snoopy_outputregistry_callByName (char const * const outputName, char const 
  */
 int snoopy_outputregistry_dispatch (char const * const logMessage, int errorOrMessage)
 {
-    snoopy_configuration_t *CFG;
+    const snoopy_configuration_t *CFG;
 
     /* Get config pointer */
     CFG = snoopy_configuration_get();

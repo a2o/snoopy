@@ -53,12 +53,12 @@
  */
 int snoopy_datasource_tid_kernel (char * const result, char const * const arg)
 {
-    pid_t tid = syscall(SYS_gettid);
+    long unsigned int tid = (long unsigned int) syscall(SYS_gettid);
 
     // This happens if -lpthread is not given to compiler
-    if (0 == (unsigned long int)tid) {
+    if (0 == tid) {
         return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "(error @ syscall(SYS_gettid))");
     }
 
-    return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "%lu", (unsigned long int)tid);
+    return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "%lu", tid);
 }

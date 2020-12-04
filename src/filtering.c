@@ -56,7 +56,7 @@
  */
 int snoopy_filtering_check_chain (
     char *logMessage,
-    char *filterChain
+    const char *filterChain
 ) {
     char  filterChainCopy[SNOOPY_FILTER_CHAIN_MAX_SIZE];   // Must be here, or strtok_r segfaults
     int   j;

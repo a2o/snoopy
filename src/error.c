@@ -48,7 +48,7 @@
  */
 void snoopy_error_handler (char *errorMsg)
 {
-    snoopy_configuration_t *CFG;
+    const snoopy_configuration_t * CFG;
 
 
     /* Get config pointer */
