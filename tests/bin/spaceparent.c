@@ -12,16 +12,6 @@ int main (int argc, char **argv)
         exit(1);
     }
 
-    // Copy the argv
-    char** new_argv = malloc((argc) * sizeof *new_argv);
-    for (int i=1; i < argc; ++i)
-    {
-        size_t length = strlen(argv[i])+1;
-        new_argv[i-1] = malloc(length);
-        memcpy(new_argv[i-1], argv[i], length);
-    }
-    new_argv[argc-1] = NULL;
-
     /* Spawn a child to run the program. */
     pid_t pid = fork();
     if (pid == -1) { /* fork failed */
@@ -30,13 +20,7 @@ int main (int argc, char **argv)
     }
 
     if (pid == 0) { /* child process */
-        //static char *argv[] = {
-        //    "echo",
-        //    "Foo is my name.",
-        //    NULL
-        //};
-        //execv("/bin/echo", argv);
-        execv(argv[1], new_argv);
+        execv(argv[1], &argv[1]);
 
         /* This only gets executed if execv fails */
         printf("execv() failed\n");
