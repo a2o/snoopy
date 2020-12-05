@@ -85,7 +85,7 @@ void snoopy_tsrm_ctor ()
     snoopy_tsrm_threadData_t   *tData;
 
     // Initialize threading support
-    pthread_once(&snoopy_tsrm_init_onceControl, snoopy_tsrm_init);
+    pthread_once(&snoopy_tsrm_init_onceControl, &snoopy_tsrm_init);
 
     // Get my thread id - before mutex, no need for mutex here
     curTid = snoopy_tsrm_getCurrentThreadId();
