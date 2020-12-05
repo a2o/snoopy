@@ -62,7 +62,7 @@ int snoopy_filtering_check_chain (
     int   j;
     char *str;
     char *rest;
-    char *filterSpec;            // Single filter specification from defined filter chain
+    const char *filterSpec;            // Single filter specification from defined filter chain
     const char *fcPos_filterSpecArg;   // Pointer to argument part of single filter specification in a filter chain
 
     // Copy the filter chain specification to separate string, to be used in strtok_r
