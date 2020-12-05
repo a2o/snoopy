@@ -35,6 +35,7 @@
 #include "tsrm.h"
 #endif
 
+#include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -59,6 +60,7 @@ int snoopy_configuration_configFileParsingEnabled = SNOOPY_TRUE;
  * Should alternate configuration file be loaded?
  */
 char * snoopy_configuration_altConfigFilePath = NULL;
+char   snoopy_configuration_altConfigFilePathBuf[PATH_MAX] = "";
 
 
 
@@ -141,15 +143,18 @@ void snoopy_configuration_preinit_setConfigFilePathFromEnv ()
         return;
     }
 
+    /* Store it */
+    strncpy(snoopy_configuration_altConfigFilePathBuf, valuePtr, PATH_MAX-1);
+    snoopy_configuration_altConfigFilePathBuf[PATH_MAX-1] = 0;
+
     /* Is file readable? */
     if (0 != access(valuePtr, R_OK)) {
         /* Nope. */
+        snoopy_configuration_altConfigFilePathBuf[0] = 0;
         return;
     }
 
-    /* Store it */
-    /* FIXME does this have to be copied to malloced local variable? */
-    snoopy_configuration_preinit_enableAltConfigFileParsing(valuePtr);
+    snoopy_configuration_preinit_enableAltConfigFileParsing(snoopy_configuration_altConfigFilePathBuf);
 }
 
 
