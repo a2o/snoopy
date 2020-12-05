@@ -59,7 +59,6 @@ int snoopy_filtering_check_chain (
     const char *filterChain
 ) {
     char  filterChainCopy[SNOOPY_FILTER_CHAIN_MAX_SIZE];   // Must be here, or strtok_r segfaults
-    int   j;
     char *str;
     char *rest;
     const char *filterSpec;            // Single filter specification from defined filter chain
@@ -70,7 +69,12 @@ int snoopy_filtering_check_chain (
     filterChainCopy[SNOOPY_FILTER_CHAIN_MAX_SIZE-1] = '\0';
 
     // Loop through all filters
-    for (j=1, str=filterChainCopy;  ; j++, str=NULL) {
+    str = filterChainCopy;
+    filterSpec = "";
+    int j = 0;
+    while (filterSpec != NULL) {
+        j++;
+
         char    filterName[SNOOPY_FILTER_NAME_MAX_SIZE];
         const char   *filterNamePtr;
         size_t  filterNameSize;
@@ -78,6 +82,7 @@ int snoopy_filtering_check_chain (
         const char   *filterArgPtr;
 
         // Parse the remaining filter chain specification for next filterSpec
+        if (j > 1) str = NULL;
         filterSpec = strtok_r(str, ";", &rest);
         if (NULL == filterSpec) {
             // We are at the end of filtering chain
