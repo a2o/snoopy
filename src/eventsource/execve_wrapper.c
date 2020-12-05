@@ -55,12 +55,12 @@
  * Function wrapper - execv()
  */
 int execv (const char *filename, char *const argv[]) {
-    static int (*func)(const char *, char **);
+    static int (*func)(const char *, char * const *);
 
-    FN(func, int, "execv", (const char *, char **const));
+    FN(func, int, "execv", (const char *, char * const *));
     snoopy_log_syscall_execv(filename, argv);
 
-    return (*func) (filename, (char **) argv);
+    return (*func) (filename, argv);
 }
 
 
@@ -70,10 +70,10 @@ int execv (const char *filename, char *const argv[]) {
  */
 int execve (const char *filename, char *const argv[], char *const envp[])
 {
-    static int (*func)(const char *, char **, char **);
+    static int (*func)(const char *, char * const *, char * const *);
 
-    FN(func, int, "execve", (const char *, char **const, char **const));
+    FN(func, int, "execve", (const char *, char * const *, char * const *));
     snoopy_log_syscall_execve(filename, argv, envp);
 
-    return (*func) (filename, (char**) argv, (char **) envp);
+    return (*func) (filename, argv, envp);
 }

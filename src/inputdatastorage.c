@@ -179,7 +179,7 @@ void snoopy_inputdatastorage_store_filename (
  *     void
  */
 void snoopy_inputdatastorage_store_argv (
-    char *argv[]
+    char *const argv[]
 ) {
     /* Get IDS pointer */
     snoopy_inputdatastorage_t *IDS = snoopy_inputdatastorage_get();
@@ -203,7 +203,7 @@ void snoopy_inputdatastorage_store_argv (
  *     void
  */
 void snoopy_inputdatastorage_store_envp (
-    char *envp[]
+    char *const envp[]
 ) {
     /* Get IDS pointer */
     snoopy_inputdatastorage_t *IDS = snoopy_inputdatastorage_get();

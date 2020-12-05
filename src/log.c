@@ -125,8 +125,8 @@ void snoopy_log_syscall_exec (
 
     // Store arguments passed to execv(e)()
     snoopy_inputdatastorage_store_filename(filename);
-    snoopy_inputdatastorage_store_argv((char**)argv);
-    snoopy_inputdatastorage_store_envp((char**)envp);
+    snoopy_inputdatastorage_store_argv(argv);
+    snoopy_inputdatastorage_store_envp(envp);
 
     /* Initialize empty log message */
     logMessage    = malloc(SNOOPY_LOG_MESSAGE_MAX_SIZE);

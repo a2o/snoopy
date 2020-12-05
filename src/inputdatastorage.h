@@ -36,8 +36,8 @@
 typedef struct {
     int          initialized;
     const char  *filename;
-    char       **argv;
-    char       **envp;
+    char *const *argv;
+    char *const *envp;
 } snoopy_inputdatastorage_t;
 
 
@@ -56,8 +56,8 @@ void snoopy_inputdatastorage_setDefaults      (snoopy_inputdatastorage_t *IDS);
  * Functions that do the actual data storing
  */
 void snoopy_inputdatastorage_store_filename (const char *filename);
-void snoopy_inputdatastorage_store_argv     (      char *argv[]  );
-void snoopy_inputdatastorage_store_envp     (      char *envp[]  );
+void snoopy_inputdatastorage_store_argv     (char *const argv[]);
+void snoopy_inputdatastorage_store_envp     (char *const envp[]);
 
 
 
