@@ -72,7 +72,7 @@ void snoopy_message_generateFromFormat (
         char  dataSourceTag[100];
         int   dataSourceTagLength;
         char *fmtPos_dataSourceTagArg;
-        char *dataSourceNamePtr;
+        const char *dataSourceNamePtr;
         const char *dataSourceArgPtr;
         char  dataSourceArg[SNOOPY_DATASOURCE_ARG_MAX_SIZE];
         char  dataSourceMsg[SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE];

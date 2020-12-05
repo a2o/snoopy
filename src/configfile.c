@@ -271,7 +271,7 @@ void snoopy_configfile_parse_syslog_facility (
     const char *confValOrig
 ) {
     char *confVal;
-    char *confValCleaned;
+    const char *confValCleaned;
     int   facilityInt;
     snoopy_configuration_t *CFG;
 
@@ -317,7 +317,7 @@ void snoopy_configfile_parse_syslog_level (
     const char *confValOrig
 ) {
     char *confVal;
-    char *confValCleaned;
+    const char *confValCleaned;
     int   levelInt;
     snoopy_configuration_t *CFG;
 

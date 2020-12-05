@@ -133,7 +133,7 @@ void snoopy_configuration_preinit_enableAltConfigFileParsing (char * const altCo
  */
 void snoopy_configuration_preinit_setConfigFilePathFromEnv ()
 {
-    char *valuePtr;
+    const char *valuePtr;
 
 
     /* Does environmental variable exist? */

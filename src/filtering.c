@@ -63,7 +63,7 @@ int snoopy_filtering_check_chain (
     char *str;
     char *rest;
     char *filterSpec;            // Single filter specification from defined filter chain
-    char *fcPos_filterSpecArg;   // Pointer to argument part of single filter specification in a filter chain
+    const char *fcPos_filterSpecArg;   // Pointer to argument part of single filter specification in a filter chain
 
     // Copy the filter chain specification to separate string, to be used in strtok_r
     strncpy(filterChainCopy, filterChain, SNOOPY_FILTER_CHAIN_MAX_SIZE - 1);
@@ -72,7 +72,7 @@ int snoopy_filtering_check_chain (
     // Loop through all filters
     for (j=1, str=filterChainCopy;  ; j++, str=NULL) {
         char    filterName[SNOOPY_FILTER_NAME_MAX_SIZE];
-        char   *filterNamePtr;
+        const char   *filterNamePtr;
         size_t  filterNameSize;
         char    filterArg[SNOOPY_FILTER_ARG_MAX_SIZE];
         const char   *filterArgPtr;
