@@ -30,7 +30,7 @@
 #endif
 
 int main(void) {
-	char *libc = "/usr/lib/x86_64-linux-gnu/libc.so";
+	const char * libc = "/usr/lib/x86_64-linux-gnu/libc.so";
 	void *handle = dlopen(libc, RTLD_LAZY);
 	//simple test to see if the execve in memory matches libc.so.6
 	if (dlsym(handle, "execve") != dlsym(RTLD_DEFAULT, "execve"))

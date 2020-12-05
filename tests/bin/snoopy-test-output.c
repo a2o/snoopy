@@ -49,10 +49,10 @@ int  fatalError(char *errorMsg);
 
 int main (int argc, char **argv)
 {
-    char *message;
-    char *outputName;
-    char *outputArg;
-    int   retVal;
+    const char * message;
+    const char * outputName;
+    const char * outputArg;
+    int retVal;
 
 
     /* Initialize Snoopy */

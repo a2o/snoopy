@@ -50,7 +50,7 @@ int  fatalError(char *errorMsg);
 int main (int argc, char **argv)
 {
     const char *datasourceName;
-    char *datasourceArg;
+    const char *datasourceArg;
     char  datasourceResult[SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE];
     int   retVal;
 
