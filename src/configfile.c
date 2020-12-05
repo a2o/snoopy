@@ -76,7 +76,6 @@ int snoopy_configfile_load (
     /* Parse the INI configuration file first */
     iniParseStatus = ini_parse(iniFilePath, snoopy_configfile_parser_callback, CFG);
     if (0 != iniParseStatus) {
-        // TODO Snoopy error handling
         return -1;
     }
     CFG->configfile_found = SNOOPY_TRUE;

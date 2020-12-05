@@ -46,7 +46,7 @@
  * Return:
  *     void
  */
-void snoopy_error_handler (char *errorMsg)
+void snoopy_error_handler (const char * errorMsg)
 {
     const snoopy_configuration_t * CFG;
 

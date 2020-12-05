@@ -172,7 +172,7 @@ int  snoopy_string_countChars (const char *stringToSearch, char characterToCount
  *     int           Corresponding syslog facility id, or -1 if not found
  */
 int snoopy_syslog_convert_facilityToInt (
-    char *facilityStr
+    const char *facilityStr
 ) {
     const char *facilityStrAdj;
     int   facilityInt;
@@ -274,7 +274,7 @@ const char* snoopy_syslog_convert_facilityToStr (
  *     int        Corresponding syslog level id, or -1 if not found
  */
 int snoopy_syslog_convert_levelToInt (
-    char *levelStr
+    const char *levelStr
 ) {
     const char *levelStrAdj;
     int   levelInt;

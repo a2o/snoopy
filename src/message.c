@@ -159,7 +159,7 @@ void snoopy_message_generateFromFormat (
  */
 void snoopy_message_append (
     char *logMessage,
-    char *appendThis
+    const char *appendThis
 ) {
     snoopy_string_append(logMessage, appendThis, SNOOPY_LOG_MESSAGE_MAX_SIZE);
 }

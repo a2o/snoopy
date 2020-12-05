@@ -75,7 +75,7 @@ int snoopy_filtering_check_chain (
         char   *filterNamePtr;
         size_t  filterNameSize;
         char    filterArg[SNOOPY_FILTER_ARG_MAX_SIZE];
-        char   *filterArgPtr;
+        const char   *filterArgPtr;
 
         // Parse the remaining filter chain specification for next filterSpec
         filterSpec = strtok_r(str, ";", &rest);
