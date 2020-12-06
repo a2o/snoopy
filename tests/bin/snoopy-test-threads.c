@@ -80,12 +80,13 @@ int               threadCountCreated  = 0; // Created threads, as seen by each t
 int               threadCountAliveNow = 0; // Number of threads currently alive
 int               threadCountAliveMax = 0; // Maximum number of threads alive at any one time
 
+int               verbose;
 
 
 int main (int argc, char **argv)
 {
     int         threadsToCreate;
-    int         i;
+    int         maxThreadsSeen;
     int         retVal = 0;
 
 
@@ -100,24 +101,27 @@ int main (int argc, char **argv)
         return fatalError("Invalid number of threads to create (min 1, max THREAD_COUNT_MAX)");
     }
 
+    if ((argc == 3) && (0 == strcmp(argv[2], "-v"))) {
+        verbose = 1;
+    } else {
+        verbose = 0;
+    }
+
 
     // Disable config file parsing
     snoopy_configuration_preinit_disableConfigFileParsing();
 
 
-    // Do the initial Snoopy init in main thread
-    // - left out intentionally, let the child threads figure it out for themselves!
-//    printf("M: Threads before initial snoopy_init(): %d\n", snoopy_tsrm_get_threadCount());
-//    snoopy_init();
-//    printf("M: Threads after  initial snoopy_init(): %d\n", snoopy_tsrm_get_threadCount());
+    // Do not call snoopy_init() in the main thread here, as we're letting the non-main threads
+    // figure it out for themselves.
 
 
     // Create threads and run the function in them
     printf("M: Starting threads... ");
-    for (i=0 ; i<threadsToCreate ; i++) {
+    for (int i=0 ; i<threadsToCreate ; i++) {
         tData_t *tArgs = malloc(sizeof *tArgs);
         tArgs->seqNr   = i;
-//        printf(" M: Starting thread #%d:\n", i+1);
+        if (verbose) printf(" M: Starting thread #%d:\n", i+1);
         retVal = pthread_create(&tRepo[i], NULL, &threadMain, tArgs);
     }
     printf("done.\n");
@@ -125,20 +129,24 @@ int main (int argc, char **argv)
 
 
     // Sleep a bit, and get thread count, should be max
-//    usleep(200000);
-//    maxThreadsSeen = snoopy_tsrm_get_threadCount();
-//    printf("M: Threads after first sleep: %d\n", maxThreadsSeen);
+    if (verbose) {
+        usleep(200000);
+        maxThreadsSeen = snoopy_tsrm_get_threadCount();
+        printf("M: Threads after first sleep: %d\n", maxThreadsSeen);
 
-    // Sleep a bit more for all threads to finish
-//    usleep(200000);
-//    printf("M: Threads after all threads are supposedly finished: %d\n", snoopy_tsrm_get_threadCount());
+        // Sleep a bit more for all threads to finish
+        usleep(200000);
+        printf("M: Threads after all threads are supposedly finished: %d\n", snoopy_tsrm_get_threadCount());
+    }
 
     // Wait for threads to finish
     printf("M: Waiting for all threads to finish... ");
-    for (i=0 ; i<threadsToCreate ; i++) {
+    for (int i=0 ; i<threadsToCreate ; i++) {
         pthread_join(tRepo[i], NULL);
-//        printf("M: Thread joined: #%d\n", i+1);
-//        printf(" M: Thread #%d joined.\n", i+1);
+        if (verbose) {
+            printf("M: Thread joined: #%d\n", i+1);
+            printf(" M: Thread #%d joined.\n", i+1);
+        }
     }
     printf("done.\n");
 
@@ -146,20 +154,11 @@ int main (int argc, char **argv)
     printf("M: Max threads alive simultaneously: %d\n", threadCountAliveMax);
 
     // This should return 1 thread still active
-//    printf("M: Threads after all threads, except main, have finished: %d\n", snoopy_tsrm_get_threadCount());
+    if (verbose) printf("M: Threads after all threads, except main, have finished: %d\n", snoopy_tsrm_get_threadCount());
+    // Why did we have snoopy_cleanup() commented out here?
+    if (verbose) printf("M: Threads after all threads have finished: %d\n", snoopy_tsrm_get_threadCount());
 
-    // This should return 0 threads still active
-//    snoopy_cleanup();
-//    printf("M: Threads after all threads have finished: %d\n", snoopy_tsrm_get_threadCount());
-
-
-    /* Evaluate and return */
-//    if (maxThreadsSeen != threadsToCreate) {
-//        printf("ERROR: Expected max Snoopy threads count was %d, but actual number was %d\n", threadsToCreate, maxThreadsSeen);
-//        return 1;
-//    }
-
-//    printf("SUCCESS! Expected Snoopy threads count reached: %d\n", maxThreadsSeen);
+    if (verbose) printf("SUCCESS! Expected Snoopy threads count reached: %d\n", maxThreadsSeen);
     return retVal;
 }
 
@@ -203,13 +202,13 @@ void* threadMain (void *args)
 
 
     // Hello the user
-//    printf("    t%d %llu : Hello from thread #%d\n", seqNrPub, (unsigned long long)pthread_self(), seqNrPub);
+    if (verbose) printf("    t%d %llu : Hello from thread #%d\n", seqNrPub, (unsigned long long)pthread_self(), seqNrPub);
 
 
     // Initialize Snoopy
-//    printf("    t%d %llu : Threads before snoopy_init():    %d\n", seqNrPub, (unsigned long long)pthread_self(), snoopy_tsrm_get_threadCount());
+    if (verbose) printf("    t%d %llu : Threads before snoopy_init():    %d\n", seqNrPub, (unsigned long long)pthread_self(), snoopy_tsrm_get_threadCount());
     snoopy_init();
-//    printf("    t%d %llu : Threads after  snoopy_init():    %d\n", seqNrPub, (unsigned long long)pthread_self(), snoopy_tsrm_get_threadCount());
+    if (verbose) printf("    t%d %llu : Threads after  snoopy_init():    %d\n", seqNrPub, (unsigned long long)pthread_self(), snoopy_tsrm_get_threadCount());
 
 
     // Run a random snoopy datasource
@@ -226,13 +225,13 @@ void* threadMain (void *args)
 
 
     // Retest at thread end
-//    printf("    t%d %llu : Threads before snoopy_cleanup(): %d\n", seqNrPub, (unsigned long long)pthread_self(), snoopy_tsrm_get_threadCount());
+    if (verbose) printf("    t%d %llu : Threads before snoopy_cleanup(): %d\n", seqNrPub, (unsigned long long)pthread_self(), snoopy_tsrm_get_threadCount());
     snoopy_cleanup();
-//    printf("    t%d %llu : Threads after  snoopy_cleanup(): %d\n", seqNrPub, (unsigned long long)pthread_self(), snoopy_tsrm_get_threadCount());
+    if (verbose) printf("    t%d %llu : Threads after  snoopy_cleanup(): %d\n", seqNrPub, (unsigned long long)pthread_self(), snoopy_tsrm_get_threadCount());
 
 
     // Goodbye to user
-//    printf("    t%d %llu : Thread exiting: #%d\n", seqNrPub, (unsigned long long)pthread_self(), seqNrPub);
+    if (verbose) printf("    t%d %llu : Thread exiting: #%d\n", seqNrPub, (unsigned long long)pthread_self(), seqNrPub);
 
 
     // Cleanup thread
@@ -263,7 +262,7 @@ void displayHelp ()
 {
     printf("\n");
     printf("Usage: \n");
-    printf("    snoopy-test-threads   THREAD_COUNT\n");
+    printf("    snoopy-test-threads   THREAD_COUNT [-v]\n");
     printf("\n");
 }
 
