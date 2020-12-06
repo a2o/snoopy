@@ -42,8 +42,8 @@
 #include <string.h>
 #include <sys/syscall.h>
 #include <sys/types.h>
+#include <time.h>
 #include <unistd.h>
-#include <wait.h>
 
 
 #define   THREAD_COUNT_MAX   10000
@@ -130,12 +130,15 @@ int main (int argc, char **argv)
 
     // Sleep a bit, and get thread count, should be max
     if (verbose) {
-        usleep(200000);
+        struct timespec ts_sleep;
+        ts_sleep.tv_sec = 0;
+        ts_sleep.tv_nsec = 200000000;
+        nanosleep(&ts_sleep, NULL);
         maxThreadsSeen = snoopy_tsrm_get_threadCount();
         printf("M: Threads after first sleep: %d\n", maxThreadsSeen);
 
         // Sleep a bit more for all threads to finish
-        usleep(200000);
+        nanosleep(&ts_sleep, NULL);
         printf("M: Threads after all threads are supposedly finished: %d\n", snoopy_tsrm_get_threadCount());
     }
 
