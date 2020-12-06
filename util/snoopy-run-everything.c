@@ -69,7 +69,6 @@ int main (int argc, char **argv)
 
 
     /* Run throught as much code as possible */
-    /* TODO: Parse config file with all settings */
     printf("-----[ Datasources ]-----------------------------------\n");
     snoopy_debug_test_all_datasources();
 #ifdef SNOOPY_FILTERING_ENABLED
