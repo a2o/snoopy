@@ -83,7 +83,7 @@ int               verbose;
 int main (int argc, char **argv)
 {
     int         threadsToCreate;
-    int         maxThreadsSeen;
+    int         maxThreadsSeen = 0;
     int         retVal = 0;
 
 
