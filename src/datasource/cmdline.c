@@ -75,7 +75,7 @@ int snoopy_datasource_cmdline (char * const result, char const * const arg)
         /* Argument length + space */
         cmdLineSizeSum += strlen(snoopy_inputdatastorage->argv[i]) + 1;
     }
-    /* Last space will be converted to \0 */
+    /* Do not substract the +1 from the last iteration - the last character (most likely a space) will be converted to \0 */
     cmdLineSizeRet = min(SNOOPY_SYSCONF_ARG_MAX, cmdLineSizeSum);
 
     /* Initialize cmdLine */
@@ -84,24 +84,19 @@ int snoopy_datasource_cmdline (char * const result, char const * const arg)
 
     n = 0;
     for (int i=0 ; i<cmdLineArgCount ; i++) {
-        /* Did adding space in previous iteration cause this? */
-        if (n >= cmdLineSizeRet) {
-            break;
-        }
         n += snprintf(cmdLine+n, cmdLineSizeRet-n, "%s", snoopy_inputdatastorage->argv[i]);
 
+        if (n < cmdLineSizeRet) {
+            cmdLine[n] = ' ';
+            n++;
+        }
+
         if (n >= cmdLineSizeRet) {
             break;
         }
-        cmdLine[n] = ' ';
-        n++;
     }
 
-    /*
-     * Conclude string - add \0 at the end
-     * - if last character is space
-     * - or if last character is ordinary character from incompletely copied argument
-     */
+    /* Conclude the string - add \0 at the end */
     if (n > 0) n--;
     cmdLine[n] = '\0';
 
