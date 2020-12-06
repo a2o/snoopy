@@ -25,9 +25,6 @@
 /*
  * Includes order: from local to global
  */
-#define   _XOPEN_SOURCE   500
-#define   _GNU_SOURCE
-
 #include <snoopy.h>
 
 #include <configuration.h>

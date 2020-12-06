@@ -25,11 +25,8 @@
 /*
  * Includes order: from local to global
  */
-#define _XOPEN_SOURCE 700   // Required by pthread_mutex_setattr
-
-#include "tsrm.h"
-
 #include "snoopy.h"
+#include "tsrm.h"
 
 #include "configuration.h"
 #include "inputdatastorage.h"

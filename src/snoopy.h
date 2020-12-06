@@ -31,10 +31,7 @@
 /* This must be the first file to be included, or implicit inclusion
  * (by i.e. <features.h>) does the wrong thing
  */
-#ifdef   _XOPEN_SOURCE
-#undef   _XOPEN_SOURCE
-#endif
-#define  _XOPEN_SOURCE   500
+#define  _XOPEN_SOURCE   700
 #include <features.h>   /* Needed for GLIBC macros here */
 #include <syslog.h>     /* Needed for syslog defaults */
 #include <unistd.h>     /* Needed for _SC_ARG_MAX constant */
