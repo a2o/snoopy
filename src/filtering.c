@@ -81,44 +81,44 @@ int snoopy_filtering_check_chain (
         char    filterArg[SNOOPY_FILTER_ARG_MAX_SIZE];
         const char   *filterArgPtr;
 
-        // Parse the remaining filter chain specification for next filterSpec
+        // Parse the (remaining) filter chain specification for a next filterSpec
         if (j > 1) str = NULL;
         filterSpec = strtok_r(str, ";", &rest);
-        if (NULL == filterSpec) {
-            // We are at the end of filtering chain
-            break;
-        }
 
-        // If filter tag contains ":", then split it into filter name and filter argument
-        fcPos_filterSpecArg  = strstr(filterSpec, ":");
-        if (NULL == fcPos_filterSpecArg) {
-            // filterSpec == filterName, there is no argument
-            filterName[0] = '\0';
-            filterNamePtr = filterSpec;
-            filterArg[0]  = '\0';
-            filterArgPtr  = filterArg;
-        } else {
-            // Change the colon to null character, which effectively splits the string in two parts.
-            // Then point to first and second part with corresponding variables.
-            filterNameSize = fcPos_filterSpecArg - filterSpec;
-            filterName[0] = '\0';
-            strncpy(filterName, filterSpec, filterNameSize);
-            filterName[filterNameSize] = '\0';
-            filterNamePtr = filterName;
-            filterArgPtr  = fcPos_filterSpecArg + 1;
-        }
+        // If next filterSpec has been found
+        if (NULL != filterSpec) {
 
-        // Check if filter actually exists
-        if (SNOOPY_FALSE == snoopy_filterregistry_doesNameExist(filterNamePtr)) {
-            snoopy_message_append(logMessage, "ERROR(Filter not found - ");
-            snoopy_message_append(logMessage, filterNamePtr);
-            snoopy_message_append(logMessage, ")");
-            break;
-        }
+            // If filter tag contains ":", then split it into filter name and filter argument
+            fcPos_filterSpecArg  = strstr(filterSpec, ":");
+            if (NULL == fcPos_filterSpecArg) {
+                // filterSpec == filterName, there is no argument
+                filterName[0] = '\0';
+                filterNamePtr = filterSpec;
+                filterArg[0]  = '\0';
+                filterArgPtr  = filterArg;
+            } else {
+                // Change the colon to null character, which effectively splits the string in two parts.
+                // Then point to first and second part with corresponding variables.
+                filterNameSize = fcPos_filterSpecArg - filterSpec;
+                filterName[0] = '\0';
+                strncpy(filterName, filterSpec, filterNameSize);
+                filterName[filterNameSize] = '\0';
+                filterNamePtr = filterName;
+                filterArgPtr  = fcPos_filterSpecArg + 1;
+            }
 
-        // Consult the filter, and return immediately if message should be dropped
-        if (SNOOPY_FILTER_DROP == snoopy_filterregistry_callByName(filterNamePtr, logMessage, filterArgPtr)) {
-            return SNOOPY_FILTER_DROP;
+            // Check if filter actually exists
+            if (SNOOPY_FALSE == snoopy_filterregistry_doesNameExist(filterNamePtr)) {
+                snoopy_message_append(logMessage, "ERROR(Filter not found - ");
+                snoopy_message_append(logMessage, filterNamePtr);
+                snoopy_message_append(logMessage, ")");
+                break;
+            }
+
+            // Consult the filter, and return immediately if message should be dropped
+            if (SNOOPY_FILTER_DROP == snoopy_filterregistry_callByName(filterNamePtr, logMessage, filterArgPtr)) {
+                return SNOOPY_FILTER_DROP;
+            }
         }
     }
     return SNOOPY_FILTER_PASS;
