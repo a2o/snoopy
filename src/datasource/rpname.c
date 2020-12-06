@@ -113,16 +113,13 @@ static char* read_proc_property (int pid, const char * prop_name)
     /* Read line by line */
     while (getline(&line, &lineLen, fp) != -1) {
 
-        /* If line is empty, bail out - no such thing in /proc/PID/status */
-        if (0 == lineLen) {
-            goto RETURN_FREE_LINE_AND_CLOSE_FILE;
-        }
-
         /*
-         * The format must be "prop_name: value".
-         * Otherwise bail out altogether - something must be wrong with this /proc/PID/status file
+         * Bail out on the following two conditions:
+         * - If line is empty, bail out - no such thing in /proc/PID/status.
+         * - The format must be "prop_name: value".
+         *   Otherwise bail out altogether - something must be wrong with this /proc/PID/status file.
          */
-        if (NULL == strstr(line, ":")) {
+        if ((0 == lineLen) || (NULL == strstr(line, ":"))){
             goto RETURN_FREE_LINE_AND_CLOSE_FILE;
         }
 
