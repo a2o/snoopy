@@ -53,7 +53,7 @@ on:
 jobs:
   code-qa-sonarcloud:
 
-    name: Static code analysis
+    name: Static code analysis submission
     runs-on: ubuntu-20.04
     container: ubuntu:20.04
 
@@ -71,9 +71,22 @@ jobs:
 
       ### Fetch the code
       #
-      - uses: actions/checkout@v2
+      - name: Checkout branch ${{ github.ref }}
+        uses: actions/checkout@v2
         with:
           fetch-depth: 0   # Shallow clones should be disabled for a better relevancy of analysis
+        if: ${{ github.event_name == 'push' }}
+
+      # In the PR-related operation mode, unlike regular github's CI workflows (where
+      # the workflow operates on a (preview) merge commit (as if PR was merged into the base
+      # branch already), we're operating on PR's HEAD (last commit of the PR) itself here.
+      - name: Checkout (preview) merge commit for PR ${{ github.event.pull_request.number }}
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0   # Shallow clones should be disabled for a better relevancy of analysis
+          repository: ${{github.event.pull_request.head.repo.full_name}}
+          ref: ${{github.event.pull_request.head.ref}}
+        if: ${{ github.event_name == 'pull_request_target' }}
 
 
 
@@ -140,15 +153,15 @@ jobs:
 
       ### Trigger the SonarCloudscan and submission
       #
-      # We can't use `./dev-tools/libexec/get-release-tag.sh` here for security reasons either.
-      #
-      - name: Scan and submit to SonarCloud
+      - name: Scan and submit to SonarCloud - on push
         run: |
+            CURRENT_BRANCH_NAME=`git branch --show-current`
             SONARCLOUD_TAG=`./dev-tools/libexec/get-sonarcloud-tag.sh`
             /opt/sonar-scanner \
               -Dsonar.organization=a2o \
               -Dsonar.projectKey=snoopy \
               -Dsonar.sources=. \
+              -Dsonar.branch.name=$CURRENT_BRANCH_NAME \
               -Dsonar.projectVersion=$SONARCLOUD_TAG \
               -Dsonar.cfamily.build-wrapper-output=../snoopy-sonarcloud-build-wrapper-output \
               -Dsonar.cfamily.threads=4 \
@@ -158,3 +171,26 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+        if: ${{ github.event_name == 'push' }}
+
+
+      - name: Scan and submit to SonarCloud - on PR
+        run: |
+            CURRENT_BRANCH_NAME=`git branch --show-current`
+            SONARCLOUD_TAG=`./dev-tools/libexec/get-sonarcloud-tag.sh`
+            /opt/sonar-scanner \
+              -Dsonar.organization=a2o \
+              -Dsonar.projectKey=snoopy \
+              -Dsonar.sources=. \
+              -Dsonar.pullrequest.provider=github \
+              -Dsonar.pullrequest.key=${{ github.event.pull_request.number }} \
+              -Dsonar.pullrequest.branch=${{github.event.pull_request.head.repo.owner.login}}:${{github.event.pull_request.head.ref}} \
+              -Dsonar.cfamily.build-wrapper-output=../snoopy-sonarcloud-build-wrapper-output \
+              -Dsonar.cfamily.threads=4 \
+              -Dsonar.cfamily.cache.enabled=false \
+              -Dsonar.host.url=https://sonarcloud.io
+            echo "Submission tag: $SONARCLOUD_TAG"
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+        if: ${{ github.event_name == 'pull_request_target' }}

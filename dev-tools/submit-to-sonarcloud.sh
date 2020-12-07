@@ -96,11 +96,13 @@ build-wrapper-linux-x86-64 \
 
 ### Analyze and submit
 #
+CURRENT_BRANCH_NAME=`git branch --show-current`
 SONARCLOUD_TAG=`./dev-tools/libexec/get-sonarcloud-tag.sh`
 sonar-scanner \
   -Dsonar.organization=a2o \
   -Dsonar.projectKey=snoopy \
   -Dsonar.sources=. \
+  -Dsonar.branch.name=$CURRENT_BRANCH_NAME \
   -Dsonar.projectVersion=$SONARCLOUD_TAG \
   -Dsonar.cfamily.build-wrapper-output=$BUILD_WRAPPER_OUTPUT_DIR \
   -Dsonar.cfamily.threads=1 \
