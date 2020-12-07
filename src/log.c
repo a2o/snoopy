@@ -64,7 +64,7 @@ void snoopy_log_syscall_execv (
     // a fake empty array to simulate it.
     char *envp[] = { NULL };
 
-    snoopy_log_syscall_exec("execv", filename, argv, envp);
+    snoopy_log_syscall_exec(filename, argv, envp);
 }
 
 
@@ -88,7 +88,7 @@ void snoopy_log_syscall_execve (
     char *const argv[],
     char *const envp[]
 ) {
-    snoopy_log_syscall_exec("execve", filename, argv, envp);
+    snoopy_log_syscall_exec(filename, argv, envp);
 }
 
 
@@ -109,7 +109,6 @@ void snoopy_log_syscall_execve (
  *     void
  */
 void snoopy_log_syscall_exec (
-    const char *syscallName,
     const char *filename,
     char *const argv[],
     char *const envp[]
@@ -126,8 +125,8 @@ void snoopy_log_syscall_exec (
 
     // Store arguments passed to execv(e)()
     snoopy_inputdatastorage_store_filename(filename);
-    snoopy_inputdatastorage_store_argv((char**)argv);
-    snoopy_inputdatastorage_store_envp((char**)envp);
+    snoopy_inputdatastorage_store_argv(argv);
+    snoopy_inputdatastorage_store_envp(envp);
 
     /* Initialize empty log message */
     logMessage    = malloc(SNOOPY_LOG_MESSAGE_MAX_SIZE);
@@ -174,7 +173,7 @@ void snoopy_log_syscall_exec (
  *     int:              See snoopy.h (SNOOPY_OUTPUT_*) for details.
  */
 int snoopy_log_dispatch (
-    char *logMessage,
+    const char *logMessage,
     int   errorOrMessage
 ) {
     /* Dispatch only if non-zero size */

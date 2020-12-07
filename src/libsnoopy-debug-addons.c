@@ -59,10 +59,9 @@
 void snoopy_debug_test_all_datasources ()
 {
     char *itemName   = NULL;
-    char *itemArgs   = NULL;
+    const char *itemArgs   = NULL;
     char *itemResult = NULL;
     int   itemResultSize;
-    int   i;
     int   dCount;
 
     /* Initialize variables and spaces */
@@ -70,7 +69,7 @@ void snoopy_debug_test_all_datasources ()
 
     /* Loop through all datasources and just send to output */
     dCount = snoopy_datasourceregistry_getCount();
-    for (i=0 ; i<dCount ; i++) {
+    for (int i=0 ; i<dCount ; i++) {
 
         itemName = snoopy_datasourceregistry_getName(i);
         printf("Datasource %15s: ", itemName);
@@ -117,10 +116,9 @@ void snoopy_debug_test_all_filters ()
 {
     char *message    = NULL;
     char *itemName   = NULL;
-    char *itemArgs   = NULL;
+    const char *itemArgs   = NULL;
     int   itemResult;
     int   fCount;
-    int   i;
 
 
     /* Initialize variables and spaces */
@@ -129,7 +127,7 @@ void snoopy_debug_test_all_filters ()
 
     /* Loop throught all filters and run them with bogus arguments */
     fCount = snoopy_filterregistry_getCount();
-    for (i=0 ; i<fCount ; i++) {
+    for (int i=0 ; i<fCount ; i++) {
 
         itemName = snoopy_filterregistry_getName(i);
         printf("Filter %19s: ", itemName);
@@ -182,10 +180,9 @@ void snoopy_debug_test_all_outputs ()
 {
     char *message    = NULL;
     char *itemName   = NULL;
-    char *itemArgs   = NULL;
+    const char *itemArgs   = NULL;
     int   itemResult;
     int   iCount;
-    int   i;
 
 
     /* Initialize variables and spaces */
@@ -194,7 +191,7 @@ void snoopy_debug_test_all_outputs ()
 
     /* Loop throught all outputs and run them with bogus arguments */
     iCount = snoopy_outputregistry_getCount();
-    for (i=0 ; i<iCount ; i++) {
+    for (int i=0 ; i<iCount ; i++) {
 
         itemName = snoopy_outputregistry_getName(i);
         printf("Output %19s: ", itemName);

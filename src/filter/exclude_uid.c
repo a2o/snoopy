@@ -72,7 +72,7 @@ int snoopy_filter_exclude_uid (char *msg, char const * const arg)
         uid_t  argCurUid; // Actual UID to be used for comparison
 
         // Convert literal UID to numeric type
-        argCurUid = atol(argParsed[i]);
+        argCurUid = (uid_t) atol(argParsed[i]);
 
         // If UID matches, drop the message
         if (argCurUid == curUid) {

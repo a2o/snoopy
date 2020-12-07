@@ -61,8 +61,9 @@ int snoopy_datasource_env_all (char * const result, char const * const arg)
 
     // Loop through all environmental variables
     char *envItem = *environ; // Get first environmental variable
-    int i = 1;
-    for ( ; NULL!=envItem ; i++) {
+    int i = 0;
+    while (NULL != envItem) {
+        i++;
         int   remResultSize    = 0;
         remResultSize = SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE - resultSize;
 
@@ -73,8 +74,6 @@ int snoopy_datasource_env_all (char * const result, char const * const arg)
             resultSize++;
             remResultSize--;
         }
-
-        // TODO Add support for excluding certain environmental variables via *arg
 
         // Do we append whole environmental variable, or just part of it?
         // +3 to account for ... and +1 for null character

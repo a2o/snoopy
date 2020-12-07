@@ -49,12 +49,12 @@
  */
 int snoopy_datasource_tid (char * const result, char const * const arg)
 {
-    pthread_t tid = pthread_self();
+    long unsigned int tid = pthread_self();
 
     // This happens if -lpthread is not given to compiler
-    if (0 == (unsigned long int)tid) {
+    if (0 == tid) {
         return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "(error @ pthread_self())");
     }
 
-    return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "%lu", (unsigned long int)tid);
+    return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "%lu", tid);
 }

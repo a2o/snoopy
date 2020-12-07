@@ -47,6 +47,7 @@
 /*
  * Local defines
  */
+#define ST_PATH_SIZE_MAX       32   // Path "/proc/nnnn/stat" where nnnn = some PID
 #define PID_ROOT                1
 #define PID_ZERO                0 // In containers, if attached from the host
 #define PID_UNKNOWN             -1
@@ -54,7 +55,7 @@
 #define PROC_PID_STATUS_KEY_NAME        "Name"
 #define PROC_PID_STATUS_KEY_PPID        "PPid"
 
-#define PROC_PID_STATUS_VAL_MAX_LENGTH          NAME_MAX      // Pid is max 2^2 (7-digit number), name can be max 255 bytes
+#define PROC_PID_STATUS_VAL_MAX_LENGTH          NAME_MAX      // Pid is max 2^22 (7-digit number), name can be max 255 bytes
 #define PROC_PID_STATUS_VAL_MAX_LENGTH_STR      PROC_PID_STATUS_VAL_MAX_LENGTH + 1   // +1 for null termination
 
 #define UNKNOWN_STR             "(unknown)"
@@ -66,7 +67,7 @@
  */
 static int   get_parent_pid (int pid);
 static int   get_rpname (int pid, char *result);
-static char* read_proc_property (int pid, char* prop_name);
+static char* read_proc_property (int pid, const char * prop_name);
 
 
 
@@ -91,19 +92,19 @@ int snoopy_datasource_rpname (char * const result, char const * const arg)
 
 
 /* Read /proc/{pid}/status file and extract the property */
-static char* read_proc_property (int pid, char* prop_name)
+static char* read_proc_property (int pid, const char * prop_name)
 {
-    char    pid_file[50];
+    char    pid_file[ST_PATH_SIZE_MAX];
     FILE   *fp;
     char   *line = NULL;
     size_t  lineLen = 0;
-    char   *k;
+    const char *k;
     char   *v;
     size_t  vLen = 0;
     char    returnValue[PROC_PID_STATUS_VAL_MAX_LENGTH_STR] = "";
 
     /* Open file or return */
-    sprintf(pid_file, "/proc/%d/status", pid);
+    snprintf(pid_file, ST_PATH_SIZE_MAX, "/proc/%d/status", pid);
     fp = fopen(pid_file, "r");
     if (NULL == fp) {
         return NULL;
@@ -112,16 +113,13 @@ static char* read_proc_property (int pid, char* prop_name)
     /* Read line by line */
     while (getline(&line, &lineLen, fp) != -1) {
 
-        /* If line is empty, bail out - no such thing in /proc/PID/status */
-        if (0 == lineLen) {
-            goto RETURN_FREE_LINE_AND_CLOSE_FILE;
-        }
-
         /*
-         * The format must be "prop_name: value".
-         * Otherwise bail out altogether - something must be wrong with this /proc/PID/status file
+         * Bail out on the following two conditions:
+         * - If line is empty, bail out - no such thing in /proc/PID/status.
+         * - The format must be "prop_name: value".
+         *   Otherwise bail out altogether - something must be wrong with this /proc/PID/status file.
          */
-        if (NULL == strstr(line, ":")) {
+        if ((0 == lineLen) || (NULL == strstr(line, ":"))){
             goto RETURN_FREE_LINE_AND_CLOSE_FILE;
         }
 
@@ -212,7 +210,7 @@ static int get_rpname (int pid, char *result)
         } else {
             nameLen = snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "%s", UNKNOWN_STR);
         }
-        return nameLen;
+        return (int) nameLen;
     } else if (PID_UNKNOWN == parentPid) {
         return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "%s", UNKNOWN_STR);
     } else {

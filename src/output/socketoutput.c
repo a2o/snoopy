@@ -81,7 +81,7 @@ int snoopy_output_socketoutput (char const * const logMessage, int errorOrMessag
         remote.sun_path[107] = '\0';
     }
 
-    remoteLength      = strlen(remote.sun_path) + sizeof(remote.sun_family);
+    remoteLength      = (int) strlen(remote.sun_path) + (int) sizeof(remote.sun_family);
     if (connect(s, (struct sockaddr *)&remote, remoteLength) == -1) {
         close(s);
         return SNOOPY_OUTPUT_FAILURE;
@@ -97,5 +97,5 @@ int snoopy_output_socketoutput (char const * const logMessage, int errorOrMessag
 
     /* Return success status */
     close(s);
-    return strlen(logMessage);
+    return (int) strlen(logMessage);
 }

@@ -63,7 +63,7 @@ int snoopy_parser_argList_csv (char *argListRaw, char ***argListParsed)
     int    i;
 
     // Get size of raw argument list
-    argListRaw_charCount = strlen(argListRaw);
+    argListRaw_charCount = (int) strlen(argListRaw);
 
     // Allocate memory for array of string pointers:
     // - 1st +1 is because of common sense (X commas =~ X-1 arguments)

@@ -60,12 +60,10 @@ void snoopy_message_generateFromFormat (
     char *fmtPos_cur;
     char *fmtPos_nextFormatTag;
     char *fmtPos_nextFormatTagClose;
-    char *msgPos_cur;
     int   retVal;
 
     fmtPos_cur           = logMessageFormat;
     fmtPos_nextFormatTag = logMessageFormat;
-    msgPos_cur           = logMessage;
 
     // Loop all the way to the end of log message format specification
     while (strlen(fmtPos_nextFormatTag) > 0) {
@@ -74,8 +72,8 @@ void snoopy_message_generateFromFormat (
         char  dataSourceTag[100];
         int   dataSourceTagLength;
         char *fmtPos_dataSourceTagArg;
-        char *dataSourceNamePtr;
-        char *dataSourceArgPtr;
+        const char *dataSourceNamePtr;
+        const char *dataSourceArgPtr;
         char  dataSourceArg[SNOOPY_DATASOURCE_ARG_MAX_SIZE];
         char  dataSourceMsg[SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE];
 
@@ -87,14 +85,13 @@ void snoopy_message_generateFromFormat (
         }
 
         // Otherwise copy text up to the next data source tag
-        lengthToCopy = fmtPos_nextFormatTag - fmtPos_cur + 1; // + 1 for null termination
+        lengthToCopy = (int) (fmtPos_nextFormatTag - fmtPos_cur + 1); // + 1 for null termination
         if (lengthToCopy > (int)(SNOOPY_LOG_MESSAGE_MAX_SIZE-strlen(logMessage))) {
-            lengthToCopy = SNOOPY_LOG_MESSAGE_MAX_SIZE-strlen(logMessage);
+            lengthToCopy = (int)(SNOOPY_LOG_MESSAGE_MAX_SIZE-strlen(logMessage));
         }
         fmtStaticText[0] = '\0';
         snprintf(fmtStaticText, lengthToCopy, "%s", fmtPos_cur);
         snoopy_message_append(logMessage, fmtStaticText);
-        msgPos_cur += lengthToCopy;
 
         // Get data source tag
         fmtPos_nextFormatTagClose = strstr(fmtPos_nextFormatTag, "}");
@@ -103,7 +100,7 @@ void snoopy_message_generateFromFormat (
             break;
         }
         dataSourceTag[0]    = '\0';
-        dataSourceTagLength = (fmtPos_nextFormatTagClose-1) - (fmtPos_nextFormatTag+2) + 2;
+        dataSourceTagLength = (int)((fmtPos_nextFormatTagClose-1) - (fmtPos_nextFormatTag+2) + 2);
         snprintf(dataSourceTag, dataSourceTagLength, "%s", fmtPos_nextFormatTag + 2);
 
         // If data source tag contains ":", then split it into data source name and data source argument
@@ -141,7 +138,6 @@ void snoopy_message_generateFromFormat (
 
         // Where to start next iteration
         fmtPos_cur = fmtPos_nextFormatTagClose + 1;
-        msgPos_cur = fmtPos_nextFormatTagClose + 1;
     }
 }
 
@@ -163,7 +159,7 @@ void snoopy_message_generateFromFormat (
  */
 void snoopy_message_append (
     char *logMessage,
-    char *appendThis
+    const char *appendThis
 ) {
     snoopy_string_append(logMessage, appendThis, SNOOPY_LOG_MESSAGE_MAX_SIZE);
 }

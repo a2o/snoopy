@@ -54,7 +54,7 @@ int snoopy_genericregistry_getCount (char *regArray[])
 /*
  * doesIdExist()
  *
- * Return true if item exists (by id) in the registry, otherwise return false
+ * True if the item exists (by id) in the registry, otherwise false
  */
 int snoopy_genericregistry_doesIdExist (char *regArray[], int itemId)
 {
@@ -70,7 +70,7 @@ int snoopy_genericregistry_doesIdExist (char *regArray[], int itemId)
 /*
  * doesNameExist()
  *
- * Return true if item exists (by name) in the registry, otherwise return false
+ * True if the item exists (by name) in the registry, otherwise false
  */
 int snoopy_genericregistry_doesNameExist (char *regArray[], char const * const itemName)
 {

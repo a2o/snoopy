@@ -26,16 +26,18 @@
  * Includes order: from local to global
  */
 #include "tty_uid.h"
-
+#include "tty__common.h"
 #include "tty.h"
 
 #include "snoopy.h"
 
 #include <errno.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
+#include <pwd.h>
 
 
 
@@ -54,32 +56,13 @@
  */
 int snoopy_datasource_tty_uid (char * const result, char const * const arg)
 {
-    char    ttyPath[SNOOPY_DATASOURCE_TTY_sizeMaxWithNull];
-    size_t  ttyPathLen = SNOOPY_DATASOURCE_TTY_sizeMaxWithoutNull;
     int     retVal;
-    struct  stat statbuffer;
-    long    ttyUid;
+    uid_t   ttyUid;
 
-    /* Get tty path */
-    retVal = ttyname_r(0, ttyPath, ttyPathLen);
-    if (0 != retVal) {
-        if (EBADF == retVal) {
-            return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "ERROR(ttyname_r->EBADF)");
-        }
-        if (ERANGE == retVal) {
-            return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "ERROR(ttyname_r->ERANGE)");
-        }
-        if (ENOTTY == retVal) {
-            return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "(none)");
-        }
-        return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "(unknown)");
+    retVal = snoopy_datasource_tty__get_tty_uid(&ttyUid, result);
+    if (retVal > 0) {
+        return retVal;   // Error occurred, and the message about it is already in the result buffer
     }
 
-    /* Get owner of tty */
-    if (-1 == stat(ttyPath, &statbuffer)) {
-        return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "ERROR(unable to stat() %s)", ttyPath);
-    }
-    ttyUid = statbuffer.st_uid;
-
-    return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "%ld", ttyUid);
+    return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "%u", ttyUid);
 }

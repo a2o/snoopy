@@ -34,6 +34,7 @@
 #include "snoopy.h"
 
 #include   <errno.h>
+#include   <limits.h>
 #include   <stdio.h>
 #include   <string.h>
 #include   <unistd.h>
@@ -43,6 +44,7 @@
 /*
  * Local defines
  */
+#define   HOST_NAME_BUF_SIZE    HOST_NAME_MAX + 2   // +1 for terminal \0 and +1 because we'll be adding a trailing dot
 #define   HOSTS_PATH            "/etc/hosts"
 #define   HOSTS_LINE_SIZE_MAX   1024
 #define   HOSTS_LINE_POS_MAX    1023
@@ -65,36 +67,42 @@
 int snoopy_datasource_domain (char * const result, char const * const arg)
 {
     FILE *fp;
-    char  hostname[SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE+1];   // +1 - we add "." to the end of string
+    char  hostname[HOST_NAME_BUF_SIZE];
     char  line[HOSTS_LINE_SIZE_MAX];
     int   retVal;
-    int   tmpInt;
+    int   hostnameLen;
 
     /*
      * START: COPY FROM datasource/hostname
      */
     /* Get my hostname first */
-    retVal = gethostname(hostname, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE);
+    retVal = gethostname(hostname, HOST_NAME_MAX);
     if (0 != retVal) {
         return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "(error @ gethostname(): %d)", errno);
     }
 
-    // If hostname was something alien (longer than 1024 characters),
-    // set last char to null just in case
-    hostname[SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE-1] = '\0';
+    // If hostname was something alien (longer than HOST_NAME_MAX), then the
+    // last character may not be NULL (the behavior is unspecified).
+    // Let's avoid any surprises and null-terminate at the end of this buffer.
+    hostname[HOST_NAME_BUF_SIZE-1] = '\0';
     /*
      * END: Copy from datasource/hostname
      */
 
     /* Check hostname length */
-    if (0 == strlen(hostname)) {
+    hostnameLen = (int) strlen(hostname);
+    if (0 == hostnameLen) {
         snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "Got empty hostname");
         return SNOOPY_DATASOURCE_FAILURE;
     }
+    if (hostnameLen > HOST_NAME_BUF_SIZE - 2) {
+        snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "INTERNAL ERROR: Got too long hostname, length: %d", hostnameLen);
+        return SNOOPY_DATASOURCE_FAILURE;
+    }
+
     /* Add a dot at the end of hostname, that is what we are searching for */
-    tmpInt = strlen(hostname);
-    hostname[tmpInt] = '.';
-    hostname[tmpInt+1] = '\0';
+    hostname[hostnameLen] = '.';
+    hostname[hostnameLen+1] = '\0';
 
 
     /* Try to open file in read mode */
@@ -106,8 +114,8 @@ int snoopy_datasource_domain (char * const result, char const * const arg)
 
 
     /* Read line by line */
-    char *linePtr;
-    char *hashPtr;
+    const char *linePtr;
+    const char *hashPtr;
     char *lineEntryPtr;
     char *savePtr;
     char *domainPtr = NULL;
@@ -115,7 +123,8 @@ int snoopy_datasource_domain (char * const result, char const * const arg)
     while (NULL != (linePtr = fgets(line, sizeof(line), fp))) {
 
         /* Is line a comment - ignore everything after '#' character */
-        if (NULL != (hashPtr = strchr(linePtr, '#'))) {
+        hashPtr = strchr(linePtr, '#');
+        if (NULL != hashPtr) {
             hashPtr = '\0';
         }
 

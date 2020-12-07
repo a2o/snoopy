@@ -50,7 +50,7 @@ int  fatalError(char *errorMsg);
 int main (int argc, char **argv)
 {
     char *iniFilePath;
-    char *showConfigVar;
+    const char *showConfigVar;
     snoopy_configuration_t *CFG;
 
 

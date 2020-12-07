@@ -1,9 +1,9 @@
 /*
  * SNOOPY LOGGER
  *
- * File: filtering.h
+ * File: snoopy/datasource/tty__common.h
  *
- * Copyright (c) 2015 Bostjan Skufca <bostjan@a2o.si>
+ * Copyright (c) 2020-2020 Bostjan Skufca <bostjan@a2o.si>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,7 +22,12 @@
 
 
 
-int snoopy_filtering_check_chain (
-    char *logMessage,
-    const char *chain
-);
+#include "snoopy.h"
+#include <sys/types.h>
+
+
+
+/*
+ * SNOOPY DATA SOURCE: tty-related common functions
+ */
+int snoopy_datasource_tty__get_tty_uid (uid_t * ttyUid, char * const result);

@@ -35,7 +35,6 @@ void snoopy_log_syscall_execve (
     char *const  envp[]
 );
 void snoopy_log_syscall_exec (
-    const char  *syscallName,
     const char  *filename,
     char *const  argv[],
     char *const  envp[]
@@ -47,6 +46,6 @@ void snoopy_log_syscall_exec (
  * Log message dispatching functions
  */
 int snoopy_log_dispatch (
-    char *logMessage,
+    const char *logMessage,
     int   errorOrMessage
 );

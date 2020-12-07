@@ -33,7 +33,7 @@ void snoopy_cleanup ();
 /*
  * String functions
  */
-void snoopy_string_append     (char *destString, char *appendThis, int destStringMaxLength);
+void snoopy_string_append     (char *destString, const char *appendThis, int destStringMaxLength);
 int  snoopy_string_countChars (const char *stringToSearch, char characterToCount);
 
 
@@ -41,7 +41,7 @@ int  snoopy_string_countChars (const char *stringToSearch, char characterToCount
 /*
  * Syslog functions
  */
-int         snoopy_syslog_convert_facilityToInt (char *facilityStr);
+int         snoopy_syslog_convert_facilityToInt (const char *facilityStr);
 const char* snoopy_syslog_convert_facilityToStr (int   facilityInt);
-int         snoopy_syslog_convert_levelToInt    (char *levelStr);
+int         snoopy_syslog_convert_levelToInt    (const char *levelStr);
 const char* snoopy_syslog_convert_levelToStr    (int   levelInt);

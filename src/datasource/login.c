@@ -61,7 +61,7 @@ int snoopy_datasource_login (char * const result, char const * const arg)
     int          loginSizeMaxWithoutNull = SNOOPY_DATASOURCE_LOGIN_loginSizeMaxWithoutNull;
     int          loginSizeMaxWithNull    = SNOOPY_DATASOURCE_LOGIN_loginSizeMaxWithNull;
     static char  login[SNOOPY_DATASOURCE_LOGIN_loginSizeMaxWithNull];
-    char        *loginptr = NULL;
+    const char * loginptr = NULL;
 
     /*
      * Retrive the user login trying in order:

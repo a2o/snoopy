@@ -60,9 +60,8 @@ int snoopy_datasource_cmdline (char * const result, char const * const arg)
     int     cmdLineArgCount;
     int     cmdLineSizeSum;   // Size sum of all arguments and spaces in between
     int     cmdLineSizeRet;   // Size that will be returned
-    int     i;
     int     n;
-    snoopy_inputdatastorage_t   *snoopy_inputdatastorage;
+    const snoopy_inputdatastorage_t * snoopy_inputdatastorage;
 
     /* Get argument data of execv/e() call */
     snoopy_inputdatastorage = snoopy_inputdatastorage_get();
@@ -72,37 +71,32 @@ int snoopy_datasource_cmdline (char * const result, char const * const arg)
 
     /* Calculate memory requirement for cmdLine */
     cmdLineSizeSum = 1;
-    for (i=0 ; i<cmdLineArgCount ; i++) {
+    for (int i=0 ; i<cmdLineArgCount ; i++) {
         /* Argument length + space */
         cmdLineSizeSum += strlen(snoopy_inputdatastorage->argv[i]) + 1;
     }
-    /* Last space will be converted to \0 */
-    cmdLineSizeRet = min(SNOOPY_SYSCONF_ARG_MAX, cmdLineSizeSum);
+    /* Do not substract the +1 from the last iteration - the last character (most likely a space) will be converted to \0 */
+    cmdLineSizeRet = min((int) SNOOPY_SYSCONF_ARG_MAX, cmdLineSizeSum);
 
     /* Initialize cmdLine */
     cmdLine    = malloc(cmdLineSizeRet);
     cmdLine[0] = '\0';
 
-    for (i = n = 0 ; i<cmdLineArgCount ; i++) {
-        /* Did adding space in previous iteration cause this? */
-        if (n >= cmdLineSizeRet) {
-            break;
-        }
+    n = 0;
+    for (int i=0 ; i<cmdLineArgCount ; i++) {
         n += snprintf(cmdLine+n, cmdLineSizeRet-n, "%s", snoopy_inputdatastorage->argv[i]);
 
+        if (n < cmdLineSizeRet) {
+            cmdLine[n] = ' ';
+            n++;
+        }
+
         if (n >= cmdLineSizeRet) {
             break;
         }
-        cmdLine[n] = ' ';
-        n++;
     }
 
-    /*
-     * Conclude string - add \0 at the end:
-     * - If the last character is space (added in the loop)
-     * - Or if the last character is an ordinary character from an incompletely copied argument
-     * Or set \0 at the start if the argument array was empty (this should only happen in unit tests).
-     */
+    /* Conclude the string - add \0 at the end */
     if (n > 0) n--;
     cmdLine[n] = '\0';
 

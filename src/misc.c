@@ -108,7 +108,7 @@ void snoopy_cleanup ()
  */
 void snoopy_string_append (
     char *destString,
-    char *appendThis,
+    const char *appendThis,
     int   destStringMaxLength
 ) {
     int   destStringSize          = -1;
@@ -116,8 +116,8 @@ void snoopy_string_append (
     int   appendThisSize          = -1;
 
     /* Verify the limits */
-    destStringSize          = strlen(destString);
-    appendThisSize          = strlen(appendThis);
+    destStringSize          = (int) strlen(destString);
+    appendThisSize          = (int) strlen(appendThis);
     destStringSizeRemaining = destStringMaxLength - destStringSize;
     if (destStringSizeRemaining < appendThisSize) {
         snoopy_error_handler("Maximum destination string size exceeded");
@@ -172,9 +172,9 @@ int  snoopy_string_countChars (const char *stringToSearch, char characterToCount
  *     int           Corresponding syslog facility id, or -1 if not found
  */
 int snoopy_syslog_convert_facilityToInt (
-    char *facilityStr
+    const char *facilityStr
 ) {
-    char *facilityStrAdj;
+    const char *facilityStrAdj;
     int   facilityInt;
 
     facilityStrAdj = facilityStr;
@@ -229,7 +229,7 @@ int snoopy_syslog_convert_facilityToInt (
 const char* snoopy_syslog_convert_facilityToStr (
     int   facilityInt
 ) {
-    char *facilityStr;
+    const char *facilityStr;
 
     // Evaluate and set return value
     if      (LOG_AUTH     == facilityInt) { facilityStr = "AUTH";     }
@@ -274,9 +274,9 @@ const char* snoopy_syslog_convert_facilityToStr (
  *     int        Corresponding syslog level id, or -1 if not found
  */
 int snoopy_syslog_convert_levelToInt (
-    char *levelStr
+    const char *levelStr
 ) {
-    char *levelStrAdj;
+    const char *levelStrAdj;
     int   levelInt;
 
     levelStrAdj = levelStr;
@@ -319,7 +319,7 @@ int snoopy_syslog_convert_levelToInt (
 const char* snoopy_syslog_convert_levelToStr (
     int   levelInt
 ) {
-    char *levelStr;
+    const char *levelStr;
 
     // Evaluate and set return value
     if      (LOG_EMERG   == levelInt) { levelStr = "EMERG";   }

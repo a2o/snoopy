@@ -52,14 +52,15 @@
 // 1 digit PID, space, empty parens, space, 1 char state, space,
 // 1 digit PPID
 #define   ST_SIZE_MIN                 8
-
+// Path "/proc/nnnn/stat" where nnnn = some PID
+#define   ST_PATH_SIZE_MAX           32
 
 
 /*
  * Non-public function prototypes
  */
 static int find_ancestor_in_list(char **name_list);
-static int find_string_in_array(char *str, char **str_array);
+static int find_string_in_array(const char *str, char **str_array);
 static char **string_to_token_array(char *str);
 
 
@@ -114,13 +115,15 @@ int snoopy_filter_exclude_spawns_of(char *msg, char const * const arg)
  *    0 if there are no ancestor that have a name found in name_list
  *   -1 if error.
  */
-static int find_ancestor_in_list(char **name_list)
+static int find_ancestor_in_list(char ** name_list)
 {
     pid_t ppid;
-    char stat_path[32]; // Path "/proc/nnnn/stat" where nnnn = some PID
-    FILE *statf;
-    int rc, found;
-    char *left, *right;
+    char stat_path[ST_PATH_SIZE_MAX];
+    FILE * statf;
+    int rc;
+    int found;
+    const char * left;
+    const char * right;
     size_t len;
 
     /*
@@ -143,14 +146,14 @@ static int find_ancestor_in_list(char **name_list)
     ppid = getppid(); // We start with the parent
     while (ppid != 0) {
         // Create the path to /proc/<ppid>/stat
-        sprintf(stat_path, "/proc/%d/stat", ppid);
+        snprintf(stat_path, ST_PATH_SIZE_MAX, "/proc/%d/stat", ppid);
         statf = fopen(stat_path, "r");
         if (statf == NULL) {
             return -1;
         }
 
         // Grab the first few elements from the stat pseudo-file
-        rc = fread(st_buf, 1, ST_BUF_SIZE - 1, statf);
+        rc = (int) fread(st_buf, 1, ST_BUF_SIZE - 1, statf);
         st_buf[rc] = '\0';
         fclose(statf);
         if (rc < ST_SIZE_MIN) {
@@ -198,7 +201,7 @@ static int find_ancestor_in_list(char **name_list)
  *    1 if str matches one of the strings in str_array
  *    0 if there are no matches or if either argument is NULL.
  */
-static int find_string_in_array(char *str, char **str_array)
+static int find_string_in_array(const char *str, char **str_array)
 {
     if ((str == NULL) || (str_array == NULL)) {
         return 0;
@@ -229,7 +232,6 @@ static int find_string_in_array(char *str, char **str_array)
 static char **string_to_token_array(char *str)
 {
     char *p;
-    int i;
     int sepcount = 0;
     int token_count;
     char **token_array; // Return value
@@ -256,7 +258,7 @@ static char **string_to_token_array(char *str)
     // Fill in token_array with ptrs to individual tokens
     char delim[] = { PROGLISTSEP, '\0'}; // Make a string of delimiters
     p = str;
-    for (i = 0; i < token_count; i++) {
+    for (int i = 0; i < token_count; i++) {
         token_array[i] = strtok_r(p, delim, &saveptr);
         p = NULL;
     }

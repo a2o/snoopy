@@ -62,6 +62,6 @@ int snoopy_datasource_hostname (char * const result, char const * const arg)
     // If hostname was something alien (longer than 1024 characters),
     // set last char to null just in case
     result[SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE-1] = '\0';
-    charCount = strlen(result);
+    charCount = (int) strlen(result);
     return charCount;
 }

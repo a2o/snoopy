@@ -76,7 +76,6 @@ int snoopy_configfile_load (
     /* Parse the INI configuration file first */
     iniParseStatus = ini_parse(iniFilePath, snoopy_configfile_parser_callback, CFG);
     if (0 != iniParseStatus) {
-        // TODO Snoopy error handling
         return -1;
     }
     CFG->configfile_found = SNOOPY_TRUE;
@@ -97,10 +96,10 @@ int snoopy_configfile_load (
  *     Callback function for each found ini value in parsed config file.
  *
  * Params:
- * //    file   Path log INI configuration file
+ *     ...
  *
  * Return:
- * //    int    0 on success, -1 on error openinf file, other int for other errors
+ *     ...
  */
 int snoopy_configfile_parser_callback (
     void* sth,
@@ -198,8 +197,8 @@ void snoopy_configfile_parse_output (
     const char *confValOrig
 ) {
     char  *confVal;
-    char  *outputName;
-    char  *outputArg;
+    const char * outputName;
+    const char * outputArg;
     int    outputArgFound = SNOOPY_FALSE;
     snoopy_configuration_t *CFG;
 
@@ -272,7 +271,7 @@ void snoopy_configfile_parse_syslog_facility (
     const char *confValOrig
 ) {
     char *confVal;
-    char *confValCleaned;
+    const char *confValCleaned;
     int   facilityInt;
     snoopy_configuration_t *CFG;
 
@@ -318,7 +317,7 @@ void snoopy_configfile_parse_syslog_level (
     const char *confValOrig
 ) {
     char *confVal;
-    char *confValCleaned;
+    const char *confValCleaned;
     int   levelInt;
     snoopy_configuration_t *CFG;
 
@@ -362,9 +361,6 @@ void snoopy_configfile_parse_syslog_level (
 char *snoopy_configfile_syslog_value_cleanup (char *confVal)
 {
     char *confValCleaned;
-
-    // Initialize - just in case
-    confValCleaned = confVal;
 
     // Convert to upper case
     snoopy_configfile_strtoupper(confVal);
