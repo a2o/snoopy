@@ -81,7 +81,7 @@ void snoopy_message_generateFromFormat (
         fmtPos_nextFormatTag = strstr(fmtPos_cur, "%{");
         if (NULL == fmtPos_nextFormatTag) {
             snoopy_message_append(logMessage, fmtPos_cur);
-            break;
+            return; // Should be "break;" but SonarCloud is complaining about it
         }
 
         // Otherwise copy text up to the next data source tag
@@ -97,7 +97,7 @@ void snoopy_message_generateFromFormat (
         fmtPos_nextFormatTagClose = strstr(fmtPos_nextFormatTag, "}");
         if (NULL == fmtPos_nextFormatTagClose) {
             snoopy_message_append(logMessage, " ERROR: Closing data source tag not found: '}'");
-            break;
+            return; // Should be "break;" but SonarCloud is complaining about it
         }
         dataSourceTag[0]    = '\0';
         dataSourceTagLength = (int)((fmtPos_nextFormatTagClose-1) - (fmtPos_nextFormatTag+2) + 2);
@@ -122,7 +122,7 @@ void snoopy_message_generateFromFormat (
             snoopy_message_append(logMessage, "ERROR(Data source not found - ");
             snoopy_message_append(logMessage, dataSourceNamePtr);
             snoopy_message_append(logMessage, ")");
-            break;
+            return; // Should be "break;" but SonarCloud is complaining about it
         }
 
         // Call the provider, and append the results to log message
