@@ -49,7 +49,7 @@ Supported CLI arguments:
                 used.
                 (Incompatible with -c flag.)
 
-    -c          Use the git reference that was used for the last import.
+    -c          Use the current git reference that was used for the last import.
                 Mainly useful for testing the import procedure.
                 (Incompatible with -r option.)
 
@@ -122,10 +122,11 @@ if [[ "$ARG_GIT_REF" != "" ]] && [[ "$ARG_GIT_REF_USE_CURRENT" == "true" ]]; the
     _fatalError "The -r and -c flags cannot be used at the same time. Run '$0 -h' for more information." $LINENO
 fi
 
-if [ "${@:$OPTIND:1}" == "" ]; then
+RES="${@:$OPTIND:1}"
+if [ "$RES" == "" ]; then
     _fatalError "Missing the import target. Usage example: $0 PATH/TO/LIB" $LINENO
 fi
-ARG_EXTLIB_DIR="${@:$OPTIND:1}"
+ARG_EXTLIB_DIR="$RES"
 
 
 
