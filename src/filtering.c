@@ -60,7 +60,7 @@ int snoopy_filtering_check_chain (
 ) {
     char  filterChainCopy[SNOOPY_FILTER_CHAIN_MAX_SIZE];   // Must be here, or strtok_r segfaults
     char *str;
-    char *rest;
+    char *rest = NULL;
     const char *filterSpec;            // Single filter specification from defined filter chain
     const char *fcPos_filterSpecArg;   // Pointer to argument part of single filter specification in a filter chain
 
