@@ -149,7 +149,7 @@ Snoopy development is located at the following URI:
 
 Additional git repository mirrors (read-only) are available here:
 - https://gitlab.com/a2o/snoopy/
-- https://bitbucket.org/bostjan/snoopy/
+- https://bitbucket.org/snoopylogger/snoopy/
 
 
 
