@@ -1,7 +1,7 @@
 /*
  * SNOOPY LOGGER
  *
- * File: snoopy.c -- execve() logging wrapper
+ * File: src/eventsource/execve_wrapper_test_configfile_env.c
  *
  * Copyright (c) 2000 Marius Aamodt Eriksen <marius@linux.com>
  * Copyright (c) 2000 Mike Baker <mbm@linux.com>
@@ -29,7 +29,7 @@
 /*
  * Includes order: from local to global
  */
-//#include "libsnoopy-test.h"
+#include "execve_wrapper_test_configfile_env.h"
 
 #include "snoopy.h"
 #include "configuration.h"

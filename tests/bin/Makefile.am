@@ -69,9 +69,10 @@ clean-local:
 # This library reads path to snoopy.ini from SNOOPY_INI environmental variable.
 #
 noinst_LTLIBRARIES        = libsnoopy-test.la
-libsnoopy_test_la_SOURCES = libsnoopy-test.c
-libsnoopy_test_la_CFLAGS  = `echo $(AM_CFLAGS) | sed -e 's/-pedantic//'`
-libsnoopy_test_la_LIBADD  = $(top_builddir)/src/libsnoopy_no_execve.la
+libsnoopy_test_la_SOURCES =
+libsnoopy_test_la_LIBADD  = \
+	$(top_builddir)/src/libsnoopy_no_execve.la \
+	$(top_builddir)/src/eventsource/libsnoopy_eventsource_execve_wrapper_test_configfile_env.la
 #
 # This needs to be added as automake does not create shared library for
 # things in noinst_LTLIBRARIES.

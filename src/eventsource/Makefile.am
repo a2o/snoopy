@@ -19,7 +19,7 @@ AM_CFLAGS += -Wno-pedantic
 
 ### Create one library with all Snoopy data sources collected in it
 #
-noinst_LTLIBRARIES = libsnoopy_eventsource_execve_wrapper.la
+noinst_LTLIBRARIES =
 
 
 
@@ -27,6 +27,17 @@ noinst_LTLIBRARIES = libsnoopy_eventsource_execve_wrapper.la
 #
 # Please maintain alphabetical order, equal to what `ls` would do.
 #
+
+# Production event source
 libsnoopy_eventsource_execve_wrapper_la_SOURCES = \
 	execve_wrapper.c \
 	execve_wrapper.h
+noinst_LTLIBRARIES += \
+	libsnoopy_eventsource_execve_wrapper.la
+
+# Test-related event source
+libsnoopy_eventsource_execve_wrapper_test_configfile_env_la_SOURCES = \
+	execve_wrapper_test_configfile_env.c \
+	execve_wrapper_test_configfile_env.h
+noinst_LTLIBRARIES += \
+	libsnoopy_eventsource_execve_wrapper_test_configfile_env.la
