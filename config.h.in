@@ -158,6 +158,9 @@
 /* Configure command that was used to build Snoopy */
 #undef SNOOPY_CONFIGURE_COMMAND
 
+/* code coverage */
+#undef SNOOPY_CONF_CODE_COVERAGE_ENABLED
+
 /* Is config file parsing enabled? */
 #undef SNOOPY_CONF_CONFIGFILE_ENABLED
 

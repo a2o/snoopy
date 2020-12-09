@@ -81,6 +81,7 @@ AC_PROG_SED
 ### Check for programs required for TEST suite
 #
 SNOOPY_PROG_REQUIRE([dirname],  [DIRNAME],  [Needed for "make check" test suite.])
+SNOOPY_PROG_REQUIRE([gcov],     [GCOV],     [Needed for "make coverage" build target.])
 SNOOPY_PROG_REQUIRE([readlink], [READLINK], [Needed for "make check" test suite.])
 SNOOPY_PROG_SUGGEST([socat],    [SOCAT],    [Needed for "make check" test suite.])
 SNOOPY_PROG_SUGGEST([ps],       [PS],       [Needed for "make check" test suite.])
@@ -760,6 +761,32 @@ AC_ARG_ENABLE(dev-tools,
 )
 AM_CONDITIONAL([DEV_TOOLS_ENABLED], [test "x$enable_dev_tools" == "xyes"])
 AC_MSG_NOTICE([Snoopy development tools: $enable_dev_tools])
+
+
+
+dnl ============================================================================
+dnl ======= ENABLE TEST COVERAGE BUILD =========================================
+dnl ============================================================================
+AC_ARG_ENABLE(code-coverage,
+    [AC_HELP_STRING(
+        [--enable-code-coverage],
+        [Embed code coverage instrumentation into Snoopy [default=disabled]]
+    )],
+    SNOOPY_CONFIGURE_ENABLE_GENERIC_SPECIFIED(  [code_coverage], [code_coverage_enabled], [$enableval], []),
+    SNOOPY_CONFIGURE_ENABLE_GENERIC_UNSPECIFIED([code_coverage], [code_coverage_enabled], [no], [])
+)
+SNOOPY_CONFIGURE_ENABLE_GENERIC_EVALUATE([$code_coverage_enabled], [CODE_COVERAGE_ENABLED], [code coverage])
+
+AS_IF([test "x$code_coverage_enabled" = "xyes"], [
+    # Disable optimization, add code coverage-related build and linking flags
+    changequote({,})
+    CFLAGS=`echo $CFLAGS | sed 's/-O[1-9s]/-O0/g'`
+    CXXFLAGS=`echo $CXXFLAGS | sed 's/-O[1-9s]/-O0/g'`
+    CFLAGS="$CFLAGS -fprofile-arcs -ftest-coverage"
+    CXXFLAGS="$CFLAGS -fprofile-arcs -ftest-coverage"
+    LDFLAGS="$LDFLAGS -lgcov --coverage"
+    changequote([,])
+])
 
 
 
