@@ -27,8 +27,8 @@ ACLOCAL_AMFLAGS = -I build/m4
 SUBDIRS  =
 if CONFIGFILE_ENABLED
 SUBDIRS += etc
-SUBDIRS += lib
 endif
+SUBDIRS += lib
 SUBDIRS += src
 SUBDIRS += util
 SUBDIRS += doc

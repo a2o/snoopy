@@ -174,6 +174,8 @@ AC_CONFIG_FILES([Makefile
                  lib/Makefile
                  lib/inih/Makefile
                  lib/inih/src/Makefile
+                 lib/liblcthw/Makefile
+                 lib/liblcthw/src/Makefile
                  src/Makefile
                  src/datasource/Makefile
                  src/eventsource/Makefile

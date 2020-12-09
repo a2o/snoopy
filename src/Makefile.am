@@ -62,14 +62,12 @@ endif
 
 # If config file is enabled, build and link these too
 if THREAD_SAFETY_ENABLED
-libsnoopy_no_execve_la_CFLAGS  += -I$(top_srcdir)/lib/liblcthw/src
-libsnoopy_no_execve_la_LDFLAGS += -lpthread
 libsnoopy_no_execve_la_SOURCES += \
-	../lib/liblcthw/src/dbg.h \
-	../lib/liblcthw/src/list.c \
-	../lib/liblcthw/src/list.h \
 	tsrm.c \
 	tsrm.h
+libsnoopy_no_execve_la_LIBADD += \
+	../lib/liblcthw/src/liblist.la
+libsnoopy_no_execve_la_LDFLAGS += -lpthread
 endif
 
 # If filtering is enabled, add these too
