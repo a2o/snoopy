@@ -27,8 +27,8 @@ ACLOCAL_AMFLAGS = -I build/m4
 SUBDIRS  =
 if CONFIGFILE_ENABLED
 SUBDIRS += etc
-SUBDIRS += lib
 endif
+SUBDIRS += lib
 SUBDIRS += src
 SUBDIRS += util
 SUBDIRS += doc
@@ -74,10 +74,11 @@ uninstall-local: disable
 #
 
 # Clean release files
-clean-local:
+clean-local: coverage-clean
 	rm -rf snoopy-[0-9].[0-9].* ; \
 	rm -f  snoopy-*.tar.gz* ; \
 	rm -f  snoopy-latest-*.txt ; \
+	find . -name '*.gcno' | xargs -r rm ; \
 	rm -rf coverity-build-wrapper-output* ; \
 	rm -rf sonarcloud-build-wrapper-output ; \
 	rm -rf sonar-cfamily.reproducer ; \
@@ -117,3 +118,20 @@ valgrind: all
 	--undef-value-errors=yes \
 	--track-origins=yes \
 	./util/snoopy-run-everything ;
+
+
+
+### Code coverage
+#
+if CODE_COVERAGE_ENABLED
+
+coverage-report:
+	./dev-tools/libexec/generate-gcov-reports.sh
+
+coverage-clean:
+	find . -name "*.gcda" -exec rm {} \;
+	find . -name "*.gcov" -exec rm {} \;
+
+coverage: coverage-clean check coverage-report
+
+endif

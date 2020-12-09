@@ -100,7 +100,7 @@ jobs:
       ### Bootstrap & configure the code
       #
       - run: ./bootstrap.sh
-      - run: ./configure --enable-everything
+      - run: ./configure --enable-everything --enable-code-coverage
 
 
 
@@ -124,10 +124,13 @@ jobs:
 
 
 
-      ### Run the test suite
+      ### Generate coverage info
       #
-      - name: Run tests
-        run: make tests -j4
+      # No need to run `make check`, as the test suite is started by
+      # the `coverage` target in Makefile.
+      #
+      - name: Run tests and generate coverage information
+        run: make coverage
 
 
 
@@ -164,10 +167,11 @@ jobs:
               -Dsonar.branch.name=$CURRENT_BRANCH_NAME \
               -Dsonar.projectVersion=$SONARCLOUD_TAG \
               -Dsonar.cfamily.build-wrapper-output=../snoopy-sonarcloud-build-wrapper-output \
+              -Dsonar.cfamily.gcov.reportsPath=. \
               -Dsonar.cfamily.threads=4 \
               -Dsonar.cfamily.cache.enabled=false \
               -Dsonar.host.url=https://sonarcloud.io
-            echo "Submission tag: $SONARCLOUD_TAG"
+            echo "Submission tag: $SONARCLOUD_TAG (branch: $CURRENT_BRANCH_NAME)"
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
@@ -186,10 +190,11 @@ jobs:
               -Dsonar.pullrequest.key=${{ github.event.pull_request.number }} \
               -Dsonar.pullrequest.branch=${{github.event.pull_request.head.repo.owner.login}}:${{github.event.pull_request.head.ref}} \
               -Dsonar.cfamily.build-wrapper-output=../snoopy-sonarcloud-build-wrapper-output \
+              -Dsonar.cfamily.gcov.reportsPath=. \
               -Dsonar.cfamily.threads=4 \
               -Dsonar.cfamily.cache.enabled=false \
               -Dsonar.host.url=https://sonarcloud.io
-            echo "Submission tag: $SONARCLOUD_TAG"
+            echo "Submission tag: $SONARCLOUD_TAG (branch: $CURRENT_BRANCH_NAME)"
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any

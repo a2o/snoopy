@@ -77,12 +77,12 @@ fi
 
 # Clean
 ./bootstrap.sh
-./configure --enable-everything
+./configure --enable-everything --enable-code-coverage
 make gitclean
 
 # Configure for real
 ./bootstrap.sh
-./configure --enable-everything
+./configure --enable-everything --enable-code-coverage
 
 
 
@@ -91,6 +91,15 @@ make gitclean
 build-wrapper-linux-x86-64 \
     --out-dir $BUILD_WRAPPER_OUTPUT_DIR \
     make
+
+
+
+### Generate coverage info
+#
+# No need to run `make check`, as the test suite is started by
+# the `coverage` target in Makefile.
+#
+make coverage
 
 
 
@@ -105,7 +114,8 @@ sonar-scanner \
   -Dsonar.branch.name=$CURRENT_BRANCH_NAME \
   -Dsonar.projectVersion=$SONARCLOUD_TAG \
   -Dsonar.cfamily.build-wrapper-output=$BUILD_WRAPPER_OUTPUT_DIR \
+  -Dsonar.cfamily.gcov.reportsPath=. \
   -Dsonar.cfamily.threads=1 \
   -Dsonar.cfamily.cache.enabled=false \
   -Dsonar.host.url=https://sonarcloud.io
-echo "INFO: Submission tag: $SONARCLOUD_TAG"
+echo "INFO: Submission tag: $SONARCLOUD_TAG (branch: $CURRENT_BRANCH_NAME)"

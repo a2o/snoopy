@@ -9,3 +9,8 @@ SUBDIRS =
 if CONFIGFILE_ENABLED
 SUBDIRS += inih
 endif
+
+
+if THREAD_SAFETY_ENABLED
+SUBDIRS += liblcthw
+endif

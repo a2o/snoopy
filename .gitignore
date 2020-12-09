@@ -79,6 +79,11 @@ Makefile
 /tests/*/*.trs
 
 
+### Files produced by the tests' code coverage analysis
+#
+*.gcov
+
+
 ### Code analysis configuration and output files
 #
 /coverity-build-wrapper-output*
