@@ -13,7 +13,6 @@ if FILTERING_ENABLED
 SUBDIRS += filter
 endif
 SUBDIRS += output
-SUBDIRS += .
 
 
 
@@ -44,7 +43,6 @@ libsnoopy_no_execve_la_SOURCES = \
 	parser.c \
 	parser.h \
 	snoopy.h
-libsnoopy_no_execve_la_CFLAGS  = $(AM_CFLAGS)
 libsnoopy_no_execve_la_LDFLAGS = $(AM_LDFLAGS)
 
 libsnoopy_no_execve_la_LIBADD = \
