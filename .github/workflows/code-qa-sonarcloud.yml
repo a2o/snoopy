@@ -189,6 +189,8 @@ jobs:
               -Dsonar.pullrequest.provider=github \
               -Dsonar.pullrequest.key=${{ github.event.pull_request.number }} \
               -Dsonar.pullrequest.branch=${{github.event.pull_request.head.repo.owner.login}}:${{github.event.pull_request.head.ref}} \
+              -Dsonar.pullrequest.github.repository=${{ github.event.pull_request.base.repo.full_name }} \
+              -Dsonar.pullrequest.base=${{ github.event.pull_request.base.ref }} \
               -Dsonar.cfamily.build-wrapper-output=../snoopy-sonarcloud-build-wrapper-output \
               -Dsonar.cfamily.gcov.reportsPath=. \
               -Dsonar.cfamily.threads=4 \
