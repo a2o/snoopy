@@ -1,0 +1,77 @@
+name: "Code QA - CodeQL"
+
+
+
+on:
+  workflow_dispatch:
+
+  push:
+    branches:
+      - master
+    tags:
+      - '*'
+    paths-ignore:
+      - '.github/*.md'
+      - '.github/workflows/**'
+      - '.gitignore'
+      - 'ChangeLog'
+      - 'COPYING'
+      - 'configure.scan'
+      - 'contrib/**'
+      - 'dev-tools/**'
+#      - '!dev-tools/libexec/get-release-*.sh'
+      - 'doc/**'
+      - 'etc/**'
+      - 'install/**'
+      - 'lib/*/IMPORT.defs'
+      - 'lib/*/LICENSE'
+      - 'README.md'
+
+  pull_request:
+    branches:
+      - master
+    paths-ignore:
+      - '.github/*.md'
+      - '.github/workflows/**'
+      - '.gitignore'
+      - 'ChangeLog'
+      - 'COPYING'
+      - 'configure.scan'
+      - 'contrib/**'
+      - 'dev-tools/**'
+#      - '!dev-tools/libexec/get-release-*.sh'
+      - 'doc/**'
+      - 'etc/**'
+      - 'install/**'
+      - 'lib/*/IMPORT.defs'
+      - 'lib/*/LICENSE'
+      - 'README.md'
+
+
+
+jobs:
+  analyze:
+    name: Analyze
+    runs-on: ubuntu-20.04
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    ### Initialize the CodeQL tools for scanning
+    #
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v1
+      with:
+        languages: cpp
+
+    ### Build
+    #
+    - run: ./bootstrap.sh
+    - run: ./configure --enable-everything
+    - run: make -j4
+
+    ### Run the scan
+    #
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v1
