@@ -28,26 +28,6 @@ on:
       - 'lib/*/LICENSE'
       - 'README.md'
 
-  pull_request_target:
-    branches:
-      - master
-    paths-ignore:
-      - '.github/*.md'
-      - '.github/workflows/**'
-      - '.gitignore'
-      - 'ChangeLog'
-      - 'COPYING'
-      - 'configure.scan'
-      - 'contrib/**'
-      - 'dev-tools/**'
-#      - '!dev-tools/libexec/get-release-*.sh'
-      - 'doc/**'
-      - 'etc/**'
-      - 'install/**'
-      - 'lib/*/IMPORT.defs'
-      - 'lib/*/LICENSE'
-      - 'README.md'
-
 
 
 jobs:
@@ -174,7 +154,6 @@ jobs:
             echo "Submission tag: $SONARCLOUD_TAG (branch: $CURRENT_BRANCH_NAME)"
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
         if: ${{ github.event_name == 'push' }}
 
 
@@ -199,5 +178,4 @@ jobs:
             echo "Submission tag: $SONARCLOUD_TAG (branch: $CURRENT_BRANCH_NAME)"
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
         if: ${{ github.event_name == 'pull_request_target' }}
