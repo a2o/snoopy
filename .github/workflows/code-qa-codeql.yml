@@ -10,22 +10,22 @@ on:
       - master
     tags:
       - '*'
-    paths-ignore:
-      - '.github/*.md'
-      - '.github/workflows/**'
-      - '.gitignore'
-      - 'ChangeLog'
-      - 'COPYING'
-      - 'configure.scan'
-      - 'contrib/**'
-      - 'dev-tools/**'
-#      - '!dev-tools/libexec/get-release-*.sh'
-      - 'doc/**'
-      - 'etc/**'
-      - 'install/**'
-      - 'lib/*/IMPORT.defs'
-      - 'lib/*/LICENSE'
-      - 'README.md'
+#    paths-ignore:   # Intentionally commented out, as CodeQL does not run for a PR, if it didn't run for PR's base commit
+#      - '.github/*.md'
+#      - '.github/workflows/**'
+#      - '.gitignore'
+#      - 'ChangeLog'
+#      - 'COPYING'
+#      - 'configure.scan'
+#      - 'contrib/**'
+#      - 'dev-tools/**'
+##      - '!dev-tools/libexec/get-release-*.sh'
+#      - 'doc/**'
+#      - 'etc/**'
+#      - 'install/**'
+#      - 'lib/*/IMPORT.defs'
+#      - 'lib/*/LICENSE'
+#      - 'README.md'
 
   pull_request:
     branches:
