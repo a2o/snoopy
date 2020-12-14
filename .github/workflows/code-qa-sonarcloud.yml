@@ -28,6 +28,28 @@ on:
       - 'lib/*/LICENSE'
       - 'README.md'
 
+  pull_request_target:
+    types:
+      - labeled
+    branches:
+      - master
+    paths-ignore:
+      - '.github/*.md'
+      - '.github/workflows/**'
+      - '.gitignore'
+      - 'ChangeLog'
+      - 'COPYING'
+      - 'configure.scan'
+      - 'contrib/**'
+      - 'dev-tools/**'
+#      - '!dev-tools/libexec/get-release-*.sh'
+      - 'doc/**'
+      - 'etc/**'
+      - 'install/**'
+      - 'lib/*/IMPORT.defs'
+      - 'lib/*/LICENSE'
+      - 'README.md'
+
 
 
 jobs:
@@ -36,6 +58,9 @@ jobs:
     name: Static code analysis submission
     runs-on: ubuntu-20.04
     container: ubuntu:20.04
+
+    # For PRs, start the execution only when a specific label is added
+    if: github.event_name == 'workflow_dispatch' || github.event_name == 'push' || (github.event_name == 'pull_request_target' && contains(github.event.pull_request.labels.*.name, 'Status: Safe to Test'))
 
     steps:
 
