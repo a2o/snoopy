@@ -60,7 +60,14 @@ jobs:
     container: ubuntu:20.04
 
     # For PRs, start the execution only when a specific label is added
-    if: github.event_name == 'workflow_dispatch' || github.event_name == 'push' || (github.event_name == 'pull_request_target' && contains(github.event.pull_request.labels.*.name, 'Status: Safe to Test'))
+    if: |
+      (
+        (github.event_name == 'workflow_dispatch')
+        ||
+        (github.event_name == 'push')
+        ||
+        (github.event_name == 'pull_request_target' && contains(github.event.pull_request.labels.*.name, 'Status: Safe to Test'))
+      )
 
     steps:
 
