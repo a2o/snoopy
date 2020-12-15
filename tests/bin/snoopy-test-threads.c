@@ -310,7 +310,7 @@ int randomNumberInclusive (int nMin, int nMax)
     // Read the random content
     int fd = open("/dev/urandom", O_RDONLY);
     if (-1 == fd) {
-        printf("ERROR: Unable to read %lu bytes from /dev/urandom, only got %li bytes.\n", sizeof(randomNrRaw), bytesRead);
+        printf("ERROR: Unable to open /dev/urandom.\n");
         return -1; // Yeah, not the best error handling
     }
     bytesRead = read(fd, buffer, sizeof(randomNrRaw));
