@@ -115,7 +115,7 @@ int snoopy_datasource_domain (char * const result, char const * const arg)
 
     /* Read line by line */
     const char *linePtr;
-    const char *hashPtr;
+    char *hashPtr;
     char *lineEntryPtr;
     char *savePtr;
     char *domainPtr = NULL;
@@ -125,7 +125,7 @@ int snoopy_datasource_domain (char * const result, char const * const arg)
         /* Is line a comment - ignore everything after '#' character */
         hashPtr = strchr(linePtr, '#');
         if (NULL != hashPtr) {
-            hashPtr = '\0';
+            *hashPtr = '\0';
         }
 
         /* Try to find "hostname." there */
