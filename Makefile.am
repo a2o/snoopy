@@ -74,7 +74,11 @@ uninstall-local: disable
 #
 
 # Clean release files
+if CODE_COVERAGE_ENABLED
 clean-local: coverage-clean
+else
+clean-local:
+endif
 	rm -rf snoopy-[0-9].[0-9].* ; \
 	rm -f  snoopy-*.tar.gz* ; \
 	rm -f  snoopy-latest-*.txt ; \
