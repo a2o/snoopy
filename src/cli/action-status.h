@@ -1,11 +1,7 @@
 /*
  * SNOOPY LOGGER
  *
- * File: detect.c -- simple execve() wrapper detection
- *
- * Copyright (c) 2000 Marius Aamodt Eriksen <marius@linux.com>
- * Copyright (c) 2000 Mike Baker <mbm@linux.com>
- *
+ * Copyright (c) 2020 Bostjan Skufca Jese <bostjan@a2o.si>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,20 +18,6 @@
  * Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#include <stdio.h>
-#include <dlfcn.h>
 
-#ifndef RTLD_DEFAULT
-#  define RTLD_DEFAULT ((void *) 0)
-#endif
 
-int main(void) {
-	const char * libc = "/usr/lib/x86_64-linux-gnu/libc.so";
-	void *handle = dlopen(libc, RTLD_LAZY);
-	//simple test to see if the execve in memory matches libc.so.6
-	if (dlsym(handle, "execve") != dlsym(RTLD_DEFAULT, "execve"))
-		printf("something fishy...\n");
-	else
-		printf("secure\n");
-	return 0;
-}
+int snoopy_cli_action_status ();

@@ -29,9 +29,6 @@ bin_PROGRAMS                         += snoopy-test-output
 snoopy_test_output_SOURCES            = snoopy-test-output.c
 snoopy_test_output_LDADD              = ../src/libsnoopy_no_execve.la
 
-noinst_PROGRAMS                      += snoopy-detect
-snoopy_detect_SOURCES                 = snoopy-detect.c
-
 noinst_PROGRAMS                      += snoopy-test-all-data-sources
 snoopy_test_all_data_sources_SOURCES  = snoopy-test-all-data-sources.c
 snoopy_test_all_data_sources_LDADD    = ../src/libsnoopy_no_execve.la \

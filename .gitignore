@@ -54,6 +54,7 @@ Makefile
 .deps/
 .libs/
 /a.out
+/src/cli/snoopy
 /src/libsnoopy.so
 /tests/bin/*
 !/tests/bin/*.c
