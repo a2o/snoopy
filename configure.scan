@@ -40,6 +40,7 @@ AC_CONFIG_FILES([Makefile
                  lib/liblcthw/Makefile
                  lib/liblcthw/src/Makefile
                  src/Makefile
+                 src/cli/Makefile
                  src/datasource/Makefile
                  src/entrypoint/Makefile
                  src/filter/Makefile
