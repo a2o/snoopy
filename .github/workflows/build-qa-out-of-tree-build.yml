@@ -1,0 +1,97 @@
+name: Build QA - Out-of-tree build
+
+
+
+on:
+  workflow_dispatch:
+
+  pull_request:
+    branches:
+      - master
+    paths-ignore:
+      - '.github/*.md'
+      - '.github/workflows/**'
+      - '.gitignore'
+      - 'ChangeLog'
+      - 'COPYING'
+      - 'configure.scan'
+      - 'contrib/**'
+      - 'dev-tools/**'
+      - '!dev-tools/libexec/get-release-*.sh'
+      - 'doc/**'
+      - 'etc/**'
+      - 'install/**'
+      - 'lib/*/IMPORT.defs'
+      - 'lib/*/LICENSE'
+      - 'README.md'
+
+  push:
+    branches:
+      - master
+    tags:
+      - '*'
+    paths-ignore:
+      - '.github/*.md'
+      - '.github/workflows/**'
+      - '.gitignore'
+      - 'ChangeLog'
+      - 'COPYING'
+      - 'configure.scan'
+      - 'contrib/**'
+      - 'dev-tools/**'
+      - '!dev-tools/libexec/get-release-*.sh'
+      - 'doc/**'
+      - 'etc/**'
+      - 'install/**'
+      - 'lib/*/IMPORT.defs'
+      - 'lib/*/LICENSE'
+      - 'README.md'
+
+
+
+jobs:
+  build-qa-out-of-tree-build:
+
+    name: Out-of-tree build
+    runs-on: ubuntu-20.04
+    container: ubuntu:20.04
+
+
+
+    ###
+    ### Steps to run
+    ###
+    steps:
+
+
+
+      ### Install requirements for the subsequent checkout action
+      #
+      - run: |
+          DEBIAN_FRONTEND=noninteractive apt-get update -y
+          DEBIAN_FRONTEND=noninteractive apt-get install -y git
+
+
+
+      ### Fetch the code
+      #
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+
+
+      ### Build
+      #
+      - run: ./dev-tools/install-dev-software.sh
+      - run: ./bootstrap.sh
+      - run: mkdir -p tmp/build1
+      - run: cd tmp/build1 && ../../configure --enable-everything
+      - run: cd tmp/build1 && make -j4
+      - run: cd tmp/build1 && make -j4 check
+
+      - uses: actions/upload-artifact@v2
+        if: failure()
+        with:
+          name: tests-directory
+          path: tmp/build1/tests/

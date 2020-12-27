@@ -25,7 +25,7 @@
 /*
  * Includes order: from local to global
  */
-#include "src/filter/noop.h"
+#include "noop.h"
 
 #include "snoopy.h"
 

@@ -25,7 +25,7 @@
 /*
  * Includes order: from local to global
  */
-#include "src/datasource/tty.h"
+#include "tty.h"
 
 #include "snoopy.h"
 

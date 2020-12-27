@@ -25,7 +25,7 @@
 /*
  * Includes order: from local to global
  */
-#include "src/filter/only_tty.h"
+#include "only_tty.h"
 
 #include "snoopy.h"
 
