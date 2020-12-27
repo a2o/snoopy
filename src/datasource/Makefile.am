@@ -4,12 +4,6 @@ include   $(top_srcdir)/build/Makefile.am.common
 
 
 
-### Include
-#
-AM_CFLAGS += -I$(top_srcdir)/src
-
-
-
 ### Create one library with all Snoopy data sources collected in it
 #
 noinst_LTLIBRARIES = libsnoopy_datasources_all.la

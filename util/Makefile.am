@@ -4,10 +4,6 @@ include   $(top_srcdir)/build/Makefile.am.common
 
 
 
-### Use includes from src/ directory
-#
-AM_CFLAGS += -I$(top_srcdir)/src
-
 bin_PROGRAMS    =
 sbin_SCRIPTS    =
 noinst_LTLIBRARIES =

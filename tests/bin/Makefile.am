@@ -4,12 +4,6 @@ include   $(top_srcdir)/build/Makefile.am.common
 
 
 
-### Include
-#
-AM_CFLAGS += -I$(top_srcdir)/src
-
-
-
 ### Init empty program install list, but always link with given library
 #
 noinst_PROGRAMS =
