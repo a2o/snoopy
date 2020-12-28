@@ -23,7 +23,7 @@ AC_INIT([Snoopy Logger],[m4_esyscmd_s(echo $(./dev-tools/libexec/get-release-ver
 
 ### Configure autotools
 #
-AC_CONFIG_SRCDIR([src/eventsource/execve_wrapper.c])   # Check if we are in correct directory tree
+AC_CONFIG_SRCDIR([src/entrypoint/execve_wrapper.c])   # Check if we are in correct directory tree
 AC_CONFIG_AUX_DIR([build/aux])
 AC_CONFIG_MACRO_DIRS([build/m4])
 m4_include([build/snoopy.m4])
@@ -181,7 +181,7 @@ AC_CONFIG_FILES([Makefile
                  src/Makefile
                  src/cli/Makefile
                  src/datasource/Makefile
-                 src/eventsource/Makefile
+                 src/entrypoint/Makefile
                  src/filter/Makefile
                  src/output/Makefile
                  tests/Makefile

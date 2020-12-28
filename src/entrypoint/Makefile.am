@@ -18,27 +18,27 @@ AM_CFLAGS += -Wno-pedantic
 
 
 
-### Create one library with all Snoopy data sources collected in it
+### Variables to add final build targets to
 #
 noinst_LTLIBRARIES =
 
 
 
-### Event sources
+### Library-based entry points
 #
-# Please maintain alphabetical order, equal to what `ls` would do.
+# Maintain alphabetical order, equal to what `ls` would do.
 #
 
-# Production event source
-libsnoopy_eventsource_execve_wrapper_la_SOURCES = \
+# Production entry point
+libsnoopy_entrypoint_execve_wrapper_la_SOURCES = \
 	execve_wrapper.c \
 	execve_wrapper.h
 noinst_LTLIBRARIES += \
-	libsnoopy_eventsource_execve_wrapper.la
+	libsnoopy_entrypoint_execve_wrapper.la
 
-# Test-related event source
-libsnoopy_eventsource_execve_wrapper_test_configfile_env_la_SOURCES = \
+# Test-related entry point
+libsnoopy_entrypoint_execve_wrapper_test_configfile_env_la_SOURCES = \
 	execve_wrapper_test_configfile_env.c \
 	execve_wrapper_test_configfile_env.h
 noinst_LTLIBRARIES += \
-	libsnoopy_eventsource_execve_wrapper_test_configfile_env.la
+	libsnoopy_entrypoint_execve_wrapper_test_configfile_env.la

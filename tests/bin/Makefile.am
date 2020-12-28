@@ -78,7 +78,7 @@ noinst_LTLIBRARIES        = libsnoopy-test.la
 libsnoopy_test_la_SOURCES =
 libsnoopy_test_la_LIBADD  = \
 	$(top_builddir)/src/libsnoopy_no_execve.la \
-	$(top_builddir)/src/eventsource/libsnoopy_eventsource_execve_wrapper_test_configfile_env.la
+	$(top_builddir)/src/entrypoint/libsnoopy_entrypoint_execve_wrapper_test_configfile_env.la
 #
 # This needs to be added as automake does not create shared library for
 # things in noinst_LTLIBRARIES.

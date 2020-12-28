@@ -1,11 +1,9 @@
 /*
  * SNOOPY LOGGER
  *
- * File: snoopy/eventsource/execve_wrapper.h
+ * File: snoopy/entrypoint/execve_wrapper_test_configfile_env.h
  *
- * Copyright (c) 2000 Marius Aamodt Eriksen <marius@linux.com>
- * Copyright (c) 2000 Mike Baker <mbm@linux.com>
- * Copyright (c) 2010-2015 Bostjan Skufca <bostjan@a2o.si>
+ * Copyright (c) 2020 Bostjan Skufca <bostjan@skufca.si>
  *
  * Part hacked on flight KL 0617, 30,000 ft or so over the Atlantic :)
  *

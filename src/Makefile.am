@@ -8,7 +8,7 @@ include   $(top_srcdir)/build/Makefile.am.common
 #
 SUBDIRS  =
 SUBDIRS += cli
-SUBDIRS += eventsource
+SUBDIRS += entrypoint
 SUBDIRS += datasource
 if FILTERING_ENABLED
 SUBDIRS += filter
@@ -88,7 +88,7 @@ lib_LTLIBRARIES      = libsnoopy.la
 libsnoopy_la_SOURCES =
 libsnoopy_la_LIBADD  = \
 	libsnoopy_no_execve.la \
-	eventsource/libsnoopy_eventsource_execve_wrapper.la
+	entrypoint/libsnoopy_entrypoint_execve_wrapper.la
 
 
 
