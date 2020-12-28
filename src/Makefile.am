@@ -54,9 +54,6 @@ if CONFIGFILE_ENABLED
 libsnoopy_no_execve_la_SOURCES += \
 	configfile.c \
 	configfile.h
-# Add topdir into header search path, for lib/... headers
-configfile.o:  CFLAGS += -I$(top_srcdir)
-configfile.lo: CFLAGS += -I$(top_srcdir)
 libsnoopy_no_execve_la_LIBADD += \
 	../lib/inih/src/libinih.la
 endif
@@ -66,9 +63,6 @@ if THREAD_SAFETY_ENABLED
 libsnoopy_no_execve_la_SOURCES += \
 	tsrm.c \
 	tsrm.h
-# Add topdir into header search path, for lib/... headers
-tsrm.o:  CFLAGS += -I$(top_srcdir)
-tsrm.lo: CFLAGS += -I$(top_srcdir)
 libsnoopy_no_execve_la_LIBADD += \
 	../lib/liblcthw/src/liblist.la
 libsnoopy_no_execve_la_LDFLAGS += -lpthread

@@ -6,12 +6,13 @@ include   $(top_srcdir)/build/Makefile.am.common
 
 ### Adjust cflags
 #
-# Exclude -pedantic from CFLAGS because casing object pointer received from
-# dlsym to function pointer is not allowed by ISO C.
+# Exclude -Wpedantic from directory-level CFLAGS, because casting object pointer
+# received from dlsym() to function pointer is not allowed by ISO C.
 #
-# Before we had this, but it produced a prefixed .o|.gcna files, which were
-# messing with our code coverage analysis:
-#   libsnoopy_eventsource_execve_wrapper_la_CFLAGS = `echo $(AM_CFLAGS) | sed -e 's/-pedantic//'`
+# Earlier we had this enabled on a per-make-target basis, like this:
+#   libsnoopy_eventsource_execve_wrapper_la_CFLAGS = `echo $(AM_CFLAGS) | sed -e 's/-Wpedantic//'`
+# Unfortunately, that produced prefixed .o|.gcna files, which were messing with
+# our code coverage analysis.
 #
 AM_CFLAGS += -Wno-pedantic
 
