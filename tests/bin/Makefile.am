@@ -57,9 +57,6 @@ clean-local:
 
 ### Create test library, whole
 #
-# Exclude -pedantic from CFLAGS because casing object pointer received from
-# dlsym to function pointer is not allowed by ISO C.
-#
 # This library reads path to snoopy.ini from SNOOPY_INI environmental variable.
 #
 noinst_LTLIBRARIES        = libsnoopy-test.la
