@@ -7,6 +7,6 @@ MAINTAINERCLEANFILES = Makefile.in
 ### Automake defaults
 #
 # Note:
-# -I$(top_srcdir) is here for #include 'lib/*/src/*.h' to work
+# -I$(top_srcdir)/src is here for #include "snoopy.h" (or similar) to work everywhere
 #
 AM_CFLAGS = -Wall -Werror -Wextra -Wno-unused-parameter -std=c99 -Wpedantic -I$(top_srcdir)/src
