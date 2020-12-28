@@ -30,15 +30,15 @@ noinst_LTLIBRARIES =
 #
 
 # Production event source
-libsnoopy_eventsource_execve_wrapper_la_SOURCES = \
+libsnoopy_entrypoint_execve_wrapper_la_SOURCES = \
 	execve_wrapper.c \
 	execve_wrapper.h
 noinst_LTLIBRARIES += \
-	libsnoopy_eventsource_execve_wrapper.la
+	libsnoopy_entrypoint_execve_wrapper.la
 
 # Test-related event source
-libsnoopy_eventsource_execve_wrapper_test_configfile_env_la_SOURCES = \
+libsnoopy_entrypoint_execve_wrapper_test_configfile_env_la_SOURCES = \
 	execve_wrapper_test_configfile_env.c \
 	execve_wrapper_test_configfile_env.h
 noinst_LTLIBRARIES += \
-	libsnoopy_eventsource_execve_wrapper_test_configfile_env.la
+	libsnoopy_entrypoint_execve_wrapper_test_configfile_env.la

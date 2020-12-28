@@ -26,7 +26,7 @@ AC_INIT(
 
 ### Configure autotools
 #
-AC_CONFIG_SRCDIR([src/eventsource/execve_wrapper.c])   # Check if we are in correct directory tree
+AC_CONFIG_SRCDIR([src/entrypoint/execve_wrapper.c])   # Check if we are in correct directory tree
 AC_CONFIG_AUX_DIR([build/aux])
 AC_CONFIG_MACRO_DIR([build/m4])
 m4_include([build/snoopy.m4])
@@ -179,7 +179,7 @@ AC_CONFIG_FILES([Makefile
                  lib/liblcthw/src/Makefile
                  src/Makefile
                  src/datasource/Makefile
-                 src/eventsource/Makefile
+                 src/entrypoint/Makefile
                  src/filter/Makefile
                  src/output/Makefile
                  util/Makefile
