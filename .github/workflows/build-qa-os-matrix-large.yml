@@ -43,24 +43,24 @@ jobs:
     strategy:
       matrix:
         container:
-          - archlinux:base-devel
+          - ciready/archlinux:base-devel-ci-c
 
-          - centos:7
-          - centos:8
+          - ciready/centos:7-ci-c
+          - ciready/centos:8-ci-c
 
-          - debian:stretch
-          - debian:buster
-          - debian:bullseye
-          - debian:sid
+          - ciready/debian:stretch-ci-c
+          - ciready/debian:buster-ci-c
+          - ciready/debian:bullseye-ci-c
+          - ciready/debian:sid-ci-c
 
-          - opensuse/leap:15.1
-          - opensuse/leap:15.2
-          - opensuse/tumbleweed:latest
+          - ciready/opensuse:leap-15.1-ci-c
+          - ciready/opensuse:leap-15.2-ci-c
+          - ciready/opensuse:tumbleweed-latest-ci-c
 
-          - ubuntu:16.04
-          - ubuntu:18.04
-          - ubuntu:20.04
-          - ubuntu:rolling
+          - ciready/ubuntu:16.04-ci-c
+          - ciready/ubuntu:18.04-ci-c
+          - ciready/ubuntu:20.04-ci-c
+          - ciready/ubuntu:rolling-ci-c
 
 
 
@@ -68,29 +68,6 @@ jobs:
     ### Steps to run
     ###
     steps:
-
-
-
-      ### Install requirements for the subsequent checkout action
-      #
-
-      # Arch
-      - run: pacman -Syu --noconfirm git
-        if: ${{ startsWith(matrix.container, 'archlinux:') }}
-
-      # Debian / Ubuntu
-      - run: |
-          DEBIAN_FRONTEND=noninteractive apt-get update -y
-          DEBIAN_FRONTEND=noninteractive apt-get install -y git
-        if: ${{ startsWith(matrix.container, 'debian:') || startsWith(matrix.container, 'ubuntu:') }}
-
-      # RedHat / CentOS
-      - run: yum install -y git
-        if: ${{ startsWith(matrix.container, 'centos:') }}
-
-      # SUSE / OpenSUSE
-      - run: zypper -n install git
-        if: ${{ startsWith(matrix.container, 'opensuse/') }}
 
 
 

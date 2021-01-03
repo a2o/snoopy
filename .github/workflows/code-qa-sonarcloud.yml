@@ -57,7 +57,7 @@ jobs:
 
     name: Static code analysis submission
     runs-on: ubuntu-20.04
-    container: ubuntu:20.04
+    container: ciready/ubuntu:20.04-ci-c
 
     # For PRs, start the execution only when a specific label is added
     if: |
@@ -70,14 +70,6 @@ jobs:
       )
 
     steps:
-
-
-
-      ### Install requirements for the subsequent checkout action
-      #
-      - run: |
-          DEBIAN_FRONTEND=noninteractive apt-get update -y
-          DEBIAN_FRONTEND=noninteractive apt-get install -y git
 
 
 

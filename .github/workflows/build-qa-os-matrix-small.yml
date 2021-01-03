@@ -41,17 +41,17 @@ jobs:
     strategy:
       matrix:
         container:
-          - archlinux:base-devel
+          - ciready/archlinux:base-devel-ci-c
 
-          - centos:8
+          - ciready/centos:8-ci-c
 
-          - debian:buster
-          - debian:sid
+          - ciready/debian:buster-ci-c
+          - ciready/debian:sid-ci-c
 
-          - opensuse/leap:15.2
+          - ciready/opensuse:leap-15.2-ci-c
 
-          - ubuntu:20.04
-          - ubuntu:rolling
+          - ciready/ubuntu:20.04-ci-c
+          - ciready/ubuntu:rolling-ci-c
 
 
 
@@ -59,29 +59,6 @@ jobs:
     ### Steps to run
     ###
     steps:
-
-
-
-      ### Install requirements for the subsequent checkout action
-      #
-
-      # Arch
-      - run: pacman -Syu --noconfirm git
-        if: ${{ startsWith(matrix.container, 'archlinux:') }}
-
-      # Debian / Ubuntu
-      - run: |
-          DEBIAN_FRONTEND=noninteractive apt-get update -y
-          DEBIAN_FRONTEND=noninteractive apt-get install -y git
-        if: ${{ startsWith(matrix.container, 'debian:') || startsWith(matrix.container, 'ubuntu:') }}
-
-      # RedHat / CentOS
-      - run: yum install -y git
-        if: ${{ startsWith(matrix.container, 'centos:') }}
-
-      # SUSE / OpenSUSE
-      - run: zypper -n install git
-        if: ${{ startsWith(matrix.container, 'opensuse/') }}
 
 
 
