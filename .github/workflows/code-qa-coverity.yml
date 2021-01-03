@@ -16,17 +16,9 @@ jobs:
 
     name: Static code analysis
     runs-on: ubuntu-20.04
-    container: ubuntu:20.04
+    container: ciready/ubuntu:20.04-ci-c
 
     steps:
-
-
-
-      ### Install requirements for the subsequent checkout action
-      #
-      - run: |
-          DEBIAN_FRONTEND=noninteractive apt-get update -y
-          DEBIAN_FRONTEND=noninteractive apt-get install -y git
 
 
 
