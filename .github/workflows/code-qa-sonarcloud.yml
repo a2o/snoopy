@@ -182,6 +182,8 @@ jobs:
 
 
       - name: Scan and submit to SonarCloud - on PR
+        env:
+          PR_HEAD_REF: ${{ github.event.pull_request.head.ref }}
         run: |
             CURRENT_BRANCH_NAME=`git branch --show-current`
             SONARCLOUD_TAG=`./dev-tools/libexec/get-sonarcloud-tag.sh`
@@ -191,7 +193,7 @@ jobs:
               -Dsonar.sources=. \
               -Dsonar.pullrequest.provider=github \
               -Dsonar.pullrequest.key=${{ github.event.pull_request.number }} \
-              -Dsonar.pullrequest.branch=${{github.event.pull_request.head.repo.owner.login}}:${{github.event.pull_request.head.ref}} \
+              -Dsonar.pullrequest.branch=${{github.event.pull_request.head.repo.owner.login}}:$PR_HEAD_REF \
               -Dsonar.pullrequest.github.repository=${{ github.event.pull_request.base.repo.full_name }} \
               -Dsonar.pullrequest.base=${{ github.event.pull_request.base.ref }} \
               -Dsonar.cfamily.build-wrapper-output=../snoopy-sonarcloud-build-wrapper-output \
