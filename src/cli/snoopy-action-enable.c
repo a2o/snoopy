@@ -24,10 +24,12 @@
  * Includes order: from local to global
  */
 #include "snoopy-action-enable.h"
+#include "snoopy-cli-subroutines.h"
 
-#include <dlfcn.h>
+#include <errno.h>
 #include <stdio.h>
-
+#include <stdlib.h>
+#include <string.h>
 
 
 #ifndef RTLD_DEFAULT
@@ -36,13 +38,45 @@
 
 
 
-int snoopy_action_enable (int argc, char *argv[]) {
-    const char * libc = "/usr/lib/x86_64-linux-gnu/libc.so";
-    void *handle = dlopen(libc, RTLD_LAZY);
-    //simple test to see if the execve in memory matches libc.so.6
-    if (dlsym(handle, "execve") != dlsym(RTLD_DEFAULT, "execve"))
-        printf("Looks like something (Snoopy?) has overloaded the `execve()` function...\n");
-    else
-        printf("Looks like `execve()` is untouched...\n");
+int snoopy_action_enable (int argc, char *argv[])
+{
+//    char * filePath = "/etc/ld.so.preload";
+    char * filePath = "/etc/ld.so.preload.TES";
+    long   fileContentLen;
+    char * fileContentBuf = 0;
+
+
+    FILE * fileHandle = fopen(filePath, "r");
+    if (fileHandle == NULL) {
+        showErrorValue("Unable to open file for reading", filePath);
+        showErrorValue("Reason:", strerror(errno));
+        return 1;
+    }
+
+
+    fseek(fileHandle, 0, SEEK_END);
+    fileContentLen = ftell(fileHandle);
+    fseek(fileHandle, 0, SEEK_SET);
+    if (fileContentLen > 0) {
+        fileContentBuf = malloc(fileContentLen+1);
+        if (fileContentBuf == NULL) {
+            showErrorValue("Unable to malloc() for reading file content from:", filePath);
+            showErrorValue("Reason:", strerror(errno));
+            return 1;
+        }
+
+        long freadRes = fread(fileContentBuf, 1, fileContentLen, fileHandle);
+        if (freadRes != fileContentLen) {
+            showErrorValue("Unable to read the whole content of", filePath);
+            printf("Expected bytes count: %ld", fileContentLen);
+            printf("Obtained bytes count: %ld", freadRes);
+            return 1;
+        }
+    }
+    fclose (fileHandle);
+
+    printf("%s content:\n", filePath);
+    printf("%s", fileContentBuf);
+    free(fileContentBuf);
     return 0;
 }
