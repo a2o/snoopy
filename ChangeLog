@@ -3,6 +3,13 @@
 -------------------------------------------------------------------------------
 
 
+202x-xx-xx - Version 2.5.0
+--------------------------
+o Change/Enhancement (GH #166):
+    Enable thread safety by default. It can still be disabled at build time
+    via the --disable-thread-safety flag.
+
+
 2020-11-30 - Version 2.4.10
 ---------------------------
 o Bugfix (GH #119, #168) - IMPORTANT:
