@@ -127,7 +127,7 @@ done
 ### Check if there are uncommitted changes in this repository
 #
 if [ "$ALLOW_DIRTY" == "false" ]; then
-    RES=`git status --short | grep -c .`
+    RES=`git status --short | grep -c . | cat`
     if [ "$RES" != "0" ]; then
         _fatalError "There are uncommitted changes in this repository (the '-d' flag skips this check)" $LINENO
     fi
