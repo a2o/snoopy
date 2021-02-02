@@ -3,6 +3,35 @@
 -------------------------------------------------------------------------------
 
 
+2021-02-02 - Version 2.4.11
+---------------------------
+o Enhancement (GH #179):
+    Introduction of SonarCloud static analysis pointed out many potential issues
+    and other code smells, all fixed now (details are available in the repo history).
+
+o Enhancement (GH #176):
+    Add installation support for Arch Linux and OpenSUSE.
+
+o Enhancement (GH #175):
+    Remove installation dependency on the `which` program.
+    Additionally, remove configure dependency on `socat` and `ps` programs.
+    Additionally, add a script to quickly install all development-related
+    programs on mainstream Linux distributions.
+
+o Bugfix (GH #184):
+    Fix out-of-source builds (+ a verificaton job has been added to CI so we
+    don't break that aspect inadvertently again).
+
+o Bugfix (GH #184):
+    Fix incorrect handling of comments when reading /etc/hosts file by the
+    `domain` data source.
+
+o Bugfix (GH #174):
+    Fix invalid memory access that could only be encountered by running a
+    test suite. Regular Snoopy operation was unaffected by this.
+
+
+
 2020-11-30 - Version 2.4.10
 ---------------------------
 o Bugfix (GH #119, #168) - IMPORTANT:
