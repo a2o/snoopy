@@ -71,6 +71,11 @@ Makefile
 /etc/snoopy.ini
 
 
+### Files produced by the releasing process
+#
+/snoopy-*.tar.gz
+
+
 ### Files produced by test suite
 #
 /tests/*.log
