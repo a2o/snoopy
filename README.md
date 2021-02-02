@@ -59,7 +59,7 @@ Consult [ChangeLog](ChangeLog) for more information.
 [![Install QA - OS Matrix - Install from git](https://github.com/a2o/snoopy/workflows/Install%20QA%20-%20OS%20Matrix/badge.svg?branch=install)](https://github.com/a2o/snoopy/actions?query=workflow%3A%22Install+QA+-+OS+Matrix%22+branch%3Ainstall)
 [![Release QA - OS Matrix - Install from source](https://github.com/a2o/snoopy/workflows/Release%20QA%20-%20OS%20Matrix%20-%20Install%20from%20source/badge.svg)](https://github.com/a2o/snoopy/actions?query=workflow%3A%22Release+QA+-+OS+Matrix+-+Install+from+source%22)
 
-The simplest way to start using the latest version Snoopy is to execute the following commands (as root):
+The simplest way to start using the latest Snoopy is to execute the following commands (as root):
 ```shell
 wget -O install-snoopy.sh https://github.com/a2o/snoopy/raw/install/install/install-snoopy.sh &&
 chmod 755 install-snoopy.sh &&
