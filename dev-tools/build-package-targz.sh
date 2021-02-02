@@ -48,7 +48,7 @@ _echo "Determined release version: $RELEASE_VERSION"
 
 ### If this is a production build, do additional checking
 #
-if [[ $RELEASE_TAG =~ ^snoopy-[0-9]+\.[0-9]+\.[0-9]+(-rc[0-9]+)$ ]]; then
+if [[ $RELEASE_TAG =~ ^snoopy-[0-9]+\.[0-9]+\.[0-9]+(-rc[0-9]+)?$ ]]; then
     _echo "This is a stable production build, running additional consistency checks..."
     ./dev-tools/verify-release-tag.sh "$RELEASE_TAG"
     RELEASE_IS_STABLE="1"
