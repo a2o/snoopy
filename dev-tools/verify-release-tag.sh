@@ -40,7 +40,7 @@ RELEASE_VERSION=`echo "$RELEASE_TAG" | sed -e 's/snoopy-//'`
 
 ### Check if release tag actually exists
 #
-if ! git tag | grep "^$RELEASE_TAG\$"; then
+if ! git tag | grep "^$RELEASE_TAG\$" > /dev/null ; then
     _fatalError "Release tag not found: $RELEASE_TAG"
 fi
 
@@ -48,7 +48,7 @@ fi
 
 ### Check if first line of the tagged commit contains "Release X.Y.Z"
 #
-RES=`git log -1 --pretty="%B" $RELEASE_TAG | head -n1 | grep "^Release $RELEASE_VERSION\$" -c`
+RES=`git log -1 --pretty="%B" $RELEASE_TAG | head -n1 | grep "^Release $RELEASE_VERSION\$" -c | cat`
 if [ "$RES" -ne "1" ]; then
     _fatalError "Release commit message under tag $RELEASE_TAG does not contain the following first line: 'Release $RELEASE_VERSION'"
 fi
@@ -66,18 +66,9 @@ fi
 
 ### Check if README.md - NEWS has the same release
 #
-RES=`cat README.md | grep -E '^## News' -A10 | grep -E "Snoopy $RELEASE_VERSION released!" -c`
+RES=`cat README.md | grep -E '^## News' -A10 | grep -E "Snoopy $RELEASE_VERSION released!" -c | cat`
 if [ "$RES" != "1" ]; then
     _fatalError "News section in README.md does not contain a reference to $RELEASE_VERSION version."
-fi
-
-
-
-### Check if README.md - INSTALLATION has the same release
-#
-RES=`cat README.md | grep -E 'Latest stable release' | grep -E "$RELEASE_VERSION" -c`
-if [ "$RES" != "1" ]; then
-    _fatalError "Installation section in README.md does not contain a reference to $RELEASE_VERSION version."
 fi
 
 
