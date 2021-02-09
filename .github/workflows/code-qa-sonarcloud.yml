@@ -182,8 +182,6 @@ jobs:
 
 
       - name: Scan and submit to SonarCloud - on PR
-        env:
-          PR_HEAD_REF: ${{ github.event.pull_request.head.ref }}
         run: |
             CURRENT_BRANCH_NAME=`git branch --show-current`
             SONARCLOUD_TAG=`./dev-tools/libexec/get-sonarcloud-tag.sh`
@@ -204,4 +202,5 @@ jobs:
             echo "Submission tag: $SONARCLOUD_TAG (branch: $CURRENT_BRANCH_NAME)"
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          PR_HEAD_REF: ${{ github.event.pull_request.head.ref }}
         if: ${{ github.event_name == 'pull_request_target' }}
