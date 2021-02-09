@@ -50,7 +50,8 @@ _echo "Determined release version: $RELEASE_VERSION"
 #
 if [[ $RELEASE_TAG =~ ^snoopy-[0-9]+\.[0-9]+\.[0-9]+(-rc[0-9]+)?$ ]]; then
     _echo "This is a stable production build, running additional consistency checks..."
-    ./dev-tools/verify-release-tag.sh "$RELEASE_TAG"
+    ./dev-tools/libexec/verify-last-version-in-readme.sh    "$RELEASE_VERSION"
+    ./dev-tools/libexec/verify-last-version-in-changelog.sh "$RELEASE_VERSION"
     RELEASE_IS_STABLE="1"
 else
     _echo "This is a non-stable/non-production build, additional consistency checks will be skipped."
