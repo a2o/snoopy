@@ -48,11 +48,12 @@ _echo "Determined release version: $RELEASE_VERSION"
 
 ### If this is a production build, do additional checking
 #
+RELEASE_IS_STABLE="false"
 if [[ $RELEASE_TAG =~ ^snoopy-[0-9]+\.[0-9]+\.[0-9]+(-rc[0-9]+)?$ ]]; then
     _echo "This is a stable production build, running additional consistency checks..."
     ./dev-tools/libexec/verify-last-version-in-readme.sh    "$RELEASE_VERSION"
     ./dev-tools/libexec/verify-last-version-in-changelog.sh "$RELEASE_VERSION"
-    RELEASE_IS_STABLE="1"
+    RELEASE_IS_STABLE="true"
 else
     _echo "This is a non-stable/non-production build, additional consistency checks will be skipped."
 fi
@@ -77,6 +78,29 @@ make distcheck
 
 
 
-### All done.
-_echo "Build complete."
-_echo "Result: $RELEASE_PACKAGE_FILE"
+### Report success
+#
+_echo ""
+_echo "SUCCESS: Build complete."
+_echo "SUCCESS: Result: $RELEASE_PACKAGE_FILE"
+_echo ""
+
+
+
+### Suggest next step(s)
+#
+if [ "$RELEASE_IS_STABLE" == "true" ]; then
+    _echo ""
+    _echo "Next step:"
+    _echo "=========="
+    _echo "Publish the release using the following command:"
+    _echo ""
+    _echo "    ./dev-tools/publish-release.sh"
+    _echo ""
+else
+    _echo ""
+    _echo "Next step:"
+    _echo "=========="
+    _echo "This is a non-stable version, skipping the publishing suggestion."
+    _echo ""
+fi

@@ -2,6 +2,18 @@
 
 
 
+## Changing the release process / Editing this document
+
+This document contains the overall releasing process descrtiption, but hints
+for what to do after each step are scattered around the related scripts in the
+[dev-tools/](../dev-tools/) directory, to speed up the process.
+
+Therefore, when changing the release process and documenting the changes in
+this file, replicate the changes into the `Next step(s):` sections at the end of
+each releasing-related script in the [dev-tools/](../dev-tools/) directory.
+
+
+
 ## (Before the release) QA
 
 Run through the Quality Assurance-related steps in the [HACKING-QA.md](HACKING-QA.md) document
@@ -55,9 +67,7 @@ The following assumptions are, well, assumed, by the releasing scripts:
 
 
 6. Go to Snoopy's [Actions](https://github.com/a2o/snoopy/actions) tab
-   on GitHub and monitor the following workflows:
-   - [Releasing QA - OS Matrix](https://github.com/a2o/snoopy/actions?query=workflow%3A%22Release+QA+-+OS+Matrix%22).
-   - [Install QA - README.md](https://github.com/a2o/snoopy/actions?query=workflow%3A%22Install+QA+-+README.md%22)
+   on GitHub and monitor the workflows related to the new release (hint: filter by git tag).
 
 
 7. All done.

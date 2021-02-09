@@ -175,3 +175,23 @@ git commit -m "Release $RELEASE_VERSION
 #
 " -e -s -v
 git tag "$RELEASE_TAG"
+
+
+
+### Report success
+#
+_echo ""
+_echo "SUCCESS: Commit and tag for version $RELEASE_VERSION created (locally)."
+_echo ""
+
+
+
+### Suggest next step(s)
+#
+_echo ""
+_echo "Next step:"
+_echo "=========="
+_echo "Build the release package with the following command:"
+_echo ""
+_echo "    ./dev-tools/build-package-targz.sh"
+_echo ""

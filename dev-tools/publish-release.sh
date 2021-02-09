@@ -315,9 +315,30 @@ gh release create \
     -t "$RELEASE_TAG" \
     "$RELEASE_TAG" \
     $RELEASE_PACKAGE_TARGZ
+
+
+
+### Report success
+#
 _echo ""
 _echo "SUCCESS: Snoopy version $RELEASE_VERSION released."
 _echo "SUCCESS: The new release is available at:"
 _echo "SUCCESS:"
 _echo "SUCCESS:     https://github.com/$GIT_REMOTE_GITHUB_ID/releases/tag/$RELEASE_TAG"
+_echo ""
+
+
+
+### Suggest next step(s)
+#
+_echo ""
+_echo "Next steps:"
+_echo "==========="
+_echo "1. Close the $RELEASE_VERSION milestone on GitHub (paste the release URL into the content):"
+_echo "    https://github.com/a2o/snoopy/milestones"
+_echo ""
+_echo "2. Monitor the CI jobs related to $RELEASE_TAG release tag:"
+_echo "    https://github.com/a2o/snoopy/actions?query=branch%3A$RELEASE_TAG"
+_echo ""
+_echo "3. All done."
 _echo ""
