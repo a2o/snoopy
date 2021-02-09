@@ -3,6 +3,16 @@
 -------------------------------------------------------------------------------
 
 
+
+2021-02-09 - Version 2.4.12
+---------------------------
+o Bugfix (GH #191, #192):
+    Fix incorrect handling of sysconf(_SC_ARG_MAX)'s return value in cmdline
+    datasource.
+    (Thanks to Marco Stagno (@MarcoStagno @ GitHub) for reporting this.)
+
+
+
 2021-02-02 - Version 2.4.11
 ---------------------------
 o Enhancement (GH #179):
