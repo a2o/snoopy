@@ -28,7 +28,7 @@ jobs:
     strategy:
       matrix:
         container:
-          - archlinux:base-devel
+#          - archlinux:base-devel
 
           - centos:7
           - centos:8

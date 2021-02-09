@@ -41,7 +41,7 @@ jobs:
     strategy:
       matrix:
         container:
-          - ciready/archlinux:base-devel-ci-c
+#          - ciready/archlinux:base-devel-ci-c
 
           - ciready/centos:8-ci-c
 
