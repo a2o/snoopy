@@ -36,11 +36,6 @@
 
 
 
-/* Helper */
-#define min(a,b) a<b ? a : b
-
-
-
 /*
  * SNOOPY DATA SOURCE: cmdline
  *
@@ -76,7 +71,11 @@ int snoopy_datasource_cmdline (char * const result, char const * const arg)
         cmdLineSizeSum += strlen(snoopy_inputdatastorage->argv[i]) + 1;
     }
     /* Do not substract the +1 from the last iteration - the last character (most likely a space) will be converted to \0 */
-    cmdLineSizeRet = min((int) SNOOPY_SYSCONF_ARG_MAX, cmdLineSizeSum);
+    if (cmdLineSizeSum > SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE) {
+        cmdLineSizeRet = SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE;
+    } else {
+        cmdLineSizeRet = cmdLineSizeSum;
+    }
 
     /* Initialize cmdLine */
     cmdLine    = malloc(cmdLineSizeRet);

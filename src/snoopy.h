@@ -34,7 +34,7 @@
 #define  _XOPEN_SOURCE   700
 #include <features.h>   /* Needed for GLIBC macros here */
 #include <syslog.h>     /* Needed for syslog defaults */
-#include <unistd.h>     /* Needed for _SC_ARG_MAX constant */
+#include <unistd.h>
 
 
 
@@ -45,15 +45,6 @@
  * LOG_... constants are needed.
  */
 #include "config.h"
-
-
-
-/**
- * SNOOPY_MAX_ARG_LENGTH
- *
- * Maximum length of arguments passed to execv(e) functions
- */
-#define SNOOPY_SYSCONF_ARG_MAX ((-1 == sysconf(_SC_ARG_MAX)) ? 4096 : sysconf(_SC_ARG_MAX))
 
 
 
