@@ -147,7 +147,7 @@ jobs:
       - name: Install SonarClound scanner
         run: |
           rm -rf sonar-scanner*
-          LATEST_SONAR_SCANNER_VERSION=`wget -q -O - --header "Accept: application/vnd.github.v3+json" https://api.github.com/repos/SonarSource/sonar-scanner-cli/releases/latest | grep '"name"' | head -n1 | cut -d '"' -f4 | cut -d'-' -f2`
+          LATEST_SONAR_SCANNER_VERSION=`wget -q -O - --header "Accept: application/vnd.github.v3+json" https://api.github.com/repos/SonarSource/sonar-scanner-cli/releases/latest | grep '"tag_name"' | head -n1 | cut -d '"' -f4`
           echo "Got the latest Sonar Scanner version: $LATEST_SONAR_SCANNER_VERSION"
           LATEST_SONAR_SCANNER_ZIP="sonar-scanner-cli-$LATEST_SONAR_SCANNER_VERSION-linux.zip"
           LATEST_SONAR_SCANNER_DIR="sonar-scanner-$LATEST_SONAR_SCANNER_VERSION-linux"
