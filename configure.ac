@@ -343,7 +343,7 @@ AC_ARG_ENABLE(all-datasources,
 # ==============================================================================
 SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [cmdline],        [full command line including arguments])
 SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [cwd],            [current working directory])
-SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [datetime],       [current date and time in ISO 8601 format])
+SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [datetime],       [current date and time, supports strftime-based formatting argument, defaults to ISO 8601 format])
 SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [domain],         [domain of this system])
 SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [egid],           [effective GID])
 SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [egroup],         [effective literal group name])

@@ -20,6 +20,11 @@ endif
 
 if DATASOURCE_ENABLED_datetime
     TESTS += $(SCRIPT_PREFIX)_datetime.sh
+    TESTS += $(SCRIPT_PREFIX)_datetime-fmt-epoch.sh
+    TESTS += $(SCRIPT_PREFIX)_datetime-fmt-static.sh
+    TESTS += $(SCRIPT_PREFIX)_datetime-fmt-too-long.sh
+    XFAIL_TESTS += $(SCRIPT_PREFIX)_datetime-fmt-too-long.sh
+    TESTS += $(SCRIPT_PREFIX)_datetime-fmt-ymd.sh
 endif
 
 #if DATASOURCE_ENABLED_domain

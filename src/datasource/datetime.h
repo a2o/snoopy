@@ -23,6 +23,14 @@
 
 
 /*
+ * Local defines
+ */
+#define   SNOOPY_DATASOURCE_DATETIME_defaultFormat      "%FT%T%z"
+#define   SNOOPY_DATASOURCE_DATETIME_sizeMaxWithNull    80
+
+
+
+/*
  * SNOOPY DATA SOURCE: datetime
  */
 int snoopy_datasource_datetime (char * const result, char const * const arg);
