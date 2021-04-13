@@ -53,7 +53,8 @@ int snoopy_datasource_datetime (char * const result, char const * const arg)
     time_t     curTime;
     struct tm  curLocalTimeBuf;
     const struct tm *curLocalTime;
-    char       timeBuffer[80];
+    char const *formatToUse;
+    char       timeBuffer[SNOOPY_DATASOURCE_DATETIME_sizeMaxWithNull];
 
     // Get current time
     if ((time_t) -1 == time(&curTime)) {
@@ -66,8 +67,15 @@ int snoopy_datasource_datetime (char * const result, char const * const arg)
         return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "(error @ localtime_r())");
     }
 
+    // Determine the format to use
+    if (arg[0] != '\0') {
+        formatToUse = arg;
+    } else {
+        formatToUse = SNOOPY_DATASOURCE_DATETIME_defaultFormat;
+    }
+
     // Format it
-    if (0 == strftime(timeBuffer, 80, "%FT%T%z", curLocalTime)) {
+    if (0 == strftime(timeBuffer, SNOOPY_DATASOURCE_DATETIME_sizeMaxWithNull, formatToUse, curLocalTime)) {
         return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "(error @ strftime())");
     }
 
