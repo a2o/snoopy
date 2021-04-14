@@ -4,6 +4,15 @@
 
 
 
+2021-04-14 - Version 2.4.13
+---------------------------
+o Enhancement (GH #194, #195):
+    Dadasource `datetime` now support custom date and time formatting, with %-based
+    conversion specifications - strftime()'s manual page contains all the details.
+    (Thanks to @ky4k0b (@GitHub) for suggesting this.)
+
+
+
 2021-02-09 - Version 2.4.12
 ---------------------------
 o Bugfix (GH #191, #192):
