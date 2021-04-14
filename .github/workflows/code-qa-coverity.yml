@@ -8,6 +8,24 @@ on:
   push:
     branches:
       - coverity-scan
+    tags:
+      - '*'
+    paths-ignore:
+      - '.github/*.md'
+      - '.github/workflows/**'
+      - '.gitignore'
+      - 'ChangeLog'
+      - 'COPYING'
+      - 'configure.scan'
+      - 'contrib/**'
+      - 'dev-tools/**'
+#      - '!dev-tools/libexec/get-release-*.sh'
+      - 'doc/**'
+      - 'etc/**'
+      - 'install/**'
+      - 'lib/*/IMPORT.defs'
+      - 'lib/*/LICENSE'
+      - 'README.md'
 
 
 
