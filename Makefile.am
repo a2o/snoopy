@@ -83,7 +83,7 @@ endif
 	rm -f  snoopy-*.tar.gz* ; \
 	rm -f  snoopy-latest-*.txt ; \
 	find . -name '*.gcno' | xargs -r rm ; \
-	rm -rf coverity-build-wrapper-output* ; \
+	rm -rf cov-int* ; \
 	rm -rf sonarcloud-build-wrapper-output ; \
 	rm -rf sonar-cfamily.reproducer ; \
 	rm -rf .scannerwork ;

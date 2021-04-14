@@ -13,8 +13,8 @@ set -o pipefail
 ### Settings
 #
 COVERITY_SETTINGS_FILE="./dev-tools/submit-to-coverity.conf"
-BUILD_DIR="coverity-build-wrapper-output"
-BUILD_FILE_PREFIX="coverity-build-wrapper-output-snoopy"
+BUILD_DIR="cov-int"   # Can't change the name of this one, or else Coverity build analysis fails once the build tarball is uploaded
+BUILD_FILE_PREFIX="cov-int"
 
 
 
@@ -74,7 +74,7 @@ fi
 if [ -n "${COVERITY_BUILD_DESCRIPTION+1}" ]; then
     true
 else
-    export COVERITY_BUILD_DESCRIPTION="Build version $COVERITY_BUILD_VERSION"
+    export COVERITY_BUILD_DESCRIPTION="$COVERITY_BUILD_VERSION"
 fi
 
 
@@ -138,8 +138,9 @@ tar \
 ### Submit to Coverity
 #
 curl -f \
-    --form email="$COVERITY_EMAIL" \
+    --form project=a2o%2Fsnoopy \
     --form token="$COVERITY_TOKEN" \
+    --form email="$COVERITY_EMAIL" \
     --form version="$COVERITY_BUILD_VERSION" \
     --form description="$COVERITY_BUILD_DESCRIPTION" \
     --form file=@${BUILD_FILE_PREFIX}-${COVERITY_BUILD_VERSION}.tar.gz \

@@ -91,7 +91,10 @@ Makefile
 
 ### Code analysis configuration and output files
 #
-/coverity-build-wrapper-output*
+# Notes:
+# - cov-int*: Can't rename this one, or else Coverity build analysis fails once the build tarball is uploaded.
+#
+/cov-int*
 /dev-tools/submit-to-coverity.conf
 /dev-tools/submit-to-sonarcloud.conf
 /.scannerwork/

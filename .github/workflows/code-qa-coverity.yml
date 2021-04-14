@@ -62,7 +62,7 @@ jobs:
         run: |
           export PATH=/opt/cov-analysis-linux64/bin:$PATH
           cov-build \
-            --dir coverity-build-wrapper-output \
+            --dir cov-int \
             make
 
 
@@ -72,14 +72,14 @@ jobs:
       - name: Submit the result to Coverity Scan
         run: |
           RELEASE_TAG=`./dev-tools/libexec/get-release-tag.sh`
-          tar -czf coverity-build-wrapper-output.tar.gz coverity-build-wrapper-output
+          tar -czf cov-int.tar.gz cov-int
           curl \
             --form project=a2o%2Fsnoopy \
             --form token=$COVERITY_SCAN_TOKEN \
             --form email=bostjan@skufca.si \
-            --form file=@coverity-build-wrapper-output.tar.gz \
             --form version=$RELEASE_TAG \
             --form description=$RELEASE_TAG \
+            --form file=@cov-int.tar.gz \
             https://scan.coverity.com/builds?project=a2o%2Fsnoopy
           echo "Submission tag: $RELEASE_TAG"
         env:
