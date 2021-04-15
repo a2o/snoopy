@@ -26,7 +26,7 @@ I confirm that:
 
 ## Bug reproduction steps
 
-To avoid describing the environment "manually", I am providing a [Docker-based issue demo](../../docs/DOCKER-BASED-ISSUE-DEMO.md).
+To avoid describing the environment "manually", I am providing a [Docker-based issue demo](../blob/master/doc/DOCKER-BASED-ISSUE-DEMO.md).
 
 My `Dockerfile` content:
 ```
