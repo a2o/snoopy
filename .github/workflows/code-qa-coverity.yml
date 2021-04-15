@@ -11,8 +11,7 @@ on:
     tags:
       - '*'
     paths-ignore:
-      - '.github/*.md'
-      - '.github/workflows/**'
+      - '.github/**'
       - '.gitignore'
       - 'ChangeLog'
       - 'COPYING'

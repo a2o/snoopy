@@ -12,8 +12,7 @@ on:
     tags:
       - '*'
     paths-ignore:
-      - '.github/*.md'
-      - '.github/workflows/**'
+      - '.github/**'
       - '.gitignore'
       - 'ChangeLog'
       - 'COPYING'
@@ -34,8 +33,7 @@ on:
     branches:
       - master
     paths-ignore:
-      - '.github/*.md'
-      - '.github/workflows/**'
+      - '.github/**'
       - '.gitignore'
       - 'ChangeLog'
       - 'COPYING'
