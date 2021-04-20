@@ -91,6 +91,7 @@ int snoopy_datasource_cmdline (char * const result, char const * const arg)
         }
 
         if (n >= cmdLineSizeRet) {
+            n = cmdLineSizeRet;
             break;
         }
     }
