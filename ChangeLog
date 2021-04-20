@@ -4,10 +4,18 @@
 
 
 
+2021-04-20 - Version 2.4.14
+---------------------------
+o Bugfix (GH #198):
+    Prevent overflow in the `cmdline` datasource.
+    (Thanks to Ken TSUKAHARA (@ken3 @ GitHub) for finding, reporting and fixing this.)
+
+
+
 2021-04-14 - Version 2.4.13
 ---------------------------
 o Enhancement (GH #194, #195):
-    Dadasource `datetime` now support custom date and time formatting, with %-based
+    Datasource `datetime` now support custom date and time formatting, with %-based
     conversion specifications - strftime()'s manual page contains all the details.
     (Thanks to @ky4k0b (@GitHub) for suggesting this.)
 
