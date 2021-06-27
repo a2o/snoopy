@@ -23,7 +23,7 @@ are working to find out why.
 ## Further information
 
 * Read the code.
-* Start at [src/eventsource/execve_wrapper.c](../src/eventsource/execve_wrapper.c).
+* Start at [src/entrypoint/execve_wrapper.c](../src/entrypoint/execve_wrapper.c).
     This is essential.
     Here the execv()/execve() syscalls are intercepted and forwarded to internal
     Snoopy functions. Once Snoopy is done, execution is forwarded back to

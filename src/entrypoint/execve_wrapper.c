@@ -1,7 +1,7 @@
 /*
  * SNOOPY LOGGER
  *
- * File: src/eventsource/execve_wrapper_test_configfile_env.c
+ * File: snoopy/entrypoint/execve_wrapper.c
  *
  * Copyright (c) 2000 Marius Aamodt Eriksen <marius@linux.com>
  * Copyright (c) 2000 Mike Baker <mbm@linux.com>
@@ -29,10 +29,9 @@
 /*
  * Includes order: from local to global
  */
-#include "execve_wrapper_test_configfile_env.h"
+#include "execve_wrapper.h"
 
 #include "snoopy.h"
-#include "configuration.h"
 #include "log.h"
 
 #include <dlfcn.h>
@@ -59,7 +58,6 @@ int execv (const char *filename, char *const argv[]) {
     static int (*func)(const char *, char * const *);
 
     FN(func, int, "execv", (const char *, char * const *));
-    snoopy_configuration_preinit_setConfigFilePathFromEnv();
     snoopy_log_syscall_execv(filename, argv);
 
     return (*func) (filename, argv);
@@ -75,7 +73,6 @@ int execve (const char *filename, char *const argv[], char *const envp[])
     static int (*func)(const char *, char * const *, char * const *);
 
     FN(func, int, "execve", (const char *, char * const *, char * const *));
-    snoopy_configuration_preinit_setConfigFilePathFromEnv();
     snoopy_log_syscall_execve(filename, argv, envp);
 
     return (*func) (filename, argv, envp);
