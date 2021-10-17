@@ -4,6 +4,15 @@
 
 
 
+2021-xx-xx - Version 2.4.xx
+---------------------------
+o Bugfix (GH #201):
+    Work around DirectAdmin's non-conventional execve() call (null argv).
+    (Thanks to Yavuz Aydin (@yavuzaydin @ GitHub) for reporting this issue and
+    for providing access to a reproduction environment to aid the investigation.)
+
+
+
 2021-04-20 - Version 2.4.14
 ---------------------------
 o Bugfix (GH #198):

@@ -61,6 +61,13 @@ int snoopy_datasource_cmdline (char * const result, char const * const arg)
     /* Get argument data of execv/e() call */
     snoopy_inputdatastorage = snoopy_inputdatastorage_get();
 
+    /* DirectAdmin does not follow the execve() convention (as described in its man page)
+       and passes NULL argv instead of what it's supposed to do. Let's work around that. */
+    if (snoopy_inputdatastorage->argv == NULL) {
+        n = snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "%s", snoopy_inputdatastorage->filename);
+        return n;
+    }
+
     /* Count number of arguments */
     for (cmdLineArgCount=0 ; *(snoopy_inputdatastorage->argv+cmdLineArgCount) != (char *) 0 ; cmdLineArgCount++);
 
