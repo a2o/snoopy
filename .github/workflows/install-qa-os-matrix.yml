@@ -47,7 +47,7 @@ jobs:
 
           - opensuse/leap:15.1
           - opensuse/leap:15.2
-          - opensuse/tumbleweed:latest
+#          - opensuse/tumbleweed:latest
 
           - ubuntu:16.04
           - ubuntu:18.04
