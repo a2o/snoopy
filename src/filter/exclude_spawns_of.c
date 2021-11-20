@@ -263,6 +263,6 @@ static char **string_to_token_array(char *str)
         p = NULL;
     }
     token_array[token_count] = NULL;
-    return(token_array);
+    return token_array;
 }
 
