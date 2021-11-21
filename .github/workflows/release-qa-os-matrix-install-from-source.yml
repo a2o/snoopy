@@ -38,9 +38,9 @@ jobs:
           - debian:bullseye
           - debian:sid
 
-          - opensuse/leap:15.1
           - opensuse/leap:15.2
-#          - opensuse/tumbleweed:latest
+          - opensuse/leap:15.3
+          - opensuse/tumbleweed:latest
 
           - ubuntu:16.04
           - ubuntu:18.04

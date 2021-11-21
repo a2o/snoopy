@@ -47,7 +47,7 @@ jobs:
           - ciready/debian:buster-ci-c
           - ciready/debian:sid-ci-c
 
-          - ciready/opensuse:leap-15.2-ci-c
+          - ciready/opensuse:leap-15.3-ci-c
 
           - ciready/ubuntu:20.04-ci-c
           - ciready/ubuntu:rolling-ci-c
