@@ -49,7 +49,6 @@ jobs:
           - opensuse/leap:15.3
           - opensuse/tumbleweed:latest
 
-          - ubuntu:16.04
           - ubuntu:18.04
           - ubuntu:20.04
           - ubuntu:rolling
