@@ -16,9 +16,8 @@
           * [3.3.3 Optional configuration file support](#333-optional-configuration-file-support)
       * [4 How to enable/activate Snoopy](#4-how-to-enableactivate-snoopy)
         * [4.1 Enable for specific program](#41-enable-for-specific-program)
-        * [4.2 Enable system-wide Snoopy on 32-bit-only or 64-bit-only systems](#42-enable-system-wide-snoopy-on-32-bit-only-or-64-bit-only-systems)
-        * [4.3 For multilib systems](#43-for-multilib-systems)
-        * [4.4 For multilib systems with LD_PRELOAD_* environmental variables](#44-for-multilib-systems-with-ld_preload_-environmental-variables)
+        * [4.2 Enable system-wide Snoopy on single architecture systems](#42-enable-system-wide-snoopy-on-single-architecture-systems)
+        * [4.3 For multiarch systems](#43-for-multiarch-systems)
       * [5 Snoopy output](#5-snoopy-output)
       * [6 How to disable Snoopy](#6-how-to-disable-snoopy)
 
@@ -200,12 +199,7 @@ Example:
 
 
 
-#### 4.2 Enable system-wide Snoopy on 32-bit-only or 64-bit-only systems
-
-WARNING: Using this method on multilib systems (64-bit systems capable
-WARNING: of running 32-bit applications) can cause malfunction because
-WARNING: preload config file /etc/ld.so.preload makes  no  distinction
-WARNING: between 32- and 64-bit programs and shared libraries.
+#### 4.2 Enable system-wide Snoopy on single architecture systems
 
     # Use special Snoopy-enabling script
     snoopy-enable
@@ -213,40 +207,17 @@ WARNING: between 32- and 64-bit programs and shared libraries.
     # Or enable it using build tools
     make enable
 
-Explanation:
+Under the hood:
 
 An entry is created in /etc/ld.so.preload file  which  causes  execv()
-and execve() system calls to be intercepted by Snoopy and logged via
-syslog.
+and execve() system calls to be intercepted by Snoopy.
 
 
 
-#### 4.3 For multilib systems
+#### 4.3 For multiarch systems
 
-Content of /etc/ld.so.preload should include the following line:
-
-    /usr/local/$LIB/libsnoopy.so
-
-This applies only when you have installed both 32bit and 64bit version
-of the library in the appropriate paths.
-
-
-
-#### 4.4 For multilib systems with LD_PRELOAD_* environmental variables
-
-On systems that support LD_PRELOAD_32 and LD_PRELOAD_64  you  can  use
-those variables to force loading of Snoopy. If you wish to  enable  it
-system-wide, ensure that correct values are held  by  those  variables
-at boot time. Consult section  4.a  of  this  README  on  how  to  set
-environmental variables. Setting them at boot time is usually  distro-
-dependent.
-Users are also required to compile 32-bit version of library. To do so
-on 64-bit systems it is usually enough to set appropriate CFLAGS:
-
-    CFLAGS=-m32 ./configure [OPTIONS]
-
-Of course your system must be cross-compilation capable. Consult  your
-OS documentation for details on this subject.
+Snoopy does not natively support installation on systems that concurrently support multiple architectures.
+However, for an example installation on such systems, consult the [doc/INSTALL-MULTIARCH.md](INSTALL-MULTIARCH.md) guide.
 
 
 
