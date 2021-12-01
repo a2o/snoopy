@@ -1,249 +1,214 @@
-# Snoopy Logger Installation Instructions
+# Installation Instructions - Snoopy Logger 
+
+* Building and installing:
+  * [Automated installation procedure](#automated-installation-procedure)
+  * [Building from source](#building-from-source)
+  * [Distribution-native packages](#distribution-native-packages) (and [how to build them](#building-a-distribution-native-package))
+  * [Multiarch systems](#multiarch-systems)
+
+* Configuration:
+  * [Important build configuration flags](#important-build-configuration-flags)
+  * [/etc/snoopy.ini](#etcsnoopyini)
+
+* Enabling:
+  * [Enable for a specific command](#enable-for-a-specific-command)
+  * [Enable system-wide](#enable-system-wide)
+    * [Under the hood](#under-the-hood)
+
+* Removing:
+  * [What gets installed](#what-gets-installed)
+  * [How to disable Snoopy](#how-to-disable-snoopy)
 
 
 
-  * [Snoopy Logger Installation Instructions](#snoopy-logger-installation-instructions)
-    * [Available installation methods:](#available-installation-methods)
-      * [1. Automated installation procedure](#1-automated-installation-procedure)
-      * [2. Installing Snoopy from distribution package repositories](#2-installing-snoopy-from-distribution-package-repositories)
-        * [2.1 Building distribution-specific packages yourself](#21-building-distribution-specific-packages-yourself)
-      * [3. Building Snoopy from sources](#3-building-snoopy-from-sources)
-        * [3.1 Downloading source](#31-downloading-source)
-        * [3.2 Installation procedure](#32-installation-procedure)
-        * [3.3 Build configuration](#33-build-configuration)
-          * [3.3.1 Configuring log output](#331-configuring-log-output)
-          * [3.3.2 Configuring filtering](#332-configuring-filtering)
-          * [3.3.3 Optional configuration file support](#333-optional-configuration-file-support)
-      * [4 How to enable/activate Snoopy](#4-how-to-enableactivate-snoopy)
-        * [4.1 Enable for specific program](#41-enable-for-specific-program)
-        * [4.2 Enable system-wide Snoopy on single architecture systems](#42-enable-system-wide-snoopy-on-single-architecture-systems)
-        * [4.3 For multiarch systems](#43-for-multiarch-systems)
-      * [5 Snoopy output](#5-snoopy-output)
-      * [6 How to disable Snoopy](#6-how-to-disable-snoopy)
+## Automated installation procedure
 
+(This is the preferred installation method.)
 
-
-## Available installation methods:
-
-* automated installation procedure (preferred, installs latest version), or
-* using packages provided by your Linux distribution, or
-* building it manually.
-
-
-
-
-
-### 1. Automated installation procedure
-
-To start automated installation procedure for **STABLE** version of Snoopy,
+To start the automated installation procedure of the latest **stable** version of Snoopy,
 run this command:
-
-    rm -f install-snoopy.sh &&
-    wget -q -O install-snoopy.sh https://github.com/a2o/snoopy/raw/install/install/install-snoopy.sh &&
-    chmod 755 install-snoopy.sh &&
-    ./install-snoopy.sh stable
-
-To start automated installation procedure for **DEVELOPMENT** version of Snoopy,
-run this command:
-
-    rm -f install-snoopy.sh &&
-    wget -q -O install-snoopy.sh https://github.com/a2o/snoopy/raw/install/install/install-snoopy.sh &&
-    chmod 755 install-snoopy.sh &&
-    ./install-snoopy.sh git-master
-
-**WARNING: This manual is for latest Snoopy version only. Any version that is not the latest is not supported. Please do not submit any bug/feature/change requests related to unsupported versions.**
-
-
-
-
-
-### 2. Installing Snoopy from distribution package repositories
-
-This is generally simple, if some maintainer already packaged Snoopy for you.
-How to install distribution-provided packages is out of scope of this manual.
-
-Generally you would do something like this:
-
-    apt-get install snoopy
-    yum     install snoopy
-    zypper  install snoopy
-
-
-
-#### 2.1 Building distribution-specific packages yourself
-
-The following Linux distributions have their corresponding package definition
-files available in the contrib/ directory:
-
-* Debian/Ubuntu, in contrib/debian/
-* RHEL/CentOS/Fedora, in contrib/rhel/
-* SLES/OpenSUSE, in contrib/sles/
-
-The contents of contrib/ directory is user-supplied and therefore not supported. Patches
-however are gladly accepted.
-
-
-
-
-
-### 3. Building Snoopy from sources
-
-#### 3.1 Downloading source
-
-You can download Snoopy release tarballs from this location: https://github.com/a2o/snoopy/releases
-Alternatively, you can clone the latest Snoopy sources from GitHub.
 ```
-git clone https://github.com/a2o/snoopy.git
+wget -q -O install-snoopy.sh https://github.com/a2o/snoopy/raw/install/install/install-snoopy.sh &&
+chmod 755 install-snoopy.sh &&
+./install-snoopy.sh stable
+```
+
+To use the automated installation procedure for installing the latest **development**
+version of Snoopy, simply modify the `./install-snoopy.sh` command above by replacing
+the `stable` argument with `git-master`.
+
+
+
+## Building from source
+
+Download the Snoopy source tarball (you can find the releases [here](https://github.com/a2o/snoopy/releases)):
+```
+wget https://github.com/a2o/snoopy/releases/download/snoopy-2.4.15/snoopy-2.4.15.tar.gz
+tar -xzf snoopy-2.4.15.tar.gz
+cd snoopy-2.4.15
+```
+
+Alternatively, clone the latest Snoopy git repository from GitHub:
+```
+git clone https://github.com/a2o/snoopy snoopy
 cd snoopy
 
-# This generates ./configure script
+# Run the ./bootstrap.sh script to generate the ./configure script
 ./bootstrap.sh
 ```
 
+Configure the build:
+```
+./configure [OPTIONS]
+```
+For information about available build configuration options, consult the section below
+listing [the most important build configuration flags](#important-build-configuration-flags)
+or run the `./configure --help` to list all available flags.
 
-#### 3.2 Installation procedure
+Build it:
+```
+make
+```
 
-Snoopy supports various features that  can be enabled by supplying arguments
-to configure command. Consult `./configure --help' for more information.
+Optionally run the test suite:
+```
+make tests
+```
 
-    # Only if you are building directly from git repository:
-    ./bootstrap.sh
+Install it:
+```
+make install
+```
 
-    # Check configuration options, see section 3.3 for details:
-    ./configure --help
-
-    # Then continue with normal build procedure:
-    ./configure [OPTIONS]
-    make
-    make install
-
-    # At this point, Snoopy is **installed but not yet enabled**.
-    # Enable it
-    make enable
-
-    # Reboot your system for Snoopy to be picked by all programs.
-    reboot
-
-
-
-#### 3.3 Build configuration
-
-##### 3.3.1 Configuring log output
-
-Snoopy already has default log message format configured, but by using
-"./configure --with-message-format=FORMAT" you can adjust it to your
-needs.
-
-Log message format specification example:
-
-    --with-message-format="text1:%{datasource1} text2:%{datasource2} text3:%{datasource3:arg}"
-
-Text outside %{...} is considered literal and is copied as-is to final
-log message. On the other hand, text found within %{...} has special
-meaning: it retrieves data from specified data source. If data source
-specification contains a colon, then text before colon is considered
-data source name, and text following the colon is passed as an argument
-to the data source provider in question.
+At this point, Snoopy is **installed but not yet enabled**.
+What is missing is (optionally) [adjusting the snoopy.ini configuration file](#etcsnoopyini)
+and [enabling Snoopy for a specific command](#enable-for-a-specific-command) or [enabling Snoopy system-wide](#enable-system-wide).
 
 
 
-##### 3.3.2 Configuring filtering
+## Distribution-native packages
 
-Snoopy supports message filtering. Filtering support must be
-enabled at build time, here is an example:
-
-    # REQUIRED TO ENABLE FILTERING FEATURE
-    --enable-filtering
-
-    # HOW TO DEFINE FILTER CHAINS
-    --with-filter-chain="FILTER_CHAIN_SPEC"
-
-By default, if FILTER_CHAIN_SPEC is not configured. An empty string is
-used instead, which effectively disables filtering and all Snoopy messages
-are passed to the configured output.
-
-See sample configuration file etc/snoopy.ini for list and description
-of supported filter configurations.
+Providing distribution-specific instructions on how to install packages is out of the scope of this manual.
+However, installing a distribution-native Snoopy package should look something like this:
+```
+apt     install snoopy   # Debian / Ubuntu
+yum     install snoopy   # RHEL / CentOS
+zypper  install snoopy   # SLES / OpenSUSE
+```
 
 
-##### 3.3.3 Optional configuration file support
+#### Building a distribution-native package
 
-Snoopy supports optional configuration file, which may help with
-development and/or configuration endeavours. Configuration file must
-be enabled at build time:
+**Disclaimer:**
 
-    --enable-config-file
+* There are distribution-native Snoopy packages in the wild, created by distribution package maintainers.
+* Efforts of distribution package maintainers and efforts of Snoopy core developers are (mostly) independent of each other (as of late 2021).
 
-Configuration file is installed as SYSCONFDIR/snoopy.ini. SYSCONFDIR
-can be changed with --sysconfdir=PATH configuration directive.
-See sample configuration file etc/snoopy.ini for list and description
-of supported configuration directives.
+That said, some distribution package maintainers (and other interested individuals) have contributed their work to the Snoopy upstream repository (this repository).
+Their contributions are collected in the [contrib/](../contrib/) directory:
+
+* Debian/Ubuntu, in `contrib/debian/`
+* RHEL/CentOS/Fedora, in `contrib/rhel/`
+* SLES/OpenSUSE, in `contrib/sles/`
 
 
 
-
-
-### 4 How to enable/activate Snoopy
-
-#### 4.1 Enable for specific program
-
-If you wish to monitor only certain applications you can do so through
-the LD_PRELOAD environmental variable - simply set it to the full path
-to libsnoopy.so shared library before starting the application.
-
-Example:
-
-    export LD_PRELOAD=/usr/local/lib/libsnoopy.so    # default path
-    lynx http://linux.com/
-    unset LD_PRELOAD
-
-
-
-#### 4.2 Enable system-wide Snoopy on single architecture systems
-
-    # Use special Snoopy-enabling script
-    snoopy-enable
-
-    # Or enable it using build tools
-    make enable
-
-Under the hood:
-
-An entry is created in /etc/ld.so.preload file  which  causes  execv()
-and execve() system calls to be intercepted by Snoopy.
-
-
-
-#### 4.3 For multiarch systems
+## Multiarch systems
 
 Snoopy does not natively support installation on systems that concurrently support multiple architectures.
-However, for an example installation on such systems, consult the [doc/INSTALL-MULTIARCH.md](INSTALL-MULTIARCH.md) guide.
+However, [doc/INSTALL-MULTIARCH.md](INSTALL-MULTIARCH.md) guide contains an example multiarch installation.
 
 
 
+## Important build configuration flags
+
+| Flag                   | Meaning |
+|------------------------|---------|
+| --disable-config-file  | Disable `snoopy.ini` support (default: enabled) |
+| --with-message-format  | Modify the built-in default log message format. Useful when config file support is disabled. |
+| --with-default-output  | Modify the built-in default output target. Useful when config file support is disabled. |
+| --enable-thread-safety | Enable per-thread data structures (experimental, default: disableD) |
+| --prefix               | Overall installation target directory prefix (default: `/usr/local`) |
+| --libdir               | Target `libsnoopy.so` installation directory (default: `PREFIX/lib`) |
+| --sysconfdir           | Target `snoopy.ini` installation directory (default: `PREFIX/etc`) |
+
+Run the `./configure --help` command to get a list of all available build flags.
 
 
-### 5 Snoopy output
 
-The exact location  of  your  Snoopy output  depends  on  your  syslog
-configuration. Usually it gets stored in one of the following files:
+## /etc/snoopy.ini
 
-    /var/log/auth*
-    /var/log/messages
-    /var/log/secure
+When Snoopy has been built with a configuration file support (which is enabled by default),
+then Snoopy runtime configuration is picked up from the `/etc/snoopy.ini` file (or `PREFIX/etc/snoopy.ini` or `SYSCONFDIR/snoopy.ini`, depending on your build flags).
+
+All supported runtime configuration directives are listed and described in the default [snoopy.ini](../etc/snoopy.ini.in) configuration file.
+Configuration changes are picked up instantly, as Snoopy re-reads its configuration file on each invocation.
 
 
 
-### 6 How to disable Snoopy
+## Enable for a specific command
 
-The simplest way is by using special script:
+When only a certain application should be monitored for its execution of external programs,
+the `LD_PRELOAD` environment variable can be used:
+```
+LD_PRELOAD="/usr/local/lib/libsnoopy.so" bash
+```
+The new `bash` shell instance will log any executed command. Exiting this `bash` will stop the logging.
 
-    snoopy-disable
 
-To manually disable Snoopy, simply edit /etc/ld.so.preload and remove
-reference to libsnoopy.so. Also unset any environmental variable that
-references Snoopy (LD_PRELOAD, LD_PRELOAD_32 and LD_PRELOAD_64).  Then
-you may also delete Snoopy shared library from  your  system.  Default
-installation path of Snoopy shared library is:
 
-    /usr/local/lib/libsnoopy.so
+## Enable system-wide
+
+There are two ways to enable Snoopy.
+The first one is a dedicated Snoopy-enabling script that is installed by the `make install` step above:
+```
+snoopy-enable
+```
+
+Alternatively, when Snoopy has been built from source, the following `make` command can be used from within the source directory:
+```
+make enable
+```
+
+A system reboot is usually necessary to make all programs pick up the newly installed Snoopy.
+
+
+####  Under the hood
+
+`snoopy-enable` or `make enable` command creates an entry in the `/etc/ld.so.preload` file.
+This entry causes the [dynamic linker](https://man7.org/linux/man-pages/man8/ld.so.8.html) to preload the Snoopy shared library,
+which interposes Snoopy between the `execv()`/`execve()` function calls of a program and the real `execv()`/`execve()` implementations in the libc library.
+When `execv()`/`execve()` is called, the interposed Snoopy code is responsible for creating a log entry for a command that is to be executed,
+and then the execution is forwarded to the real `execv()`/`execve()` libc functions to do the actual program invocation.
+
+
+
+## What gets installed
+
+Commands `make install` and `make enable`/`snoopy-enable` perform the following changes on the system:
+
+| File             | Location             | Change |
+|------------------|----------------------|--------|
+| `libsnoopy.so*`  | `/usr/local/lib/`*   | File installed |
+| `snoopy-enable`  | `/usr/local/bin/`*   | File installed |
+| `snoopy-disable` | `/usr/local/bin/`*   | File installed |
+| `snoopy.ini`     | `/etc/`*             | File installed |
+| `ld.so.preload`  | `/etc/ld.so.preload` | Entry added |
+*Locations of these files may vary, depending on your [build configuration flags](#important-build-configuration-flags).
+
+
+
+## How to disable Snoopy
+
+The simplest way to disable Snoopy is to use the script installed for this purpose:
+```
+snoopy-disable
+```
+Once disabled, a system reboot may be necessary to force a reload of all the running programs.
+
+
+#### How to disable Snoopy manually
+
+To manually disable Snoopy, remove any references to `libsnoopy.so` from the `/etc/ld.so.preload` file.
+Additionally, unset any environment variable that references Snoopy (`LD_PRELOAD`, `LD_PRELOAD_32`, and `LD_PRELOAD_64`).
+Reboot.
