@@ -11,3 +11,13 @@ MAINTAINERCLEANFILES = Makefile.in
 # -I$(top_srcdir)     is here for #include "lib/*/src/*.h" to work everywhere (additionally, this also makes references "src/*/*.h" work too)
 #
 AM_CFLAGS = -Wall -Werror -Wextra -Wno-unused-parameter -std=c99 -Wpedantic -I$(top_srcdir)/src -I$(top_srcdir)
+
+
+
+### Distclean .dep files
+#
+# It has been discovered that running `make distclean` in Snoopy's release tarball
+# leaves empty .dep directories lying around.
+#
+distclean-local:
+	rm -rf .deps
