@@ -37,20 +37,23 @@ jobs:
         container:
 #          - archlinux:base-devel
 
-          - centos:7
-          - centos:8
+          - almalinux/8-base:latest
+          - almalinux/9-base:latest
 
-          - debian:stretch
+          - quay.io/centos/centos:stream8
+          - quay.io/centos/centos:stream9
+
           - debian:buster
           - debian:bullseye
           - debian:sid
 
-          - opensuse/leap:15.2
           - opensuse/leap:15.3
+          - opensuse/leap:15.4
           - opensuse/tumbleweed:latest
 
           - ubuntu:18.04
           - ubuntu:20.04
+          - ubuntu:22.04
           - ubuntu:rolling
 
 
