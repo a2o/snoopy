@@ -56,6 +56,10 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
+    # Work around the fix for CVE-2022-24765
+    - run: git config --global --add safe.directory $GITHUB_WORKSPACE || true
+
+
     ### Initialize the CodeQL tools for scanning
     #
     - name: Initialize CodeQL
