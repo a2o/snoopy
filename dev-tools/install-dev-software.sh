@@ -134,7 +134,7 @@ _installPackages()
             DEBIAN_FRONTEND="noninteractive" $USE_SUDO apt-get install -y $PACKAGE_NAMES_DEBIAN
             ;;
 
-        rhel|centos)
+        rhel|centos|almalinux)
             $USE_SUDO yum install -y $PACKAGE_NAMES_REDHAT
             ;;
 
