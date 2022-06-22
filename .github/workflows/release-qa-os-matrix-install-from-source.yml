@@ -30,20 +30,23 @@ jobs:
         container:
 #          - archlinux:base-devel
 
-          - centos:7
-          - centos:8
+          - almalinux/8-base:latest
+          - almalinux/9-base:latest
 
-          - debian:stretch
+          - quay.io/centos/centos:stream8
+          - quay.io/centos/centos:stream9
+
           - debian:buster
           - debian:bullseye
           - debian:sid
 
-          - opensuse/leap:15.2
           - opensuse/leap:15.3
+          - opensuse/leap:15.4
           - opensuse/tumbleweed:latest
 
           - ubuntu:18.04
           - ubuntu:20.04
+          - ubuntu:22.04
           - ubuntu:rolling
 
 
@@ -64,7 +67,7 @@ jobs:
 
       # CentOS
       - run: yum install -y   wget tar gzip
-        if: ${{ startsWith(matrix.container, 'centos:') }}
+        if: ${{ startsWith(matrix.container, 'almalinux/') || startsWith(matrix.container, 'quay.io/centos/centos:') }}
 
       # Debian / Ubuntu
       - run: |
@@ -84,6 +87,9 @@ jobs:
       # NOTICE: For SUSE, make sure to install tar+gzip before running this action
       #
       - uses: actions/checkout@v2
+
+      # Work around the fix for CVE-2022-24765
+      - run: git config --global --add safe.directory $GITHUB_WORKSPACE || true
 
 
 

@@ -44,20 +44,23 @@ jobs:
         container:
 #          - ciready/archlinux:base-devel-ci-c
 
-          - ciready/centos:7-ci-c
-          - ciready/centos:8-ci-c
+          - ciready/almalinux:8-ci-c
+          - ciready/almalinux:9-ci-c
 
-          - ciready/debian:stretch-ci-c
+          - ciready/centos:stream-8-ci-c
+          - ciready/centos:stream-9-ci-c
+
           - ciready/debian:buster-ci-c
           - ciready/debian:bullseye-ci-c
           - ciready/debian:sid-ci-c
 
-          - ciready/opensuse:leap-15.2-ci-c
           - ciready/opensuse:leap-15.3-ci-c
+          - ciready/opensuse:leap-15.4-ci-c
           - ciready/opensuse:tumbleweed-latest-ci-c
 
           - ciready/ubuntu:18.04-ci-c
           - ciready/ubuntu:20.04-ci-c
+          - ciready/ubuntu:22.04-ci-c
           - ciready/ubuntu:rolling-ci-c
 
 
@@ -74,6 +77,9 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
+
+      # Work around the fix for CVE-2022-24765
+      - run: git config --global --add safe.directory $GITHUB_WORKSPACE || true
 
 
 
