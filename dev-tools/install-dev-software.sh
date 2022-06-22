@@ -135,7 +135,7 @@ _installPackages()
             ;;
 
         rhel|centos|almalinux)
-            $USE_SUDO yum install -y $PACKAGE_NAMES_REDHAT
+            $USE_SUDO yum install -y --allowerasing $PACKAGE_NAMES_REDHAT
             ;;
 
         sles|opensuse-leap|opensuse-tumbleweed)
