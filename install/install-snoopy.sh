@@ -359,7 +359,7 @@ elif [[ "$SNOOPY_SOURCE_TYPE" == "package" ]] && [[ "$SNOOPY_DOWNLOAD_MODE" == "
     #
     if [ "$SNOOPY_VERSION_TO_INSTALL" == "latest" ]; then
         echo -n "SNOOPY INSTALL: Getting latest Snoopy version... " | tee -a $SNOOPY_INSTALL_LOGFILE
-        SNOOPY_VERSION_TO_INSTALL=`wget -q -O - --header "Accept: application/vnd.github.v3+json" https://api.github.com/repos/a2o/snoopy/releases/latest | grep '"name"' | head -n1 | cut -d '"' -f4 | cut -d'-' -f2`
+        SNOOPY_VERSION_TO_INSTALL=`wget -q -O - https://raw.githubusercontent.com/a2o/snoopy/master/README.md | grep -E '^## Latest version$' -A10 | grep -E '^[|] +Stable +' | cut -d'|' -f3 | tr -d '[:space:]'`
         echo "got it, $SNOOPY_VERSION_TO_INSTALL" | tee -a $SNOOPY_INSTALL_LOGFILE
     else
         echo -n "SNOOPY INSTALL: Snoopy version to be installed... " | tee -a $SNOOPY_INSTALL_LOGFILE
