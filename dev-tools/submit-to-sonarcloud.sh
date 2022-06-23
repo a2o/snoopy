@@ -115,7 +115,6 @@ sonar-scanner \
   -Dsonar.projectVersion=$SONARCLOUD_TAG \
   -Dsonar.cfamily.build-wrapper-output=$BUILD_WRAPPER_OUTPUT_DIR \
   -Dsonar.cfamily.gcov.reportsPath=. \
-  -Dsonar.cfamily.threads=1 \
   -Dsonar.cfamily.cache.enabled=false \
   -Dsonar.host.url=https://sonarcloud.io
 echo "INFO: Submission tag: $SONARCLOUD_TAG (branch: $CURRENT_BRANCH_NAME)"
