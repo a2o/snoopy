@@ -223,17 +223,19 @@ AC_DEFUN([SNOOPY_CONFIGURE_DATASOURCE_MSG],
 # DATASOURCE: actual macro
 #
 # Args:
-#   1: datasource name
-#   2: datasource info
-#   3: enable/disable by default
-#   4: oposite of arg #3
+#   1: Datasource name
+#   2: Datasource description
+#   3: Default setting (either "enabled" or "disabled")
+#   4: Action that opposes the arg #3 ("disable" or "enable")
+#   5: Same as #4, but with capitalized first letter
+#   6: Optional variables to set
 #
 AC_DEFUN([SNOOPY_CONFIGURE_DATASOURCE_ENABLEDISABLE],
 [
     AC_ARG_ENABLE(datasource-$1,
         [AS_HELP_STRING(
             [--$4-datasource-$1],
-            [$4 datasource "$1". This datasource provides $2. [default=$3]]
+            [$5 datasource "$1". This datasource provides $2. [default=$3]]
         )],
         [
             if   test "x$enableval" == "xyes"; then
@@ -259,7 +261,7 @@ AC_DEFUN([SNOOPY_CONFIGURE_DATASOURCE_ENABLEDISABLE],
                 elif test "x$enable_everything" == "xno" ; then
                     enable_datasource_$1="no"
                 else
-                    if test "x$3" == "xenable"; then
+                    if test "x$3" == "xenabled"; then
                         enable_datasource_$1="yes"
                     else
                         enable_datasource_$1="no"
@@ -276,14 +278,14 @@ AC_DEFUN([SNOOPY_CONFIGURE_DATASOURCE_ENABLEDISABLE],
     AC_SUBST([enable_datasource_$1])
 
     # Define (optional) additional variables
-    AM_CONDITIONAL([DATASOURCE_$5], [test "x$5" != "x"])
+    AM_CONDITIONAL([DATASOURCE_$6], [test "x$6" != "x"])
 
     SNOOPY_CONFIGURE_DATASOURCE_MSG([$1], [$enable_datasource_$1])
 ])
 
 # DATASOURCE: alias macros
-AC_DEFUN([SNOOPY_CONFIGURE_DATASOURCE_ENABLE],  [SNOOPY_CONFIGURE_DATASOURCE_ENABLEDISABLE([$1], [$2], [enable],  [disable], [$3])])
-AC_DEFUN([SNOOPY_CONFIGURE_DATASOURCE_DISABLE], [SNOOPY_CONFIGURE_DATASOURCE_ENABLEDISABLE([$1], [$2], [disable], [enable],  [$3])])
+AC_DEFUN([SNOOPY_CONFIGURE_DATASOURCE_ENABLE],  [SNOOPY_CONFIGURE_DATASOURCE_ENABLEDISABLE([$1], [$2], [enabled],  [disable], [Disable], [$3])])
+AC_DEFUN([SNOOPY_CONFIGURE_DATASOURCE_DISABLE], [SNOOPY_CONFIGURE_DATASOURCE_ENABLEDISABLE([$1], [$2], [disabled], [enable],  [Enable],  [$3])])
 
 # DATASOURCE: force certain datasource to be enabled
 AC_DEFUN([SNOOPY_CONFIGURE_DATASOURCE_FORCE],
@@ -313,20 +315,20 @@ AC_DEFUN([SNOOPY_CONFIGURE_FILTER_MSG],
 # FILTER: actual macro
 #
 # Args:
-#   1: filter name
-#   2: filter info
-#   3: enable/disable by default
-#   4: oposite of arg #3
+#   1: Filter name
+#   2: Filter description
+#   3: Default setting (either "enabled" or "disabled")
+#   4: Action that opposes the arg #3 ("disable" or "enable")
+#   5: Same as #4, but with capitalized first letter
 #
 AC_DEFUN([SNOOPY_CONFIGURE_FILTER_ENABLEDISABLE],
 [
     AC_ARG_ENABLE(filter-$1,
         [AS_HELP_STRING(
             [--$4-filter-$1],
-            [$4 filter "$1". This filter provides $2. [default=$3]]
+            [$5 filter "$1". $2 [default=$3]]
         )],
         [
-
             if test   "x$enableval" == "xyes"; then
                 enable_filter_$1=yes
             elif test "x$enableval" == "xno" ; then
@@ -351,7 +353,7 @@ AC_DEFUN([SNOOPY_CONFIGURE_FILTER_ENABLEDISABLE],
                     elif test "x$everything_enabled" == "xno" ; then
                         enable_filter_$1="no"
                     else
-                        if test "x$3" == "xenable"; then
+                        if test "x$3" == "xenabled"; then
                             enable_filter_$1="yes"
                         else
                             enable_filter_$1="no"
@@ -372,8 +374,8 @@ AC_DEFUN([SNOOPY_CONFIGURE_FILTER_ENABLEDISABLE],
 ])
 
 # FILTER: alias macros
-AC_DEFUN([SNOOPY_CONFIGURE_FILTER_ENABLE],  [SNOOPY_CONFIGURE_FILTER_ENABLEDISABLE([$1], [$2], [enable],  [disable])])
-AC_DEFUN([SNOOPY_CONFIGURE_FILTER_DISABLE], [SNOOPY_CONFIGURE_FILTER_ENABLEDISABLE([$1], [$2], [disable], [enable] )])
+AC_DEFUN([SNOOPY_CONFIGURE_FILTER_ENABLE],  [SNOOPY_CONFIGURE_FILTER_ENABLEDISABLE([$1], [$2], [enabled],  [disable], [Disable])])
+AC_DEFUN([SNOOPY_CONFIGURE_FILTER_DISABLE], [SNOOPY_CONFIGURE_FILTER_ENABLEDISABLE([$1], [$2], [disabled], [enable],  [Enable] )])
 
 # FILTER: force certain filter to be enabled
 AC_DEFUN([SNOOPY_CONFIGURE_FILTER_FORCE],
@@ -403,17 +405,18 @@ AC_DEFUN([SNOOPY_CONFIGURE_OUTPUT_MSG],
 # OUTPUT: actual macro
 #
 # Args:
-#   1: output name
-#   2: output info
-#   3: enable/disable by default
-#   4: oposite of arg #3
+#   1: Output name
+#   2: Output description
+#   3: Default setting (either "enabled" or "disabled")
+#   4: Action that opposes the arg #3 ("disable" or "enable")
+#   5: Same as #4, but with capitalized first letter
 #
 AC_DEFUN([SNOOPY_CONFIGURE_OUTPUT_ENABLEDISABLE],
 [
     AC_ARG_ENABLE(output-$1,
         [AS_HELP_STRING(
             [--$4-output-$1],
-            [$4 output "$1". This output provides $2. [default=$3]]
+            [$5 output "$1". $2 [default=$3]]
         )],
         [
             if   test "x$enableval" == "xyes"; then
@@ -435,7 +438,7 @@ AC_DEFUN([SNOOPY_CONFIGURE_OUTPUT_ENABLEDISABLE],
                 elif test "x$enable_everything" == "xno" ; then
                     enable_output_$1="no"
                 else
-                    if test "x$3" == "xenable"; then
+                    if test "x$3" == "xenabled"; then
                         enable_output_$1="yes"
                     else
                         enable_output_$1="no"
@@ -455,8 +458,8 @@ AC_DEFUN([SNOOPY_CONFIGURE_OUTPUT_ENABLEDISABLE],
 ])
 
 # OUTPUT: alias macros
-AC_DEFUN([SNOOPY_CONFIGURE_OUTPUT_ENABLE],  [SNOOPY_CONFIGURE_OUTPUT_ENABLEDISABLE([$1], [$2], [enable],  [disable])])
-AC_DEFUN([SNOOPY_CONFIGURE_OUTPUT_DISABLE], [SNOOPY_CONFIGURE_OUTPUT_ENABLEDISABLE([$1], [$2], [disable], [enable])])
+AC_DEFUN([SNOOPY_CONFIGURE_OUTPUT_ENABLE],  [SNOOPY_CONFIGURE_OUTPUT_ENABLEDISABLE([$1], [$2], [enabled],  [disable], [Disable])])
+AC_DEFUN([SNOOPY_CONFIGURE_OUTPUT_DISABLE], [SNOOPY_CONFIGURE_OUTPUT_ENABLEDISABLE([$1], [$2], [disabled], [enable],  [Enable] )])
 
 # OUTPUT: force certain output to be enabled
 AC_DEFUN([SNOOPY_CONFIGURE_OUTPUT_FORCE],
