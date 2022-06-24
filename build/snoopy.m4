@@ -323,7 +323,7 @@ AC_DEFUN([SNOOPY_CONFIGURE_FILTER_ENABLEDISABLE],
     AC_ARG_ENABLE(filter-$1,
         [AS_HELP_STRING(
             [--$4-filter-$1],
-            [$4 filter "$1". This filter provides $2. [default=$3]]
+            [$4 filter "$1". $2 [default=$3]]
         )],
         [
 
@@ -413,7 +413,7 @@ AC_DEFUN([SNOOPY_CONFIGURE_OUTPUT_ENABLEDISABLE],
     AC_ARG_ENABLE(output-$1,
         [AS_HELP_STRING(
             [--$4-output-$1],
-            [$4 output "$1". This output provides $2. [default=$3]]
+            [$4 output "$1". $2 [default=$3]]
         )],
         [
             if   test "x$enableval" == "xyes"; then
