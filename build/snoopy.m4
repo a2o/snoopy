@@ -36,7 +36,7 @@
 #   2: variable to define, usually upper case (is prefixed with SNOOPY_PROG_ and suffixed with _FOUND)
 #   3: additional info if program is not found
 #
-AU_DEFUN([SNOOPY_PROG_REQUIRE],
+AC_DEFUN([SNOOPY_PROG_REQUIRE],
 [
     AC_CHECK_PROG(SNOOPY_PROG_$2_FOUND, $1, yes)
     if test x"$SNOOPY_PROG_$2_FOUND" != x"yes" ; then
@@ -44,7 +44,7 @@ AU_DEFUN([SNOOPY_PROG_REQUIRE],
     fi
 ])
 
-AU_DEFUN([SNOOPY_PROG_SUGGEST],
+AC_DEFUN([SNOOPY_PROG_SUGGEST],
 [
     AC_CHECK_PROG(SNOOPY_PROG_$2_FOUND, $1, yes)
     if test x"$SNOOPY_PROG_$2_FOUND" != x"yes" ; then
@@ -69,7 +69,7 @@ AU_DEFUN([SNOOPY_PROG_SUGGEST],
 # Args:
 #   1: valuevariable to check
 #
-AU_DEFUN([SNOOPY_CONFIGURE_ENABLE_EVERYTHING_SET],
+AC_DEFUN([SNOOPY_CONFIGURE_ENABLE_EVERYTHING_SET],
 [
     if test "x$1" == "xyes"; then
         everything_enabled="yes"
@@ -88,7 +88,7 @@ AU_DEFUN([SNOOPY_CONFIGURE_ENABLE_EVERYTHING_SET],
 #   1: variable name to define
 #   2: default value, if no --enable/--disable-everything is specified.
 #
-AU_DEFUN([SNOOPY_CONFIGURE_ENABLE_EVERYTHING_GET],
+AC_DEFUN([SNOOPY_CONFIGURE_ENABLE_EVERYTHING_GET],
 [
     if test "x$everything_enabled" == "xyes"; then
         $1="yes"
@@ -119,7 +119,7 @@ AU_DEFUN([SNOOPY_CONFIGURE_ENABLE_EVERYTHING_GET],
 #   3: enableval value
 #   4: additional help content, if invalid value is provided
 #
-AU_DEFUN([SNOOPY_CONFIGURE_ENABLE_GENERIC_SPECIFIED],
+AC_DEFUN([SNOOPY_CONFIGURE_ENABLE_GENERIC_SPECIFIED],
 [
     if test "x$3" == "xyes"; then
         $2="yes"
@@ -139,7 +139,7 @@ AU_DEFUN([SNOOPY_CONFIGURE_ENABLE_GENERIC_SPECIFIED],
 #   3: default value, used if parent default value is unspecified
 #
 #
-AU_DEFUN([SNOOPY_CONFIGURE_ENABLE_GENERIC_UNSPECIFIED],
+AC_DEFUN([SNOOPY_CONFIGURE_ENABLE_GENERIC_UNSPECIFIED],
 [
     if test "x$3" == "xyes"; then
         $2="yes"
@@ -158,7 +158,7 @@ AU_DEFUN([SNOOPY_CONFIGURE_ENABLE_GENERIC_UNSPECIFIED],
 #   3: default value
 #
 #
-AU_DEFUN([SNOOPY_CONFIGURE_ENABLE_GENERIC_EVALUATE],
+AC_DEFUN([SNOOPY_CONFIGURE_ENABLE_GENERIC_EVALUATE],
 [
     AS_IF([test "x$1" = "xyes"], [
         AC_DEFINE(SNOOPY_CONF_$2, 1, [$3])
@@ -184,7 +184,7 @@ AU_DEFUN([SNOOPY_CONFIGURE_ENABLE_GENERIC_EVALUATE],
 #   3: entity id
 #   4: "yes" if enabled, "no" if disabled, anything else is displayed literally
 #
-AU_DEFUN([SNOOPY_CONFIGURE_ENTITY_MSG],
+AC_DEFUN([SNOOPY_CONFIGURE_ENTITY_MSG],
 [
     AS_IF(
         [test "x" == "x"],
@@ -213,7 +213,7 @@ AU_DEFUN([SNOOPY_CONFIGURE_ENTITY_MSG],
 #
 
 # DATASOURCE: ./configure output
-AU_DEFUN([SNOOPY_CONFIGURE_DATASOURCE_MSG],
+AC_DEFUN([SNOOPY_CONFIGURE_DATASOURCE_MSG],
 [
     # Do not put newline between last angled and regular closing brace,
     # it gets picked up as part of argument.
@@ -228,10 +228,10 @@ AU_DEFUN([SNOOPY_CONFIGURE_DATASOURCE_MSG],
 #   3: enable/disable by default
 #   4: oposite of arg #3
 #
-AU_DEFUN([SNOOPY_CONFIGURE_DATASOURCE_ENABLEDISABLE],
+AC_DEFUN([SNOOPY_CONFIGURE_DATASOURCE_ENABLEDISABLE],
 [
     AC_ARG_ENABLE(datasource-$1,
-        [AC_HELP_STRING(
+        [AS_HELP_STRING(
             [--$4-datasource-$1],
             [$4 datasource "$1". This datasource provides $2. [default=$3]]
         )],
@@ -282,11 +282,11 @@ AU_DEFUN([SNOOPY_CONFIGURE_DATASOURCE_ENABLEDISABLE],
 ])
 
 # DATASOURCE: alias macros
-AU_DEFUN([SNOOPY_CONFIGURE_DATASOURCE_ENABLE],  [SNOOPY_CONFIGURE_DATASOURCE_ENABLEDISABLE([$1], [$2], [enable],  [disable], [$3])])
-AU_DEFUN([SNOOPY_CONFIGURE_DATASOURCE_DISABLE], [SNOOPY_CONFIGURE_DATASOURCE_ENABLEDISABLE([$1], [$2], [disable], [enable],  [$3])])
+AC_DEFUN([SNOOPY_CONFIGURE_DATASOURCE_ENABLE],  [SNOOPY_CONFIGURE_DATASOURCE_ENABLEDISABLE([$1], [$2], [enable],  [disable], [$3])])
+AC_DEFUN([SNOOPY_CONFIGURE_DATASOURCE_DISABLE], [SNOOPY_CONFIGURE_DATASOURCE_ENABLEDISABLE([$1], [$2], [disable], [enable],  [$3])])
 
 # DATASOURCE: force certain datasource to be enabled
-AU_DEFUN([SNOOPY_CONFIGURE_DATASOURCE_FORCE],
+AC_DEFUN([SNOOPY_CONFIGURE_DATASOURCE_FORCE],
 [
     AC_DEFINE(SNOOPY_CONF_DATASOURCE_ENABLED_$1, 1, [Is datasource "$1" available? Forced "Yes".])
     AM_CONDITIONAL([DATASOURCE_ENABLED_$1], [test "x" == "x"])
@@ -303,7 +303,7 @@ AU_DEFUN([SNOOPY_CONFIGURE_DATASOURCE_FORCE],
 #
 
 # FILTER: ./configure output
-AU_DEFUN([SNOOPY_CONFIGURE_FILTER_MSG],
+AC_DEFUN([SNOOPY_CONFIGURE_FILTER_MSG],
 [
     # Do not put newline between last angled and regular closing brace,
     # it gets picked up as part of argument.
@@ -318,10 +318,10 @@ AU_DEFUN([SNOOPY_CONFIGURE_FILTER_MSG],
 #   3: enable/disable by default
 #   4: oposite of arg #3
 #
-AU_DEFUN([SNOOPY_CONFIGURE_FILTER_ENABLEDISABLE],
+AC_DEFUN([SNOOPY_CONFIGURE_FILTER_ENABLEDISABLE],
 [
     AC_ARG_ENABLE(filter-$1,
-        [AC_HELP_STRING(
+        [AS_HELP_STRING(
             [--$4-filter-$1],
             [$4 filter "$1". This filter provides $2. [default=$3]]
         )],
@@ -372,11 +372,11 @@ AU_DEFUN([SNOOPY_CONFIGURE_FILTER_ENABLEDISABLE],
 ])
 
 # FILTER: alias macros
-AU_DEFUN([SNOOPY_CONFIGURE_FILTER_ENABLE],  [SNOOPY_CONFIGURE_FILTER_ENABLEDISABLE([$1], [$2], [enable],  [disable])])
-AU_DEFUN([SNOOPY_CONFIGURE_FILTER_DISABLE], [SNOOPY_CONFIGURE_FILTER_ENABLEDISABLE([$1], [$2], [disable], [enable] )])
+AC_DEFUN([SNOOPY_CONFIGURE_FILTER_ENABLE],  [SNOOPY_CONFIGURE_FILTER_ENABLEDISABLE([$1], [$2], [enable],  [disable])])
+AC_DEFUN([SNOOPY_CONFIGURE_FILTER_DISABLE], [SNOOPY_CONFIGURE_FILTER_ENABLEDISABLE([$1], [$2], [disable], [enable] )])
 
 # FILTER: force certain filter to be enabled
-AU_DEFUN([SNOOPY_CONFIGURE_FILTER_FORCE],
+AC_DEFUN([SNOOPY_CONFIGURE_FILTER_FORCE],
 [
     AC_DEFINE(SNOOPY_CONF_FILTER_ENABLED_$1, 1, [Is filter "$1" available? Forced "Yes".])
     AM_CONDITIONAL([FILTER_ENABLED_$1], [test "x" == "x"])
@@ -393,7 +393,7 @@ AU_DEFUN([SNOOPY_CONFIGURE_FILTER_FORCE],
 #
 
 # OUTPUT: ./configure output
-AU_DEFUN([SNOOPY_CONFIGURE_OUTPUT_MSG],
+AC_DEFUN([SNOOPY_CONFIGURE_OUTPUT_MSG],
 [
     # Do not put newline between last angled and regular closing brace,
     # it gets picked up as part of argument.
@@ -408,10 +408,10 @@ AU_DEFUN([SNOOPY_CONFIGURE_OUTPUT_MSG],
 #   3: enable/disable by default
 #   4: oposite of arg #3
 #
-AU_DEFUN([SNOOPY_CONFIGURE_OUTPUT_ENABLEDISABLE],
+AC_DEFUN([SNOOPY_CONFIGURE_OUTPUT_ENABLEDISABLE],
 [
     AC_ARG_ENABLE(output-$1,
-        [AC_HELP_STRING(
+        [AS_HELP_STRING(
             [--$4-output-$1],
             [$4 output "$1". This output provides $2. [default=$3]]
         )],
@@ -455,11 +455,11 @@ AU_DEFUN([SNOOPY_CONFIGURE_OUTPUT_ENABLEDISABLE],
 ])
 
 # OUTPUT: alias macros
-AU_DEFUN([SNOOPY_CONFIGURE_OUTPUT_ENABLE],  [SNOOPY_CONFIGURE_OUTPUT_ENABLEDISABLE([$1], [$2], [enable],  [disable])])
-AU_DEFUN([SNOOPY_CONFIGURE_OUTPUT_DISABLE], [SNOOPY_CONFIGURE_OUTPUT_ENABLEDISABLE([$1], [$2], [disable], [enable])])
+AC_DEFUN([SNOOPY_CONFIGURE_OUTPUT_ENABLE],  [SNOOPY_CONFIGURE_OUTPUT_ENABLEDISABLE([$1], [$2], [enable],  [disable])])
+AC_DEFUN([SNOOPY_CONFIGURE_OUTPUT_DISABLE], [SNOOPY_CONFIGURE_OUTPUT_ENABLEDISABLE([$1], [$2], [disable], [enable])])
 
 # OUTPUT: force certain output to be enabled
-AU_DEFUN([SNOOPY_CONFIGURE_OUTPUT_FORCE],
+AC_DEFUN([SNOOPY_CONFIGURE_OUTPUT_FORCE],
 [
     AC_DEFINE(SNOOPY_CONF_OUTPUT_ENABLED_$1, 1, [Is output "$1" available? Forced "Yes".])
     AM_CONDITIONAL([OUTPUT_ENABLED_$1], [test "x" == "x"])
