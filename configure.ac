@@ -6,7 +6,7 @@
 
 ### Initialize autotools
 #
-AC_PREREQ([2.63])
+AC_PREREQ([2.69])
 
 # If you are running older OS and trying to build Snoopy from git,
 # ./bootstrap.sh will change the line below from script-based version
@@ -16,12 +16,9 @@ AC_PREREQ([2.63])
 #
 #   m4_esyscmd_s(echo $(./dev-tools/libexec/get-release-version.sh)),
 #
-AC_INIT(
-    [Snoopy Logger],
-    [m4_esyscmd_s(echo $(./dev-tools/libexec/get-release-version.sh))],
-    [https://github.com/a2o/snoopy/issues/],
-    [snoopy],
-    [https://github.com/a2o/snoopy/])
+# PS: Since the upgrade to autoconf 2.69, AC_INIT definition can no longer span multiple lines.
+#
+AC_INIT([Snoopy Logger],[m4_esyscmd_s(echo $(./dev-tools/libexec/get-release-version.sh))],[https://github.com/a2o/snoopy/issues/],[snoopy],[https://github.com/a2o/snoopy/])
 
 
 ### Configure autotools
@@ -61,20 +58,23 @@ LT_INIT([disable-static])
 
 dnl Checks for programs.
 dnl
-dnl DO NOT REMOVE: CXX, AWK, CPP, RANLIB
-dnl     Sometimes autoscan will suggest removing them, next time it will change
-dnl     its mind and suggest putting them back in. Let's just keep them and be
-dnl     done with it already.
+dnl WARNING: Do not run autoscan over a non-gitclean-ed directory!
+dnl
+dnl If you run autoscan over a dirty directory, it adds the following macros 
+dnl that are actually not required:
+dnl - AC_PROG_CPP
+dnl - AC_PROG_CXX
+dnl - AC_PROG_LN_S
+dnl - AC_PROG_RANLIB
 dnl
 AC_PROG_AWK
 AC_PROG_CC
 AC_PROG_GREP
 AC_PROG_INSTALL
-AC_PROG_LIBTOOL
 AC_PROG_MAKE_SET
 AC_PROG_MKDIR_P
-AC_PROG_NM
 AC_PROG_SED
+LT_PATH_NM
 
 
 
@@ -234,7 +234,7 @@ AC_MSG_NOTICE([-])
 # ======= ENABLE EVERYTHING ==================================================
 # ============================================================================
 AC_ARG_ENABLE(everything,
-    [AC_HELP_STRING(
+    [AS_HELP_STRING(
         [--enable-everything],
         [enable/disable all Snoopy features with one argument. Mainly useful for testing Snoopy builds. Individual features can still be enabled/disabled. [default=depends]]
     )],
@@ -259,7 +259,7 @@ dnl ============================================================================
 dnl ======= ENABLE CONFIG FILE =================================================
 dnl ============================================================================
 AC_ARG_ENABLE(config-file,
-    [AC_HELP_STRING(
+    [AS_HELP_STRING(
         [--disable-config-file],
         [disable INI configuration file parsing. If enabled, then path is SYSCONFDIR/snoopy.ini [default=enabled] [default location=SYSCONFDIR/snoopy.ini]]
     )],
@@ -283,7 +283,7 @@ dnl ============================================================================
 dnl ======= ENABLE ERROR LOGGING ===============================================
 dnl ============================================================================
 AC_ARG_ENABLE(error-logging,
-    [AC_HELP_STRING(
+    [AS_HELP_STRING(
         [--enable-error-logging],
         [enable error logging through configured output - use only if you are developing Snoopy or having problems configuring it [default=disabled]]
     )],
@@ -302,7 +302,7 @@ dnl ============================================================================
 dnl ======= ENABLE THREAD SAFETY ===============================================
 dnl ============================================================================
 AC_ARG_ENABLE(thread-safety,
-    [AC_HELP_STRING(
+    [AS_HELP_STRING(
         [--enable-thread-safety],
         [EXPERIMENTAL: enable parts of code that ensure safe multi-threaded operation [default=disabled]]
     )],
@@ -328,7 +328,7 @@ AC_MSG_NOTICE([-])
 # ======= Enable/disable all data sources at once ==============================
 # ==============================================================================
 AC_ARG_ENABLE(all-datasources,
-    [AC_HELP_STRING(
+    [AS_HELP_STRING(
         [--disable-all-datasources],
         [disables all data sources at once. Use --enable-datasource-NAME to reenable individual data sources. [default=enabled]]
     )],
@@ -384,7 +384,7 @@ dnl ============================================================================
 dnl ======= DEFAULT MESSAGE FORMAT =============================================
 dnl ============================================================================
 AC_ARG_WITH(message-format,
-    [AC_HELP_STRING(
+    [AS_HELP_STRING(
         [--with-message-format=FORMAT],
         [format to use to log messages with. For default value and available options, see comments in etc/snoopy.ini for format specification.]
     )],
@@ -428,7 +428,7 @@ dnl ============================================================================
 dnl ======= DEPRECATED FILTER: root-only =======================================
 dnl ============================================================================
 AC_ARG_ENABLE(root-only,
-    [AC_HELP_STRING(
+    [AS_HELP_STRING(
         [--enable-root-only],
         [DEPRECATED. Use --enable-filtering --with-filter-chain="only_uid:0" instead.]
     )],
@@ -443,7 +443,7 @@ dnl ============================================================================
 dnl ======= ENABLE FILTERING ===================================================
 dnl ============================================================================
 AC_ARG_ENABLE(filtering,
-    [AC_HELP_STRING(
+    [AS_HELP_STRING(
         [--disable-filtering],
         [disable general message filtering [default=enabled]]
     )],
@@ -458,7 +458,7 @@ SNOOPY_CONFIGURE_ENABLE_GENERIC_EVALUATE([$enable_filtering], [FILTERING_ENABLED
 # ======= Enable/disable all filters at once ===================================
 # ==============================================================================
 AC_ARG_ENABLE(all-filters,
-    [AC_HELP_STRING(
+    [AS_HELP_STRING(
         [--disable-all-filters],
         [disables all filters at once. This does not disable filtering in general. It only causes that none of filters is going to be built unless explicitly enabling it by specifying --enable-filter-NAME at ./confgure time. [default=enabled]]
     )],
@@ -486,7 +486,7 @@ dnl ============================================================================
 dnl ======= WITH FILTER CHAIN ==================================================
 dnl ============================================================================
 AC_ARG_WITH(filter-chain,
-    [AC_HELP_STRING(
+    [AS_HELP_STRING(
         [--with-filter-chain=CHAINSPEC],
         [default filter chain to use. See src/snoopy.h and src/filter/ for available filters [default=empty]]
     )],
@@ -535,7 +535,7 @@ AC_MSG_NOTICE([-])
 # ======= Enable/disable all outputs at once ===================================
 # ==============================================================================
 AC_ARG_ENABLE(all-outputs,
-    [AC_HELP_STRING(
+    [AS_HELP_STRING(
         [--disable-all-outputs],
         [disables all outputs at once. Use --enable-output-NAME to reenable individual output. [default=enabled]]
     )],
@@ -563,7 +563,7 @@ SNOOPY_CONFIGURE_OUTPUT_DISABLE( [syslog],         [WARNING: This output is caus
 
 dnl ============================================================================
 AC_ARG_WITH(default-output,
-    [AC_HELP_STRING(
+    [AS_HELP_STRING(
         [--with-default-output=OUTPUT_SPEC],
         [default output to use. See snoopy.ini or src/output/* for available values. [default=devlog]]
     )],
@@ -636,7 +636,7 @@ AC_MSG_NOTICE([-])
 
 dnl ============================================================================
 AC_ARG_WITH(syslog-facility,
-    [AC_HELP_STRING(
+    [AS_HELP_STRING(
         [--with-syslog-facility=FACILITY],
         [syslog facility to use when logging. Check 'man 3 syslog' or 'man openlog' for supported values [default=LOG_AUTHPRIV]]
     )],
@@ -671,7 +671,7 @@ AC_MSG_NOTICE([Snoopy default syslog facility: $syslog_facility])
 
 dnl ============================================================================
 AC_ARG_WITH(syslog-level,
-    [AC_HELP_STRING(
+    [AS_HELP_STRING(
         [--with-syslog-level=LEVEL],
         [syslog level to use when logging. Check 'man 3 syslog' or 'man openlog' for supported values [default=LOG_INFO]]
     )],
@@ -706,7 +706,7 @@ AC_MSG_NOTICE([Snoopy default syslog level:    $syslog_level])
 
 dnl ============================================================================
 AC_ARG_WITH(syslog-ident,
-    [AC_HELP_STRING(
+    [AS_HELP_STRING(
         [--with-syslog-ident=STRING],
         [syslog identity to use when logging. [default=snoopy]]
     )],
@@ -752,7 +752,7 @@ AC_MSG_NOTICE([-])
 # ======= snoopy-dev-helper ====================================================
 # ==============================================================================
 AC_ARG_ENABLE(dev-tools,
-    [AC_HELP_STRING(
+    [AS_HELP_STRING(
         [--enable-dev-tools],
         [enable util/snoopy-dev-* and util/snoopy-test-* programs. [default=disabled]]
     )],
@@ -768,7 +768,7 @@ dnl ============================================================================
 dnl ======= ENABLE TEST COVERAGE BUILD =========================================
 dnl ============================================================================
 AC_ARG_ENABLE(code-coverage,
-    [AC_HELP_STRING(
+    [AS_HELP_STRING(
         [--enable-code-coverage],
         [Embed code coverage instrumentation into Snoopy [default=disabled]]
     )],
