@@ -106,6 +106,7 @@ AC_CHECK_HEADERS([ \
     limits.h \
     pwd.h \
     stdio.h \
+    stddef.h \
     stdlib.h \
     string.h \
     syslog.h \
@@ -131,7 +132,6 @@ AC_TYPE_UID_T
 dnl Checks for library functions.
 AC_FUNC_FORK
 AC_FUNC_MALLOC
-AC_FUNC_REALLOC
 AC_CHECK_FUNCS([ \
     getcwd    \
     gethostname \

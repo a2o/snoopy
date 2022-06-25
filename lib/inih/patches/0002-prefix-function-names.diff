@@ -1,8 +1,8 @@
 --- src/ini.h.ORIG	2020-11-26 03:37:52.533640594 +0100
 +++ src/ini.h	2020-11-26 03:38:43.553738846 +0100
-@@ -10,6 +10,13 @@
- #ifndef __INI_H__
- #define __INI_H__
+@@ -14,6 +14,13 @@
+ #ifndef INI_H
+ #define INI_H
  
 +/* START For Snoopy - redefine function names, to avoid symbol name collisions */
 +#define ini_parse          snoopy_ini_parse

@@ -4,7 +4,7 @@ set -e
 set -u
 
 EXTLIB_GIT_REPO_URL="https://github.com/benhoyt/inih.git"
-EXTLIB_GIT_REF="tags/r42-0-g9d1af9d"
+EXTLIB_GIT_REF="tags/r55-0-gf7f69c6"
 
 _snoopy_extlib_import()
 {

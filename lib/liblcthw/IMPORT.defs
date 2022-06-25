@@ -4,7 +4,7 @@ set -e
 set -u
 
 EXTLIB_GIT_REPO_URL="https://github.com/zedshaw/liblcthw.git"
-EXTLIB_GIT_REF="b0abccd39"
+EXTLIB_GIT_REF="heads/master-0-g1249486"
 
 _snoopy_extlib_import()
 {
