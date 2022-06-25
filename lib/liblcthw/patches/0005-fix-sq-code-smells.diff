@@ -1,7 +1,7 @@
 --- src/list.c
 +++ src/list.c
-@@ -37,7 +37,7 @@ void List_clear_destroy(List *list)
- void List_push(List *list, void *value)
+@@ -34,7 +34,7 @@ void List_clear_destroy(List * list)
+ void List_push(List * list, void *value)
  {
      ListNode *node = calloc(1, sizeof(ListNode));
 -    check_mem(node);
@@ -9,8 +9,8 @@
  
      node->value = value;
  
-@@ -67,7 +67,7 @@ void *List_pop(List *list)
- void List_shift(List *list, void *value)
+@@ -64,7 +64,7 @@ void *List_pop(List * list)
+ void List_unshift(List * list, void *value)
  {
      ListNode *node = calloc(1, sizeof(ListNode));
 -    check_mem(node);
@@ -18,7 +18,7 @@
  
      node->value = value;
  
-@@ -96,8 +96,8 @@ void *List_remove(List *list, ListNode *node)
+@@ -93,8 +93,8 @@ void *List_remove(List * list, ListNode * node)
  {
      void *result = NULL;
  
@@ -27,5 +27,5 @@
 +    check(list->first && list->last, "List is empty.%s", "")
 +    check(node, "Node can't be NULL.%s", "")
  
-     if(node == list->first && node == list->last) {
+     if (node == list->first && node == list->last) {
          list->first = NULL;
