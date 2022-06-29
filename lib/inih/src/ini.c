@@ -100,12 +100,10 @@ int ini_parse_stream(ini_reader reader, void* stream, ini_handler handler,
     /* Uses a fair bit of stack (use heap instead if you need to) */
 #if INI_USE_STACK
     char line[INI_MAX_LINE];
-    int max_line = INI_MAX_LINE;
-#define MAX_LINE_CAST
+    size_t max_line = INI_MAX_LINE;
 #else
     char* line;
     size_t max_line = INI_INITIAL_ALLOC;
-#define MAX_LINE_CAST (int)
 #endif
 #if INI_ALLOW_REALLOC && !INI_USE_STACK
     char* new_line;
@@ -135,7 +133,7 @@ int ini_parse_stream(ini_reader reader, void* stream, ini_handler handler,
 #endif
 
     /* Scan through stream line by line */
-    while (reader(line, MAX_LINE_CAST max_line, stream) != NULL) {
+    while (reader(line, (int)max_line, stream) != NULL) {
 #if INI_ALLOW_REALLOC && !INI_USE_STACK
         offset = strlen(line);
         while (offset == max_line - 1 && line[offset - 1] != '\n') {
