@@ -197,8 +197,6 @@ AC_CONFIG_FILES([Makefile
                  tests/output/Makefile
                  tests/threads/Makefile
 ])
-AC_CONFIG_FILES([util/snoopy-disable], [chmod +x util/snoopy-disable])
-AC_CONFIG_FILES([util/snoopy-enable],  [chmod +x util/snoopy-enable])
 AC_CONFIG_FILES([tests/_bootstrap-paths.sh], [chmod +x tests/_bootstrap-paths.sh])
 
 

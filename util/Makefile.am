@@ -5,16 +5,8 @@ include   $(top_srcdir)/build/Makefile.am.common
 
 
 bin_PROGRAMS    =
-sbin_SCRIPTS    =
 noinst_LTLIBRARIES =
 noinst_PROGRAMS =
-
-
-
-### Scripts to enable/disable Snoopy
-#
-sbin_SCRIPTS += snoopy-enable
-sbin_SCRIPTS += snoopy-disable
 
 
 

@@ -65,9 +65,7 @@ Makefile
 /util/*
 !/util/*.c
 !/util/*.h
-!/util/*.in
 !/util/Makefile.am
-!/util/*.in
 /util/Makefile.in
 /contrib/rhel/snoopy.spec
 /contrib/sles/snoopy.spec

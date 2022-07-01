@@ -483,8 +483,8 @@ else
     echo "TIP #1: If Snoopy is to be enabled for all processes, you need"
     echo "        to restart your system, or at least all services on it."
     echo
-    echo "TIP #2: If you ever need to disable Snoopy, you should use provided"
-    echo "        'snoopy-disable' script. Use 'snoopy-enable' to reenable it."
+    echo "TIP #2: If you ever need to disable Snoopy, use the provided"
+    echo "        'snoopy disable' command. Use 'snoopy enable' to reenable it."
     echo
     echo "TIP #3: Snoopy output can usually be found somewhere in /var/log/*"
     echo "        Check your syslog configuration for details."
