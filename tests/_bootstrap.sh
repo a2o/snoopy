@@ -7,7 +7,12 @@
 set -e
 set -u
 
-#echo ${BASH_SOURCE[1]}
+
+
+### Source build-based variables
+#
+. ../_bootstrap-paths.sh
+
 
 
 ### Get variables about current test

@@ -46,6 +46,7 @@ AC_CONFIG_FILES([Makefile
                  src/output/Makefile
                  tests/Makefile
                  tests/bin/Makefile
+                 tests/cli/Makefile
                  tests/combined/Makefile
                  tests/configfile/Makefile
                  tests/datasource/Makefile

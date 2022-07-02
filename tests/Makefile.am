@@ -9,6 +9,7 @@ include   $(top_srcdir)/build/Makefile.am.common
 SUBDIRS      =
 
 SUBDIRS     += bin
+SUBDIRS     += cli
 if CONFIGFILE_ENABLED
     SUBDIRS += configfile
 endif
@@ -35,6 +36,8 @@ endif
 
 
 
-### Include tests in distribution archive
+### Include these files too
 #
-EXTRA_DIST  = _bootstrap.sh
+EXTRA_DIST  =
+EXTRA_DIST += _bootstrap.sh
+EXTRA_DIST += _bootstrap-paths.sh

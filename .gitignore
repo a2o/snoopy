@@ -33,6 +33,8 @@ Makefile.in
 #
 Makefile
 /libtool
+/tests/_bootstrap-paths.sh
+
 
 # Temporary files created during ./configure run
 /conf*/
