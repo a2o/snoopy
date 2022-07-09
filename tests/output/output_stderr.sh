@@ -13,7 +13,7 @@ set -u
 ### Output data
 #
 VAL_REAL=`date +%s`
-VAL_SNOOPY=`$SNOOPY_TEST_OUTPUT   "$VAL_REAL"   "stderr" 2>&1 >/dev/null`
+VAL_SNOOPY=`$SNOOPY_TEST_CLI run output   "$VAL_REAL"   "stderr" 2>&1 >/dev/null`
 
 
 

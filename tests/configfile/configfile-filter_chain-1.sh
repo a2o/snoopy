@@ -22,7 +22,7 @@ cat > $TMP_INI <<EOF
 filter_chain = "$VAL_REAL"
 EOF
 
-VAL_SNOOPY=`$SNOOPY_TEST_CONFIGFILE "$TMP_INI" "filter_chain"`
+VAL_SNOOPY=`$SNOOPY_TEST_CLI run configfile "$TMP_INI" "filter_chain"`
 rm -f $TMP_INI
 
 

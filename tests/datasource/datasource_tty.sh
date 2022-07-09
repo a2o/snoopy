@@ -12,7 +12,7 @@ set -u
 
 ### Get data
 #
-VAL_SNOOPY=`$SNOOPY_TEST_DATASOURCE tty`
+VAL_SNOOPY=`$SNOOPY_TEST_CLI run datasource tty`
 if [ "(unknown)" == "$VAL_SNOOPY" ]; then
     VAL_SNOOPY="(none)"
 fi

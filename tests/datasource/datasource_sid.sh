@@ -12,7 +12,7 @@ set -u
 
 ### Get data
 #
-VAL_SNOOPY=`$SNOOPY_TEST_DATASOURCE sid`
+VAL_SNOOPY=`$SNOOPY_TEST_CLI run datasource sid`
 MY_PID=$$
 VAL_REAL=`snoopy_test_getValue_fromPs "$MY_PID" "sid"`
 

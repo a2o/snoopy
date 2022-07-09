@@ -13,7 +13,7 @@ set -u
 ### Get data
 #
 VAL_REAL="1"
-VAL_SNOOPY=`$SNOOPY_TEST_DATASOURCE snoopy_threads ""`
+VAL_SNOOPY=`$SNOOPY_TEST_CLI run datasource snoopy_threads ""`
 
 
 

@@ -1,9 +1,7 @@
 /*
  * SNOOPY LOGGER
  *
- * File: snoopy-test-output.c
- *
- * Copyright (c) 2015 Bostjan Skufca <bostjan@a2o.si>
+ * Copyright (c) 2015 Bostjan Skufca Jese <bostjan@a2o.si>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,7 +23,7 @@
 /*
  * Includes order: from local to global
  */
-//#include "snoopy-test-output.h"
+#include "action-common.h"
 
 #include "snoopy.h"
 
@@ -38,16 +36,35 @@
 #include <string.h>
 
 
-/*
- * We do not use separate .h file here
- */
-int  main (int argc, char **argv);
-void displayHelp();
-int  fatalError(char *errorMsg);
+
+void snoopyTestCli_action_run_output_listOutputs ()
+{
+    printf("Available outputs:\n");
+    int oCount = snoopy_outputregistry_getCount();
+    for (int i=0 ; i<oCount ; i++) {
+        printf("    %s\n", snoopy_outputregistry_getName(i));
+    }
+}
 
 
 
-int main (int argc, char **argv)
+void snoopyTestCli_action_run_output_showHelp ()
+{
+    char * helpContent =
+        "Snoopy TEST SUITE CLI utility :: Action `run` :: Subsystem `output`\n"
+        "\n"
+        "Usage:\n"
+        "    snoopy-test run output \"LOG MESSAGE\" OUTPUT [OUTPUT_ARGS]\n"
+        "    snoopy-test run output --list\n"
+        "\n";
+    printf("%s", helpContent);
+
+    snoopyTestCli_action_run_output_listOutputs();
+}
+
+
+
+int snoopyTestCli_action_run_output (int argc, char ** argv)
 {
     const char * message;
     const char * outputName;
@@ -58,26 +75,26 @@ int main (int argc, char **argv)
     /* Initialize Snoopy */
     snoopy_configuration_preinit_disableConfigFileParsing();
     snoopy_init();
-    snoopy_inputdatastorage_store_filename(argv[0]);
-    snoopy_inputdatastorage_store_argv(argv);
+    snoopy_inputdatastorage_store_filename(g_argv[0]);
+    snoopy_inputdatastorage_store_argv(g_argv);
 
 
     /* Check if all arguments are present */
-    if (argc < 2) {
-        displayHelp();
-        return fatalError("Missing argument: log message");
+    if (argc < 1) {
+        snoopyTestCli_action_run_output_showHelp();
+        fatalError("Missing argument: log message");
     }
-    message = argv[1];
+    message = argv[0];
 
-    if (argc < 3) {
-        displayHelp();
-        return fatalError("Missing argument: output name");
+    if (argc < 2) {
+        snoopyTestCli_action_run_output_showHelp();
+        fatalError("Missing argument: output name");
     }
-    outputName = argv[2];
+    outputName = argv[1];
 
     /* Is there an argument for this data source */
-    if (3 < argc) {
-        outputArg = argv[3];
+    if (argc > 2) {
+        outputArg = argv[2];
     } else {
         outputArg = "";
     }
@@ -85,68 +102,18 @@ int main (int argc, char **argv)
 
     /* Check if what we got is a valid output name */
     if (SNOOPY_FALSE == snoopy_outputregistry_doesNameExist(outputName)) {
-        displayHelp();
-        return fatalError("Invalid output name given");
+        snoopyTestCli_action_run_output_showHelp();
+        fatalErrorValue("Invalid output name given", outputName);
     }
 
     /* Dispatch message to output */
     retVal = snoopy_outputregistry_callByName(outputName, message, SNOOPY_LOG_MESSAGE, outputArg);
     if (SNOOPY_OUTPUT_FAILED(retVal)) {
-        return fatalError("Output failure");
+        fatalError("Output failure");
     }
 
 
     /* Housekeeping and return */
     snoopy_cleanup();
     return 0;
-}
-
-
-
-/*
- * displayHelp()
- *
- * Description:
- *     Displays help
- *
- * Params:
- *     (none)
- *
- * Return:
- *     void
- */
-void displayHelp ()
-{
-    printf("\n");
-    printf("Usage: \n");
-    printf("    snoopy-test-output LOG_MESSAGE OUTPUT [OUTPUT_ARG]\n");
-    printf("\n");
-
-    printf("Available outputs:\n");
-    int oCount = snoopy_outputregistry_getCount();
-    for (int i=0 ; i<oCount ; i++) {
-        printf("    %s\n", snoopy_outputregistry_getName(i));
-    }
-    printf("\n");
-}
-
-
-
-/*
- * fatalError()
- *
- * Description:
- *     Displays error message + help and returns non-zero exit status
- *
- * Params:
- *     errorMsg   Error message to display to user
- *
- * Return:
- *     int        Exit status to return to calling process
- */
-int fatalError (char *errorMsg)
-{
-    printf("ERROR: %s\n", errorMsg);
-    printf("\n");
-    return 127;
 }

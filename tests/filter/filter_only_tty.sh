@@ -31,13 +31,13 @@ fi
 ### Execute on-tty-dependent check
 #
 if [ "$ON_TTY" == "true" ]; then
-    if $SNOOPY_TEST_FILTER   "msg"   "only_tty" > /dev/null; then
+    if $SNOOPY_TEST_CLI run filter   "msg"   "only_tty" > /dev/null; then
         snoopy_testResult_pass
     else
         snoopy_testResult_fail "only_tty check running in non-interactive mode failed"
     fi
 else
-    if ! $SNOOPY_TEST_FILTER   "msg"   "only_tty" > /dev/null; then
+    if ! $SNOOPY_TEST_CLI run filter   "msg"   "only_tty" > /dev/null; then
         snoopy_testResult_pass
     else
         snoopy_testResult_fail "only_tty check NOT running on interactive tty failed"

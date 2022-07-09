@@ -25,7 +25,7 @@
 /*
  * Includes order: from local to global
  */
-//#include "snoopy-test-message-format.h"
+#include "action-common.h"
 
 #include "snoopy.h"
 
@@ -39,16 +39,24 @@
 
 
 
-/*
- * We do not use separate .h file here
- */
-int  main (int argc, char **argv);
-void displayHelp();
-int  fatalError(char *errorMsg);
+void snoopyTestCli_action_run_messageformat_showHelp ()
+{
+    char * helpContent =
+        "Snoopy TEST SUITE CLI utility :: Action `run` :: Subsystem `message formatter`\n"
+        "\n"
+        "Usage:\n"
+        "    snoopy-test run messageformat \"FORMAT SPECIFICATION\"\n"
+        "\n"
+        "Result:\n"
+        "    Prints a log message formatted according to the given format specification.\n"
+        "    Process data is taken from self.\n"
+        "\n";
+    printf("%s", helpContent);
+}
 
 
 
-int main (int argc, char **argv)
+int snoopyTestCli_action_run_messageformat (int argc, char **argv)
 {
     char *messageFormat;
     char *message;
@@ -57,16 +65,16 @@ int main (int argc, char **argv)
     /* Initialize Snoopy */
     snoopy_configuration_preinit_disableConfigFileParsing();
     snoopy_init();
-    snoopy_inputdatastorage_store_filename(argv[0]);
-    snoopy_inputdatastorage_store_argv(argv);
+    snoopy_inputdatastorage_store_filename(g_argv[0]);
+    snoopy_inputdatastorage_store_argv(g_argv);
 
 
     /* Check if all arguments are present */
-    if (argc < 2) {
-        displayHelp();
-        return fatalError("Missing argument: message format");
+    if (argc < 1) {
+        snoopyTestCli_action_run_messageformat_showHelp();
+        fatalError("Missing argument: message format");
     }
-    messageFormat = argv[1];
+    messageFormat = argv[0];
 
 
     /* Initialize message */
@@ -86,47 +94,4 @@ int main (int argc, char **argv)
     free(message);
     snoopy_cleanup();
     return 0;
-}
-
-
-
-/*
- * displayHelp()
- *
- * Description:
- *     Displays help
- *
- * Params:
- *     (none)
- *
- * Return:
- *     void
- */
-void displayHelp ()
-{
-    printf("\n");
-    printf("Usage: \n");
-    printf("    snoopy-test-message-format MESSAGE_FORMAT\n");
-    printf("\n");
-}
-
-
-
-/*
- * fatalError()
- *
- * Description:
- *     Displays error message + help and returns non-zero exit status
- *
- * Params:
- *     errorMsg   Error message to display to user
- *
- * Return:
- *     int        Exit status to return to calling process
- */
-int fatalError (char *errorMsg)
-{
-    printf("ERROR: %s\n", errorMsg);
-    printf("\n");
-    return 127;
 }

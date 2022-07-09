@@ -12,7 +12,7 @@ set -u
 
 ### Get data
 #
-VAL_SNOOPY=`$SNOOPY_TEST_DATASOURCE uid`
+VAL_SNOOPY=`$SNOOPY_TEST_CLI run datasource uid`
 VAL_REAL=`id -a | grep -Eo 'uid=[0-9]+' | grep -Eo '[0-9]+'`
 
 

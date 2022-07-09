@@ -18,7 +18,7 @@ FILE="output_file.sh.$MY_PID.tmp.out"
 
 # Write
 rm -f $FILE
-$SNOOPY_TEST_OUTPUT   "$VAL_REAL"   "file"   "$FILE" > /dev/null
+$SNOOPY_TEST_CLI run output   "$VAL_REAL"   "file"   "$FILE" > /dev/null
 
 # Read
 VAL_SNOOPY=`cat $FILE`

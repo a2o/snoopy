@@ -12,10 +12,10 @@ set -u
 
 ### Get data
 #
-MY_UID=`$SNOOPY_TEST_DATASOURCE uid`
+MY_UID=`$SNOOPY_TEST_CLI run datasource uid`
 MY_UID_PLUS_1=`expr $MY_UID + 1`
 MY_UID_PLUS_2=`expr $MY_UID + 2`
-if ! $SNOOPY_TEST_FILTER   "msg"   "only_uid"   "$MY_UID_PLUS_1,$MY_UID,$MY_UID_PLUS_2" > /dev/null; then
+if ! $SNOOPY_TEST_CLI run filter   "msg"   "only_uid"   "$MY_UID_PLUS_1,$MY_UID,$MY_UID_PLUS_2" > /dev/null; then
     snoopy_testResult_fail "My UID: $MY_UID"
 else
     snoopy_testResult_pass

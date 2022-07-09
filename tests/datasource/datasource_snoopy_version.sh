@@ -12,7 +12,7 @@ set -u
 
 ### Get data
 #
-VAL_SNOOPY=`$SNOOPY_TEST_DATASOURCE snoopy_version`
+VAL_SNOOPY=`$SNOOPY_TEST_CLI run datasource snoopy_version`
 
 
 

@@ -12,7 +12,7 @@ set -u
 
 ### Get data
 #
-VAL_SNOOPY=`$SNOOPY_TEST_DATASOURCE login`
+VAL_SNOOPY=`$SNOOPY_TEST_CLI run datasource login`
 
 if ! logname 2>/dev/null; then
     VAL_REAL=""

@@ -12,7 +12,7 @@ set -u
 
 ### Get data
 #
-VAL_SNOOPY=`$SNOOPY_TEST_DATASOURCE domain`
+VAL_SNOOPY=`$SNOOPY_TEST_CLI run datasource domain`
 
 # Getting domain is tricky on some hosts (Travis CI build boxes return empty string)
 # Therefore try multiple sources.

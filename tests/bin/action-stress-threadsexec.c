@@ -25,6 +25,8 @@
 /*
  * Includes order: from local to global
  */
+#include "action-common.h"
+
 #include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -51,22 +53,47 @@ typedef struct {
 /*
  * We do not use separate .h file here
  */
-int    main        (int argc, char **argv);
-void   displayHelp ();
-int    fatalError  (char *errorMsg);
-void * threadMain  (void *arg);
+void * snoopyTestCli_action_stress_threadsexec_threadMain  (void *arg);
 
 
 
 /*
  * Global variables
  */
-char      **runCmdAndArgv;
-pthread_t   tRepo[THREAD_COUNT_MAX];
+char      **snoopyTestCli_action_stress_threadsexec_runCmdAndArgv;
+pthread_t   snoopyTestCli_action_stress_threadsexec_tRepo[THREAD_COUNT_MAX];
 
 
 
-int main (int argc, char **argv)
+
+
+
+void snoopyTestCli_action_stress_threadsexec_showHelp ()
+{
+    char * helpContent =
+        "Snoopy TEST SUITE CLI utility :: Action `stress` :: Subsystem `threadsexec`\n"
+        "\n"
+        "Usage:\n"
+        "    snoopy-test stress threadsexec THREAD_COUNT CMD [CMD_ARGS]\n"
+        "\n"
+        "Description:\n"
+        "    Stresses Snoopy's threading implementation by creating and destroying THREAD_COUNT\n"
+        "    threads as fast as possible and executing CMD from those threads.\n"
+        "\n"
+        "Arguments:\n"
+        "    THREAD_COUNT       Number of threads to create and destroy\n"
+        "    CMD                External command to execute from each newly created thread\n"
+        "    [CMD_ARGS]         Optional argument(s) for the external command\n"
+        "\n"
+        "Output:\n"
+        "    Various threading-related messages are shown, followed by a word \"SUCCESS!\".\n"
+        "\n";
+    printf("%s", helpContent);
+}
+
+
+
+int snoopyTestCli_action_stress_threadsexec (int argc, char ** argv)
 {
     int         threadsToCreate;
     int         i;
@@ -74,21 +101,21 @@ int main (int argc, char **argv)
 
 
     /* Check arguments and parse them */
-    if (argc < 2) {
-        displayHelp();
-        return fatalError("Missing argument: number of threads to run");
+    if (argc < 1) {
+        snoopyTestCli_action_stress_threadsexec_showHelp();
+        fatalError("Missing argument: number of threads to run");
     }
-    threadsToCreate = atoi(argv[1]);
+    threadsToCreate = atoi(argv[0]);
     if ((threadsToCreate < 1) || (threadsToCreate > THREAD_COUNT_MAX)) {
-        displayHelp();
-        return fatalError("Invalid number of threads to create (min 1, max THREAD_COUNT_MAX)");
+        snoopyTestCli_action_stress_threadsexec_showHelp();
+        fatalErrorValue("Invalid number of threads to create (min 1, max THREAD_COUNT_MAX)", argv[0]);
     }
 
-    if (argc < 3) {
-        displayHelp();
-        return fatalError("Missing argument: command to run");
+    if (argc < 2) {
+        snoopyTestCli_action_stress_threadsexec_showHelp();
+        fatalError("Missing argument: external command to run");
     }
-    runCmdAndArgv = &argv[2];
+    snoopyTestCli_action_stress_threadsexec_runCmdAndArgv = &argv[1];
 
 
     // Create threads and run the function in them
@@ -97,14 +124,14 @@ int main (int argc, char **argv)
         tData_t *tArgs = malloc(sizeof *tArgs);
         tArgs->seqNr   = i;
         printf(" M: Starting thread #%d:\n", i+1);
-        retVal = pthread_create(&tRepo[i], NULL, &threadMain, tArgs);
+        retVal = pthread_create(&snoopyTestCli_action_stress_threadsexec_tRepo[i], NULL, &snoopyTestCli_action_stress_threadsexec_threadMain, tArgs);
     }
     printf("M: All threads started\n");
 
     // Wait for threads to finish
     printf("M: Waiting for all threads to finish:\n");
     for (i=0 ; i<threadsToCreate ; i++) {
-        pthread_join(tRepo[i], NULL);
+        pthread_join(snoopyTestCli_action_stress_threadsexec_tRepo[i], NULL);
         printf(" M: Thread #%d joined.\n", i+1);
     }
     printf("M: All threads have finished.\n");
@@ -128,7 +155,7 @@ int main (int argc, char **argv)
  * Return:
  *     int        Exit status to return to calling process
  */
-void* threadMain (void *args)
+void* snoopyTestCli_action_stress_threadsexec_threadMain (void *args)
 {
     tData_t  *tArgs = args;
     char     *cmd;
@@ -153,8 +180,8 @@ void* threadMain (void *args)
         printf("  t%dc: Hello from child proc\n", tArgs->seqNr+1);
 
         // Set variables
-        cmd  = runCmdAndArgv[0];
-        argv = &runCmdAndArgv[0];
+        cmd  = snoopyTestCli_action_stress_threadsexec_runCmdAndArgv[0];
+        argv = &snoopyTestCli_action_stress_threadsexec_runCmdAndArgv[0];
 
         printf("  t%dc: running cmd %s %s\n", tArgs->seqNr+1, cmd, argv[0]);
         execv(cmd, argv);
@@ -166,47 +193,4 @@ void* threadMain (void *args)
 
     free (tArgs);
     return NULL;
-}
-
-
-
-/*
- * displayHelp()
- *
- * Description:
- *     Displays help
- *
- * Params:
- *     (none)
- *
- * Return:
- *     void
- */
-void displayHelp ()
-{
-    printf("\n");
-    printf("Usage: \n");
-    printf("    snoopy-run-threads   THREAD_COUNT   THREAD_EXEC_CMD   [THREAD_EXEC_ARGS]\n");
-    printf("\n");
-}
-
-
-
-/*
- * fatalError()
- *
- * Description:
- *     Displays error message + help and returns non-zero exit status
- *
- * Params:
- *     errorMsg   Error message to display to user
- *
- * Return:
- *     int        Exit status to return to calling process
- */
-int fatalError (char *errorMsg)
-{
-    printf("ERROR: %s\n", errorMsg);
-    printf("\n");
-    return 127;
 }

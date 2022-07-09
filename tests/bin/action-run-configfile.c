@@ -1,9 +1,7 @@
 /*
  * SNOOPY LOGGER
  *
- * File: snoopy-test-filter.c
- *
- * Copyright (c) 2015 Bostjan Skufca <bostjan@a2o.si>
+ * Copyright (c) 2015 Bostjan Skufca Jese <bostjan@a2o.si>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,29 +23,60 @@
 /*
  * Includes order: from local to global
  */
-//#include "snoopy-test-filter.h"
+#include "action-common.h"
 
 #include "snoopy.h"
 #include "configuration.h"
 #include "inputdatastorage.h"
 #include "misc.h"
 
+#include <errno.h>
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
 
 
 
-/*
- * We do not use separate .h file here
- */
-int  main (int argc, char **argv);
-void displayHelp();
-int  fatalError(char *errorMsg);
+void displayHelp ()
+{
+    printf("\n");
+    printf("Usage: \n");
+    printf("    snoopy-test-configfile PATH-TO-INI CONFIG-VARIABLE-TO-DISPLAY\n");
+    printf("\n");
+
+    printf("Available configfile variables:\n");
+    printf("    (check etc/snoopy.ini for list of supported configuration variables)\n");
+    printf("\n");
+}
 
 
 
-int main (int argc, char **argv)
+void snoopyTestCli_action_run_configfile_showHelp ()
+{
+    char * helpContent =
+        "Snoopy TEST SUITE CLI utility :: Action `run` :: Subsystem `configfile`\n"
+        "\n"
+        "Usage:\n"
+        "    snoopy-test run configfile INI_FILE KEY\n"
+        "\n"
+        "Result:\n"
+        "    Prints value of the requested configuration KEY from the given INI_FILE.\n"
+        "\n"
+        "Supported configuration keys (check etc/snoopy.ini for more information):\n"
+        "    message_format\n"
+        "    filter_chain\n"
+        "    output\n"
+        "    syslog_facility\n"
+        "    syslog_ident\n"
+        "    syslog_level\n"
+        "NOTICE: These keys MUST be placed in a section named [snoopy].\n"
+        "\n";
+    printf("%s", helpContent);
+}
+
+
+
+int snoopyTestCli_action_run_configfile (int argc, char **argv)
 {
     char *iniFilePath;
     const char *showConfigVar;
@@ -55,23 +84,28 @@ int main (int argc, char **argv)
 
 
     /* Check if all arguments are present */
-    if (argc < 2) {
-        displayHelp();
-        return fatalError("Missing argument: path to INI config file");
+    if (argc < 1) {
+        snoopyTestCli_action_run_configfile_showHelp();
+        fatalError("Missing argument: path to INI config file");
     }
-    iniFilePath = argv[1];
+    if (0 == strcmp(argv[0], "--help")) {
+        snoopyTestCli_action_run_configfile_showHelp();
+        return 0;
+    }
+    iniFilePath = argv[0];
 
-    if (argc < 3) {
-        displayHelp();
-        return fatalError("Missing argument: configuration variable to display");
+    if (argc < 2) {
+        snoopyTestCli_action_run_configfile_showHelp();
+        fatalError("Missing argument: configuration variable to display");
     }
-    showConfigVar = argv[2];
+    showConfigVar = argv[1];
 
 
     /* Check if config file exists and is readable */
     if (-1 == access(iniFilePath, R_OK)) {
-        displayHelp();
-        return fatalError("Unable to open/read given config file");
+        snoopyTestCli_action_run_configfile_showHelp();
+        printErrorValue("INI file path", iniFilePath);
+        fatalErrorValue("Unable to open/read given INI file", strerror(errno));
     }
 
 
@@ -110,58 +144,11 @@ int main (int argc, char **argv)
         printf("%s\n", snoopy_syslog_convert_levelToStr(CFG->syslog_level));
 
     } else {
-        return fatalError("Unknown configuration variable given");
+        fatalErrorValue("Unknown setting given", showConfigVar);
     }
 
 
     /* Housekeeping and return */
     snoopy_cleanup();
     return 0;
-}
-
-
-
-/*
- * displayHelp()
- *
- * Description:
- *     Displays help
- *
- * Params:
- *     (none)
- *
- * Return:
- *     void
- */
-void displayHelp ()
-{
-    printf("\n");
-    printf("Usage: \n");
-    printf("    snoopy-test-configfile PATH-TO-INI CONFIG-VARIABLE-TO-DISPLAY\n");
-    printf("\n");
-
-    printf("Available configfile variables:\n");
-    printf("    (check etc/snoopy.ini for list of supported configuration variables)\n");
-    printf("\n");
-}
-
-
-
-/*
- * fatalError()
- *
- * Description:
- *     Displays error message + help and returns non-zero exit status
- *
- * Params:
- *     errorMsg   Error message to display to user
- *
- * Return:
- *     int        Exit status to return to calling process
- */
-int fatalError (char *errorMsg)
-{
-    printf("ERROR: %s\n", errorMsg);
-    printf("\n");
-    return 127;
 }

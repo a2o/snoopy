@@ -12,7 +12,7 @@ set -u
 
 ### Check if there is ENV datasource available
 #
-RES=`$SNOOPY_TEST_DATASOURCE --list | grep -E '^(snoopy_version|env)$' -c`
+RES=`$SNOOPY_TEST_CLI run datasource --list | grep -E '^ *(snoopy_version|env)$' -c`
 if [ "$RES" -eq "1" ]; then
     snoopy_testResult_skip "Required datasource 'env' is not available"
 fi
@@ -24,7 +24,7 @@ fi
 VAR_NAME="SNOOPY_TEST_MESSAGE_FORMAT_`date +%s`"
 VAR_VALUE="${VAR_NAME}-value"
 export $VAR_NAME="$VAR_VALUE"
-VAL_SNOOPY=`$SNOOPY_TEST_MESSAGE_FORMAT "%{env:$VAR_NAME}"`
+VAL_SNOOPY=`$SNOOPY_TEST_CLI run messageformat "%{env:$VAR_NAME}"`
 VAL_REAL="$VAR_VALUE"
 
 
