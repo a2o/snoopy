@@ -26,6 +26,7 @@
 #include "action-common.h"
 
 #include "snoopy.h"
+#include "entrypoint/test-cli.h"
 #include "configuration.h"
 #include "datasourceregistry.h"
 #include "inputdatastorage.h"
@@ -74,11 +75,7 @@ int snoopyTestCli_action_run_datasource (int argc, char ** argv)
 
 
     /* Initialize Snoopy */
-    snoopy_configuration_preinit_disableConfigFileParsing();
-    snoopy_init();
-    snoopy_inputdatastorage_store_filename((char const *)g_argv[0]);
-    snoopy_inputdatastorage_store_argv(g_argv);
-
+    snoopy_entrypoint_test_cli_init((char const *)g_argv[0], g_argv, NULL);
 
 
     /* Check if there is a data source name passed as an argument */
@@ -126,6 +123,6 @@ int snoopyTestCli_action_run_datasource (int argc, char ** argv)
 
 
     /* Housekeeping and return */
-    snoopy_cleanup();
+    snoopy_entrypoint_test_cli_exit();
     return 0;
 }

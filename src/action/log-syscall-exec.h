@@ -1,7 +1,7 @@
 /*
  * SNOOPY LOGGER
  *
- * File: error.c
+ * File: log.h
  *
  * Copyright (c) 2014-2015 Bostjan Skufca <bostjan@a2o.si>
  *
@@ -22,41 +22,4 @@
 
 
 
-/*
- * Includes order: from local to global
- */
-#include "error.h"
-
-#include "snoopy.h"
-#include "configuration.h"
-#include "action/log-message-dispatch.h"
-
-
-
-/*
- * snoopy_error_handler
- *
- * Description:
- *     Does the actual error handling. If configured, it sends it
- *     to syslog.
- *
- * Params:
- *     (none)
- *
- * Return:
- *     void
- */
-void snoopy_error_handler (const char * errorMsg)
-{
-    const snoopy_configuration_t * CFG;
-
-
-    /* Get config pointer */
-    CFG = snoopy_configuration_get();
-
-
-    /* Only send error to syslog if configured like that */
-    if (SNOOPY_TRUE == CFG->error_logging_enabled) {
-        snoopy_action_log_message_dispatch(errorMsg, SNOOPY_LOG_ERROR);
-    }
-}
+void snoopy_action_log_syscall_exec ();

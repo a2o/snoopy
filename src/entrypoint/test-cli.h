@@ -1,11 +1,7 @@
 /*
  * SNOOPY LOGGER
  *
- * File: snoopy/entrypoint/execve_wrapper_test_configfile_env.h
- *
- * Copyright (c) 2020 Bostjan Skufca <bostjan@skufca.si>
- *
- * Part hacked on flight KL 0617, 30,000 ft or so over the Atlantic :)
+ * Copyright (c) 2022 Bostjan Skufca <bostjan@a2o.si>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,8 +20,6 @@
 
 
 
-/*
- * Function prototypes
- */
-int execv  (const char *filename, char *const argv[]);
-int execve (const char *filename, char *const argv[], char *const envp[]);
+void snoopy_entrypoint_test_cli_init (const char *filename, char *const argv[], char * const configFilePath);
+void snoopy_entrypoint_test_cli_threads_init();
+void snoopy_entrypoint_test_cli_exit ();

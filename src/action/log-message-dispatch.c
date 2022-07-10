@@ -1,9 +1,7 @@
 /*
  * SNOOPY LOGGER
  *
- * File: error.c
- *
- * Copyright (c) 2014-2015 Bostjan Skufca <bostjan@a2o.si>
+ * Copyright (c) 2014 Bostjan Skufca Jese <bostjan@a2o.si>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,38 +23,39 @@
 /*
  * Includes order: from local to global
  */
-#include "error.h"
+#include "log-message-dispatch.h"
 
 #include "snoopy.h"
-#include "configuration.h"
-#include "action/log-message-dispatch.h"
+#include "outputregistry.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 
 
 /*
- * snoopy_error_handler
+ * snoopy_action_log_message_dispatch
  *
  * Description:
- *     Does the actual error handling. If configured, it sends it
- *     to syslog.
+ *     Dispatch given message to configured output
  *
  * Params:
- *     (none)
+ *     logMessage:       message to dispatch
+ *     errorOrMessage:   is this a message or an error?
  *
  * Return:
- *     void
+ *     int:              See snoopy.h (SNOOPY_OUTPUT_*) for details.
  */
-void snoopy_error_handler (const char * errorMsg)
-{
-    const snoopy_configuration_t * CFG;
-
-
-    /* Get config pointer */
-    CFG = snoopy_configuration_get();
-
-
-    /* Only send error to syslog if configured like that */
-    if (SNOOPY_TRUE == CFG->error_logging_enabled) {
-        snoopy_action_log_message_dispatch(errorMsg, SNOOPY_LOG_ERROR);
+int snoopy_action_log_message_dispatch (
+    const char *logMessage,
+    int   errorOrMessage
+) {
+    /* Dispatch only if non-zero size */
+    if (0 == strlen(logMessage)) {
+        return SNOOPY_OUTPUT_GRACEFUL_DISCARD;
     }
+
+    // Dispatch to configured output
+    return snoopy_outputregistry_dispatch(logMessage, errorOrMessage);
 }

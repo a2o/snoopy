@@ -1,13 +1,7 @@
 /*
  * SNOOPY LOGGER
  *
- * File: snoopy/entrypoint/execve_wrapper.h
- *
- * Copyright (c) 2000 Marius Aamodt Eriksen <marius@linux.com>
- * Copyright (c) 2000 Mike Baker <mbm@linux.com>
- * Copyright (c) 2010-2015 Bostjan Skufca <bostjan@a2o.si>
- *
- * Part hacked on flight KL 0617, 30,000 ft or so over the Atlantic :)
+ * Copyright (c) 2014 Bostjan Skufca Jese <bostjan@a2o.si>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,7 +21,6 @@
 
 
 /*
- * Function prototypes
+ * Log message dispatching action
  */
-int execv  (const char *filename, char *const argv[]);
-int execve (const char *filename, char *const argv[], char *const envp[]);
+int snoopy_action_log_message_dispatch (const char *logMessage, int errorOrMessage);
