@@ -334,11 +334,11 @@ dnl ======= ENABLE THREAD SAFETY ===============================================
 dnl ============================================================================
 AC_ARG_ENABLE(thread-safety,
     [AS_HELP_STRING(
-        [--enable-thread-safety],
-        [EXPERIMENTAL: enable parts of code that ensure safe multi-threaded operation [default=disabled]]
+        [--disable-thread-safety],
+        [Disable parts of code that ensure safe multi-threaded operation [default=enabled]]
     )],
     SNOOPY_CONFIGURE_ENABLE_GENERIC_SPECIFIED(  [thread_safety], [thread_safety_enabled], [$enableval], []),
-    SNOOPY_CONFIGURE_ENABLE_GENERIC_UNSPECIFIED([thread_safety], [thread_safety_enabled], [$enable_everything], [no])
+    SNOOPY_CONFIGURE_ENABLE_GENERIC_UNSPECIFIED([thread_safety], [thread_safety_enabled], [$enable_everything], [yes])
 )
 SNOOPY_CONFIGURE_ENABLE_GENERIC_EVALUATE([$thread_safety_enabled], [THREAD_SAFETY_ENABLED], [thread safety])
 

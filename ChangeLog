@@ -4,6 +4,14 @@
 
 
 
+202x-xx-xx - Version 2.5.0
+--------------------------
+o Change/Enhancement (GH #166):
+    Enable thread safety by default. It can still be disabled at build time
+    via the --disable-thread-safety flag.
+
+
+
 2021-10-17 - Version 2.4.15
 ---------------------------
 o Bugfix (GH #201):
@@ -65,7 +73,6 @@ o Bugfix (GH #184):
 o Bugfix (GH #174):
     Fix invalid memory access that could only be encountered by running a
     test suite. Regular Snoopy operation was unaffected by this.
-
 
 
 2020-11-30 - Version 2.4.10
