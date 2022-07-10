@@ -26,6 +26,7 @@
 #include "action-common.h"
 
 #include "snoopy.h"
+#include "entrypoint/test-cli.h"
 #include "libsnoopy-debug-addons.h"
 
 #include "configuration.h"
@@ -34,7 +35,7 @@
 #endif
 //#include "filterregistry.h"
 #include "inputdatastorage.h"
-#include "log.h"
+#include "action/log-message-dispatch.h"
 #include "message.h"
 #include "misc.h"
 
@@ -71,9 +72,7 @@ int snoopyTestCli_action_run_everything ()
 
 
     /* Initialize Snoopy */
-    snoopy_init();
-    snoopy_inputdatastorage_store_filename(g_argv[0]);
-    snoopy_inputdatastorage_store_argv(g_argv);
+    snoopy_entrypoint_test_cli_init((char const *)g_argv[0], g_argv, NULL);
 
     /* Get config pointer */
     CFG = snoopy_configuration_get();
@@ -108,7 +107,7 @@ int snoopyTestCli_action_run_everything ()
 #endif
 
     printf("-----[ Dispatching ]-----------------------------------\n");
-    snoopy_log_dispatch(logMessage, SNOOPY_LOG_MESSAGE);
+    snoopy_action_log_message_dispatch(logMessage, SNOOPY_LOG_MESSAGE);
     printf("Done.\n");
 
     printf("\nAll done.\n");
@@ -116,7 +115,7 @@ int snoopyTestCli_action_run_everything ()
 
     /* Cleanup and return */
     free(logMessage);
-    snoopy_cleanup();
+    snoopy_entrypoint_test_cli_exit();
 
     /* Close these FDs too, otherwise valgrind complains */
     fclose(stdin);

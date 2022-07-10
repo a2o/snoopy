@@ -7,7 +7,6 @@ include   $(top_srcdir)/build/Makefile.am.common
 ### Init empty program install list, but always link with given library
 #
 noinst_PROGRAMS =
-LDADD           = ../../src/libsnoopy_no_execve.la
 
 
 
@@ -32,8 +31,7 @@ snoopy_test_SOURCES  = \
     $(top_builddir)/src/cli/cli-subroutines.c \
     $(top_builddir)/src/cli/cli-subroutines.h
 snoopy_test_LDADD  = \
-    $(top_builddir)/src/libsnoopy_no_execve.la \
-    $(top_builddir)/src/libsnoopy-debug-addons.la
+    $(top_builddir)/src/libsnoopy-test-cli.la
 
 if CONFIGFILE_ENABLED
 snoopy_test_SOURCES += \
@@ -74,13 +72,13 @@ clean-local:
 #
 # This library reads path to snoopy.ini from SNOOPY_INI environmental variable.
 #
-noinst_LTLIBRARIES        = libsnoopy-test.la
-libsnoopy_test_la_SOURCES =
-libsnoopy_test_la_LIBADD  = \
-	$(top_builddir)/src/libsnoopy_no_execve.la \
-	$(top_builddir)/src/eventsource/libsnoopy_eventsource_execve_wrapper_test_configfile_env.la
+noinst_LTLIBRARIES        = libsnoopy-test-execve-wrapper-env-ini-path.la
+libsnoopy_test_execve_wrapper_env_ini_path_la_SOURCES =
+libsnoopy_test_execve_wrapper_env_ini_path_la_LIBADD  = \
+	$(top_builddir)/src/libsnoopy-no-entrypoint.la \
+	$(top_builddir)/src/entrypoint/libsnoopy-entrypoint-execve-wrapper-test-configfile-env.la
 #
 # This needs to be added as automake does not create shared library for
 # things in noinst_LTLIBRARIES.
 #
-libsnoopy_test_la_LDFLAGS = -module -rpath /nowhere
+libsnoopy_test_execve_wrapper_env_ini_path_la_LDFLAGS = -module -rpath /nowhere

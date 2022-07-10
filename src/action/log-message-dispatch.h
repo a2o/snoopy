@@ -1,11 +1,7 @@
 /*
  * SNOOPY LOGGER
  *
- * File: snoopy/eventsource/execve_wrapper_test_configfile_env.h
- *
- * Copyright (c) 2020 Bostjan Skufca <bostjan@skufca.si>
- *
- * Part hacked on flight KL 0617, 30,000 ft or so over the Atlantic :)
+ * Copyright (c) 2014 Bostjan Skufca Jese <bostjan@a2o.si>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,7 +21,6 @@
 
 
 /*
- * Function prototypes
+ * Log message dispatching action
  */
-int execv  (const char *filename, char *const argv[]);
-int execve (const char *filename, char *const argv[], char *const envp[]);
+int snoopy_action_log_message_dispatch (const char *logMessage, int errorOrMessage);

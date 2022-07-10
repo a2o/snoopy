@@ -26,6 +26,7 @@
 #include "action-common.h"
 
 #include "snoopy.h"
+#include "entrypoint/test-cli.h"
 #include "configuration.h"
 #include "inputdatastorage.h"
 #include "misc.h"
@@ -110,10 +111,7 @@ int snoopyTestCli_action_run_configfile (int argc, char **argv)
 
 
     /* Initialize Snoopy, which parses alternate configuration file too */
-    snoopy_configuration_preinit_enableAltConfigFileParsing(iniFilePath);
-    snoopy_init();
-    snoopy_inputdatastorage_store_filename(argv[0]);
-    snoopy_inputdatastorage_store_argv(argv);
+    snoopy_entrypoint_test_cli_init((char const *)g_argv[0], g_argv, iniFilePath);
 
 
     /* Get config pointer */
@@ -149,6 +147,6 @@ int snoopyTestCli_action_run_configfile (int argc, char **argv)
 
 
     /* Housekeeping and return */
-    snoopy_cleanup();
+    snoopy_entrypoint_test_cli_exit();
     return 0;
 }

@@ -25,14 +25,14 @@
 /*
  * Includes order: from local to global
  */
-#include <action-common.h>
+#include "action-common.h"
 
-#include <snoopy.h>
-
-#include <configuration.h>
-#include <datasourceregistry.h>
-#include <misc.h>
-#include <tsrm.h>
+#include "snoopy.h"
+#include "entrypoint/test-cli.h"
+#include "configuration.h"
+#include "datasourceregistry.h"
+#include "misc.h"
+#include "tsrm.h"
 
 #include <fcntl.h>
 #include <pthread.h>
@@ -231,7 +231,7 @@ void* snoopyTestCli_action_stress_threads_threadMain (void *args)
 
     // Initialize Snoopy
     if (verbose) printf("    t%d %llu : Threads before snoopy_init():    %d\n", seqNrPub, (unsigned long long)pthread_self(), snoopy_tsrm_get_threadCount());
-    snoopy_init();
+    snoopy_entrypoint_test_cli_threads_init();
     if (verbose) printf("    t%d %llu : Threads after  snoopy_init():    %d\n", seqNrPub, (unsigned long long)pthread_self(), snoopy_tsrm_get_threadCount());
 
 
@@ -250,7 +250,7 @@ void* snoopyTestCli_action_stress_threads_threadMain (void *args)
 
     // Retest at thread end
     if (verbose) printf("    t%d %llu : Threads before snoopy_cleanup(): %d\n", seqNrPub, (unsigned long long)pthread_self(), snoopy_tsrm_get_threadCount());
-    snoopy_cleanup();
+    snoopy_entrypoint_test_cli_exit();
     if (verbose) printf("    t%d %llu : Threads after  snoopy_cleanup(): %d\n", seqNrPub, (unsigned long long)pthread_self(), snoopy_tsrm_get_threadCount());
 
 

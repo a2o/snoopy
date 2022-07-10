@@ -1,13 +1,7 @@
 /*
  * SNOOPY LOGGER
  *
- * File: snoopy/eventsource/execve_wrapper.h
- *
- * Copyright (c) 2000 Marius Aamodt Eriksen <marius@linux.com>
- * Copyright (c) 2000 Mike Baker <mbm@linux.com>
- * Copyright (c) 2010-2015 Bostjan Skufca <bostjan@a2o.si>
- *
- * Part hacked on flight KL 0617, 30,000 ft or so over the Atlantic :)
+ * Copyright (c) 2022 Bostjan Skufca <bostjan@a2o.si>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,8 +20,6 @@
 
 
 
-/*
- * Function prototypes
- */
-int execv  (const char *filename, char *const argv[]);
-int execve (const char *filename, char *const argv[], char *const envp[]);
+void snoopy_entrypoint_test_cli_init (const char *filename, char *const argv[], char * const configFilePath);
+void snoopy_entrypoint_test_cli_threads_init();
+void snoopy_entrypoint_test_cli_exit ();

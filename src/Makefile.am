@@ -7,8 +7,9 @@ include   $(top_srcdir)/build/Makefile.am.common
 ### Subdir processing order
 #
 SUBDIRS  =
+SUBDIRS += action
 SUBDIRS += cli
-SUBDIRS += eventsource
+SUBDIRS += entrypoint
 SUBDIRS += datasource
 if FILTERING_ENABLED
 SUBDIRS += filter
@@ -17,12 +18,12 @@ SUBDIRS += output
 
 
 
-### Create main library, but without execve() wrappers
+### Create the main library, but without an entrypoint (i.e. execve() wrapper)
 #
 noinst_LTLIBRARIES = \
-	libsnoopy_no_execve.la
+	libsnoopy-no-entrypoint.la
 
-libsnoopy_no_execve_la_SOURCES = \
+libsnoopy_no_entrypoint_la_SOURCES = \
 	configuration.c \
 	configuration.h \
 	error.c \
@@ -33,8 +34,6 @@ libsnoopy_no_execve_la_SOURCES = \
 	inputdatastorage.h \
 	datasourceregistry.c \
 	datasourceregistry.h \
-	log.c \
-	log.h \
 	message.c \
 	message.h \
 	misc.c \
@@ -44,39 +43,40 @@ libsnoopy_no_execve_la_SOURCES = \
 	parser.c \
 	parser.h \
 	snoopy.h
-libsnoopy_no_execve_la_LDFLAGS = $(AM_LDFLAGS)
+libsnoopy_no_entrypoint_la_LDFLAGS = $(AM_LDFLAGS)
 
-libsnoopy_no_execve_la_LIBADD = \
+libsnoopy_no_entrypoint_la_LIBADD = \
+	action/libsnoopy-actions-all.la \
 	datasource/libsnoopy_datasources_all.la \
 	output/libsnoopy_outputs_all.la
 
 # If config file is enabled, build and link these too
 if CONFIGFILE_ENABLED
-libsnoopy_no_execve_la_SOURCES += \
+libsnoopy_no_entrypoint_la_SOURCES += \
 	configfile.c \
 	configfile.h
-libsnoopy_no_execve_la_LIBADD += \
+libsnoopy_no_entrypoint_la_LIBADD += \
 	../lib/inih/src/libinih.la
 endif
 
 # If thread safety is enabled, build and link these too
 if THREAD_SAFETY_ENABLED
-libsnoopy_no_execve_la_SOURCES += \
+libsnoopy_no_entrypoint_la_SOURCES += \
 	tsrm.c \
 	tsrm.h
-libsnoopy_no_execve_la_LIBADD += \
+libsnoopy_no_entrypoint_la_LIBADD += \
 	../lib/liblcthw/src/liblist.la
-libsnoopy_no_execve_la_LDFLAGS += -lpthread
+libsnoopy_no_entrypoint_la_LDFLAGS += -lpthread
 endif
 
 # If filtering is enabled, add these too
 if FILTERING_ENABLED
-libsnoopy_no_execve_la_SOURCES += \
+libsnoopy_no_entrypoint_la_SOURCES += \
 	filtering.c \
 	filtering.h \
 	filterregistry.c \
 	filterregistry.h
-libsnoopy_no_execve_la_LIBADD += \
+libsnoopy_no_entrypoint_la_LIBADD += \
 	filter/libsnoopy_filters_all.la
 endif
 
@@ -84,17 +84,20 @@ endif
 
 ### Create main library, whole
 #
-lib_LTLIBRARIES      = libsnoopy.la
+lib_LTLIBRARIES = libsnoopy.la
 libsnoopy_la_SOURCES =
 libsnoopy_la_LIBADD  = \
-	libsnoopy_no_execve.la \
-	eventsource/libsnoopy_eventsource_execve_wrapper.la
+    libsnoopy-no-entrypoint.la \
+    entrypoint/libsnoopy-entrypoint-execve-wrapper.la
 
 
 
 ### Create debugging helper library
 #
-noinst_LTLIBRARIES                += libsnoopy-debug-addons.la
-libsnoopy_debug_addons_la_SOURCES  = libsnoopy-debug-addons.c \
-                                     libsnoopy-debug-addons.h
-libsnoopy_debug_addons_la_LIBADD   = libsnoopy_no_execve.la
+noinst_LTLIBRARIES += libsnoopy-test-cli.la
+libsnoopy_test_cli_la_SOURCES  = \
+    libsnoopy-debug-addons.c \
+    libsnoopy-debug-addons.h
+libsnoopy_test_cli_la_LIBADD = \
+    libsnoopy-no-entrypoint.la \
+    entrypoint/libsnoopy-entrypoint-test-cli.la

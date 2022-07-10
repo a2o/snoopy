@@ -1,9 +1,7 @@
 /*
  * SNOOPY LOGGER
  *
- * File: error.c
- *
- * Copyright (c) 2014-2015 Bostjan Skufca <bostjan@a2o.si>
+ * Copyright (c) 2022 Bostjan Skufca Jese <bostjan@a2o.si>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,38 +23,42 @@
 /*
  * Includes order: from local to global
  */
-#include "error.h"
+#include "test-cli.h"
 
 #include "snoopy.h"
+
 #include "configuration.h"
-#include "action/log-message-dispatch.h"
+#include "inputdatastorage.h"
+#include "misc.h"
 
 
 
-/*
- * snoopy_error_handler
- *
- * Description:
- *     Does the actual error handling. If configured, it sends it
- *     to syslog.
- *
- * Params:
- *     (none)
- *
- * Return:
- *     void
- */
-void snoopy_error_handler (const char * errorMsg)
+void snoopy_entrypoint_test_cli_init (const char *filename, char *const argv[], char * const configFilePath)
 {
-    const snoopy_configuration_t * CFG;
-
-
-    /* Get config pointer */
-    CFG = snoopy_configuration_get();
-
-
-    /* Only send error to syslog if configured like that */
-    if (SNOOPY_TRUE == CFG->error_logging_enabled) {
-        snoopy_action_log_message_dispatch(errorMsg, SNOOPY_LOG_ERROR);
+    if (configFilePath != NULL) {
+        snoopy_configuration_preinit_enableAltConfigFileParsing(configFilePath);
+    } else {
+        snoopy_configuration_preinit_disableConfigFileParsing();
     }
+
+    snoopy_init();
+
+    snoopy_inputdatastorage_store_filename(filename);
+    snoopy_inputdatastorage_store_argv(argv);
+    char *envp[] = { NULL };
+    snoopy_inputdatastorage_store_envp(envp);
+}
+
+
+
+void snoopy_entrypoint_test_cli_threads_init ()
+{
+    snoopy_init();
+}
+
+
+
+void snoopy_entrypoint_test_cli_exit ()
+{
+    snoopy_cleanup();
 }
