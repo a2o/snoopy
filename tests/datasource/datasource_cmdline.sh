@@ -12,7 +12,7 @@ set -u
 
 ### Get data
 #
-COMMAND="$SNOOPY_TEST_DATASOURCE cmdline"
+COMMAND="$SNOOPY_TEST_CLI run datasource cmdline"
 VAL_SNOOPY=`$COMMAND`
 VAL_REAL="$COMMAND"
 

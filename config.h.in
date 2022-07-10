@@ -79,6 +79,9 @@
 /* Define to 1 if you have the `strdup' function. */
 #undef HAVE_STRDUP
 
+/* Define to 1 if you have the `strerror' function. */
+#undef HAVE_STRERROR
+
 /* Define to 1 if you have the <strings.h> header file. */
 #undef HAVE_STRINGS_H
 
@@ -289,6 +292,9 @@
 /* Is filter "only_uid" available? */
 #undef SNOOPY_CONF_FILTER_ENABLED_only_uid
 
+/* Target installation directory for .so library */
+#undef SNOOPY_CONF_LIBDIR
+
 /* Custom message format to use */
 #undef SNOOPY_CONF_MESSAGE_FORMAT
 
@@ -321,6 +327,12 @@
 
 /* Is output "syslog" available? */
 #undef SNOOPY_CONF_OUTPUT_ENABLED_syslog
+
+/* Target installation directory for the CLI tool */
+#undef SNOOPY_CONF_SBINDIR
+
+/* Target installation directory for the configuration file */
+#undef SNOOPY_CONF_SYSCONFDIR
 
 /* Syslog facility to use by default */
 #undef SNOOPY_CONF_SYSLOG_FACILITY

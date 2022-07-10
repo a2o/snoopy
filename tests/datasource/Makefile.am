@@ -6,147 +6,146 @@ include   $(top_srcdir)/build/Makefile.am.common
 
 ### Which tests to run
 #
-SCRIPT_PREFIX = datasource
-TESTS  =
-XFAIL_TESTS  =
+TESTS       =
+XFAIL_TESTS =
 
 if DATASOURCE_ENABLED_cmdline
-    TESTS += $(SCRIPT_PREFIX)_cmdline.sh
+    TESTS += datasource_cmdline.sh
 endif
 
 if DATASOURCE_ENABLED_cwd
-    TESTS += $(SCRIPT_PREFIX)_cwd.sh
+    TESTS += datasource_cwd.sh
 endif
 
 if DATASOURCE_ENABLED_datetime
-    TESTS += $(SCRIPT_PREFIX)_datetime.sh
-    TESTS += $(SCRIPT_PREFIX)_datetime-fmt-epoch.sh
-    TESTS += $(SCRIPT_PREFIX)_datetime-fmt-static.sh
-    TESTS += $(SCRIPT_PREFIX)_datetime-fmt-too-long.sh
-    XFAIL_TESTS += $(SCRIPT_PREFIX)_datetime-fmt-too-long.sh
-    TESTS += $(SCRIPT_PREFIX)_datetime-fmt-ymd.sh
+    TESTS += datasource_datetime.sh
+    TESTS += datasource_datetime-fmt-epoch.sh
+    TESTS += datasource_datetime-fmt-static.sh
+    TESTS += datasource_datetime-fmt-too-long.sh
+    XFAIL_TESTS += datasource_datetime-fmt-too-long.sh
+    TESTS += datasource_datetime-fmt-ymd.sh
 endif
 
 #if DATASOURCE_ENABLED_domain
-#    TESTS += $(SCRIPT_PREFIX)_domain.sh
+#    TESTS += datasource_domain.sh
 #endif
 
 if DATASOURCE_ENABLED_egid
-    TESTS += $(SCRIPT_PREFIX)_egid.sh
+    TESTS += datasource_egid.sh
 endif
 
 if DATASOURCE_ENABLED_egroup
-    TESTS += $(SCRIPT_PREFIX)_egroup.sh
+    TESTS += datasource_egroup.sh
 endif
 
 if DATASOURCE_ENABLED_env_all
-    TESTS += $(SCRIPT_PREFIX)_env_all.sh
+    TESTS += datasource_env_all.sh
 endif
 if DATASOURCE_ENABLED_env
-    TESTS += $(SCRIPT_PREFIX)_env-set.sh
-    TESTS += $(SCRIPT_PREFIX)_env-unset.sh
+    TESTS += datasource_env-set.sh
+    TESTS += datasource_env-unset.sh
 endif
 
 if DATASOURCE_ENABLED_euid
-    TESTS += $(SCRIPT_PREFIX)_euid.sh
+    TESTS += datasource_euid.sh
 endif
 
 if DATASOURCE_ENABLED_eusername
-    TESTS += $(SCRIPT_PREFIX)_eusername.sh
+    TESTS += datasource_eusername.sh
 endif
 
 if DATASOURCE_ENABLED_filename
-    TESTS += $(SCRIPT_PREFIX)_filename.sh
+    TESTS += datasource_filename.sh
 endif
 
 if DATASOURCE_ENABLED_gid
-    TESTS += $(SCRIPT_PREFIX)_gid.sh
+    TESTS += datasource_gid.sh
 endif
 
 if DATASOURCE_ENABLED_group
-    TESTS += $(SCRIPT_PREFIX)_group.sh
+    TESTS += datasource_group.sh
 endif
 
 if DATASOURCE_ENABLED_hostname
-    TESTS += $(SCRIPT_PREFIX)_hostname.sh
+    TESTS += datasource_hostname.sh
 endif
 
 if DATASOURCE_ENABLED_login
-    TESTS += $(SCRIPT_PREFIX)_login.sh
+    TESTS += datasource_login.sh
 endif
 
 if DATASOURCE_ENABLED_pid
-    TESTS += $(SCRIPT_PREFIX)_pid.sh
+    TESTS += datasource_pid.sh
 endif
 
 if DATASOURCE_ENABLED_ppid
-    TESTS += $(SCRIPT_PREFIX)_ppid.sh
+    TESTS += datasource_ppid.sh
 endif
 
 if DATASOURCE_ENABLED_rpname
-    TESTS += $(SCRIPT_PREFIX)_rpname.sh
+    TESTS += datasource_rpname.sh
 endif
 
 if DATASOURCE_ENABLED_sid
-    TESTS += $(SCRIPT_PREFIX)_sid.sh
+    TESTS += datasource_sid.sh
 endif
 
 if DATASOURCE_ENABLED_snoopy_configure_command
-    TESTS += $(SCRIPT_PREFIX)_snoopy_configure_command.sh
+    TESTS += datasource_snoopy_configure_command.sh
 endif
 
 if DATASOURCE_ENABLED_snoopy_literal
-    TESTS += $(SCRIPT_PREFIX)_snoopy_literal.sh
+    TESTS += datasource_snoopy_literal.sh
 endif
 
 if THREAD_SAFETY_ENABLED
 if DATASOURCE_ENABLED_snoopy_threads
-    TESTS += $(SCRIPT_PREFIX)_snoopy_threads.sh
+    TESTS += datasource_snoopy_threads.sh
 endif
 endif
 
 if DATASOURCE_ENABLED_snoopy_version
-    TESTS += $(SCRIPT_PREFIX)_snoopy_version.sh
+    TESTS += datasource_snoopy_version.sh
 endif
 
 if DATASOURCE_ENABLED_tid
-    TESTS += $(SCRIPT_PREFIX)_tid.sh
+    TESTS += datasource_tid.sh
 endif
 
 if DATASOURCE_ENABLED_tid_kernel
-    TESTS += $(SCRIPT_PREFIX)_tid_kernel.sh
+    TESTS += datasource_tid_kernel.sh
 endif
 
 if DATASOURCE_ENABLED_timestamp
-    TESTS += $(SCRIPT_PREFIX)_timestamp.sh
+    TESTS += datasource_timestamp.sh
 endif
 
 if DATASOURCE_ENABLED_timestamp_ms
-    TESTS += $(SCRIPT_PREFIX)_timestamp_ms.sh
+    TESTS += datasource_timestamp_ms.sh
 endif
 
 if DATASOURCE_ENABLED_timestamp_us
-    TESTS += $(SCRIPT_PREFIX)_timestamp_us.sh
+    TESTS += datasource_timestamp_us.sh
 endif
 
 if DATASOURCE_ENABLED_tty
-    TESTS += $(SCRIPT_PREFIX)_tty.sh
+    TESTS += datasource_tty.sh
 endif
 
 if DATASOURCE_ENABLED_tty_uid
-    TESTS += $(SCRIPT_PREFIX)_tty_uid.sh
+    TESTS += datasource_tty_uid.sh
 endif
 
 if DATASOURCE_ENABLED_tty_username
-    TESTS += $(SCRIPT_PREFIX)_tty_username.sh
+    TESTS += datasource_tty_username.sh
 endif
 
 if DATASOURCE_ENABLED_uid
-    TESTS += $(SCRIPT_PREFIX)_uid.sh
+    TESTS += datasource_uid.sh
 endif
 
 if DATASOURCE_ENABLED_username
-    TESTS += $(SCRIPT_PREFIX)_username.sh
+    TESTS += datasource_username.sh
 endif
 
 

@@ -6,14 +6,13 @@ include   $(top_srcdir)/build/Makefile.am.common
 
 ### Which tests to run
 #
-SCRIPT_PREFIX = threads
-TESTS  =
-XFAIL_TESTS  =
+TESTS =
+XFAIL_TESTS =
 
 if THREAD_SAFETY_ENABLED
-    TESTS += $(SCRIPT_PREFIX)_creation.sh
-    TESTS += $(SCRIPT_PREFIX)_fork_exec.sh
-    TESTS += $(SCRIPT_PREFIX)_try-to-segfault.sh
+    TESTS += threads_creation.sh
+    TESTS += threads_fork_exec.sh
+    TESTS += threads_try-to-segfault.sh
 endif
 
 

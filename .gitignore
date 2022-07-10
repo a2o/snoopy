@@ -33,6 +33,8 @@ Makefile.in
 #
 Makefile
 /libtool
+/tests/_bootstrap-paths.sh
+
 
 # Temporary files created during ./configure run
 /conf*/
@@ -54,6 +56,7 @@ Makefile
 .deps/
 .libs/
 /a.out
+/src/cli/snoopy
 /src/libsnoopy.so
 /tests/bin/*
 !/tests/bin/*.c
@@ -62,9 +65,7 @@ Makefile
 /util/*
 !/util/*.c
 !/util/*.h
-!/util/*.in
 !/util/Makefile.am
-!/util/*.in
 /util/Makefile.in
 /contrib/rhel/snoopy.spec
 /contrib/sles/snoopy.spec

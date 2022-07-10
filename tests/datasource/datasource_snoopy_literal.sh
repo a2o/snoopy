@@ -13,7 +13,7 @@ set -u
 ### Get data
 #
 VAL_REAL="test-string-`date +%s`"
-VAL_SNOOPY=`$SNOOPY_TEST_DATASOURCE snoopy_literal "$VAL_REAL"`
+VAL_SNOOPY=`$SNOOPY_TEST_CLI run datasource snoopy_literal "$VAL_REAL"`
 
 
 

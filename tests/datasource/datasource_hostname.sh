@@ -12,7 +12,7 @@ set -u
 
 ### Get data
 #
-VAL_SNOOPY=`$SNOOPY_TEST_DATASOURCE hostname`
+VAL_SNOOPY=`$SNOOPY_TEST_CLI run datasource hostname`
 VAL_REAL=`hostname`
 
 

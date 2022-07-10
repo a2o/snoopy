@@ -22,7 +22,7 @@ cat > $TMP_INI <<EOF
 output = "$VAL_REAL"
 EOF
 
-VAL_SNOOPY=`$SNOOPY_TEST_CONFIGFILE "$TMP_INI" "output"`
+VAL_SNOOPY=`$SNOOPY_TEST_CLI run configfile "$TMP_INI" "output"`
 rm -f $TMP_INI
 
 

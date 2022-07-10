@@ -1,0 +1,15 @@
+#!/bin/bash
+
+
+
+### Configure shell
+#
+set -e
+set -u
+
+
+
+### Get variables from the build system
+#
+SNOOPY_LIBDIR="@SNOOPY_LIBDIR@"
+LIBSNOOPY_SO_PATH="$SNOOPY_LIBDIR/libsnoopy.so"

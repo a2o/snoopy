@@ -12,7 +12,7 @@ set -u
 
 ### Get data
 #
-VAL_SNOOPY=`$SNOOPY_TEST_DATASOURCE eusername`
+VAL_SNOOPY=`$SNOOPY_TEST_CLI run datasource eusername`
 MY_EUID="$EUID"
 VAL_REAL=`getent passwd "$MY_EUID" | cut -d: -f1`
 

@@ -160,9 +160,9 @@ The new `bash` shell instance will log any executed command. Exiting this `bash`
 ## Enable system-wide
 
 There are two ways to enable Snoopy.
-The first one is a dedicated Snoopy-enabling script that is installed by the `make install` step above:
+The first one is to use a `snoopy` CLI utility that is installed by the `make install` step above:
 ```
-snoopy-enable
+snoopy enable
 ```
 
 Alternatively, when Snoopy has been built from source, the following `make` command can be used from within the source directory:
@@ -175,7 +175,7 @@ A system reboot is usually necessary to make all programs pick up the newly inst
 
 ####  Under the hood
 
-`snoopy-enable` or `make enable` command creates an entry in the `/etc/ld.so.preload` file.
+`snoopy enable` or `make enable` command creates an entry in the `/etc/ld.so.preload` file.
 This entry causes the [dynamic linker](https://man7.org/linux/man-pages/man8/ld.so.8.html) to preload the Snoopy shared library,
 which interposes Snoopy between the `execv()`/`execve()` function calls of a program and the real `execv()`/`execve()` implementations in the libc library.
 When `execv()`/`execve()` is called, the interposed Snoopy code is responsible for creating a log entry for a command that is to be executed,
@@ -185,13 +185,12 @@ and then the execution is forwarded to the real `execv()`/`execve()` libc functi
 
 ## What gets installed
 
-Commands `make install` and `make enable`/`snoopy-enable` perform the following changes on the system:
+Commands `make install` and `make enable`/`snoopy enable` perform the following changes on the system:
 
 | File             | Location             | Change |
 |------------------|----------------------|--------|
 | `libsnoopy.so*`  | `/usr/local/lib/`*   | File installed |
-| `snoopy-enable`  | `/usr/local/bin/`*   | File installed |
-| `snoopy-disable` | `/usr/local/bin/`*   | File installed |
+| `snoopy`         | `/usr/local/sbin/`*  | File installed |
 | `snoopy.ini`     | `/etc/`*             | File installed |
 | `ld.so.preload`  | `/etc/ld.so.preload` | Entry added |
 *Locations of these files may vary, depending on your [build configuration flags](#important-build-configuration-flags).
@@ -202,7 +201,7 @@ Commands `make install` and `make enable`/`snoopy-enable` perform the following 
 
 The simplest way to disable Snoopy is to use the script installed for this purpose:
 ```
-snoopy-disable
+snoopy disable
 ```
 Once disabled, a system reboot may be necessary to force a reload of all the running programs.
 

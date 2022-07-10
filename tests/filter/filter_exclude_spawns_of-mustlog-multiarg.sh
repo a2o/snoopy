@@ -12,7 +12,7 @@ set -u
 
 ### Get data
 #
-if $SNOOPY_TEST_FILTER   "msg"   "exclude_spawns_of"   "aaaa,bbbb,cccc" > /dev/null; then
+if $SNOOPY_TEST_CLI run filter   "msg"   "exclude_spawns_of"   "aaaa,bbbb,cccc" > /dev/null; then
     snoopy_testResult_pass
 else
     snoopy_testResult_fail "Message unexpectedly dropped."

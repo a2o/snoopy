@@ -6,21 +6,20 @@ include   $(top_srcdir)/build/Makefile.am.common
 
 ### Which tests to run
 #
-SCRIPT_PREFIX = combined
-TESTS         =
-XFAIL_TESTS   =
+TESTS =
+XFAIL_TESTS =
 
-TESTS        += $(SCRIPT_PREFIX)-nofilter-1.sh
-TESTS        += $(SCRIPT_PREFIX)-nofilter-2.sh
+TESTS += combined-nofilter-1.sh
+TESTS += combined-nofilter-2.sh
 
 if FILTERING_ENABLED
 if FILTER_ENABLED_exclude_uid
-TESTS        += $(SCRIPT_PREFIX)-filter-exclude_uid-drop.sh
-TESTS        += $(SCRIPT_PREFIX)-filter-exclude_uid-pass.sh
+TESTS += combined-filter-exclude_uid-drop.sh
+TESTS += combined-filter-exclude_uid-pass.sh
 endif
 if FILTER_ENABLED_only_uid
-TESTS        += $(SCRIPT_PREFIX)-filter-only_uid-drop.sh
-TESTS        += $(SCRIPT_PREFIX)-filter-only_uid-pass.sh
+TESTS += combined-filter-only_uid-drop.sh
+TESTS += combined-filter-only_uid-pass.sh
 endif
 endif
 

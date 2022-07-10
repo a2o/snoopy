@@ -13,7 +13,7 @@ set -u
 ### Get data
 #
 STR="staticUselessText-`date +%s`"
-VAL_SNOOPY=`$SNOOPY_TEST_MESSAGE_FORMAT "$STR"`
+VAL_SNOOPY=`$SNOOPY_TEST_CLI run messageformat "$STR"`
 VAL_REAL="$STR"
 
 

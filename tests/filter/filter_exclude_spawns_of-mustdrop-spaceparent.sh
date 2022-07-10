@@ -12,7 +12,7 @@ set -u
 
 ### Get data
 #
-if ! "$SNOOPY_TESTS_BINDIR/space parent" $SNOOPY_TEST_FILTER   "msg"   "exclude_spawns_of"   "space parent"; then
+if ! "$SNOOPY_TESTS_BINDIR/space parent" $SNOOPY_TEST_CLI run filter   "msg"   "exclude_spawns_of"   "space parent"; then
     snoopy_testResult_pass
 else
     snoopy_testResult_fail "Message passed through when it shouldn't."

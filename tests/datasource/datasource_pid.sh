@@ -14,7 +14,7 @@ set -u
 #
 
 # Run this command first, in background
-$SNOOPY_TEST_DATASOURCE pid > datasource_pid.out.tmp &
+$SNOOPY_TEST_CLI run datasource pid > datasource_pid.out.tmp &
 
 # Capture its pid from BASH
 VAL_REAL=$!

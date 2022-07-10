@@ -6,11 +6,10 @@ include   $(top_srcdir)/build/Makefile.am.common
 
 ### Which tests to run
 #
-SCRIPT_PREFIX = general
 TESTS         =
 XFAIL_TESTS   =
 
-TESTS        += $(SCRIPT_PREFIX)-symbol-leaks.sh
+TESTS        += general-symbol-leaks.sh
 
 
 

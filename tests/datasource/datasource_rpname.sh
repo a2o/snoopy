@@ -12,7 +12,7 @@ set -u
 
 ### Get data
 #
-VAL_SNOOPY=`$SNOOPY_TEST_DATASOURCE rpname`
+VAL_SNOOPY=`$SNOOPY_TEST_CLI run datasource rpname`
 
 # Get root process PID
 CUR_PID=$$

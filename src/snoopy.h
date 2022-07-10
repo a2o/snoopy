@@ -117,11 +117,30 @@
 
 
 /**
- * SNOOPY_LOG_MESSAGE_FORMAT_default
+ * SNOOPY_VERSION
  *
- * Default format of Snoopy log message
+ * Snoopy code version
  */
 #define   SNOOPY_VERSION   PACKAGE_VERSION
+
+
+
+/**
+ * SNOOPY_SO_LIBRARY_PATH
+ *
+ * Absolute filesystem path to libsnoopy.so
+ */
+#define SNOOPY_SO_LIBRARY_NAME                "libsnoopy.so"
+#define SNOOPY_SO_LIBRARY_NAME_WITH_SLASH     "/libsnoopy.so"
+#define SNOOPY_SO_LIBRARY_PATH                SNOOPY_CONF_LIBDIR SNOOPY_SO_LIBRARY_NAME_WITH_SLASH
+#define SNOOPY_SO_LIBRARY_PATH_GIT            "src/.libs/libsnoopy.so"
+
+
+
+/**
+ * SNOOPY_ETC_LD_SO_PRELOAD_PATH
+ */
+#define   SNOOPY_ETC_LD_SO_PRELOAD_PATH   "/etc/ld.so.preload"
 
 
 

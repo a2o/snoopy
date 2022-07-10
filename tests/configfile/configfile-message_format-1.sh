@@ -22,7 +22,7 @@ cat > $TMP_INI <<EOF
 message_format = "$VAL_REAL"
 EOF
 
-VAL_SNOOPY=`$SNOOPY_TEST_CONFIGFILE "$TMP_INI" "message_format"`
+VAL_SNOOPY=`$SNOOPY_TEST_CLI run configfile "$TMP_INI" "message_format"`
 rm -f $TMP_INI
 
 

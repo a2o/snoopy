@@ -141,6 +141,7 @@ AC_CHECK_FUNCS([ \
     socket    \
     strchr    \
     strdup    \
+    strerror  \
     strrchr   \
     strstr    \
 ], [], [
@@ -178,13 +179,14 @@ AC_CONFIG_FILES([Makefile
                  lib/liblcthw/Makefile
                  lib/liblcthw/src/Makefile
                  src/Makefile
+                 src/cli/Makefile
                  src/datasource/Makefile
                  src/eventsource/Makefile
                  src/filter/Makefile
                  src/output/Makefile
-                 util/Makefile
                  tests/Makefile
                  tests/bin/Makefile
+                 tests/cli/Makefile
                  tests/combined/Makefile
                  tests/configfile/Makefile
                  tests/datasource/Makefile
@@ -194,24 +196,42 @@ AC_CONFIG_FILES([Makefile
                  tests/output/Makefile
                  tests/threads/Makefile
 ])
-AC_CONFIG_FILES([util/snoopy-disable], [chmod +x util/snoopy-disable])
-AC_CONFIG_FILES([util/snoopy-enable],  [chmod +x util/snoopy-enable])
+AC_CONFIG_FILES([tests/_bootstrap-paths.sh], [chmod +x tests/_bootstrap-paths.sh])
 
 
 
 dnl ============================================================================
+dnl ======= Determine target locations =========================================
+dnl ============================================================================
 
-dnl Decide where things are installed
 if test "x$prefix" = "xNONE" ; then
     PREFIX="/usr/local"
 else
     PREFIX="$prefix"
 fi
 
+if test "x$exec_prefix" = "xNONE" ; then
+    EXEC_PREFIX="$PREFIX"
+else
+    EXEC_PREFIX="$exec_prefix"
+fi
+
 if test "x$sysconfdir" = "x\${prefix}/etc" ; then
     SYSCONFDIR="$PREFIX/etc"
 else
     SYSCONFDIR="$sysconfdir"
+fi
+
+if test "x$libdir" = "x\${exec_prefix}/lib" ; then
+    LIBDIR="$EXEC_PREFIX/lib"
+else
+    LIBDIR="$libdir"
+fi
+
+if test "x$sbindir" = "x\${exec_prefix}/sbin" ; then
+    SBINDIR="$EXEC_PREFIX/sbin"
+else
+    SBINDIR="$libdir"
 fi
 
 
@@ -251,7 +271,17 @@ AS_IF([test "x$enable_everything" = "xyes"],
         )
     ]
 )
-AC_MSG_NOTICE([-])
+
+
+
+# ============================================================================
+# ========= TARGET PATHS =====================================================
+# ============================================================================
+AC_MSG_NOTICE([Snoopy library directory:     $LIBDIR])
+AC_MSG_NOTICE([Snoopy CLI tool directory:    $SBINDIR])
+
+AC_DEFINE_UNQUOTED(SNOOPY_CONF_LIBDIR,  "$LIBDIR",  [Target installation directory for .so library])
+AC_DEFINE_UNQUOTED(SNOOPY_CONF_SBINDIR, "$SBINDIR", [Target installation directory for the CLI tool])
 
 
 
@@ -272,6 +302,7 @@ AS_IF([test "x$configfile_enabled" == "xyes"], [
     configfile_path="$SYSCONFDIR/snoopy.ini"
     AC_DEFINE_UNQUOTED(SNOOPY_CONF_CONFIGFILE_ENABLED, 1,                   [Is config file parsing enabled?])
     AC_DEFINE_UNQUOTED(SNOOPY_CONF_CONFIGFILE_PATH,    "$configfile_path",  [INI configuration file path to use])
+    AC_DEFINE_UNQUOTED(SNOOPY_CONF_SYSCONFDIR, "$SYSCONFDIR",               [Target installation directory for the configuration file])
     AC_MSG_NOTICE([Snoopy config file path:      $configfile_path])
 ])
 
@@ -745,22 +776,6 @@ dnl ======= START section: DEVELOPMENT =========================================
 dnl ============================================================================
 dnl ============================================================================
 AC_MSG_NOTICE([-])
-
-
-
-# ==============================================================================
-# ======= snoopy-dev-helper ====================================================
-# ==============================================================================
-AC_ARG_ENABLE(dev-tools,
-    [AS_HELP_STRING(
-        [--enable-dev-tools],
-        [enable util/snoopy-dev-* and util/snoopy-test-* programs. [default=disabled]]
-    )],
-    SNOOPY_CONFIGURE_ENABLE_GENERIC_SPECIFIED(  [dev-helper], [enable_dev_tools], [$enableval], []),
-    SNOOPY_CONFIGURE_ENABLE_GENERIC_UNSPECIFIED([dev-helper], [enable_dev_tools], [$enable_everything], [no])
-)
-AM_CONDITIONAL([DEV_TOOLS_ENABLED], [test "x$enable_dev_tools" == "xyes"])
-AC_MSG_NOTICE([Snoopy development tools: $enable_dev_tools])
 
 
 

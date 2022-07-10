@@ -12,13 +12,13 @@ set -u
 
 ### Get data
 #
-VAL_SNOOPY_1=`$SNOOPY_TEST_DATASOURCE timestamp_us`
+VAL_SNOOPY_1=`$SNOOPY_TEST_CLI run datasource timestamp_us`
 sleep 0.005
-VAL_SNOOPY_2=`$SNOOPY_TEST_DATASOURCE timestamp_us`
+VAL_SNOOPY_2=`$SNOOPY_TEST_CLI run datasource timestamp_us`
 if [ "$VAL_SNOOPY_1" -gt "$VAL_SNOOPY_2" ]; then
-    VAL_SNOOPY_1=`$SNOOPY_TEST_DATASOURCE timestamp_us`
+    VAL_SNOOPY_1=`$SNOOPY_TEST_CLI run datasource timestamp_us`
     sleep 0.005
-    VAL_SNOOPY_2=`$SNOOPY_TEST_DATASOURCE timestamp_us`
+    VAL_SNOOPY_2=`$SNOOPY_TEST_CLI run datasource timestamp_us`
 fi
 
 

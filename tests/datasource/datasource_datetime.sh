@@ -12,7 +12,7 @@ set -u
 
 ### Get data
 #
-VAL_SNOOPY=`$SNOOPY_TEST_DATASOURCE datetime`
+VAL_SNOOPY=`$SNOOPY_TEST_CLI run datasource datetime`
 snoopy_testRun_info "Snoopy value: $VAL_SNOOPY"
 VAL_REAL=`date "+%Y-%m-%dT%H:%M:%S%z"`
 snoopy_testRun_info "Real value:   $VAL_REAL"

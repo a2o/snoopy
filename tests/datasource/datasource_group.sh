@@ -12,7 +12,7 @@ set -u
 
 ### Get data
 #
-VAL_SNOOPY=`$SNOOPY_TEST_DATASOURCE group`
+VAL_SNOOPY=`$SNOOPY_TEST_CLI run datasource group`
 VAL_REAL=`id -a | grep -Eo 'gid=[0-9]+[(][^)]+[)]' | grep -Eo '[(][^)]+[)]' | grep -Eo '[^()]+'`
 
 

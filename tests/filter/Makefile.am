@@ -6,40 +6,39 @@ include   $(top_srcdir)/build/Makefile.am.common
 
 ### Which tests to run
 #
-SCRIPT_PREFIX = filter
-TESTS  =
-XFAIL_TESTS  =
+TESTS =
+XFAIL_TESTS =
 
 if FILTER_ENABLED_exclude_spawns_of
-    TESTS += $(SCRIPT_PREFIX)_exclude_spawns_of-mustdrop-multiarg-first.sh
-    TESTS += $(SCRIPT_PREFIX)_exclude_spawns_of-mustdrop-multiarg-last.sh
-    TESTS += $(SCRIPT_PREFIX)_exclude_spawns_of-mustdrop-multiarg-mid.sh
-    TESTS += $(SCRIPT_PREFIX)_exclude_spawns_of-mustdrop-singlearg.sh
-    TESTS += $(SCRIPT_PREFIX)_exclude_spawns_of-mustdrop-spaceparent.sh
-    TESTS += $(SCRIPT_PREFIX)_exclude_spawns_of-mustlog-multiarg.sh
-    TESTS += $(SCRIPT_PREFIX)_exclude_spawns_of-mustlog-singlearg.sh
-    TESTS += $(SCRIPT_PREFIX)_exclude_spawns_of-mustlog-spaceparent.sh
+    TESTS += filter_exclude_spawns_of-mustdrop-multiarg-first.sh
+    TESTS += filter_exclude_spawns_of-mustdrop-multiarg-last.sh
+    TESTS += filter_exclude_spawns_of-mustdrop-multiarg-mid.sh
+    TESTS += filter_exclude_spawns_of-mustdrop-singlearg.sh
+    TESTS += filter_exclude_spawns_of-mustdrop-spaceparent.sh
+    TESTS += filter_exclude_spawns_of-mustlog-multiarg.sh
+    TESTS += filter_exclude_spawns_of-mustlog-singlearg.sh
+    TESTS += filter_exclude_spawns_of-mustlog-spaceparent.sh
 endif
 
 if DATASOURCE_ENABLED_uid
 if FILTER_ENABLED_exclude_uid
-    TESTS += $(SCRIPT_PREFIX)_exclude_uid-pass.sh
-    TESTS += $(SCRIPT_PREFIX)_exclude_uid-pass-multi.sh
-    TESTS += $(SCRIPT_PREFIX)_exclude_uid-drop.sh
-    TESTS += $(SCRIPT_PREFIX)_exclude_uid-drop-multi.sh
+    TESTS += filter_exclude_uid-pass.sh
+    TESTS += filter_exclude_uid-pass-multi.sh
+    TESTS += filter_exclude_uid-drop.sh
+    TESTS += filter_exclude_uid-drop-multi.sh
 endif
 endif
 
 if FILTER_ENABLED_only_tty
-    TESTS += $(SCRIPT_PREFIX)_only_tty.sh
+    TESTS += filter_only_tty.sh
 endif
 
 if DATASOURCE_ENABLED_uid
 if FILTER_ENABLED_only_uid
-    TESTS += $(SCRIPT_PREFIX)_only_uid-pass.sh
-    TESTS += $(SCRIPT_PREFIX)_only_uid-pass-multi.sh
-    TESTS += $(SCRIPT_PREFIX)_only_uid-drop.sh
-    TESTS += $(SCRIPT_PREFIX)_only_uid-drop-multi.sh
+    TESTS += filter_only_uid-pass.sh
+    TESTS += filter_only_uid-pass-multi.sh
+    TESTS += filter_only_uid-drop.sh
+    TESTS += filter_only_uid-drop-multi.sh
 endif
 endif
 

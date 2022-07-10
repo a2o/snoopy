@@ -13,7 +13,7 @@ set -u
 ### Output data
 #
 VAL_REAL=""
-VAL_SNOOPY=`$SNOOPY_TEST_OUTPUT   "$VAL_REAL"   "devnull"`
+VAL_SNOOPY=`$SNOOPY_TEST_CLI run output   "$VAL_REAL"   "devnull"`
 
 
 

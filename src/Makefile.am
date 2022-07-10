@@ -7,6 +7,7 @@ include   $(top_srcdir)/build/Makefile.am.common
 ### Subdir processing order
 #
 SUBDIRS  =
+SUBDIRS += cli
 SUBDIRS += eventsource
 SUBDIRS += datasource
 if FILTERING_ENABLED

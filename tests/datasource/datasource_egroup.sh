@@ -12,7 +12,7 @@ set -u
 
 ### Get data
 #
-VAL_SNOOPY=`$SNOOPY_TEST_DATASOURCE egroup`
+VAL_SNOOPY=`$SNOOPY_TEST_CLI run datasource egroup`
 MY_PID=$$
 MY_EGID=`snoopy_test_getValue_fromPs "$MY_PID" "egid"`
 VAL_REAL=`getent group "$MY_EGID" | cut -d: -f1`

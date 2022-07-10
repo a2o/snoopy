@@ -25,7 +25,7 @@ fi
 
 ### Get data
 #
-if ! $SNOOPY_TEST_FILTER   "msg"   "exclude_spawns_of"   "aaaa,$PARENT_PROC_NAME,bbbb" > /dev/null; then
+if ! $SNOOPY_TEST_CLI run filter   "msg"   "exclude_spawns_of"   "aaaa,$PARENT_PROC_NAME,bbbb" > /dev/null; then
     snoopy_testResult_pass
 else
     snoopy_testResult_fail "Message passed through when it shouldn't."
