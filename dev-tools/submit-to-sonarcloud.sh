@@ -111,6 +111,8 @@ sonar-scanner \
   -Dsonar.organization=a2o \
   -Dsonar.projectKey=snoopy \
   -Dsonar.sources=. \
+  "-Dsonar.exclusions=tests/**" \
+  -Dsonar.tests=tests \
   -Dsonar.branch.name=$CURRENT_BRANCH_NAME \
   -Dsonar.projectVersion=$SONARCLOUD_TAG \
   -Dsonar.cfamily.build-wrapper-output=$BUILD_WRAPPER_OUTPUT_DIR \
