@@ -54,6 +54,5 @@ AC_CONFIG_FILES([Makefile
                  tests/general/Makefile
                  tests/message/Makefile
                  tests/output/Makefile
-                 tests/threads/Makefile
-                 util/Makefile])
+                 tests/threads/Makefile])
 AC_OUTPUT

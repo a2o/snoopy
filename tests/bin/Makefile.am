@@ -20,6 +20,8 @@ snoopy_test_SOURCES  = \
     action-run.h \
     action-run-datasource.c \
     action-run-datasource.h \
+    action-run-everything.c \
+    action-run-everything.h \
     action-run-messageformat.c \
     action-run-messageformat.h \
     action-run-output.c \

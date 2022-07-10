@@ -30,7 +30,6 @@ SUBDIRS += etc
 endif
 SUBDIRS += lib
 SUBDIRS += src
-SUBDIRS += util
 SUBDIRS += doc
 SUBDIRS += tests
 
@@ -118,7 +117,7 @@ valgrind: all
 	--leak-check=full \
 	--undef-value-errors=yes \
 	--track-origins=yes \
-	./util/snoopy-run-everything ;
+	./tests/bin/snoopy-test run everything ;
 
 
 

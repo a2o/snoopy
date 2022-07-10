@@ -29,6 +29,7 @@
 #include "configuration.h"
 #include "datasourceregistry.h"
 #include "inputdatastorage.h"
+#include "libsnoopy-debug-addons.h"
 #include "misc.h"
 
 #include <stdio.h>
@@ -54,7 +55,8 @@ void snoopyTestCli_action_run_datasource_showHelp ()
         "\n"
         "Usage:\n"
         "    snoopy-test run datasource DATASOURCE [ARGS]\n"
-        "    snoopy-test run datasource --list\n"
+        "    snoopy-test run datasource --list   # Lists all available data sources\n"
+        "    snoopy-test run datasource --all    # Runs all datasources\n"
         "\n";
     printf("%s", helpContent);
 
@@ -90,6 +92,10 @@ int snoopyTestCli_action_run_datasource (int argc, char ** argv)
     /* Is second argument --list? */
     if (0 == strcmp(argv[0], "--list")) {
         snoopyTestCli_action_run_datasource_listDatasources();
+        return 0;
+    }
+    if (0 == strcmp(argv[0], "--all")) {
+        snoopy_debug_test_all_datasources();
         return 0;
     }
 

@@ -184,7 +184,6 @@ AC_CONFIG_FILES([Makefile
                  src/eventsource/Makefile
                  src/filter/Makefile
                  src/output/Makefile
-                 util/Makefile
                  tests/Makefile
                  tests/bin/Makefile
                  tests/cli/Makefile
@@ -777,22 +776,6 @@ dnl ======= START section: DEVELOPMENT =========================================
 dnl ============================================================================
 dnl ============================================================================
 AC_MSG_NOTICE([-])
-
-
-
-# ==============================================================================
-# ======= snoopy-dev-helper ====================================================
-# ==============================================================================
-AC_ARG_ENABLE(dev-tools,
-    [AS_HELP_STRING(
-        [--enable-dev-tools],
-        [enable util/snoopy-dev-* and util/snoopy-test-* programs. [default=disabled]]
-    )],
-    SNOOPY_CONFIGURE_ENABLE_GENERIC_SPECIFIED(  [dev-helper], [enable_dev_tools], [$enableval], []),
-    SNOOPY_CONFIGURE_ENABLE_GENERIC_UNSPECIFIED([dev-helper], [enable_dev_tools], [$enable_everything], [no])
-)
-AM_CONDITIONAL([DEV_TOOLS_ENABLED], [test "x$enable_dev_tools" == "xyes"])
-AC_MSG_NOTICE([Snoopy development tools: $enable_dev_tools])
 
 
 

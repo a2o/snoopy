@@ -37,6 +37,8 @@
 #include "action-run-messageformat.h"
 #include "action-run-output.h"
 
+#include "action-run-everything.h"
+
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -63,6 +65,8 @@ void snoopyTestCli_action_run_showHelp ()
 #endif
         "    messageformat,mf   Run the message formatter\n"
         "    output,o           Run an output\n"
+        "\n"
+        "    everything         Runs every subsystem, as much as possible (for Valgrind)\n"
         "\n"
         "    help,h             Show this help\n"
         "    SUBSYSTEM help     Show SUBSYSTEM's help\n"
@@ -100,6 +104,9 @@ int snoopyTestCli_action_run (int argc, char ** argv)
 
     } else if ((0 == strcmp(argv[0], "output")) || (0 == strcmp(argv[0], "o"))) {
         return snoopyTestCli_action_run_output(argc-1, &argv[1]);
+
+    } else if (0 == strcmp(argv[0], "everything")) {
+        return snoopyTestCli_action_run_everything();
 
 
     } else if ((0 == strcmp(argv[0], "help")) || (0 == strcmp(argv[0], "h"))) {

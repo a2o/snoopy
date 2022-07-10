@@ -1,9 +1,7 @@
 /*
  * SNOOPY LOGGER
  *
- * File: snoopy-test-filter.c
- *
- * Copyright (c) 2015 Bostjan Skufca <bostjan@a2o.si>
+ * Copyright (c) 2015 Bostjan Skufca Jese <bostjan@a2o.si>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,7 +23,7 @@
 /*
  * Includes order: from local to global
  */
-//#include "snoopy-test-filter.h"
+#include "action-common.h"
 
 #include "snoopy.h"
 #include "libsnoopy-debug-addons.h"
@@ -34,21 +32,39 @@
 #ifdef SNOOPY_FILTERING_ENABLED
 #include "filtering.h"
 #endif
+//#include "filterregistry.h"
+#include "inputdatastorage.h"
 #include "log.h"
 #include "message.h"
 #include "misc.h"
-#include "inputdatastorage.h"
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 
 
-int  main (int argc, char **argv);
 
 
 
-int main (int argc, char **argv)
+void snoopyTestCli_action_run_everything_showHelp ()
+{
+    char * helpContent =
+        "Snoopy TEST SUITE CLI utility :: Action `run` :: Run everything (for Valgrind)\n"
+        "\n"
+        "Usage:\n"
+        "    snoopy-test run everything\n"
+        "\n"
+        "Result:\n"
+        "    Runs as many subsystems as possible, to cover as much code as possible.\n"
+        "    Useful for Valgrind analysis.\n"
+        "\n";
+    printf("%s", helpContent);
+}
+
+
+
+int snoopyTestCli_action_run_everything ()
 {
     char                     *logMessage = NULL;
     snoopy_configuration_t   *CFG;
@@ -56,8 +72,8 @@ int main (int argc, char **argv)
 
     /* Initialize Snoopy */
     snoopy_init();
-    snoopy_inputdatastorage_store_filename(argv[0]);
-    snoopy_inputdatastorage_store_argv(argv);
+    snoopy_inputdatastorage_store_filename(g_argv[0]);
+    snoopy_inputdatastorage_store_argv(g_argv);
 
     /* Get config pointer */
     CFG = snoopy_configuration_get();
@@ -96,6 +112,7 @@ int main (int argc, char **argv)
     printf("Done.\n");
 
     printf("\nAll done.\n");
+
 
     /* Cleanup and return */
     free(logMessage);
