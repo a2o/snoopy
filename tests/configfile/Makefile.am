@@ -6,28 +6,27 @@ include   $(top_srcdir)/build/Makefile.am.common
 
 ### Which tests to run
 #
-SCRIPT_PREFIX = configfile
-TESTS         =
-XFAIL_TESTS   =
+TESTS =
+XFAIL_TESTS =
 
-TESTS        += $(SCRIPT_PREFIX)-line-length-1023.sh
-TESTS        += $(SCRIPT_PREFIX)-line-length-1024.sh
-XFAIL_TESTS  += $(SCRIPT_PREFIX)-line-length-1024.sh
-TESTS        += $(SCRIPT_PREFIX)-filter_chain-1.sh
-TESTS        += $(SCRIPT_PREFIX)-message_format-1.sh
-TESTS        += $(SCRIPT_PREFIX)-message_format-unquoted.sh
-TESTS        += $(SCRIPT_PREFIX)-message_format-single-quoted.sh
-TESTS        += $(SCRIPT_PREFIX)-message_format-double-quoted.sh
-TESTS        += $(SCRIPT_PREFIX)-output-devlog.sh
+TESTS        += configfile-line-length-1023.sh
+TESTS        += configfile-line-length-1024.sh
+XFAIL_TESTS  += configfile-line-length-1024.sh
+TESTS        += configfile-filter_chain-1.sh
+TESTS        += configfile-message_format-1.sh
+TESTS        += configfile-message_format-unquoted.sh
+TESTS        += configfile-message_format-single-quoted.sh
+TESTS        += configfile-message_format-double-quoted.sh
+TESTS        += configfile-output-devlog.sh
 if OUTPUT_ENABLED_file
-TESTS        += $(SCRIPT_PREFIX)-output-file.sh
+TESTS        += configfile-output-file.sh
 endif
-TESTS        += $(SCRIPT_PREFIX)-output-invalid.sh
-XFAIL_TESTS  += $(SCRIPT_PREFIX)-output-invalid.sh
-TESTS        += $(SCRIPT_PREFIX)-output-socket.sh
-TESTS        += $(SCRIPT_PREFIX)-syslog_facility.sh
-TESTS        += $(SCRIPT_PREFIX)-syslog_ident.sh
-TESTS        += $(SCRIPT_PREFIX)-syslog_level.sh
+TESTS        += configfile-output-invalid.sh
+XFAIL_TESTS  += configfile-output-invalid.sh
+TESTS        += configfile-output-socket.sh
+TESTS        += configfile-syslog_facility.sh
+TESTS        += configfile-syslog_ident.sh
+TESTS        += configfile-syslog_level.sh
 
 
 
