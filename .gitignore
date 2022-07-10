@@ -86,8 +86,9 @@ Makefile
 
 ### Files produced by the tests' code coverage analysis
 #
+*.gcda
+*.gcno
 *.gcov
-
 
 ### Code analysis configuration and output files
 #
