@@ -42,7 +42,9 @@ endif
 if FILTERING_ENABLED
 snoopy_test_SOURCES += \
     action-run-filter.c \
-    action-run-filter.h
+    action-run-filter.h \
+    action-run-filterchain.c \
+    action-run-filterchain.h
 endif
 
 if THREAD_SAFETY_ENABLED
