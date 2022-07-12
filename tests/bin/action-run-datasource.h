@@ -21,3 +21,4 @@
 
 
 int snoopyTestCli_action_run_datasource (int argc, char ** argv);
+void snoopyTestCli_action_run_datasource_all ();

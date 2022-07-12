@@ -21,3 +21,4 @@
 
 
 int snoopyTestCli_action_run_filter (int argc, char ** argv);
+void snoopyTestCli_action_run_filter_all ();
