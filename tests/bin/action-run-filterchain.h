@@ -1,9 +1,7 @@
 /*
  * SNOOPY LOGGER
  *
- * File: libsnoopy-debug-addons.h
- *
- * Copyright (c) 2015 Bostjan Skufca <bostjan@a2o.si>
+ * Copyright (c) 2022 Bostjan Skufca Jese <bostjan@a2o.si>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,9 +20,4 @@
 
 
 
-/*
- * Debugging functions
- */
-void snoopy_debug_test_all_datasources ();
-void snoopy_debug_test_all_filters     ();
-void snoopy_debug_test_all_outputs     ();
+int snoopyTestCli_action_run_filterchain (int argc, char ** argv);

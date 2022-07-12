@@ -23,22 +23,25 @@
 /*
  * Includes order: from local to global
  */
+#include "action-run-datasource.h"
 #include "action-common.h"
 
 #include "snoopy.h"
 #include "entrypoint/test-cli.h"
+
 #include "configuration.h"
+#include "error.h"
 #include "datasourceregistry.h"
 #include "inputdatastorage.h"
-#include "libsnoopy-debug-addons.h"
 #include "misc.h"
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 
 
-void snoopyTestCli_action_run_datasource_listDatasources ()
+void snoopyTestCli_action_run_datasource_showList ()
 {
     printf("Available datasources:\n");
     int dCount = snoopy_datasourceregistry_getCount();
@@ -56,18 +59,20 @@ void snoopyTestCli_action_run_datasource_showHelp ()
         "\n"
         "Usage:\n"
         "    snoopy-test run datasource DATASOURCE [ARGS]\n"
-        "    snoopy-test run datasource --list   # Lists all available data sources\n"
         "    snoopy-test run datasource --all    # Runs all datasources\n"
+        "    snoopy-test run datasource --help   # Shows this help message\n"
+        "    snoopy-test run datasource --list   # Lists all available datasources\n"
         "\n";
     printf("%s", helpContent);
 
-    snoopyTestCli_action_run_datasource_listDatasources();
+    snoopyTestCli_action_run_datasource_showList();
 }
 
 
 
 int snoopyTestCli_action_run_datasource (int argc, char ** argv)
 {
+    const char *arg1;
     const char *datasourceName;
     const char *datasourceArg;
     char  datasourceResult[SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE];
@@ -83,18 +88,23 @@ int snoopyTestCli_action_run_datasource (int argc, char ** argv)
         snoopyTestCli_action_run_datasource_showHelp();
         fatalError("Missing argument: `datasource name` or `--list`");
     }
-    datasourceName = argv[0];
+    arg1 = argv[0];
 
 
     /* Is second argument --list? */
-    if (0 == strcmp(argv[0], "--list")) {
-        snoopyTestCli_action_run_datasource_listDatasources();
+    if (0 == strcmp(arg1, "--all")) {
+        snoopyTestCli_action_run_datasource_all();
         return 0;
     }
-    if (0 == strcmp(argv[0], "--all")) {
-        snoopy_debug_test_all_datasources();
+    if (0 == strcmp(arg1, "--help")) {
+        snoopyTestCli_action_run_datasource_showHelp();
         return 0;
     }
+    if (0 == strcmp(arg1, "--list")) {
+        snoopyTestCli_action_run_datasource_showList();
+        return 0;
+    }
+    datasourceName = arg1;
 
 
     /* Check if what we got is a valid datasource name */
@@ -125,4 +135,47 @@ int snoopyTestCli_action_run_datasource (int argc, char ** argv)
     /* Housekeeping and return */
     snoopy_entrypoint_test_cli_exit();
     return 0;
+}
+
+
+
+void snoopyTestCli_action_run_datasource_all ()
+{
+    char *itemName   = NULL;
+    const char *itemArgs   = NULL;
+    char *itemResult = NULL;
+    int   itemResultSize;
+    int   dCount;
+
+    /* Initialize variables and spaces */
+    itemResult = malloc(SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE + 1);
+
+    /* Loop through all datasources and just send to output */
+    dCount = snoopy_datasourceregistry_getCount();
+    for (int i=0 ; i<dCount ; i++) {
+
+        itemName = snoopy_datasourceregistry_getName(i);
+        printf("Datasource %15s: ", itemName);
+
+        /* Which arguments to pass to data source */
+        if (strcmp(itemName, "env") == 0) {
+            itemArgs = "HOME";
+        } else if (strcmp(itemName, "snoopy_literal") == 0) {
+            itemArgs = "somestring";
+        } else {
+            itemArgs = "";
+        }
+
+        /* Execute the data source function */
+        itemResultSize = snoopy_datasourceregistry_callById(i, itemResult, itemArgs);
+        if (itemResultSize > SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE) {
+            snoopy_error_handler("Maximum data source message size exceeded");
+        }
+
+        /* Copy content, append */
+        printf("%s\n", itemResult);
+    }
+
+    /* Memory housekeeping */
+    free(itemResult);
 }

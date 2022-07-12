@@ -25,9 +25,12 @@
  */
 #include "action-common.h"
 
+#include "action-run-datasource.h"
+#include "action-run-filter.h"
+#include "action-run-output.h"
+
 #include "snoopy.h"
 #include "entrypoint/test-cli.h"
-#include "libsnoopy-debug-addons.h"
 
 #include "configuration.h"
 #ifdef SNOOPY_FILTERING_ENABLED
@@ -85,13 +88,13 @@ int snoopyTestCli_action_run_everything ()
 
     /* Run throught as much code as possible */
     printf("-----[ Datasources ]-----------------------------------\n");
-    snoopy_debug_test_all_datasources();
+    snoopyTestCli_action_run_datasource_all();
 #ifdef SNOOPY_FILTERING_ENABLED
     printf("-----[ Filters ]---------------------------------------\n");
-    snoopy_debug_test_all_filters();
+    snoopyTestCli_action_run_filter_all();
 #endif
     printf("-----[ Outputs ]---------------------------------------\n");
-    snoopy_debug_test_all_outputs();
+    snoopyTestCli_action_run_output_all();
 
 
     printf("-----[ Message formatting ]----------------------------\n");

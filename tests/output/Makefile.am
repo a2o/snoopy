@@ -17,6 +17,8 @@ if OUTPUT_ENABLED_file
     TESTS += output_file.sh
 endif
 
+TESTS += output_noop.sh
+
 if OUTPUT_ENABLED_socket
     TESTS += output_socket.sh
 endif

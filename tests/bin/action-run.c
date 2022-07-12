@@ -33,6 +33,7 @@
 #include "action-run-datasource.h"
 #ifdef SNOOPY_FILTERING_ENABLED
 #include "action-run-filter.h"
+#include "action-run-filterchain.h"
 #endif
 #include "action-run-messageformat.h"
 #include "action-run-output.h"
@@ -62,6 +63,7 @@ void snoopyTestCli_action_run_showHelp ()
         "    datasource,ds      Run a data source\n"
 #ifdef SNOOPY_FILTERING_ENABLED
         "    filter,f           Run a filter\n"
+        "    filterchain,fc     Run a filter chain (as if it would be configured in snoopy.ini)\n"
 #endif
         "    messageformat,mf   Run the message formatter\n"
         "    output,o           Run an output\n"
@@ -93,31 +95,37 @@ int snoopyTestCli_action_run (int argc, char ** argv)
 
     if ((0 == strcmp(argv[0], "datasource")) || (0 == strcmp(argv[0], "ds"))) {
         return snoopyTestCli_action_run_datasource(argc-1, &(argv[1]));
+    }
 
 #ifdef SNOOPY_FILTERING_ENABLED
-    } else if ((0 == strcmp(argv[0], "filter")) || (0 == strcmp(argv[0], "f"))) {
+    if ((0 == strcmp(argv[0], "filter")) || (0 == strcmp(argv[0], "f"))) {
         return snoopyTestCli_action_run_filter(argc-1, &argv[1]);
+    }
+    if ((0 == strcmp(argv[0], "filterchain")) || (0 == strcmp(argv[0], "fc"))) {
+        return snoopyTestCli_action_run_filterchain(argc-1, &argv[1]);
+    }
 #endif
 
-    } else if ((0 == strcmp(argv[0], "messageformat")) || (0 == strcmp(argv[0], "mf"))) {
+    if ((0 == strcmp(argv[0], "messageformat")) || (0 == strcmp(argv[0], "mf"))) {
         return snoopyTestCli_action_run_messageformat(argc-1, &argv[1]);
+    }
 
-    } else if ((0 == strcmp(argv[0], "output")) || (0 == strcmp(argv[0], "o"))) {
+    if ((0 == strcmp(argv[0], "output")) || (0 == strcmp(argv[0], "o"))) {
         return snoopyTestCli_action_run_output(argc-1, &argv[1]);
+    }
 
-    } else if (0 == strcmp(argv[0], "everything")) {
+    if (0 == strcmp(argv[0], "everything")) {
         return snoopyTestCli_action_run_everything();
-
-
-    } else if ((0 == strcmp(argv[0], "help")) || (0 == strcmp(argv[0], "h"))) {
-        snoopyTestCli_action_run_showHelp();
-        return 0;
-
-    } else {
-        snoopyTestCli_action_run_showHelp();
-        fatalErrorValue("Unknown subsystem", argv[0]);
     }
 
 
-    return 0;
+    if ((0 == strcmp(argv[0], "help")) || (0 == strcmp(argv[0], "h"))) {
+        snoopyTestCli_action_run_showHelp();
+        return 0;
+    }
+
+
+    snoopyTestCli_action_run_showHelp();
+    fatalErrorValue("Unknown subsystem", argv[0]);
+    return 127;
 }

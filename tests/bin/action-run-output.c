@@ -23,6 +23,7 @@
 /*
  * Includes order: from local to global
  */
+#include "action-run-output.h"
 #include "action-common.h"
 
 #include "snoopy.h"
@@ -33,11 +34,12 @@
 #include "outputregistry.h"
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 
 
-void snoopyTestCli_action_run_output_listOutputs ()
+void snoopyTestCli_action_run_output_showList ()
 {
     printf("Available outputs:\n");
     int oCount = snoopy_outputregistry_getCount();
@@ -55,17 +57,20 @@ void snoopyTestCli_action_run_output_showHelp ()
         "\n"
         "Usage:\n"
         "    snoopy-test run output \"LOG MESSAGE\" OUTPUT [OUTPUT_ARGS]\n"
+        "    snoopy-test run output --all\n"
         "    snoopy-test run output --list\n"
+        "    snoopy-test run output --help\n"
         "\n";
     printf("%s", helpContent);
 
-    snoopyTestCli_action_run_output_listOutputs();
+    snoopyTestCli_action_run_output_showList();
 }
 
 
 
 int snoopyTestCli_action_run_output (int argc, char ** argv)
 {
+    const char * arg1;
     const char * message;
     const char * outputName;
     const char * outputArg;
@@ -79,9 +84,24 @@ int snoopyTestCli_action_run_output (int argc, char ** argv)
     /* Check if all arguments are present */
     if (argc < 1) {
         snoopyTestCli_action_run_output_showHelp();
-        fatalError("Missing argument: log message");
+        fatalError("Missing argument: log message, or --all or --list");
     }
-    message = argv[0];
+    arg1 = argv[0];
+
+    // Meta actions
+    if (0 == strcmp(arg1, "--all")) {
+        snoopyTestCli_action_run_output_all();
+        return 0;
+    }
+    if (0 == strcmp(arg1, "--help")) {
+        snoopyTestCli_action_run_output_showHelp();
+        return 0;
+    }
+    if (0 == strcmp(arg1, "--list")) {
+        snoopyTestCli_action_run_output_showList();
+        return 0;
+    }
+    message = arg1;
 
     if (argc < 2) {
         snoopyTestCli_action_run_output_showHelp();
@@ -113,4 +133,51 @@ int snoopyTestCli_action_run_output (int argc, char ** argv)
     /* Housekeeping and return */
     snoopy_entrypoint_test_cli_exit();
     return 0;
+}
+
+
+
+void snoopyTestCli_action_run_output_all ()
+{
+    char *message    = NULL;
+    char *itemName   = NULL;
+    const char *itemArgs   = NULL;
+    int   itemResult;
+    int   iCount;
+
+
+    /* Initialize variables and spaces */
+    message  = malloc(SNOOPY_LOG_MESSAGE_MAX_SIZE + 1);
+    snprintf(message, SNOOPY_LOG_MESSAGE_MAX_SIZE, "Snoopy output debugging");
+
+    /* Loop throught all outputs and run them with bogus arguments */
+    iCount = snoopy_outputregistry_getCount();
+    for (int i=0 ; i<iCount ; i++) {
+
+        itemName = snoopy_outputregistry_getName(i);
+        printf("Output %19s: ", itemName);
+
+        /* Which arguments to pass */
+        if (strcmp(itemName, "file") == 0) {
+            itemArgs = "./fileoutput.out";
+        } else if (strcmp(itemName, "socket") == 0) {
+            itemArgs = "/dev/log";
+        } else {
+            itemArgs = "";
+        }
+
+        /* Execute the output function */
+        itemResult = snoopy_outputregistry_callById(i, message, SNOOPY_LOG_MESSAGE, itemArgs);
+
+        /* Evaluate */
+        printf("%d chars transmitted. (output arg:%s)\n", itemResult, itemArgs);
+
+        /* Cleanup */
+        if (strcmp(itemName, "file") == 0) {
+            unlink(itemArgs);
+        }
+    }
+
+    /* Memory housekeeping */
+    free(message);
 }

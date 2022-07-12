@@ -22,7 +22,7 @@ FILE_OUT="output_socket.sh.$MY_PID.sock.out"
 rm -f $FILE_SOCKET
 rm -f $FILE_OUT
 touch $FILE_OUT
-socat UNIX-LISTEN:$FILE_SOCKET OPEN:$FILE_OUT &
+socat UNIX-RECV:$FILE_SOCKET OPEN:$FILE_OUT &
 SOCAT_PID=$!
 
 # Wait for the socket file to appear
@@ -38,7 +38,7 @@ while [ ! -e $FILE_SOCKET ]; do
 done
 
 # Send content to this socket
-echo "$VAL_REAL" | socat - UNIX-CONNECT:$FILE_SOCKET
+$SNOOPY_TEST_CLI run output "$VAL_REAL" socket $FILE_SOCKET
 
 # Kill the listener if it is still alive by accident
 #wait $SOCAT_PID

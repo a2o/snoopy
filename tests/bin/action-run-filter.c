@@ -23,6 +23,7 @@
 /*
  * Includes order: from local to global
  */
+#include "action-run-filter.h"
 #include "action-common.h"
 
 #include "snoopy.h"
@@ -33,6 +34,7 @@
 #include "misc.h"
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 
@@ -58,6 +60,7 @@ void snoopyTestCli_action_run_filter_showHelp ()
         "\n"
         "Usage:\n"
         "    snoopy-test run filter \"LOG MESSAGE\" FILTER [FILTER_ARGS]\n"
+        "    snoopy-test run filter --all\n"
         "    snoopy-test run filter --list\n"
         "    snoopy-test run filter --help\n"
         "\n"
@@ -74,6 +77,7 @@ void snoopyTestCli_action_run_filter_showHelp ()
 
 int snoopyTestCli_action_run_filter (int argc, char **argv)
 {
+    char * arg1;
     char * message;
     const char * filterName;
     const char * filterArg;
@@ -89,15 +93,21 @@ int snoopyTestCli_action_run_filter (int argc, char **argv)
         snoopyTestCli_action_run_filter_showHelp();
         fatalError("Missing argument: log message, --help or --list");
     }
-    message = argv[0];
-    if (0 == strcmp(message, "--help")) {
+    arg1 = argv[0];
+
+    if (0 == strcmp(arg1, "--all")) {
+        snoopyTestCli_action_run_filter_all();
+        return 0;
+    }
+    if (0 == strcmp(arg1, "--help")) {
         snoopyTestCli_action_run_filter_showHelp();
         return 0;
     }
-    if (0 == strcmp(message, "--list")) {
+    if (0 == strcmp(arg1, "--list")) {
         snoopyTestCli_action_run_filter_showList();
         return 0;
     }
+    message = arg1;
 
     if (argc < 2) {
         snoopyTestCli_action_run_filter_showHelp();
@@ -135,4 +145,55 @@ int snoopyTestCli_action_run_filter (int argc, char **argv)
         printf("DROP\n");
         return 1;
     }
+}
+
+
+
+void snoopyTestCli_action_run_filter_all ()
+{
+    char *message    = NULL;
+    char *itemName   = NULL;
+    const char *itemArgs   = NULL;
+    int   itemResult;
+    int   fCount;
+
+
+    /* Initialize variables and spaces */
+    message  = malloc(SNOOPY_LOG_MESSAGE_MAX_SIZE + 1);
+    snprintf(message, SNOOPY_LOG_MESSAGE_MAX_SIZE, "bad message here");
+
+    /* Loop throught all filters and run them with bogus arguments */
+    fCount = snoopy_filterregistry_getCount();
+    for (int i=0 ; i<fCount ; i++) {
+
+        itemName = snoopy_filterregistry_getName(i);
+        printf("Filter %19s: ", itemName);
+
+        /* Which arguments to pass */
+        if (strcmp(itemName, "exclude_spawns_of") == 0) {
+            itemArgs = "asdf,bsdf";
+        } else if (strcmp(itemName, "exclude_uid") == 0) {
+            itemArgs = "0";
+        } else if (strcmp(itemName, "only_root") == 0) {
+            itemArgs = "";
+        } else if (strcmp(itemName, "only_uid") == 0) {
+            itemArgs = "0";
+        } else {
+            itemArgs = "";
+        }
+
+        /* Execute the filter function */
+        itemResult = snoopy_filterregistry_callById(i, message, itemArgs);
+
+        /* Evaluate */
+        if (SNOOPY_FILTER_PASS == itemResult) {
+            printf("PASS");
+        } else {
+            printf("DROP");
+        }
+        printf("\n");
+    }
+
+    /* Memory housekeeping */
+    free(message);
 }

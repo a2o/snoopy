@@ -39,8 +39,12 @@ if FILTER_ENABLED_only_uid
     TESTS += filter_only_uid-pass-multi.sh
     TESTS += filter_only_uid-drop.sh
     TESTS += filter_only_uid-drop-multi.sh
+    TESTS += filterchain-drop.sh
+    TESTS += filterchain-pass.sh
 endif
 endif
+
+TESTS += filterchain-unknown-filter.sh
 
 
 

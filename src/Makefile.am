@@ -82,7 +82,7 @@ endif
 
 
 
-### Create main library, whole
+### Create the main library
 #
 lib_LTLIBRARIES = libsnoopy.la
 libsnoopy_la_SOURCES =
@@ -92,12 +92,10 @@ libsnoopy_la_LIBADD  = \
 
 
 
-### Create debugging helper library
+### Create a library to be included in `snoopy-test` CLI utility
 #
 noinst_LTLIBRARIES += libsnoopy-test-cli.la
-libsnoopy_test_cli_la_SOURCES  = \
-    libsnoopy-debug-addons.c \
-    libsnoopy-debug-addons.h
-libsnoopy_test_cli_la_LIBADD = \
+libsnoopy_test_cli_la_SOURCES =
+libsnoopy_test_cli_la_LIBADD  = \
     libsnoopy-no-entrypoint.la \
     entrypoint/libsnoopy-entrypoint-test-cli.la
