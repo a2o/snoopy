@@ -174,8 +174,8 @@ jobs:
               -Dsonar.organization=a2o \
               -Dsonar.projectKey=snoopy \
               -Dsonar.sources=. \
-              "-Dsonar.exclusions=tests/**" \
-              -Dsonar.tests=tests \
+              -Dsonar.coverage.exclusions=tests/**/* \
+              -Dsonar.cpd.exclusions=tests/**/*,src/entrypoint/* \
               -Dsonar.branch.name=$CURRENT_BRANCH_NAME \
               -Dsonar.projectVersion=$SONARCLOUD_TAG \
               -Dsonar.cfamily.build-wrapper-output=../snoopy-sonarcloud-build-wrapper-output \
@@ -197,8 +197,8 @@ jobs:
               -Dsonar.organization=a2o \
               -Dsonar.projectKey=snoopy \
               -Dsonar.sources=. \
-              "-Dsonar.exclusions=tests/**" \
-              -Dsonar.tests=tests \
+              -Dsonar.coverage.exclusions=tests/**/* \
+              -Dsonar.cpd.exclusions=tests/**/*,src/entrypoint/* \
               -Dsonar.pullrequest.provider=github \
               -Dsonar.pullrequest.key=${{ github.event.pull_request.number }} \
               -Dsonar.pullrequest.branch=${{github.event.pull_request.head.repo.owner.login}}:$PR_HEAD_REF \
