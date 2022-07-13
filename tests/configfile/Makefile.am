@@ -10,6 +10,12 @@ TESTS =
 XFAIL_TESTS =
 
 TESTS        += configfile-bom.sh
+TESTS        += configfile-error_logging-y1.sh
+TESTS        += configfile-error_logging-y2.sh
+TESTS        += configfile-error_logging-y3.sh
+TESTS        += configfile-error_logging-n1.sh
+TESTS        += configfile-error_logging-n2.sh
+TESTS        += configfile-error_logging-n3.sh
 TESTS        += configfile-inline-comment.sh
 TESTS        += configfile-line-length-1023.sh
 TESTS        += configfile-line-length-1024.sh

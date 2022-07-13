@@ -141,6 +141,9 @@ int snoopyTestCli_action_run_configfile (int argc, char **argv)
     } else if (0 == strcmp(showConfigVar, "syslog_level")) {
         printf("%s\n", snoopy_syslog_convert_levelToStr(CFG->syslog_level));
 
+    } else if (0 == strcmp(showConfigVar, "error_logging")) {
+        printf("%s\n", (CFG->error_logging_enabled == SNOOPY_TRUE ? "y" : "n"));
+
     } else {
         fatalErrorValue("Unknown setting given", showConfigVar);
     }
