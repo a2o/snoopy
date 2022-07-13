@@ -28,6 +28,7 @@ void printInfo          (const char * const message);
 void printInfoValue     (const char * const message, const char * const value);
 void printNotice        (const char * const message);
 void printNoticeValue   (const char * const message, const char * const value);
+void printSuccess       (const char * const message);
 void printWarning       (const char * const message);
 void printWarningValue  (const char * const message, const char * const value);
 void printError         (const char * const message);
