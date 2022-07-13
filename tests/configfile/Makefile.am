@@ -9,6 +9,8 @@ include   $(top_srcdir)/build/Makefile.am.common
 TESTS =
 XFAIL_TESTS =
 
+TESTS        += configfile-bom.sh
+TESTS        += configfile-inline-comment.sh
 TESTS        += configfile-line-length-1023.sh
 TESTS        += configfile-line-length-1024.sh
 XFAIL_TESTS  += configfile-line-length-1024.sh

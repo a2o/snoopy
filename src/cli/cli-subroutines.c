@@ -78,6 +78,12 @@ void printNoticeValue (const char * const message, const char * const value)
 }
 
 
+void printSuccess (const char * const message)
+{
+    fprintf(stderr, "[SUCCESS] %s\n", message);
+}
+
+
 void printWarning (const char * const message)
 {
     fprintf(stderr, "[WARNING] %s\n", message);

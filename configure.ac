@@ -196,6 +196,7 @@ AC_CONFIG_FILES([Makefile
                  tests/message/Makefile
                  tests/output/Makefile
                  tests/threads/Makefile
+                 tests/unit/Makefile
 ])
 AC_CONFIG_FILES([tests/_bootstrap-paths.sh], [chmod +x tests/_bootstrap-paths.sh])
 

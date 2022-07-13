@@ -27,6 +27,12 @@ snoopy_test_SOURCES  = \
     action-run-output.h \
     action-stress.c \
     action-stress.h \
+    action-unit.c \
+    action-unit.h \
+    action-unit-misc.c \
+    action-unit-misc.h \
+    action-unit-outputregistry.c \
+    action-unit-outputregistry.h \
     snoopy-test.c \
     $(top_builddir)/src/cli/cli-subroutines.c \
     $(top_builddir)/src/cli/cli-subroutines.h
@@ -36,7 +42,9 @@ snoopy_test_LDADD  = \
 if CONFIGFILE_ENABLED
 snoopy_test_SOURCES += \
     action-run-configfile.c \
-    action-run-configfile.h
+    action-run-configfile.h \
+    action-unit-ext-ini.c \
+    action-unit-ext-ini.h
 endif
 
 if FILTERING_ENABLED
@@ -44,7 +52,9 @@ snoopy_test_SOURCES += \
     action-run-filter.c \
     action-run-filter.h \
     action-run-filterchain.c \
-    action-run-filterchain.h
+    action-run-filterchain.h \
+    action-unit-filterregistry.c \
+    action-unit-filterregistry.h
 endif
 
 if THREAD_SAFETY_ENABLED
@@ -52,7 +62,9 @@ snoopy_test_SOURCES += \
     action-stress-threads.c \
     action-stress-threads.h \
     action-stress-threadsexec.c \
-    action-stress-threadsexec.h
+    action-stress-threadsexec.h \
+    action-unit-ext-list.c \
+    action-unit-ext-list.h
 endif
 
 noinst_PROGRAMS                    += spaceparent

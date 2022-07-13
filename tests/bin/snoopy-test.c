@@ -25,6 +25,7 @@
  */
 #include "action-run.h"
 #include "action-stress.h"
+#include "action-unit.h"
 
 #include "cli/cli-subroutines.h"
 
@@ -53,9 +54,10 @@ void snoopyTestCli_showHelp ()
         "Available actions:\n"
         "    run            Run Snoopy's subsystem\n"
         "    stress         Run stress tests\n"
+        "    unit           Run unit tests\n"
         "\n"
-        "    help           Show this help\n"
-        "    ACTION help    Show ACTION's help\n"
+        "    --help,-h      Show this help\n"
+        "    ACTION --help  Show ACTION's help\n"
         "\n";
 
     printf("%s", helpContent);
@@ -78,7 +80,7 @@ int main (int argc, char ** argv)
     action = argv[1];
 
 
-    if (0 == strcmp(action, "help")) {
+    if ((0 == strcmp(action, "--help")) || (0 == strcmp(action, "-h"))) {
         snoopyTestCli_showHelp();
         return 0;
     }
@@ -90,6 +92,10 @@ int main (int argc, char ** argv)
 
     if (0 == strcmp(action, "stress")) {
         return snoopyTestCli_action_stress(argc-2, &argv[2]);
+    }
+
+    if (0 == strcmp(action, "unit")) {
+        return snoopyTestCli_action_unit(argc-2, &argv[2]);
     }
 
 

@@ -23,6 +23,7 @@ SUBDIRS     += output
 if THREAD_SAFETY_ENABLED
     SUBDIRS += threads
 endif
+SUBDIRS     += unit
 #
 # Functional tests at last
 #
