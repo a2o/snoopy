@@ -96,7 +96,7 @@ void snoopy_message_generateFromFormat (
         // Get data source tag
         fmtPos_nextFormatTagClose = strstr(fmtPos_nextFormatTag, "}");
         if (NULL == fmtPos_nextFormatTagClose) {
-            snoopy_message_append(logMessage, " ERROR: Closing data source tag not found: '}'");
+            snoopy_message_append(logMessage, "[ERROR: Closing data source tag ('}') not found.]");
             return; // Should be "break;" but SonarCloud is complaining about it
         }
         dataSourceTag[0]    = '\0';
@@ -119,9 +119,9 @@ void snoopy_message_generateFromFormat (
 
         // Check if data source actually exists
         if (! snoopy_datasourceregistry_doesNameExist(dataSourceNamePtr)) {
-            snoopy_message_append(logMessage, "ERROR(Data source not found - ");
+            snoopy_message_append(logMessage, "[ERROR: Data source '");
             snoopy_message_append(logMessage, dataSourceNamePtr);
-            snoopy_message_append(logMessage, ")");
+            snoopy_message_append(logMessage, "' not found.]");
             return; // Should be "break;" but SonarCloud is complaining about it
         }
 
@@ -129,9 +129,11 @@ void snoopy_message_generateFromFormat (
         dataSourceMsg[0] = '\0';
         retVal = snoopy_datasourceregistry_callByName(dataSourceNamePtr, dataSourceMsg, dataSourceArgPtr);
         if (SNOOPY_DATASOURCE_FAILED(retVal)) {
-            snoopy_message_append(logMessage, "ERROR(Data source failed, msg:");
+            snoopy_message_append(logMessage, "[ERROR: Data source '");
+            snoopy_message_append(logMessage, dataSourceNamePtr);
+            snoopy_message_append(logMessage, "' failed with the following error message: '");
             snoopy_message_append(logMessage, dataSourceMsg);
-            snoopy_message_append(logMessage, ")");
+            snoopy_message_append(logMessage, "']");
         } else {
             snoopy_message_append(logMessage, dataSourceMsg);
         }
