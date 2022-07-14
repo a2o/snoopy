@@ -29,6 +29,8 @@ snoopy_test_SOURCES  = \
     action-stress.h \
     action-unit.c \
     action-unit.h \
+    action-unit-error.c \
+    action-unit-error.h \
     action-unit-misc.c \
     action-unit-misc.h \
     action-unit-outputregistry.c \

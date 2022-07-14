@@ -9,6 +9,7 @@ include   $(top_srcdir)/build/Makefile.am.common
 TESTS =
 XFAIL_TESTS =
 
+TESTS += unit-error.sh
 if CONFIGFILE_ENABLED
 TESTS += unit-ext-ini.sh
 endif

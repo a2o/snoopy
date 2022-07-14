@@ -27,6 +27,7 @@
 
 #include "action-common.h"
 
+#include "action-unit-error.h"
 #ifdef SNOOPY_CONFIGFILE_ENABLED
 #include "action-unit-ext-ini.h"
 #endif
@@ -53,17 +54,18 @@ void snoopyTestCli_action_unit_showHelp ()
         "    snoopy-test unit UNIT [ARGS]\n"
         "\n"
         "Available units:\n"
+        "    error              Run a unit test on src/error.h\n"
 #ifdef SNOOPY_CONFIGFILE_ENABLED
-        "    ext-ini,ei         Run an unit test on lib/inih/src/ini.c\n"
+        "    ext-ini,ei         Run a unit test on lib/inih/src/ini.c\n"
 #endif
 #ifdef SNOOPY_CONF_THREAD_SAFETY_ENABLED
-        "    ext-list,el        Run an unit test on lib/liblcthw/src/list.c\n"
+        "    ext-list,el        Run a unit test on lib/liblcthw/src/list.c\n"
 #endif
 #ifdef SNOOPY_FILTERING_ENABLED
-        "    filterregistry,fr  Run an unit test on src/filterregistry.c\n"
+        "    filterregistry,fr  Run a unit test on src/filterregistry.c\n"
 #endif
-        "    misc               Run an unit test on src/misc.c\n"
-        "    outputregistry,or  Run an unit test on src/outputregistry.c\n"
+        "    misc               Run a unit test on src/misc.c\n"
+        "    outputregistry,or  Run a unit test on src/outputregistry.c\n"
         "\n"
         "    --help,-h          Show this help\n"
         "    UNIT --help        Show UNIT's help\n"
@@ -84,6 +86,10 @@ int snoopyTestCli_action_unit (int argc, char ** argv)
     }
     unit = argv[0];
 
+
+    if ((0 == strcmp(unit, "error")) || (0 == strcmp(unit, "e"))) {
+        return snoopyTestCli_action_unit_error(argc-1, &argv[1]);
+    }
 
 #ifdef SNOOPY_CONFIGFILE_ENABLED
     if ((0 == strcmp(unit, "ext-ini")) || (0 == strcmp(unit, "ei"))) {
