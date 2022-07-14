@@ -70,17 +70,17 @@ void printInfoValue (const char * const message, const char * const value)
 
 void printNotice (const char * const message)
 {
-    fprintf(stderr, "[NOTICE] %s\n", message);
+    printf("[NOTICE] %s\n", message);
 }
 void printNoticeValue (const char * const message, const char * const value)
 {
-    fprintf(stderr, "[NOTICE] %s: %s\n", message, value);
+    printf("[NOTICE] %s: %s\n", message, value);
 }
 
 
 void printSuccess (const char * const message)
 {
-    fprintf(stderr, "[SUCCESS] %s\n", message);
+    printf("[SUCCESS] %s\n", message);
 }
 
 
