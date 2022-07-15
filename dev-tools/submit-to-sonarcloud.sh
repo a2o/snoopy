@@ -111,7 +111,7 @@ sonar-scanner \
   -Dsonar.organization=a2o \
   -Dsonar.projectKey=snoopy \
   -Dsonar.sources=. \
-  -Dsonar.coverage.exclusions=tests/**/* \
+  -Dsonar.coverage.exclusions=tests/**/*,src/entrypoint/execve-wrapper* \
   -Dsonar.cpd.exclusions=tests/**/*,src/entrypoint/* \
   -Dsonar.branch.name=$CURRENT_BRANCH_NAME \
   -Dsonar.projectVersion=$SONARCLOUD_TAG \
