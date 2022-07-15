@@ -72,7 +72,7 @@ int snoopyTestCli_action_unit_action (int argc, char ** argv)
     }
 
     if ((0 == strcmp(subunit, "log-syscall-exec")) || (0 == strcmp(subunit, "lse"))) {
-        return snoopyTestCli_action_unit_action_log_message_dispatch(argc-1, &argv[1]);
+        return snoopyTestCli_action_unit_action_log_syscall_exec(argc-1, &argv[1]);
     }
 
 
