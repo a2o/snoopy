@@ -54,6 +54,8 @@ if DATASOURCE_ENABLED_eusername
     TESTS += datasource_eusername.sh
 endif
 
+TESTS += datasource_failure.sh
+
 if DATASOURCE_ENABLED_filename
     TESTS += datasource_filename.sh
 endif

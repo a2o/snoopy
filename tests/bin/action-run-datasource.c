@@ -124,7 +124,7 @@ int snoopyTestCli_action_run_datasource (int argc, char ** argv)
     /* Call the datasource */
     retVal = snoopy_datasourceregistry_callByName(datasourceName, datasourceResult, datasourceArg);
     if (SNOOPY_DATASOURCE_FAILED(retVal)) {
-        fatalError("Datasource failed");
+        fatalErrorValue("Datasource failed", datasourceResult);
     }
 
 

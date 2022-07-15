@@ -140,6 +140,7 @@
 #endif
 
 /* This prevents "ISO C forbids empty initializer braces" error */
+#include "datasource/failure.h"
 #include "datasource/noop.h"
 
 
@@ -251,6 +252,7 @@ char* snoopy_datasourceregistry_names[] = {
 #endif
 
     /* This prevents "ISO C forbids empty initializer braces" error */
+    "failure",
     "noop",
     "",
 };
@@ -359,6 +361,7 @@ int (*snoopy_datasourceregistry_ptrs []) (char * const result, char const * cons
 #endif
 
     /* This prevents "ISO C forbids empty initializer braces" error */
+    snoopy_datasource_failure,
     snoopy_datasource_noop,
 };
 
