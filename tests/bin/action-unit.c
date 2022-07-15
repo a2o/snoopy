@@ -27,6 +27,7 @@
 
 #include "action-common.h"
 
+#include "action-unit-action.h"
 #include "action-unit-error.h"
 #ifdef SNOOPY_CONFIGFILE_ENABLED
 #include "action-unit-ext-ini.h"
@@ -86,6 +87,10 @@ int snoopyTestCli_action_unit (int argc, char ** argv)
     }
     unit = argv[0];
 
+
+    if ((0 == strcmp(unit, "action")) || (0 == strcmp(unit, "a"))) {
+        return snoopyTestCli_action_unit_action(argc-1, &argv[1]);
+    }
 
     if ((0 == strcmp(unit, "error")) || (0 == strcmp(unit, "e"))) {
         return snoopyTestCli_action_unit_error(argc-1, &argv[1]);
