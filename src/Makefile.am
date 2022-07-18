@@ -6,7 +6,9 @@ include   $(top_srcdir)/build/Makefile.am.common
 
 ### Subdir processing order
 #
+# `util` subdir must be the first to get processed, as `cli` depends on it
 SUBDIRS  =
+SUBDIRS += util
 SUBDIRS += action
 SUBDIRS += cli
 SUBDIRS += entrypoint
@@ -46,9 +48,10 @@ libsnoopy_no_entrypoint_la_SOURCES = \
 libsnoopy_no_entrypoint_la_LDFLAGS = $(AM_LDFLAGS)
 
 libsnoopy_no_entrypoint_la_LIBADD = \
-	action/libsnoopy-actions-all.la \
-	datasource/libsnoopy_datasources_all.la \
-	output/libsnoopy_outputs_all.la
+    action/libsnoopy-actions-all.la \
+    datasource/libsnoopy_datasources_all.la \
+    output/libsnoopy_outputs_all.la \
+    util/libsnoopy-utils.la
 
 # If config file is enabled, build and link these too
 if CONFIGFILE_ENABLED

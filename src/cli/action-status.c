@@ -30,6 +30,7 @@
 #include "cli-subroutines.h"
 
 #include "snoopy.h"
+#include "util/string-header.h"
 
 #include <dlfcn.h>
 #include <link.h>
@@ -94,7 +95,7 @@ int snoopy_cli_action_status ()
     } else {
 
         // Check for multiple concurrently-enabled libsnoopy.so instances
-        linePtr += getLineLength(linePtr);
+        linePtr += snoopy_util_string_getLineLength(linePtr);
         linePtr = etcLdSoPreload_findNonCommentLineContainingString(linePtr, SNOOPY_SO_LIBRARY_NAME);
         if (linePtr != NULL) {
             printDiagValue("ld.so.preload path", g_etcLdSoPreloadPath);

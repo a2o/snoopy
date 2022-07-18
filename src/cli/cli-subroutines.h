@@ -46,9 +46,6 @@ void         etcLdSoPreload_writeFile (char * newContent);
 const char * etcLdSoPreload_findNonCommentLineContainingString (const char * content, const char * searchString);
 const char * etcLdSoPreload_findEntry (const char * content, const char * entry);
 
-char * copyLineFromContent (char const * const lineStartPtr);
-int    getLineLength (char const * const lineStartPtr);
-
 extern const char * g_etcLdSoPreloadPath;
 extern const char * g_libsnoopySoPath;
 extern void *       g_libsnoopySoHandle;

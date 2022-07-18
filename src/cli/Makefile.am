@@ -26,3 +26,5 @@ snoopy_SOURCES = \
 	cli-subroutines.c \
 	cli-subroutines.h \
 	snoopy.c
+snoopy_LDADD = \
+	../util/libsnoopy-utils.la

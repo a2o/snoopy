@@ -185,6 +185,7 @@ AC_CONFIG_FILES([Makefile
                  src/entrypoint/Makefile
                  src/filter/Makefile
                  src/output/Makefile
+                 src/util/Makefile
                  tests/Makefile
                  tests/bin/Makefile
                  tests/cli/Makefile
