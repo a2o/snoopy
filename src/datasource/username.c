@@ -29,11 +29,10 @@
 
 #include "snoopy.h"
 
+#include "util/pwd-snoopy.h"
+
 #include <stdio.h>
 #include <stdlib.h>
-#include <sys/types.h>
-#include <unistd.h>
-#include <pwd.h>
 
 
 
@@ -52,34 +51,21 @@
  */
 int snoopy_datasource_username (char * const result, char const * const arg)
 {
-    struct passwd  pwd;
-    struct passwd *pwd_uid = NULL;
-    char          *buffpwd_uid = NULL;
-    long           buffpwdsize_uid = 0;
-    int            messageLength   = 0;
+    char * username = NULL;
+    int    retMsgLen = 0;
 
-    /* Allocate memory */
-    buffpwdsize_uid = sysconf(_SC_GETPW_R_SIZE_MAX);
-    if (-1 == buffpwdsize_uid) {
-        buffpwdsize_uid = 16384;
-    }
-    buffpwd_uid = malloc(buffpwdsize_uid);
-    if (NULL == buffpwd_uid) {
-        return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "ERROR(malloc)");
+
+    // We're not using arguments in this datasource
+    (void) arg;
+
+
+    username = snoopy_util_pwd_convertUidToUsername(getuid());
+    if (username == NULL) {
+        return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "Unable to convert UID to username");
     }
 
-    /* Try to get data */
-    if (0 != getpwuid_r(getuid(), &pwd, buffpwd_uid, buffpwdsize_uid, &pwd_uid)) {
-        messageLength  = snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "ERROR(getpwuid_r)");
-    } else {
-        if (NULL == pwd_uid) {
-            messageLength = snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "(undefined)");
-        } else {
-            messageLength = snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "%s", pwd_uid->pw_name);
-        }
-    }
 
-    /* Cleanup and return */
-    free(buffpwd_uid);
-    return messageLength;
+    retMsgLen = snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "%s", username);
+    free(username);
+    return retMsgLen;
 }

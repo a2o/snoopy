@@ -111,6 +111,9 @@
 #ifdef SNOOPY_CONF_DATASOURCE_ENABLED_snoopy_version
 #include "datasource/snoopy_version.h"
 #endif
+#ifdef SNOOPY_CONF_DATASOURCE_ENABLED_systemd_unit_name
+#include "datasource/systemd-unit-name.h"
+#endif
 #ifdef SNOOPY_CONF_DATASOURCE_ENABLED_tid
 #include "datasource/tid.h"
 #endif
@@ -226,6 +229,9 @@ char* snoopy_datasourceregistry_names[] = {
 #ifdef SNOOPY_CONF_DATASOURCE_ENABLED_snoopy_version
     "snoopy_version",
 #endif
+#ifdef SNOOPY_CONF_DATASOURCE_ENABLED_systemd_unit_name
+    "systemd_unit_name",
+#endif
 #ifdef SNOOPY_CONF_DATASOURCE_ENABLED_tid
     "tid",
 #endif
@@ -337,6 +343,9 @@ int (*snoopy_datasourceregistry_ptrs []) (char * const result, char const * cons
 #endif
 #ifdef SNOOPY_CONF_DATASOURCE_ENABLED_snoopy_version
     snoopy_datasource_snoopy_version,
+#endif
+#ifdef SNOOPY_CONF_DATASOURCE_ENABLED_systemd_unit_name
+    snoopy_datasource_systemd_unit_name,
 #endif
 #ifdef SNOOPY_CONF_DATASOURCE_ENABLED_tid
     snoopy_datasource_tid,

@@ -142,6 +142,7 @@ AC_CHECK_FUNCS([ \
     strchr    \
     strdup    \
     strerror  \
+    strndup    \
     strrchr   \
     strstr    \
 ], [], [
@@ -399,6 +400,7 @@ SNOOPY_CONFIGURE_DATASOURCE_FORCE(  [snoopy_configure_command], [returns the ./c
 SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [snoopy_literal], [dummy data source - only returns what it receives as argument])
 SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [snoopy_threads], [number of threads that Snoopy currently is initialized for])
 SNOOPY_CONFIGURE_DATASOURCE_FORCE(  [snoopy_version], [installed Snoopy version])
+SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [systemd_unit_name], [SystemD unit name, as found in /proc/self/cgroup file under the name=systemd cgroup])
 SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [tid],            [Thread ID of process performing the execution])
 SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [tid_kernel],     [Thread ID of process performing the execution, as retured by kernel via syscall])
 SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [timestamp],      [current Unix timestamp])
@@ -841,6 +843,13 @@ dnl ============================================================================
 #
 AS_IF([test "x$enable_datasource_explicit_snoopy_threads" = "xyes" -a "x$thread_safety_enabled" = "xno"], [
     AC_MSG_ERROR([For datasource snoopy_threads to be enabled, thread safety must be enabled too. Unable to continue.])
+])
+
+
+### Datasource systemd_unit_name requires datasource cgroup
+#
+AS_IF([test "x$enable_datasource_systemd_unit_name" = "xyes" -a "x$enable_datasource_cgroup" = "xno"], [
+    AC_MSG_ERROR([For datasource systemd_unit_name to be enabled, datasource cgroup must be enabled too. Unable to continue.])
 ])
 
 

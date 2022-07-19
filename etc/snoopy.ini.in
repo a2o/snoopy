@@ -37,6 +37,7 @@
 ; - %{snoopy_threads} ; (available=@enable_datasource_snoopy_threads@) Number of threads that Snoopy currently is configured for
 ; - %{snoopy_version} ; (available=@enable_datasource_snoopy_version@) Snoopy version
 ; - %{snoopy_literal:arg} ; (available=@enable_datasource_snoopy_literal@) Dummy data source, only returns its argument literally
+; - %{systemd_unit_name} ; (available=@enable_datasource_systemd_unit_name@) SystemD unit name, as read from /proc/PID/cgroup (from line that starts with "1:name=systemd:...")
 ; - %{tid}            ; (available=@enable_datasource_tid@) Thread ID of process that executed the command
 ; - %{tid_kernel}     ; (available=@enable_datasource_tid_kernel@) Thread ID of process that executed the command, as returned by Linux kernel
 ; - %{timestamp}      ; (available=@enable_datasource_timestamp@) Current Unix timestamp

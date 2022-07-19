@@ -217,6 +217,14 @@ libsnoopy_datasources_all_la_SOURCES += \
 	snoopy_version.h
 endif
 
+# Data source: systemd_unit_name
+#
+if DATASOURCE_ENABLED_systemd_unit_name
+libsnoopy_datasources_all_la_SOURCES += \
+	systemd-unit-name.c \
+	systemd-unit-name.h
+endif
+
 # Data source: tid
 #
 if DATASOURCE_ENABLED_tid

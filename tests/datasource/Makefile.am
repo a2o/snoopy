@@ -120,6 +120,10 @@ if DATASOURCE_ENABLED_snoopy_version
     TESTS += datasource_snoopy_version.sh
 endif
 
+if DATASOURCE_ENABLED_systemd_unit_name
+    TESTS += datasource_systemd_unit_name.sh
+endif
+
 if DATASOURCE_ENABLED_tid
     TESTS += datasource_tid.sh
 endif

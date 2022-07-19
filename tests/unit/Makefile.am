@@ -31,6 +31,10 @@ endif
 TESTS += unit-misc.sh
 TESTS += unit-outputregistry.sh
 
+if DATASOURCE_ENABLED_systemd_unit_name
+TESTS += unit-util-systemd.sh
+endif
+
 
 
 ### Include tests in distribution archive

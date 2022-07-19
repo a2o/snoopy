@@ -40,6 +40,7 @@
 #endif
 #include "action-unit-misc.h"
 #include "action-unit-outputregistry.h"
+#include "action-unit-util.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -55,7 +56,8 @@ void snoopyTestCli_action_unit_showHelp ()
         "    snoopy-test unit UNIT [ARGS]\n"
         "\n"
         "Available units:\n"
-        "    error              Run a unit test on src/error.h\n"
+        "    action,a           Run a unit test on action/*.c\n"
+        "    error,e            Run a unit test on src/error.c\n"
 #ifdef SNOOPY_CONFIGFILE_ENABLED
         "    ext-ini,ei         Run a unit test on lib/inih/src/ini.c\n"
 #endif
@@ -67,6 +69,7 @@ void snoopyTestCli_action_unit_showHelp ()
 #endif
         "    misc               Run a unit test on src/misc.c\n"
         "    outputregistry,or  Run a unit test on src/outputregistry.c\n"
+        "    util,u             Run a unit test on src/util/*.c\n"
         "\n"
         "    --help,-h          Show this help\n"
         "    UNIT --help        Show UNIT's help\n"
@@ -120,6 +123,10 @@ int snoopyTestCli_action_unit (int argc, char ** argv)
 
     if ((0 == strcmp(unit, "outputregistry")) || (0 == strcmp(unit, "or"))) {
         return snoopyTestCli_action_unit_outputregistry(argc-1, &argv[1]);
+    }
+
+    if ((0 == strcmp(unit, "util")) || (0 == strcmp(unit, "u"))) {
+        return snoopyTestCli_action_unit_util(argc-1, &argv[1]);
     }
 
 

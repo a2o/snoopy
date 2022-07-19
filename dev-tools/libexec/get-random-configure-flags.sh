@@ -78,6 +78,22 @@ if [[ "${ALL_CONFIG_OPTS_ASSOC["everything"]}" == "unspecified" ]] && [[ "${ALL_
     fi
 fi
 
+# Datasource `cgroup` is needed by `systemd_unit_name`
+#
+if [ "${ALL_CONFIG_OPTS_ASSOC["datasource-systemd_unit_name"]}" == "enable" ]; then
+    ALL_CONFIG_OPTS_ASSOC["datasource-cgroup"]="enable"
+fi
+if [[ "${ALL_CONFIG_OPTS_ASSOC["everything"]}" == "enable" ]] || [[ "${ALL_CONFIG_OPTS_ASSOC["all-datasources"]}" == "enable" ]]; then
+    if [ "${ALL_CONFIG_OPTS_ASSOC["datasource-systemd_unit_name"]}" != "disable" ]; then
+        ALL_CONFIG_OPTS_ASSOC["datasource-cgroup"]="enable"
+    fi
+fi
+if [[ "${ALL_CONFIG_OPTS_ASSOC["everything"]}" == "unspecified" ]] && [[ "${ALL_CONFIG_OPTS_ASSOC["all-datasources"]}" == "unspecified" ]]; then
+    if [ "${ALL_CONFIG_OPTS_ASSOC["datasource-systemd_unit_name"]}" != "disable" ]; then
+        ALL_CONFIG_OPTS_ASSOC["datasource-cgroup"]="enable"
+    fi
+fi
+
 
 
 ### Build output

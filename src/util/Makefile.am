@@ -12,5 +12,14 @@ noinst_LTLIBRARIES = libsnoopy-utils.la
 libsnoopy_utils_la_SOURCES = \
     file.c \
     file.h \
+    pwd.c \
+    pwd-snoopy.h \
     string.c \
     string-header.h
+
+
+if DATASOURCE_ENABLED_systemd_unit_name
+libsnoopy_utils_la_SOURCES += \
+    systemd.c \
+    systemd-snoopy.h
+endif

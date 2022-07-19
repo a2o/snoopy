@@ -31,13 +31,10 @@
 
 #include "snoopy.h"
 
-#include <errno.h>
+#include "util/pwd-snoopy.h"
+
 #include <stdio.h>
 #include <stdlib.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <unistd.h>
-#include <pwd.h>
 
 
 
@@ -58,13 +55,13 @@ int snoopy_datasource_tty_username (char * const result, char const * const arg)
 {
     int     retVal;
     uid_t   ttyUid;
+    char   *username = NULL;
+    int     retMsgLen = 0;
 
-    /* Variables for uid-to-username conversion */
-    struct passwd  pwd;
-    struct passwd *pwd_uid = NULL;
-    char          *buffpwd_uid = NULL;
-    long           buffpwdsize_uid = 0;
-    int            messageLength   = 0;
+
+    // We're not using arguments in this datasource
+    (void) arg;
+
 
     /* Get tty UID */
     retVal = snoopy_datasource_tty__get_tty_uid(&ttyUid, result);
@@ -72,28 +69,14 @@ int snoopy_datasource_tty_username (char * const result, char const * const arg)
         return retVal;   // Error occurred, and the message about it is already in the result buffer
     }
 
-    /* Allocate memory for pwd structure */
-    buffpwdsize_uid = sysconf(_SC_GETPW_R_SIZE_MAX);
-    if (-1 == buffpwdsize_uid) {
-        buffpwdsize_uid = 16384;
-    }
-    buffpwd_uid = malloc(buffpwdsize_uid);
-    if (NULL == buffpwd_uid) {
-        return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "ERROR(malloc)");
+
+    username = snoopy_util_pwd_convertUidToUsername(ttyUid);
+    if (username == NULL) {
+        return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "Unable to convert UID to username");
     }
 
-    /* Try to get data */
-    if (0 != getpwuid_r(ttyUid, &pwd, buffpwd_uid, buffpwdsize_uid, &pwd_uid)) {
-        messageLength  = snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "ERROR(getpwuid_r)");
-    } else {
-        if (NULL == pwd_uid) {
-            messageLength = snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "(undefined)");
-        } else {
-            messageLength = snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "%s", pwd_uid->pw_name);
-        }
-    }
 
-    /* Cleanup and return */
-    free(buffpwd_uid);
-    return messageLength;
+    retMsgLen = snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "%s", username);
+    free(username);
+    return retMsgLen;
 }
