@@ -9,6 +9,16 @@ include   $(top_srcdir)/build/Makefile.am.common
 TESTS       =
 XFAIL_TESTS =
 
+if DATASOURCE_ENABLED_cgroup
+    TESTS += datasource_cgroup-name.sh
+    TESTS += datasource_cgroup-name-first.sh
+    TESTS += datasource_cgroup-name-last.sh
+    TESTS += datasource_cgroup-name-mid.sh
+    TESTS += datasource_cgroup-name-notfound.sh
+    TESTS += datasource_cgroup-number.sh
+    TESTS += datasource_cgroup-number-notfound.sh
+endif
+
 if DATASOURCE_ENABLED_cmdline
     TESTS += datasource_cmdline.sh
 endif

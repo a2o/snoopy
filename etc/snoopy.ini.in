@@ -13,6 +13,7 @@
 ; - calls to data sources with    arguments: %{datasourcename:arg1,arg2}   <--- if data source supports it
 ;
 ; List of available data sources:
+; - %{cgroup:PATTERN} ; (available=@enable_datasource_cgroup@) Control group information. PATTERN can be either a number (hierarchy id) or a string (controller name)
 ; - %{cmdline}        ; (available=@enable_datasource_cmdline@) Full command line, with arguments
 ; - %{cwd}            ; (available=@enable_datasource_cwd@) Current working directory
 ; - %{datetime:fmt}   ; (available=@enable_datasource_datetime@) Date and time. The format argument is optional, supports strftime() syntax (%-based conversion specifications, google for "man strftime()") and defaults to ISO 8601 format.

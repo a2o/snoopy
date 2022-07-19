@@ -155,11 +155,11 @@
 
 
 /**
- * SNOOPY_TRUE
- * SNOOPY_FALSE
+ * True, false, error
  */
 #define   SNOOPY_TRUE    1
 #define   SNOOPY_FALSE   0
+#define   SNOOPY_ERROR  -1
 
 
 

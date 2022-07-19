@@ -169,6 +169,9 @@
 /* INI configuration file path to use */
 #undef SNOOPY_CONF_CONFIGFILE_PATH
 
+/* Is datasource "cgroup" available? */
+#undef SNOOPY_CONF_DATASOURCE_ENABLED_cgroup
+
 /* Is datasource "cmdline" available? */
 #undef SNOOPY_CONF_DATASOURCE_ENABLED_cmdline
 

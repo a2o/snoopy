@@ -87,6 +87,42 @@ char * snoopy_util_string_copyLineFromContent (char const * const lineStartPtr)
 
 
 /*
+ * Find a line in a multiline content that start with searchString
+ *
+ * Params:
+ *      content:        Multi-line content to scan through
+ *      searchString:   String to search for at the beginning of each line
+ *
+ * Return:
+ *     const char *:    Pointer to the line starting with searchString, or NULL if not found
+ */
+char * snoopy_util_string_findLineStartingWith (char const * const content, char const * const searchString)
+{
+    const char * contentPos = NULL;
+    char * foundStringPos = NULL;
+
+    contentPos = content;
+
+    while ((foundStringPos = strstr(contentPos, searchString)) != NULL) {
+
+        // Check the start of the line
+        if (
+            (foundStringPos == content) // Start of the content
+            ||
+            ((foundStringPos > content) && (foundStringPos[-1] == '\n')) // The preceding character is a newline
+        ) {
+            return foundStringPos;
+        }
+
+        contentPos = foundStringPos + strlen(searchString);
+    }
+
+    return NULL;
+}
+
+
+
+/*
  * Get the length of a pointed-to text line
  *
  * Params:
@@ -112,4 +148,26 @@ int snoopy_util_string_getLineLength (char const * const lineStartPtr)
     }
 
     return (int) lineLen;
+}
+
+
+
+/*
+ * Null-terminate a line in content ("destroys" content in-place by replacing \n with \0)
+ *
+ * Params:
+ *      lineInContent:  Pointer to a line in multiline content
+ *
+ * Return:
+ *     void
+ */
+void snoopy_util_string_nullTerminateLine (char const * const lineInContent)
+{
+    char * newlineCharPos = NULL;
+
+    newlineCharPos = strchr(lineInContent, '\n');
+
+    if (newlineCharPos != NULL) {
+        *newlineCharPos = '\0';
+    }
 }

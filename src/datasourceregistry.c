@@ -37,6 +37,9 @@
 /*
  * Include headers of all datasource functions
  */
+#ifdef SNOOPY_CONF_DATASOURCE_ENABLED_cgroup
+#include "datasource/cgroup.h"
+#endif
 #ifdef SNOOPY_CONF_DATASOURCE_ENABLED_cmdline
 #include "datasource/cmdline.h"
 #endif
@@ -149,6 +152,9 @@
  * Two arrays holding data about all data sources
  */
 char* snoopy_datasourceregistry_names[] = {
+#ifdef SNOOPY_CONF_DATASOURCE_ENABLED_cgroup
+    "cgroup",
+#endif
 #ifdef SNOOPY_CONF_DATASOURCE_ENABLED_cmdline
     "cmdline",
 #endif
@@ -258,6 +264,9 @@ char* snoopy_datasourceregistry_names[] = {
 };
 
 int (*snoopy_datasourceregistry_ptrs []) (char * const result, char const * const arg) = {
+#ifdef SNOOPY_CONF_DATASOURCE_ENABLED_cgroup
+    snoopy_datasource_cgroup,
+#endif
 #ifdef SNOOPY_CONF_DATASOURCE_ENABLED_cmdline
     snoopy_datasource_cmdline,
 #endif

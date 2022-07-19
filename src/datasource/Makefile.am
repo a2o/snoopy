@@ -23,6 +23,14 @@ libsnoopy_datasources_all_la_LDFLAGS =
 
 
 
+# Data source: cgroup
+#
+if DATASOURCE_ENABLED_cgroup
+libsnoopy_datasources_all_la_SOURCES += \
+	cgroup.c \
+	cgroup.h
+endif
+
 # Data source: cmdline
 #
 if DATASOURCE_ENABLED_cmdline

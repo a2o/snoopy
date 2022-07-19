@@ -1,7 +1,7 @@
 /*
  * SNOOPY LOGGER
  *
- * Copyright (c) 2022 Bostjan Skufca Jese (bostjan _A_T_ a2o.si)
+ * Copyright (c) 2022 Bostjan Skufca Jese <bostjan@a2o.si>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,8 +20,7 @@
 
 
 
-int             snoopy_util_string_containsOnlyDigits (char const * const str);
-char *          snoopy_util_string_copyLineFromContent (char const * const lineStartPtr);
-char *          snoopy_util_string_findLineStartingWith (char const * const content, char const * const searchString);
-int             snoopy_util_string_getLineLength (char const * const lineStartPtr);
-void            snoopy_util_string_nullTerminateLine (char const * const lineInContent);
+/*
+ * SNOOPY DATA SOURCE: cgroup
+ */
+int snoopy_datasource_cgroup (char * const result, char const * const arg);

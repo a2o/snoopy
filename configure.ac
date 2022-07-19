@@ -375,6 +375,7 @@ AC_ARG_ENABLE(all-datasources,
 # ==============================================================================
 # ======= START section: ENABLE INDIVIDUAL DATA SOURCES ========================
 # ==============================================================================
+SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [cgroup],         [cgroup information])
 SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [cmdline],        [full command line including arguments])
 SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [cwd],            [current working directory])
 SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [datetime],       [current date and time, supports strftime-based formatting argument, defaults to ISO 8601 format])
