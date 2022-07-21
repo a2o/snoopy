@@ -30,6 +30,8 @@ on:
   pull_request_target:
     types:
       - labeled
+      - opened
+      - synchronize
     branches:
       - master
     paths-ignore:
@@ -64,7 +66,15 @@ jobs:
         ||
         (github.event_name == 'push')
         ||
-        (github.event_name == 'pull_request_target' && contains(github.event.pull_request.labels.*.name, '/ci run additional tests'))
+        (
+            (github.event_name == 'pull_request_target')
+            &&
+            (
+                ((github.event.pull_request.action == 'labeled') && contains(github.event.pull_request.labels.*.name, '/ci run additional tests'))
+                ||
+                (github.actor == 'bostjan')
+            )
+        )
       )
 
     steps:
