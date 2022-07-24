@@ -763,7 +763,7 @@ AC_ARG_WITH(syslog-ident,
     [syslog_ident="snoopy"]
 )
 
-AC_DEFINE_UNQUOTED(SNOOPY_CONF_SYSLOG_IDENT,  ["$syslog_ident"], [Syslog ident to use by default])
+AC_DEFINE_UNQUOTED(SNOOPY_CONF_SYSLOG_IDENT_FORMAT,  ["$syslog_ident"], [Syslog ident to use by default])
 AC_MSG_NOTICE([Snoopy default syslog ident:    "$syslog_ident"])
 
 dnl ============================================================================

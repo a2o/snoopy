@@ -176,13 +176,15 @@
 ; What syslog ident (program name) to use.
 ;
 ; Possible values:
-;   Any non-spaced string.
+;   Any non-spaced string. Using data sources is supported.
 ;
 ; Default value:
 ;   "snoopy" (unless changed by ./configure --with-syslog-ident="other")
 ;
-; Example:
+; Examples:
 ;syslog_ident = "my-ident-string"
+;syslog_ident = "%{username}"
+;syslog_ident = "%{systemd_unit_name}"
 
 
 

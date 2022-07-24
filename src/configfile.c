@@ -161,8 +161,8 @@ int snoopy_configfile_parser_callback (
 
 
     if (MATCHNAME("syslog_ident")) {
-        CFG->syslog_ident          = strdup(confValString);
-        CFG->syslog_ident_malloced = SNOOPY_TRUE;
+        CFG->syslog_ident_format          = strdup(confValString);
+        CFG->syslog_ident_format_malloced = SNOOPY_TRUE;
         return 1;
     }
 

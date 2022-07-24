@@ -109,15 +109,15 @@ void snoopy_cleanup ()
 void snoopy_string_append (
     char *destString,
     const char *appendThis,
-    int   destStringMaxLength
+    size_t destStringMaxLength
 ) {
-    int   destStringSize          = -1;
-    int   destStringSizeRemaining = -1;
-    int   appendThisSize          = -1;
+    size_t destStringSize          = 0;
+    size_t destStringSizeRemaining = 0;
+    size_t appendThisSize          = 0;
 
     /* Verify the limits */
-    destStringSize          = (int) strlen(destString);
-    appendThisSize          = (int) strlen(appendThis);
+    destStringSize          = strlen(destString);
+    appendThisSize          = strlen(appendThis);
     destStringSizeRemaining = destStringMaxLength - destStringSize;
     if (destStringSizeRemaining < appendThisSize) {
         snoopy_error_handler("Maximum destination string size exceeded");

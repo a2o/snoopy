@@ -55,7 +55,8 @@
  *     SNOOPY_FILTER_PASS or SNOOPY_FILTER_DROP
  */
 int snoopy_filtering_check_chain (
-    char *logMessage,
+    char   *logMessage,
+    size_t  logMessageBufSize,
     const char *filterChain
 ) {
     char  filterChainCopy[SNOOPY_FILTER_CHAIN_MAX_SIZE];   // Must be here, or strtok_r segfaults
@@ -109,9 +110,9 @@ int snoopy_filtering_check_chain (
 
             // Check if filter actually exists
             if (SNOOPY_FALSE == snoopy_filterregistry_doesNameExist(filterNamePtr)) {
-                snoopy_message_append(logMessage, "ERROR(Filter not found - ");
-                snoopy_message_append(logMessage, filterNamePtr);
-                snoopy_message_append(logMessage, ")");
+                snoopy_message_append(logMessage, logMessageBufSize, "ERROR(Filter not found - ");
+                snoopy_message_append(logMessage, logMessageBufSize, filterNamePtr);
+                snoopy_message_append(logMessage, logMessageBufSize, ")");
                 break;
             }
 

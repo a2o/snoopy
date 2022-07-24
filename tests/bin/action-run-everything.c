@@ -82,7 +82,7 @@ int snoopyTestCli_action_run_everything ()
 
 
     /* Initialize empty log message */
-    logMessage    = malloc(SNOOPY_LOG_MESSAGE_MAX_SIZE);
+    logMessage    = malloc(SNOOPY_LOG_MESSAGE_BUF_SIZE);
     logMessage[0] = '\0';
 
 
@@ -98,12 +98,12 @@ int snoopyTestCli_action_run_everything ()
 
 
     printf("-----[ Message formatting ]----------------------------\n");
-    snoopy_message_generateFromFormat(logMessage, CFG->message_format);
+    snoopy_message_generateFromFormat(logMessage, SNOOPY_LOG_MESSAGE_BUF_SIZE, CFG->message_format);
     printf("Message: %s\n", logMessage);
 
     printf("-----[ Filtering ]-------------------------------------\n");
 #ifdef SNOOPY_FILTERING_ENABLED
-    snoopy_filtering_check_chain(logMessage, "exclude_uid:10,11,12;only_uid=0,1,2,3");
+    snoopy_filtering_check_chain(logMessage, SNOOPY_LOG_MESSAGE_BUF_SIZE, "exclude_uid:10,11,12;only_uid=0,1,2,3");
     printf("Done.\n");
 #else
     printf("SKIPPED - not enabled.\n");

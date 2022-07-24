@@ -29,6 +29,7 @@
 
 #include "snoopy.h"
 #include "configuration.h"
+#include "message.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -55,20 +56,20 @@
  */
 int snoopy_output_syslogoutput (char const * const logMessage, int errorOrMessage, char const * const arg)
 {
-    const snoopy_configuration_t *CFG;
-
-
-    /* Get config pointer */
-    CFG = snoopy_configuration_get();
-
-
     /* Dispatch only if non-zero size */
     if (0 == strlen(logMessage)) {
         return SNOOPY_OUTPUT_GRACEFUL_DISCARD;
     }
 
+    /* Get config pointer */
+    snoopy_configuration_t *CFG = snoopy_configuration_get();
+
+    /* Generate syslog ident string */
+    char syslogIdent[SNOOPY_SYSLOG_IDENT_FORMAT_BUF_SIZE] = {'\0'};
+    snoopy_message_generateFromFormat(syslogIdent, SNOOPY_SYSLOG_IDENT_FORMAT_BUF_SIZE, CFG->syslog_ident_format);
+
     /* Prepare logging stuff */
-    openlog(CFG->syslog_ident, LOG_PID, CFG->syslog_facility);
+    openlog(syslogIdent, LOG_PID, CFG->syslog_facility);
 
     /* Log error or ordinary message */
     if (SNOOPY_LOG_ERROR == errorOrMessage) {

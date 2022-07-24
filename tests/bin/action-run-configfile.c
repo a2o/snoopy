@@ -136,7 +136,7 @@ int snoopyTestCli_action_run_configfile (int argc, char **argv)
         printf("%s\n", snoopy_syslog_convert_facilityToStr(CFG->syslog_facility));
 
     } else if (0 == strcmp(showConfigVar, "syslog_ident")) {
-        printf("%s\n", CFG->syslog_ident);
+        printf("%s\n", CFG->syslog_ident_format);
 
     } else if (0 == strcmp(showConfigVar, "syslog_level")) {
         printf("%s\n", snoopy_syslog_convert_levelToStr(CFG->syslog_level));

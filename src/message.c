@@ -54,8 +54,9 @@
  *     void
  */
 void snoopy_message_generateFromFormat (
-    char *logMessage,
-    char *logMessageFormat
+    char  *logMessage,
+    size_t logMessageBufSize,
+    char  *logMessageFormat
 ) {
     char *fmtPos_cur;
     char *fmtPos_nextFormatTag;
@@ -80,23 +81,23 @@ void snoopy_message_generateFromFormat (
         // If no data source tag is found, just copy the text and bail out
         fmtPos_nextFormatTag = strstr(fmtPos_cur, "%{");
         if (NULL == fmtPos_nextFormatTag) {
-            snoopy_message_append(logMessage, fmtPos_cur);
+            snoopy_message_append(logMessage, logMessageBufSize, fmtPos_cur);
             return; // Should be "break;" but SonarCloud is complaining about it
         }
 
         // Otherwise copy text up to the next data source tag
         lengthToCopy = (int) (fmtPos_nextFormatTag - fmtPos_cur + 1); // + 1 for null termination
-        if (lengthToCopy > (int)(SNOOPY_LOG_MESSAGE_MAX_SIZE-strlen(logMessage))) {
-            lengthToCopy = (int)(SNOOPY_LOG_MESSAGE_MAX_SIZE-strlen(logMessage));
+        if (lengthToCopy > (int)(logMessageBufSize-strlen(logMessage))) {
+            lengthToCopy = (int)(logMessageBufSize-strlen(logMessage));
         }
         fmtStaticText[0] = '\0';
         snprintf(fmtStaticText, lengthToCopy, "%s", fmtPos_cur);
-        snoopy_message_append(logMessage, fmtStaticText);
+        snoopy_message_append(logMessage, logMessageBufSize, fmtStaticText);
 
         // Get data source tag
         fmtPos_nextFormatTagClose = strstr(fmtPos_nextFormatTag, "}");
         if (NULL == fmtPos_nextFormatTagClose) {
-            snoopy_message_append(logMessage, "[ERROR: Closing data source tag ('}') not found.]");
+            snoopy_message_append(logMessage, logMessageBufSize, "[ERROR: Closing data source tag ('}') not found.]");
             return; // Should be "break;" but SonarCloud is complaining about it
         }
         dataSourceTag[0]    = '\0';
@@ -119,9 +120,9 @@ void snoopy_message_generateFromFormat (
 
         // Check if data source actually exists
         if (! snoopy_datasourceregistry_doesNameExist(dataSourceNamePtr)) {
-            snoopy_message_append(logMessage, "[ERROR: Data source '");
-            snoopy_message_append(logMessage, dataSourceNamePtr);
-            snoopy_message_append(logMessage, "' not found.]");
+            snoopy_message_append(logMessage, logMessageBufSize, "[ERROR: Data source '");
+            snoopy_message_append(logMessage, logMessageBufSize, dataSourceNamePtr);
+            snoopy_message_append(logMessage, logMessageBufSize, "' not found.]");
             return; // Should be "break;" but SonarCloud is complaining about it
         }
 
@@ -129,13 +130,13 @@ void snoopy_message_generateFromFormat (
         dataSourceMsg[0] = '\0';
         retVal = snoopy_datasourceregistry_callByName(dataSourceNamePtr, dataSourceMsg, dataSourceArgPtr);
         if (SNOOPY_DATASOURCE_FAILED(retVal)) {
-            snoopy_message_append(logMessage, "[ERROR: Data source '");
-            snoopy_message_append(logMessage, dataSourceNamePtr);
-            snoopy_message_append(logMessage, "' failed with the following error message: '");
-            snoopy_message_append(logMessage, dataSourceMsg);
-            snoopy_message_append(logMessage, "']");
+            snoopy_message_append(logMessage, logMessageBufSize, "[ERROR: Data source '");
+            snoopy_message_append(logMessage, logMessageBufSize, dataSourceNamePtr);
+            snoopy_message_append(logMessage, logMessageBufSize, "' failed with the following error message: '");
+            snoopy_message_append(logMessage, logMessageBufSize, dataSourceMsg);
+            snoopy_message_append(logMessage, logMessageBufSize, "']");
         } else {
-            snoopy_message_append(logMessage, dataSourceMsg);
+            snoopy_message_append(logMessage, logMessageBufSize, dataSourceMsg);
         }
 
         // Where to start next iteration
@@ -160,8 +161,9 @@ void snoopy_message_generateFromFormat (
  *     void
  */
 void snoopy_message_append (
-    char *logMessage,
+    char  *logMessage,
+    size_t logMessageBufSize,
     const char *appendThis
 ) {
-    snoopy_string_append(logMessage, appendThis, SNOOPY_LOG_MESSAGE_MAX_SIZE);
+    snoopy_string_append(logMessage, appendThis, logMessageBufSize);
 }

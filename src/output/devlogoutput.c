@@ -29,10 +29,12 @@
 
 #include "snoopy.h"
 #include "configuration.h"
+#include "message.h"
 #include "output/socketoutput.h"
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 //#include <syslog.h>
 
 
@@ -53,32 +55,31 @@
  */
 int snoopy_output_devlogoutput (char const * const logMessage, int errorOrMessage, char const * const arg)
 {
-    char  *logMessageWithPrefix = NULL;
-    int    retVal;
-    snoopy_configuration_t *CFG;
-
+    /* Dispatch only if non-zero size */
+    if (0 == strlen(logMessage)) {
+        return SNOOPY_OUTPUT_GRACEFUL_DISCARD;
+    }
 
     /* Get config pointer */
-    CFG = snoopy_configuration_get();
+    snoopy_configuration_t *CFG = snoopy_configuration_get();
 
+    /* Generate syslog ident string */
+    char syslogIdent[SNOOPY_SYSLOG_IDENT_FORMAT_BUF_SIZE] = {'\0'};
+    snoopy_message_generateFromFormat(syslogIdent, SNOOPY_SYSLOG_IDENT_FORMAT_BUF_SIZE, CFG->syslog_ident_format);
 
     /* Generate final message - add prefix which is otherwise added by syslog() syscall */
-    logMessageWithPrefix    = malloc(SNOOPY_LOG_MESSAGE_MAX_SIZE + 100);   // +100 ought to be enough
-    logMessageWithPrefix[0] = '\0';
+    char logMessageWithPrefix[SNOOPY_LOG_MESSAGE_BUF_SIZE + SNOOPY_SYSLOG_IDENT_FORMAT_BUF_SIZE + 100] = {'\0'};   // +100 ought to be enough
     snprintf(
         logMessageWithPrefix,
-        SNOOPY_LOG_MESSAGE_MAX_SIZE + 100,
-        "<%d>%s[%d]: %s",
+        SNOOPY_LOG_MESSAGE_BUF_SIZE + SNOOPY_SYSLOG_IDENT_FORMAT_BUF_SIZE + 100,
+        "<%d>%.*s[%d]: %s",
         CFG->syslog_facility | CFG->syslog_level,
-        CFG->syslog_ident,
+        SNOOPY_SYSLOG_IDENT_FORMAT_BUF_SIZE-1,
+        syslogIdent,
         getpid(),
         logMessage
     );
 
     /* Pass execution to another output provider */
-    retVal = snoopy_output_socketoutput(logMessageWithPrefix, errorOrMessage, "/dev/log");
-
-    /* Housekeeping */
-    free(logMessageWithPrefix);
-    return retVal;
+    return snoopy_output_socketoutput(logMessageWithPrefix, errorOrMessage, "/dev/log");
 }
