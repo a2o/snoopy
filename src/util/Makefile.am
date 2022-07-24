@@ -11,11 +11,11 @@ include   $(top_srcdir)/build/Makefile.am.common
 noinst_LTLIBRARIES = libsnoopy-utils.la
 libsnoopy_utils_la_SOURCES = \
     file.c \
-    file.h \
+    file-snoopy.h \
     pwd.c \
     pwd-snoopy.h \
     string.c \
-    string-header.h
+    string-snoopy.h
 
 
 if DATASOURCE_ENABLED_systemd_unit_name

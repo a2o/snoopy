@@ -28,7 +28,7 @@
 #include "cli-subroutines.h"
 
 #include "snoopy.h"
-#include "util/string-header.h"
+#include "util/string-snoopy.h"
 
 #include <stdio.h>
 #include <stdlib.h>

@@ -27,8 +27,8 @@
 
 #include "snoopy.h"
 
-#include "util/file.h"
-#include "util/string-header.h"
+#include "util/file-snoopy.h"
+#include "util/string-snoopy.h"
 
 #include <stdio.h>
 #include <stdlib.h>

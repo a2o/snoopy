@@ -23,9 +23,10 @@
 /*
  * Includes order: from local to global (local, this-subsystem, snoopy.h, other-subsystems, global)
  *
- * Must be named "string-header.h" and not "string.h" in order to not conflict with the global <string.h>
+ * Header file must not be named "string.h" in order to not conflict with the global <string.h>.
+ * Therefore we're using the "-snoopy" suffix - "string-snoopy.h".
  */
-#include "string-header.h"
+#include "string-snoopy.h"
 
 #include "snoopy.h"
 

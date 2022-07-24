@@ -23,7 +23,7 @@
 /*
  * Includes order: from local to global (local, this-subsystem, snoopy.h, other-subsystems, global)
  */
-#include "file.h"
+#include "file-snoopy.h"
 
 #include "snoopy.h"
 

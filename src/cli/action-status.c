@@ -30,7 +30,7 @@
 #include "cli-subroutines.h"
 
 #include "snoopy.h"
-#include "util/string-header.h"
+#include "util/string-snoopy.h"
 
 #include <dlfcn.h>
 #include <link.h>
