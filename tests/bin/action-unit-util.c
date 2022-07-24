@@ -27,6 +27,7 @@
 
 #include "action-common.h"
 
+#include "action-unit-util-syslog.h"
 #ifdef SNOOPY_CONF_DATASOURCE_ENABLED_systemd_unit_name
 #include "action-unit-util-systemd.h"
 #endif
@@ -45,6 +46,7 @@ void snoopyTestCli_action_unit_util_showHelp ()
         "    snoopy-test unit util SUBUNIT [ARGS]\n"
         "\n"
         "Available subunits:\n"
+        "    syslog             Run a unit test on src/util/syslog.c\n"
 #ifdef SNOOPY_CONF_DATASOURCE_ENABLED_systemd_unit_name
         "    systemd            Run a unit test on src/util/systemd.c\n"
 #endif
@@ -69,6 +71,9 @@ int snoopyTestCli_action_unit_util (int argc, char ** argv)
     subunit = argv[0];
 
 
+    if (0 == strcmp(subunit, "syslog")) {
+        return snoopyTestCli_action_unit_util_syslog(argc-1, &argv[1]);
+    }
 #ifdef SNOOPY_CONF_DATASOURCE_ENABLED_systemd_unit_name
     if (0 == strcmp(subunit, "systemd")) {
         return snoopyTestCli_action_unit_util_systemd(argc-1, &argv[1]);

@@ -32,14 +32,14 @@ libsnoopy_no_entrypoint_la_SOURCES = \
 	error.h \
 	genericregistry.c \
 	genericregistry.h \
+	init-deinit.c \
+	init-deinit.h \
 	inputdatastorage.c \
 	inputdatastorage.h \
 	datasourceregistry.c \
 	datasourceregistry.h \
 	message.c \
 	message.h \
-	misc.c \
-	misc.h \
 	outputregistry.c \
 	outputregistry.h \
 	parser.c \

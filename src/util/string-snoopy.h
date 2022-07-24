@@ -20,8 +20,14 @@
 
 
 
+#include <stddef.h>
+
+
+
+int             snoopy_util_string_append (char *destString, size_t destStringBufSize, const char *appendThis);
 int             snoopy_util_string_containsOnlyDigits (char const * const str);
 char *          snoopy_util_string_copyLineFromContent (char const * const lineStartPtr);
+int             snoopy_util_string_countChars (const char *stringToSearch, char characterToCount);
 char *          snoopy_util_string_findLineStartingWith (char const * const content, char const * const searchString);
 int             snoopy_util_string_getLineLength (char const * const lineStartPtr);
 void            snoopy_util_string_nullTerminateLine (char const * const lineInContent);

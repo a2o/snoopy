@@ -29,10 +29,10 @@
 
 #include "snoopy.h"
 #include "entrypoint/test-cli.h"
+
 #include "configuration.h"
 #include "inputdatastorage.h"
 #include "message.h"
-#include "misc.h"
 
 #include <stdio.h>
 #include <stdlib.h>

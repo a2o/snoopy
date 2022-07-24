@@ -1,9 +1,7 @@
 /*
  * SNOOPY LOGGER
  *
- * File: misc.c
- *
- * Copyright (c) 2014-2015 Bostjan Skufca <bostjan@a2o.si>
+ * Copyright (c) 2022 Bostjan Skufca Jese (bostjan _A_T_ a2o.si)
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,147 +21,21 @@
 
 
 /*
- * Includes order: from local to global
+ * Includes order: from local to global (local, this-subsystem, snoopy.h, other-subsystems, global)
+ *
+ * Header file must not be named "syslog.h" in order to not conflict with the global <syslog.h>.
+ * Therefore we're using the "-snoopy" suffix - "syslog-snoopy.h".
  */
-#include "misc.h"
+#include "syslog-snoopy.h"
 
 #include "snoopy.h"
-#include "configuration.h"
-#include "error.h"
-#include "inputdatastorage.h"
-#ifdef SNOOPY_CONF_THREAD_SAFETY_ENABLED
-#include "tsrm.h"
-#endif
 
-#include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
-#include <syslog.h>
 
 
 
 /*
- * snoopy_init
- *
- * Description:
- *     Handles Snoopy initialization/startup specifics.
- *     This method must be called when initializing anything that is
- *     Snoopy-based. This is especially true for thread-safe Snoopy builds.
- *
- * Params:
- *     (none)
- *
- * Return:
- *     void
- */
-void snoopy_init ()
-{
-#ifdef SNOOPY_CONF_THREAD_SAFETY_ENABLED
-    snoopy_tsrm_ctor();
-#endif
-    snoopy_configuration_ctor();
-    snoopy_inputdatastorage_ctor();
-}
-
-
-
-/*
- * snoopy_cleanup
- *
- * Description:
- *     Handles all Snoopy deinitialization/shutdown specifics
- *
- * Params:
- *     (none)
- *
- * Return:
- *     void
- */
-void snoopy_cleanup ()
-{
-    /* Reverse order from ctor */
-    snoopy_inputdatastorage_dtor();
-    snoopy_configuration_dtor();
-#ifdef SNOOPY_CONF_THREAD_SAFETY_ENABLED
-    snoopy_tsrm_dtor();
-#endif
-}
-
-
-
-/*
- * snoopy_string_append
- *
- * Description:
- *     Appends content to the end of string, watching for
- *     buffer overrun.
- *
- * Params:
- *     destString:            string container to append to
- *     appendThis:            content to append to destString
- *     destStringMaxLength:   maximum length of dest string, including \0
- *
- * Return:
- *     void
- */
-void snoopy_string_append (
-    char *destString,
-    const char *appendThis,
-    size_t destStringMaxLength
-) {
-    size_t destStringSize          = 0;
-    size_t destStringSizeRemaining = 0;
-    size_t appendThisSize          = 0;
-
-    /* Verify the limits */
-    destStringSize          = strlen(destString);
-    appendThisSize          = strlen(appendThis);
-    destStringSizeRemaining = destStringMaxLength - destStringSize;
-    if (destStringSizeRemaining < appendThisSize) {
-        snoopy_error_handler("Maximum destination string size exceeded");
-    }
-
-    /* Copy to the destination string */
-    strcat(&destString[destStringSize], appendThis);
-}
-
-
-
-/*
- * snoopy_string_countChars
- *
- * Description:
- *     Counts number of occurrences of specified character in a given string.
- *
- * Params:
- *     stringToSearch:   string to look into
- *     characterToCount: search for this character
- *
- * Return:
- *     int   Number of occurrences
- */
-int  snoopy_string_countChars (const char *stringToSearch, char characterToCount)
-{
-    const char *strPtr = stringToSearch;
-    int charCount      = 0;
-
-    while ('\0' != *strPtr) {
-        if (*strPtr == characterToCount) {
-            charCount++;
-        }
-        strPtr++;
-    }
-
-    return charCount;
-}
-
-
-
-/*
- * snoopy_syslog_convert_facilityToInt
- *
- * Description:
- *     Returns corresponding integer for each syslog facility, or -1 on failure.
+ * Return corresponding integer for each syslog facility
  *
  * Params:
  *     facilityStr   Syslog facility string to convert
@@ -171,9 +43,8 @@ int  snoopy_string_countChars (const char *stringToSearch, char characterToCount
  * Return:
  *     int           Corresponding syslog facility id, or -1 if not found
  */
-int snoopy_syslog_convert_facilityToInt (
-    const char *facilityStr
-) {
+int snoopy_util_syslog_convertFacilityToInt (const char *facilityStr)
+{
     const char *facilityStrAdj;
     int   facilityInt;
 
@@ -215,20 +86,16 @@ int snoopy_syslog_convert_facilityToInt (
 
 
 /*
- * snoopy_syslog_convert_facilityToStr
- *
- * Description:
- *     Convert syslog facility from integer code to corresponding string.
+ * Convert syslog facility from integer code to corresponding string
  *
  * Params:
  *     facilityInt   Syslog facility to convert
  *
  * Return:
- *     const char*   Corresponding syslog facility string
+ *     const char *  Corresponding syslog facility string
  */
-const char* snoopy_syslog_convert_facilityToStr (
-    int   facilityInt
-) {
+const char* snoopy_util_syslog_convertFacilityToStr (int facilityInt)
+{
     const char *facilityStr;
 
     // Evaluate and set return value
@@ -262,10 +129,7 @@ const char* snoopy_syslog_convert_facilityToStr (
 
 
 /*
- * snoopy_syslog_convert_levelToInt
- *
- * Description:
- *     Returns corresponding integer for each syslog level, or -1 on failure.
+ * Return corresponding integer for each syslog level
  *
  * Params:
  *     levelStr   Syslog level string to convert
@@ -273,9 +137,8 @@ const char* snoopy_syslog_convert_facilityToStr (
  * Return:
  *     int        Corresponding syslog level id, or -1 if not found
  */
-int snoopy_syslog_convert_levelToInt (
-    const char *levelStr
-) {
+int snoopy_util_syslog_convertLevelToInt (const char *levelStr)
+{
     const char *levelStrAdj;
     int   levelInt;
 
@@ -305,20 +168,16 @@ int snoopy_syslog_convert_levelToInt (
 
 
 /*
- * snoopy_syslog_convert_levelToStr
- *
- * Description:
- *     Convert syslog level from integer code to corresponding string.
+ * Convert syslog level from integer code to corresponding string
  *
  * Params:
  *     levelInt      Syslog level to convert
  *
  * Return:
- *     const char*   Corresponding syslog facility string
+ *     const char *  Corresponding syslog facility string
  */
-const char* snoopy_syslog_convert_levelToStr (
-    int   levelInt
-) {
+const char * snoopy_util_syslog_convertLevelToStr (int levelInt)
+{
     const char *levelStr;
 
     // Evaluate and set return value

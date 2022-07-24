@@ -20,4 +20,4 @@
 
 
 
-int snoopyTestCli_action_unit_misc (int argc, char ** argv);
+int snoopyTestCli_action_unit_util_syslog (int argc, char ** argv);

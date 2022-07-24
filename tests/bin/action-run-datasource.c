@@ -33,7 +33,6 @@
 #include "error.h"
 #include "datasourceregistry.h"
 #include "inputdatastorage.h"
-#include "misc.h"
 
 #include <stdio.h>
 #include <stdlib.h>

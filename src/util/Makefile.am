@@ -15,7 +15,9 @@ libsnoopy_utils_la_SOURCES = \
     pwd.c \
     pwd-snoopy.h \
     string.c \
-    string-snoopy.h
+    string-snoopy.h \
+    syslog.c \
+    syslog-snoopy.h
 
 
 if DATASOURCE_ENABLED_systemd_unit_name

@@ -29,9 +29,9 @@
 
 #include "snoopy.h"
 #include "entrypoint/test-cli.h"
+
 #include "configuration.h"
 #include "datasourceregistry.h"
-#include "misc.h"
 #include "tsrm.h"
 
 #include <fcntl.h>

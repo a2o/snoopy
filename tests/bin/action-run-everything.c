@@ -36,11 +36,9 @@
 #ifdef SNOOPY_FILTERING_ENABLED
 #include "filtering.h"
 #endif
-//#include "filterregistry.h"
 #include "inputdatastorage.h"
 #include "action/log-message-dispatch.h"
 #include "message.h"
-#include "misc.h"
 
 #include <stdio.h>
 #include <stdlib.h>

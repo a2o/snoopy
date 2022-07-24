@@ -38,7 +38,6 @@
 #ifdef SNOOPY_FILTERING_ENABLED
 #include "action-unit-filterregistry.h"
 #endif
-#include "action-unit-misc.h"
 #include "action-unit-outputregistry.h"
 #include "action-unit-util.h"
 
@@ -67,7 +66,6 @@ void snoopyTestCli_action_unit_showHelp ()
 #ifdef SNOOPY_FILTERING_ENABLED
         "    filterregistry,fr  Run a unit test on src/filterregistry.c\n"
 #endif
-        "    misc               Run a unit test on src/misc.c\n"
         "    outputregistry,or  Run a unit test on src/outputregistry.c\n"
         "    util,u             Run a unit test on src/util/*.c\n"
         "\n"
@@ -116,10 +114,6 @@ int snoopyTestCli_action_unit (int argc, char ** argv)
         return snoopyTestCli_action_unit_filterregistry(argc-1, &argv[1]);
     }
 #endif
-
-    if ((0 == strcmp(unit, "misc")) || (0 == strcmp(unit, "m"))) {
-        return snoopyTestCli_action_unit_misc(argc-1, &argv[1]);
-    }
 
     if ((0 == strcmp(unit, "outputregistry")) || (0 == strcmp(unit, "or"))) {
         return snoopyTestCli_action_unit_outputregistry(argc-1, &argv[1]);

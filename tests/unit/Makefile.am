@@ -28,8 +28,8 @@ if FILTERING_ENABLED
 TESTS += unit-filterregistry.sh
 endif
 
-TESTS += unit-misc.sh
 TESTS += unit-outputregistry.sh
+TESTS += unit-util-syslog.sh
 
 if DATASOURCE_ENABLED_systemd_unit_name
 TESTS += unit-util-systemd.sh

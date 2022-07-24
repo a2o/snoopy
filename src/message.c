@@ -31,7 +31,7 @@
 #include "configuration.h"
 #include "error.h"
 #include "datasourceregistry.h"
-#include "misc.h"
+#include "util/string-snoopy.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -165,5 +165,7 @@ void snoopy_message_append (
     size_t logMessageBufSize,
     const char *appendThis
 ) {
-    snoopy_string_append(logMessage, appendThis, logMessageBufSize);
+    if (SNOOPY_ERROR == snoopy_util_string_append(logMessage, logMessageBufSize, appendThis)) {
+        snoopy_error_handler("Maximum destination string size exceeded");
+    }
 }

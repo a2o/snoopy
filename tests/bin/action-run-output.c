@@ -28,9 +28,9 @@
 
 #include "snoopy.h"
 #include "entrypoint/test-cli.h"
+
 #include "configuration.h"
 #include "inputdatastorage.h"
-#include "misc.h"
 #include "outputregistry.h"
 
 #include <stdio.h>

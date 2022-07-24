@@ -31,9 +31,40 @@
 #include "snoopy.h"
 
 #include <ctype.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+
+
+/*
+ * Append content to the end of string, watching for buffer overrun
+ *
+ * Params:
+ *     destString:              string container to append to
+ *     destStringBufSize:       maximum length of dest string, including \0
+ *     appendThis:              content to append to destString
+ *
+ * Return:
+ *     int:     Appended size, or SNOOPY_ERROR (when remaining space in destination string is not big enough)
+ */
+int snoopy_util_string_append (char *destString, size_t destStringBufSize, const char *appendThis)
+{
+    size_t destStringSize          = 0;
+    size_t destStringSizeRemaining = 0;
+    size_t appendThisSize          = 0;
+
+    /* Verify the limits */
+    destStringSize          = strlen(destString);
+    appendThisSize          = strlen(appendThis);
+    destStringSizeRemaining = destStringBufSize - destStringSize;
+    if (destStringSizeRemaining < appendThisSize) {
+        return SNOOPY_ERROR;
+    }
+
+    /* Copy to the destination string */
+    strcat(&destString[destStringSize], appendThis);
+    return (int) appendThisSize;
+}
 
 
 
@@ -83,6 +114,33 @@ char * snoopy_util_string_copyLineFromContent (char const * const lineStartPtr)
     copiedLine[lineLen] = '\0';
 
     return copiedLine;
+}
+
+
+
+/*
+ * Count number of occurrences of specified character in a given string
+ *
+ * Params:
+ *     stringToSearch:   string to look into
+ *     characterToCount: search for this character
+ *
+ * Return:
+ *     int   Number of occurrences
+ */
+int  snoopy_util_string_countChars (const char *stringToSearch, char characterToCount)
+{
+    const char *strPtr = stringToSearch;
+    int charCount      = 0;
+
+    while ('\0' != *strPtr) {
+        if (*strPtr == characterToCount) {
+            charCount++;
+        }
+        strPtr++;
+    }
+
+    return charCount;
 }
 
 
