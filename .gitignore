@@ -53,6 +53,7 @@ Makefile
 *.o
 *.la
 *.lo
+*.loT
 .deps/
 .libs/
 /a.out
