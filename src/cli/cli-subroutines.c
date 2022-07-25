@@ -341,35 +341,3 @@ const char * etcLdSoPreload_findNonCommentLineContainingString (const char * con
 
     return NULL;
 }
-
-
-char * copyLineFromContent (char const * const lineStartPtr)
-{
-    int lineLen = 0;
-    char * copiedLine = NULL;
-
-    lineLen = getLineLength(lineStartPtr);
-
-    copiedLine = malloc(lineLen+1);
-    strncpy(copiedLine, lineStartPtr, lineLen);
-    copiedLine[lineLen] = '\0';
-
-    return copiedLine;
-}
-
-
-int getLineLength (char const * const lineStartPtr)
-{
-    long lineLen = 0;
-    const char * newlineCharPos = NULL;
-
-    newlineCharPos = strchr(lineStartPtr, '\n');
-
-    if (newlineCharPos == NULL) {
-        lineLen = strlen(lineStartPtr);
-    } else {
-        lineLen = newlineCharPos - lineStartPtr;
-    }
-
-    return (int) lineLen;
-}

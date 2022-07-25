@@ -23,6 +23,14 @@ libsnoopy_datasources_all_la_LDFLAGS =
 
 
 
+# Data source: cgroup
+#
+if DATASOURCE_ENABLED_cgroup
+libsnoopy_datasources_all_la_SOURCES += \
+	cgroup.c \
+	cgroup.h
+endif
+
 # Data source: cmdline
 #
 if DATASOURCE_ENABLED_cmdline
@@ -207,6 +215,14 @@ if DATASOURCE_ENABLED_snoopy_version
 libsnoopy_datasources_all_la_SOURCES += \
 	snoopy_version.c \
 	snoopy_version.h
+endif
+
+# Data source: systemd_unit_name
+#
+if DATASOURCE_ENABLED_systemd_unit_name
+libsnoopy_datasources_all_la_SOURCES += \
+	systemd-unit-name.c \
+	systemd-unit-name.h
 endif
 
 # Data source: tid

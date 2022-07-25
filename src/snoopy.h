@@ -107,12 +107,11 @@
 
 
 /**
- * SNOOPY_LOG_MESSAGE_MAX_SIZE
+ * SNOOPY_LOG_MESSAGE_BUF_SIZE
  *
- * Maximum length of single (whole) log message,
- * including terminating null character.
+ * Size of the log message buffer (message + \0).
  */
-#define SNOOPY_LOG_MESSAGE_MAX_SIZE 16383
+#define SNOOPY_LOG_MESSAGE_BUF_SIZE 16383
 
 
 
@@ -155,11 +154,11 @@
 
 
 /**
- * SNOOPY_TRUE
- * SNOOPY_FALSE
+ * True, false, error
  */
 #define   SNOOPY_TRUE    1
 #define   SNOOPY_FALSE   0
+#define   SNOOPY_ERROR  -1
 
 
 
@@ -287,6 +286,7 @@
  *
  * Default syslog configuration settings
  */
-#define   SNOOPY_SYSLOG_FACILITY   SNOOPY_CONF_SYSLOG_FACILITY
-#define   SNOOPY_SYSLOG_IDENT      SNOOPY_CONF_SYSLOG_IDENT
-#define   SNOOPY_SYSLOG_LEVEL      SNOOPY_CONF_SYSLOG_LEVEL
+#define   SNOOPY_SYSLOG_FACILITY                SNOOPY_CONF_SYSLOG_FACILITY
+#define   SNOOPY_SYSLOG_IDENT_FORMAT            SNOOPY_CONF_SYSLOG_IDENT_FORMAT
+#define   SNOOPY_SYSLOG_IDENT_FORMAT_BUF_SIZE   256
+#define   SNOOPY_SYSLOG_LEVEL                   SNOOPY_CONF_SYSLOG_LEVEL

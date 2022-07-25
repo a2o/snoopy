@@ -12,7 +12,7 @@ set -u
 
 ### Run the mock test
 #
-$SNOOPY_TEST_CLI unit misc
+$SNOOPY_TEST_CLI unit util syslog
 
 
 

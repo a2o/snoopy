@@ -91,14 +91,14 @@ int snoopyTestCli_action_run_filterchain (int argc, char **argv)
 
 
     // Copy the message into a separate buffer - filters may mangle it (for now)
-    messageCopy = malloc(SNOOPY_LOG_MESSAGE_MAX_SIZE);
+    messageCopy = malloc(SNOOPY_LOG_MESSAGE_BUF_SIZE);
     messageCopy[0] = '\0';
-    strncpy(messageCopy, message, SNOOPY_LOG_MESSAGE_MAX_SIZE-1);
-    messageCopy[SNOOPY_LOG_MESSAGE_MAX_SIZE-1] = '\0'; // Just in case
+    strncpy(messageCopy, message, SNOOPY_LOG_MESSAGE_BUF_SIZE-1);
+    messageCopy[SNOOPY_LOG_MESSAGE_BUF_SIZE-1] = '\0'; // Just in case
 
 
     // Process the filter chain
-    filterResult = snoopy_filtering_check_chain(messageCopy, filterChain);
+    filterResult = snoopy_filtering_check_chain(messageCopy, SNOOPY_LOG_MESSAGE_BUF_SIZE, filterChain);
 
 
     /* Housekeeping */
@@ -107,7 +107,7 @@ int snoopyTestCli_action_run_filterchain (int argc, char **argv)
 
     /* Display and return */
     if (SNOOPY_FILTER_PASS == filterResult) {
-        if (0 != strncmp(message, messageCopy, SNOOPY_LOG_MESSAGE_MAX_SIZE)) {
+        if (0 != strncmp(message, messageCopy, SNOOPY_LOG_MESSAGE_BUF_SIZE)) {
             printf("Filter chain has modified the message:\n");
             printf("    Filter chain:     %s\n", filterChain);
             printf("    Original message: %s\n", message);

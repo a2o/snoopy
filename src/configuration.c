@@ -309,12 +309,12 @@ void snoopy_configuration_dtor ()
 
 
     /*
-     * Reset config setting: syslog_ident
+     * Reset config setting: syslog_ident_format
      */
-    if (SNOOPY_TRUE == CFG->syslog_ident_malloced) {
-        free(CFG->syslog_ident);
-        CFG->syslog_ident_malloced = SNOOPY_FALSE;          /* Set this to false         - REQUIRED (see above) */
-        CFG->syslog_ident          = SNOOPY_SYSLOG_IDENT;   /* Set this to default value - REQUIRED (see above) */
+    if (SNOOPY_TRUE == CFG->syslog_ident_format_malloced) {
+        free(CFG->syslog_ident_format);
+        CFG->syslog_ident_format_malloced = SNOOPY_FALSE;                 /* Set this to false         - REQUIRED (see above) */
+        CFG->syslog_ident_format          = SNOOPY_SYSLOG_IDENT_FORMAT;   /* Set this to default value - REQUIRED (see above) */
     }
 }
 
@@ -395,8 +395,8 @@ void snoopy_configuration_setDefaults
     CFG->output_arg_malloced     = SNOOPY_FALSE;
 
     CFG->syslog_facility         = SNOOPY_SYSLOG_FACILITY;
-    CFG->syslog_ident            = SNOOPY_SYSLOG_IDENT;
-    CFG->syslog_ident_malloced   = SNOOPY_FALSE;
+    CFG->syslog_ident_format     = SNOOPY_SYSLOG_IDENT_FORMAT;
+    CFG->syslog_ident_format_malloced = SNOOPY_FALSE;
     CFG->syslog_level            = SNOOPY_SYSLOG_LEVEL;
 }
 

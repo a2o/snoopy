@@ -1,7 +1,7 @@
 /*
  * SNOOPY LOGGER
  *
- * Copyright (c) 2022 Bostjan Skufca Jese <bostjan@a2o.si>
+ * Copyright (c) 2022 Bostjan Skufca Jese (bostjan _A_T_ a2o.si)
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,4 +20,7 @@
 
 
 
-int snoopyTestCli_action_unit_misc (int argc, char ** argv);
+int             snoopy_util_syslog_convertFacilityToInt (const char *facilityStr);
+const char*     snoopy_util_syslog_convertFacilityToStr (int         facilityInt);
+int             snoopy_util_syslog_convertLevelToInt    (const char *levelStr);
+const char*     snoopy_util_syslog_convertLevelToStr    (int         levelInt);

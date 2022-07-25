@@ -61,11 +61,11 @@ void snoopy_action_log_syscall_exec ()
     CFG = snoopy_configuration_get();
 
     /* Initialize empty log message */
-    logMessage    = malloc(SNOOPY_LOG_MESSAGE_MAX_SIZE);
+    logMessage    = malloc(SNOOPY_LOG_MESSAGE_BUF_SIZE);
     logMessage[0] = '\0';
 
     /* Generate log message in specified format */
-    snoopy_message_generateFromFormat(logMessage, CFG->message_format);
+    snoopy_message_generateFromFormat(logMessage, SNOOPY_LOG_MESSAGE_BUF_SIZE, CFG->message_format);
 
 #if defined(SNOOPY_FILTERING_ENABLED)
     /* Should message be passed to syslog or not? */
@@ -75,7 +75,7 @@ void snoopy_action_log_syscall_exec ()
         (
             (SNOOPY_TRUE == CFG->filtering_enabled)
             &&
-            (SNOOPY_FILTER_PASS == snoopy_filtering_check_chain(logMessage, CFG->filter_chain))
+            (SNOOPY_FILTER_PASS == snoopy_filtering_check_chain(logMessage, SNOOPY_LOG_MESSAGE_BUF_SIZE, CFG->filter_chain))
         )
     ) {
 #endif

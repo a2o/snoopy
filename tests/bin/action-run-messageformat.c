@@ -29,10 +29,10 @@
 
 #include "snoopy.h"
 #include "entrypoint/test-cli.h"
+
 #include "configuration.h"
 #include "inputdatastorage.h"
 #include "message.h"
-#include "misc.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -75,12 +75,12 @@ int snoopyTestCli_action_run_messageformat (int argc, char **argv)
 
 
     /* Initialize message */
-    message    = malloc(SNOOPY_LOG_MESSAGE_MAX_SIZE);
+    message    = malloc(SNOOPY_LOG_MESSAGE_BUF_SIZE);
     message[0] = '\0';
 
 
     /* Call the filter */
-    snoopy_message_generateFromFormat(message, messageFormat);
+    snoopy_message_generateFromFormat(message, SNOOPY_LOG_MESSAGE_BUF_SIZE, messageFormat);
 
 
     /* Display result */

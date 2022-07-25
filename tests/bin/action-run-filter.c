@@ -28,10 +28,10 @@
 
 #include "snoopy.h"
 #include "entrypoint/test-cli.h"
+
 #include "configuration.h"
 #include "filterregistry.h"
 #include "inputdatastorage.h"
-#include "misc.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -159,8 +159,8 @@ void snoopyTestCli_action_run_filter_all ()
 
 
     /* Initialize variables and spaces */
-    message  = malloc(SNOOPY_LOG_MESSAGE_MAX_SIZE + 1);
-    snprintf(message, SNOOPY_LOG_MESSAGE_MAX_SIZE, "bad message here");
+    message  = malloc(SNOOPY_LOG_MESSAGE_BUF_SIZE + 1);
+    snprintf(message, SNOOPY_LOG_MESSAGE_BUF_SIZE, "bad message here");
 
     /* Loop throught all filters and run them with bogus arguments */
     fCount = snoopy_filterregistry_getCount();

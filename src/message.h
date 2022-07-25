@@ -22,14 +22,20 @@
 
 
 
+#include <stddef.h>
+
+
+
 void snoopy_message_generateFromFormat (
-    char        *logMessage,
-    char        *logMessageFormat
+    char       *logMessage,
+    size_t      logMessageBufSize,
+    char       *logMessageFormat
 );
 
 
 
 void snoopy_message_append (
-    char *logMessage,
+    char       *logMessage,
+    size_t      logMessageBufSize,
     const char *appendThis
 );

@@ -29,7 +29,7 @@
 #include "entrypoint/test-cli.h"
 #include "configuration.h"
 #include "inputdatastorage.h"
-#include "misc.h"
+#include "util/syslog-snoopy.h"
 
 #include <errno.h>
 #include <stdio.h>
@@ -133,13 +133,13 @@ int snoopyTestCli_action_run_configfile (int argc, char **argv)
         printf("\n");
 
     } else if (0 == strcmp(showConfigVar, "syslog_facility")) {
-        printf("%s\n", snoopy_syslog_convert_facilityToStr(CFG->syslog_facility));
+        printf("%s\n", snoopy_util_syslog_convertFacilityToStr(CFG->syslog_facility));
 
     } else if (0 == strcmp(showConfigVar, "syslog_ident")) {
-        printf("%s\n", CFG->syslog_ident);
+        printf("%s\n", CFG->syslog_ident_format);
 
     } else if (0 == strcmp(showConfigVar, "syslog_level")) {
-        printf("%s\n", snoopy_syslog_convert_levelToStr(CFG->syslog_level));
+        printf("%s\n", snoopy_util_syslog_convertLevelToStr(CFG->syslog_level));
 
     } else if (0 == strcmp(showConfigVar, "error_logging")) {
         printf("%s\n", (CFG->error_logging_enabled == SNOOPY_TRUE ? "y" : "n"));

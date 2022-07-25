@@ -22,7 +22,12 @@
 
 
 
+#include <stddef.h>
+
+
+
 int snoopy_filtering_check_chain (
-    char *logMessage,
+    char   *logMessage,
+    size_t  logMessageBufSize,
     const char *chain
 );

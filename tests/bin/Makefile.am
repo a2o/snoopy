@@ -37,10 +37,12 @@ snoopy_test_SOURCES  = \
     action-unit-action-log-message-dispatch.h \
     action-unit-error.c \
     action-unit-error.h \
-    action-unit-misc.c \
-    action-unit-misc.h \
     action-unit-outputregistry.c \
     action-unit-outputregistry.h \
+    action-unit-util.c \
+    action-unit-util.h \
+    action-unit-util-syslog.c \
+    action-unit-util-syslog.h \
     snoopy-test.c \
     $(top_builddir)/src/cli/cli-subroutines.c \
     $(top_builddir)/src/cli/cli-subroutines.h
@@ -73,6 +75,12 @@ snoopy_test_SOURCES += \
     action-stress-threadsexec.h \
     action-unit-ext-list.c \
     action-unit-ext-list.h
+endif
+
+if DATASOURCE_ENABLED_systemd_unit_name
+snoopy_test_SOURCES += \
+    action-unit-util-systemd.c \
+    action-unit-util-systemd.h
 endif
 
 noinst_PROGRAMS                    += spaceparent

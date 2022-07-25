@@ -88,6 +88,9 @@
 /* Define to 1 if you have the <string.h> header file. */
 #undef HAVE_STRING_H
 
+/* Define to 1 if you have the `strndup' function. */
+#undef HAVE_STRNDUP
+
 /* Define to 1 if you have the `strrchr' function. */
 #undef HAVE_STRRCHR
 
@@ -169,6 +172,9 @@
 /* INI configuration file path to use */
 #undef SNOOPY_CONF_CONFIGFILE_PATH
 
+/* Is datasource "cgroup" available? */
+#undef SNOOPY_CONF_DATASOURCE_ENABLED_cgroup
+
 /* Is datasource "cmdline" available? */
 #undef SNOOPY_CONF_DATASOURCE_ENABLED_cmdline
 
@@ -237,6 +243,9 @@
 
 /* Is datasource "snoopy_version" available? Forced "Yes". */
 #undef SNOOPY_CONF_DATASOURCE_ENABLED_snoopy_version
+
+/* Is datasource "systemd_unit_name" available? */
+#undef SNOOPY_CONF_DATASOURCE_ENABLED_systemd_unit_name
 
 /* Is datasource "tid" available? */
 #undef SNOOPY_CONF_DATASOURCE_ENABLED_tid
@@ -338,7 +347,7 @@
 #undef SNOOPY_CONF_SYSLOG_FACILITY
 
 /* Syslog ident to use by default */
-#undef SNOOPY_CONF_SYSLOG_IDENT
+#undef SNOOPY_CONF_SYSLOG_IDENT_FORMAT
 
 /* Syslog level to use by default */
 #undef SNOOPY_CONF_SYSLOG_LEVEL

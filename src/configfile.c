@@ -30,8 +30,8 @@
 #include "snoopy.h"
 #include "configfile.h"
 #include "configuration.h"
-#include "misc.h"
 #include "outputregistry.h"
+#include "util/syslog-snoopy.h"
 
 #include "lib/inih/src/ini.h"
 
@@ -161,8 +161,8 @@ int snoopy_configfile_parser_callback (
 
 
     if (MATCHNAME("syslog_ident")) {
-        CFG->syslog_ident          = strdup(confValString);
-        CFG->syslog_ident_malloced = SNOOPY_TRUE;
+        CFG->syslog_ident_format          = strdup(confValString);
+        CFG->syslog_ident_format_malloced = SNOOPY_TRUE;
         return 1;
     }
 
@@ -286,7 +286,7 @@ void snoopy_configfile_parse_syslog_facility (
     confValCleaned = snoopy_configfile_syslog_value_cleanup(confVal);
 
     // Evaluate and set configuration flag
-    facilityInt = snoopy_syslog_convert_facilityToInt(confValCleaned);
+    facilityInt = snoopy_util_syslog_convertFacilityToInt(confValCleaned);
     if (-1 == facilityInt) {
         CFG->syslog_facility = SNOOPY_SYSLOG_FACILITY;
     } else {
@@ -332,7 +332,7 @@ void snoopy_configfile_parse_syslog_level (
     confValCleaned = snoopy_configfile_syslog_value_cleanup(confVal);
 
     // Evaluate and set configuration flag
-    levelInt = snoopy_syslog_convert_levelToInt(confValCleaned);
+    levelInt = snoopy_util_syslog_convertLevelToInt(confValCleaned);
     if (-1 == levelInt) {
         CFG->syslog_level = SNOOPY_SYSLOG_LEVEL;
     } else {

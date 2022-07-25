@@ -27,7 +27,7 @@
  */
 #include "parser.h"
 
-#include "misc.h"
+#include "util/string-snoopy.h"
 
 #include <stdlib.h>
 #include <string.h>
@@ -68,7 +68,7 @@ int snoopy_parser_argList_csv (char *argListRaw, char ***argListParsed)
     // Allocate memory for array of string pointers:
     // - 1st +1 is because of common sense (X commas =~ X-1 arguments)
     // - 2nd +1 is for "" at the end or array
-    commaCount       = snoopy_string_countChars(argListRaw, ',');
+    commaCount       = snoopy_util_string_countChars(argListRaw, ',');
     argCount         = commaCount + 1;
     argListParsedPtr = malloc(sizeof(char*) * (argCount+1));
 
@@ -86,7 +86,7 @@ int snoopy_parser_argList_csv (char *argListRaw, char ***argListParsed)
 
 
     // Parse for commas, changing commas into '\0' characters and assigning pointers
-    // Optimize: do not count characters 2 times (1st in snoopy_string_charCount() function)
+    // Optimize: do not count characters 2 times (1st in snoopy_util_string_charCount() function)
     if (commaCount > 0 ) {
         argListRaw_pos = argListRaw;
         while (NULL != (nextCommaPtr = strchr(argListRaw_pos, ','))) {

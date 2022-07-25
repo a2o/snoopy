@@ -28,9 +28,9 @@
 
 #include "snoopy.h"
 #include "entrypoint/test-cli.h"
+
 #include "configuration.h"
 #include "inputdatastorage.h"
-#include "misc.h"
 #include "outputregistry.h"
 
 #include <stdio.h>
@@ -147,8 +147,8 @@ void snoopyTestCli_action_run_output_all ()
 
 
     /* Initialize variables and spaces */
-    message  = malloc(SNOOPY_LOG_MESSAGE_MAX_SIZE + 1);
-    snprintf(message, SNOOPY_LOG_MESSAGE_MAX_SIZE, "Snoopy output debugging");
+    message  = malloc(SNOOPY_LOG_MESSAGE_BUF_SIZE);
+    snprintf(message, SNOOPY_LOG_MESSAGE_BUF_SIZE, "Snoopy output debugging");
 
     /* Loop throught all outputs and run them with bogus arguments */
     iCount = snoopy_outputregistry_getCount();

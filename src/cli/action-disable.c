@@ -28,6 +28,7 @@
 #include "cli-subroutines.h"
 
 #include "snoopy.h"
+#include "util/string-snoopy.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -61,7 +62,7 @@ int snoopy_cli_action_disable ()
     // Check for duplicate active libsnoopy.so
     foundStringPos1 = etcLdSoPreload_findNonCommentLineContainingString(curEtcLdSoPreloadContent, SNOOPY_SO_LIBRARY_NAME);
     if (foundStringPos1 != NULL) {
-        foundStringPos2 = etcLdSoPreload_findNonCommentLineContainingString(foundStringPos1 + getLineLength(foundStringPos1), SNOOPY_SO_LIBRARY_NAME);
+        foundStringPos2 = etcLdSoPreload_findNonCommentLineContainingString(foundStringPos1 + snoopy_util_string_getLineLength(foundStringPos1), SNOOPY_SO_LIBRARY_NAME);
         if (foundStringPos2 != NULL) {
             printDiagValue("Search string", SNOOPY_SO_LIBRARY_NAME);
             printDiagValue("ld.so.preload path", g_etcLdSoPreloadPath);
@@ -92,7 +93,7 @@ int snoopy_cli_action_disable ()
 
     // Skip the entry line we're removing, copy the rest
     destPosPtr = newEtcLdSoPreloadContent + copyLength;
-    entryLine  = copyLineFromContent(entryPtr);
+    entryLine  = snoopy_util_string_copyLineFromContent(entryPtr);
     srcPosPtr  = entryPtr + strlen(entryLine);
     copyLength = (unsigned int) (strlen(curEtcLdSoPreloadContent) - (entryPtr - curEtcLdSoPreloadContent) - strlen(entryLine));
     if (*srcPosPtr == '\n') {

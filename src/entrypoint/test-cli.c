@@ -27,9 +27,10 @@
 
 #include "snoopy.h"
 
+#include "init-deinit.h"
+
 #include "configuration.h"
 #include "inputdatastorage.h"
-#include "misc.h"
 
 
 
