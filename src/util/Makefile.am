@@ -12,6 +12,8 @@ noinst_LTLIBRARIES = libsnoopy-utils.la
 libsnoopy_utils_la_SOURCES = \
     file.c \
     file-snoopy.h \
+    parser.c \
+    parser-snoopy.h \
     pwd.c \
     pwd-snoopy.h \
     string.c \

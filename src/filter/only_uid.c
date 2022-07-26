@@ -28,7 +28,8 @@
 #include "only_uid.h"
 
 #include "snoopy.h"
-#include "parser.h"
+
+#include "util/parser-snoopy.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -65,7 +66,7 @@ int snoopy_filter_only_uid (char *msg, char const * const arg)
 
     /* Parse arguments - values are malloc()-ed */
     argDup   = strdup(arg);
-    argCount = snoopy_parser_argList_csv(argDup, &argParsed);
+    argCount = snoopy_util_parser_csvToArgList(argDup, &argParsed);
 
     /* Loop through all UIDs passed to the filter as argument */
     for (int i=0 ; i<argCount ; i++) {

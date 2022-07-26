@@ -25,4 +25,4 @@
 /*
  * Parser functions
  */
-int snoopy_parser_argList_csv (char *argListRaw, char ***argListParsed);
+int snoopy_util_parser_csvToArgList (char *argListRaw, char ***argListParsed);
