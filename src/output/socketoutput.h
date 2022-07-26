@@ -25,4 +25,4 @@
 /*
  * SNOOPY OUTPUT: socket
  */
-int snoopy_output_socketoutput (char const * const logMessage, int errorOrMessage, char const * const arg);
+int snoopy_output_socketoutput (char const * const logMessage, char const * const arg);

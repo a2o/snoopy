@@ -108,7 +108,7 @@ int snoopyTestCli_action_run_everything ()
 #endif
 
     printf("-----[ Dispatching ]-----------------------------------\n");
-    snoopy_action_log_message_dispatch(logMessage, SNOOPY_LOG_MESSAGE);
+    snoopy_action_log_message_dispatch(logMessage);
     printf("Done.\n");
 
     printf("\nAll done.\n");

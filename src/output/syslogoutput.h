@@ -25,4 +25,4 @@
 /*
  * SNOOPY OUTPUT: syslog
  */
-int snoopy_output_syslogoutput (char const * const logMessage, int errorOrMessage, char const * const arg);
+int snoopy_output_syslogoutput (char const * const logMessage, char const * const arg);

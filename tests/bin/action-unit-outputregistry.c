@@ -93,12 +93,12 @@ int snoopyTestCli_action_unit_outputregistry (int argc, char ** argv)
 
     outputName = "noop";
     outputIdReceived = snoopy_outputregistry_getIdFromName(outputName);
-    snoopy_outputregistry_callById(outputIdReceived, NULL, SNOOPY_LOG_MESSAGE, "");
+    snoopy_outputregistry_callById(outputIdReceived, NULL, "");
 
-    if (-1 != snoopy_outputregistry_callById(-1, NULL, SNOOPY_LOG_MESSAGE, "")) {
+    if (-1 != snoopy_outputregistry_callById(-1, NULL, "")) {
         fatalError("Output ID -1 unexpectedly exists");
     }
-    if (-1 != snoopy_outputregistry_callByName("fakeOutputNameThatShouldNeverExist", NULL, SNOOPY_LOG_MESSAGE, "")) {
+    if (-1 != snoopy_outputregistry_callByName("fakeOutputNameThatShouldNeverExist", NULL, "")) {
         fatalError("Output with an unexpected name actually exists");
     }
 
@@ -111,7 +111,7 @@ int snoopyTestCli_action_unit_outputregistry (int argc, char ** argv)
     CFG = snoopy_configuration_get();
     CFG->output = "noop";
 
-    snoopy_outputregistry_dispatch(NULL, SNOOPY_LOG_MESSAGE);
+    snoopy_outputregistry_dispatch(NULL);
 
 
     /* Cleanup */

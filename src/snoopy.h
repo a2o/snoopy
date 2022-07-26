@@ -163,15 +163,6 @@
 
 
 /**
- * SNOOPY_LOG_ERROR
- * SNOOPY_LOG_MESSAGE
- */
-#define   SNOOPY_LOG_ERROR     1
-#define   SNOOPY_LOG_MESSAGE   2
-
-
-
-/**
  * Filter return values
  *
  * SNOOPY_FILTER_PASS - message should be passed on

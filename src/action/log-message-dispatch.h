@@ -23,4 +23,4 @@
 /*
  * Log message dispatching action
  */
-int snoopy_action_log_message_dispatch (const char *logMessage, int errorOrMessage);
+int snoopy_action_log_message_dispatch (const char *logMessage);

@@ -31,32 +31,44 @@
 #include "configuration.h"
 #include "action/log-message-dispatch.h"
 
+#include <stdio.h>
+
+
+
+/*
+ * Local defines
+ */
+#define SNOOPY_ERROR_MSG_BUF_SIZE 4096
+
 
 
 /*
  * snoopy_error_handler
  *
  * Description:
- *     Does the actual error handling. If configured, it sends it
- *     to syslog.
+ *     Does the actual error handling. If error logging is enabled, the error
+ *     message is sent to the configured output.
  *
  * Params:
- *     (none)
+ *     errorMsg:        Error message, withouth the leading "ERROR:" prefix.
  *
  * Return:
  *     void
  */
-void snoopy_error_handler (const char * errorMsg)
+void snoopy_error_handler (char const * const errorMsg)
 {
     const snoopy_configuration_t * CFG;
+    char errorMsgFormatted[SNOOPY_ERROR_MSG_BUF_SIZE];
+    errorMsgFormatted[0] = '\0';
 
-
-    /* Get config pointer */
     CFG = snoopy_configuration_get();
 
-
-    /* Only send error to syslog if configured like that */
-    if (SNOOPY_TRUE == CFG->error_logging_enabled) {
-        snoopy_action_log_message_dispatch(errorMsg, SNOOPY_LOG_ERROR);
+    if (SNOOPY_TRUE != CFG->error_logging_enabled) {
+        return;
     }
+
+    snprintf(errorMsgFormatted, SNOOPY_ERROR_MSG_BUF_SIZE, "SNOOPY ERROR: %s", errorMsg);
+    errorMsgFormatted[SNOOPY_ERROR_MSG_BUF_SIZE-1] = '\0';
+
+    snoopy_action_log_message_dispatch(errorMsg);
 }

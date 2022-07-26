@@ -42,20 +42,17 @@
  *
  * Params:
  *     logMessage:       message to dispatch
- *     errorOrMessage:   is this a message or an error?
  *
  * Return:
  *     int:              See snoopy.h (SNOOPY_OUTPUT_*) for details.
  */
-int snoopy_action_log_message_dispatch (
-    const char *logMessage,
-    int   errorOrMessage
-) {
+int snoopy_action_log_message_dispatch (const char *logMessage)
+{
     /* Dispatch only if non-zero size */
     if (0 == strlen(logMessage)) {
         return SNOOPY_OUTPUT_GRACEFUL_DISCARD;
     }
 
     // Dispatch to configured output
-    return snoopy_outputregistry_dispatch(logMessage, errorOrMessage);
+    return snoopy_outputregistry_dispatch(logMessage);
 }

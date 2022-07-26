@@ -79,7 +79,7 @@ void snoopy_action_log_syscall_exec ()
         )
     ) {
 #endif
-        snoopy_action_log_message_dispatch(logMessage, SNOOPY_LOG_MESSAGE);
+        snoopy_action_log_message_dispatch(logMessage);
 #if defined(SNOOPY_FILTERING_ENABLED)
     }
 #endif

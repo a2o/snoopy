@@ -78,7 +78,7 @@ int snoopyTestCli_action_unit_action_log_message_dispatch (int argc, char ** arg
     snoopy_configuration_t * CFG;
     CFG = snoopy_configuration_get();
     CFG->output = "stdout";
-    snoopy_action_log_message_dispatch("Test error message, sent out via stdout output.", SNOOPY_LOG_MESSAGE);
+    snoopy_action_log_message_dispatch("Test error message, sent out via stdout output.");
 
 
     /* Cleanup */

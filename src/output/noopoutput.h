@@ -25,4 +25,4 @@
 /*
  * SNOOPY OUTPUT: noop
  */
-int snoopy_output_noopoutput (char const * const logMessage, int errorOrMessage, char const * const arg);
+int snoopy_output_noopoutput (char const * const logMessage, char const * const arg);

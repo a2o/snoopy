@@ -48,13 +48,12 @@
  *
  * Params:
  *     message:    message to send
- *     errOrMsg:   is message and error message or ordinary Snoopy log message
  *     arg:        output argument(s)
  *
  * Return:
  *     int:        See snoopy.h (SNOOPY_OUTPUT_*) for details.
  */
-int snoopy_output_socketoutput (char const * const logMessage, int errorOrMessage, char const * const arg)
+int snoopy_output_socketoutput (char const * const logMessage, char const * const arg)
 {
     int                  s;
     struct sockaddr_un   remote;
