@@ -6,7 +6,7 @@ include   $(top_srcdir)/build/Makefile.am.common
 
 ### Override certain inih defaults
 #
-AM_CFLAGS += -DINI_MAX_LINE=1024 -DINI_INITIAL_ALLOC=1024
+AM_CFLAGS += -DINI_MAX_LINE=1024 -DINI_INITIAL_ALLOC=1024 '-DINI_API=__attribute__((visibility("hidden")))'
 
 
 
