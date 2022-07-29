@@ -44,7 +44,7 @@
  * Return:
  *     int:        See snoopy.h (SNOOPY_OUTPUT_*) for details.
  */
-int snoopy_output_devnulloutput (char const * const logMessage, char const * const arg)
+int snoopy_output_devnulloutput (char const * const logMessage, __attribute__((unused)) char const * const arg)
 {
     return snoopy_output_fileoutput(logMessage, "/dev/null");
 }

@@ -35,7 +35,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-//#include <syslog.h>
 
 
 
@@ -52,7 +51,7 @@
  * Return:
  *     int:        See snoopy.h (SNOOPY_OUTPUT_*) for details.
  */
-int snoopy_output_devlogoutput (char const * const logMessage, char const * const arg)
+int snoopy_output_devlogoutput (char const * const logMessage, __attribute__((unused)) char const * const arg)
 {
     /* Dispatch only if non-zero size */
     if (0 == strlen(logMessage)) {

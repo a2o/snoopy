@@ -48,7 +48,7 @@
  * Return:
  *     number of characters in the returned string, or SNOOPY_DATASOURCE_FAILURE
  */
-int snoopy_datasource_timestamp (char * const result, char const * const arg)
+int snoopy_datasource_timestamp (char * const result, __attribute__((unused)) char const * const arg)
 {
     struct timeval tv;
     int            retVal;

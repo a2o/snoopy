@@ -42,7 +42,7 @@
  * Return:
  *     int:        0
  */
-int snoopy_output_noopoutput (char const * const logMessage, char const * const arg)
+int snoopy_output_noopoutput (__attribute__((unused)) char const * const logMessage, __attribute__((unused)) char const * const arg)
 {
     return 0;
 }

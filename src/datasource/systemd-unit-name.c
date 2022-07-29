@@ -36,16 +36,12 @@
 
 
 
-int snoopy_datasource_systemd_unit_name (char * const result, char const * const arg)
+int snoopy_datasource_systemd_unit_name (char * const result, __attribute__((unused)) char const * const arg)
 {
     char  cgroupEntry[SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE] = "";
     int   cgroupDsRetVal;
     char *unitName = NULL;
     int   retMsgLen;
-
-
-    // We're not using arguments at this point
-    (void) arg;
 
 
     // Get the cgroup entry

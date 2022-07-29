@@ -41,7 +41,7 @@
  *
  * Params:
  *     result: pointer to string, to write result into
- *     arg:    (ignored)
+ *     arg:    string to copy into the result
  *
  * Return:
  *     number of characters in the returned string, or SNOOPY_DATASOURCE_FAILURE

@@ -52,7 +52,7 @@
  * Return:
  *     SNOOPY_FILTER_PASS or SNOOPY_FILTER_DROP
  */
-int snoopy_filter_exclude_uid (char *msg, char const * const arg)
+int snoopy_filter_exclude_uid (__attribute__((unused)) char *msg, char const * const arg)
 {
     uid_t  curUid;     // Actual UID of running process
     char  *argDup    = NULL;
