@@ -48,7 +48,7 @@
  * Return:
  *     number of characters in the returned string, or SNOOPY_DATASOURCE_FAILURE
  */
-int snoopy_filter_only_tty(__attribute__((unused)) char *msg, __attribute__((unused)) char const * const arg)
+int snoopy_filter_only_tty(__attribute__((unused)) char * const msg, __attribute__((unused)) char const * const arg)
 {
     char    ttyPath[SNOOPY_DATASOURCE_TTY_sizeMaxWithNull];
     size_t  ttyPathLen = SNOOPY_DATASOURCE_TTY_sizeMaxWithoutNull;

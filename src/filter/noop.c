@@ -44,7 +44,7 @@
  * Return:
  *     SNOOPY_FILTER_PASS
  */
-int snoopy_filter_noop(__attribute__((unused)) char *msg, __attribute__((unused)) char const * const arg)
+int snoopy_filter_noop(__attribute__((unused)) char * const msg, __attribute__((unused)) char const * const arg)
 {
     return SNOOPY_FILTER_PASS;
 }

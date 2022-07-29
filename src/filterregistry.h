@@ -31,5 +31,5 @@ int   snoopy_filterregistry_doesNameExist (char const * const filterName);
 int   snoopy_filterregistry_getIdFromName (char const * const filterName);
 char* snoopy_filterregistry_getName       (int   filterId);
 
-int   snoopy_filterregistry_callById      (int                filterId,   char * logMessage, char const * const filterArg);
-int   snoopy_filterregistry_callByName    (char const * const filterName, char * logMessage, char const * const filterArg);
+int   snoopy_filterregistry_callById      (int                filterId,   char * const logMessage, char const * const filterArg);
+int   snoopy_filterregistry_callByName    (char const * const filterName, char * const logMessage, char const * const filterArg);
