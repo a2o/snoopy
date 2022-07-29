@@ -46,6 +46,43 @@
 
 
 
+
+
+/*
+ * Local defines
+ */
+#define SNOOPY_CONFIGFILE_OPTION_NOT_SUPPORTED -1
+
+#define SNOOPY_CONFIGFILE_PARSEVALUE_SUCCESS    1
+#define SNOOPY_CONFIGFILE_PARSEVALUE_ERROR      0
+
+
+
+/*
+ * Define supported config options
+ */
+struct snoopy_configfile_optionData_t {
+    int (*valueParserPtr) (char const * const confValString, snoopy_configuration_t *CFG);
+};
+
+struct snoopy_configfile_option_t {
+    char const * const                          name;
+    struct snoopy_configfile_optionData_t       data;
+};
+
+struct snoopy_configfile_option_t snoopy_configfile_optionRegistry[] = {
+    { "error_logging",   { &snoopy_configfile_parseValue_error_logging   } },
+    { "filter_chain",    { &snoopy_configfile_parseValue_filter_chain    } },
+    { "message_format",  { &snoopy_configfile_parseValue_message_format  } },
+    { "output",          { &snoopy_configfile_parseValue_output          } },
+    { "syslog_facility", { &snoopy_configfile_parseValue_syslog_facility } },
+    { "syslog_ident",    { &snoopy_configfile_parseValue_syslog_ident    } },
+    { "syslog_level",    { &snoopy_configfile_parseValue_syslog_level    } },
+    { "",                {  NULL                                         } },
+};
+
+
+
 /*
  * snoopy_configfile_load_file
  *
@@ -74,7 +111,7 @@ int snoopy_configfile_load (
     CFG->configfile_path = iniFilePath;
 
     /* Parse the INI configuration file first */
-    iniParseStatus = ini_parse(iniFilePath, snoopy_configfile_parser_callback, CFG);
+    iniParseStatus = ini_parse(iniFilePath, snoopy_configfile_iniParser_callback, CFG);
     if (0 != iniParseStatus) {
         return -1;
     }
@@ -101,77 +138,25 @@ int snoopy_configfile_load (
  * Return:
  *     ...
  */
-int snoopy_configfile_parser_callback (
+int snoopy_configfile_iniParser_callback (
     void* sth,
     const char* section,
     const char* name,
     const char* confValString
 ) {
-    int confValInt;
-
-
     /* Qualify pointer? */
     snoopy_configuration_t* CFG = (snoopy_configuration_t*)sth;
-
 
     /* Skip unknown sections */
     if (0 != strcmp(section, "snoopy")) {
         return 1;
     }
 
-
-
-    /* Do the name matching */
-    #define MATCHNAME(n) strcmp(name, n) == 0
-
-
-    if (MATCHNAME("error_logging")) {
-        confValInt = snoopy_configfile_getboolean(confValString, -1);
-        if (-1 != confValInt) {
-            CFG->error_logging_enabled = confValInt;
-        }
-        return 1;
+    /* Handle a (supported) option */
+    int optionId = snoopy_configfile_optionRegistry_getIdFromName(name);
+    if (optionId != SNOOPY_CONFIGFILE_OPTION_NOT_SUPPORTED) {
+        return snoopy_configfile_optionRegistry[optionId].data.valueParserPtr(confValString, CFG);
     }
-
-
-    if (MATCHNAME("message_format")) {
-        CFG->message_format          = strdup(confValString);
-        CFG->message_format_malloced = SNOOPY_TRUE;
-        return 1;
-    }
-
-
-    if (MATCHNAME("filter_chain")) {
-        CFG->filter_chain          = strdup(confValString);
-        CFG->filter_chain_malloced = SNOOPY_TRUE;
-        return 1;
-    }
-
-
-    if (MATCHNAME("output")) {
-        snoopy_configfile_parse_output(confValString);
-        return 1;
-    }
-
-
-    if (MATCHNAME("syslog_facility")) {
-        snoopy_configfile_parse_syslog_facility(confValString);
-        return 1;
-    }
-
-
-    if (MATCHNAME("syslog_ident")) {
-        CFG->syslog_ident_format          = strdup(confValString);
-        CFG->syslog_ident_format_malloced = SNOOPY_TRUE;
-        return 1;
-    }
-
-
-    if (MATCHNAME("syslog_level")) {
-        snoopy_configfile_parse_syslog_level(confValString);
-        return 1;
-    }
-
 
     /* Why are we returning 1 instead of zero everywhere? */
     return 1;
@@ -180,31 +165,116 @@ int snoopy_configfile_parser_callback (
 
 
 /*
- * snoopy_configfile_parse_output
- *
- * Description:
- *     Parses configuration setting syslog_output and
- *     sets appropriate internal configuration variable(s).
- *     Uses default setting if unknown value.
- *
- * Params:
- *     confVal   Value from configuration file
+ * optionRegistry :: getIdFromName()
  *
  * Return:
- *     void
+ *      int:    Id of a given option, or
+ *              SNOOPY_CONFIGFILE_OPTION_NOT_SUPPORTED (-1) when not found.
  */
-void snoopy_configfile_parse_output (
-    const char *confValOrig
+int snoopy_configfile_optionRegistry_getIdFromName (char const * const optionName)
+{
+    for (int i=0 ; 0 != strcmp(snoopy_configfile_optionRegistry[i].name, "") ; i++) {
+        if (strcmp(snoopy_configfile_optionRegistry[i].name, optionName) == 0) {
+            return i;
+        }
+    }
+
+    /* Not found */
+    return SNOOPY_CONFIGFILE_OPTION_NOT_SUPPORTED;
+}
+
+
+
+/*
+ * Parse 'error_logging' config option
+ *
+ * Params:
+ *     confValString:   Value from configuration file
+ *     CFG:             Snoopy configuration struct
+ *
+ * Return:
+ *     int              SNOOPY_CONFIGFILE_PARSEVALUE_SUCCESS or
+ *                      SNOOPY_CONFIGFILE_PARSEVALUE_ERROR
+ */
+int snoopy_configfile_parseValue_error_logging (
+    const char *confValString,
+    snoopy_configuration_t* CFG
+) {
+    int confValInt = snoopy_configfile_getboolean(confValString, -1);
+    if (-1 != confValInt) {
+        CFG->error_logging_enabled = confValInt;
+    }
+
+    return SNOOPY_CONFIGFILE_PARSEVALUE_SUCCESS;
+}
+
+
+
+/*
+ * Parse 'filter_chain' config option
+ *
+ * Params:
+ *     confValString:   Value from configuration file
+ *     CFG:             Snoopy configuration struct
+ *
+ * Return:
+ *     int              SNOOPY_CONFIGFILE_PARSEVALUE_SUCCESS or
+ *                      SNOOPY_CONFIGFILE_PARSEVALUE_ERROR
+ */
+int snoopy_configfile_parseValue_filter_chain (
+    const char *confValString,
+    snoopy_configuration_t* CFG
+) {
+    CFG->filter_chain          = strdup(confValString);
+    CFG->filter_chain_malloced = SNOOPY_TRUE;
+
+    return SNOOPY_CONFIGFILE_PARSEVALUE_SUCCESS;
+}
+
+
+
+/*
+ * Parse 'message_format' config option
+ *
+ * Params:
+ *     confValString:   Value from configuration file
+ *     CFG:             Snoopy configuration struct
+ *
+ * Return:
+ *     int              SNOOPY_CONFIGFILE_PARSEVALUE_SUCCESS or
+ *                      SNOOPY_CONFIGFILE_PARSEVALUE_ERROR
+ */
+int snoopy_configfile_parseValue_message_format (
+    const char *confValString,
+    snoopy_configuration_t* CFG
+) {
+    CFG->message_format          = strdup(confValString);
+    CFG->message_format_malloced = SNOOPY_TRUE;
+
+    return SNOOPY_CONFIGFILE_PARSEVALUE_SUCCESS;
+}
+
+
+
+/*
+ * Parse 'output' config option
+ *
+ * Params:
+ *     confValString:   Value from configuration file
+ *     CFG:             Snoopy configuration struct
+ *
+ * Return:
+ *     int              SNOOPY_CONFIGFILE_PARSEVALUE_SUCCESS or
+ *                      SNOOPY_CONFIGFILE_PARSEVALUE_ERROR
+ */
+int snoopy_configfile_parseValue_output (
+    const char *confValString,
+    snoopy_configuration_t* CFG
 ) {
     char  *confVal;
     const char * outputName;
     const char * outputArg;
     int    outputArgFound = SNOOPY_FALSE;
-    snoopy_configuration_t *CFG;
-
-
-    /* Get config pointer */
-    CFG = snoopy_configuration_get();
 
 
     // Do not assign null to it explicitly, as you get "Explicit null dereference" Coverity error.
@@ -212,7 +282,7 @@ void snoopy_configfile_parse_output (
     char  *saveptr1 = "";
 
     // First clone the config value, as it gets freed by ini parsing library
-    confVal = strdup(confValOrig);
+    confVal = strdup(confValString);
 
     // Check if configured value contains argument(s)
     if (NULL == strchr(confVal, ':')) {
@@ -249,38 +319,35 @@ void snoopy_configfile_parse_output (
 
     // Housekeeping
     free(confVal);
+
+
+    return SNOOPY_CONFIGFILE_PARSEVALUE_SUCCESS;
 }
 
 
 
 /*
- * snoopy_configfile_parse_syslog_facility
- *
- * Description:
- *     Parses configuration setting syslog_facility and
- *     sets appropriate config variable.
- *     Uses default setting if unknown value.
+ * Parse 'syslog_facility' config option
  *
  * Params:
- *     confVal   Value from configuration file
+ *     confValString:   Value from configuration file
+ *     CFG:             Snoopy configuration struct
  *
  * Return:
- *     void
+ *     int              SNOOPY_CONFIGFILE_PARSEVALUE_SUCCESS or
+ *                      SNOOPY_CONFIGFILE_PARSEVALUE_ERROR
  */
-void snoopy_configfile_parse_syslog_facility (
-    const char *confValOrig
+int snoopy_configfile_parseValue_syslog_facility (
+    const char *confValString,
+    snoopy_configuration_t* CFG
 ) {
     char *confVal;
     const char *confValCleaned;
     int   facilityInt;
-    snoopy_configuration_t *CFG;
 
-
-    /* Get config pointer */
-    CFG = snoopy_configuration_get();
 
     // Duplicate the ini value, as we need to modify it
-    confVal = strdup(confValOrig);
+    confVal = strdup(confValString);
 
     // First cleanup the value
     confValCleaned = snoopy_configfile_syslog_value_cleanup(confVal);
@@ -295,38 +362,58 @@ void snoopy_configfile_parse_syslog_facility (
 
     /* Housekeeping */
     free(confVal);
+
+
+    return SNOOPY_CONFIGFILE_PARSEVALUE_SUCCESS;
 }
 
 
 
 /*
- * snoopy_configfile_parse_syslog_level
- *
- * Description:
- *     Parses configuration setting syslog_level and
- *     sets appropriate config variable.
- *     Uses default setting if unknown value.
+ * Parse 'syslog_ident' config option
  *
  * Params:
- *     confVal   Value from configuration file
+ *     confValString:   Value from configuration file
+ *     CFG:             Snoopy configuration struct
  *
  * Return:
- *     void
+ *     int              SNOOPY_CONFIGFILE_PARSEVALUE_SUCCESS or
+ *                      SNOOPY_CONFIGFILE_PARSEVALUE_ERROR
  */
-void snoopy_configfile_parse_syslog_level (
-    const char *confValOrig
+int snoopy_configfile_parseValue_syslog_ident (
+    const char *confValString,
+    snoopy_configuration_t* CFG
+) {
+    CFG->syslog_ident_format          = strdup(confValString);
+    CFG->syslog_ident_format_malloced = SNOOPY_TRUE;
+
+    return SNOOPY_CONFIGFILE_PARSEVALUE_SUCCESS;
+}
+
+
+
+/*
+ * Parse 'syslog_level' config option
+ *
+ * Params:
+ *     confValString:   Value from configuration file
+ *     CFG:             Snoopy configuration struct
+ *
+ * Return:
+ *     int              SNOOPY_CONFIGFILE_PARSEVALUE_SUCCESS or
+ *                      SNOOPY_CONFIGFILE_PARSEVALUE_ERROR
+ */
+int snoopy_configfile_parseValue_syslog_level (
+    const char *confValString,
+    snoopy_configuration_t* CFG
 ) {
     char *confVal;
     const char *confValCleaned;
     int   levelInt;
-    snoopy_configuration_t *CFG;
 
-
-    /* Get config pointer */
-    CFG = snoopy_configuration_get();
 
     // Duplicate the ini value, as we need to modify it
-    confVal = strdup(confValOrig);
+    confVal = strdup(confValString);
 
     // First cleanup the value
     confValCleaned = snoopy_configfile_syslog_value_cleanup(confVal);
@@ -341,6 +428,9 @@ void snoopy_configfile_parse_syslog_level (
 
     /* Housekeeping */
     free(confVal);
+
+
+    return SNOOPY_CONFIGFILE_PARSEVALUE_SUCCESS;
 }
 
 
