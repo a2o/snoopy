@@ -60,6 +60,17 @@ void snoopy_action_log_syscall_exec ()
     /* Get config pointer */
     CFG = snoopy_configuration_get();
 
+#if defined(SNOOPY_FILTERING_ENABLED)
+    /* Should message be passed to syslog or not? */
+    if (
+        (SNOOPY_TRUE == CFG->filtering_enabled)
+        &&
+        (SNOOPY_FILTER_DROP == snoopy_filtering_check_chain(CFG->filter_chain))
+    ) {
+        return;
+    }
+#endif
+
     /* Initialize empty log message */
     logMessage    = malloc(SNOOPY_LOG_MESSAGE_BUF_SIZE);
     logMessage[0] = '\0';
@@ -67,22 +78,8 @@ void snoopy_action_log_syscall_exec ()
     /* Generate log message in specified format */
     snoopy_message_generateFromFormat(logMessage, SNOOPY_LOG_MESSAGE_BUF_SIZE, CFG->message_format);
 
-#if defined(SNOOPY_FILTERING_ENABLED)
-    /* Should message be passed to syslog or not? */
-    if (
-        (SNOOPY_FALSE == CFG->filtering_enabled)
-        ||
-        (
-            (SNOOPY_TRUE == CFG->filtering_enabled)
-            &&
-            (SNOOPY_FILTER_PASS == snoopy_filtering_check_chain(logMessage, SNOOPY_LOG_MESSAGE_BUF_SIZE, CFG->filter_chain))
-        )
-    ) {
-#endif
-        snoopy_action_log_message_dispatch(logMessage);
-#if defined(SNOOPY_FILTERING_ENABLED)
-    }
-#endif
+    /* Dispatch the message to configured output */
+    snoopy_action_log_message_dispatch(logMessage);
 
     /* Housekeeping */
     free(logMessage);

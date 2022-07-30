@@ -44,7 +44,7 @@ void snoopyTestCli_action_run_filterchain_showHelp ()
         "Snoopy TEST SUITE CLI utility :: Action `run` :: Subsystem `filterchain`\n"
         "\n"
         "Usage:\n"
-        "    snoopy-test run filterchain \"MESSAGE\" \"FILTER_CHAIN\"\n"
+        "    snoopy-test run filterchain \"FILTER_CHAIN\"\n"
         "    snoopy-test run filterchain --help\n"
         "\n"
         "Description:\n"
@@ -62,8 +62,7 @@ void snoopyTestCli_action_run_filterchain_showHelp ()
 
 int snoopyTestCli_action_run_filterchain (int argc, char **argv)
 {
-    char * message;
-    char * messageCopy;
+    const char * arg1;
     const char * filterChain;
     int filterResult;
 
@@ -75,30 +74,28 @@ int snoopyTestCli_action_run_filterchain (int argc, char **argv)
     /* Check if all arguments are present */
     if (argc < 1) {
         snoopyTestCli_action_run_filterchain_showHelp();
-        fatalError("Missing argument: log message, --help");
+        fatalError("Missing argument: filter chain specification, or --help");
     }
-    message = argv[0];
-    if (0 == strcmp(message, "--help")) {
+    arg1 = argv[0];
+
+    if (0 == strcmp(arg1, "--help")) {
         snoopyTestCli_action_run_filterchain_showHelp();
         return 0;
     }
 
-    if (argc < 2) {
+
+    // Arg1 is a filter chain spec
+    filterChain = arg1;
+
+
+    if (argc < 1) {
         snoopyTestCli_action_run_filterchain_showHelp();
         fatalError("Missing argument: filter chain specification");
     }
-    filterChain = argv[1];
-
-
-    // Copy the message into a separate buffer - filters may mangle it (for now)
-    messageCopy = malloc(SNOOPY_LOG_MESSAGE_BUF_SIZE);
-    messageCopy[0] = '\0';
-    strncpy(messageCopy, message, SNOOPY_LOG_MESSAGE_BUF_SIZE-1);
-    messageCopy[SNOOPY_LOG_MESSAGE_BUF_SIZE-1] = '\0'; // Just in case
 
 
     // Process the filter chain
-    filterResult = snoopy_filtering_check_chain(messageCopy, SNOOPY_LOG_MESSAGE_BUF_SIZE, filterChain);
+    filterResult = snoopy_filtering_check_chain(filterChain);
 
 
     /* Housekeeping */
@@ -107,12 +104,6 @@ int snoopyTestCli_action_run_filterchain (int argc, char **argv)
 
     /* Display and return */
     if (SNOOPY_FILTER_PASS == filterResult) {
-        if (0 != strncmp(message, messageCopy, SNOOPY_LOG_MESSAGE_BUF_SIZE)) {
-            printf("Filter chain has modified the message:\n");
-            printf("    Filter chain:     %s\n", filterChain);
-            printf("    Original message: %s\n", message);
-            printf("    Adjusted message: %s\n", messageCopy);
-        }
         printf("PASS\n");
         return 0;
     } else {

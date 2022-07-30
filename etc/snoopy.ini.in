@@ -98,7 +98,7 @@
 ; Examples:
 ;filter_chain = ""
 ;filter_chain = "only_uid:0"
-;filter_chain = "only_uid:10000"
+;filter_chain = "only_uid:10000,10001,10002"
 ;filter_chain = "exclude_uid:0"
 
 

@@ -25,4 +25,4 @@
 /*
  * SNOOPY FILTER: noop
  */
-int snoopy_filter_noop(char * const msg, char const * const arg);
+int snoopy_filter_noop (char const * const arg);

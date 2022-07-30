@@ -92,12 +92,12 @@ int snoopyTestCli_action_unit_filterregistry (int argc, char ** argv)
 
     filterName = "noop";
     filterIdReceived = snoopy_filterregistry_getIdFromName(filterName);
-    snoopy_filterregistry_callById(filterIdReceived, NULL, "");
+    snoopy_filterregistry_callById(filterIdReceived, "");
 
-    if (-1 != snoopy_filterregistry_callById(-1, NULL, "")) {
+    if (-1 != snoopy_filterregistry_callById(-1, "")) {
         fatalError("Filter ID -1 unexpectedly exists");
     }
-    if (-1 != snoopy_filterregistry_callByName("fakeFilterNameThatShouldNeverExist", NULL, "")) {
+    if (-1 != snoopy_filterregistry_callByName("fakeFilterNameThatShouldNeverExist", "")) {
         fatalError("Filter with an unexpected name actually exists");
     }
 

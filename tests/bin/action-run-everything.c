@@ -85,12 +85,19 @@ int snoopyTestCli_action_run_everything ()
 
 
     /* Run throught as much code as possible */
-    printf("-----[ Datasources ]-----------------------------------\n");
-    snoopyTestCli_action_run_datasource_all();
 #ifdef SNOOPY_FILTERING_ENABLED
     printf("-----[ Filters ]---------------------------------------\n");
     snoopyTestCli_action_run_filter_all();
 #endif
+    printf("-----[ Filtering ]-------------------------------------\n");
+#ifdef SNOOPY_FILTERING_ENABLED
+    snoopy_filtering_check_chain("exclude_uid:10,11,12;only_uid=0,1,2,3");
+    printf("Done.\n");
+#else
+    printf("SKIPPED - not enabled.\n");
+#endif
+    printf("-----[ Datasources ]-----------------------------------\n");
+    snoopyTestCli_action_run_datasource_all();
     printf("-----[ Outputs ]---------------------------------------\n");
     snoopyTestCli_action_run_output_all();
 
@@ -99,13 +106,6 @@ int snoopyTestCli_action_run_everything ()
     snoopy_message_generateFromFormat(logMessage, SNOOPY_LOG_MESSAGE_BUF_SIZE, CFG->message_format);
     printf("Message: %s\n", logMessage);
 
-    printf("-----[ Filtering ]-------------------------------------\n");
-#ifdef SNOOPY_FILTERING_ENABLED
-    snoopy_filtering_check_chain(logMessage, SNOOPY_LOG_MESSAGE_BUF_SIZE, "exclude_uid:10,11,12;only_uid=0,1,2,3");
-    printf("Done.\n");
-#else
-    printf("SKIPPED - not enabled.\n");
-#endif
 
     printf("-----[ Dispatching ]-----------------------------------\n");
     snoopy_action_log_message_dispatch(logMessage);
