@@ -72,9 +72,7 @@ snoopy_test_SOURCES += \
     action-stress-threads.c \
     action-stress-threads.h \
     action-stress-threadsexec.c \
-    action-stress-threadsexec.h \
-    action-unit-ext-list.c \
-    action-unit-ext-list.h
+    action-stress-threadsexec.h
 endif
 
 if DATASOURCE_ENABLED_systemd_unit_name

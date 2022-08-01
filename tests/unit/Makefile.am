@@ -20,10 +20,6 @@ if CONFIGFILE_ENABLED
 TESTS += unit-ext-ini.sh
 endif
 
-if THREAD_SAFETY_ENABLED
-TESTS += unit-ext-list.sh
-endif
-
 if FILTERING_ENABLED
 TESTS += unit-filterregistry.sh
 endif

@@ -27,3 +27,10 @@ libsnoopy_utils_la_SOURCES += \
     systemd.c \
     systemd-snoopy.h
 endif
+
+
+if THREAD_SAFETY_ENABLED
+libsnoopy_utils_la_SOURCES += \
+    list.c \
+    list-snoopy.h
+endif
