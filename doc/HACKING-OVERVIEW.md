@@ -103,13 +103,10 @@ Rules for filter development are the same as for new data source development,
 with the following additional specifics:
 
 - filters are located in src/filter/;
-- each filter is passed two arguments:
-    - logMessage and
+- each filter is passed one argument:
     - filter argument (if any, otherwise an empty string is passed);
 - filter argument is literal. If it contains multiple arguments (separated by
     comma, for example), the filter itself must do the parsing/tokenization.
-- filter MAY modify logMessage. If it does so, the new log message MUST NOT
-    EXCEED the maximum log message size, defined in snoopy.h.
 - filter MUST return SNOOPY_FILTER_PASS or SNOOPY_FILTER_DROP constant;
 - if SNOOPY_FILTER_DROP is returned by filter, it causes immediate termination
     of filter chain processing and message is not logged to syslog;
@@ -146,7 +143,6 @@ with the following additional specifics:
 - as output names are generally very generic, files and functions are suffixed with "...output";
 - each output is passed three arguments:
     - logMessage
-    - flag whether logMessage is a regular Snoopy log message or an error message
     - output argument string (might not be used by output)
 - output argument is literal. If it contains multiple arguments (separated by
     comma, for example), the output itself must do the parsing/tokenization.

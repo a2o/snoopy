@@ -51,16 +51,12 @@
  * Return:
  *     number of characters in the returned string, or SNOOPY_DATASOURCE_FAILURE
  */
-int snoopy_datasource_tty_username (char * const result, char const * const arg)
+int snoopy_datasource_tty_username (char * const result, __attribute__((unused)) char const * const arg)
 {
     int     retVal;
     uid_t   ttyUid;
     char   *username = NULL;
     int     retMsgLen = 0;
-
-
-    // We're not using arguments in this datasource
-    (void) arg;
 
 
     /* Get tty UID */

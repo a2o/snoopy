@@ -124,7 +124,7 @@ int snoopyTestCli_action_run_output (int argc, char ** argv)
     }
 
     /* Dispatch message to output */
-    retVal = snoopy_outputregistry_callByName(outputName, message, SNOOPY_LOG_MESSAGE, outputArg);
+    retVal = snoopy_outputregistry_callByName(outputName, message, outputArg);
     if (SNOOPY_OUTPUT_FAILED(retVal)) {
         fatalError("Output failure");
     }
@@ -167,7 +167,7 @@ void snoopyTestCli_action_run_output_all ()
         }
 
         /* Execute the output function */
-        itemResult = snoopy_outputregistry_callById(i, message, SNOOPY_LOG_MESSAGE, itemArgs);
+        itemResult = snoopy_outputregistry_callById(i, message, itemArgs);
 
         /* Evaluate */
         printf("%d chars transmitted. (output arg:%s)\n", itemResult, itemArgs);

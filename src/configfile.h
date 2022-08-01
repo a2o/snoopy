@@ -22,20 +22,33 @@
 
 
 
+#include "configuration.h"
+
+
+
 /*
  * Functions to load/parse config file
  */
 int   snoopy_configfile_load (char *iniFilePath);
-int   snoopy_configfile_parser_callback (
+int   snoopy_configfile_iniParser_callback (
     void* sth,
     const char* section,
     const char* name,
     const char* confValString
 );
-void  snoopy_configfile_parse_output               (const char *confVal);
-void  snoopy_configfile_parse_syslog_facility      (const char *confVal);
-void  snoopy_configfile_parse_syslog_level         (const char *confVal);
+
+int     snoopy_configfile_optionRegistry_getIdFromName (char const * const itemName);
+
+int     snoopy_configfile_parseValue_error_logging        (const char *confValString, snoopy_configuration_t* CFG);
+int     snoopy_configfile_parseValue_filter_chain         (const char *confValString, snoopy_configuration_t* CFG);
+int     snoopy_configfile_parseValue_message_format       (const char *confValString, snoopy_configuration_t* CFG);
+int     snoopy_configfile_parseValue_output               (const char *confValString, snoopy_configuration_t* CFG);
+int     snoopy_configfile_parseValue_syslog_facility      (const char *confValString, snoopy_configuration_t* CFG);
+int     snoopy_configfile_parseValue_syslog_ident         (const char *confValString, snoopy_configuration_t* CFG);
+int     snoopy_configfile_parseValue_syslog_level         (const char *confValString, snoopy_configuration_t* CFG);
+
 char *snoopy_configfile_syslog_value_cleanup       (char *confVal);
 char *snoopy_configfile_syslog_value_remove_prefix (char *confVal);
+
 void  snoopy_configfile_strtoupper (char *s);
 int   snoopy_configfile_getboolean (const char *c, int notfound);

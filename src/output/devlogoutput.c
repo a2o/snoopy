@@ -35,7 +35,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-//#include <syslog.h>
 
 
 
@@ -47,13 +46,12 @@
  *
  * Params:
  *     message:    message to send
- *     errOrMsg:   is message and error message or ordinary Snoopy log message
  *     arg:        output argument(s)
  *
  * Return:
  *     int:        See snoopy.h (SNOOPY_OUTPUT_*) for details.
  */
-int snoopy_output_devlogoutput (char const * const logMessage, int errorOrMessage, char const * const arg)
+int snoopy_output_devlogoutput (char const * const logMessage, __attribute__((unused)) char const * const arg)
 {
     /* Dispatch only if non-zero size */
     if (0 == strlen(logMessage)) {
@@ -81,5 +79,5 @@ int snoopy_output_devlogoutput (char const * const logMessage, int errorOrMessag
     );
 
     /* Pass execution to another output provider */
-    return snoopy_output_socketoutput(logMessageWithPrefix, errorOrMessage, "/dev/log");
+    return snoopy_output_socketoutput(logMessageWithPrefix, "/dev/log");
 }

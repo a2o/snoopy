@@ -25,7 +25,7 @@
 /*
  * Includes order: from local to global
  */
-#include "parser.h"
+#include "util/parser-snoopy.h"
 
 #include "util/string-snoopy.h"
 
@@ -35,24 +35,23 @@
 
 
 /*
- * snoopy_parser_argList_csv
+ * Parses CSV list into an array of char pointers (modifies original CSV string)
  *
- * Description:
- *     Parses comma-separated list of arguments in an array of char pointers.
- *     Last array entry contains only '\0' character.
+ * Last array entry contains only '\0' character.
  *
- *     NOTE 1: argListRaw will be modified (commas will be replaced with \0s,
- *             argListParsed array will contain pointers to parts of this newly
- *             mangled argListRaw.
- *     NOTE 2: argListParsed is malloc()-ed and must be freed afterwards.
+ * NOTE 1: argListRaw will be modified (commas will be replaced with \0s,
+ *         argListParsed array will contain pointers to parts of this newly
+ *         mangled argListRaw.
+ * NOTE 2: argListParsed is malloc()-ed and must be freed after use.
  *
  * Params:
- *     char*
+ *     argListRaw:      String containing CSV to parse
+ *     argListParsed:   A pointer that will get malloc()-ed array of char pointers to individual CSV entries
  *
  * Return:
- *     char*   Number of arguments parsed out.
+ *     int:             Number of arguments parsed out.
  */
-int snoopy_parser_argList_csv (char *argListRaw, char ***argListParsed)
+int snoopy_util_parser_csvToArgList (char *argListRaw, char ***argListParsed)
 {
     int    commaCount;
     int    argCount;

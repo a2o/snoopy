@@ -132,6 +132,7 @@ AC_TYPE_UID_T
 dnl Checks for library functions.
 AC_FUNC_FORK
 AC_FUNC_MALLOC
+AC_FUNC_STRERROR_R
 AC_CHECK_FUNCS([ \
     getcwd    \
     gethostname \
@@ -177,8 +178,6 @@ AC_CONFIG_FILES([Makefile
                  lib/Makefile
                  lib/inih/Makefile
                  lib/inih/src/Makefile
-                 lib/liblcthw/Makefile
-                 lib/liblcthw/src/Makefile
                  src/Makefile
                  src/action/Makefile
                  src/cli/Makefile

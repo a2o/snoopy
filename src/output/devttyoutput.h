@@ -25,4 +25,4 @@
 /*
  * SNOOPY OUTPUT: directly to /dev/tty
  */
-int snoopy_output_devttyoutput (char const * const logMessage, int errorOrMessage, char const * const arg);
+int snoopy_output_devttyoutput (char const * const logMessage, char const * const arg);

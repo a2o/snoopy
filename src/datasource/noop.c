@@ -36,13 +36,13 @@
  *     Does nothing.
  *
  * Params:
- *     result: pointer to string, to write result into
+ *     result: (ignored)
  *     arg:    (ignored)
  *
  * Return:
  *     number of characters in the returned string, or SNOOPY_DATASOURCE_FAILURE
  */
-int snoopy_datasource_noop (char * const result, char const * const arg)
+int snoopy_datasource_noop (__attribute__((unused)) char * const result, __attribute__((unused)) char const * const arg)
 {
     return 0;
 }

@@ -1,7 +1,9 @@
 /*
  * SNOOPY LOGGER
  *
- * Copyright (c) 2022 Bostjan Skufca Jese <bostjan@a2o.si>
+ * File: parser.h
+ *
+ * Copyright (c) 2015 Bostjan Skufca <bostjan@a2o.si>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,4 +22,7 @@
 
 
 
-int snoopyTestCli_action_unit_ext_list (int argc, char ** argv);
+/*
+ * Parser functions
+ */
+int snoopy_util_parser_csvToArgList (char *argListRaw, char ***argListParsed);

@@ -48,17 +48,13 @@
  *     Determines whether given message should be send to syslog or not
  *
  * Params:
- *     logMessage:   message about to be sent to syslog
  *     chain:        filter chain to check
  *
  * Return:
  *     SNOOPY_FILTER_PASS or SNOOPY_FILTER_DROP
  */
-int snoopy_filtering_check_chain (
-    char   *logMessage,
-    size_t  logMessageBufSize,
-    const char *filterChain
-) {
+int snoopy_filtering_check_chain (char const * const filterChain)
+{
     char  filterChainCopy[SNOOPY_FILTER_CHAIN_MAX_SIZE];   // Must be here, or strtok_r segfaults
     char *str;
     char *rest = NULL;
@@ -110,14 +106,11 @@ int snoopy_filtering_check_chain (
 
             // Check if filter actually exists
             if (SNOOPY_FALSE == snoopy_filterregistry_doesNameExist(filterNamePtr)) {
-                snoopy_message_append(logMessage, logMessageBufSize, "ERROR(Filter not found - ");
-                snoopy_message_append(logMessage, logMessageBufSize, filterNamePtr);
-                snoopy_message_append(logMessage, logMessageBufSize, ")");
-                break;
+                continue;
             }
 
             // Consult the filter, and return immediately if message should be dropped
-            if (SNOOPY_FILTER_DROP == snoopy_filterregistry_callByName(filterNamePtr, logMessage, filterArgPtr)) {
+            if (SNOOPY_FILTER_DROP == snoopy_filterregistry_callByName(filterNamePtr, filterArgPtr)) {
                 return SNOOPY_FILTER_DROP;
             }
         }

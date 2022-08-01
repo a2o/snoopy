@@ -59,15 +59,9 @@ Makefile
 /a.out
 /src/cli/snoopy
 /src/libsnoopy.so
-/tests/bin/*
-!/tests/bin/*.c
-!/tests/bin/*.h
-!/tests/bin/Makefile.am
-/util/*
-!/util/*.c
-!/util/*.h
-!/util/Makefile.am
-/util/Makefile.in
+/tests/bin/snoopy-test
+/tests/bin/spaceparent
+/tests/bin/space parent
 /contrib/rhel/snoopy.spec
 /contrib/sles/snoopy.spec
 /etc/snoopy.ini

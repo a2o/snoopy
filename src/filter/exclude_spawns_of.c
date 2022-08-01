@@ -81,7 +81,7 @@ static char **string_to_token_array(char *str);
  * Return:
  *     SNOOPY_FILTER_PASS or SNOOPY_FILTER_DROP
  */
-int snoopy_filter_exclude_spawns_of(char *msg, char const * const arg)
+int snoopy_filter_exclude_spawns_of (char const * const arg)
 {
     char  *argDup;   // Must not alter arg
     char **losp; // List of specified programs derived from arg

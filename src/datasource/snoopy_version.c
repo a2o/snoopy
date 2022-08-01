@@ -41,6 +41,9 @@
  * Description:
  *     Dummy data source that returns Snoopy version.
  *
+ * Notice:
+ *     This function has been made public for `snoopy version` CLI command.
+ *
  * Params:
  *     result: pointer to string, to write result into
  *     arg:    (ignored)
@@ -48,7 +51,7 @@
  * Return:
  *     number of characters in the returned string, or SNOOPY_DATASOURCE_FAILURE
  */
-int snoopy_datasource_snoopy_version (char * const result, char const * const arg)
+__attribute__((visibility("default"))) int snoopy_datasource_snoopy_version (char * const result, __attribute__((unused)) char const * const arg)
 {
     return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "%s", SNOOPY_VERSION);
 }

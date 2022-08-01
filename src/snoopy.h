@@ -154,20 +154,12 @@
 
 
 /**
- * True, false, error
+ * True, false, success, error
  */
 #define   SNOOPY_TRUE    1
 #define   SNOOPY_FALSE   0
+#define   SNOOPY_SUCCESS 1
 #define   SNOOPY_ERROR  -1
-
-
-
-/**
- * SNOOPY_LOG_ERROR
- * SNOOPY_LOG_MESSAGE
- */
-#define   SNOOPY_LOG_ERROR     1
-#define   SNOOPY_LOG_MESSAGE   2
 
 
 

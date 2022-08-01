@@ -32,9 +32,6 @@
 #ifdef SNOOPY_CONFIGFILE_ENABLED
 #include "action-unit-ext-ini.h"
 #endif
-#ifdef SNOOPY_CONF_THREAD_SAFETY_ENABLED
-#include "action-unit-ext-list.h"
-#endif
 #ifdef SNOOPY_FILTERING_ENABLED
 #include "action-unit-filterregistry.h"
 #endif
@@ -59,9 +56,6 @@ void snoopyTestCli_action_unit_showHelp ()
         "    error,e            Run a unit test on src/error.c\n"
 #ifdef SNOOPY_CONFIGFILE_ENABLED
         "    ext-ini,ei         Run a unit test on lib/inih/src/ini.c\n"
-#endif
-#ifdef SNOOPY_CONF_THREAD_SAFETY_ENABLED
-        "    ext-list,el        Run a unit test on lib/liblcthw/src/list.c\n"
 #endif
 #ifdef SNOOPY_FILTERING_ENABLED
         "    filterregistry,fr  Run a unit test on src/filterregistry.c\n"
@@ -100,12 +94,6 @@ int snoopyTestCli_action_unit (int argc, char ** argv)
 #ifdef SNOOPY_CONFIGFILE_ENABLED
     if ((0 == strcmp(unit, "ext-ini")) || (0 == strcmp(unit, "ei"))) {
         return snoopyTestCli_action_unit_ext_ini(argc-1, &argv[1]);
-    }
-#endif
-
-#ifdef SNOOPY_CONF_THREAD_SAFETY_ENABLED
-    if ((0 == strcmp(unit, "ext-list")) || (0 == strcmp(unit, "el"))) {
-        return snoopyTestCli_action_unit_ext_list(argc-1, &argv[1]);
     }
 #endif
 

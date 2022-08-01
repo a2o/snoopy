@@ -42,8 +42,6 @@ libsnoopy_no_entrypoint_la_SOURCES = \
 	message.h \
 	outputregistry.c \
 	outputregistry.h \
-	parser.c \
-	parser.h \
 	snoopy.h
 libsnoopy_no_entrypoint_la_LDFLAGS = $(AM_LDFLAGS)
 
@@ -67,8 +65,6 @@ if THREAD_SAFETY_ENABLED
 libsnoopy_no_entrypoint_la_SOURCES += \
 	tsrm.c \
 	tsrm.h
-libsnoopy_no_entrypoint_la_LIBADD += \
-	../lib/liblcthw/src/liblist.la
 libsnoopy_no_entrypoint_la_LDFLAGS += -lpthread
 endif
 

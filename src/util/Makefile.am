@@ -12,6 +12,8 @@ noinst_LTLIBRARIES = libsnoopy-utils.la
 libsnoopy_utils_la_SOURCES = \
     file.c \
     file-snoopy.h \
+    parser.c \
+    parser-snoopy.h \
     pwd.c \
     pwd-snoopy.h \
     string.c \
@@ -24,4 +26,11 @@ if DATASOURCE_ENABLED_systemd_unit_name
 libsnoopy_utils_la_SOURCES += \
     systemd.c \
     systemd-snoopy.h
+endif
+
+
+if THREAD_SAFETY_ENABLED
+libsnoopy_utils_la_SOURCES += \
+    list.c \
+    list-snoopy.h
 endif

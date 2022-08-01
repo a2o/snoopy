@@ -37,13 +37,12 @@
  *
  * Params:
  *     message:    message to send
- *     errOrMsg:   is message and error message or ordinary Snoopy log message
  *     arg:        output argument(s)
  *
  * Return:
  *     int:        0
  */
-int snoopy_output_noopoutput (char const * const logMessage, int errorOrMessage, char const * const arg)
+int snoopy_output_noopoutput (__attribute__((unused)) char const * const logMessage, __attribute__((unused)) char const * const arg)
 {
     return 0;
 }

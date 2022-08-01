@@ -26,12 +26,12 @@
  * Functions to manage and utilise outputs
  */
 int   snoopy_outputregistry_getCount      ();
-int   snoopy_outputregistry_doesIdExist   (int   outputId);
+int   snoopy_outputregistry_doesIdExist   (int                outputId);
 int   snoopy_outputregistry_doesNameExist (char const * const outputName);
 int   snoopy_outputregistry_getIdFromName (char const * const outputName);
-char* snoopy_outputregistry_getName       (int   outputId);
+char* snoopy_outputregistry_getName       (int                outputId);
 
-int   snoopy_outputregistry_callById      (int                outputId,   char const * const logMessage, int errorOrMessage, char const * const outputArg);
-int   snoopy_outputregistry_callByName    (char const * const outputName, char const * const logMessage, int errorOrMessage, char const * const outputArg);
+int   snoopy_outputregistry_callById      (int                outputId,   char const * const logMessage, char const * const outputArg);
+int   snoopy_outputregistry_callByName    (char const * const outputName, char const * const logMessage, char const * const outputArg);
 
-int   snoopy_outputregistry_dispatch                                     (char const * const logMessage, int errorOrMessage);
+int   snoopy_outputregistry_dispatch                                     (char const * const logMessage);

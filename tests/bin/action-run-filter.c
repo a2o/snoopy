@@ -59,7 +59,7 @@ void snoopyTestCli_action_run_filter_showHelp ()
         "Snoopy TEST SUITE CLI utility :: Action `run` :: Subsystem `filter`\n"
         "\n"
         "Usage:\n"
-        "    snoopy-test run filter \"LOG MESSAGE\" FILTER [FILTER_ARGS]\n"
+        "    snoopy-test run filter FILTER [FILTER_ARGS]\n"
         "    snoopy-test run filter --all\n"
         "    snoopy-test run filter --list\n"
         "    snoopy-test run filter --help\n"
@@ -77,8 +77,7 @@ void snoopyTestCli_action_run_filter_showHelp ()
 
 int snoopyTestCli_action_run_filter (int argc, char **argv)
 {
-    char * arg1;
-    char * message;
+    const char * arg1;
     const char * filterName;
     const char * filterArg;
     int filterResult;
@@ -91,9 +90,10 @@ int snoopyTestCli_action_run_filter (int argc, char **argv)
     /* Check if all arguments are present */
     if (argc < 1) {
         snoopyTestCli_action_run_filter_showHelp();
-        fatalError("Missing argument: log message, --help or --list");
+        fatalError("Missing argument: filter name, or --all, or --list, or --help");
     }
     arg1 = argv[0];
+
 
     if (0 == strcmp(arg1, "--all")) {
         snoopyTestCli_action_run_filter_all();
@@ -107,17 +107,13 @@ int snoopyTestCli_action_run_filter (int argc, char **argv)
         snoopyTestCli_action_run_filter_showList();
         return 0;
     }
-    message = arg1;
 
-    if (argc < 2) {
-        snoopyTestCli_action_run_filter_showHelp();
-        fatalError("Missing argument: filter name");
-    }
-    filterName = argv[1];
+    filterName = arg1;
 
-    /* Is there an argument for this data source */
-    if (argc > 2) {
-        filterArg = argv[2];
+
+    /* Is there an argument for this filter */
+    if (argc > 1) {
+        filterArg = argv[1];
     } else {
         filterArg = "";
     }
@@ -130,7 +126,7 @@ int snoopyTestCli_action_run_filter (int argc, char **argv)
     }
 
     /* Call the filter */
-    filterResult = snoopy_filterregistry_callByName(filterName, message, filterArg);
+    filterResult = snoopy_filterregistry_callByName(filterName, filterArg);
 
 
     /* Housekeeping */
@@ -151,16 +147,11 @@ int snoopyTestCli_action_run_filter (int argc, char **argv)
 
 void snoopyTestCli_action_run_filter_all ()
 {
-    char *message    = NULL;
     char *itemName   = NULL;
     const char *itemArgs   = NULL;
     int   itemResult;
     int   fCount;
 
-
-    /* Initialize variables and spaces */
-    message  = malloc(SNOOPY_LOG_MESSAGE_BUF_SIZE + 1);
-    snprintf(message, SNOOPY_LOG_MESSAGE_BUF_SIZE, "bad message here");
 
     /* Loop throught all filters and run them with bogus arguments */
     fCount = snoopy_filterregistry_getCount();
@@ -183,7 +174,7 @@ void snoopyTestCli_action_run_filter_all ()
         }
 
         /* Execute the filter function */
-        itemResult = snoopy_filterregistry_callById(i, message, itemArgs);
+        itemResult = snoopy_filterregistry_callById(i, itemArgs);
 
         /* Evaluate */
         if (SNOOPY_FILTER_PASS == itemResult) {
@@ -193,7 +184,4 @@ void snoopyTestCli_action_run_filter_all ()
         }
         printf("\n");
     }
-
-    /* Memory housekeeping */
-    free(message);
 }

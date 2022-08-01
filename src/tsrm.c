@@ -31,9 +31,10 @@
 #include "configuration.h"
 #include "inputdatastorage.h"
 
-#include "lib/liblcthw/src/list.h"
+#include "util/list-snoopy.h"
 
 #include <pthread.h>
+#include <stdlib.h>
 
 
 
@@ -43,12 +44,12 @@
 pthread_once_t       snoopy_tsrm_init_onceControl = PTHREAD_ONCE_INIT;
 pthread_mutex_t      snoopy_tsrm_threadRepo_mutex;
 pthread_mutexattr_t  snoopy_tsrm_threadRepo_mutexAttr;
-List                 snoopy_tsrm_threadRepo_data = {
+list_t               snoopy_tsrm_threadRepo_data = {
     .first = NULL,
     .last  = NULL,
     .count = 0,
 };
-List                *snoopy_tsrm_threadRepo = &snoopy_tsrm_threadRepo_data;
+list_t              *snoopy_tsrm_threadRepo = &snoopy_tsrm_threadRepo_data;
 
 
 
@@ -58,7 +59,7 @@ List                *snoopy_tsrm_threadRepo = &snoopy_tsrm_threadRepo_data;
 void                        snoopy_tsrm_init                      ();
 int                         snoopy_tsrm_doesThreadRepoEntryExist  (snoopy_tsrm_threadId_t threadId, int mutex_already_locked);
 snoopy_tsrm_threadId_t      snoopy_tsrm_getCurrentThreadId        ();
-ListNode*                   snoopy_tsrm_getCurrentThreadRepoEntry ();
+listNode_t*                 snoopy_tsrm_getCurrentThreadRepoEntry ();
 snoopy_tsrm_threadData_t*   snoopy_tsrm_getCurrentThreadData      ();
 snoopy_tsrm_threadData_t*   snoopy_tsrm_createNewThreadData       (snoopy_tsrm_threadId_t threadId);
 
@@ -93,7 +94,7 @@ void snoopy_tsrm_ctor ()
     // Create my entry if it does not exist
     if (SNOOPY_FALSE == snoopy_tsrm_doesThreadRepoEntryExist(curTid, SNOOPY_TRUE)) {
         tData = snoopy_tsrm_createNewThreadData(curTid);
-        List_push(snoopy_tsrm_threadRepo, tData);
+        snoopy_util_list_push(snoopy_tsrm_threadRepo, tData);
     }
 
     // Mutex END
@@ -116,7 +117,7 @@ void snoopy_tsrm_ctor ()
  */
 void snoopy_tsrm_dtor ()
 {
-    ListNode                   *tRepoEntry;
+    listNode_t                 *tRepoEntry;
     snoopy_tsrm_threadData_t   *tData;
 
     // Get my thread data structure
@@ -130,7 +131,7 @@ void snoopy_tsrm_dtor ()
     pthread_mutex_lock(&snoopy_tsrm_threadRepo_mutex);
 
     // Remove from repo
-    tData = List_remove(snoopy_tsrm_threadRepo, tRepoEntry);
+    tData = snoopy_util_list_remove(snoopy_tsrm_threadRepo, tRepoEntry);
 
     // Mutex END
     pthread_mutex_unlock(&snoopy_tsrm_threadRepo_mutex);
@@ -191,11 +192,12 @@ int   snoopy_tsrm_doesThreadRepoEntryExist (snoopy_tsrm_threadId_t threadId, int
         pthread_mutex_lock(&snoopy_tsrm_threadRepo_mutex);
     }
 
-    LIST_FOREACH(snoopy_tsrm_threadRepo, first, next, cur) {
-        if (NULL == cur->value) {
+    listNode_t * curNode = NULL;
+    while (NULL != (curNode = snoopy_util_list_fetchNextNode(snoopy_tsrm_threadRepo, curNode))) {
+        if (NULL == curNode->value) {
             continue;
         }
-        tData = cur->value;
+        tData = curNode->value;
         if (0 != pthread_equal(threadId, tData->threadId)) {
 
             /* Thread ID matches */
@@ -277,12 +279,12 @@ snoopy_tsrm_threadId_t   snoopy_tsrm_getCurrentThreadId ()
  *     (none)
  *
  * Return:
- *     ListNode*:   Current threadRepo entry, or null if it does not exist
+ *     listNode_t*:   Current threadRepo entry, or null if it does not exist
  */
-ListNode*   snoopy_tsrm_getCurrentThreadRepoEntry ()
+listNode_t *   snoopy_tsrm_getCurrentThreadRepoEntry ()
 {
     snoopy_tsrm_threadId_t      myThreadId;
-    ListNode                   *tRepoEntry = NULL;
+    listNode_t                 *tRepoEntry = NULL;
     const snoopy_tsrm_threadData_t   *tData;
 
     // This is the thread ID we are looking for
@@ -291,17 +293,18 @@ ListNode*   snoopy_tsrm_getCurrentThreadRepoEntry ()
     // Mutex START
     pthread_mutex_lock(&snoopy_tsrm_threadRepo_mutex);
 
-    LIST_FOREACH(snoopy_tsrm_threadRepo, first, next, cur) {
+    listNode_t * curNode = NULL;
+    while (NULL != (curNode = snoopy_util_list_fetchNextNode(snoopy_tsrm_threadRepo, curNode))) {
 
         // This should not happen, but maybe, just maybe, there is another thread
-        // that is just creating new entry.
-        if (NULL == cur->value) {
+        // that is just creating a new entry.
+        if (NULL == curNode->value) {
             continue;
         }
-        tData = cur->value;
+        tData = curNode->value;
 
         if (0 != pthread_equal(myThreadId, tData->threadId)) {
-            tRepoEntry = cur;
+            tRepoEntry = curNode;
             goto FOUND;
         }
     }
@@ -331,7 +334,7 @@ FOUND:
  */
 snoopy_tsrm_threadData_t*   snoopy_tsrm_getCurrentThreadData ()
 {
-    ListNode   *tRepoEntry;
+    listNode_t   *tRepoEntry;
 
     tRepoEntry = snoopy_tsrm_getCurrentThreadRepoEntry();
     if (NULL == tRepoEntry) {

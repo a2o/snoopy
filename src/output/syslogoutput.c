@@ -48,13 +48,12 @@
  *
  * Params:
  *     message:    message to send
- *     errOrMsg:   is message and error message or ordinary Snoopy log message
  *     arg:        output argument(s)
  *
  * Return:
  *     int:        See snoopy.h (SNOOPY_OUTPUT_*) for details.
  */
-int snoopy_output_syslogoutput (char const * const logMessage, int errorOrMessage, char const * const arg)
+int snoopy_output_syslogoutput (char const * const logMessage, __attribute__((unused)) char const * const arg)
 {
     /* Dispatch only if non-zero size */
     if (0 == strlen(logMessage)) {
@@ -68,17 +67,8 @@ int snoopy_output_syslogoutput (char const * const logMessage, int errorOrMessag
     char syslogIdent[SNOOPY_SYSLOG_IDENT_FORMAT_BUF_SIZE] = {'\0'};
     snoopy_message_generateFromFormat(syslogIdent, SNOOPY_SYSLOG_IDENT_FORMAT_BUF_SIZE, CFG->syslog_ident_format);
 
-    /* Prepare logging stuff */
     openlog(syslogIdent, LOG_PID, CFG->syslog_facility);
-
-    /* Log error or ordinary message */
-    if (SNOOPY_LOG_ERROR == errorOrMessage) {
-        syslog(LOG_ERR, "ERROR: %s", logMessage);
-    } else {
-        syslog(CFG->syslog_level, "%s", logMessage);
-    }
-
-    /* Close the syslog file descriptor */
+    syslog(CFG->syslog_level, "%s", logMessage);
     closelog();
 
     return (int) strlen(logMessage);

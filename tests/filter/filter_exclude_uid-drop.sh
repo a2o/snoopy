@@ -13,7 +13,7 @@ set -u
 ### Get data
 #
 MY_UID=`$SNOOPY_TEST_CLI run datasource uid`
-if ! $SNOOPY_TEST_CLI run filter   "msg"   "exclude_uid"   "$MY_UID" > /dev/null; then
+if ! $SNOOPY_TEST_CLI run filter   "exclude_uid"   "$MY_UID" > /dev/null; then
     snoopy_testResult_pass
 else
     snoopy_testResult_fail "My UID: $MY_UID"
