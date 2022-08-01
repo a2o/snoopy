@@ -62,6 +62,7 @@ int snoopy_util_file_getSmallTextFileContent (char const * const filePath, char 
 {
     FILE * fileHandle;
     char * contentPtr;
+    char * errorMsgBuf;
 
 
     // Allocate the memory
@@ -85,14 +86,20 @@ int snoopy_util_file_getSmallTextFileContent (char const * const filePath, char 
     // Open
     fileHandle = fopen(filePath, "r");
     if (fileHandle == NULL) {
+        free(contentPtr);
         contentPtr = malloc(SNOOPY_UTIL_FILE__ERROR_MSG_MAX_SIZE);
+        errorMsgBuf = malloc(SNOOPY_UTIL_FILE__ERROR_MSG_MAX_SIZE);
+        errorMsgBuf[0] = '\0';
+        strerror_r(errno, errorMsgBuf, SNOOPY_UTIL_FILE__ERROR_MSG_MAX_SIZE);
+        errorMsgBuf[SNOOPY_UTIL_FILE__ERROR_MSG_MAX_SIZE-1] = '\0';
         snprintf(
             contentPtr,
             SNOOPY_UTIL_FILE__ERROR_MSG_MAX_SIZE,
-            "Unable to open file %s for reading, reason: %s", filePath, strerror(errno)
+            "Unable to open file %s for reading, reason: %s", filePath, errorMsgBuf
         );
         contentPtr[SNOOPY_UTIL_FILE__ERROR_MSG_MAX_SIZE-1] = '\0';
         *contentPtrAddr = contentPtr;
+        free(errorMsgBuf);
         return -1;
     }
 
@@ -107,15 +114,20 @@ int snoopy_util_file_getSmallTextFileContent (char const * const filePath, char 
         if (ferror(fileHandle)) {
             free(contentPtr);
             contentPtr = malloc(SNOOPY_UTIL_FILE__ERROR_MSG_MAX_SIZE);
+            errorMsgBuf = malloc(SNOOPY_UTIL_FILE__ERROR_MSG_MAX_SIZE);
+            errorMsgBuf[0] = '\0';
+            strerror_r(errno, errorMsgBuf, SNOOPY_UTIL_FILE__ERROR_MSG_MAX_SIZE);
+            errorMsgBuf[SNOOPY_UTIL_FILE__ERROR_MSG_MAX_SIZE-1] = '\0';
             snprintf(
                 contentPtr,
                 SNOOPY_UTIL_FILE__ERROR_MSG_MAX_SIZE,
-                "Error reading file: %s", strerror(errno)
+                "Error reading file: %s", errorMsgBuf
             );
             contentPtr[SNOOPY_UTIL_FILE__ERROR_MSG_MAX_SIZE-1] = '\0';
             *contentPtrAddr = contentPtr;
             clearerr(fileHandle);
             fclose(fileHandle);
+            free(errorMsgBuf);
             return -1;
         }
 
