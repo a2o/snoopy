@@ -91,7 +91,7 @@ spaceparent_SOURCES                 = spaceparent.c
 all-local: spaceparent
 	@cp spaceparent "space parent"
 
-clean-local:
+clean-local-this-dir:
 	rm -f "space parent"
 
 

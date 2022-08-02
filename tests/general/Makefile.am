@@ -22,6 +22,6 @@ EXTRA_DIST   += $(TESTS)
 
 ### Remove stale temporary test files, if tests got stuck
 #
-clean-local:
+clean-local-this-dir:
 	rm -f *.ini ;
 	rm -f *.out ;

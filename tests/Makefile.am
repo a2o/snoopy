@@ -42,3 +42,13 @@ endif
 EXTRA_DIST  =
 EXTRA_DIST += _bootstrap.sh
 EXTRA_DIST += _bootstrap-paths.sh
+
+
+
+### Clean all test leftovers
+#
+# These are usually left behind when we rename files
+#
+clean-local-this-dir:
+	rm -f */*.log ;
+	rm -f */*.trs ;
