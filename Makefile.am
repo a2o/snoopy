@@ -71,15 +71,10 @@ uninstall-local: disable
 #
 
 # Clean release files
-if CODE_COVERAGE_ENABLED
-clean-local: coverage-clean
-else
-clean-local:
-endif
+clean-local-this-dir:
 	rm -rf snoopy-[0-9].[0-9].* ; \
 	rm -f  snoopy-*.tar.gz* ; \
 	rm -f  snoopy-latest-*.txt ; \
-	find . -name '*.gcno' | xargs -r rm ; \
 	rm -rf cov-int* ; \
 	rm -rf sonarcloud-build-wrapper-output ; \
 	rm -rf sonar-cfamily.reproducer ; \
@@ -127,10 +122,6 @@ if CODE_COVERAGE_ENABLED
 
 coverage-report:
 	./dev-tools/libexec/generate-gcov-reports.sh
-
-coverage-clean:
-	find . -name "*.gcda" -exec rm {} \;
-	find . -name "*.gcov" -exec rm {} \;
 
 coverage: coverage-clean check coverage-report
 

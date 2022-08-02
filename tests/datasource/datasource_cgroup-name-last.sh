@@ -24,7 +24,7 @@ fi
 
 ### Evaluate
 #
-CONTROLLER_NAME=`cat /proc/self/cgroup | grep -E '^[0-9]:[^:]+,[^:]+:' | head -n1 | cut -d: -f2 | rev | cut -d, -f1 | rev`
+CONTROLLER_NAME=`cat /proc/self/cgroup | grep -E '^[0-9]:[^:]+,[^:]+:' | head -n1 | cut -d: -f2 | awk -F ',' '{print $NF}'`
 VAL_EXPECTED=`cat /proc/self/cgroup | grep -E "^[0-9]:[^:]+,$CONTROLLER_NAME:" | head -n1`
 VAL_SNOOPY=`$SNOOPY_TEST_CLI run datasource cgroup "$CONTROLLER_NAME"`
 
