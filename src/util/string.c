@@ -230,3 +230,24 @@ void snoopy_util_string_nullTerminateLine (char const * const lineInContent)
         *newlineCharPos = '\0';
     }
 }
+
+
+
+/*
+ * Convert string to upper case
+ *
+ * Params:
+ *     s:       Pointer to string to work on
+ *
+ * Return:
+ *     void
+ */
+void snoopy_util_string_toUpper (char * s)
+{
+    while (*s) {
+        if ((*s >= 'a' ) && (*s <= 'z')) {
+            *s -= ('a'-'A');
+        }
+        s++;
+    }
+}

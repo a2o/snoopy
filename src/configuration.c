@@ -414,7 +414,7 @@ void snoopy_configuration_setDefaults
  * Return:
  *     snoopy_configuration_t*
  */
-snoopy_configuration_t* snoopy_configuration_get ()
+__attribute__((visibility("default"))) snoopy_configuration_t* snoopy_configuration_get ()
 {
     snoopy_configuration_t *CFG;
 

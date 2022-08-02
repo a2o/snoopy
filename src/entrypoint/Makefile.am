@@ -29,11 +29,17 @@ noinst_LTLIBRARIES =
 # Maintain alphabetical order, equal to what `ls` would do.
 #
 
-# Production entry point
+# Production entry point (for loaded library)
 noinst_LTLIBRARIES += libsnoopy-entrypoint-execve-wrapper.la
 libsnoopy_entrypoint_execve_wrapper_la_SOURCES = \
     execve-wrapper.c \
     execve-wrapper.h
+
+# Production entry point (for `snoopy` CLI utility)
+noinst_LTLIBRARIES += libsnoopy-entrypoint-cli.la
+libsnoopy_entrypoint_cli_la_SOURCES = \
+    cli.c \
+    cli.h
 
 # Test-related entry point (for loaded library)
 noinst_LTLIBRARIES += libsnoopy-entrypoint-execve-wrapper-test-configfile-env.la
@@ -41,7 +47,7 @@ libsnoopy_entrypoint_execve_wrapper_test_configfile_env_la_SOURCES = \
     execve-wrapper-test-configfile-env.c \
     execve-wrapper-test-configfile-env.h
 
-# Test-related entry point (for snoopy-test CLI utility)
+# Test-related entry point (for `snoopy-test` CLI utility)
 noinst_LTLIBRARIES += libsnoopy-entrypoint-test-cli.la
 libsnoopy_entrypoint_test_cli_la_SOURCES = \
     test-cli.c \

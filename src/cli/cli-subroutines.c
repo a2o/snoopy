@@ -138,7 +138,7 @@ char * libsnoopySo_getFilePathNoCheck ()
 
     envValue = getenv("SNOOPY_TEST_LIBSNOOPY_SO_PATH");
     if (envValue != NULL) {
-        printNoticeValue("Using non-default path to libsnoopy.so", envValue);
+        printWarningValue("Using non-default path to libsnoopy.so", envValue);
         filePath = envValue;
     } else {
         filePath = SNOOPY_SO_LIBRARY_PATH;
@@ -168,7 +168,7 @@ const char * etcLdSoPreload_getFilePath ()
 
     envValue = getenv("SNOOPY_TEST_LD_SO_PRELOAD_PATH");
     if (envValue != NULL) {
-        printNoticeValue("Using non-standard path to ld.so.preload", envValue);
+        printWarningValue("Using non-standard path to ld.so.preload", envValue);
         return envValue;
     } else {
         return SNOOPY_ETC_LD_SO_PRELOAD_PATH;

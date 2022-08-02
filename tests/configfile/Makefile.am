@@ -20,7 +20,9 @@ TESTS        += configfile-inline-comment.sh
 TESTS        += configfile-line-length-1023.sh
 TESTS        += configfile-line-length-1024.sh
 XFAIL_TESTS  += configfile-line-length-1024.sh
+if FILTERING_ENABLED
 TESTS        += configfile-filter_chain-1.sh
+endif
 TESTS        += configfile-message_format-1.sh
 TESTS        += configfile-message_format-unquoted.sh
 TESTS        += configfile-message_format-single-quoted.sh

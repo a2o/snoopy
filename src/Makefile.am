@@ -87,7 +87,8 @@ lib_LTLIBRARIES = libsnoopy.la
 libsnoopy_la_SOURCES =
 libsnoopy_la_LIBADD  = \
     libsnoopy-no-entrypoint.la \
-    entrypoint/libsnoopy-entrypoint-execve-wrapper.la
+    entrypoint/libsnoopy-entrypoint-execve-wrapper.la \
+    entrypoint/libsnoopy-entrypoint-cli.la
 
 
 
