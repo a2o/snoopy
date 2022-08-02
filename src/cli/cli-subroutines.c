@@ -162,6 +162,23 @@ void libsnoopySo_load ()
 }
 
 
+void * libsnoopySo_dlsym (char const * const functionName)
+{
+    void * functionPtr;
+    const char * error;
+
+    functionPtr = dlsym(g_libsnoopySoHandle, functionName);
+
+    error = dlerror();
+    if (error != NULL) {
+        printDiagValue("libsnoopy.so path", g_libsnoopySoPath);
+        fatalError(error);
+    }
+
+    return functionPtr;
+}
+
+
 const char * etcLdSoPreload_getFilePath ()
 {
     const char * envValue = NULL;

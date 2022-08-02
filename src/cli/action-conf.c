@@ -40,12 +40,11 @@
 
 int snoopy_cli_action_conf ()
 {
-    void (* snoopy_entrypoint_cli_init_ptr) ();
-    void (* snoopy_entrypoint_cli_exit_ptr) ();
-    snoopy_configuration_t * (* snoopy_configuration_get_ptr) ();
+    void                         (* snoopy_entrypoint_cli_init_ptr) ();
+    void                         (* snoopy_entrypoint_cli_exit_ptr) ();
+    snoopy_configuration_t *     (* snoopy_configuration_get_ptr) ();
     snoopy_configfile_option_t * (* snoopy_configfile_optionRegistry_getAll_ptr) ();
-    char * (* snoopy_configfile_optionRegistry_getOptionValueAsString_ptr) (char const * const optionName);
-    const char * error;
+    char *                       (* snoopy_configfile_optionRegistry_getOptionValueAsString_ptr) (char const * const optionName);
 
     snoopy_configuration_t * CFG;
     const snoopy_configfile_option_t * optionRegistry;
@@ -55,54 +54,26 @@ int snoopy_cli_action_conf ()
     libsnoopySo_load();
 
     // Find function pointers
-    *(void **) (&snoopy_entrypoint_cli_init_ptr) = dlsym(g_libsnoopySoHandle, "snoopy_entrypoint_cli_init");
-    error = dlerror();
-    if (error != NULL) {
-        printDiagValue("libsnoopy.so path", g_libsnoopySoPath);
-        fatalError(error);
-    }
+    *(void **) (&snoopy_entrypoint_cli_init_ptr)                              = libsnoopySo_dlsym("snoopy_entrypoint_cli_init");
+    *(void **) (&snoopy_entrypoint_cli_exit_ptr)                              = libsnoopySo_dlsym("snoopy_entrypoint_cli_exit");
+    *(void **) (&snoopy_configuration_get_ptr)                                = libsnoopySo_dlsym("snoopy_configuration_get");
+    *(void **) (&snoopy_configfile_optionRegistry_getAll_ptr)                 = libsnoopySo_dlsym("snoopy_configfile_optionRegistry_getAll");
+    *(void **) (&snoopy_configfile_optionRegistry_getOptionValueAsString_ptr) = libsnoopySo_dlsym("snoopy_configfile_optionRegistry_getOptionValueAsString");
 
-    *(void **) (&snoopy_entrypoint_cli_exit_ptr) = dlsym(g_libsnoopySoHandle, "snoopy_entrypoint_cli_exit");
-    error = dlerror();
-    if (error != NULL) {
-        printDiagValue("libsnoopy.so path", g_libsnoopySoPath);
-        fatalError(error);
-    }
-
-    *(void **) (&snoopy_configuration_get_ptr) = dlsym(g_libsnoopySoHandle, "snoopy_configuration_get");
-    error = dlerror();
-    if (error != NULL) {
-        printDiagValue("libsnoopy.so path", g_libsnoopySoPath);
-        fatalError(error);
-    }
-
-    *(void **) (&snoopy_configfile_optionRegistry_getAll_ptr) = dlsym(g_libsnoopySoHandle, "snoopy_configfile_optionRegistry_getAll");
-    error = dlerror();
-    if (error != NULL) {
-        printDiagValue("libsnoopy.so path", g_libsnoopySoPath);
-        fatalError(error);
-    }
-
-    *(void **) (&snoopy_configfile_optionRegistry_getOptionValueAsString_ptr) = dlsym(g_libsnoopySoHandle, "snoopy_configfile_optionRegistry_getOptionValueAsString");
-    error = dlerror();
-    if (error != NULL) {
-        printDiagValue("libsnoopy.so path", g_libsnoopySoPath);
-        fatalError(error);
-    }
-
-    // Get the configuration
     snoopy_entrypoint_cli_init_ptr();
 
+    // Get the configuration
     CFG = snoopy_configuration_get_ptr();
-    optionRegistry = snoopy_configfile_optionRegistry_getAll_ptr();
     printf("; Options from config file (or defaults): %s\n", CFG->configfile_path);
     printf("[snoopy]\n");
+
+    // Print the configured options
+    optionRegistry = snoopy_configfile_optionRegistry_getAll_ptr();
     for (int i=0 ; 0 != strcmp(optionRegistry[i].name, "") ; i++) {
         char * optionValue = snoopy_configfile_optionRegistry_getOptionValueAsString_ptr(optionRegistry[i].name);
         printf("%s = %s\n", optionRegistry[i].name, optionValue);
         free(optionValue);
     }
-
 
     // Cleanup
     snoopy_entrypoint_cli_exit_ptr();

@@ -38,7 +38,6 @@
 int snoopy_cli_action_version ()
 {
     int (* snoopy_ds_version_ptr) (char * const result, char const * const arg);
-    const char * error;
     char ds_message_buf[SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE] = "";
     int  ds_status;
 
@@ -46,12 +45,7 @@ int snoopy_cli_action_version ()
     libsnoopySo_load();
 
     // Find the desired datasource (that returns Snoopy version)
-    *(void **) (&snoopy_ds_version_ptr) = dlsym(g_libsnoopySoHandle, "snoopy_datasource_snoopy_version");
-    error = dlerror();
-    if (error != NULL) {
-        printDiagValue("libsnoopy.so path", g_libsnoopySoPath);
-        fatalError(error);
-    }
+    *(void **) (&snoopy_ds_version_ptr) = libsnoopySo_dlsym("snoopy_datasource_snoopy_version");
 
     // Call the function
     ds_status = snoopy_ds_version_ptr(ds_message_buf, "");
