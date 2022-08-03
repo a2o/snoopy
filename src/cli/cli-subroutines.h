@@ -36,9 +36,10 @@ void printErrorValue    (const char * const message, const char * const value);
 void fatalError         (const char * const message);
 void fatalErrorValue    (const char * const message, const char * const value);
 
-char * libsnoopySo_getFilePath ();
-char * libsnoopySo_getFilePathNoCheck ();
-void   libsnoopySo_load ();
+char *      libsnoopySo_getFilePath ();
+char *      libsnoopySo_getFilePathNoCheck ();
+void        libsnoopySo_load ();
+void *      libsnoopySo_dlsym (char const * const);
 
 const char * etcLdSoPreload_getFilePath ();
 char *       etcLdSoPreload_readFile ();

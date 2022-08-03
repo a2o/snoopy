@@ -15,6 +15,8 @@ sbin_PROGRAMS =
 #
 sbin_PROGRAMS += snoopy
 snoopy_SOURCES = \
+	action-conf.c \
+	action-conf.h \
 	action-disable.c \
 	action-disable.h \
 	action-enable.c \

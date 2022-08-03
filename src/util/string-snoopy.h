@@ -31,3 +31,4 @@ int             snoopy_util_string_countChars (const char *stringToSearch, char 
 char *          snoopy_util_string_findLineStartingWith (char const * const content, char const * const searchString);
 int             snoopy_util_string_getLineLength (char const * const lineStartPtr);
 void            snoopy_util_string_nullTerminateLine (char const * const lineInContent);
+void            snoopy_util_string_toUpper (char * s);

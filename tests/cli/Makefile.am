@@ -10,6 +10,9 @@ TESTS =
 XFAIL_TESTS =
 
 TESTS += cli-action-about.sh
+if CONFIGFILE_ENABLED
+TESTS += cli-action-conf.sh
+endif
 TESTS += cli-action-disable-1-nofile.sh
 TESTS += cli-action-disable-2-emptyfile.sh
 TESTS += cli-action-disable-31-only-entry.sh

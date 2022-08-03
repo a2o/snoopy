@@ -23,6 +23,11 @@
 /*
  * Includes order: from local to global
  */
+#include "snoopy.h"
+
+#ifdef SNOOPY_CONFIGFILE_ENABLED
+#include "action-conf.h"
+#endif
 #include "action-disable.h"
 #include "action-enable.h"
 #include "action-status.h"
@@ -56,6 +61,9 @@ void showHelp () {
         "    snoopy ACTION [ARGS]\n"
         "\n"
         "Available actions:\n"
+#ifdef SNOOPY_CONFIGFILE_ENABLED
+        "    conf           Show configuration\n"
+#endif
         "    disable        Remove libsnoopy.so from /etc/ld.so.preload\n"
         "    enable         Add libsnoopy.so to /etc/ld.so.preload\n"
         "    status         Detect whether Snoopy is already enabled and/or loaded\n"
@@ -79,6 +87,10 @@ int main (int argc, char *argv[]) {
 
     if (0 == strcmp(argv[1], "status")) {
         return snoopy_cli_action_status();
+#ifdef SNOOPY_CONFIGFILE_ENABLED
+    } else if (0 == strcmp(argv[1], "conf")) {
+        return snoopy_cli_action_conf();
+#endif
     } else if (0 == strcmp(argv[1], "disable")) {
         return snoopy_cli_action_disable();
     } else if (0 == strcmp(argv[1], "enable")) {

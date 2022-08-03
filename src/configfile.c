@@ -28,9 +28,9 @@
 #include "configfile.h"
 
 #include "snoopy.h"
-#include "configfile.h"
 #include "configuration.h"
 #include "outputregistry.h"
+#include "util/string-snoopy.h"
 #include "util/syslog-snoopy.h"
 
 #include "lib/inih/src/ini.h"
@@ -61,24 +61,17 @@
 /*
  * Define supported config options
  */
-struct snoopy_configfile_optionData_t {
-    int (*valueParserPtr) (char const * const confValString, snoopy_configuration_t *CFG);
-};
-
-struct snoopy_configfile_option_t {
-    char const * const                          name;
-    struct snoopy_configfile_optionData_t       data;
-};
-
-struct snoopy_configfile_option_t snoopy_configfile_optionRegistry[] = {
-    { "error_logging",   { &snoopy_configfile_parseValue_error_logging   } },
-    { "filter_chain",    { &snoopy_configfile_parseValue_filter_chain    } },
-    { "message_format",  { &snoopy_configfile_parseValue_message_format  } },
-    { "output",          { &snoopy_configfile_parseValue_output          } },
-    { "syslog_facility", { &snoopy_configfile_parseValue_syslog_facility } },
-    { "syslog_ident",    { &snoopy_configfile_parseValue_syslog_ident    } },
-    { "syslog_level",    { &snoopy_configfile_parseValue_syslog_level    } },
-    { "",                {  NULL                                         } },
+snoopy_configfile_option_t snoopy_configfile_optionRegistry[] = {
+    { "error_logging",   { SNOOPY_CONFIGFILE_OPTION_TYPE_BOOL,   &snoopy_configfile_parseValue_error_logging,   &snoopy_configfile_getOptionValueAsString_error_logging   } },
+#ifdef SNOOPY_FILTERING_ENABLED
+    { "filter_chain",    { SNOOPY_CONFIGFILE_OPTION_TYPE_STRING, &snoopy_configfile_parseValue_filter_chain,    &snoopy_configfile_getOptionValueAsString_filter_chain    } },
+#endif
+    { "message_format",  { SNOOPY_CONFIGFILE_OPTION_TYPE_STRING, &snoopy_configfile_parseValue_message_format,  &snoopy_configfile_getOptionValueAsString_message_format  } },
+    { "output",          { SNOOPY_CONFIGFILE_OPTION_TYPE_STRING, &snoopy_configfile_parseValue_output,          &snoopy_configfile_getOptionValueAsString_output          } },
+    { "syslog_facility", { SNOOPY_CONFIGFILE_OPTION_TYPE_STRING, &snoopy_configfile_parseValue_syslog_facility, &snoopy_configfile_getOptionValueAsString_syslog_facility } },
+    { "syslog_ident",    { SNOOPY_CONFIGFILE_OPTION_TYPE_STRING, &snoopy_configfile_parseValue_syslog_ident,    &snoopy_configfile_getOptionValueAsString_syslog_ident    } },
+    { "syslog_level",    { SNOOPY_CONFIGFILE_OPTION_TYPE_STRING, &snoopy_configfile_parseValue_syslog_level,    &snoopy_configfile_getOptionValueAsString_syslog_level    } },
+    { "",                { SNOOPY_CONFIGFILE_OPTION_TYPE_NONE,    NULL,                                          NULL                                               } },
 };
 
 
@@ -165,27 +158,6 @@ int snoopy_configfile_iniParser_callback (
 
 
 /*
- * optionRegistry :: getIdFromName()
- *
- * Return:
- *      int:    Id of a given option, or
- *              SNOOPY_CONFIGFILE_OPTION_NOT_SUPPORTED (-1) when not found.
- */
-int snoopy_configfile_optionRegistry_getIdFromName (char const * const optionName)
-{
-    for (int i=0 ; 0 != strcmp(snoopy_configfile_optionRegistry[i].name, "") ; i++) {
-        if (strcmp(snoopy_configfile_optionRegistry[i].name, optionName) == 0) {
-            return i;
-        }
-    }
-
-    /* Not found */
-    return SNOOPY_CONFIGFILE_OPTION_NOT_SUPPORTED;
-}
-
-
-
-/*
  * Parse 'error_logging' config option
  *
  * Params:
@@ -210,6 +182,20 @@ int snoopy_configfile_parseValue_error_logging (
 
 
 
+char * snoopy_configfile_getOptionValueAsString_error_logging ()
+{
+    const snoopy_configuration_t * CFG = snoopy_configuration_get();
+
+    if (CFG->error_logging_enabled == SNOOPY_TRUE) {
+        return strdup("yes");
+    } else {
+        return strdup("no");
+    }
+}
+
+
+
+#ifdef SNOOPY_FILTERING_ENABLED
 /*
  * Parse 'filter_chain' config option
  *
@@ -233,6 +219,16 @@ int snoopy_configfile_parseValue_filter_chain (
 
 
 
+char * snoopy_configfile_getOptionValueAsString_filter_chain ()
+{
+    const snoopy_configuration_t * CFG = snoopy_configuration_get();
+
+    return strdup(CFG->filter_chain);
+}
+#endif
+
+
+
 /*
  * Parse 'message_format' config option
  *
@@ -252,6 +248,15 @@ int snoopy_configfile_parseValue_message_format (
     CFG->message_format_malloced = SNOOPY_TRUE;
 
     return SNOOPY_CONFIGFILE_PARSEVALUE_SUCCESS;
+}
+
+
+
+char * snoopy_configfile_getOptionValueAsString_message_format ()
+{
+    const snoopy_configuration_t * CFG = snoopy_configuration_get();
+
+    return strdup(CFG->message_format);
 }
 
 
@@ -326,6 +331,26 @@ int snoopy_configfile_parseValue_output (
 
 
 
+char * snoopy_configfile_getOptionValueAsString_output ()
+{
+    const snoopy_configuration_t * CFG = snoopy_configuration_get();
+    char * outputString = NULL;
+
+    if (0 == strcmp("", CFG->output_arg)) {
+        outputString = strdup(CFG->output);
+
+    } else {
+        size_t outputStringBufSize = strlen(CFG->output) + 1 + strlen(CFG->output_arg) + 1; // First +1 for ':', second +1 for '\0'
+        outputString = malloc(outputStringBufSize);
+
+        snprintf(outputString, outputStringBufSize, "%s:%s", CFG->output, CFG->output_arg);
+        outputString[outputStringBufSize-1] = '\0';
+    }
+    return outputString;
+}
+
+
+
 /*
  * Parse 'syslog_facility' config option
  *
@@ -369,6 +394,15 @@ int snoopy_configfile_parseValue_syslog_facility (
 
 
 
+char * snoopy_configfile_getOptionValueAsString_syslog_facility ()
+{
+    const snoopy_configuration_t * CFG = snoopy_configuration_get();
+
+    return strdup(snoopy_util_syslog_convertFacilityToStr(CFG->syslog_facility));
+}
+
+
+
 /*
  * Parse 'syslog_ident' config option
  *
@@ -388,6 +422,15 @@ int snoopy_configfile_parseValue_syslog_ident (
     CFG->syslog_ident_format_malloced = SNOOPY_TRUE;
 
     return SNOOPY_CONFIGFILE_PARSEVALUE_SUCCESS;
+}
+
+
+
+char * snoopy_configfile_getOptionValueAsString_syslog_ident ()
+{
+    const snoopy_configuration_t * CFG = snoopy_configuration_get();
+
+    return strdup(CFG->syslog_ident_format);
 }
 
 
@@ -435,6 +478,15 @@ int snoopy_configfile_parseValue_syslog_level (
 
 
 
+char * snoopy_configfile_getOptionValueAsString_syslog_level ()
+{
+    const snoopy_configuration_t * CFG = snoopy_configuration_get();
+
+    return strdup(snoopy_util_syslog_convertLevelToStr(CFG->syslog_level));
+}
+
+
+
 /*
  * snoopy_configfile_syslog_value_cleanup
  *
@@ -453,7 +505,7 @@ char *snoopy_configfile_syslog_value_cleanup (char *confVal)
     char *confValCleaned;
 
     // Convert to upper case
-    snoopy_configfile_strtoupper(confVal);
+    snoopy_util_string_toUpper(confVal);
 
     // Remove LOG_ prefix
     confValCleaned = snoopy_configfile_syslog_value_remove_prefix(confVal);
@@ -482,30 +534,6 @@ char *snoopy_configfile_syslog_value_remove_prefix (char *confVal)
         return confVal+4;
     } else {
         return confVal;
-    }
-}
-
-
-
-/*
- * snoopy_configfile_strtoupper
- *
- * Description:
- *     Convert existing string to upper case
- *
- * Params:
- *     string   Pointer to string to change and to be operated on
- *
- * Return:
- *     void
- */
-void snoopy_configfile_strtoupper (char *s)
-{
-    while (*s) {
-        if ((*s >= 'a' ) && (*s <= 'z')) {
-            *s -= ('a'-'A');
-        }
-        s++;
     }
 }
 
@@ -551,11 +579,62 @@ int snoopy_configfile_getboolean (const char *c, int notfound)
     int   ret;
 
     if (c[0]=='y' || c[0]=='Y' || c[0]=='1' || c[0]=='t' || c[0]=='T') {
-        ret = 1 ;
+        ret = SNOOPY_TRUE;
     } else if (c[0]=='n' || c[0]=='N' || c[0]=='0' || c[0]=='f' || c[0]=='F') {
-        ret = 0 ;
+        ret = SNOOPY_FALSE;
     } else {
         ret = notfound ;
     }
     return ret;
+}
+
+
+
+/*
+ * optionRegistry :: getIdFromName()
+ *
+ * Return:
+ *      int:    Id of a given option, or
+ *              SNOOPY_CONFIGFILE_OPTION_NOT_SUPPORTED (-1) when not found.
+ */
+int snoopy_configfile_optionRegistry_getIdFromName (char const * const optionName)
+{
+    for (int i=0 ; 0 != strcmp(snoopy_configfile_optionRegistry[i].name, "") ; i++) {
+        if (strcmp(snoopy_configfile_optionRegistry[i].name, optionName) == 0) {
+            return i;
+        }
+    }
+
+    /* Not found */
+    return SNOOPY_CONFIGFILE_OPTION_NOT_SUPPORTED;
+}
+
+
+
+/*
+ * optionRegistry :: getAll()
+ *
+ * Returns all supported config options.
+ */
+__attribute__((visibility("default"))) snoopy_configfile_option_t * snoopy_configfile_optionRegistry_getAll ()
+{
+    return snoopy_configfile_optionRegistry;
+}
+
+
+
+/*
+ * optionRegistry :: getOptionValueAsString()
+ *
+ * Returns a malloc()-ed string representation of option value (that can be (re)used in a config file).
+ */
+__attribute__((visibility("default"))) char * snoopy_configfile_optionRegistry_getOptionValueAsString (char const * const optionName)
+{
+
+    for (int i=0 ; 0 != strcmp(snoopy_configfile_optionRegistry[i].name, "") ; i++) {
+        if (strcmp(snoopy_configfile_optionRegistry[i].name, optionName) == 0) {
+            return snoopy_configfile_optionRegistry[i].data.getValueAsStringPtr();
+        }
+    }
+    return NULL; // Option not found
 }
