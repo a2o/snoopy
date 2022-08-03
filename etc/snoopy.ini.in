@@ -132,7 +132,7 @@
 ;   (to raw device writing as syslogd blocks syslog() calls if journald is not running)
 ;
 ; Example:
-;output = console
+;output = devtty
 ;output = devlog
 ;output = file:/var/log/snoopy.log
 ;output = socket:/var/run/socket-for-snoopy.sock
