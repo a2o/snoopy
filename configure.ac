@@ -97,6 +97,7 @@ AC_CHECK_LIB([dl], [dlsym], [], [
 
 dnl Checks for header files.
 AC_CHECK_HEADERS([ \
+    arpa/inet.h \
     ctype.h \
     dlfcn.h \
     errno.h \
@@ -118,6 +119,7 @@ AC_CHECK_HEADERS([ \
     sys/un.h \
     time.h \
     unistd.h \
+    utmp.h \
 ], [], [
     AC_MSG_ERROR([A header file is missing. Unable to continue.])
 ])
@@ -146,6 +148,7 @@ AC_CHECK_FUNCS([ \
     strndup    \
     strrchr   \
     strstr    \
+    utmpname  \
 ], [], [
     AC_MSG_ERROR([A function is missing. Unable to continue.])
 ])
@@ -390,6 +393,7 @@ SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [filename],       [full filename of process 
 SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [gid],            [GID of process performing the execution])
 SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [group],          [literal group name of process performing the execution])
 SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [hostname],       [hostname of this system])
+SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [ipaddr],         [IP address of a connected terminal])
 SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [login],          [login username of user doing the execution])
 SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [pid],            [PID of process performing the execution])
 SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [ppid],           [parent PID of process performing the execution])

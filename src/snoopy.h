@@ -22,19 +22,13 @@
 
 
 /**
- * Include all required system headers
- */
-
-/* This should generally be done wherever unistd.h is required. */
-/* But sysconf is needed here, and all files include snoopy.h. */
-/* Needed to get getpgid and getsid on older glibc */
-/* This must be the first file to be included, or implicit inclusion
- * (by i.e. <features.h>) does the wrong thing
+ * Define Snoopy-wide system header file inclusion parameters
+ *
+ * _XPEN_SOURCE does a few things:
+ * - prevents GCC from complaining about not using strerror_r return value
+ * - enables strdup() presence
  */
 #define  _XOPEN_SOURCE   700
-#include <features.h>   /* Needed for GLIBC macros here */
-#include <syslog.h>     /* Needed for syslog defaults */
-#include <unistd.h>
 
 
 

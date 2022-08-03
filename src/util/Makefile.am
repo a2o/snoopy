@@ -22,6 +22,13 @@ libsnoopy_utils_la_SOURCES = \
     syslog-snoopy.h
 
 
+if DATASOURCE_ENABLED_ipaddr
+libsnoopy_utils_la_SOURCES += \
+    utmp.c \
+    utmp-snoopy.h
+endif
+
+
 if DATASOURCE_ENABLED_systemd_unit_name
 libsnoopy_utils_la_SOURCES += \
     systemd.c \

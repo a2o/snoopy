@@ -1,7 +1,7 @@
 /*
  * SNOOPY LOGGER
  *
- * Copyright (c) 2022 Bostjan Skufca Jese (bostjan _A_T_ a2o.si)
+ * Copyright (c) 2022 Bostjan Skufca Jese <bostjan@a2o.si>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,10 +20,4 @@
 
 
 
-#include "snoopy.h"
-
-#include <sys/types.h>
-
-
-
-char * snoopy_util_pwd_convertUidToUsername (uid_t uid);
+int snoopyTestCli_action_unit_util_utmp (int argc, char ** argv);

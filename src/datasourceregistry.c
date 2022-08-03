@@ -82,6 +82,9 @@
 #ifdef SNOOPY_CONF_DATASOURCE_ENABLED_hostname
 #include "datasource/hostname.h"
 #endif
+#ifdef SNOOPY_CONF_DATASOURCE_ENABLED_ipaddr
+#include "datasource/ipaddr.h"
+#endif
 #ifdef SNOOPY_CONF_DATASOURCE_ENABLED_login
 #include "datasource/login.h"
 #endif
@@ -200,6 +203,9 @@ char* snoopy_datasourceregistry_names[] = {
 #ifdef SNOOPY_CONF_DATASOURCE_ENABLED_hostname
     "hostname",
 #endif
+#ifdef SNOOPY_CONF_DATASOURCE_ENABLED_ipaddr
+    "ipaddr",
+#endif
 #ifdef SNOOPY_CONF_DATASOURCE_ENABLED_login
     "login",
 #endif
@@ -314,6 +320,9 @@ int (*snoopy_datasourceregistry_ptrs []) (char * const result, char const * cons
 #endif
 #ifdef SNOOPY_CONF_DATASOURCE_ENABLED_hostname
     snoopy_datasource_hostname,
+#endif
+#ifdef SNOOPY_CONF_DATASOURCE_ENABLED_ipaddr
+    snoopy_datasource_ipaddr,
 #endif
 #ifdef SNOOPY_CONF_DATASOURCE_ENABLED_login
     snoopy_datasource_login,

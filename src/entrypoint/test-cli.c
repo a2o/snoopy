@@ -32,6 +32,8 @@
 #include "configuration.h"
 #include "inputdatastorage.h"
 
+#include <stddef.h>
+
 
 
 void snoopy_entrypoint_test_cli_init (const char *filename, char *const argv[], char * const configFilePath)

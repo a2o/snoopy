@@ -31,9 +31,20 @@ if DATASOURCE_ENABLED_systemd_unit_name
 TESTS += unit-util-systemd.sh
 endif
 
+if DATASOURCE_ENABLED_ipaddr
+TESTS += unit-util-utmp-entry-missing.sh
+TESTS += unit-util-utmp-entry-without-ip-address.sh
+TESTS += unit-util-utmp-ipv4.sh
+TESTS += unit-util-utmp-ipv6.sh
+endif
+
 
 
 ### Include tests in distribution archive
 #
 EXTRA_DIST    = _bootstrap.sh
 EXTRA_DIST   += $(TESTS)
+
+if DATASOURCE_ENABLED_ipaddr
+EXTRA_DIST += unit-util-utmp-testUtmpFile
+endif

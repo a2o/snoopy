@@ -20,10 +20,17 @@
 
 
 
-#include "snoopy.h"
+#ifndef _GNU_SOURCE
+#define _GNU_SOURCE // For getutline_r() in utmp.c
+#endif
+#include <utmp.h>
 
-#include <sys/types.h>
 
 
+int  snoopy_util_utmp_findUtmpEntryByLine (char const * const ttyLine, struct utmp * const resultEntryBuf);
+int  snoopy_util_utmp_findUtmpEntryByPath (char const * const ttyPath, struct utmp * const resultEntryBuf);
 
-char * snoopy_util_pwd_convertUidToUsername (uid_t uid);
+int  snoopy_util_utmp_doesEntryContainIpAddr (struct utmp const * const utmpEntry);
+int  snoopy_util_utmp_getUtmpIpAddrAsString (struct utmp const * const utmpEntry, char * const resultBuf, size_t resultBufSize);
+
+void snoopy_util_utmp_test_setAlternateUtmpFilePath (char const * const utmpPath);
