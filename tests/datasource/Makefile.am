@@ -82,6 +82,10 @@ if DATASOURCE_ENABLED_hostname
     TESTS += datasource_hostname.sh
 endif
 
+if DATASOURCE_ENABLED_ipaddr
+    TESTS += datasource_ipaddr.sh
+endif
+
 if DATASOURCE_ENABLED_login
     TESTS += datasource_login.sh
 endif

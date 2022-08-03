@@ -81,6 +81,12 @@ snoopy_test_SOURCES += \
     action-unit-util-systemd.h
 endif
 
+if DATASOURCE_ENABLED_ipaddr
+snoopy_test_SOURCES += \
+    action-unit-util-utmp.c \
+    action-unit-util-utmp.h
+endif
+
 noinst_PROGRAMS                    += spaceparent
 spaceparent_SOURCES                 = spaceparent.c
 

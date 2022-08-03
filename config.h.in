@@ -1,5 +1,8 @@
 /* config.h.in.  Generated from configure.ac by autoheader.  */
 
+/* Define to 1 if you have the <arpa/inet.h> header file. */
+#undef HAVE_ARPA_INET_H
+
 /* Define to 1 if you have the <ctype.h> header file. */
 #undef HAVE_CTYPE_H
 
@@ -131,6 +134,12 @@
 /* Define to 1 if you have the <unistd.h> header file. */
 #undef HAVE_UNISTD_H
 
+/* Define to 1 if you have the `utmpname' function. */
+#undef HAVE_UTMPNAME
+
+/* Define to 1 if you have the <utmp.h> header file. */
+#undef HAVE_UTMP_H
+
 /* Define to 1 if you have the `vfork' function. */
 #undef HAVE_VFORK
 
@@ -223,6 +232,9 @@
 
 /* Is datasource "hostname" available? */
 #undef SNOOPY_CONF_DATASOURCE_ENABLED_hostname
+
+/* Is datasource "ipaddr" available? */
+#undef SNOOPY_CONF_DATASOURCE_ENABLED_ipaddr
 
 /* Is datasource "login" available? */
 #undef SNOOPY_CONF_DATASOURCE_ENABLED_login

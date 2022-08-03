@@ -143,6 +143,14 @@ libsnoopy_datasources_all_la_SOURCES += \
 	hostname.h
 endif
 
+# Data source: ipaddr
+#
+if DATASOURCE_ENABLED_ipaddr
+libsnoopy_datasources_all_la_SOURCES += \
+	ipaddr.c \
+	ipaddr.h
+endif
+
 # Data source: login
 #
 if DATASOURCE_ENABLED_login

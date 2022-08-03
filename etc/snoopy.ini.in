@@ -28,6 +28,7 @@
 ; - %{gid}            ; (available=@enable_datasource_gid@) Group id that executed the command
 ; - %{group}          ; (available=@enable_datasource_group@) Group name that executed the command
 ; - %{hostname}       ; (available=@enable_datasource_hostname@) Hostname of current system
+; - %{ipaddr}         ; (available=@enable_datasource_ipaddr@) IP address of a connected terminal
 ; - %{login}          ; (available=@enable_datasource_login@) Login name (tries getlogin_r() first, then SUDO_USER env variabe, and LOGNAME env as last resort)
 ; - %{pid}            ; (available=@enable_datasource_pid@) ID of process that executed the command
 ; - %{ppid}           ; (available=@enable_datasource_ppid@) Parent process ID of process that executed the command

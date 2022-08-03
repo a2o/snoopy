@@ -31,6 +31,9 @@
 #ifdef SNOOPY_CONF_DATASOURCE_ENABLED_systemd_unit_name
 #include "action-unit-util-systemd.h"
 #endif
+#ifdef SNOOPY_CONF_DATASOURCE_ENABLED_ipaddr
+#include "action-unit-util-utmp.h"
+#endif
 
 #include <stdio.h>
 #include <string.h>
@@ -49,6 +52,9 @@ void snoopyTestCli_action_unit_util_showHelp ()
         "    syslog             Run a unit test on src/util/syslog.c\n"
 #ifdef SNOOPY_CONF_DATASOURCE_ENABLED_systemd_unit_name
         "    systemd            Run a unit test on src/util/systemd.c\n"
+#endif
+#ifdef SNOOPY_CONF_DATASOURCE_ENABLED_ipaddr
+        "    utmp               Unit test helper for src/util/utmp.c\n"
 #endif
         "\n"
         "    --help,-h          Show this help\n"
@@ -77,6 +83,11 @@ int snoopyTestCli_action_unit_util (int argc, char ** argv)
 #ifdef SNOOPY_CONF_DATASOURCE_ENABLED_systemd_unit_name
     if (0 == strcmp(subunit, "systemd")) {
         return snoopyTestCli_action_unit_util_systemd(argc-1, &argv[1]);
+    }
+#endif
+#ifdef SNOOPY_CONF_DATASOURCE_ENABLED_ipaddr
+    if (0 == strcmp(subunit, "utmp")) {
+        return snoopyTestCli_action_unit_util_utmp(argc-1, &argv[1]);
     }
 #endif
 
