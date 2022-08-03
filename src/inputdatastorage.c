@@ -32,6 +32,8 @@
 #include "tsrm.h"
 #endif
 
+#include <stddef.h>
+
 
 
 /*

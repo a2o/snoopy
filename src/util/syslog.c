@@ -31,6 +31,7 @@
 #include "snoopy.h"
 
 #include <string.h>
+#include <syslog.h>
 
 
 

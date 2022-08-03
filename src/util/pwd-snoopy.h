@@ -22,6 +22,8 @@
 
 #include "snoopy.h"
 
+#include <sys/types.h>
+
 
 
 char * snoopy_util_pwd_convertUidToUsername (uid_t uid);
