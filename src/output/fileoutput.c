@@ -29,7 +29,9 @@
 
 #include "snoopy.h"
 #include "configuration.h"
+#include "message.h"
 
+#include <linux/limits.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -51,6 +53,8 @@
  */
 int snoopy_output_fileoutput (char const * const logMessage, char const * const arg)
 {
+    char   filePathBuf[PATH_MAX] = {'\0'};
+    char * filePath = filePathBuf;
     FILE  *fp;
     int    charCount;
 
@@ -59,8 +63,11 @@ int snoopy_output_fileoutput (char const * const logMessage, char const * const 
         return SNOOPY_OUTPUT_FAILURE;
     }
 
+    // Parse the output file specification (i.e. for %{datetime} or similar tags)
+    snoopy_message_generateFromFormat(filePath, PATH_MAX, arg);
+
     // Try to open file in append mode
-    fp = fopen(arg, "a");
+    fp = fopen(filePath, "a");
     if (NULL == fp) {
         return SNOOPY_OUTPUT_FAILURE;
     }

@@ -136,6 +136,9 @@
 ;output = devtty
 ;output = devlog
 ;output = file:/var/log/snoopy.log
+;output = file:/var/log/snoopy.log-%{datetime:%Y-%m-%d}
+;output = file:/var/log/snoopy.log-%{username}
+;output = file:/home/%{username}/snoopy.log   ; If "/home/%{username}" directory does not exist, Snoopy will _not_ create it.
 ;output = socket:/var/run/socket-for-snoopy.sock
 
 

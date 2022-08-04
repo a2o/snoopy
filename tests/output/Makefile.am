@@ -15,6 +15,9 @@ endif
 
 if OUTPUT_ENABLED_file
     TESTS += output_file.sh
+if DATASOURCE_ENABLED_username
+    TESTS += output_file-dynamic.sh
+endif
 endif
 
 TESTS += output_noop.sh
