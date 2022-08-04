@@ -69,7 +69,7 @@ void snoopyTestCli_action_run_everything_showHelp ()
 int snoopyTestCli_action_run_everything ()
 {
     char                     *logMessage = NULL;
-    snoopy_configuration_t   *CFG;
+    const snoopy_configuration_t * CFG;
 
 
     /* Initialize Snoopy */

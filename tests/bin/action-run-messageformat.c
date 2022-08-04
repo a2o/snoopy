@@ -58,8 +58,8 @@ void snoopyTestCli_action_run_messageformat_showHelp ()
 
 int snoopyTestCli_action_run_messageformat (int argc, char **argv)
 {
-    char *messageFormat;
-    char *message;
+    const char * messageFormat;
+    char       * message;
 
 
     /* Initialize Snoopy */
