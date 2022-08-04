@@ -48,19 +48,20 @@
  *
  * Params:
  *     logMessage:         destination string to return message in
+ *     logMessageBufSize:  size of the destination buffer
  *     logMessageFormat:   log message format to use
  *
  * Return:
  *     void
  */
 void snoopy_message_generateFromFormat (
-    char  *logMessage,
-    size_t logMessageBufSize,
-    char  *logMessageFormat
+    char * const logMessage,
+    size_t       logMessageBufSize,
+    char const * const logMessageFormat
 ) {
-    char *fmtPos_cur;
-    char *fmtPos_nextFormatTag;
-    char *fmtPos_nextFormatTagClose;
+    char const * fmtPos_cur;
+    char const * fmtPos_nextFormatTag;
+    char const * fmtPos_nextFormatTagClose;
     int   retVal;
 
     fmtPos_cur           = logMessageFormat;
@@ -161,9 +162,9 @@ void snoopy_message_generateFromFormat (
  *     void
  */
 void snoopy_message_append (
-    char  *logMessage,
+    char * logMessage,
     size_t logMessageBufSize,
-    const char *appendThis
+    char const * const appendThis
 ) {
     if (SNOOPY_ERROR == snoopy_util_string_append(logMessage, logMessageBufSize, appendThis)) {
         snoopy_error_handler("Maximum destination string size exceeded");

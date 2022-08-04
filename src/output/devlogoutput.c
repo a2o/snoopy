@@ -60,7 +60,7 @@ int snoopy_output_devlogoutput (char const * const logMessage, __attribute__((un
     }
 
     /* Get config pointer */
-    snoopy_configuration_t *CFG = snoopy_configuration_get();
+    const snoopy_configuration_t * CFG = snoopy_configuration_get();
 
     /* Generate syslog ident string */
     char syslogIdent[SNOOPY_SYSLOG_IDENT_FORMAT_BUF_SIZE] = {'\0'};

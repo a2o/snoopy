@@ -27,15 +27,15 @@
 
 
 void snoopy_message_generateFromFormat (
-    char       *logMessage,
-    size_t      logMessageBufSize,
-    char       *logMessageFormat
+    char * const       logMessage,
+    size_t             logMessageBufSize,
+    char const * const logMessageFormat
 );
 
 
 
 void snoopy_message_append (
-    char       *logMessage,
-    size_t      logMessageBufSize,
-    const char *appendThis
+    char * const       logMessage,
+    size_t             logMessageBufSize,
+    char const * const appendThis
 );

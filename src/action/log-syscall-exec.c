@@ -54,7 +54,7 @@
  */
 void snoopy_action_log_syscall_exec ()
 {
-    snoopy_configuration_t *CFG;
+    const snoopy_configuration_t * CFG;
     char *logMessage = NULL;
 
     /* Get config pointer */
