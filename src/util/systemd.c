@@ -94,8 +94,7 @@ char * snoopy_util_systemd_convertCgroupEntryToUnitName (char const * const cgro
 
     // Type: system.slice/
     } else if (0 == strncmp(matchPtr, SYSTEMD_SLICE_TYPE__SYSTEM, strlen(SYSTEMD_SLICE_TYPE__SYSTEM))) {
-        matchPtr = strchr(matchPtr, '/');
-        matchPtr++;
+        matchPtr += strlen(SYSTEMD_SLICE_TYPE__SYSTEM);
 
         dotPtr = strchr(matchPtr, '.');
         if ((dotPtr != NULL) && (0 == strcmp(dotPtr, ".service"))) {
@@ -107,8 +106,7 @@ char * snoopy_util_systemd_convertCgroupEntryToUnitName (char const * const cgro
 
     // Type: user.slice/
     } else if (0 == strncmp(matchPtr, SYSTEMD_SLICE_TYPE__USER, strlen(SYSTEMD_SLICE_TYPE__USER))) {
-        matchPtr = strchr(matchPtr, '/');
-        matchPtr++;
+        matchPtr += strlen(SYSTEMD_SLICE_TYPE__USER);
 
         return snoopy_util_systemd_convertUserSliceInfoToUsername(matchPtr);
     }

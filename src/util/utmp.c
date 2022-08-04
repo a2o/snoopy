@@ -56,6 +56,7 @@ int snoopy_util_utmp_findUtmpEntryByLine (char const * const ttyLine, struct utm
 
     // Prepare the search conditions
     strncpy(searchEntry.ut_line, ttyLine, UT_LINESIZE);
+    searchEntry.ut_line[UT_LINESIZE-1] = '\0';
 
     // Do the search
     setutent();

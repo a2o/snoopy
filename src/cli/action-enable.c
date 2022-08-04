@@ -66,6 +66,7 @@ int snoopy_cli_action_enable ()
 
     // Check if OUR Snoopy is already enabled
     if (etcLdSoPreload_findEntry(curEtcLdSoPreloadContent, libsnoopySoPath)) {
+        free(curEtcLdSoPreloadContent);
         printDiagValue("ld.so.preload path", g_etcLdSoPreloadPath);
         printDiagValue("Search string", libsnoopySoPath);
         printNotice("Snoopy is already enabled in /etc/ld.so.preload.");

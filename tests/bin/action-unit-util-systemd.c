@@ -139,8 +139,6 @@ static void mockCgroupEntryConversion(char const * const cgroupEntry, char const
         return; // Fake for Sonar CI, fatalError() exits
     }
 
-    if (unitName) {
-        free(unitName);
-    }
+    free(unitName);
     return;
 }
