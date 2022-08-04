@@ -28,6 +28,7 @@
 #include "action-common.h"
 
 #include "action-unit-action.h"
+#include "action-unit-datasource.h"
 #include "action-unit-error.h"
 #ifdef SNOOPY_CONFIGFILE_ENABLED
 #include "action-unit-ext-ini.h"
@@ -53,6 +54,7 @@ void snoopyTestCli_action_unit_showHelp ()
         "\n"
         "Available units:\n"
         "    action,a           Run a unit test on action/*.c\n"
+        "    datasource,ds      Run a unit test on datasource/*.c\n"
         "    error,e            Run a unit test on src/error.c\n"
 #ifdef SNOOPY_CONFIGFILE_ENABLED
         "    ext-ini,ei         Run a unit test on lib/inih/src/ini.c\n"
@@ -85,6 +87,10 @@ int snoopyTestCli_action_unit (int argc, char ** argv)
 
     if ((0 == strcmp(unit, "action")) || (0 == strcmp(unit, "a"))) {
         return snoopyTestCli_action_unit_action(argc-1, &argv[1]);
+    }
+
+    if ((0 == strcmp(unit, "datasource")) || (0 == strcmp(unit, "ds"))) {
+        return snoopyTestCli_action_unit_datasource(argc-1, &argv[1]);
     }
 
     if ((0 == strcmp(unit, "error")) || (0 == strcmp(unit, "e"))) {

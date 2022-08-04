@@ -35,6 +35,8 @@ snoopy_test_SOURCES  = \
     action-unit-action-log-syscall-exec.h \
     action-unit-action-log-message-dispatch.c \
     action-unit-action-log-message-dispatch.h \
+    action-unit-datasource.c \
+    action-unit-datasource.h \
     action-unit-error.c \
     action-unit-error.h \
     action-unit-outputregistry.c \
@@ -73,6 +75,12 @@ snoopy_test_SOURCES += \
     action-stress-threads.h \
     action-stress-threadsexec.c \
     action-stress-threadsexec.h
+endif
+
+if DATASOURCE_ENABLED_cmdline
+snoopy_test_SOURCES += \
+    action-unit-datasource-cmdline.c \
+    action-unit-datasource-cmdline.h
 endif
 
 if DATASOURCE_ENABLED_systemd_unit_name
