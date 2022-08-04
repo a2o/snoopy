@@ -14,6 +14,10 @@ TESTS += unit-action-log-message-dispatch.sh
 TESTS += unit-action-log-syscall-exec.sh
 endif
 
+if DATASOURCE_ENABLED_cmdline
+TESTS += unit-datasource-cmdline.sh
+endif
+
 TESTS += unit-error.sh
 
 if CONFIGFILE_ENABLED

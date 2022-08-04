@@ -54,7 +54,7 @@ void printDiag (const char * const message)
 }
 void printDiagValue (const char * const message, const char * const value)
 {
-    printf("[DIAG] %s: %s\n", message, value);
+    printf("[DIAG] %s: '%s'\n", message, value);
 }
 
 

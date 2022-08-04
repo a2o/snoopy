@@ -51,65 +51,59 @@
  */
 int snoopy_datasource_cmdline (char * const result, __attribute__((unused)) char const * const arg)
 {
-    char   *cmdLine = NULL;
-    int     cmdLineArgCount;
-    int     cmdLineSizeSum;   // Size sum of all arguments and spaces in between
-    int     cmdLineSizeRet;   // Size that will be returned
-    int     n;
     const snoopy_inputdatastorage_t * snoopy_inputdatastorage;
+    size_t bytesWrittenToResult;
 
     /* Get argument data of execv/e() call */
     snoopy_inputdatastorage = snoopy_inputdatastorage_get();
 
-    /* DirectAdmin does not follow the execve() convention (as described in its man page)
-       and passes NULL argv instead of what it's supposed to do. Let's work around that. */
-    if (snoopy_inputdatastorage->argv == NULL) {
-        n = snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "%s", snoopy_inputdatastorage->filename);
-        return n;
+    /*
+     * DirectAdmin does not follow the execve() convention (as described in its man page)
+     * and passes NULL argv instead of what it's supposed to do. Let's work around that.
+     *
+     * Additionally, let's handle the `(char *[]) { NULL }` case in the same manner too.
+     */
+    if (
+        (snoopy_inputdatastorage->argv == NULL)
+        ||
+        (snoopy_inputdatastorage->argv[0] == NULL)
+    ) {
+        if (NULL == snoopy_inputdatastorage->filename) {
+            return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "(unknown)");
+        } else {
+            return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "%s", snoopy_inputdatastorage->filename);
+        }
     }
 
-    /* Count number of arguments */
-    for (cmdLineArgCount=0 ; *(snoopy_inputdatastorage->argv+cmdLineArgCount) != (char *) 0 ; cmdLineArgCount++);
+    // Recompose the command into a result string
+    bytesWrittenToResult = 0;
+    for (int argId=0 ; snoopy_inputdatastorage->argv[argId] != NULL ; argId++) {
 
-    /* Calculate memory requirement for cmdLine */
-    cmdLineSizeSum = 1;
-    for (int i=0 ; i<cmdLineArgCount ; i++) {
-        /* Argument length + space */
-        cmdLineSizeSum += strlen(snoopy_inputdatastorage->argv[i]) + 1;
+        // Add space before every non-first argument
+        if ((argId > 0) && (bytesWrittenToResult < SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE)) {
+            bytesWrittenToResult += snprintf(
+                result+bytesWrittenToResult,
+                SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE - bytesWrittenToResult,
+                " "
+            );
+        }
+
+        // Copy the content
+        if (bytesWrittenToResult < SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE) {
+            bytesWrittenToResult += snprintf(
+                result+bytesWrittenToResult,
+                SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE - bytesWrittenToResult,
+                "%s", snoopy_inputdatastorage->argv[argId]
+            );
+        }
     }
-    /* Do not substract the +1 from the last iteration - the last character (most likely a space) will be converted to \0 */
-    if (cmdLineSizeSum > SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE) {
-        cmdLineSizeRet = SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE;
+
+    // Ensure the presence of a terminating null character
+    if (bytesWrittenToResult < SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE) {
+        result[bytesWrittenToResult] = '\0';
     } else {
-        cmdLineSizeRet = cmdLineSizeSum;
+        result[SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE-1] = '\0';
     }
 
-    /* Initialize cmdLine */
-    cmdLine    = malloc(cmdLineSizeRet);
-    cmdLine[0] = '\0';
-
-    n = 0;
-    for (int i=0 ; i<cmdLineArgCount ; i++) {
-        n += snprintf(cmdLine+n, cmdLineSizeRet-n, "%s", snoopy_inputdatastorage->argv[i]);
-
-        if (n < cmdLineSizeRet) {
-            cmdLine[n] = ' ';
-            n++;
-        }
-
-        if (n >= cmdLineSizeRet) {
-            n = cmdLineSizeRet;
-            break;
-        }
-    }
-
-    /* Conclude the string - add \0 at the end */
-    if (n > 0) n--;
-    cmdLine[n] = '\0';
-
-    /* Copy the result to the string pointed by return pointer */
-    snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "%s", cmdLine);
-
-    free(cmdLine);
-    return cmdLineSizeRet;
+    return (int) bytesWrittenToResult;
 }

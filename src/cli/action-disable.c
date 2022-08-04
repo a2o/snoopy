@@ -45,7 +45,7 @@ int snoopy_cli_action_disable ()
     size_t newEtcLdSoPreloadContentLengthMax;
     unsigned int copyLength;
     const char * entryPtr = NULL;
-    const char * entryLine = NULL;
+    char * entryLine = NULL;
     const char * srcPosPtr = 0;
     char * destPosPtr = 0;
     const char * foundStringPos1 = NULL;
@@ -74,6 +74,7 @@ int snoopy_cli_action_disable ()
     // Check if OUR Snoopy is already disabled
     entryPtr = etcLdSoPreload_findEntry(curEtcLdSoPreloadContent, libsnoopySoPath);
     if (entryPtr == NULL) {
+        free(curEtcLdSoPreloadContent);
         printDiagValue("ld.so.preload path", g_etcLdSoPreloadPath);
         printDiagValue("libsnoopy.so path", libsnoopySoPath);
         printNotice("Snoopy library is already absent from the ld.so.preload file.");
@@ -82,7 +83,7 @@ int snoopy_cli_action_disable ()
 
 
     newEtcLdSoPreloadContentLengthMax = strlen(curEtcLdSoPreloadContent);
-    newEtcLdSoPreloadContent          = malloc(newEtcLdSoPreloadContentLengthMax);
+    newEtcLdSoPreloadContent          = malloc(newEtcLdSoPreloadContentLengthMax+1); // +1 for terminating \0
     newEtcLdSoPreloadContent[0] = '\0';
 
     // Copy the initial part
@@ -122,5 +123,6 @@ int snoopy_cli_action_disable ()
 
     free(curEtcLdSoPreloadContent);
     free(newEtcLdSoPreloadContent);
+    free(entryLine);
     return 0;
 }

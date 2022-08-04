@@ -79,7 +79,7 @@ static int dl_iterate_phdr_callback (struct dl_phdr_info *i, size_t size, void *
 int snoopy_cli_action_status ()
 {
     const char * libsnoopySoPath = NULL;
-    const char * etcLdSoPreloadContent = NULL;
+    char * etcLdSoPreloadContent = NULL;
     const char * linePtr = NULL;
     const char * entryPtr = NULL;
 
@@ -111,6 +111,7 @@ int snoopy_cli_action_status ()
             printMessage("/etc/ld.so.preload:            OK - Snoopy is enabled.");
         }
     }
+    free(etcLdSoPreloadContent);
 
 
     // Check LD_PRELOAD environment variable?
@@ -162,6 +163,8 @@ int snoopy_cli_action_status ()
     } else {
         printMessage("Current process (execve addr): OK - execve() symbol address changed, looks like Snoopy is loaded.");
     }
+
+    dlclose(libcHandle);
 
 
     return 0;
