@@ -16,7 +16,7 @@ on:
       - 'ChangeLog'
       - 'COPYING'
       - 'configure.scan'
-      - 'contrib/**'
+      - 'packaging/**'
       - 'dev-tools/**'
       - '!dev-tools/libexec/get-release-*.sh'
       - 'doc/**'

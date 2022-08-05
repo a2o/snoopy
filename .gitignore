@@ -62,8 +62,8 @@ Makefile
 /tests/bin/snoopy-test
 /tests/bin/spaceparent
 /tests/bin/space parent
-/contrib/rhel/snoopy.spec
-/contrib/sles/snoopy.spec
+/packaging/rhel/snoopy.spec
+/packaging/sles/snoopy.spec
 /etc/snoopy.ini
 
 
@@ -98,6 +98,7 @@ Makefile
 /sonar-cfamily.reproducer
 /sonarcloud-build-wrapper-output
 
-### Distribution related files
+
+### Packaging-related files
 #
 /debian

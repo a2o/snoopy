@@ -172,8 +172,8 @@ AC_CONFIG_HEADERS([config.h])
 ### Generate these (Make)files
 #
 AC_CONFIG_FILES([Makefile
-                 contrib/rhel/snoopy.spec
-                 contrib/sles/snoopy.spec
+                 packaging/rhel/snoopy.spec
+                 packaging/sles/snoopy.spec
                  doc/Makefile
                  etc/Makefile
                  etc/snoopy.ini
