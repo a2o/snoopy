@@ -69,10 +69,10 @@ Makefile
 
 ### Files produced by the releasing process
 #
-/snoopy-*.tar.gz
+/snoopy-*.tar.*
 
 
-### Files produced by test suite
+### Files produced by the test suite
 #
 /tests/*.log
 /tests/*/*.log
@@ -85,6 +85,7 @@ Makefile
 *.gcda
 *.gcno
 *.gcov
+
 
 ### Code analysis configuration and output files
 #

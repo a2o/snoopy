@@ -1,0 +1,24 @@
+Source: snoopy
+Section: admin
+Priority: optional
+Maintainer: Bostjan Skufca Jese <bostjan@skufca.si>
+Build-Depends: debhelper (>= 11.1), autoconf (>=2.69), dh-autoreconf, procps, socat
+Standards-Version: 4.6.1.0
+Homepage: https://github.com/a2o/snoopy
+Vcs-Git: https://github.com/a2o/snoopy.git
+Vcs-Browser: https://github.com/a2o/snoopy
+Rules-Requires-Root: no
+
+Package: snoopy
+Architecture: linux-any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Conflicts: libsnoopy
+Replaces: libsnoopy
+Description: Snoopy Command Logger is a wrapper around execve() that captures all executed commands by all users and all processes and sends the data to syslog.
+ Snoopy Command Logger is a shared library that interposes itself
+ between dynamic executables and libc's execve() function.
+ Once loaded, programs' calls to execve() are intercepted and logged.
+ System administrators may find Snoopy Command Logger useful in tasks
+ such as system diagnostics, tracking other administrators' actions
+ as well as getting a good 'feel' of what's going on on their system
+ (i.e. what CGI scripts are being launched by Apache).

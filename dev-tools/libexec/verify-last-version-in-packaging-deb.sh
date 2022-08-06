@@ -29,7 +29,7 @@ set -u
 #
 RELEASE_VERSION="${1:-}"
 if [ "$RELEASE_VERSION" == "" ]; then
-    _fatalError "Release version argument not provided. Usage: $0 x.y.z"
+    _fatalError "Release version argument not provided. Usage: $0 x.y.z" $LINENO
 fi
 
 
@@ -42,14 +42,16 @@ fi
 
 
 
-### Check everywhere for last version consistency
+### Get latest release version from ChangeLog and verify it
 #
-./dev-tools/libexec/verify-last-version-in-readme.sh          "$RELEASE_VERSION"
-./dev-tools/libexec/verify-last-version-in-changelog.sh       "$RELEASE_VERSION"
-./dev-tools/libexec/verify-last-version-in-packaging-deb.sh   "$RELEASE_VERSION"
+LAST_VERSION_IN_DEBIAN_CHANGELOG=`head -n1 packaging/deb/changelog | grep -E '^snoopy [(]' | cut -d'(' -f2 | cut -d')' -f1 | sed -e 's/-1$//'`
+if [ "$LAST_VERSION_IN_DEBIAN_CHANGELOG" != "$RELEASE_VERSION" ]; then
+    _fatalError "Last version listed in packaging/deb/changelog is $LAST_VERSION_IN_DEBIAN_CHANGELOG, not $RELEASE_VERSION" $LINENO
+fi
 
 
 
 ### All good
 #
+#_echo "Last version listed in ChangeLog: $LAST_VERSION_IN_CHANGELOG"
 true
