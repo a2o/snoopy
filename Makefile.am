@@ -93,6 +93,7 @@ clean-local-this-dir:
 	rm -f  ../snoopy_*_*.changes ; \
 	rm -f  ../snoopy_*_*.deb ; \
 	rm -f  ../snoopy-dbgsym_*_*.ddeb ; \
+	rm -rf packaging/rpmbuild ; \
 	true
 
 

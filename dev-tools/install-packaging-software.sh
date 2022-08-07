@@ -33,8 +33,8 @@ BOOTSTRAP_GIT_REPO_REQUIRED="false"
 #
   PACKAGE_NAMES_ARCH="fixme-this-is-not-an-actual-package"
 PACKAGE_NAMES_DEBIAN="debhelper"
-PACKAGE_NAMES_REDHAT="fixme-this-is-not-an-actual-package"
-  PACKAGE_NAMES_SUSE="fixme-this-is-not-an-actual-package"
+PACKAGE_NAMES_REDHAT="rpm-build"
+  PACKAGE_NAMES_SUSE="rpm-build"
 
 
 
