@@ -237,7 +237,7 @@ fi
 if test "x$sbindir" = "x\${exec_prefix}/sbin" ; then
     SBINDIR="$EXEC_PREFIX/sbin"
 else
-    SBINDIR="$libdir"
+    SBINDIR="$sbindir"
 fi
 
 
