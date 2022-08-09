@@ -35,7 +35,7 @@ jobs:
     strategy:
       matrix:
         container:
-#          - archlinux:base-devel
+          - archlinux:base-devel
 
           - almalinux/8-base:latest
           - almalinux/9-base:latest
