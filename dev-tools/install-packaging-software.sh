@@ -31,7 +31,7 @@ BOOTSTRAP_GIT_REPO_REQUIRED="false"
 
 ### Definitions
 #
-  PACKAGE_NAMES_ARCH="fixme-this-is-not-an-actual-package"
+  PACKAGE_NAMES_ARCH="pacman"
 PACKAGE_NAMES_DEBIAN="debhelper"
 PACKAGE_NAMES_REDHAT="rpm-build"
   PACKAGE_NAMES_SUSE="rpm-build"

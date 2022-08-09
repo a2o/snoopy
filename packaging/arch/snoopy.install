@@ -1,0 +1,7 @@
+post_install() {
+    /usr/bin/snoopyctl enable
+}
+
+pre_remove() {
+    /usr/bin/snoopyctl disable
+}

@@ -16,6 +16,7 @@ Makefile.in
 /build/m4/libtool.m4
 /build/m4/lt*.m4
 /configure
+/configure~
 /config.cache
 /config.h
 /config.log
@@ -103,3 +104,4 @@ Makefile
 ### Packaging-related files
 #
 /debian
+/PKGBUILD

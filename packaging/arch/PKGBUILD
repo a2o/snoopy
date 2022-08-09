@@ -1,0 +1,64 @@
+# Maintainer: Bostjan Skufca Jese <bostjan@skufca.si>
+pkgname="snoopy"
+pkgver=2.4.15_123_g05fa514_dirty
+pkgrel=1
+pkgdesc="Snoopy Command Logger is a wrapper around execve() that captures all executed commands by all users and all processes and sends the data to syslog."
+arch=('x86_64')
+url="https://github.com/a2o/snoopy"
+license=('GPL')
+groups=()
+depends=('glibc')
+makedepends=(
+    "autoconf"
+    "automake"
+    "diffutils"
+    "file"
+    "gcc"
+    "git"
+    "libtool"
+    "m4"
+    "make"
+)
+checkdepends=(
+    "inetutils"
+    "procps"
+    "socat"
+)
+backup=(
+    "etc/snoopy.ini"
+)
+options=()
+install="packaging/arch/snoopy.install"
+changelog=ChangeLog
+
+pkgver() {
+    cd $startdir
+    ./dev-tools/libexec/get-release-version.sh | sed -e 's/-/_/g'
+}
+
+prepare() {
+    cd $startdir
+    if [ ! -f configure ]; then
+        ./bootstrap.sh
+    fi
+}
+
+build() {
+    cd $startdir
+    # On Arch, we need to "reroute" /usr/sbin/snoopyctl to /usr/bin/snoopyctl,
+    # since /usr/sbin is a symlink to /usr/bin.
+    # If we don't do this, we get the "conflicting files" error because of
+    # the usr/sbin being an actual directory in the .pkg.tar.zst package.
+    ./configure --enable-everything --prefix=/usr --sysconfdir=/etc --sbindir=/usr/bin
+    make -j4
+}
+
+check() {
+    cd $startdir
+    make -j4 check
+}
+
+package() {
+    cd $startdir
+    make DESTDIR="$pkgdir/" install
+}
