@@ -120,7 +120,7 @@ jobs:
       ### Bootstrap & configure the code
       #
       - run: ./bootstrap.sh
-      - run: ./configure --enable-everything --enable-code-coverage
+      - run: ./configure --enable-option-checking=fatal --enable-everything --enable-code-coverage
 
 
 

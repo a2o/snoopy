@@ -87,7 +87,7 @@ jobs:
       #
       - run: ./dev-tools/install-dev-software.sh
       - run: ./bootstrap.sh
-      - run: ./configure --enable-everything
+      - run: ./configure --enable-option-checking=fatal --enable-everything
       - run: make -j4
       - run: make -j4 check
 
