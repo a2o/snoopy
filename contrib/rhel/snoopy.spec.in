@@ -29,8 +29,8 @@ install -m 0644 etc/snoopy.ini %{buildroot}/%{_sysconfdir}/snoopy.ini
 %{_sbindir}/*
 %{_sysconfdir}/*
 
-%post -p /usr/sbin/snoopy enable
-%preun -p /usr/sbin/snoopy disable
+%post -p /usr/sbin/snoopyctl enable
+%preun -p /usr/sbin/snoopyctl disable
 
 %changelog
 * Tue Nov 4 2014 Jeremy Brown <jwbrown77@yahoo.com> 2.0.0rc12-1

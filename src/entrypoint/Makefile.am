@@ -35,7 +35,7 @@ libsnoopy_entrypoint_execve_wrapper_la_SOURCES = \
     execve-wrapper.c \
     execve-wrapper.h
 
-# Production entry point (for `snoopy` CLI utility)
+# Production entry point (for `snoopyctl` CLI utility)
 noinst_LTLIBRARIES += libsnoopy-entrypoint-cli.la
 libsnoopy_entrypoint_cli_la_SOURCES = \
     cli.c \
