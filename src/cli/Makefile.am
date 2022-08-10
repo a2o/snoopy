@@ -13,8 +13,8 @@ sbin_PROGRAMS =
 
 ### Program-based entry points
 #
-sbin_PROGRAMS += snoopy
-snoopy_SOURCES = \
+sbin_PROGRAMS += snoopyctl
+snoopyctl_SOURCES = \
 	action-conf.c \
 	action-conf.h \
 	action-disable.c \
@@ -27,6 +27,6 @@ snoopy_SOURCES = \
 	action-version.h \
 	cli-subroutines.c \
 	cli-subroutines.h \
-	snoopy.c
-snoopy_LDADD = \
+	snoopyctl.c
+snoopyctl_LDADD = \
 	../util/libsnoopy-utils.la

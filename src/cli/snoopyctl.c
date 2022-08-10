@@ -58,7 +58,7 @@ void showAbout () {
 void showHelp () {
     char * helpContent =
         "Snoopy CLI management tool usage:\n"
-        "    snoopy ACTION [ARGS]\n"
+        "    snoopyctl ACTION [ARGS]\n"
         "\n"
         "Available actions:\n"
 #ifdef SNOOPY_CONFIGFILE_ENABLED
@@ -66,7 +66,7 @@ void showHelp () {
 #endif
         "    disable        Remove libsnoopy.so from /etc/ld.so.preload\n"
         "    enable         Add libsnoopy.so to /etc/ld.so.preload\n"
-        "    status         Detect whether Snoopy is already enabled and/or loaded\n"
+        "    status         Detect whether Snoopy is already enabled and loaded\n"
         "\n"
         "    version        Show Snoopy version\n"
         "    about          Show general information\n"

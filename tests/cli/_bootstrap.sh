@@ -17,9 +17,9 @@ set -u
 
 ### This dir-specific settings
 #
-# Path to the freshly built `snoopy` CLI tool
-export SNOOPY_CLI="$SNOOPY_CUR_TEST_WORKDIR/../../src/cli/snoopy"
-# This one changes the behaviour of `snoopy ...` CLI tool, to look for `libsnoopy.so`
+# Path to the freshly built `snoopyctl` CLI tool
+export SNOOPY_CLI="$SNOOPY_CUR_TEST_WORKDIR/../../src/cli/snoopyctl"
+# This one changes the behaviour of `snoopyctl ...` CLI tool, to look for `libsnoopy.so`
 # in the specified location instead of the configured one.
-# For now, this does not change what `snoopy enable` puts into the `ld.so.preload` file.
+# For now, this does not change what `snoopyctl enable` puts into the `ld.so.preload` file.
 export SNOOPY_TEST_LIBSNOOPY_SO_PATH="$SNOOPY_CUR_TEST_WORKDIR/../../src/.libs/libsnoopy.so"

@@ -90,7 +90,7 @@ The last string in the command output is your login shell, `bash` by default.
 
 Let's enable Snoopy with the command:
 
-    snoopy enable
+    snoopyctl enable
 
 You can check that the `/etc/ld.so.preload` file now contains something like `/lib/libsnoopy.so`.
 

@@ -57,7 +57,7 @@ Makefile
 .deps/
 .libs/
 /a.out
-/src/cli/snoopy
+/src/cli/snoopyctl
 /src/libsnoopy.so
 /tests/bin/snoopy-test
 /tests/bin/spaceparent

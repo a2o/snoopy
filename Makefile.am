@@ -54,12 +54,12 @@ tests:  check
 ### Enable/disable targets
 #
 enable: install
-	$(sbindir)/snoopy enable
+	$(sbindir)/snoopyctl enable
 
-# We need to run a local isntance of `snoopy`, as `make uninstall` first
-# removes the installed `snoopy` instance before running the `uninstall-local` target.
+# We need to run a local instance of `snoopyctl`, as `make uninstall` first
+# removes the installed `snoopyctl` instance before running the `uninstall-local` target.
 disable:
-	./src/cli/snoopy disable
+	./src/cli/snoopyctl disable
 
 # Disable it if we are uninstalling it, to avoid error messages
 # about missing library that should be preloaded.
