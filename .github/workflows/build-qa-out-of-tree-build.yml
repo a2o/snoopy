@@ -79,7 +79,7 @@ jobs:
       - run: ./dev-tools/install-dev-software.sh
       - run: ./bootstrap.sh
       - run: mkdir -p tmp/build1
-      - run: cd tmp/build1 && ../../configure --enable-everything
+      - run: cd tmp/build1 && ../../configure --enable-option-checking=fatal --enable-everything
       - run: cd tmp/build1 && make -j4
       - run: cd tmp/build1 && make -j4 check
 

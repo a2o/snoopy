@@ -79,7 +79,7 @@ jobs:
       ### Build
       #
       - run: ./bootstrap.sh
-      - run: ./configure --enable-everything
+      - run: ./configure --enable-option-checking=fatal --enable-everything
       - run: make
 
 

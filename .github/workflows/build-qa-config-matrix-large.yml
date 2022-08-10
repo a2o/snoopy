@@ -91,10 +91,10 @@ jobs:
       - run: ./dev-tools/install-dev-software.sh
       - run: ./bootstrap.sh
 
-      - run: ./configure ${{matrix.configure_flags}}
+      - run: ./configure --enable-option-checking=fatal ${{matrix.configure_flags}}
         if: ${{ ! startsWith(matrix.configure_flags, 'random') }}
 
-      - run: ./configure `./dev-tools/libexec/get-random-configure-flags.sh`
+      - run: ./configure --enable-option-checking=fatal `./dev-tools/libexec/get-random-configure-flags.sh`
         if: ${{ startsWith(matrix.configure_flags, 'random') }}
 
       - run: make -j4
