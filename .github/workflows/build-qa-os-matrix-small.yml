@@ -46,7 +46,7 @@ jobs:
 
           - ciready/centos:stream-9-ci-c
 
-          - ciready/debian:bullseye-ci-c
+          - ciready/debian:bookworm-ci-c
           - ciready/debian:sid-ci-c
 
           - ciready/opensuse:leap-15.4-ci-c

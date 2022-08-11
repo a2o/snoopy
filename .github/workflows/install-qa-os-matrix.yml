@@ -45,6 +45,7 @@ jobs:
 
           - debian:buster
           - debian:bullseye
+          - debian:bookworm
           - debian:sid
 
           - opensuse/leap:15.3
