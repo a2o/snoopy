@@ -36,17 +36,16 @@ fi
 
 ### Verify release version syntax
 #
-if ! _isReleaseVersionFormatValid "$RELEASE_VERSION"; then
-    _fatalError "Invalid release version syntax: $RELEASE_VERSION" $LINENO
+if ! _isPublicReleaseVersionFormatValid "$RELEASE_VERSION"; then
+    _fatalError "Invalid public release version syntax: $RELEASE_VERSION" $LINENO
 fi
 
 
 
 ### Check everywhere for last version consistency
 #
-./dev-tools/libexec/verify-last-version-in-readme.sh          "$RELEASE_VERSION"
-./dev-tools/libexec/verify-last-version-in-changelog.sh       "$RELEASE_VERSION"
-./dev-tools/libexec/verify-last-version-in-packaging-deb.sh   "$RELEASE_VERSION"
+./dev-tools/libexec/verify-last-version-in-readme.sh    "$RELEASE_VERSION"
+./dev-tools/libexec/verify-last-version-in-changelog.sh "$RELEASE_VERSION"
 
 
 

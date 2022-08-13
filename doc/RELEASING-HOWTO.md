@@ -41,7 +41,10 @@ The following assumptions are, well, assumed, by the releasing scripts:
     edit ChangeLog
 
 
-2. Edit the `README.md` file, update the latest release version (to the upcoming release version):
+2. Edit the `README.md` file, update:
+- The latest shown release version
+- The latest release version in URLs right next to the edit above
+- Add the latest release to the `News` section:
 
     edit README.md
 
@@ -51,9 +54,9 @@ The following assumptions are, well, assumed, by the releasing scripts:
     ./dev-tools/create-release-commit-and-tag.sh
 
 
-4. Build the release package(s):
+4. Build the release package:
 
-    ./dev-tools/build-package-targz.sh
+    ./dev-tools/build-release-package.sh
 
 
 5. Publish the release:
@@ -61,13 +64,25 @@ The following assumptions are, well, assumed, by the releasing scripts:
     ./dev-tools/publish-release.sh
 
 
-5. Go to GitHub and close the corresponding milestone:
+6. Go to GitHub and close the corresponding milestone:
 
     https://github.com/a2o/snoopy/milestones
 
 
-6. Go to Snoopy's [Actions](https://github.com/a2o/snoopy/actions) tab
-   on GitHub and monitor the workflows related to the new release (hint: filter by git tag).
+7. Go to Snoopy's [Actions](https://github.com/a2o/snoopy/actions) tab
+   on GitHub and monitor the workflows related to the new release:
+
+    https://github.com/a2o/snoopy/actions?query=branch%3A$RELEASE_TAG
 
 
-7. All done.
+8. Trigger the native packaging build jobs:
+
+    gh workflow run -R $GIT_REMOTE_GITHUB_ID publish-native-packages.yml --ref=$RELEASE_TAG
+
+
+9. Monitor the native packaging build jobs:
+
+    https://github.com/a2o/snoopy/actions/workflows/publish-native-packages.yml?query=branch%3A$RELEASE_TAG
+
+
+10. All done.

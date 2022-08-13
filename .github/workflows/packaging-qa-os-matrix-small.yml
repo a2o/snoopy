@@ -1,0 +1,103 @@
+name: Packaging QA - OS Matrix (Small)
+
+
+
+on:
+  workflow_dispatch:
+
+  pull_request:
+    branches:
+      - master
+    paths:
+      - '**'
+      - '!.github/**'
+      - '.github/workflows/packaging-qa-os-matrix-small.yml'
+      - '!.gitignore'
+      - '!ChangeLog'
+      - '!COPYING'
+      - '!configure.scan'
+      - '!dev-tools/**'
+      - 'dev-tools/_bootstrap.sh'
+      - 'dev-tools/build-native-package.sh'
+      - 'dev-tools/clean-git-repository.sh'
+      - 'dev-tools/libexec/get-release-*.sh'
+      - '!doc/**'
+      - '!etc/**'
+      - '!install/**'
+      - '!lib/*/IMPORT.defs'
+      - '!lib/*/LICENSE'
+      - '!README.md'
+
+
+
+jobs:
+  packaging-qa-os-matrix-small:
+
+    name: Build on ${{matrix.container}}
+    runs-on: ubuntu-20.04
+
+
+
+    ### Define the list of container images
+    #
+    container: ${{ matrix.container }}
+    strategy:
+      matrix:
+        container:
+          - ciready/archlinux:base-devel-ci-c
+
+          - ciready/centos:stream-9-ci-c
+
+          - ciready/ubuntu:22.04-ci-c
+
+
+
+    ###
+    ### Steps to run
+    ###
+    steps:
+
+
+
+      ### Ubuntu 18.04 legacy git workaround
+      #
+      - name: "WORKAROUND: Install latest git on Ubuntu 18.04, required by action/checkout@v2"
+        run: |
+            apt install -y software-properties-common
+            add-apt-repository -y ppa:git-core/ppa
+            apt update
+            apt install -y git
+        if: ${{ startsWith(matrix.container, 'ciready/ubuntu:18.04') }}
+
+
+
+      ### Fetch the code
+      #
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      # Work around the fix for CVE-2022-24765
+      - run: git config --global --add safe.directory $GITHUB_WORKSPACE || true
+
+
+
+      ### Install required tools
+      #
+      - run: ./dev-tools/install-dev-software.sh
+      - run: ./dev-tools/install-packaging-software.sh
+
+
+
+      ### Archlinux "workaround"
+      #
+      - name: "WORKAROUND: Make makepkg run as roon on Arch Linux"
+        run: |
+            sed -i 's/EUID == 0/EUID == 1987/' /usr/sbin/makepkg
+        if: ${{ startsWith(matrix.container, 'ciready/archlinux:') }}
+
+
+
+      ### Build
+      #
+      - run: ./dev-tools/build-native-package.sh

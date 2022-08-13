@@ -42,19 +42,107 @@ fi
 
 
 
+### Define the help method
+#
+_showHelp()
+{
+    cat <<EOF
+Purpose:
+
+    Return the version of Snoopy code in the source tree
+
+Supported CLI arguments:
+
+    -i          Ignore a dirty working directory - do not add '-dirty' suffix to the version.
+                Only applicable in 'git' mode (and when 'autoreconf' mode uses git too).
+    -m MODE     Specify the mode of operation ('git', 'changelog', or 'autoreconf' [default]).
+                Mode 'autoreconf' uses 'git' mode if available, and falls back on 'changelog'
+                mode (i.e. when used within a distribution tarball).
+
+    -h/--help   Show this help.
+
+Supported environment variables:
+
+    SNOOPY_RELEASE_VERSION_IGNORE_DIRTY
+        If set, dirty working tree is not reported as such in the returned version.
+        Useful for fixing up (refreshed) release tooling on-the-fly while releasing
+        a package.
+
+Usage:
+
+    Get the software release version:
+        $0
+
+    Get the version that ignores the "-dirty" git tag:
+        $0 -i
+
+EOF
+}
+
+_showHelpAndExit()
+{
+    _showHelp
+    exit
+}
+
+
+
+### Parse the CLI arguments
+#
+if [[ $@ =~ [-][-]help ]]; then
+    _showHelpAndExit
+fi
+
+IGNORE_DIRTY="false"
+MODE="autoreconf"
+
+while getopts ":him:" opt; do
+    case "$opt" in
+        i)
+            IGNORE_DIRTY="true"
+            ;;
+
+        m)
+            MODE="$OPTARG"
+            ;;
+
+        h)
+            _showHelpAndExit
+            ;;
+
+        ?)
+            _fatalError "Unsupported argument: '-$OPTARG'. Run '$0 -h' to list supported arguments." $LINENO
+            ;;
+
+        *)
+            _fatalError "Internal error (opt=$opt)" $LINENO
+            ;;
+    esac
+done
+
+
+
+### Parse ENV arguments
+#
+if [ ! -z ${SNOOPY_RELEASE_VERSION_IGNORE_DIRTY+x} ]; then
+    echo "[$0] WARNING: Environment varible SNOOPY_RELEASE_VERSION_IGNORE_DIRTY set, ignoring potentially dirty working directory." 1>&2
+    IGNORE_DIRTY=true
+fi
+
+
+
 ### Check arguments
 #
-MODE=${1:-all}
 case $MODE in
 
-    'all')
+    'autoreconf')
         ;;
     'git')
         ;;
     'changelog')
         ;;
     *)
-        _fatalError "Invalid run mode: '$MODE'. Only 'git', 'changelog' or 'all' options are supported."
+        _fatalError "Invalid run mode: '$MODE'. Only 'git', 'changelog' or 'autoreconf' (default) options are supported."
         ;;
 esac
 
@@ -88,9 +176,13 @@ esac
 #
 # Used for building from git, and for making RC packages
 #
-if [ "$MODE" == "all" -o "$MODE" == "git" ]; then
+if [ "$MODE" == "autoreconf" -o "$MODE" == "git" ]; then
     if [ -d .git ]; then
-        SNOOPY_RELEASE_VERSION=`git describe --tags --dirty --always | sed -e 's/^snoopy-//'`
+        if [ "$IGNORE_DIRTY" == "true" ]; then
+            SNOOPY_RELEASE_VERSION=`git describe --tags --always | sed -e 's/^snoopy-//'`
+        else
+            SNOOPY_RELEASE_VERSION=`git describe --tags --always --dirty | sed -e 's/^snoopy-//'`
+        fi
         echo $SNOOPY_RELEASE_VERSION
         exit 0
     fi
@@ -102,7 +194,7 @@ fi
 #
 # Used only if ./bootstrap.sh is run from distribution package, not from git
 #
-if [ "$MODE" == "all" -o "$MODE" == "changelog" ]; then
+if [ "$MODE" == "autoreconf" -o "$MODE" == "changelog" ]; then
     if [ -f ChangeLog ]; then
         SNOOPY_RELEASE_VERSION=`cat ChangeLog | grep -E '^[-0-9]+ - Version [.0-9]+$' | head -n1 | awk '{print $4}'`
         echo $SNOOPY_RELEASE_VERSION

@@ -73,6 +73,7 @@ uninstall-local: disable
 # Clean release files
 clean-local-this-dir:
 	rm -f  config.h.in~ ; \
+	rm -f  config.log ; \
 	rm -f  configure~ ; \
 	rm -rf snoopy-[0-9].[0-9].* ; \
 	rm -f  snoopy-*.tar.gz* ; \
@@ -104,11 +105,13 @@ clean-local-this-dir:
 # (anything that is not in git repository must go away)
 gitclean: maintainer-clean
 	rm -f  aclocal.m4 ; \
+	rm -fr autom4te.cache ; \
 	rm -f  autoscan.log ; \
 	rm -fr build/aux/ ; \
 	rm -fr build/m4/ ; \
 	rm -f  configure ; \
 	rm -f  debian ; \
+	rm -f  packaging/deb/changelog ; \
 	rm -f  PKGBUILD ; \
 	true
 

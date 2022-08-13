@@ -2,18 +2,12 @@
 
 
 
-### Shell configuration and error handler
+### Shell configuration and script bootstrap
 #
 set -e
 set -u
-
-_fatalError() {
-    echo "ERROR($0): $1" 1>&2
-    exit 1
-}
-_echo() {
-    echo "[$0]: $1"
-}
+set -o pipefail
+. `dirname $0`/_bootstrap.sh
 
 
 
@@ -46,15 +40,15 @@ _echo "Determined release version: $RELEASE_VERSION"
 
 
 
-### If this is a production build, do additional checking
+### Verify version consistency for public releases
 #
-RELEASE_IS_STABLE="false"
-if [[ $RELEASE_TAG =~ ^snoopy-[0-9]+\.[0-9]+\.[0-9]+(-rc[0-9]+)?$ ]]; then
-    _echo "This is a stable production build, running additional consistency checks..."
+RELEASE_IS_PUBLIC="false"
+if _doesReleaseTagDenotePublicRelease "$RELEASE_TAG" ; then
+    _echo "This is a stable/rc build, running version consistency checks..."
     ./dev-tools/libexec/verify-last-version-everywhere.sh "$RELEASE_VERSION"
-    RELEASE_IS_STABLE="true"
+    RELEASE_IS_PUBLIC="true"
 else
-    _echo "This is a non-stable/non-production build, additional consistency checks will be skipped."
+    _echo "This is NOT a stable/rc build, thus skipping version consistency checks."
 fi
 
 
@@ -65,6 +59,12 @@ RELEASE_PACKAGE_FILE="snoopy-$RELEASE_VERSION.tar.gz"
 if [ -e $RELEASE_PACKAGE_FILE ]; then
     _fatalError "Release package file already exists: $RELEASE_PACKAGE_FILE"
 fi
+
+
+
+### Clean up the git repo first
+#
+./dev-tools/clean-git-repository.sh
 
 
 
@@ -88,18 +88,22 @@ _echo ""
 
 ### Suggest next step(s)
 #
-if [ "$RELEASE_IS_STABLE" == "true" ]; then
-    _echo ""
-    _echo "Next step:"
-    _echo "=========="
-    _echo "Publish the release using the following command:"
-    _echo ""
-    _echo "    ./dev-tools/publish-release.sh"
-    _echo ""
+if [ "$RELEASE_IS_PUBLIC" == "true" ]; then
+    _echo "
+Next step:
+==========
+
+5. Publish the release:
+
+    ./dev-tools/publish-release.sh
+
+"
 else
-    _echo ""
-    _echo "Next step:"
-    _echo "=========="
-    _echo "This is a non-stable version, skipping the publishing suggestion."
-    _echo ""
+    _echo "
+Next step:
+==========
+
+This is not a public release, thus not showing the publishing next step(s).
+
+"
 fi

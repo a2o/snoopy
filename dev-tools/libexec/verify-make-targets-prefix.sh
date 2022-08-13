@@ -12,7 +12,7 @@ set -u
 
 ### Generate reports
 #
-RES=`make -p | grep -Eo '^[a-z][^:]+\.lo:' | grep -E '^libsnoopy' -c | cat`
+RES=`make -p | grep -Eo '^[a-z][^:]+\.lo:' | grep -E '^libsnoopy' -c || true`
 if [ "$RES" -ne "0" ]; then
     make -p | grep -Eo '^[a-z][^:]+\.lo:' | grep -E '^libsnoopy'
     _fatalError "Some *.lo make targets contain 'libsnoopy...' prefix (listed above)." $LINENO

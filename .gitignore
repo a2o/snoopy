@@ -73,6 +73,11 @@ Makefile
 /snoopy-*.tar.*
 
 
+## Files producing by the native packaging process
+#
+/packaging/deb/changelog
+
+
 ### Files produced by the test suite
 #
 /tests/*.log

@@ -102,7 +102,7 @@ fi
 ### Get the release tag from ChangeLog file
 #
 _echo "Getting release tag from ChangeLog..."
-RELEASE_TAG=`./dev-tools/libexec/get-release-tag.sh changelog`
+RELEASE_TAG=`./dev-tools/libexec/get-release-tag.sh -m changelog`
 _echo "Got release tag: $RELEASE_TAG"
 RELEASE_VERSION=`echo $RELEASE_TAG | sed -e 's/^snoopy-//'`
 _echo "Got release version: $RELEASE_VERSION"
@@ -126,21 +126,12 @@ fi
 
 
 
-### Verify ChangeLog content
+### Verify last version information
 #
-if ! ./dev-tools/libexec/verify-last-version-in-changelog.sh "$RELEASE_VERSION"; then
-    _fatalError "Last version listed in ChangeLog is not $RELEASE_VERSION" $LINENO
+if ! ./dev-tools/libexec/verify-last-version-everywhere.sh "$RELEASE_VERSION"; then
+    _fatalError "Last version information is not consistent everywhere: $RELEASE_VERSION" $LINENO
 fi
-_echo "ChangeLog content looks OK."
-
-
-
-### Verify README.md content
-#
-if ! ./dev-tools/libexec/verify-last-version-in-readme.sh "$RELEASE_VERSION"; then
-    _fatalError "Version $RELEASE_VERSION is not (properly) listed in README.md" $LINENO
-fi
-_echo "README.md content looks OK."
+_echo "Last release version information is consistent everywhere."
 
 
 
@@ -188,10 +179,12 @@ _echo ""
 
 ### Suggest next step(s)
 #
-_echo ""
-_echo "Next step:"
-_echo "=========="
-_echo "Build the release package with the following command:"
-_echo ""
-_echo "    ./dev-tools/build-package-targz.sh"
-_echo ""
+_echo "
+Next step:
+==========
+
+4. Build the release package:
+
+    ./dev-tools/build-release-package.sh
+
+"

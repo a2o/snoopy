@@ -1,4 +1,4 @@
-snoopy (2.4.15-1) unstable; urgency=medium
+snoopy (DEB_PACKAGE_VERSION) unstable; urgency=medium
 
   * NOTICE: This is not a real changelog.
   * This .deb package has been provided by Snoopy maintainers.
