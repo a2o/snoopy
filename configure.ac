@@ -90,7 +90,6 @@ SNOOPY_PROG_REQUIRE([wc],       [WC],       [Needed for "make check" test suite.
 
 
 dnl Checks for libraries.
-dnl FIXME: Replace `main' with a function in `-ldl':
 AC_CHECK_LIB([dl], [dlsym], [], [
     AC_MSG_ERROR([A library is missing. Unable to continue.])
 ])
