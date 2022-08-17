@@ -113,11 +113,9 @@ EOF
 #
 
 # Clean
-./bootstrap.sh
-./configure --enable-everything
-make gitclean
+./dev-tools/clean-git-repository.sh
 
-# Configure for real
+# Configure
 ./bootstrap.sh
 ./configure --enable-everything
 

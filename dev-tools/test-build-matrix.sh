@@ -61,9 +61,7 @@ cat <<EOF
 ### Bootstrapping the build environment
 ###
 EOF
-./bootstrap.sh
-./configure --enable-everything
-make gitclean
+./dev-tools/clean-git-repository.sh
 ./bootstrap.sh
 
 
