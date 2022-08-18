@@ -25,6 +25,7 @@ Supported CLI arguments:
     -n          Do not build, only show the final package's file name.
     -p          Do not build, only show the final package's file path.
     -r N        Specify a custom release number. [default=1]
+    -v          Do not build, only show the final package's version.
 
     -h/--help   Show this help.
 
@@ -56,7 +57,7 @@ fi
 ARG_RUN_MODE="build"
 ARG_PKG_RELEASE_NUMBER="1"
 
-while getopts ":npr:" opt; do
+while getopts ":npr:vh" opt; do
     case "$opt" in
         n)
             ARG_RUN_MODE="only-show-file-name"
@@ -68,6 +69,10 @@ while getopts ":npr:" opt; do
 
         r)
             ARG_PKG_RELEASE_NUMBER="$OPTARG"
+            ;;
+
+        v)
+            ARG_RUN_MODE="only-show-package-version"
             ;;
 
         h)
@@ -124,6 +129,7 @@ case "$OS_ID" in
         PKG_RELEASE_NUMBER="$ARG_PKG_RELEASE_NUMBER"
 
         ARCHITECTURE=`uname -m`
+        PKG_VERS_TAG="${PKG_SNOOPY_VERSION}-${PKG_RELEASE_NUMBER}"
         PKG_FULL_TAG="${PKG_SNOOPY_VERSION}-${PKG_RELEASE_NUMBER}-${ARCHITECTURE}"
 
         PKG_FILE_NAME="snoopy-${PKG_FULL_TAG}.pkg.tar.zst"
@@ -156,6 +162,7 @@ case "$OS_ID" in
         PKG_RELEASE_TAG="${PKG_RELEASE_NUMBER}.${PKG_RELEASE_DIST}"
 
         ARCHITECTURE=`rpm --eval '%{_arch}'`
+        PKG_VERS_TAG="${PKG_SNOOPY_VERSION}-${PKG_RELEASE_NUMBER}"
         PKG_FULL_TAG="${PKG_SNOOPY_VERSION}-${PKG_RELEASE_NUMBER}.${PKG_RELEASE_DIST}.${ARCHITECTURE}"
 
         PKG_FILE_NAME="snoopy-${PKG_FULL_TAG}.rpm"
@@ -180,6 +187,7 @@ case "$OS_ID" in
         PKG_RELEASE_TAG="${PKG_RELEASE_NUMBER}.${PKG_RELEASE_DIST}"
 
         ARCHITECTURE=`rpm --eval '%{_arch}'`
+        PKG_FULL_TAG="${PKG_SNOOPY_VERSION}-${PKG_RELEASE_NUMBER}"
         PKG_FULL_TAG="${PKG_SNOOPY_VERSION}-${PKG_RELEASE_NUMBER}.${PKG_RELEASE_DIST}.${ARCHITECTURE}"
 
         PKG_FILE_NAME="snoopy-${PKG_FULL_TAG}.rpm"
@@ -201,6 +209,10 @@ if [ "$ARG_RUN_MODE" == "only-show-file-name" ]; then
 fi
 if [ "$ARG_RUN_MODE" == "only-show-file-path" ]; then
     echo "$PKG_FILE_PATH"
+    exit
+fi
+if [ "$ARG_RUN_MODE" == "only-show-package-version" ]; then
+    echo "$PKG_VERS_TAG"
     exit
 fi
 

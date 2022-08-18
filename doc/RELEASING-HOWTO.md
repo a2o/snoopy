@@ -77,7 +77,7 @@ The following assumptions are, well, assumed, by the releasing scripts:
 
 8. Trigger the native packaging build jobs:
 
-    gh workflow run -R $GIT_REMOTE_GITHUB_ID publish-native-packages.yml --ref=$RELEASE_TAG
+    gh workflow run -R a2o/snoopy publish-native-packages.yml --ref=$RELEASE_TAG
 
 
 9. Monitor the native packaging build jobs:
@@ -85,4 +85,14 @@ The following assumptions are, well, assumed, by the releasing scripts:
     https://github.com/a2o/snoopy/actions/workflows/publish-native-packages.yml?query=branch%3A$RELEASE_TAG
 
 
-10. All done.
+10. Trigger the native package installation verification jobs:
+
+    gh workflow run -R a2o/snoopy release-qa-os-matrix-install-from-repo.yml --ref=$RELEASE_TAG
+
+
+11. Monitor the native package installation verification jobs:
+
+    https://github.com/a2o/snoopy/actions/workflows/release-qa-os-matrix-install-from-repo.yml?query=branch%3A$RELEASE_TAG
+
+
+12. All done.
