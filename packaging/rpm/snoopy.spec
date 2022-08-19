@@ -37,7 +37,7 @@ as well as getting a good 'feel' of what's going on on their system
 
 
 %build
-%configure --enable-everything
+%configure
 %make_build check
 
 

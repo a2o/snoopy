@@ -49,7 +49,7 @@ build() {
     # since /usr/sbin is a symlink to /usr/bin.
     # If we don't do this, we get the "conflicting files" error because of
     # the usr/sbin being an actual directory in the .pkg.tar.zst package.
-    ./configure --enable-everything --prefix=/usr --sysconfdir=/etc --sbindir=/usr/bin
+    ./configure --prefix=/usr --sysconfdir=/etc --sbindir=/usr/bin
     make -j4
 }
 
