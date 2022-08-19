@@ -4,11 +4,76 @@
 
 
 
-202x-xx-xx - Version 2.5.0
+2022-08-19 - Version 2.5.0rc1
 --------------------------
-o Change/Enhancement (GH #166):
-    Enable thread safety by default. It can still be disabled at build time
-    via the --disable-thread-safety flag.
+New features:
+=============
+o Binary packages are now being provided for major Linux distributions:
+    - Ubuntu 18.04, 20.04 and 22.04
+    - openSUSE 15.3 and 15.4
+    - Debian Buster, Bullseye and Bookworm
+    - CentOS Stream 8 and Stream 9
+    - AlmaLinux OS 8 and 9
+    - Arch Linux
+    Ref: https://github.com/a2o/snoopy/pull/236
+o Thread safety is now enabled by default.
+    It can still be disabled at build time via the `--disable-thread-safety` flag.
+    Ref: https://github.com/a2o/snoopy/pull/166
+o A command line utility for managing Snoopy (called `snoopyctl`) has been introduced.
+    Ref: https://github.com/a2o/snoopy/pull/187
+o Support for setting syslog ident string to Systemd's unit name has been added.
+    Ref: https://github.com/a2o/snoopy/pull/228
+o A new datasource called `systemd_unit_name` has been added.
+    Ref: https://github.com/a2o/snoopy/pull/228
+o A new datasource called `cgroup` has been added, to facilitate the
+    Ref: https://github.com/a2o/snoopy/pull/228
+o A new datasource called `ipaddr` has been added. It reads the IP address
+    information from the system `utmp` file.
+    Ref: https://github.com/a2o/snoopy/pull/235
+o The `file` output can now accept date format as part of a target filename.
+    Ref: https://github.com/a2o/snoopy/pull/235
+
+
+Bugfixes:
+=========
+o Fix incorrect `./configure --help` hints.
+    Ref: https://github.com/a2o/snoopy/issues/209
+o Add missing `findutils` package to our installer (for openSUSE)
+    Ref: https://github.com/a2o/snoopy/pull/206
+o Switch Snoopy installer from using GitHub API to simply parse the raw
+    README.md file to get the latest Snoopy version, to avoid hitting
+    GitHup API's rate limits.
+    Ref: https://github.com/a2o/snoopy/issues/213
+
+
+Changes:
+========
+o Required `autoconf` version been updated, from 2.63 to 2.69.
+    Ref: https://github.com/a2o/snoopy/pull/219
+o Further thread safety fixes (`strerror` -> `strerror_r`).
+    Ref: https://github.com/a2o/snoopy/issues/82
+o Upgrade included INI parser release from r42 to r55.
+    Ref: https://github.com/a2o/snoopy/pull/221
+o Hide all .so symbols by default, only expose the ones that are needed
+    (by the .so preloading, and by the `snoopyctl`).
+    Ref: https://github.com/a2o/snoopy/pull/230
+o Stop using external linked list implementation.
+    Ref: https://github.com/a2o/snoopy/pull/230
+o Tests: Refactor all helper binaries into a single `snoopy-test` binary
+    and its subcommands.
+    Ref: https://github.com/a2o/snoopy/pull/187
+o Simplify the implementation of datasource `cmdline`, as it has been a source
+    of many issues (either reported by users, or uncovered via CI).
+    Ref: https://github.com/a2o/snoopy/pull/234
+o CI: Stop using/supporting openSUSE 15.1 and 15.2
+o CI: Add openSUSE 15.4 to CI
+o CI: Deprecate Ubuntu 16.04 from our CI environment
+o CI: Switch from CentOS to AlmaLinxu for RHEL-related CI jobs
+o CI: Add support for CentOS Stream
+o CI: Reintroduce Arch Linux testing
+o CI: Increased SonarCloud test coverage to above 80%
+o CI: Add Debian Bookworm to testing matrices
+o Fix all outstanding Coverity and SonarCloud issues
 
 
 
