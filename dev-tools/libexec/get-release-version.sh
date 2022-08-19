@@ -196,7 +196,7 @@ fi
 #
 if [ "$MODE" == "autoreconf" -o "$MODE" == "changelog" ]; then
     if [ -f ChangeLog ]; then
-        SNOOPY_RELEASE_VERSION=`cat ChangeLog | grep -E '^[-0-9]+ - Version [.0-9]+$' | head -n1 | awk '{print $4}'`
+        SNOOPY_RELEASE_VERSION=`cat ChangeLog | grep -E '^[-0-9]+ - Version [0-9]+\.[0-9]+\.[0-9]+(rc[0-9]+)?$' | head -n1 | awk '{print $4}'`
         echo $SNOOPY_RELEASE_VERSION
         exit 0
     fi
