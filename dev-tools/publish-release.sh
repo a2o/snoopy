@@ -135,7 +135,7 @@ done
 ### Check if there are uncommitted changes in this repository
 #
 if [ "$ALLOW_DIRTY" == "false" ]; then
-    RES=`git status --short | grep -c . | cat`
+    RES=`git status --short | grep -c .` || true
     if [ "$RES" != "0" ]; then
         _fatalError "There are uncommitted changes in this repository (the '-d' flag skips this check)" $LINENO
     fi
@@ -206,6 +206,7 @@ else
         RELEASE_TAG=`./dev-tools/libexec/get-release-tag.sh -m git -i`
     else
         RELEASE_TAG=`./dev-tools/libexec/get-release-tag.sh -m git`
+    fi
     _echo "Got release tag from git history: $RELEASE_TAG"
 fi
 RELEASE_VERSION=`echo "$RELEASE_TAG" | sed -e 's/snoopy-//'`
@@ -223,7 +224,7 @@ fi
 if ! git log --pretty="%h %d %s" | grep -E "(\(|, )tag: $RELEASE_TAG(\)|, )" | grep -E "\) Release $RELEASE_VERSION\$" > /dev/null; then
     _fatalError "Git tag '$RELEASE_TAG' does not seem to be representing a release commit." $LINENO
 fi
-RELEASE_COMMIT_ID=`git log --format="%h" $RELEASE_TAG | head -n1`
+RELEASE_COMMIT_ID=`git log --format="%h" $RELEASE_TAG | head -n1` || true # WhyTF is this "|| true" needed here?!?
 _echo "Release tag and commit ($RELEASE_COMMIT_ID) seem to be in order locally."
 
 
@@ -275,7 +276,7 @@ fi
 if ! gh release list -R $GIT_REMOTE_GITHUB_ID > /dev/null; then
     _fatalError "GitHub CLI access is not working. Run 'gh release list -R $GIT_REMOTE_GITHUB_ID' to see the actual error." $LINENO
 fi
-RES=`gh release list -R $GIT_REMOTE_GITHUB_ID | grep -P "^$RELEASE_TAG[ \t]+(Latest[ \t]+)?$RELEASE_TAG" -c | cat`
+RES=`gh release list -R $GIT_REMOTE_GITHUB_ID | grep -P "^$RELEASE_TAG[ \t]+(Latest[ \t]+)?$RELEASE_TAG" -c` || true
 if [ "$RES" != "0" ]; then
     _fatalError "Release $RELEASE_TAG already exists in the $GIT_REMOTE_GITHUB_ID git repository." $LINENO
 fi
