@@ -76,11 +76,9 @@ fi
 #
 
 # Clean
-./bootstrap.sh
-./configure --enable-everything --enable-code-coverage
-make gitclean
+./dev-tools/clean-git-repository.sh
 
-# Configure for real
+# Configure
 ./bootstrap.sh
 ./configure --enable-everything --enable-code-coverage
 

@@ -62,16 +62,20 @@ Consult [ChangeLog](ChangeLog) for more information.
 [![Install QA - OS Matrix - Install from git](https://github.com/a2o/snoopy/workflows/Install%20QA%20-%20OS%20Matrix/badge.svg?branch=install)](https://github.com/a2o/snoopy/actions?query=workflow%3A%22Install+QA+-+OS+Matrix%22+branch%3Ainstall)
 [![Release QA - OS Matrix - Install from source](https://github.com/a2o/snoopy/workflows/Release%20QA%20-%20OS%20Matrix%20-%20Install%20from%20source/badge.svg)](https://github.com/a2o/snoopy/actions?query=workflow%3A%22Release+QA+-+OS+Matrix+-+Install+from+source%22)
 
-The simplest way to start using the latest Snoopy is to execute the following commands (as root):
+Starting with version 2.5.0, repositories with binary packages are provided for major Linux distributions.
+Here is a [guide to installing Snoopy from package repositories](doc/install-from-repo.md).
+
+*WARNING:* If you've installed Snoopy from source (i.e. using the `install-snoopy.sh` script method below) before, it's best to remove it before installing it from a package repository.
+[This guide](doc/install-from-source.md) contains steps to remove "manually" installed Snoopy from your system.
+
+Alternatively, the original method of installing Snoopy from source is still available:
 ```shell
 wget -O install-snoopy.sh https://github.com/a2o/snoopy/raw/install/install/install-snoopy.sh &&
 chmod 755 install-snoopy.sh &&
 sudo ./install-snoopy.sh stable
 ```
-That's all.
 
-Other installation options (i.e. installing latest development version from this
-git repository) are described in the [doc/INSTALL.md](doc/INSTALL.md) document.
+More information is available in the [doc/INSTALL.md](doc/INSTALL.md) document.
 
 
 

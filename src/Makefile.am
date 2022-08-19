@@ -98,4 +98,5 @@ noinst_LTLIBRARIES += libsnoopy-test-cli.la
 libsnoopy_test_cli_la_SOURCES =
 libsnoopy_test_cli_la_LIBADD  = \
     libsnoopy-no-entrypoint.la \
+    cli/libsnoopy-cli-subroutines.la \
     entrypoint/libsnoopy-entrypoint-test-cli.la

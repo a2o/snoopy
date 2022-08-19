@@ -36,8 +36,8 @@ fi
 
 ### Verify release version syntax
 #
-if ! _isReleaseVersionFormatValid "$RELEASE_VERSION"; then
-    _fatalError "Invalid release version syntax: $RELEASE_VERSION" $LINENO
+if ! _isPublicReleaseVersionFormatValid "$RELEASE_VERSION"; then
+    _fatalError "Invalid public release version syntax: $RELEASE_VERSION" $LINENO
 fi
 
 
@@ -52,12 +52,17 @@ fi
 
 ### Check the `Latest version` section of README.md
 #
-if ! cat README.md | grep -E '^## Latest version$' -A10 | grep -E '^[|] +Stable +' | grep -E "[|] +$RELEASE_VERSION +[|]" > /dev/null; then
-    _fatalError "Version $RELEASE_VERSION not mentioned in the 'Latest version' section of the README.md" $LINENO
+if [[ $RELEASE_VERSION =~ rc ]]; then
+    TABLE_ROW_FIRST_CELL_CONTENT="Preview"
+else
+    TABLE_ROW_FIRST_CELL_CONTENT="Stable"
 fi
-RES=`cat README.md | grep -E '^## Latest version$' -A10 | grep -E '^[|] +Stable +' | grep -E "[|] +$RELEASE_VERSION +[|]" | tr ' ' '\n' | grep -Eo "snoopy-[0-9.]+" | sed -e 's/^snoopy-//' | grep -Ev "^$RELEASE_VERSION\$" | grep -c . | cat`
+if ! cat README.md | grep -E '^## Latest version$' -A10 | grep -E "^[|] +$TABLE_ROW_FIRST_CELL_CONTENT +" | grep -E "[|] +$RELEASE_VERSION +[|]" > /dev/null; then
+    _fatalError "Version $RELEASE_VERSION not mentioned in the 'Latest version' section of the README.md (in the line denoting '$TABLE_ROW_FIRST_CELL_CONTENT' version)" $LINENO
+fi
+RES=`cat README.md | grep -E '^## Latest version$' -A10 | grep -E "^[|] +$TABLE_ROW_FIRST_CELL_CONTENT +" | grep -E "[|] +$RELEASE_VERSION +[|]" | tr ' ' '\n' | grep -Eo "snoopy-[0-9]+\.[0-9]+\.[0-9]+(rc[0-9]+)?" | sed -e 's/^snoopy-//' | grep -Ev "^$RELEASE_VERSION\$" | grep -c . || true`
 if [ "$RES" != "0" ]; then
-    _fatalError "Another version besides $RELEASE_VERSION is mentioned in the 'Latest version' section of the README.md" $LINENO
+    _fatalError "Another version besides $RELEASE_VERSION is mentioned in the 'Latest version' section of the README.md (in the line denoting '$TABLE_ROW_FIRST_CELL_CONTENT' version)" $LINENO
 fi
 
 

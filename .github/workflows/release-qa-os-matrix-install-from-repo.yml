@@ -1,0 +1,137 @@
+name: Release QA - OS Matrix - Install from repo
+
+
+
+on:
+  workflow_dispatch:
+    inputs:
+      gitCheckoutRef:
+        description: 'Git reference to checkout (defaults to the chosen branch or tag above when left empty)'
+        required: false
+        default: ''
+
+# Commented out, as we can't do this automatically with the git push tag
+#  release:
+#    types: [published]
+
+#  push:
+#    branches:
+#      - release-qa-os-matrix-install-from-repo
+#      - introduce-distro-packaging
+
+
+
+jobs:
+  release-qa-os-matrix-install-from-repo:
+
+    name: Install on ${{matrix.container}}
+    runs-on: ubuntu-20.04
+
+
+
+    ### Define the list of container images
+    #
+    container: ${{ matrix.container }}
+    strategy:
+      matrix:
+        container:
+          - archlinux:base-devel
+
+          - almalinux/8-base:latest
+          - almalinux/9-base:latest
+
+          - quay.io/centos/centos:stream8
+          - quay.io/centos/centos:stream9
+
+          - debian:buster
+          - debian:bullseye
+          - debian:bookworm
+
+          - opensuse/leap:15.3
+          - opensuse/leap:15.4
+
+          - ubuntu:18.04
+          - ubuntu:20.04
+          - ubuntu:22.04
+
+
+
+    ###
+    ### Steps to run
+    ###
+    steps:
+
+
+
+      ### Install prerequisites
+      #
+
+      # Arch
+      - run: |
+            pacman-key --init
+            pacman -Syu --noconfirm   curl tar gzip
+        if: ${{ startsWith(matrix.container, 'archlinux:') }}
+
+      # CentOS
+      - run: yum install -y   curl tar gzip
+        if: ${{ startsWith(matrix.container, 'almalinux/') || startsWith(matrix.container, 'quay.io/centos/centos:') }}
+
+      # Debian / Ubuntu
+      - run: |
+          DEBIAN_FRONTEND=noninteractive apt-get update -y
+          DEBIAN_FRONTEND=noninteractive apt-get install -y   curl tar gzip
+        if: ${{ startsWith(matrix.container, 'ubuntu:') || startsWith(matrix.container, 'debian:') }}
+
+      # OpenSUSE
+      - run: zypper -n install   curl tar gzip
+        if: ${{ startsWith(matrix.container, 'opensuse/') }}
+
+
+
+      ### Ubuntu 18.04 legacy git workaround
+      #
+      - name: "WORKAROUND: Install latest git on Ubuntu 18.04, required by action/checkout@v2"
+        run: |
+            apt install -y software-properties-common
+            add-apt-repository -y ppa:git-core/ppa
+            apt update
+            apt install -y git
+        if: ${{ startsWith(matrix.container, 'ubuntu:18.04') }}
+
+
+
+      ### Fetch the code
+      #
+      # This one is only needed to get that `extract-...` script.
+      # NOTICE: For SUSE, make sure to install tar+gzip before running this action
+      #
+      - uses: actions/checkout@v2
+        # This awkward expression is the workaround to get a semblance of na "if"
+        # statement into the workflow definition.
+        ref: ${{ (github.event.inputs.gitCheckoutRef == '') && github.ref || github.event.inputs.gitCheckoutRef }}
+
+      # Work around the fix for CVE-2022-24765
+      - run: git config --global --add safe.directory $GITHUB_WORKSPACE || true
+
+
+
+      ### Install the package (& verify the installed version)
+      #
+      - run: |
+            SNOOPY_GIT_VERSION=`./dev-tools/libexec/get-release-version.sh -m git`
+            if [[ $SNOOPY_GIT_VERSION =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+                ./dev-tools/libexec/extract-native-package-install-steps.sh -c -e -p -r
+            else
+                ./dev-tools/libexec/extract-native-package-install-steps.sh -c -e -p -r -t
+            fi
+
+
+
+      ### Verify Snoopy operation
+      #
+      - name: Verify Snoopy operation
+        run: |
+          touch /var/log/snoopy.log
+          echo "output = file:/var/log/snoopy.log" >> /etc/snoopy.ini
+          /bin/echo "Snoopy is alive and well"
+          cat /var/log/snoopy.log | grep -v ': grep' | grep "Snoopy is alive and well"

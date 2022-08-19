@@ -36,15 +36,15 @@ fi
 
 ### Verify release version syntax
 #
-if ! _isReleaseVersionFormatValid "$RELEASE_VERSION"; then
-    _fatalError "Invalid release version syntax: $RELEASE_VERSION" $LINENO
+if ! _isPublicReleaseVersionFormatValid "$RELEASE_VERSION"; then
+    _fatalError "Invalid public release version syntax: $RELEASE_VERSION" $LINENO
 fi
 
 
 
 ### Get latest release version from ChangeLog and verify it
 #
-LAST_VERSION_IN_CHANGELOG=`cat ChangeLog | grep -E '^[0-9]{4}-[0-9]{2}-[0-9]{2} - Version [0-9]+\.[0-9]+\.[0-9]+$' | head -n1 | awk '{print $4}'`
+LAST_VERSION_IN_CHANGELOG=`cat ChangeLog | grep -E '^[0-9]{4}-[0-9]{2}-[0-9]{2} - Version [0-9]+\.[0-9]+\.[0-9]+(rc[0-9]+)?$' | head -n1 | awk '{print $4}'`
 if [ "$LAST_VERSION_IN_CHANGELOG" != "$RELEASE_VERSION" ]; then
     _fatalError "Last version listed in ChangeLog is $LAST_VERSION_IN_CHANGELOG, not $RELEASE_VERSION" $LINENO
 fi

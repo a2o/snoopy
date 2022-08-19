@@ -17,7 +17,7 @@ set -u
 #
 PARENT_PROC_NAME="bash"
 . /etc/os-release
-if [[ $ID =~ ^(arch|almalinux|centos|opensuse) ]]; then
+if [[ $ID =~ ^(arch|almalinux|centos|fedora|rhel|opensuse) ]]; then
     PARENT_PROC_NAME="sh"
 fi
 

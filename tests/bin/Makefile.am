@@ -45,11 +45,9 @@ snoopy_test_SOURCES  = \
     action-unit-util.h \
     action-unit-util-syslog.c \
     action-unit-util-syslog.h \
-    snoopy-test.c \
-    $(top_builddir)/src/cli/cli-subroutines.c \
-    $(top_builddir)/src/cli/cli-subroutines.h
+    snoopy-test.c
 snoopy_test_LDADD  = \
-    $(top_builddir)/src/libsnoopy-test-cli.la
+    ../../src/libsnoopy-test-cli.la
 
 if CONFIGFILE_ENABLED
 snoopy_test_SOURCES += \
@@ -117,8 +115,8 @@ clean-local-this-dir:
 noinst_LTLIBRARIES        = libsnoopy-test-execve-wrapper-env-ini-path.la
 libsnoopy_test_execve_wrapper_env_ini_path_la_SOURCES =
 libsnoopy_test_execve_wrapper_env_ini_path_la_LIBADD  = \
-	$(top_builddir)/src/libsnoopy-no-entrypoint.la \
-	$(top_builddir)/src/entrypoint/libsnoopy-entrypoint-execve-wrapper-test-configfile-env.la
+    ../../src/libsnoopy-no-entrypoint.la \
+    ../../src/entrypoint/libsnoopy-entrypoint-execve-wrapper-test-configfile-env.la
 #
 # This needs to be added as automake does not create shared library for
 # things in noinst_LTLIBRARIES.

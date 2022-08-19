@@ -1,0 +1,6 @@
+#
+# Environment variables, consumed by dev-tools/build-package-arch.sh
+#
+if [ "${PACKAGER:-}" == "" ]; then
+    export PACKAGER="Bostjan Skufca Jese <bostjan@skufca.si>"
+fi

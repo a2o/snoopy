@@ -16,6 +16,7 @@ Makefile.in
 /build/m4/libtool.m4
 /build/m4/lt*.m4
 /configure
+/configure~
 /config.cache
 /config.h
 /config.log
@@ -62,17 +63,22 @@ Makefile
 /tests/bin/snoopy-test
 /tests/bin/spaceparent
 /tests/bin/space parent
-/contrib/rhel/snoopy.spec
-/contrib/sles/snoopy.spec
+/packaging/rhel/snoopy.spec
+/packaging/sles/snoopy.spec
 /etc/snoopy.ini
 
 
 ### Files produced by the releasing process
 #
-/snoopy-*.tar.gz
+/snoopy-*.tar.*
 
 
-### Files produced by test suite
+## Files producing by the native packaging process
+#
+/packaging/deb/changelog
+
+
+### Files produced by the test suite
 #
 /tests/*.log
 /tests/*/*.log
@@ -86,6 +92,7 @@ Makefile
 *.gcno
 *.gcov
 
+
 ### Code analysis configuration and output files
 #
 # Notes:
@@ -98,6 +105,8 @@ Makefile
 /sonar-cfamily.reproducer
 /sonarcloud-build-wrapper-output
 
-### Distribution related files
+
+### Packaging-related files
 #
 /debian
+/PKGBUILD

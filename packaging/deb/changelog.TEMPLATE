@@ -1,0 +1,17 @@
+snoopy (DEB_PACKAGE_VERSION) unstable; urgency=medium
+
+  * NOTICE: This is not a real changelog.
+  * This .deb package has been provided by Snoopy maintainers.
+  * Snoopy's git repository is the actual changelog for this package,
+    at https://github.com/a2o/snoopy/.
+  * NOTICE: While the intent of Snoopy maintainers is to keep their
+    .deb packages in sync and interchangeable with distribution-provided
+    Snoopy packages, the packaging efforts are not synchronized and thus
+    incompatible differences may occur.
+  * NOTICE: To build the .deb package yourself, use the provided
+    ./dev-tools/build-package-deb.sh helper script.
+  * NOTICE: To install the required software for building the .deb
+    package, use the provided ./dev-tools/install-packaging-software.sh
+    helper script.
+
+ -- Bostjan Skufca Jese <bostjan@skufca.si>  Sat, 06 Aug 2022 00:00:00 +0000

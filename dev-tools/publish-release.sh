@@ -63,6 +63,9 @@ Supported CLI arguments:
     -d          Allow "dirty" working directory.
                 By default, this tool requires all changes to be committed.
 
+    -i          Ignore "dirty" working directory.
+                When your directory is dirty, but you don't want that showing up in release tags.
+
     -r REMOTE   Name of configured remote to use for publishing.
                 Defaults to the name that matches the "git@github.com:a2o/snoopy(.git)?(/)?" URL.
 
@@ -87,10 +90,11 @@ fi
 
 SKIP_CURRENT_BRANCH_CHECK="false"
 ALLOW_DIRTY="false"
+IGNORE_DIRTY="false"
 RELEASE_TAG_CLI=""
 CONFIRMED_VIA_CLI="false"
 
-while getopts ":ye:cdt:m:snr:h" opt; do
+while getopts ":ye:cdit:m:snr:h" opt; do
     case "$opt" in
         c)
             SKIP_CURRENT_BRANCH_CHECK="true"
@@ -98,6 +102,10 @@ while getopts ":ye:cdt:m:snr:h" opt; do
 
         d)
             ALLOW_DIRTY="true"
+            ;;
+
+        i)
+            IGNORE_DIRTY="true"
             ;;
 
         t)
@@ -194,7 +202,10 @@ if [ "$RELEASE_TAG_CLI" != "" ]; then
     RELEASE_TAG="$RELEASE_TAG_CLI"
     _echo "Got release tag from CLI argument: $RELEASE_TAG"
 else
-    RELEASE_TAG=`./dev-tools/libexec/get-release-tag.sh git`
+    if [ "$IGNORE_DIRTY" == "true" ]; then
+        RELEASE_TAG=`./dev-tools/libexec/get-release-tag.sh -m git -i`
+    else
+        RELEASE_TAG=`./dev-tools/libexec/get-release-tag.sh -m git`
     _echo "Got release tag from git history: $RELEASE_TAG"
 fi
 RELEASE_VERSION=`echo "$RELEASE_TAG" | sed -e 's/snoopy-//'`
@@ -272,12 +283,25 @@ _echo "GitHub API access works, and release $RELEASE_TAG does not exist yet in $
 
 
 
+### Is this a stable or a preview (RC) release?
+#
+RELEASE_IS_STABLE="false"
+GH_PREVIEW_RELEASE_FLAG="--prerelease"
+if _doesReleaseTagDenoteStableRelease "$RELEASE_TAG"; then
+    RELEASE_IS_STABLE="true"
+    GH_PREVIEW_RELEASE_FLAG=""
+fi
+
+
+
 ### Sanity check complete, double check the intent
 #
 _echo "All checks successful, starting the releasing process."
 _echo "Target remote name:      $GIT_REMOTE_NAME"
 _echo "Target remote URL:       $GIT_REMOTE_URL"
 _echo "Target remote GitHub id: $GIT_REMOTE_GITHUB_ID"
+_echo "Release tag:             $RELEASE_TAG"
+_echo "Stable release?          $RELEASE_IS_STABLE"
 
 if [ "$CONFIRMED_VIA_CLI" != "true" ]; then
     _echo "Are you sure you want to proceed?"
@@ -313,6 +337,7 @@ gh release create \
     -R $GIT_REMOTE_GITHUB_ID \
     -n "" \
     -t "$RELEASE_TAG" \
+    $GH_PREVIEW_RELEASE_FLAG \
     "$RELEASE_TAG" \
     $RELEASE_PACKAGE_TARGZ
 
@@ -331,14 +356,40 @@ _echo ""
 
 ### Suggest next step(s)
 #
-_echo ""
-_echo "Next steps:"
-_echo "==========="
-_echo "1. Close the $RELEASE_VERSION milestone on GitHub (paste the release URL into the content):"
-_echo "    https://github.com/a2o/snoopy/milestones"
-_echo ""
-_echo "2. Monitor the CI jobs related to $RELEASE_TAG release tag:"
-_echo "    https://github.com/a2o/snoopy/actions?query=branch%3A$RELEASE_TAG"
-_echo ""
-_echo "3. All done."
-_echo ""
+_echo "
+Next steps:
+===========
+
+6. Go to GitHub and close the corresponding milestone:
+
+    https://github.com/a2o/snoopy/milestones
+
+
+7. Go to Snoopy's [Actions](https://github.com/a2o/snoopy/actions) tab
+   on GitHub and monitor the workflows related to the new release:
+
+    https://github.com/a2o/snoopy/actions?query=branch%3A$RELEASE_TAG
+
+
+8. Trigger the native packaging build jobs:
+
+    gh workflow run -R a2o/snoopy publish-native-packages.yml --ref=$RELEASE_TAG
+
+
+9. Monitor the native packaging build jobs:
+
+    https://github.com/a2o/snoopy/actions/workflows/publish-native-packages.yml?query=branch%3A$RELEASE_TAG
+
+
+10. Trigger the native package installation verification jobs:
+
+    gh workflow run -R a2o/snoopy release-qa-os-matrix-install-from-repo.yml --ref=$RELEASE_TAG
+
+
+11. Monitor the native package installation verification jobs:
+
+    https://github.com/a2o/snoopy/actions/workflows/release-qa-os-matrix-install-from-repo.yml?query=branch%3A$RELEASE_TAG
+
+
+12. All done.
+"

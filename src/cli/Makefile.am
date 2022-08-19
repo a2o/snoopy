@@ -11,6 +11,15 @@ sbin_PROGRAMS =
 
 
 
+### Build subroutines separately, it gets linked into `snoopy-test` too
+#
+noinst_LTLIBRARIES += libsnoopy-cli-subroutines.la
+libsnoopy_cli_subroutines_la_SOURCES = \
+    cli-subroutines.c \
+    cli-subroutines.h
+
+
+
 ### Program-based entry points
 #
 sbin_PROGRAMS += snoopyctl
@@ -25,8 +34,7 @@ snoopyctl_SOURCES = \
 	action-status.h \
 	action-version.c \
 	action-version.h \
-	cli-subroutines.c \
-	cli-subroutines.h \
 	snoopyctl.c
 snoopyctl_LDADD = \
-	../util/libsnoopy-utils.la
+    libsnoopy-cli-subroutines.la \
+    ../util/libsnoopy-utils.la

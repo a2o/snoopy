@@ -1,0 +1,6 @@
+# This package is not a library intended to build executables against
+# nor to be linked by any application.
+
+snoopy: link-to-shared-library-in-wrong-package
+snoopy: package-name-doesnt-match-sonames
+snoopy: no-symbols-control-file lib/*/libsnoopy.so.0.0.0

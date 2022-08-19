@@ -71,6 +71,7 @@ AC_PROG_AWK
 AC_PROG_CC
 AC_PROG_GREP
 AC_PROG_INSTALL
+AC_PROG_LN_S
 AC_PROG_MAKE_SET
 AC_PROG_MKDIR_P
 AC_PROG_SED
@@ -90,7 +91,6 @@ SNOOPY_PROG_REQUIRE([wc],       [WC],       [Needed for "make check" test suite.
 
 
 dnl Checks for libraries.
-dnl FIXME: Replace `main' with a function in `-ldl':
 AC_CHECK_LIB([dl], [dlsym], [], [
     AC_MSG_ERROR([A library is missing. Unable to continue.])
 ])
@@ -173,8 +173,6 @@ AC_CONFIG_HEADERS([config.h])
 ### Generate these (Make)files
 #
 AC_CONFIG_FILES([Makefile
-                 contrib/rhel/snoopy.spec
-                 contrib/sles/snoopy.spec
                  doc/Makefile
                  etc/Makefile
                  etc/snoopy.ini
@@ -237,7 +235,7 @@ fi
 if test "x$sbindir" = "x\${exec_prefix}/sbin" ; then
     SBINDIR="$EXEC_PREFIX/sbin"
 else
-    SBINDIR="$libdir"
+    SBINDIR="$sbindir"
 fi
 
 

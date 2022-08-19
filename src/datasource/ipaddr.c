@@ -72,8 +72,7 @@ int snoopy_datasource_ipaddr (char * const result, __attribute__((unused)) char 
 
     // Find the matching utmp entry
     if (SNOOPY_TRUE != snoopy_util_utmp_findUtmpEntryByPath(ttyPathBuf, utmpEntry)) {
-        snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "(weird, no utmp entry for TTY %s)", ttyPathBuf);
-        return SNOOPY_DATASOURCE_FAILURE;
+        return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "-"); // This can happen, i.e. in in a `docker run ...` environment
     }
 
     // Does the associated IP address actually exist?
