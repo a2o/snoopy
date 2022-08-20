@@ -246,7 +246,7 @@ _getInstalledPackageVersion() {
 
         rhel|fedora|centos|almalinux|\
         sles|opensuse-leap|opensuse-tumbleweed)
-            INSTALLED_PACKAGE_VERSION=`rpm -q "$PACKAGE_NAME" --qf '%{VERSION}'`
+            INSTALLED_PACKAGE_VERSION=`rpm -q "$PACKAGE_NAME" --qf '%{VERSION}-%{RELEASE}'`
             ;;
 
         *)
