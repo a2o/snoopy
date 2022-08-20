@@ -198,9 +198,8 @@ echo "==========================================================================
 #
 if [ "$MODE" == "extract-and-execute" ]; then
     _echo "Executing extracted install steps:"
-    eval $INSTALL_STEPS
+    eval "$INSTALL_STEPS"
 fi
-
 
 
 
