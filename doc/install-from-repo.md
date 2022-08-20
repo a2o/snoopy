@@ -71,7 +71,7 @@ echo "
 Server = https://a2o.github.io/snoopy-packages/repo/arch/stable/
 " >> /etc/pacman.conf &&
 
-pacman -S snoopy
+pacman -Sy snoopy
 ```
 
 

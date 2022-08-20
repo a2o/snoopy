@@ -205,7 +205,7 @@ if [ "$ADJUST_COMMANDS_TO_NON_INTERACTIVE" == "true" ]; then
     _echo "NOTICE: Adjusting steps to non-interactive mode..."
     INSTALL_STEPS=`echo "$INSTALL_STEPS" \
     | sed -e 's/^apt install snoopy/DEBIAN_FRONTEND=noninteractive apt install -y snoopy/' \
-    | sed -e 's/^pacman -S snoopy/pacman -S --noconfirm snoopy/' \
+    | sed -e 's/^pacman -Sy snoopy/pacman -Sy --noconfirm snoopy/' \
     | sed -e 's/^yum install snoopy/yum install -y snoopy/' \
     | sed -e 's/^zypper install snoopy/zypper -n install snoopy/'`
 fi
