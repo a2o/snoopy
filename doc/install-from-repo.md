@@ -87,7 +87,7 @@ rpm --import snoopy-packages-key.pub
 
 echo "[snoopy-stable]
 name=Snoopy Upstream Stable Repository
-baseurl=https://a2o.github.io/snoopy-packages/repo/centos/9-stream/stable/
+baseurl=https://a2o.github.io/snoopy-packages/repo/centos/9/stable/
 enabled=1
 gpgcheck=1
 " > /etc/yum.repos.d/snoopy-stable.repo
@@ -102,7 +102,7 @@ rpm --import snoopy-packages-key.pub
 
 echo "[snoopy-stable]
 name=Snoopy Upstream Stable Repository
-baseurl=https://a2o.github.io/snoopy-packages/repo/centos/8-stream/stable/
+baseurl=https://a2o.github.io/snoopy-packages/repo/centos/8/stable/
 enabled=1
 gpgcheck=1
 " > /etc/yum.repos.d/snoopy-stable.repo
