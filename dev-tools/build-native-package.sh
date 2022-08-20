@@ -270,6 +270,14 @@ fi
 
 
 
+### Revert potential changes to config.h.in
+#
+# On newer OS versions (i.e. Ubuntu 22.04 or Arch Linux) generate a bit
+# different config.h.in, let's revert that.
+git checkout config.h.in
+
+
+
 ### Build the package
 #
 case "$OS_ID" in
@@ -279,9 +287,6 @@ case "$OS_ID" in
         # Make gitclean removes this one, so let's (re?)create it
         rm -f PKGBUILD
         ln -s packaging/arch/PKGBUILD
-
-        # One of the steps above updates comments in config.h.in, rendering git tag "-dirty"
-        git checkout config.h.in
 
         # Pull in some settings as environment variables
         source packaging/arch/env
