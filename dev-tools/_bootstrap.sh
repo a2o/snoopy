@@ -194,6 +194,12 @@ _detectOperatingSystem()
     if [[ "$OS_ID" == "almalinux" ]] && [[ $OS_VERSION =~ \. ]]; then
         OS_VERSION=`echo "$OS_VERSION" | cut -d. -f1`
     fi
+
+    # Arch quirk
+    if [[ "$OS_ID" == "arch" ]] && [[ "$OS_VERSION" == "TEMPLATE_VERSION_ID" ]]; then
+        OS_VERSION=""
+        OS_VERSION_CODENAME=""
+    fi
 }
 
 
