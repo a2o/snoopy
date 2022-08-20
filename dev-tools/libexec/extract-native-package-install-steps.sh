@@ -92,7 +92,7 @@ while getopts ":cC:d:epP:rtv:h" opt; do
             ;;
 
         p)
-            CHECK_INSTALLED_SNOOPY_PACKAGE_VERSION=`./dev-tools/build-native-package.sh -v`
+            CHECK_INSTALLED_SNOOPY_PACKAGE_VERSION="get-it-from-script"
             ;;
 
         P)
@@ -124,6 +124,15 @@ while getopts ":cC:d:epP:rtv:h" opt; do
             ;;
     esac
 done
+
+# "Format" the expected package version
+if [ "$CHECK_INSTALLED_SNOOPY_PACKAGE_VERSION" == "get-it-from-script" ]; then
+    if [ "$CHECK_INSTALLED_SNOOPY_LIBRARY_VERSION" != "" ]; then
+        CHECK_INSTALLED_SNOOPY_PACKAGE_VERSION=`./dev-tools/build-native-package.sh -v -V $CHECK_INSTALLED_SNOOPY_LIBRARY_VERSION`
+    else
+        CHECK_INSTALLED_SNOOPY_PACKAGE_VERSION=`./dev-tools/build-native-package.sh -v`
+    fi
+fi
 
 
 
