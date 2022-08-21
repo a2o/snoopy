@@ -128,6 +128,7 @@ jobs:
       - name: Extract and run the installation steps
         shell: bash
         run: |
+            MATRIX_CONTAINER='${{ matrix.container }}'
             ARG_EXPECTED_SNOOPY_PACKAGE_VERSION='${{ github.event.inputs.expectedSnoopyPackageVersion }}'
 
             CMD_FLAG_CHECK_LIBRARY_VERSION=""
@@ -153,10 +154,18 @@ jobs:
                 CMD_FLAG_CHANNEL_TESTING="-t"
             fi
 
+            # Arch repos have some symlinks that raw.githubusercontent.com does not handle properly,
+            # making package installation fail with some gpg signature issue (in reality, 404 or invalid content).
+            if [[ $MATRIX_CONTAINER =~ ^archlinux ]]; then
+                CMD_FLAG_RAW_GITHUBUSERCONTENT=""
+            else
+                CMD_FLAG_RAW_GITHUBUSERCONTENT="-r"
+            fi
+
             ./dev-tools/libexec/extract-native-package-install-steps.sh \
                 -a \
                 -e \
-                -r \
+                $CMD_FLAG_RAW_GITHUBUSERCONTENT \
                 $CMD_FLAG_CHECK_LIBRARY_VERSION \
                 $CMD_FLAG_CHECK_PACKAGE_VERSION \
                 $CMD_FLAG_CHANNEL_TESTING
