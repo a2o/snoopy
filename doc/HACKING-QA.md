@@ -74,26 +74,6 @@ to the `configure.ac` file.
 
 
 
-## Autoreconf
-
-Runs automatically on GitHub.
-
-The `autoreconf` tool (re)generates the `config.h.in` file from the latest
-`configure.ac` content (potentially updated by the [Autoscan](#autoscan) step above).
-
-
-### Autoreconf - running manually
-
-AR1: Once the above [Autoscan](#autoscan)-related additions are done, update
-the `config.h.in` file with:
-```shell
-./bootstrap.sh
-```
-
-AR2: Commit.
-
-
-
 ## Valgrind
 
 Runs automatically on GitHub.

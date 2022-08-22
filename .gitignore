@@ -21,6 +21,7 @@ Makefile.in
 /config.h
 /config.log
 /config.status
+/config.h.in
 /config.h.in~
 /stamp-h?
 
