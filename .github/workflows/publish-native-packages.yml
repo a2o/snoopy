@@ -5,6 +5,16 @@ name: Publish native packages
 on:
   workflow_dispatch:
 
+  push:
+    # Before being able to run the workflow manually, it needs to run at least
+    # once via a push event.
+    branches:
+      - force-github-action-run
+    # For now, do not run automatically on tags.
+    # We are currently executing this workflow manually, via "gh workflow run".
+    #tags:
+    #  - 'snoopy-*.*.*'
+
 
 
 jobs:
