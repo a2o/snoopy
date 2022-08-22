@@ -26,6 +26,8 @@ Supported CLI arguments:
     -p          Do not build, only show the final package's file path.
     -r N        Specify a custom release number. [default=1]
     -v          Do not build, only show the final package's version.
+    -V VERSION  Use this specific VERSION for generating package's version tag.
+                (Intended to be used with -n or -v only.)
 
     -h/--help   Show this help.
 
@@ -56,8 +58,9 @@ fi
 
 ARG_RUN_MODE="build"
 ARG_PKG_RELEASE_NUMBER="1"
+ARG_VERSION=""
 
-while getopts ":npr:vh" opt; do
+while getopts ":npr:vV:h" opt; do
     case "$opt" in
         n)
             ARG_RUN_MODE="only-show-file-name"
@@ -73,6 +76,10 @@ while getopts ":npr:vh" opt; do
 
         v)
             ARG_RUN_MODE="only-show-package-version"
+            ;;
+
+        V)
+            ARG_VERSION="$OPTARG"
             ;;
 
         h)
@@ -105,8 +112,13 @@ fi
 
 ### Get the Snoopy release information
 #
-SNOOPY_RELEASE_TAG=`./dev-tools/libexec/get-release-tag.sh`
-SNOOPY_RELEASE_VERSION=`echo "$SNOOPY_RELEASE_TAG" | sed -e 's/snoopy-//'`
+if [ "$ARG_VERSION" != "" ]; then
+    SNOOPY_RELEASE_TAG="snoopy-$ARG_VERSION"
+    SNOOPY_RELEASE_VERSION="$ARG_VERSION"
+else
+    SNOOPY_RELEASE_TAG=`./dev-tools/libexec/get-release-tag.sh`
+    SNOOPY_RELEASE_VERSION=`echo "$SNOOPY_RELEASE_TAG" | sed -e 's/snoopy-//'`
+fi
 if [ "$SNOOPY_RELEASE_VERSION" == "" ]; then
     _fatalError "Unable to determine Snoopy version, got: '$SNOOPY_RELEASE_VERSION'"
 fi
@@ -162,7 +174,7 @@ case "$OS_ID" in
         PKG_RELEASE_TAG="${PKG_RELEASE_NUMBER}.${PKG_RELEASE_DIST}"
 
         ARCHITECTURE=`rpm --eval '%{_arch}'`
-        PKG_VERS_TAG="${PKG_SNOOPY_VERSION}-${PKG_RELEASE_NUMBER}"
+        PKG_VERS_TAG="${PKG_SNOOPY_VERSION}-${PKG_RELEASE_NUMBER}.${PKG_RELEASE_DIST}"
         PKG_FULL_TAG="${PKG_SNOOPY_VERSION}-${PKG_RELEASE_NUMBER}.${PKG_RELEASE_DIST}.${ARCHITECTURE}"
 
         PKG_FILE_NAME="snoopy-${PKG_FULL_TAG}.rpm"
@@ -187,7 +199,7 @@ case "$OS_ID" in
         PKG_RELEASE_TAG="${PKG_RELEASE_NUMBER}.${PKG_RELEASE_DIST}"
 
         ARCHITECTURE=`rpm --eval '%{_arch}'`
-        PKG_FULL_TAG="${PKG_SNOOPY_VERSION}-${PKG_RELEASE_NUMBER}"
+        PKG_VERS_TAG="${PKG_SNOOPY_VERSION}-${PKG_RELEASE_NUMBER}.${PKG_RELEASE_DIST}"
         PKG_FULL_TAG="${PKG_SNOOPY_VERSION}-${PKG_RELEASE_NUMBER}.${PKG_RELEASE_DIST}.${ARCHITECTURE}"
 
         PKG_FILE_NAME="snoopy-${PKG_FULL_TAG}.rpm"
@@ -258,6 +270,14 @@ fi
 
 
 
+### Revert potential changes to config.h.in
+#
+# On newer OS versions (i.e. Ubuntu 22.04 or Arch Linux) generate a bit
+# different config.h.in, let's revert that.
+git checkout config.h.in
+
+
+
 ### Build the package
 #
 case "$OS_ID" in
@@ -267,9 +287,6 @@ case "$OS_ID" in
         # Make gitclean removes this one, so let's (re?)create it
         rm -f PKGBUILD
         ln -s packaging/arch/PKGBUILD
-
-        # One of the steps above updates comments in config.h.in, rendering git tag "-dirty"
-        git checkout config.h.in
 
         # Pull in some settings as environment variables
         source packaging/arch/env

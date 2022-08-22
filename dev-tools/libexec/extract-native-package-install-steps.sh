@@ -22,6 +22,7 @@ Purpose:
 
 Supported CLI arguments:
 
+    -a          Adjust install commands to run in a non-interactive mode (i.e. in GitHub Actions)
     -c          Same as -c, but get the version from ./dev-tools/libexec/get-release-version.sh
     -C VERSION  Check installed Snoopy version (only applicable in combination with -e flag)
     -d DIST     Distribution to extract steps for [default: use host system distribution]
@@ -71,10 +72,14 @@ OS_ID_OVERRIDE=""
 OS_VERSION_OVERRIDE=""
 REPO_URL_SWITCH_TO_RAW="false"
 REPO_CHANNEL_SWITCH_TO_TESTING="false"
+ADJUST_COMMANDS_TO_NON_INTERACTIVE=false
 
-
-while getopts ":cC:d:epP:rtv:h" opt; do
+while getopts ":acC:d:epP:rtv:h" opt; do
     case "$opt" in
+        a)
+            ADJUST_COMMANDS_TO_NON_INTERACTIVE="true"
+            ;;
+
         c)
             CHECK_INSTALLED_SNOOPY_LIBRARY_VERSION=`./dev-tools/libexec/get-release-version.sh`
             ;;
@@ -92,7 +97,7 @@ while getopts ":cC:d:epP:rtv:h" opt; do
             ;;
 
         p)
-            CHECK_INSTALLED_SNOOPY_PACKAGE_VERSION=`./dev-tools/build-native-package.sh -v`
+            CHECK_INSTALLED_SNOOPY_PACKAGE_VERSION="get-it-from-script"
             ;;
 
         P)
@@ -124,6 +129,15 @@ while getopts ":cC:d:epP:rtv:h" opt; do
             ;;
     esac
 done
+
+# "Format" the expected package version
+if [ "$CHECK_INSTALLED_SNOOPY_PACKAGE_VERSION" == "get-it-from-script" ]; then
+    if [ "$CHECK_INSTALLED_SNOOPY_LIBRARY_VERSION" != "" ]; then
+        CHECK_INSTALLED_SNOOPY_PACKAGE_VERSION=`./dev-tools/build-native-package.sh -v -V $CHECK_INSTALLED_SNOOPY_LIBRARY_VERSION`
+    else
+        CHECK_INSTALLED_SNOOPY_PACKAGE_VERSION=`./dev-tools/build-native-package.sh -v`
+    fi
+fi
 
 
 
@@ -185,6 +199,19 @@ fi
 
 
 
+### Adjust to non-interactive
+#
+if [ "$ADJUST_COMMANDS_TO_NON_INTERACTIVE" == "true" ]; then
+    _echo "NOTICE: Adjusting steps to non-interactive mode..."
+    INSTALL_STEPS=`echo "$INSTALL_STEPS" \
+    | sed -e 's/^apt install snoopy/DEBIAN_FRONTEND=noninteractive apt install -y snoopy/' \
+    | sed -e 's/^pacman -Sy snoopy/pacman -Sy --noconfirm snoopy/' \
+    | sed -e 's/^yum install snoopy/yum install -y snoopy/' \
+    | sed -e 's/^zypper install snoopy/zypper -n install snoopy/'`
+fi
+
+
+
 ### Show extracted steps
 #
 echo "Extracted package installation steps ('sudo' was removed, not needed for CI):"
@@ -198,9 +225,8 @@ echo "==========================================================================
 #
 if [ "$MODE" == "extract-and-execute" ]; then
     _echo "Executing extracted install steps:"
-    eval $INSTALL_STEPS
+    eval "$INSTALL_STEPS"
 fi
-
 
 
 
@@ -212,7 +238,6 @@ if [ "$CHECK_INSTALLED_SNOOPY_LIBRARY_VERSION" != "" ]; then
         _fatalError "Installed Snoopy library version is not the same as expected (expected=$CHECK_INSTALLED_SNOOPY_LIBRARY_VERSION, installed=$INSTALLED_SNOOPY_LIBRARY_VERSION)"
     fi
 fi
-
 
 ### FUNCTION: Get installed package's version
 #
@@ -238,7 +263,7 @@ _getInstalledPackageVersion() {
 
         rhel|fedora|centos|almalinux|\
         sles|opensuse-leap|opensuse-tumbleweed)
-            INSTALLED_PACKAGE_VERSION=`rpm -q "$PACKAGE_NAME" --qf '%{VERSION}'`
+            INSTALLED_PACKAGE_VERSION=`rpm -q "$PACKAGE_NAME" --qf '%{VERSION}-%{RELEASE}'`
             ;;
 
         *)

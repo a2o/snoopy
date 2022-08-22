@@ -9,6 +9,10 @@ on:
         description: 'Git reference to checkout (defaults to the chosen branch or tag above when left empty)'
         required: false
         default: ''
+      expectedSnoopyPackageVersion:
+        description: 'Version of a Snoopy package (without the release number) to expect (gets latest Snoopy version tag from git when not given)'
+        required: false
+        default: ''
 
 # Commented out, as we can't do this automatically with the git push tag
 #  release:
@@ -69,21 +73,24 @@ jobs:
       # Arch
       - run: |
             pacman-key --init
-            pacman -Syu --noconfirm   curl tar gzip
+            pacman -Syu --noconfirm   git curl tar gzip
         if: ${{ startsWith(matrix.container, 'archlinux:') }}
 
       # CentOS
-      - run: yum install -y   curl tar gzip
+      - run: yum install -y --allowerasing   git curl tar gzip
         if: ${{ startsWith(matrix.container, 'almalinux/') || startsWith(matrix.container, 'quay.io/centos/centos:') }}
 
       # Debian / Ubuntu
+      # ('dpkg-dev' is here to provide 'dpkg-architecture' command)
+      # ('debconf-utils' is here to provide 'debconf-set-selections' command)
       - run: |
           DEBIAN_FRONTEND=noninteractive apt-get update -y
-          DEBIAN_FRONTEND=noninteractive apt-get install -y   curl tar gzip
+          DEBIAN_FRONTEND=noninteractive apt-get install -y   git curl tar gzip dpkg-dev debconf-utils
+          echo "snoopy snoopy/install-ld-preload boolean true" | debconf-set-selections
         if: ${{ startsWith(matrix.container, 'ubuntu:') || startsWith(matrix.container, 'debian:') }}
 
       # OpenSUSE
-      - run: zypper -n install   curl tar gzip
+      - run: zypper -n install   git curl tar gzip
         if: ${{ startsWith(matrix.container, 'opensuse/') }}
 
 
@@ -106,9 +113,10 @@ jobs:
       # NOTICE: For SUSE, make sure to install tar+gzip before running this action
       #
       - uses: actions/checkout@v2
-        # This awkward expression is the workaround to get a semblance of na "if"
-        # statement into the workflow definition.
-        ref: ${{ (github.event.inputs.gitCheckoutRef == '') && github.ref || github.event.inputs.gitCheckoutRef }}
+        with:
+            # This awkward "ref" expression is a workaround to get a semblance
+            # of an "if" statement into the workflow definition.
+            ref: ${{ (github.event.inputs.gitCheckoutRef == '') && github.ref || github.event.inputs.gitCheckoutRef }}
 
       # Work around the fix for CVE-2022-24765
       - run: git config --global --add safe.directory $GITHUB_WORKSPACE || true
@@ -117,13 +125,50 @@ jobs:
 
       ### Install the package (& verify the installed version)
       #
-      - run: |
-            SNOOPY_GIT_VERSION=`./dev-tools/libexec/get-release-version.sh -m git`
-            if [[ $SNOOPY_GIT_VERSION =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-                ./dev-tools/libexec/extract-native-package-install-steps.sh -c -e -p -r
+      - name: Extract and run the installation steps
+        shell: bash
+        run: |
+            MATRIX_CONTAINER='${{ matrix.container }}'
+            ARG_EXPECTED_SNOOPY_PACKAGE_VERSION='${{ github.event.inputs.expectedSnoopyPackageVersion }}'
+
+            CMD_FLAG_CHECK_LIBRARY_VERSION=""
+            CMD_FLAG_CHECK_PACKAGE_VERSION=""
+            if [ "$ARG_EXPECTED_SNOOPY_PACKAGE_VERSION" == "" ]; then
+                CMD_FLAG_CHECK_LIBRARY_VERSION="-c"
+                CMD_FLAG_CHECK_PACKAGE_VERSION="-p"
             else
-                ./dev-tools/libexec/extract-native-package-install-steps.sh -c -e -p -r -t
+                CMD_FLAG_CHECK_LIBRARY_VERSION="-C $ARG_EXPECTED_SNOOPY_PACKAGE_VERSION"
+                # CMD_FLAG_CHECK_PACKAGE_VERSION="-P $ARG_EXPECTED_SNOOPY_PACKAGE_VERSION"
+                CMD_FLAG_CHECK_PACKAGE_VERSION="-p"   # This one uses the value of -C, but changes it into a package tag
             fi
+
+            if [ "$ARG_EXPECTED_SNOOPY_PACKAGE_VERSION" != "" ]; then
+                SNOOPY_VERSION="$ARG_EXPECTED_SNOOPY_PACKAGE_VERSION"
+            else
+                SNOOPY_VERSION=`./dev-tools/libexec/get-release-version.sh -m git`
+            fi
+
+            if [[ $SNOOPY_VERSION =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+                CMD_FLAG_CHANNEL_TESTING=""
+            else
+                CMD_FLAG_CHANNEL_TESTING="-t"
+            fi
+
+            # Arch repos have some symlinks that raw.githubusercontent.com does not handle properly,
+            # making package installation fail with some gpg signature issue (in reality, 404 or invalid content).
+            if [[ $MATRIX_CONTAINER =~ ^archlinux ]]; then
+                CMD_FLAG_RAW_GITHUBUSERCONTENT=""
+            else
+                CMD_FLAG_RAW_GITHUBUSERCONTENT="-r"
+            fi
+
+            ./dev-tools/libexec/extract-native-package-install-steps.sh \
+                -a \
+                -e \
+                $CMD_FLAG_RAW_GITHUBUSERCONTENT \
+                $CMD_FLAG_CHECK_LIBRARY_VERSION \
+                $CMD_FLAG_CHECK_PACKAGE_VERSION \
+                $CMD_FLAG_CHANNEL_TESTING
 
 
 
