@@ -64,7 +64,19 @@ Makefile
 /tests/bin/snoopy-test
 /tests/bin/spaceparent
 /tests/bin/space parent
+/packaging/rhel/snoopy.spec
+/packaging/sles/snoopy.spec
 /etc/snoopy.ini
+
+
+### Files produced by the releasing process
+#
+/snoopy-*.tar.*
+
+
+## Files producing by the native packaging process
+#
+/packaging/deb/changelog
 
 
 ### Files produced by the test suite
@@ -95,21 +107,7 @@ Makefile
 /sonarcloud-build-wrapper-output
 
 
-### Files produced by the releasing process
+### Packaging-related files
 #
-/snoopy-*.tar.*
-
-
-### Files producing by the native packaging process
-#
-# Arch
-/PKGBUILD
-
-# Debian
 /debian
-/packaging/deb/changelog
-/snoopy_*_*.buildinfo
-# This one is hardcoded to ../*.changes on 20.04
-/snoopy_*_*.changes
-/snoopy_*_*.deb
-/snoopy-dbgsym_*_*.ddeb
+/PKGBUILD

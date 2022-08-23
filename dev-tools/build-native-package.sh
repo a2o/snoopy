@@ -160,7 +160,7 @@ case "$OS_ID" in
         PKG_FULL_TAG="${PKG_SNOOPY_VERSION}-${PKG_RELEASE_NUMBER}~${PKG_RELEASE_DIST}_${ARCHITECTURE}"
 
         PKG_FILE_NAME="snoopy_${PKG_FULL_TAG}.deb"
-        PKG_FILE_PATH="${PKG_FILE_NAME}"
+        PKG_FILE_PATH="../${PKG_FILE_NAME}"
         ;;
 
     rhel|fedora|centos|almalinux)
@@ -310,7 +310,7 @@ case "$OS_ID" in
         > packaging/deb/changelog
 
         # Build the package
-        dpkg-buildpackage --build=binary --no-sign --buildinfo-option=-u. --changes-option=-u.
+        dpkg-buildpackage --build=binary --no-sign
 
         # Remove the temporary changelog file
         rm -f packaging/deb/changelog
