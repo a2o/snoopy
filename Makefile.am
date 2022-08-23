@@ -91,10 +91,11 @@ clean-local-this-dir:
 	rm -f  packaging/deb/snoopy.postrm.debhelper ; \
 	rm -f  packaging/deb/snoopy.substvars ; \
 	rm -rf packaging/deb/snoopy ; \
-	rm -f  ../snoopy_*_*.buildinfo ; \
+	rm -f  snoopy_*_*.buildinfo ; \
+	rm -f  snoopy_*_*.changes ; \
 	rm -f  ../snoopy_*_*.changes ; \
-	rm -f  ../snoopy_*_*.deb ; \
-	rm -f  ../snoopy-dbgsym_*_*.ddeb ; \
+	rm -f  snoopy_*_*.deb ; \
+	rm -f  snoopy-dbgsym_*_*.ddeb ; \
 	rm -rf packaging/rpmbuild ; \
 	rm -f  snoopy-*.pkg.tar.zst ; \
 	true

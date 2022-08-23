@@ -5,6 +5,11 @@ DEB_HOST_MULTIARCH ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
 %:
 	dh $@
 
+override_dh_clean:
+	dh_clean
+	find . -name Makefile.in -exec rm {} \+
+	rm -f aclocal.m4 compile configure test-drive
+
 override_dh_auto_configure:
 	dh_auto_configure -- \
 		--prefix=/usr \
@@ -16,10 +21,8 @@ override_dh_auto_install:
 	dh_auto_install
 	find debian/ -name "*.la" -delete
 
-override_dh_clean:
-	dh_clean
-	find . -name Makefile.in -exec rm {} \+
-	rm -f aclocal.m4 compile configure test-drive
-
 override_dh_missing:
 	dh_missing --fail-missing
+
+override_dh_builddeb:
+	dh_builddeb --destdir=.
