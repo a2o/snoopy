@@ -270,14 +270,6 @@ fi
 
 
 
-### Revert potential changes to config.h.in
-#
-# On newer OS versions (i.e. Ubuntu 22.04 or Arch Linux) generate a bit
-# different config.h.in, let's revert that.
-git checkout config.h.in
-
-
-
 ### Build the package
 #
 case "$OS_ID" in
@@ -322,9 +314,6 @@ case "$OS_ID" in
 
         # Remove the temporary changelog file
         rm -f packaging/deb/changelog
-
-        # One of the steps above updates comments in config.h.in, rendering git tag "-dirty" (bookworm/sid)
-        git checkout config.h.in
 
         # Cleanup
         rm -rf packaging/deb/.debhelper/

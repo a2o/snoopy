@@ -109,6 +109,7 @@ gitclean: maintainer-clean
 	rm -f  autoscan.log ; \
 	rm -fr build/aux/ ; \
 	rm -fr build/m4/ ; \
+	rm -f  config.h.in ; \
 	rm -f  configure ; \
 	rm -f  debian ; \
 	rm -f  packaging/deb/changelog ; \
