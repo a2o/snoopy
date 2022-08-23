@@ -185,9 +185,14 @@ _detectOperatingSystem()
         _fatalError "Unable to detect your OS via /etc/os-release."
     fi
 
-    # Debian Sid quirk
+    # Debian testing/Sid quirk
     if [[ "$OS_ID" == "debian" ]] && [[ "$OS_VERSION_CODENAME" == "" ]]; then
         OS_VERSION_CODENAME=`apt-cache policy | grep http://deb.debian.org/debian -A1 | tail -n1 | grep -Eo 'n=[a-z]+' | sed -e 's/^n=//'`
+
+        # Needed by extract-native-package-install-steps.sh
+        if [ "$OS_VERSION_CODENAME" == "bookworm" ]; then
+            OS_VERSION="12"
+        fi
     fi
 
     # Almalinux contains minor version in VERSION_ID, let's remove it
