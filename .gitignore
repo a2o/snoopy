@@ -69,16 +69,6 @@ Makefile
 /etc/snoopy.ini
 
 
-### Files produced by the releasing process
-#
-/snoopy-*.tar.*
-
-
-## Files producing by the native packaging process
-#
-/packaging/deb/changelog
-
-
 ### Files produced by the test suite
 #
 /tests/*.log
@@ -107,7 +97,25 @@ Makefile
 /sonarcloud-build-wrapper-output
 
 
-### Packaging-related files
+### Files produced by the releasing process
 #
-/debian
+/snoopy-*.tar.*
+
+
+### Files produced by the native packaging process
+#
+
+# Arch
 /PKGBUILD
+/snoopy-*.pkg.tar.zst
+
+# Debian
+/debian
+/packaging/deb/changelog
+#../snoopy_*_*.buildinfo
+#../snoopy_*_*.changes
+#../snoopy_*_*.deb
+#../snoopy-dbgsym_*_*.ddeb
+
+# RPM
+/packaging/rpmbuild
