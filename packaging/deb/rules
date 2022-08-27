@@ -2,8 +2,13 @@
 
 export DEB_BUILD_MAINT_OPTIONS = hardening=+all
 DEB_HOST_MULTIARCH ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
+
+OS_ID = $(shell cat /etc/os-release | grep ^ID= | cut -d= -f2)
+
+
 %:
 	dh $@
+
 
 override_dh_auto_configure:
 	dh_auto_configure -- \
@@ -12,14 +17,24 @@ override_dh_auto_configure:
 		--sysconfdir=/etc \
 		--with-message-format='[login:%{login} ssh:(%{env:SSH_CONNECTION}) sid:%{sid} tty:%{tty} (%{tty_uid}/%{tty_username}) uid:%{username}(%{uid})/%{eusername}(%{euid}) cwd:%{cwd}]: %{cmdline}'
 
+
 override_dh_auto_install:
 	dh_auto_install
+	
 	find debian/ -name "*.la" -delete
+	
+	@if [ "$(OS_ID)" = "ubuntu" ] ; then \
+	    mkdir -p                                     debian/snoopy/var/lib/snapd/apparmor/snap-confine ; \
+	    cp debian/extra-files/snapd-apparmor-profile debian/snoopy/var/lib/snapd/apparmor/snap-confine/snoopy ; \
+	fi
+
 
 override_dh_clean:
 	dh_clean
+	
 	find . -name Makefile.in -exec rm {} \+
 	rm -f aclocal.m4 compile configure test-drive
+
 
 override_dh_missing:
 	dh_missing --fail-missing
