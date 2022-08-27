@@ -12,7 +12,7 @@ set -u
 ### Set test configuration
 #
 CUR_TIMESTAMP=`date +%s`
-MY_UID=`id -a | grep -Eo 'uid=[0-9]+' | grep -Eo '[0-9]+'`
+MY_UID=`id -u`
 ARG_1="ls -la /"
 ARG_2="$CUR_TIMESTAMP %{cmdline}"
 ARG_3="only_uid:$MY_UID"

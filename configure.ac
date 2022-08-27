@@ -148,9 +148,17 @@ AC_CHECK_FUNCS([ \
     strndup    \
     strrchr   \
     strstr    \
-    utmpname  \
 ], [], [
     AC_MSG_ERROR([A function is missing. Unable to continue.])
+])
+
+HOST_SUPPORTS_DATASOURCE_ipaddr="true"
+AC_CHECK_FUNCS([ \
+    getutline_r \
+    utmpname \
+], [], [
+    AC_MSG_WARN([Function missing, cannot enable datasource ipaddr.])
+    HOST_SUPPORTS_DATASOURCE_ipaddr="false"
 ])
 
 dnl Substitute these variables when creating (Make)files below - GENERIC
@@ -391,7 +399,11 @@ SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [filename],       [full filename of process 
 SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [gid],            [GID of process performing the execution])
 SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [group],          [literal group name of process performing the execution])
 SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [hostname],       [hostname of this system])
-SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [ipaddr],         [IP address of a connected terminal])
+if test x"$HOST_SUPPORTS_DATASOURCE_ipaddr" = xfalse ; then
+    SNOOPY_CONFIGURE_DATASOURCE_FORCEDISABLE( [ipaddr], [IP address of a connected terminal])
+else
+    SNOOPY_CONFIGURE_DATASOURCE_ENABLE(       [ipaddr], [IP address of a connected terminal])
+fi
 SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [login],          [login username of user doing the execution])
 SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [pid],            [PID of process performing the execution])
 SNOOPY_CONFIGURE_DATASOURCE_ENABLE( [ppid],           [parent PID of process performing the execution])

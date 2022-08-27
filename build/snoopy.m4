@@ -296,6 +296,13 @@ AC_DEFUN([SNOOPY_CONFIGURE_DATASOURCE_FORCE],
     SNOOPY_CONFIGURE_DATASOURCE_MSG([$1], [YES (forced)])
 ])
 
+# DATASOURCE: force certain datasource to be disabled
+AC_DEFUN([SNOOPY_CONFIGURE_DATASOURCE_FORCEDISABLE],
+[
+    AM_CONDITIONAL([DATASOURCE_ENABLED_$1], [test "x" == "y"])
+    AC_SUBST([enable_datasource_$1], [no])
+    SNOOPY_CONFIGURE_DATASOURCE_MSG([$1], [no (forced)])
+])
 
 
 

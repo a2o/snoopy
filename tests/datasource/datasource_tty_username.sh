@@ -20,11 +20,11 @@ fi
 if ! tty -s; then
     VAL_REAL="(none)"
 else
-    VAL_REAL=`tty`
-    if [ "not a tty" == "$VAL_REAL" ]; then
+    TTY_PATH=`tty`
+    if [ "not a tty" == "$TTY_PATH" ]; then
         VAL_REAL="(none)"
     else
-        VAL_REAL=`echo "$VAL_REAL" | xargs ls -la | awk '{print $3}'`
+        VAL_REAL=`stat -c %U $TTY_PATH`
     fi
 fi
 

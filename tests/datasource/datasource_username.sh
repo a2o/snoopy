@@ -13,7 +13,7 @@ set -u
 ### Get data
 #
 VAL_SNOOPY=`$SNOOPY_TEST_CLI run datasource username`
-VAL_REAL=`id -a | grep -Eo 'uid=[0-9]+[(][^)]+[)]' | grep -Eo '[(][^)]+[)]' | grep -Eo '[^()]+'`
+VAL_REAL=`id -u -n`
 
 
 

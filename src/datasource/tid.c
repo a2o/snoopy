@@ -49,7 +49,11 @@
  */
 int snoopy_datasource_tid (char * const result, __attribute__((unused)) char const * const arg)
 {
-    long unsigned int tid = pthread_self();
+    // Musl (on Alpine 3.16) has pthread_t defined as 'unsigned long', but glibc
+    // defines it as 'unsigned long int'.
+    // SonarCloud complains about redundant cast, but not doing this cast makes
+    // build fail on Alpine 3.16.
+    long unsigned tid = (long unsigned) pthread_self();
 
     // This happens if -lpthread is not given to compiler
     if (0 == tid) {

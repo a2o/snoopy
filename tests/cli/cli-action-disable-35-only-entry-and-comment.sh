@@ -30,7 +30,7 @@ if [ ! -f $SNOOPY_TEST_LD_SO_PRELOAD_PATH ]; then
     snoopy_testResult_fail "ld.so.preload test file ($SNOOPY_TEST_LD_SO_PRELOAD_PATH) unexpectedly missing"
 fi
 
-FILESIZE=`stat --printf="%s" $SNOOPY_TEST_LD_SO_PRELOAD_PATH`
+FILESIZE=`stat -c "%s" $SNOOPY_TEST_LD_SO_PRELOAD_PATH`
 if [ "$FILESIZE" != "0" ]; then
     snoopy_testResult_fail "ld.so.preload test file ($SNOOPY_TEST_LD_SO_PRELOAD_PATH) unexpectedly non-empty"
 fi

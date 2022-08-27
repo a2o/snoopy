@@ -42,6 +42,10 @@ jobs:
     strategy:
       matrix:
         container:
+          - ciready/alpine:3.14-ci-c
+          - ciready/alpine:3.15-ci-c
+          - ciready/alpine:3.16-ci-c
+
           - ciready/archlinux:base-devel-ci-c
 
           - ciready/almalinux:8-ci-c

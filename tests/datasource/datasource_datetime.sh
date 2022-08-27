@@ -16,6 +16,12 @@ VAL_SNOOPY=`$SNOOPY_TEST_CLI run datasource datetime`
 snoopy_testRun_info "Snoopy value: $VAL_SNOOPY"
 VAL_REAL=`date "+%Y-%m-%dT%H:%M:%S%z"`
 snoopy_testRun_info "Real value:   $VAL_REAL"
+
+# Busybox-based `date` utility does not recognize "yyyy-mm-ddThh:mm:ss+zzzz" format,
+# so let's convert it to "yyyy-mm-dd hh:mm:ss" format for a more universal handling.
+VAL_SNOOPY=`echo "$VAL_SNOOPY" | cut -d+ -f1 | sed -e 's/T/ /'`
+VAL_REAL=`echo "$VAL_REAL"     | cut -d+ -f1 | sed -e 's/T/ /'`
+
 VAL_SNOOPY_TS=`date --date="$VAL_SNOOPY"  "+%s"`
 VAL_REAL_TS=`  date --date="$VAL_REAL"    "+%s"`
 VAL_DIFF=`expr $VAL_SNOOPY_TS - $VAL_REAL_TS | sed -e 's/^-//'`

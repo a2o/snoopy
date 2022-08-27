@@ -35,6 +35,11 @@ jobs:
     strategy:
       matrix:
         container:
+#FIXME uncomment once Snoopy 2.5.0 containing Alpine-/musl-related fixes is released
+#          - alpine:3.14
+#          - alpine:3.15
+#          - alpine:3.16
+
           - archlinux:base-devel
 
           - almalinux/8-base:latest
@@ -68,6 +73,10 @@ jobs:
 
       ### Install requirements for the subsequent checkout action
       #
+
+      # Alpine
+      - run: apk add bash
+        if: ${{ startsWith(matrix.container, 'alpine:') }}
 
       # SUSE / OpenSUSE
       - run: zypper -n install gzip tar

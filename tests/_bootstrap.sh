@@ -17,7 +17,8 @@ set -u
 
 ### Get variables about current test
 #
-SNOOPY_CUR_TEST_PATH=`readlink -e $0`
+SNOOPY_CUR_TEST_PATH=`readlink -f $0`
+echo "Current test path: $SNOOPY_CUR_TEST_PATH"
 SNOOPY_CUR_TEST_DIR=`dirname $SNOOPY_CUR_TEST_PATH`
 SNOOPY_CUR_TEST_FILENAME=`basename $SNOOPY_CUR_TEST_PATH`
 SNOOPY_CUR_TEST_NAME=`echo $SNOOPY_CUR_TEST_FILENAME | sed -e 's/\.sh$//'`
@@ -37,7 +38,7 @@ SNOOPY_TESTS_ROOTDIR=`dirname $SNOOPY_CUR_TEST_GROUP_PATH`
 # Also now there is an assumption that all tests are placed in subdirs of
 # root tests/ directory.
 #
-# Do not use "readlink -e $THIS_FILE_PATH" - PWD differs when building outside of source dir
+# Do not use "readlink -f $THIS_FILE_PATH" - PWD differs when building outside of source dir
 #
 SNOOPY_CUR_TEST_WORKDIR=`pwd`
 SNOOPY_TESTS_BINDIR="$SNOOPY_CUR_TEST_WORKDIR/../bin"

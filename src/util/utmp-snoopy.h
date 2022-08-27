@@ -23,6 +23,7 @@
 #ifndef _GNU_SOURCE
 #define _GNU_SOURCE // For getutline_r() in utmp.c
 #endif
+#include <stddef.h>
 #include <utmp.h>
 
 
