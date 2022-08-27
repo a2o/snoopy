@@ -64,8 +64,6 @@ Makefile
 /tests/bin/snoopy-test
 /tests/bin/spaceparent
 /tests/bin/space parent
-/packaging/rhel/snoopy.spec
-/packaging/sles/snoopy.spec
 /etc/snoopy.ini
 
 
@@ -112,6 +110,12 @@ Makefile
 # Debian
 /debian
 /packaging/deb/changelog
+/packaging/deb/.debhelper/
+/packaging/deb/autoreconf.after
+/packaging/deb/autoreconf.before
+/packaging/deb/debhelper-build-stamp
+/packaging/deb/snoopy.debhelper.log
+/packaging/deb/snoopy/
 #../snoopy_*_*.buildinfo
 #../snoopy_*_*.changes
 #../snoopy_*_*.deb

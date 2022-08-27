@@ -1,0 +1,26 @@
+#
+# Ubuntu Snap AppArmor profile additions by Snoopy Command Logger
+#
+# Snoopy installation from .deb currently does not reload apparmor profiles.
+# You will either need to do that manually, or reboot the whole system.
+#
+# Additionally, once "inside" snap, Snoopy is unable to read /etc/snoopy.ini
+# on the host's filesystem, which makes it revert back to the built-in default
+# configuration.
+#
+    /lib/x86_64-linux-gnu/libsnoopy.so* mr,
+    /etc/snoopy.ini r,
+
+    /dev/pts/ r,
+    /proc/*/loginuid r,
+    /proc/[0-9]+/status r,
+    /usr/lib/x86_64-linux-gnu/libnss_compat-*.so mr,
+    /usr/lib/x86_64-linux-gnu/libnss_nis-*.so mr,
+    /usr/lib/x86_64-linux-gnu/libnsl-*.so mr,
+
+    unix (create, connect, send) type=dgram,
+    unix (create, connect, send) type=stream,
+
+    /dev/log w,
+    /run/systemd/journal/dev-log w,
+    /var/log/snoopy.log w,
