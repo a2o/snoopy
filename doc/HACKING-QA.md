@@ -9,7 +9,6 @@ TLDR version:
 
 * [Test suite](#test-suite)
 * [Autoscan](#autoscan)
-* [Autoreconf](#autoreconf)
 * [Valgrind](#valgrind)
 * [SonarCloud](#sonarcloud)
 * [coverity](#coverity)
