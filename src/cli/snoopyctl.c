@@ -1,5 +1,5 @@
 /*
- * SNOOPY LOGGER
+ * SNOOPY COMMAND LOGGER
  *
  * Copyright (c) 2020 Bostjan Skufca Jese <bostjan@a2o.si>
  *
@@ -43,7 +43,7 @@
 
 void showAbout () {
     char * aboutContent =
-        "Snoopy is a small library that logs all program executions on your Linux/BSD system (a.k.a. Snoopy Logger).\n"
+        "Snoopy is a small library that logs all program executions on your Linux/BSD system (a.k.a. Snoopy Command Logger).\n"
         "The command line utility that you've just used to display this message is Snoopy's CLI management tool.\n"
         "\n"
         "More information about Snoopy is available at the following URL:\n"

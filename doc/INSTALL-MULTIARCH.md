@@ -1,4 +1,4 @@
-# Support for Multiple Architectures - Snoopy Logger
+# Support for Multiple Architectures - Snoopy Command Logger
 
 Table of contents:
 * [Disclaimer](#disclaimer)

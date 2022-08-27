@@ -1,4 +1,4 @@
-# Docker-based issue demo
+# Docker-based issue demo - Snoopy Command Logger
 
 To simplify the transfer of context when reporting an issue, create a
 Docker-based demonstration of the Snoopy anomaly you discovered.

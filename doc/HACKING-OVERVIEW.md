@@ -1,4 +1,4 @@
-# Hacking Snoopy
+# Hacking - Snoopy Command Logger
 
 New ideas are welcome. Most of change requests so far were about additional
 log data or filtering capabilities, therefore most of development/changes

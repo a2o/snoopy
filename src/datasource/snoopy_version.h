@@ -1,5 +1,5 @@
 /*
- * SNOOPY LOGGER
+ * SNOOPY COMMAND LOGGER
  *
  * File: snoopy/datasource/snoopy_version.h
  *

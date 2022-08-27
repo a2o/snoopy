@@ -1,4 +1,4 @@
-# Snoopy Logger Internals
+# Internals - Snoopy Command Logger
 
 
 

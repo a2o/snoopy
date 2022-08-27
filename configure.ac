@@ -18,7 +18,7 @@ AC_PREREQ([2.69])
 #
 # PS: Since the upgrade to autoconf 2.69, AC_INIT definition can no longer span multiple lines.
 #
-AC_INIT([Snoopy Logger],[m4_esyscmd_s(echo $(./dev-tools/libexec/get-release-version.sh))],[https://github.com/a2o/snoopy/issues/],[snoopy],[https://github.com/a2o/snoopy/])
+AC_INIT([Snoopy Command Logger],[m4_esyscmd_s(echo $(./dev-tools/libexec/get-release-version.sh))],[https://github.com/a2o/snoopy/issues/],[snoopy],[https://github.com/a2o/snoopy/])
 
 
 ### Configure autotools

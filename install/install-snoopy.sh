@@ -485,7 +485,7 @@ else
     ### Tell the user what to do next
     #
     echo
-    echo "SNOOPY LOGGER is now installed and enabled."
+    echo "Snoopy Command Logger is now installed and enabled."
     echo
     echo "TIP #1: If Snoopy is to be enabled for all processes, you need"
     echo "        to restart your system, or at least all services on it."

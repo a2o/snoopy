@@ -1,4 +1,4 @@
-# Snoopy Logger
+# Snoopy Command Logger
 
 
 
@@ -158,7 +158,7 @@ Additional git repository mirrors (read-only) are available here:
 
 ## Credits
 
-Snoopy Logger was originally created and maintained by:
+Snoopy Command Logger was originally created and maintained by:
 - Marius Aamodt Eriksen <marius@umich.edu>
 - Mike Baker <mbm@linux.com>
 

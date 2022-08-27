@@ -1,4 +1,4 @@
-# Snoopy Logger FAQ
+# F.A.Q. - Snoopy Command Logger
 
 
 

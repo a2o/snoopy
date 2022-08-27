@@ -1,4 +1,4 @@
-# Getting Support for Snoopy Logger
+# Getting Support for Snoopy Command Logger
 
 
 

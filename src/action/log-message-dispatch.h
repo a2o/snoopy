@@ -1,5 +1,5 @@
 /*
- * SNOOPY LOGGER
+ * SNOOPY COMMAND LOGGER
  *
  * Copyright (c) 2014 Bostjan Skufca Jese <bostjan@a2o.si>
  *

@@ -1,4 +1,4 @@
-# Snoopy releasing guide
+# Releasing guide - Snoopy Command Logger
 
 
 

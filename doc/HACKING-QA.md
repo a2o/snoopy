@@ -1,4 +1,4 @@
-# Snoopy Hacking - QA
+# Hacking QA - Snoopy Command Logger
 
 TLDR version:
 - Most of the code quality checks will run automatically (via GitHub Actions)
