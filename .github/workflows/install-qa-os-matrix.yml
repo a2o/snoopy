@@ -35,9 +35,10 @@ jobs:
     strategy:
       matrix:
         container:
-          - alpine:3.14
-          - alpine:3.15
-          - alpine:3.16
+#FIXME uncomment once Snoopy 2.5.0 containing Alpine-/musl-related fixes is released
+#          - alpine:3.14
+#          - alpine:3.15
+#          - alpine:3.16
 
           - archlinux:base-devel
 
