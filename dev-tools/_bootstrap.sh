@@ -195,11 +195,6 @@ _detectOperatingSystem()
         fi
     fi
 
-    # Alpine Linux contains patch version number too, let's remove it
-    if [[ "$OS_ID" == "alpine" ]] ; then
-        OS_VERSION=`echo "$OS_VERSION" | cut -d. -f1,2`
-    fi
-
     # Almalinux contains minor version in VERSION_ID, let's remove it
     if [[ "$OS_ID" == "almalinux" ]] && [[ $OS_VERSION =~ \. ]]; then
         OS_VERSION=`echo "$OS_VERSION" | cut -d. -f1`

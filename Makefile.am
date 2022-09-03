@@ -82,9 +82,6 @@ clean-local-this-dir:
 	rm -rf sonarcloud-build-wrapper-output ; \
 	rm -rf sonar-cfamily.reproducer ; \
 	rm -rf .scannerwork ; \
-	rm -rf packaging/alpine/builddir ; \
-	rm -f  ~/packages/packaging/x86_64/snoopy-*.apk ; \
-	rm -f  snoopy-*.pkg.tar.zst ; \
 	rm -rf packaging/deb/.debhelper ; \
 	rm -f  packaging/deb/autoreconf.after ; \
 	rm -f  packaging/deb/autoreconf.before ; \
@@ -99,6 +96,7 @@ clean-local-this-dir:
 	rm -f  ../snoopy_*_*.deb ; \
 	rm -f  ../snoopy-dbgsym_*_*.ddeb ; \
 	rm -rf packaging/rpmbuild ; \
+	rm -f  snoopy-*.pkg.tar.zst ; \
 	true
 
 
@@ -113,10 +111,9 @@ gitclean: maintainer-clean
 	rm -fr build/m4/ ; \
 	rm -f  config.h.in ; \
 	rm -f  configure ; \
-	rm -f  APKBUILD ; \
-	rm -f  PKGBUILD ; \
 	rm -f  debian ; \
 	rm -f  packaging/deb/changelog ; \
+	rm -f  PKGBUILD ; \
 	true
 
 
