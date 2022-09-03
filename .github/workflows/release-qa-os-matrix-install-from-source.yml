@@ -67,7 +67,7 @@ jobs:
       #
 
       # Alpine
-      - run: apk add wget tar gzip
+      - run: apk add wget tar gzip bash
         if: ${{ startsWith(matrix.container, 'alpine:') }}
 
       # Arch
