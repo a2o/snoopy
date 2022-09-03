@@ -135,6 +135,18 @@ fi
 #
 case "$OS_ID" in
 
+    alpine)
+        PKG_SNOOPY_VERSION=`echo "$SNOOPY_RELEASE_VERSION" | sed -e 's/-rc/_rc/' | sed -e 's/-/_/g'`
+        PKG_RELEASE_NUMBER="$ARG_PKG_RELEASE_NUMBER"
+
+        ARCHITECTURE=`uname -m`
+        PKG_VERS_TAG="${PKG_SNOOPY_VERSION}-r${PKG_RELEASE_NUMBER}"
+        PKG_FULL_TAG="${PKG_SNOOPY_VERSION}-r${PKG_RELEASE_NUMBER}"
+
+        PKG_FILE_NAME="snoopy-${PKG_FULL_TAG}.apk"
+        PKG_FILE_PATH="~/packages/packaging/x86_64/${PKG_FILE_NAME}"
+        ;;
+
     arch)
         # For pacman, 1.0.0rc1 < 1.0.0
         PKG_SNOOPY_VERSION=`echo "$SNOOPY_RELEASE_VERSION" | sed -e 's/-rc/rc/' | sed -e 's/-/_/g'`
@@ -273,6 +285,22 @@ fi
 ### Build the package
 #
 case "$OS_ID" in
+
+
+    alpine)
+        # Make gitclean removes this one, so let's (re?)create it
+        rm -f APKBUILD
+        ln -s packaging/alpine/APKBUILD
+
+        # Pull in some settings as environment variables
+#        source packaging/arch/env
+
+        # Build the package
+        abuild -P packaging/alpine/packages
+
+        # Cleanup
+        rm -f APKBUILD
+        ;;
 
 
     arch)

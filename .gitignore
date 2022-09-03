@@ -103,6 +103,11 @@ Makefile
 ### Files produced by the native packaging process
 #
 
+# Alpine
+/APKBUILD
+/packaging/alpine/builddir
+/packaging/alpine/packages
+
 # Arch
 /PKGBUILD
 /snoopy-*.pkg.tar.zst

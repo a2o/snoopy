@@ -31,6 +31,7 @@ BOOTSTRAP_GIT_REPO_REQUIRED="false"
 
 ### Definitions
 #
+PACKAGE_NAMES_ALPINE="alpine-sdk"
   PACKAGE_NAMES_ARCH="pacman openssh"
 PACKAGE_NAMES_DEBIAN="debhelper apt-utils             gnupg"
 PACKAGE_NAMES_REDHAT="rpm-build createrepo   rpm-sign gnupg2"
@@ -99,6 +100,10 @@ _installPackages()
     fi
 
     case "$OS_ID" in
+        alpine)
+            $USE_SUDO sudo apk add $PACKAGE_NAMES_ALPINE
+            ;;
+
         arch)
             $USE_SUDO sudo pacman -Syu --noconfirm $PACKAGE_NAMES_ARCH
             ;;
