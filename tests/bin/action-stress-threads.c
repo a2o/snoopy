@@ -298,7 +298,9 @@ int snoopyTestCli_action_stress_threads_randomNumberInclusive (int nMin, int nMa
     bytesRead = read(fd, buffer, sizeof(randomNrRaw));
     close(fd);
     if (bytesRead != sizeof(randomNrRaw)) {
-        printf("ERROR: Unable to read %lu bytes from /dev/urandom, only got %li bytes.\n", sizeof(randomNrRaw), bytesRead);
+        // SonarCloud may complain about redundant casts here, but removing these
+        // "redundant" casts causes builds to fail on non-64bit platforms.
+        printf("ERROR: Unable to read %lu bytes from /dev/urandom, only got %li bytes.\n", (long unsigned) sizeof(randomNrRaw), (long int) bytesRead);
         return -1;
     }
 
