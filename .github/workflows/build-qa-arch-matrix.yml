@@ -1,0 +1,120 @@
+name: Build QA - Arch Matrix
+
+
+
+on:
+  workflow_dispatch:
+
+  pull_request:
+    branches:
+      - master
+    paths:
+      - '**'
+      - '!.github/**'
+      - '.github/workflows/build-qa-arch-matrix.yml'
+      - '!.gitignore'
+      - '!ChangeLog'
+      - '!COPYING'
+      - '!configure.scan'
+      - '!dev-tools/**'
+      - 'dev-tools/install-dev-software.sh'
+      - 'dev-tools/libexec/get-release-*.sh'
+      - '!doc/**'
+      - '!etc/**'
+      - '!install/**'
+      - '!lib/*/IMPORT.defs'
+      - '!lib/*/LICENSE'
+      - '!README.md'
+
+  push:
+    branches:
+      - master
+      - force-github-action-run
+    tags:
+      - '*'
+    paths:
+      - '**'
+      - '!.github/**'
+      - '.github/workflows/build-qa-arch-matrix.yml'
+      - '!.gitignore'
+      - '!ChangeLog'
+      - '!COPYING'
+      - '!configure.scan'
+      - '!dev-tools/**'
+      - 'dev-tools/install-dev-software.sh'
+      - 'dev-tools/libexec/get-release-*.sh'
+      - '!doc/**'
+      - '!etc/**'
+      - '!install/**'
+      - '!lib/*/IMPORT.defs'
+      - '!lib/*/LICENSE'
+      - '!README.md'
+
+
+
+jobs:
+  build-qa-arch-matrix:
+
+
+
+    ### Define the matrix of architectures/platforms to run on
+    #
+    strategy:
+      matrix:
+        include:
+          - arch: linux/386
+            libdir: /lib/i386-linux-gnu
+          - arch: linux/amd64
+            libdir: /lib/x86_64-linux-gnu
+
+
+
+    ### Define the environment to run in
+    #
+    name: Build on ${{matrix.arch}}
+    runs-on: ubuntu-20.04
+    container:
+        image: debian:bullseye
+        options: --platform ${{ matrix.arch }}
+
+
+
+    ###
+    ### Steps to run
+    ###
+    steps:
+
+
+
+      ### Fetch the code
+      #
+      # We're using @v1 here to support execution on 32-bit systems
+      #
+      - uses: actions/checkout@v1
+        with:
+          fetch-depth: 0
+
+      # Work around the fix for CVE-2022-24765
+      - run: git config --global --add safe.directory $GITHUB_WORKSPACE || true
+
+
+
+      ### Make sure we're running on the right platform
+      #
+      - run: ls -lad ${{ matrix.libdir }}
+
+
+
+      ### Build
+      #
+      - run: ./dev-tools/install-dev-software.sh
+      - run: ./bootstrap.sh
+      - run: ./configure --enable-option-checking=fatal --enable-everything
+      - run: make -j4
+      - run: make -j4 check
+
+      - uses: actions/upload-artifact@v2
+        if: failure()
+        with:
+          name: tests-directory
+          path: tests/
