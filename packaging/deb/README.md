@@ -26,7 +26,7 @@ To install the required software (this only needs to be done once):
 ./dev-tools/install-packaging-software.sh
 ```
 
-To build a RPM package:
+To build a DEB package:
 ```bash
 ./dev-tools/build-package-deb.sh
 ```
