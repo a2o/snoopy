@@ -4,6 +4,16 @@
 
 
 
+2022-09-28 - Version 2.5.1
+--------------------------
+Bugfixes:
+=========
+o Bugfix (GH #246, #247):
+    Fix build issues on 32-bit architectures.
+    (Thanks Marcos Fouces (@MarcosFouces @ GitHub) for the report & testing on Debian build infrastructure.)
+
+
+
 2022-09-04 - Version 2.5.0
 --------------------------
 New features:
