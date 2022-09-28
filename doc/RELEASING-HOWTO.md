@@ -4,7 +4,7 @@
 
 ## Changing the release process / Editing this document
 
-This document contains the overall releasing process descrtiption, but hints
+This document contains the overall releasing process description, but hints
 for what to do after each step are scattered around the related scripts in the
 [dev-tools/](../dev-tools/) directory, to speed up the process.
 
@@ -35,6 +35,13 @@ The following assumptions are, well, assumed, by the releasing scripts:
 
 
 ## Steps to release Snoopy
+
+0. If it makes sense, drop a note to Marcos Fouces and mention the RC tag to test,
+   and he'll upload it to the Debian Sid CI as an experimental release. This way,
+   the new Snoopy code can be built and tested on [a lot of different architectures](https://buildd.debian.org/status/package.php?p=snoopy&suite=sid).
+
+    https://buildd.debian.org/status/package.php?p=snoopy&suite=sid
+
 
 1. Edit the `ChangeLog` file, update the upcoming release version and date:
 
