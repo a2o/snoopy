@@ -162,7 +162,9 @@ int snoopyTestCli_action_stress_threadsexec (int argc, char ** argv)
         .tv_nsec = 100000000,
     };
 
-    if (verbose) printf("M: Waiting for all threads to finish (max %d * %ld ns):\n", pMax, sleepTime.tv_nsec);
+    // SonarCloud may complain about redundant casts here, but removing these
+    // "redundant" casts causes builds to fail on non-64bit platforms.
+    if (verbose) printf("M: Waiting for all threads to finish (max %d * %lld ns):\n", pMax, (long long int) sleepTime.tv_nsec);
     if (verbose) fflush(stdout);
     int p;
     for (p=1 ; p<pMax ; p++) {
@@ -194,13 +196,17 @@ int snoopyTestCli_action_stress_threadsexec (int argc, char ** argv)
             break;
         }
 
-        if (verbose) printf(" M: Not all threads have joined yet, sleeping for %ld ns now.\n", sleepTime.tv_nsec);
+        // SonarCloud may complain about redundant casts here, but removing these
+        // "redundant" casts causes builds to fail on non-64bit platforms.
+        if (verbose) printf(" M: Not all threads have joined yet, sleeping for %lld ns now.\n", (long long int) sleepTime.tv_nsec);
         if (verbose) fflush(stdout);
         nanosleep(&sleepTime, NULL);
     }
 
     if (p >= pMax) {
-        printf("M: ERROR - Not all threads have joined (timeout after %d * %ld ns).\n", pMax, sleepTime.tv_nsec);
+        // SonarCloud may complain about redundant casts here, but removing these
+        // "redundant" casts causes builds to fail on non-64bit platforms.
+        printf("M: ERROR - Not all threads have joined (timeout after %d * %lld ns).\n", pMax, (long long int) sleepTime.tv_nsec);
         return 1;
     }
 
