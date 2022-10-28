@@ -6,7 +6,7 @@ Supported distributions:
 * [CentOS](#centos)
 * [Debian](#debian)
 * [openSUSE Leap](#opensuse-leap)
-* [Ubuntu](ubuntu)
+* [Ubuntu](#ubuntu)
 
 Supported architectures:
 * x86_64 (amd64)
