@@ -39,8 +39,14 @@ if FILTER_ENABLED_only_uid
     TESTS += filter_only_uid-pass-multi.sh
     TESTS += filter_only_uid-drop.sh
     TESTS += filter_only_uid-drop-multi.sh
-    TESTS += filterchain-drop.sh
-    TESTS += filterchain-pass.sh
+    TESTS += filterchain-double-bothdrop.sh
+    TESTS += filterchain-double-bothpass.sh
+    TESTS += filterchain-double-firstdrops.sh
+    TESTS += filterchain-double-seconddrops.sh
+    TESTS += filterchain-single-drop.sh
+    TESTS += filterchain-single-pass.sh
+    TESTS += filterchain-trailing-semicolon-drop.sh
+    TESTS += filterchain-trailing-semicolon-pass.sh
 endif
 endif
 
