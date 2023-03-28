@@ -190,7 +190,6 @@ jobs:
               -Dsonar.projectVersion=$SONARCLOUD_TAG \
               -Dsonar.cfamily.build-wrapper-output=../snoopy-sonarcloud-build-wrapper-output \
               -Dsonar.cfamily.gcov.reportsPath=. \
-              -Dsonar.cfamily.cache.enabled=false \
               -Dsonar.host.url=https://sonarcloud.io
             echo "Submission tag: $SONARCLOUD_TAG (branch: $CURRENT_BRANCH_NAME)"
         env:
@@ -216,7 +215,6 @@ jobs:
               -Dsonar.pullrequest.base=${{ github.event.pull_request.base.ref }} \
               -Dsonar.cfamily.build-wrapper-output=../snoopy-sonarcloud-build-wrapper-output \
               -Dsonar.cfamily.gcov.reportsPath=. \
-              -Dsonar.cfamily.cache.enabled=false \
               -Dsonar.host.url=https://sonarcloud.io
             echo "Submission tag: $SONARCLOUD_TAG (branch: $CURRENT_BRANCH_NAME)"
         env:
