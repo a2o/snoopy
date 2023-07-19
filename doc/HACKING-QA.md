@@ -42,7 +42,11 @@ it, where additional information about the error is (usually) available.
 Runs automatically on GitHub.
 
 The `autoscan` tool scans the local sources and generates `configure.scan` file
-containing all detected dependelcies.
+containing all detected dependencies.
+
+NOTICE: Stock `autoscan` is generating some non-consitent results.
+The wrapper script [../../dev-tools/autoscan.sh](dev-tools/autoscan.sh) will take care of those inconsistencies,
+therefore it should be used instead.
 
 
 ### Autoscan - running manually
@@ -57,13 +61,13 @@ known-good state, or else `make gitclean` might simply not work:
 make gitclean
 ```
 
-AS2: Run `autoscan` now:
+AS2: Run `./dev-tools/autoscan.sh` now:
 ```shell
-autoscan
+./dev-tools/autoscan.sh
 ```
 
 AS3: The `configure.scan` file is already committed to the repository from the
-previous `autoscan` run. This should make spotting newly-detected entries simple:
+previous `./dev-tools/autoscan.sh` run. This should make spotting newly-detected entries simple:
 ```shell
 git diff
 ```

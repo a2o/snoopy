@@ -72,7 +72,7 @@ jobs:
       - name: Run autoscan, check for changes
         run: |
           cp configure.scan configure.scan.GIT
-          autoscan
+          ./dev-tools/autoscan.sh
           diff -u configure.scan.GIT configure.scan
 
 
