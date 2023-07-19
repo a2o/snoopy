@@ -45,8 +45,8 @@ jobs:
           - debian:bookworm
           - debian:sid
 
-          - opensuse/leap:15.3
           - opensuse/leap:15.4
+          - opensuse/leap:15.5
           - opensuse/tumbleweed:latest
 
           - ubuntu:20.04

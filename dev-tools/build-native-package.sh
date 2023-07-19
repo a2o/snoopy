@@ -186,11 +186,11 @@ case "$OS_ID" in
         PKG_SNOOPY_VERSION=`echo "$SNOOPY_RELEASE_VERSION" | sed -e 's/-\?rc/~rc/' | sed -e 's/-/_/g'`
         PKG_RELEASE_NUMBER="$ARG_PKG_RELEASE_NUMBER"
         case "$OS_VERSION" in
-            "15.3")
-                PKG_RELEASE_DIST="bp154"
-                ;;
             "15.4")
                 PKG_RELEASE_DIST="bp154"
+                ;;
+            "15.5")
+                PKG_RELEASE_DIST="bp155"
                 ;;
             *)
                 _fatalError "Unsuppoterd SUSE version: $OS_VERSION"

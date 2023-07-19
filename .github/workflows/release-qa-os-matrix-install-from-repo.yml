@@ -51,8 +51,8 @@ jobs:
           - debian:bullseye
           - debian:bookworm
 
-          - opensuse/leap:15.3
           - opensuse/leap:15.4
+          - opensuse/leap:15.5
 
           - ubuntu:20.04
           - ubuntu:22.04
