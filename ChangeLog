@@ -6,9 +6,14 @@
 
 2023-xx-xx - Version 2.5.2
 --------------------------
+New features:
+=============
+o Add OpenSUSE 15.5 support.
+
 Deprecations:
 =============
 o Remove Ubuntu 18.04 support.
+o Remove OpenSUSE 15.3 support.
 
 
 
