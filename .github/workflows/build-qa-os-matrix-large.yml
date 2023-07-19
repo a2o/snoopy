@@ -63,7 +63,6 @@ jobs:
           - ciready/opensuse:leap-15.4-ci-c
           - ciready/opensuse:tumbleweed-latest-ci-c
 
-          - ciready/ubuntu:18.04-ci-c
           - ciready/ubuntu:20.04-ci-c
           - ciready/ubuntu:22.04-ci-c
           - ciready/ubuntu:rolling-ci-c

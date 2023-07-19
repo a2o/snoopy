@@ -185,14 +185,6 @@ apt update &&
 apt install snoopy
 ```
 
-Ubuntu 18.04 LTS (Bionic Beaver) [search-key:ubuntu-18.04]:
-```shell
-curl https://a2o.github.io/snoopy-packages/snoopy-packages-key.pub | apt-key add - &&
-echo "deb https://a2o.github.io/snoopy-packages/repo/ubuntu bionic stable" > /etc/apt/sources.list.d/snoopy-stable.list &&
-apt update &&
-apt install snoopy
-```
-
 
 
 ## Respositories with non-stable builds - testing

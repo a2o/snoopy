@@ -54,7 +54,6 @@ jobs:
           - opensuse/leap:15.3
           - opensuse/leap:15.4
 
-          - ubuntu:18.04
           - ubuntu:20.04
           - ubuntu:22.04
 
@@ -92,18 +91,6 @@ jobs:
       # OpenSUSE
       - run: zypper -n install   git curl tar gzip
         if: ${{ startsWith(matrix.container, 'opensuse/') }}
-
-
-
-      ### Ubuntu 18.04 legacy git workaround
-      #
-      - name: "WORKAROUND: Install latest git on Ubuntu 18.04, required by action/checkout@v2"
-        run: |
-            apt install -y software-properties-common
-            add-apt-repository -y ppa:git-core/ppa
-            apt update
-            apt install -y git
-        if: ${{ startsWith(matrix.container, 'ubuntu:18.04') }}
 
 
 

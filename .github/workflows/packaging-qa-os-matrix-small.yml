@@ -59,18 +59,6 @@ jobs:
 
 
 
-      ### Ubuntu 18.04 legacy git workaround
-      #
-      - name: "WORKAROUND: Install latest git on Ubuntu 18.04, required by action/checkout@v2"
-        run: |
-            apt install -y software-properties-common
-            add-apt-repository -y ppa:git-core/ppa
-            apt update
-            apt install -y git
-        if: ${{ startsWith(matrix.container, 'ciready/ubuntu:18.04') }}
-
-
-
       ### Fetch the code
       #
       - uses: actions/checkout@v2
