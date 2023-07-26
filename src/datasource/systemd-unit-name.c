@@ -61,8 +61,9 @@ int snoopy_datasource_systemd_unit_name (char * const resultBuf, size_t resultBu
     // Convert
     unitName = snoopy_util_systemd_convertCgroupEntryToUnitName(cgroupEntry);
     if (!unitName) {
+        retMsgLen = snprintf(resultBuf, resultBufSize, "%s", cgroupEntry+strlen("1:name=systemd:/"));
         free(cgroupEntry);
-        return snprintf(resultBuf, resultBufSize, "%s", cgroupEntry+strlen("1:name=systemd:/"));
+        return retMsgLen;
     }
     free(cgroupEntry);
 
