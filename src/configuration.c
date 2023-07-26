@@ -398,6 +398,9 @@ void snoopy_configuration_setDefaults
     CFG->syslog_ident_format     = SNOOPY_SYSLOG_IDENT_FORMAT;
     CFG->syslog_ident_format_malloced = SNOOPY_FALSE;
     CFG->syslog_level            = SNOOPY_SYSLOG_LEVEL;
+
+    CFG->datasource_message_max_length = SNOOPY_DATASOURCE_MESSAGE_MAX_LENGTH_DEFAULT;
+    CFG->log_message_max_length        = SNOOPY_LOG_MESSAGE_MAX_LENGTH_DEFAULT;
 }
 
 

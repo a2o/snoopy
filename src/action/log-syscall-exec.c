@@ -72,11 +72,11 @@ void snoopy_action_log_syscall_exec ()
 #endif
 
     /* Initialize empty log message */
-    logMessage    = malloc(SNOOPY_LOG_MESSAGE_BUF_SIZE);
+    logMessage    = malloc(CFG->log_message_max_length+1);
     logMessage[0] = '\0';
 
     /* Generate log message in specified format */
-    snoopy_message_generateFromFormat(logMessage, SNOOPY_LOG_MESSAGE_BUF_SIZE, CFG->message_format);
+    snoopy_message_generateFromFormat(logMessage, CFG->log_message_max_length+1, CFG->datasource_message_max_length+1, CFG->message_format);
 
     /* Dispatch the message to configured output */
     snoopy_action_log_message_dispatch(logMessage);

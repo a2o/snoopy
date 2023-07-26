@@ -10,6 +10,10 @@ TESTS =
 XFAIL_TESTS =
 
 TESTS        += configfile-bom.sh
+TESTS        += configfile-datasource_message_max_length-min.sh
+TESTS        += configfile-datasource_message_max_length-purenumeric.sh
+TESTS        += configfile-datasource_message_max_length-suffix-k.sh
+TESTS        += configfile-datasource_message_max_length-suffix-m-max.sh
 TESTS        += configfile-error_logging-y1.sh
 TESTS        += configfile-error_logging-y2.sh
 TESTS        += configfile-error_logging-y3.sh
@@ -20,6 +24,10 @@ TESTS        += configfile-inline-comment.sh
 TESTS        += configfile-line-length-1023.sh
 TESTS        += configfile-line-length-1024.sh
 XFAIL_TESTS  += configfile-line-length-1024.sh
+TESTS        += configfile-log_message_max_length-min.sh
+TESTS        += configfile-log_message_max_length-purenumeric.sh
+TESTS        += configfile-log_message_max_length-suffix-k.sh
+TESTS        += configfile-log_message_max_length-suffix-m-max.sh
 if FILTERING_ENABLED
 TESTS        += configfile-filter_chain-1.sh
 endif

@@ -48,7 +48,7 @@
  * Return:
  *     number of characters in the returned string, or SNOOPY_DATASOURCE_FAILURE
  */
-int snoopy_datasource_tty (char * const result, __attribute__((unused)) char const * const arg)
+int snoopy_datasource_tty (char * const resultBuf, size_t resultBufSize, __attribute__((unused)) char const * const arg)
 {
     char    ttyPath[SNOOPY_DATASOURCE_TTY_sizeMaxWithNull];
     size_t  ttyPathLen = SNOOPY_DATASOURCE_TTY_sizeMaxWithoutNull;
@@ -57,16 +57,16 @@ int snoopy_datasource_tty (char * const result, __attribute__((unused)) char con
     retVal = ttyname_r(0, ttyPath, ttyPathLen);
     if (0 != retVal) {
         if (EBADF == retVal) {
-            return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "ERROR(ttyname_r->EBADF)");
+            return snprintf(resultBuf, resultBufSize, "ERROR(ttyname_r->EBADF)");
         }
         if (ERANGE == retVal) {
-            return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "ERROR(ttyname_r->ERANGE)");
+            return snprintf(resultBuf, resultBufSize, "ERROR(ttyname_r->ERANGE)");
         }
         if (ENOTTY == retVal) {
-            return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "(none)");
+            return snprintf(resultBuf, resultBufSize, "(none)");
         }
-        return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "(unknown)");
+        return snprintf(resultBuf, resultBufSize, "(unknown)");
     }
 
-    return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "%s", ttyPath);
+    return snprintf(resultBuf, resultBufSize, "%s", ttyPath);
 }

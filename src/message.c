@@ -57,48 +57,56 @@
 void snoopy_message_generateFromFormat (
     char * const logMessage,
     size_t       logMessageBufSize,
+    size_t       dataSourceMsgMaxLength,
     char const * const logMessageFormat
 ) {
+    size_t dataSourceMsgBufSize;
+    char * dataSourceMsg = NULL;
+
     char const * fmtPos_cur;
     char const * fmtPos_nextFormatTag;
     char const * fmtPos_nextFormatTagClose;
     int   retVal;
+
+    dataSourceMsgBufSize = dataSourceMsgMaxLength+1;
+    dataSourceMsg = malloc(dataSourceMsgBufSize);
 
     fmtPos_cur           = logMessageFormat;
     fmtPos_nextFormatTag = logMessageFormat;
 
     // Loop all the way to the end of log message format specification
     while (strlen(fmtPos_nextFormatTag) > 0) {
-        int   lengthToCopy;
-        char  fmtStaticText[SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE];
+        size_t lengthToCopy;
         char  dataSourceTag[100];
         int   dataSourceTagLength;
         char *fmtPos_dataSourceTagArg;
         const char *dataSourceNamePtr;
         const char *dataSourceArgPtr;
         char  dataSourceArg[SNOOPY_DATASOURCE_ARG_MAX_SIZE];
-        char  dataSourceMsg[SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE];
 
         // If no data source tag is found, just copy the text and bail out
         fmtPos_nextFormatTag = strstr(fmtPos_cur, "%{");
         if (NULL == fmtPos_nextFormatTag) {
             snoopy_message_append(logMessage, logMessageBufSize, fmtPos_cur);
+            free(dataSourceMsg);
             return; // Should be "break;" but SonarCloud is complaining about it
         }
 
         // Otherwise copy text up to the next data source tag
         lengthToCopy = (int) (fmtPos_nextFormatTag - fmtPos_cur + 1); // + 1 for null termination
-        if (lengthToCopy > (int)(logMessageBufSize-strlen(logMessage))) {
-            lengthToCopy = (int)(logMessageBufSize-strlen(logMessage));
+        if (lengthToCopy > dataSourceMsgBufSize) {
+            lengthToCopy = dataSourceMsgBufSize;
         }
-        fmtStaticText[0] = '\0';
-        snprintf(fmtStaticText, lengthToCopy, "%s", fmtPos_cur);
-        snoopy_message_append(logMessage, logMessageBufSize, fmtStaticText);
+        dataSourceMsg[0] = '\0'; // Let's just use this buffer, even if it is called something else
+        snprintf(dataSourceMsg, lengthToCopy, "%s", fmtPos_cur);
+        snoopy_message_append(logMessage, logMessageBufSize, dataSourceMsg);
+        dataSourceMsg[0] = '\0'; // And wipe it for later reuse
 
         // Get data source tag
         fmtPos_nextFormatTagClose = strstr(fmtPos_nextFormatTag, "}");
         if (NULL == fmtPos_nextFormatTagClose) {
             snoopy_message_append(logMessage, logMessageBufSize, "[ERROR: Closing data source tag ('}') not found.]");
+            free(dataSourceMsg);
             return; // Should be "break;" but SonarCloud is complaining about it
         }
         dataSourceTag[0]    = '\0';
@@ -124,12 +132,13 @@ void snoopy_message_generateFromFormat (
             snoopy_message_append(logMessage, logMessageBufSize, "[ERROR: Data source '");
             snoopy_message_append(logMessage, logMessageBufSize, dataSourceNamePtr);
             snoopy_message_append(logMessage, logMessageBufSize, "' not found.]");
+            free(dataSourceMsg);
             return; // Should be "break;" but SonarCloud is complaining about it
         }
 
         // Call the provider, and append the results to log message
         dataSourceMsg[0] = '\0';
-        retVal = snoopy_datasourceregistry_callByName(dataSourceNamePtr, dataSourceMsg, dataSourceArgPtr);
+        retVal = snoopy_datasourceregistry_callByName(dataSourceNamePtr, dataSourceMsg, dataSourceMsgBufSize, dataSourceArgPtr);
         if (SNOOPY_DATASOURCE_FAILED(retVal)) {
             snoopy_message_append(logMessage, logMessageBufSize, "[ERROR: Data source '");
             snoopy_message_append(logMessage, logMessageBufSize, dataSourceNamePtr);
@@ -143,6 +152,8 @@ void snoopy_message_generateFromFormat (
         // Where to start next iteration
         fmtPos_cur = fmtPos_nextFormatTagClose + 1;
     }
+
+    free(dataSourceMsg);
 }
 
 

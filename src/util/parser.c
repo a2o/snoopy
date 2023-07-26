@@ -29,6 +29,7 @@
 
 #include "util/string-snoopy.h"
 
+#include <ctype.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -101,4 +102,53 @@ int snoopy_util_parser_csvToArgList (char *argListRaw, char ***argListParsed)
     *argListParsed      = argListParsedPtr;
 
     return argCount;
+}
+
+
+
+/*
+ * Parses a textual representation of an integer into an actual integer
+ *
+ * Params:
+ *     textInt:         String containing CSV to parse
+ *     argListParsed:   A pointer that will get malloc()-ed array of char pointers to individual CSV entries
+ *
+ * Return:
+ *     int:             Number of arguments parsed out.
+ */
+int snoopy_util_parser_strByteLength (char const * const numberAsText, const int valMin, const int valMax, const int valDefault)
+{
+    char const *numberAsTextPtr       = numberAsText;
+    int  numbersBufLength             = 20; // 20 characters are needed to store max long long int in decimal representation + \0.
+    char numbersBuf[numbersBufLength];
+    int  numberInt;
+    int  factor = 1;
+    int  result;
+
+    // Extract numbers
+    while ((*numberAsTextPtr != '\0') && isdigit(*numberAsTextPtr) && (numberAsTextPtr-numberAsText < numbersBufLength-2)) {
+        numbersBuf[numberAsTextPtr - numberAsText] = *numberAsTextPtr;
+        numberAsTextPtr++;
+    }
+    numbersBuf[numberAsTextPtr - numberAsText] = '\0';
+
+    // Convert to int
+    numberInt = atoi(numbersBuf);
+    if (numberInt == 0) {
+        return valDefault;
+    }
+
+    // Apply metric prefixes
+    if ((*numberAsTextPtr == 'k') || (*numberAsTextPtr == 'K')) {
+        factor = 1024;
+    } else if ((*numberAsTextPtr == 'm') || (*numberAsTextPtr == 'M')) {
+        factor = 1024*1024;
+    }
+    result = numberInt * factor;
+
+    // Apply limits
+    if (result < valMin) result = valMin;
+    if (result > valMax) result = valMax;
+
+    return result;
 }

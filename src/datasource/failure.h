@@ -22,7 +22,11 @@
 
 
 
+#include "datasource-common.h"
+
+
+
 /*
  * SNOOPY DATA SOURCE: failure
  */
-int snoopy_datasource_failure (char * const result, char const * const arg);
+int snoopy_datasource_failure (char * const resultBuf, size_t resultBufSize, char const * const arg);

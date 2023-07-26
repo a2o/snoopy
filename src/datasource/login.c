@@ -57,7 +57,7 @@
  * Return:
  *     number of characters in the returned string, or SNOOPY_DATASOURCE_FAILURE
  */
-int snoopy_datasource_login (char * const result, __attribute__((unused)) char const * const arg)
+int snoopy_datasource_login (char * const resultBuf, size_t resultBufSize, __attribute__((unused)) char const * const arg)
 {
     int          loginSizeMaxWithoutNull = SNOOPY_DATASOURCE_LOGIN_loginSizeMaxWithoutNull;
     int          loginSizeMaxWithNull    = SNOOPY_DATASOURCE_LOGIN_loginSizeMaxWithNull;
@@ -88,5 +88,5 @@ int snoopy_datasource_login (char * const result, __attribute__((unused)) char c
             }
         }
     }
-    return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "%s", login);
+    return snprintf(resultBuf, resultBufSize, "%s", login);
 }

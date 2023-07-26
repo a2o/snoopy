@@ -42,7 +42,7 @@
  * Return:
  *     number of characters in the returned string, or SNOOPY_DATASOURCE_FAILURE
  */
-int snoopy_datasource_noop (__attribute__((unused)) char * const result, __attribute__((unused)) char const * const arg)
+int snoopy_datasource_noop (__attribute__((unused)) char * const resultBuf, __attribute__((unused)) size_t resultBufSize, __attribute__((unused)) char const * const arg)
 {
     return 0;
 }

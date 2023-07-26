@@ -20,5 +20,9 @@
 
 
 
+#include <stddef.h>
+
+
+
 int snoopyTestCli_action_run_datasource (int argc, char ** argv);
-void snoopyTestCli_action_run_datasource_all ();
+void snoopyTestCli_action_run_datasource_all (size_t datasource_message_max_length);

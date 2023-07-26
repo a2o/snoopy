@@ -22,6 +22,10 @@
 
 
 
+#include "datasource-common.h"
+
+
+
 /*
  * Local defines
  */
@@ -33,4 +37,4 @@
 /*
  * SNOOPY DATA SOURCE: tty
  */
-int snoopy_datasource_tty (char * const result, char const * const arg);
+int snoopy_datasource_tty (char * const resultBuf, size_t resultBufSize, char const * const arg);

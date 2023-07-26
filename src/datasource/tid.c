@@ -47,7 +47,7 @@
  * Return:
  *     number of characters in the returned string, or SNOOPY_DATASOURCE_FAILURE
  */
-int snoopy_datasource_tid (char * const result, __attribute__((unused)) char const * const arg)
+int snoopy_datasource_tid (char * const resultBuf, size_t resultBufSize, __attribute__((unused)) char const * const arg)
 {
     // Musl (on Alpine 3.16) has pthread_t defined as 'unsigned long', but glibc
     // defines it as 'unsigned long int'.
@@ -57,8 +57,8 @@ int snoopy_datasource_tid (char * const result, __attribute__((unused)) char con
 
     // This happens if -lpthread is not given to compiler
     if (0 == tid) {
-        return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "(error @ pthread_self())");
+        return snprintf(resultBuf, resultBufSize, "(error @ pthread_self())");
     }
 
-    return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "%lu", tid);
+    return snprintf(resultBuf, resultBufSize, "%lu", tid);
 }

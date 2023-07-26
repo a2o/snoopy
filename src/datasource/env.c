@@ -47,14 +47,14 @@
  * Return:
  *     number of characters in the returned string, or SNOOPY_DATASOURCE_FAILURE
  */
-int snoopy_datasource_env (char * const result, char const * const arg)
+int snoopy_datasource_env (char * const resultBuf, size_t resultBufSize, char const * const arg)
 {
     char *env = getenv(arg);
 
     /* Return empty string if environmental variable does not exist */
     if (NULL == env) {
-        return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "(undefined)");
+        return snprintf(resultBuf, resultBufSize, "(undefined)");
     }
 
-    return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "%s", env);
+    return snprintf(resultBuf, resultBufSize, "%s", env);
 }

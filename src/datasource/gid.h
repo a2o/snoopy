@@ -22,7 +22,11 @@
 
 
 
+#include "datasource-common.h"
+
+
+
 /*
  * SNOOPY DATA SOURCE: gid
  */
-int snoopy_datasource_gid (char * const result, char const * const arg);
+int snoopy_datasource_gid (char * const resultBuf, size_t resultBufSize, char const * const arg);

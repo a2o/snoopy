@@ -74,12 +74,17 @@ int snoopyTestCli_action_run_datasource (int argc, char ** argv)
     const char *arg1;
     const char *datasourceName;
     const char *datasourceArg;
-    char  datasourceResult[SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE];
+    char  * datasourceResult;
     int   retVal;
+    const snoopy_configuration_t *CFG;
 
 
     /* Initialize Snoopy */
     snoopy_entrypoint_test_cli_init((char const *)g_argv[0], g_argv, NULL);
+
+
+    /* Get config pointer */
+    CFG = snoopy_configuration_get();
 
 
     /* Check if there is a data source name passed as an argument */
@@ -92,7 +97,7 @@ int snoopyTestCli_action_run_datasource (int argc, char ** argv)
 
     /* Is second argument --list? */
     if (0 == strcmp(arg1, "--all")) {
-        snoopyTestCli_action_run_datasource_all();
+        snoopyTestCli_action_run_datasource_all(CFG->datasource_message_max_length);
         return 0;
     }
     if (0 == strcmp(arg1, "--help")) {
@@ -121,9 +126,10 @@ int snoopyTestCli_action_run_datasource (int argc, char ** argv)
 
 
     /* Call the datasource */
-    retVal = snoopy_datasourceregistry_callByName(datasourceName, datasourceResult, datasourceArg);
+    datasourceResult = malloc(CFG->datasource_message_max_length+1);
+    retVal = snoopy_datasourceregistry_callByName(datasourceName, datasourceResult, CFG->datasource_message_max_length+1, datasourceArg);
     if (SNOOPY_DATASOURCE_FAILED(retVal)) {
-        fatalErrorValue("Datasource failed", datasourceResult);
+        fatalErrorValueFree("Datasource failed", datasourceResult);
     }
 
 
@@ -132,22 +138,25 @@ int snoopyTestCli_action_run_datasource (int argc, char ** argv)
 
 
     /* Housekeeping and return */
+    free(datasourceResult);
     snoopy_entrypoint_test_cli_exit();
     return 0;
 }
 
 
 
-void snoopyTestCli_action_run_datasource_all ()
+void snoopyTestCli_action_run_datasource_all (size_t datasource_message_max_length)
 {
     char *itemName   = NULL;
     const char *itemArgs   = NULL;
     char *itemResult = NULL;
-    int   itemResultSize;
+    size_t itemResultBufSize;
+    size_t itemResultSize;
     int   dCount;
 
     /* Initialize variables and spaces */
-    itemResult = malloc(SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE + 1);
+    itemResultBufSize = datasource_message_max_length + 1;
+    itemResult = malloc(itemResultBufSize);
 
     /* Loop through all datasources and just send to output */
     dCount = snoopy_datasourceregistry_getCount();
@@ -166,8 +175,8 @@ void snoopyTestCli_action_run_datasource_all ()
         }
 
         /* Execute the data source function */
-        itemResultSize = snoopy_datasourceregistry_callById(i, itemResult, itemArgs);
-        if (itemResultSize > SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE) {
+        itemResultSize = snoopy_datasourceregistry_callById(i, itemResult, itemResultBufSize, itemArgs);
+        if (itemResultSize > itemResultBufSize) {
             snoopy_error_handler("Maximum data source message size exceeded");
         }
 

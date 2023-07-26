@@ -55,7 +55,7 @@
  * Return:
  *     number of characters in the returned string, or SNOOPY_DATASOURCE_FAILURE
  */
-int snoopy_datasource_ipaddr (char * const result, __attribute__((unused)) char const * const arg)
+int snoopy_datasource_ipaddr (char * const resultBuf, size_t resultBufSize, __attribute__((unused)) char const * const arg)
 {
     char          ttyPathBuf[SNOOPY_DS_IPADDR_TTY_PATH_BUF_LEN];
     struct utmp   utmpEntryBuf;
@@ -66,23 +66,23 @@ int snoopy_datasource_ipaddr (char * const result, __attribute__((unused)) char 
     ttyPathBuf[0] = '\0';
     retVal = ttyname_r(STDIN_FILENO, ttyPathBuf, SNOOPY_DS_IPADDR_TTY_PATH_BUF_LEN);
     if (0 != retVal) {
-        return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "-");
+        return snprintf(resultBuf, resultBufSize, "-");
     }
     ttyPathBuf[SNOOPY_DS_IPADDR_TTY_PATH_BUF_LEN-1] = '\0';
 
     // Find the matching utmp entry
     if (SNOOPY_TRUE != snoopy_util_utmp_findUtmpEntryByPath(ttyPathBuf, utmpEntry)) {
-        return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "-"); // This can happen, i.e. in in a `docker run ...` environment
+        return snprintf(resultBuf, resultBufSize, "-"); // This can happen, i.e. in in a `docker run ...` environment
     }
 
     // Does the associated IP address actually exist?
     if (SNOOPY_TRUE != snoopy_util_utmp_doesEntryContainIpAddr(utmpEntry)) {
-        return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "-");
+        return snprintf(resultBuf, resultBufSize, "-");
     }
 
     // Convert to string IP address
-    snoopy_util_utmp_getUtmpIpAddrAsString(utmpEntry, result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE);
+    snoopy_util_utmp_getUtmpIpAddrAsString(utmpEntry, resultBuf, resultBufSize);
 
     // Clean up
-    return (int) strlen(result);
+    return (int) strlen(resultBuf);
 }

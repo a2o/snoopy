@@ -48,7 +48,7 @@
  * Return:
  *     number of characters in the returned string, or SNOOPY_DATASOURCE_FAILURE
  */
-int snoopy_datasource_snoopy_configure_command (char * const result, __attribute__((unused)) char const * const arg)
+int snoopy_datasource_snoopy_configure_command (char * const resultBuf, size_t resultBufSize, __attribute__((unused)) char const * const arg)
 {
-    return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "%s", SNOOPY_CONFIGURE_COMMAND);
+    return snprintf(resultBuf, resultBufSize, "%s", SNOOPY_CONFIGURE_COMMAND);
 }

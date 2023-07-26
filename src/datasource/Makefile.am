@@ -15,6 +15,7 @@ noinst_LTLIBRARIES = libsnoopy_datasources_all.la
 # Please maintain alphabetical order, equal to what `ls` would do.
 #
 libsnoopy_datasources_all_la_SOURCES = \
+	datasource-common.h \
 	failure.c \
 	failure.h \
 	noop.c \

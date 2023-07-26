@@ -20,4 +20,8 @@
 
 
 
-int snoopy_datasource_ipaddr (char * const result, char const * const arg);
+#include "datasource-common.h"
+
+
+
+int snoopy_datasource_ipaddr (char * const resultBuf, size_t resultBufSize, char const * const arg);

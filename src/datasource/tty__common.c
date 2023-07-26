@@ -54,7 +54,7 @@
  *     - 0 on success (result in ttyUid)
  *     - number of characters in the returned string on error
  */
-int snoopy_datasource_tty__get_tty_uid (uid_t * ttyUid, char * const result)
+int snoopy_datasource_tty__get_tty_uid (uid_t * ttyUid, char * const resultBuf, size_t resultBufSize)
 {
     char    ttyPath[SNOOPY_DATASOURCE_TTY_sizeMaxWithNull];
     size_t  ttyPathLen = SNOOPY_DATASOURCE_TTY_sizeMaxWithoutNull;
@@ -65,20 +65,20 @@ int snoopy_datasource_tty__get_tty_uid (uid_t * ttyUid, char * const result)
     retVal = ttyname_r(0, ttyPath, ttyPathLen);
     if (0 != retVal) {
         if (EBADF == retVal) {
-            return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "ERROR(ttyname_r->EBADF)");
+            return snprintf(resultBuf, resultBufSize, "ERROR(ttyname_r->EBADF)");
         }
         if (ERANGE == retVal) {
-            return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "ERROR(ttyname_r->ERANGE)");
+            return snprintf(resultBuf, resultBufSize, "ERROR(ttyname_r->ERANGE)");
         }
         if (ENOTTY == retVal) {
-            return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "(none)");
+            return snprintf(resultBuf, resultBufSize, "(none)");
         }
-        return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "(unknown)");
+        return snprintf(resultBuf, resultBufSize, "(unknown)");
     }
 
     /* Get owner of tty */
     if (-1 == stat(ttyPath, &statbuffer)) {
-        return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "ERROR(unable to stat() %s)", ttyPath);
+        return snprintf(resultBuf, resultBufSize, "ERROR(unable to stat() %s)", ttyPath);
     }
     *ttyUid = statbuffer.st_uid;
 

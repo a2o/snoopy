@@ -80,7 +80,7 @@ int snoopyTestCli_action_run_everything ()
 
 
     /* Initialize empty log message */
-    logMessage    = malloc(SNOOPY_LOG_MESSAGE_BUF_SIZE);
+    logMessage    = malloc(CFG->log_message_max_length+1);
     logMessage[0] = '\0';
 
 
@@ -97,13 +97,13 @@ int snoopyTestCli_action_run_everything ()
     printf("SKIPPED - not enabled.\n");
 #endif
     printf("-----[ Datasources ]-----------------------------------\n");
-    snoopyTestCli_action_run_datasource_all();
+    snoopyTestCli_action_run_datasource_all(CFG->datasource_message_max_length+1);
     printf("-----[ Outputs ]---------------------------------------\n");
     snoopyTestCli_action_run_output_all();
 
 
     printf("-----[ Message formatting ]----------------------------\n");
-    snoopy_message_generateFromFormat(logMessage, SNOOPY_LOG_MESSAGE_BUF_SIZE, CFG->message_format);
+    snoopy_message_generateFromFormat(logMessage, CFG->log_message_max_length+1, CFG->datasource_message_max_length+1, CFG->message_format);
     printf("Message: %s\n", logMessage);
 
 

@@ -48,15 +48,15 @@
  * Return:
  *     number of characters in the returned string, or SNOOPY_DATASOURCE_FAILURE
  */
-int snoopy_datasource_timestamp_ms (char * const result, __attribute__((unused)) char const * const arg)
+int snoopy_datasource_timestamp_ms (char * const resultBuf, size_t resultBufSize, __attribute__((unused)) char const * const arg)
 {
     struct timeval tv;
     int            retVal;
 
     retVal = gettimeofday(&tv, NULL);
     if (0 == retVal) {
-        return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "%03d", (int) tv.tv_usec/1000);
+        return snprintf(resultBuf, resultBufSize, "%03d", (int) tv.tv_usec/1000);
     } else {
-        return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "(error: %d)", errno);
+        return snprintf(resultBuf, resultBufSize, "(error: %d)", errno);
     }
 }

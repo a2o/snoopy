@@ -29,6 +29,7 @@ TESTS += unit-filterregistry.sh
 endif
 
 TESTS += unit-outputregistry.sh
+TESTS += unit-util-parser.sh
 TESTS += unit-util-syslog.sh
 
 if DATASOURCE_ENABLED_systemd_unit_name

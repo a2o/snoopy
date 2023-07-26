@@ -9,6 +9,9 @@
 New features:
 =============
 o Add OpenSUSE 15.5 support.
+o Configurable max log message length.
+    Ref: https://github.com/a2o/snoopy/issue/254
+    Ref: https://github.com/a2o/snoopy/pull/264
 
 Deprecations:
 =============

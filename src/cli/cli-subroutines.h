@@ -35,6 +35,7 @@ void printError         (const char * const message);
 void printErrorValue    (const char * const message, const char * const value);
 void fatalError         (const char * const message);
 void fatalErrorValue    (const char * const message, const char * const value);
+void fatalErrorValueFree(const char * const message,       char * const value);
 
 char *      libsnoopySo_getFilePath ();
 char *      libsnoopySo_getFilePathNoCheck ();

@@ -51,14 +51,14 @@
  * Return:
  *     number of characters in the returned string, or SNOOPY_DATASOURCE_FAILURE
  */
-int snoopy_datasource_tid_kernel (char * const result, __attribute__((unused)) char const * const arg)
+int snoopy_datasource_tid_kernel (char * const resultBuf, size_t resultBufSize, __attribute__((unused)) char const * const arg)
 {
     long unsigned int tid = (long unsigned int) syscall(SYS_gettid);
 
     // This happens if -lpthread is not given to compiler
     if (0 == tid) {
-        return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "(error @ syscall(SYS_gettid))");
+        return snprintf(resultBuf, resultBufSize, "(error @ syscall(SYS_gettid))");
     }
 
-    return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "%lu", tid);
+    return snprintf(resultBuf, resultBufSize, "%lu", tid);
 }

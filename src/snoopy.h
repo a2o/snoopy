@@ -57,7 +57,11 @@
  * Maximum length of a string returned from any data source function,
  * including terminating null character.
  */
-#define SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE 2048
+#define SNOOPY_DATASOURCE_MESSAGE_MAX_LENGTH_DEFAULT    2047
+#define SNOOPY_DATASOURCE_MESSAGE_MAX_LENGTH_HARDMIN     255
+#ifndef SNOOPY_DATASOURCE_MESSAGE_MAX_LENGTH_HARDMAX
+#define SNOOPY_DATASOURCE_MESSAGE_MAX_LENGTH_HARDMAX 1048575
+#endif
 
 
 
@@ -105,7 +109,11 @@
  *
  * Size of the log message buffer (message + \0).
  */
-#define SNOOPY_LOG_MESSAGE_BUF_SIZE 16383
+#define SNOOPY_LOG_MESSAGE_MAX_LENGTH_DEFAULT   16383
+#define SNOOPY_LOG_MESSAGE_MAX_LENGTH_HARDMIN     255
+#ifndef SNOOPY_LOG_MESSAGE_MAX_LENGTH_HARDMAX
+#define SNOOPY_LOG_MESSAGE_MAX_LENGTH_HARDMAX 1048575
+#endif
 
 
 

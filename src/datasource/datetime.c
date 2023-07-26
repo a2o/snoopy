@@ -48,7 +48,7 @@
  * Return:
  *     number of characters in the returned string, or SNOOPY_DATASOURCE_FAILURE
  */
-int snoopy_datasource_datetime (char * const result, char const * const arg)
+int snoopy_datasource_datetime (char * const resultBuf, size_t resultBufSize, char const * const arg)
 {
     time_t     curTime;
     struct tm  curLocalTimeBuf;
@@ -58,13 +58,13 @@ int snoopy_datasource_datetime (char * const result, char const * const arg)
 
     // Get current time
     if ((time_t) -1 == time(&curTime)) {
-        return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "(error @ time(): %d)", errno);
+        return snprintf(resultBuf, resultBufSize, "(error @ time(): %d)", errno);
     }
 
     // Convert to local time
     curLocalTime = localtime_r(&curTime, &curLocalTimeBuf);
     if (NULL == curLocalTime) {
-        return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "(error @ localtime_r())");
+        return snprintf(resultBuf, resultBufSize, "(error @ localtime_r())");
     }
 
     // Determine the format to use
@@ -76,9 +76,9 @@ int snoopy_datasource_datetime (char * const result, char const * const arg)
 
     // Format it
     if (0 == strftime(timeBuffer, SNOOPY_DATASOURCE_DATETIME_sizeMaxWithNull, formatToUse, curLocalTime)) {
-        return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "(error @ strftime())");
+        return snprintf(resultBuf, resultBufSize, "(error @ strftime())");
     }
 
     // Copy it
-    return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "%s", timeBuffer);
+    return snprintf(resultBuf, resultBufSize, "%s", timeBuffer);
 }

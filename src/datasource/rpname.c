@@ -66,7 +66,7 @@
  * Non-public function prototypes
  */
 static int   get_parent_pid (int pid);
-static int   get_rpname (int pid, char *result);
+static int   get_rpname (int pid, char *resultBuf, size_t resultBufSize);
 static char* read_proc_property (int pid, const char * prop_name);
 
 
@@ -84,9 +84,9 @@ static char* read_proc_property (int pid, const char * prop_name);
  * Return:
  *     number of characters in the returned string, or SNOOPY_DATASOURCE_FAILURE
  */
-int snoopy_datasource_rpname (char * const result, __attribute__((unused)) char const * const arg)
+int snoopy_datasource_rpname (char * const resultBuf, size_t resultBufSize, __attribute__((unused)) char const * const arg)
 {
-    return get_rpname(getpid(), result);
+    return get_rpname(getpid(), resultBuf, resultBufSize);
 }
 
 
@@ -195,7 +195,7 @@ static int get_parent_pid (int pid)
 
 
 /* Find root process name */
-static int get_rpname (int pid, char *result)
+static int get_rpname (int pid, char *resultBuf, size_t resultBufSize)
 {
     int     parentPid;
     char   *name;
@@ -205,15 +205,15 @@ static int get_rpname (int pid, char *result)
     if ((PID_ROOT == parentPid) || (PID_ZERO == parentPid)) {
         name = read_proc_property(pid, PROC_PID_STATUS_KEY_NAME);
         if (NULL != name) {
-            nameLen = snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "%s", name);
+            nameLen = snprintf(resultBuf, resultBufSize, "%s", name);
             free(name);
         } else {
-            nameLen = snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "%s", UNKNOWN_STR);
+            nameLen = snprintf(resultBuf, resultBufSize, "%s", UNKNOWN_STR);
         }
         return (int) nameLen;
     } else if (PID_UNKNOWN == parentPid) {
-        return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "%s", UNKNOWN_STR);
+        return snprintf(resultBuf, resultBufSize, "%s", UNKNOWN_STR);
     } else {
-        return get_rpname(parentPid, result);
+        return get_rpname(parentPid, resultBuf, resultBufSize);
     }
 }
