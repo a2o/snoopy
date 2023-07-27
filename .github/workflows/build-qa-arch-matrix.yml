@@ -95,7 +95,10 @@ jobs:
           fetch-depth: 0
 
       # Work around the fix for CVE-2022-24765
-      - run: git config --global --add safe.directory $GITHUB_WORKSPACE || true
+      # (In this particular instance, git is not installed yet at this point.)
+      # (The repo "clone" here is that actions/checkout@v1 magic that kinda looks like a git clone.)
+      # (This command has been moved further down to where git is actually available [more or less accidentally, tbh].)
+      #- run: git config --global --add safe.directory $GITHUB_WORKSPACE || true
 
 
 
@@ -108,6 +111,11 @@ jobs:
       ### Build
       #
       - run: ./dev-tools/install-dev-software.sh
+
+      # Work around the fix for CVE-2022-24765
+      # (Should be done higher up, but see higher up for why it is down here.)
+      - run: git config --global --add safe.directory $GITHUB_WORKSPACE || true
+
       - run: ./bootstrap.sh
       - run: ./configure --enable-option-checking=fatal --enable-everything
       - run: make -j4
