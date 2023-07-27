@@ -654,7 +654,7 @@ char * snoopy_configfile_getOptionValueAsString_datasource_message_max_length ()
 
     size_t strBufSize = sizeof(CFG->datasource_message_max_length)*8 + 1;
     char * strBuf     = malloc(strBufSize);
-    snprintf(strBuf, strBufSize, "%ld", CFG->datasource_message_max_length);
+    snprintf(strBuf, strBufSize, "%zu", CFG->datasource_message_max_length);
     return strBuf;
 }
 
@@ -666,7 +666,7 @@ char * snoopy_configfile_getOptionValueAsString_log_message_max_length ()
 
     size_t strBufSize = sizeof(CFG->log_message_max_length)*8 + 1;
     char * strBuf     = malloc(strBufSize);
-    snprintf(strBuf, strBufSize, "%ld", CFG->log_message_max_length);
+    snprintf(strBuf, strBufSize, "%zu", CFG->log_message_max_length);
     return strBuf;
 }
 
