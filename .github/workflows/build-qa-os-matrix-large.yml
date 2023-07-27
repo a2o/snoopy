@@ -95,8 +95,5 @@ jobs:
       - run: make -j4
       - run: make -j4 check
 
-      - uses: actions/upload-artifact@v2
+      - run: cat tests/*/test-suite.log
         if: failure()
-        with:
-          name: tests-directory
-          path: tests/

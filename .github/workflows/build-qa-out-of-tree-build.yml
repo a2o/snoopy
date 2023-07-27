@@ -83,8 +83,5 @@ jobs:
       - run: cd tmp/build1 && make -j4
       - run: cd tmp/build1 && make -j4 check
 
-      - uses: actions/upload-artifact@v2
+      - run: cat tmp/build1/tests/*/test-suite.log
         if: failure()
-        with:
-          name: tests-directory
-          path: tmp/build1/tests/
