@@ -22,7 +22,11 @@
 
 
 
+#include "datasource-common.h"
+
+
+
 /*
  * SNOOPY DATA SOURCE: euid
  */
-int snoopy_datasource_euid (char * const result, char const * const arg);
+int snoopy_datasource_euid (char * const resultBuf, size_t resultBufSize, char const * const arg);

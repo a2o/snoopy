@@ -54,15 +54,15 @@
  * Return:
  *     number of characters in the returned string, or SNOOPY_DATASOURCE_FAILURE
  */
-int snoopy_datasource_tty_uid (char * const result, __attribute__((unused)) char const * const arg)
+int snoopy_datasource_tty_uid (char * const resultBuf, size_t resultBufSize, __attribute__((unused)) char const * const arg)
 {
     int     retVal;
     uid_t   ttyUid;
 
-    retVal = snoopy_datasource_tty__get_tty_uid(&ttyUid, result);
+    retVal = snoopy_datasource_tty__get_tty_uid(&ttyUid, resultBuf, resultBufSize);
     if (retVal > 0) {
         return retVal;   // Error occurred, and the message about it is already in the result buffer
     }
 
-    return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "%u", ttyUid);
+    return snprintf(resultBuf, resultBufSize, "%u", ttyUid);
 }

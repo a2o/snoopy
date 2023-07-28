@@ -64,7 +64,7 @@
  * Return:
  *     number of characters in the returned string, or SNOOPY_DATASOURCE_FAILURE
  */
-int snoopy_datasource_domain (char * const result, __attribute__((unused)) char const * const arg)
+int snoopy_datasource_domain (char * const resultBuf, size_t resultBufSize, __attribute__((unused)) char const * const arg)
 {
     FILE *fp;
     char  hostname[HOST_NAME_BUF_SIZE];
@@ -78,7 +78,7 @@ int snoopy_datasource_domain (char * const result, __attribute__((unused)) char 
     /* Get my hostname first */
     retVal = gethostname(hostname, HOST_NAME_MAX);
     if (0 != retVal) {
-        return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "(error @ gethostname(): %d)", errno);
+        return snprintf(resultBuf, resultBufSize, "(error @ gethostname(): %d)", errno);
     }
 
     // If hostname was something alien (longer than HOST_NAME_MAX), then the
@@ -92,11 +92,11 @@ int snoopy_datasource_domain (char * const result, __attribute__((unused)) char 
     /* Check hostname length */
     hostnameLen = (int) strlen(hostname);
     if (0 == hostnameLen) {
-        snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "Got empty hostname");
+        snprintf(resultBuf, resultBufSize, "Got empty hostname");
         return SNOOPY_DATASOURCE_FAILURE;
     }
     if (hostnameLen > HOST_NAME_BUF_SIZE - 2) {
-        snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "INTERNAL ERROR: Got too long hostname, length: %d", hostnameLen);
+        snprintf(resultBuf, resultBufSize, "INTERNAL ERROR: Got too long hostname, length: %d", hostnameLen);
         return SNOOPY_DATASOURCE_FAILURE;
     }
 
@@ -108,7 +108,7 @@ int snoopy_datasource_domain (char * const result, __attribute__((unused)) char 
     /* Try to open file in read mode */
     fp = fopen(HOSTS_PATH, "r");
     if (NULL == fp) {
-        snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "Unable to open file for reading: %s", HOSTS_PATH);
+        snprintf(resultBuf, resultBufSize, "Unable to open file for reading: %s", HOSTS_PATH);
         return SNOOPY_OUTPUT_FAILURE;
     }
 
@@ -145,8 +145,8 @@ int snoopy_datasource_domain (char * const result, __attribute__((unused)) char 
     /* Cleanup and return */
     fclose(fp);
     if (NULL != domainPtr) {
-        return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "%s", domainPtr);
+        return snprintf(resultBuf, resultBufSize, "%s", domainPtr);
     } else {
-        return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "(none)");
+        return snprintf(resultBuf, resultBufSize, "(none)");
     }
 }

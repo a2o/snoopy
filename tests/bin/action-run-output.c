@@ -145,11 +145,20 @@ void snoopyTestCli_action_run_output_all ()
     const char *itemArgs   = NULL;
     int   itemResult;
     int   iCount;
+    const snoopy_configuration_t *CFG;
+
+
+    /* Initialize Snoopy */
+    snoopy_entrypoint_test_cli_init((char const *)g_argv[0], g_argv, NULL);
+
+
+    /* Get config pointer */
+    CFG = snoopy_configuration_get();
 
 
     /* Initialize variables and spaces */
-    message  = malloc(SNOOPY_LOG_MESSAGE_BUF_SIZE);
-    snprintf(message, SNOOPY_LOG_MESSAGE_BUF_SIZE, "Snoopy output debugging");
+    message  = malloc(CFG->log_message_max_length+1);
+    snprintf(message, CFG->log_message_max_length+1, "Snoopy output debugging");
 
     /* Loop throught all outputs and run them with bogus arguments */
     iCount = snoopy_outputregistry_getCount();

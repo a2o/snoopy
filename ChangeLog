@@ -9,11 +9,19 @@
 New features:
 =============
 o Add OpenSUSE 15.5 support.
+o Configurable max log message length.
+    Ref: https://github.com/a2o/snoopy/issue/254
+    Ref: https://github.com/a2o/snoopy/pull/264
 
 Deprecations:
 =============
 o Remove Ubuntu 18.04 support.
 o Remove OpenSUSE 15.3 support.
+
+Bugfixes:
+=========
+o Fix incorrectly placed free() call in `systemd_unit_name` datasource
+    Ref: https://github.com/a2o/snoopy/pull/264
 
 
 

@@ -50,7 +50,7 @@
  * Return:
  *     number of characters in the returned string, or SNOOPY_DATASOURCE_FAILURE
  */
-int snoopy_datasource_group (char * const result, __attribute__((unused)) char const * const arg)
+int snoopy_datasource_group (char * const resultBuf, size_t resultBufSize, __attribute__((unused)) char const * const arg)
 {
     struct group   gr;
     struct group  *gr_gid         = NULL;
@@ -65,17 +65,17 @@ int snoopy_datasource_group (char * const result, __attribute__((unused)) char c
     }
     buffgr_gid = malloc(buffgrsize_gid);
     if(NULL == buffgr_gid) {
-        return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "ERROR(malloc)");
+        return snprintf(resultBuf, resultBufSize, "ERROR(malloc)");
     }
 
     /* Try to get data */
     if (0 != getgrgid_r(getgid(), &gr, buffgr_gid, buffgrsize_gid, &gr_gid)) {
-        messageLength  = snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "ERROR(getgrgid_r)");
+        messageLength  = snprintf(resultBuf, resultBufSize, "ERROR(getgrgid_r)");
     } else {
         if (NULL == gr_gid) {
-            messageLength = snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "(undefined)");
+            messageLength = snprintf(resultBuf, resultBufSize, "(undefined)");
         } else {
-            messageLength = snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "%s", gr_gid->gr_name);
+            messageLength = snprintf(resultBuf, resultBufSize, "%s", gr_gid->gr_name);
         }
     }
 

@@ -51,7 +51,7 @@
  * Return:
  *     number of characters in the returned string, or SNOOPY_DATASOURCE_FAILURE
  */
-int snoopy_datasource_tty_username (char * const result, __attribute__((unused)) char const * const arg)
+int snoopy_datasource_tty_username (char * const resultBuf, size_t resultBufSize, __attribute__((unused)) char const * const arg)
 {
     int     retVal;
     uid_t   ttyUid;
@@ -60,7 +60,7 @@ int snoopy_datasource_tty_username (char * const result, __attribute__((unused))
 
 
     /* Get tty UID */
-    retVal = snoopy_datasource_tty__get_tty_uid(&ttyUid, result);
+    retVal = snoopy_datasource_tty__get_tty_uid(&ttyUid, resultBuf, resultBufSize);
     if (retVal > 0) {
         return retVal;   // Error occurred, and the message about it is already in the result buffer
     }
@@ -68,11 +68,11 @@ int snoopy_datasource_tty_username (char * const result, __attribute__((unused))
 
     username = snoopy_util_pwd_convertUidToUsername(ttyUid);
     if (username == NULL) {
-        return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "Unable to convert UID to username");
+        return snprintf(resultBuf, resultBufSize, "Unable to convert UID to username");
     }
 
 
-    retMsgLen = snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "%s", username);
+    retMsgLen = snprintf(resultBuf, resultBufSize, "%s", username);
     free(username);
     return retMsgLen;
 }

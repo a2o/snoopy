@@ -51,7 +51,7 @@
  * Return:
  *     number of characters in the returned string, or SNOOPY_DATASOURCE_FAILURE
  */
-int snoopy_datasource_sid (char * const result, __attribute__((unused)) char const * const arg)
+int snoopy_datasource_sid (char * const resultBuf, size_t resultBufSize, __attribute__((unused)) char const * const arg)
 {
-    return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "%u", getsid(0));
+    return snprintf(resultBuf, resultBufSize, "%u", getsid(0));
 }

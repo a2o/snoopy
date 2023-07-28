@@ -22,7 +22,11 @@
 
 
 
+#include "datasource-common.h"
+
+
+
 /*
  * SNOOPY DATA SOURCE: env_all
  */
-int snoopy_datasource_env_all (char * const result, char const * const arg);
+int snoopy_datasource_env_all (char * const resultBuf, size_t resultBufSize, char const * const arg);

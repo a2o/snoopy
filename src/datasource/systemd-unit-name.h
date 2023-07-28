@@ -20,7 +20,11 @@
 
 
 
+#include "datasource-common.h"
+
+
+
 /*
  * SNOOPY DATA SOURCE: systemd_unit_name
  */
-int snoopy_datasource_systemd_unit_name (char * const result, char const * const arg);
+int snoopy_datasource_systemd_unit_name (char * const resultBuf, size_t resultBufSize, char const * const arg);

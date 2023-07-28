@@ -22,6 +22,10 @@
 
 
 
+#include <stddef.h>
+
+
+
 /*
  * START: Prevent cyclic inclusions
  */
@@ -59,6 +63,9 @@ typedef struct {
     int   syslog_level;
     int   syslog_ident_format_malloced;
     char *syslog_ident_format;
+
+    size_t datasource_message_max_length;
+    size_t log_message_max_length;
 } snoopy_configuration_t;
 
 

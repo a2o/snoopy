@@ -22,7 +22,11 @@
 
 
 
+#include "datasource-common.h"
+
+
+
 /*
  * SNOOPY DATA SOURCE: timestamp_ms
  */
-int snoopy_datasource_timestamp_ms (char * const result, char const * const arg);
+int snoopy_datasource_timestamp_ms (char * const resultBuf, size_t resultBufSize, char const * const arg);

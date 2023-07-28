@@ -45,8 +45,8 @@
  * Return:
  *     SNOOPY_DATASOURCE_FAILURE
  */
-int snoopy_datasource_failure (char * const result, __attribute__((unused)) char const * const arg)
+int snoopy_datasource_failure (char * const resultBuf, size_t resultBufSize, __attribute__((unused)) char const * const arg)
 {
-    snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "Artificial datasource failure triggered");
+    snprintf(resultBuf, resultBufSize, "Artificial datasource failure triggered");
     return SNOOPY_DATASOURCE_FAILURE;
 }

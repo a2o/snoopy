@@ -47,12 +47,12 @@
  * Return:
  *     number of characters in the returned string, or SNOOPY_DATASOURCE_FAILURE
  */
-int snoopy_datasource_filename (char * const result, __attribute__((unused)) char const * const arg)
+int snoopy_datasource_filename (char * const resultBuf, size_t resultBufSize, __attribute__((unused)) char const * const arg)
 {
     const snoopy_inputdatastorage_t * snoopy_inputdatastorage;
 
     /* Get argument data of execv/e() call */
     snoopy_inputdatastorage = snoopy_inputdatastorage_get();
 
-    return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "%s", snoopy_inputdatastorage->filename);
+    return snprintf(resultBuf, resultBufSize, "%s", snoopy_inputdatastorage->filename);
 }

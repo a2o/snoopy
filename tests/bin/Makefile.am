@@ -43,6 +43,8 @@ snoopy_test_SOURCES  = \
     action-unit-outputregistry.h \
     action-unit-util.c \
     action-unit-util.h \
+    action-unit-util-parser.c \
+    action-unit-util-parser.h \
     action-unit-util-syslog.c \
     action-unit-util-syslog.h \
     snoopy-test.c

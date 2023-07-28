@@ -49,19 +49,19 @@
  * Return:
  *     number of characters in the returned string, or SNOOPY_DATASOURCE_FAILURE
  */
-int snoopy_datasource_hostname (char * const result, __attribute__((unused)) char const * const arg)
+int snoopy_datasource_hostname (char * const resultBuf, size_t resultBufSize, __attribute__((unused)) char const * const arg)
 {
     int   charCount;
     int   retVal;
 
-    retVal = gethostname(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE);
+    retVal = gethostname(resultBuf, resultBufSize);
     if (0 != retVal) {
-        return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "(error @ gethostname(): %d)", errno);
+        return snprintf(resultBuf, resultBufSize, "(error @ gethostname(): %d)", errno);
     }
 
     // If hostname was something alien (longer than 1024 characters),
     // set last char to null just in case
-    result[SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE-1] = '\0';
-    charCount = (int) strlen(result);
+    resultBuf[resultBufSize-1] = '\0';
+    charCount = (int) strlen(resultBuf);
     return charCount;
 }

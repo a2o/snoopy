@@ -27,12 +27,14 @@
 
 #include "snoopy.h"
 #include "entrypoint/test-cli.h"
+#include "configfile.h"
 #include "configuration.h"
 #include "inputdatastorage.h"
 #include "util/syslog-snoopy.h"
 
 #include <errno.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 
@@ -70,6 +72,8 @@ void snoopyTestCli_action_run_configfile_showHelp ()
         "    syslog_facility\n"
         "    syslog_ident\n"
         "    syslog_level\n"
+        "    datasource_message_max_length\n"
+        "    log_message_max_length\n"
         "NOTICE: These keys MUST be placed in a section named [snoopy].\n"
         "\n";
     printf("%s", helpContent);
@@ -140,6 +144,16 @@ int snoopyTestCli_action_run_configfile (int argc, char **argv)
 
     } else if (0 == strcmp(showConfigVar, "syslog_level")) {
         printf("%s\n", snoopy_util_syslog_convertLevelToStr(CFG->syslog_level));
+
+    } else if (0 == strcmp(showConfigVar, "datasource_message_max_length")) {
+        char * valBuf = snoopy_configfile_getOptionValueAsString_datasource_message_max_length();
+        printf("%s\n", valBuf);
+        free(valBuf);
+
+    } else if (0 == strcmp(showConfigVar, "log_message_max_length")) {
+        char * valBuf = snoopy_configfile_getOptionValueAsString_log_message_max_length();
+        printf("%s\n", valBuf);
+        free(valBuf);
 
     } else if (0 == strcmp(showConfigVar, "error_logging")) {
         printf("%s\n", (CFG->error_logging_enabled == SNOOPY_TRUE ? "y" : "n"));

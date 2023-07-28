@@ -29,6 +29,7 @@
 void snoopy_message_generateFromFormat (
     char * const       logMessage,
     size_t             logMessageBufSize,
+    size_t             dataSourceMsgMaxLength,
     char const * const logMessageFormat
 );
 

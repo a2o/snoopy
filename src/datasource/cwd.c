@@ -48,12 +48,12 @@
  * Return:
  *     number of characters in the returned string, or SNOOPY_DATASOURCE_FAILURE
  */
-int snoopy_datasource_cwd (char * const result, __attribute__((unused)) char const * const arg)
+int snoopy_datasource_cwd (char * const resultBuf, size_t resultBufSize, __attribute__((unused)) char const * const arg)
 {
     char cwdBuf[PATH_MAX+1];
 
     if (getcwd(cwdBuf, PATH_MAX+1)) {
-        return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "%s", cwdBuf);
+        return snprintf(resultBuf, resultBufSize, "%s", cwdBuf);
     }
     return SNOOPY_DATASOURCE_FAILURE;
 }

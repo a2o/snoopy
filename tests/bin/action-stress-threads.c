@@ -48,7 +48,7 @@
 
 
 #define   THREAD_COUNT_MAX   10000
-
+#define   DS_MESSAGE_BUF_SIZE 1024
 
 
 /*
@@ -212,7 +212,7 @@ void* snoopyTestCli_action_stress_threads_threadMain (void *args)
     int       dsId;
     char     *dsName;
     const char *dsArg = "";
-    char      dsResult[SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE];
+    char      dsResult[DS_MESSAGE_BUF_SIZE];
     int       retVal;
 
 
@@ -240,7 +240,7 @@ void* snoopyTestCli_action_stress_threads_threadMain (void *args)
     dsCount = snoopy_datasourceregistry_getCount();
     dsId    = snoopyTestCli_action_stress_threads_randomNumberInclusive(0, dsCount-1);
     dsName  = snoopy_datasourceregistry_getName(dsId);
-    retVal  = snoopy_datasourceregistry_callById(dsId, dsResult, dsArg);
+    retVal  = snoopy_datasourceregistry_callById(dsId, dsResult, DS_MESSAGE_BUF_SIZE, dsArg);
 
     if (0 > retVal) {
         printf("    t%d %llu : Datasource %s returned negative result: %d\n", seqNrPub, (unsigned long long)pthread_self(), dsName, retVal);

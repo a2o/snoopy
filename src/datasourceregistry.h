@@ -22,6 +22,10 @@
 
 
 
+#include <stddef.h>
+
+
+
 /*
  * Functions to manage and utilise datasources
  */
@@ -31,5 +35,5 @@ int   snoopy_datasourceregistry_doesNameExist (char const * const datasourceName
 int   snoopy_datasourceregistry_getIdFromName (char const * const datasourceName);
 char* snoopy_datasourceregistry_getName       (int   datasourceId);
 
-int   snoopy_datasourceregistry_callById      (int                datasourceId,   char * const result, char const * const datasourceArg);
-int   snoopy_datasourceregistry_callByName    (char const * const datasourceName, char * const result, char const * const datasourceArg);
+int   snoopy_datasourceregistry_callById      (int                datasourceId,   char * const resultBuf, size_t resultBufSize, char const * const datasourceArg);
+int   snoopy_datasourceregistry_callByName    (char const * const datasourceName, char * const resultBuf, size_t resultBufSize, char const * const datasourceArg);

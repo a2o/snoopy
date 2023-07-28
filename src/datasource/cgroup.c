@@ -48,7 +48,7 @@ static int doesCgroupEntryContainController (char const * const cgroupEntry, cha
 
 
 
-int snoopy_datasource_cgroup (char * const result, char const * const arg)
+int snoopy_datasource_cgroup (char * const resultBuf, size_t resultBufSize, char const * const arg)
 {
     int myPid;
     char   procPidCgroupFilePath[PROC_PID_CGROUP_PATH_SIZE_MAX];
@@ -60,7 +60,7 @@ int snoopy_datasource_cgroup (char * const result, char const * const arg)
 
     // Verify the argument
     if (0 == strcmp(arg, "")) {
-        snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "Missing cgroup selection argument");
+        snprintf(resultBuf, resultBufSize, "Missing cgroup selection argument");
         return SNOOPY_DATASOURCE_FAILURE;
     }
 
@@ -72,7 +72,7 @@ int snoopy_datasource_cgroup (char * const result, char const * const arg)
 
     // Get the cgroup info content
     if (snoopy_util_file_getSmallTextFileContent(procPidCgroupFilePath, &procPidCgroupContent) < 0) {
-        snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "Unable to read file %s, reason: %s", procPidCgroupFilePath, procPidCgroupContent);
+        snprintf(resultBuf, resultBufSize, "Unable to read file %s, reason: %s", procPidCgroupFilePath, procPidCgroupContent);
         free(procPidCgroupContent);
         return SNOOPY_DATASOURCE_FAILURE;
     }
@@ -119,12 +119,12 @@ int snoopy_datasource_cgroup (char * const result, char const * const arg)
     // Not found?
     if (NULL == cgroupEntry) {
         free(procPidCgroupContent);
-        return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "%s", "(none)");
+        return snprintf(resultBuf, resultBufSize, "%s", "(none)");
     }
 
 
     // Found
-    retMsgLen = snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "%s", cgroupEntry);
+    retMsgLen = snprintf(resultBuf, resultBufSize, "%s", cgroupEntry);
     free(procPidCgroupContent);
     return retMsgLen;
 }

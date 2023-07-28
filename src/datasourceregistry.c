@@ -275,7 +275,7 @@ char* snoopy_datasourceregistry_names[] = {
     "",
 };
 
-int (*snoopy_datasourceregistry_ptrs []) (char * const result, char const * const arg) = {
+int (*snoopy_datasourceregistry_ptrs []) (char * const resultBuf, size_t resultBufSize, char const * const arg) = {
 #ifdef SNOOPY_CONF_DATASOURCE_ENABLED_cgroup
     snoopy_datasource_cgroup,
 #endif
@@ -459,13 +459,13 @@ char* snoopy_datasourceregistry_getName (int datasourceId)
  *
  * Call the given datasource by id and return its output
  */
-int snoopy_datasourceregistry_callById (int datasourceId, char * const result, char const * const datasourceArg)
+int snoopy_datasourceregistry_callById (int datasourceId, char * const resultBuf, size_t resultBufSize, char const * const datasourceArg)
 {
     if (SNOOPY_FALSE == snoopy_datasourceregistry_doesIdExist(datasourceId)) {
         return -1;
     }
 
-    return snoopy_datasourceregistry_ptrs[datasourceId](result, datasourceArg);
+    return snoopy_datasourceregistry_ptrs[datasourceId](resultBuf, resultBufSize, datasourceArg);
 }
 
 
@@ -475,7 +475,7 @@ int snoopy_datasourceregistry_callById (int datasourceId, char * const result, c
  *
  * Call the given datasource by name and return its output
  */
-int snoopy_datasourceregistry_callByName (char const * const datasourceName, char * const result, char const * const datasourceArg)
+int snoopy_datasourceregistry_callByName (char const * const datasourceName, char * const resultBuf, size_t resultBufSize, char const * const datasourceArg)
 {
     int datasourceId;
 
@@ -484,5 +484,5 @@ int snoopy_datasourceregistry_callByName (char const * const datasourceName, cha
         return -1;
     }
 
-    return snoopy_datasourceregistry_ptrs[datasourceId](result, datasourceArg);
+    return snoopy_datasourceregistry_ptrs[datasourceId](resultBuf, resultBufSize, datasourceArg);
 }

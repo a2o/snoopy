@@ -65,7 +65,7 @@ int snoopy_output_syslogoutput (char const * const logMessage, __attribute__((un
 
     /* Generate syslog ident string */
     char syslogIdent[SNOOPY_SYSLOG_IDENT_FORMAT_BUF_SIZE] = {'\0'};
-    snoopy_message_generateFromFormat(syslogIdent, SNOOPY_SYSLOG_IDENT_FORMAT_BUF_SIZE, CFG->syslog_ident_format);
+    snoopy_message_generateFromFormat(syslogIdent, SNOOPY_SYSLOG_IDENT_FORMAT_BUF_SIZE, SNOOPY_SYSLOG_IDENT_FORMAT_BUF_SIZE, CFG->syslog_ident_format);
 
     openlog(syslogIdent, LOG_PID, CFG->syslog_facility);
     syslog(CFG->syslog_level, "%s", logMessage);

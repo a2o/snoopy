@@ -60,10 +60,15 @@ int snoopyTestCli_action_run_messageformat (int argc, char **argv)
 {
     const char * messageFormat;
     char       * message;
+    const snoopy_configuration_t *CFG;
 
 
     /* Initialize Snoopy */
     snoopy_entrypoint_test_cli_init((char const *)g_argv[0], g_argv, NULL);
+
+
+    /* Get config pointer */
+    CFG = snoopy_configuration_get();
 
 
     /* Check if all arguments are present */
@@ -75,12 +80,12 @@ int snoopyTestCli_action_run_messageformat (int argc, char **argv)
 
 
     /* Initialize message */
-    message    = malloc(SNOOPY_LOG_MESSAGE_BUF_SIZE);
+    message    = malloc(CFG->log_message_max_length+1);
     message[0] = '\0';
 
 
     /* Call the filter */
-    snoopy_message_generateFromFormat(message, SNOOPY_LOG_MESSAGE_BUF_SIZE, messageFormat);
+    snoopy_message_generateFromFormat(message, CFG->log_message_max_length+1, CFG->datasource_message_max_length+1, messageFormat);
 
 
     /* Display result */

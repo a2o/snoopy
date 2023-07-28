@@ -36,22 +36,24 @@
 
 
 
-int snoopy_datasource_systemd_unit_name (char * const result, __attribute__((unused)) char const * const arg)
+int snoopy_datasource_systemd_unit_name (char * const resultBuf, size_t resultBufSize, __attribute__((unused)) char const * const arg)
 {
-    char  cgroupEntry[SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE] = "";
+    char *cgroupEntry = NULL;
     int   cgroupDsRetVal;
     char *unitName = NULL;
     int   retMsgLen;
 
 
     // Get the cgroup entry
-    cgroupDsRetVal = snoopy_datasource_cgroup(cgroupEntry, "name=systemd");
+    cgroupEntry = malloc(resultBufSize);
+    cgroupDsRetVal = snoopy_datasource_cgroup(cgroupEntry, resultBufSize, "name=systemd");
     if (
         (cgroupDsRetVal == SNOOPY_DATASOURCE_FAILURE)
         ||
         (0 == strcmp(cgroupEntry, "(none)"))
     ) {
-        snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "Cgroup entry 'name=systemd' not found");
+        snprintf(resultBuf, resultBufSize, "Cgroup entry 'name=systemd' not found");
+        free(cgroupEntry);
         return SNOOPY_DATASOURCE_FAILURE;
     }
 
@@ -59,12 +61,15 @@ int snoopy_datasource_systemd_unit_name (char * const result, __attribute__((unu
     // Convert
     unitName = snoopy_util_systemd_convertCgroupEntryToUnitName(cgroupEntry);
     if (!unitName) {
-        return snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "%s", cgroupEntry+strlen("1:name=systemd:/"));
+        retMsgLen = snprintf(resultBuf, resultBufSize, "%s", cgroupEntry+strlen("1:name=systemd:/"));
+        free(cgroupEntry);
+        return retMsgLen;
     }
+    free(cgroupEntry);
 
 
     // Return
-    retMsgLen = snprintf(result, SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE, "%s", unitName);
+    retMsgLen = snprintf(resultBuf, resultBufSize, "%s", unitName);
     free(unitName);
     return retMsgLen;
 }

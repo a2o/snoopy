@@ -64,7 +64,7 @@ int snoopy_output_fileoutput (char const * const logMessage, char const * const 
     }
 
     // Parse the output file specification (i.e. for %{datetime} or similar tags)
-    snoopy_message_generateFromFormat(filePath, PATH_MAX, arg);
+    snoopy_message_generateFromFormat(filePath, PATH_MAX, PATH_MAX, arg);
 
     // Try to open file in append mode
     fp = fopen(filePath, "a");

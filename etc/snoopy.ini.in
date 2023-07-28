@@ -204,3 +204,37 @@
 ;
 ; Example:
 ;syslog_level = LOG_INFO
+
+
+
+;;; Maximum individual data source's message length
+;
+; The length limit of a message emitted by an individual data source.
+; WARNING: Memmory of this size is allocated on every Snoopy invocation.
+;          Increasing this setting beyond reasonable limits may impact your system's stability.
+;
+; Possible values:
+;   Between 255 and 1048575
+;
+; Default value:
+;   2047
+;
+; Example:
+;datasource_message_max_length = 2047
+
+
+
+;;; Maximum formatted log message length
+;
+; The length limit of a final formatted log message.
+; WARNING: Memmory of this size is allocated on every Snoopy invocation.
+;          Increasing this setting beyond reasonable limits may impact your system's stability.
+;
+; Possible values:
+;   Between 255 and 1048575
+;
+; Default value:
+;   16383
+;
+; Example:
+;log_message_max_length = 16383

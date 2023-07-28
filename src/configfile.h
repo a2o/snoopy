@@ -29,6 +29,7 @@
 
 #define SNOOPY_CONFIGFILE_OPTION_TYPE_BOOL      1
 #define SNOOPY_CONFIGFILE_OPTION_TYPE_STRING    2
+#define SNOOPY_CONFIGFILE_OPTION_TYPE_INT       3
 #define SNOOPY_CONFIGFILE_OPTION_TYPE_NONE      0 // Reserved for internal use
 
 
@@ -65,6 +66,8 @@ int     snoopy_configfile_parseValue_output               (const char *confValSt
 int     snoopy_configfile_parseValue_syslog_facility      (const char *confValString, snoopy_configuration_t* CFG);
 int     snoopy_configfile_parseValue_syslog_ident         (const char *confValString, snoopy_configuration_t* CFG);
 int     snoopy_configfile_parseValue_syslog_level         (const char *confValString, snoopy_configuration_t* CFG);
+int     snoopy_configfile_parseValue_datasource_message_max_length (const char *confValString, snoopy_configuration_t* CFG);
+int     snoopy_configfile_parseValue_log_message_max_length        (const char *confValString, snoopy_configuration_t* CFG);
 
 char *  snoopy_configfile_getOptionValueAsString_error_logging   ();
 #ifdef SNOOPY_FILTERING_ENABLED
@@ -75,6 +78,8 @@ char *  snoopy_configfile_getOptionValueAsString_output          ();
 char *  snoopy_configfile_getOptionValueAsString_syslog_facility ();
 char *  snoopy_configfile_getOptionValueAsString_syslog_ident    ();
 char *  snoopy_configfile_getOptionValueAsString_syslog_level    ();
+char *  snoopy_configfile_getOptionValueAsString_datasource_message_max_length ();
+char *  snoopy_configfile_getOptionValueAsString_log_message_max_length ();
 
 
 

@@ -30,6 +30,7 @@
 #include "snoopy.h"
 #include "configuration.h"
 #include "outputregistry.h"
+#include "util/parser-snoopy.h"
 #include "util/string-snoopy.h"
 #include "util/syslog-snoopy.h"
 
@@ -63,16 +64,18 @@
  * Define supported config options
  */
 snoopy_configfile_option_t snoopy_configfile_optionRegistry[] = {
-    { "error_logging",   { SNOOPY_CONFIGFILE_OPTION_TYPE_BOOL,   &snoopy_configfile_parseValue_error_logging,   &snoopy_configfile_getOptionValueAsString_error_logging   } },
+    { "error_logging",                 { SNOOPY_CONFIGFILE_OPTION_TYPE_BOOL,   &snoopy_configfile_parseValue_error_logging,                 &snoopy_configfile_getOptionValueAsString_error_logging                 } },
 #ifdef SNOOPY_FILTERING_ENABLED
-    { "filter_chain",    { SNOOPY_CONFIGFILE_OPTION_TYPE_STRING, &snoopy_configfile_parseValue_filter_chain,    &snoopy_configfile_getOptionValueAsString_filter_chain    } },
+    { "filter_chain",                  { SNOOPY_CONFIGFILE_OPTION_TYPE_STRING, &snoopy_configfile_parseValue_filter_chain,                  &snoopy_configfile_getOptionValueAsString_filter_chain                  } },
 #endif
-    { "message_format",  { SNOOPY_CONFIGFILE_OPTION_TYPE_STRING, &snoopy_configfile_parseValue_message_format,  &snoopy_configfile_getOptionValueAsString_message_format  } },
-    { "output",          { SNOOPY_CONFIGFILE_OPTION_TYPE_STRING, &snoopy_configfile_parseValue_output,          &snoopy_configfile_getOptionValueAsString_output          } },
-    { "syslog_facility", { SNOOPY_CONFIGFILE_OPTION_TYPE_STRING, &snoopy_configfile_parseValue_syslog_facility, &snoopy_configfile_getOptionValueAsString_syslog_facility } },
-    { "syslog_ident",    { SNOOPY_CONFIGFILE_OPTION_TYPE_STRING, &snoopy_configfile_parseValue_syslog_ident,    &snoopy_configfile_getOptionValueAsString_syslog_ident    } },
-    { "syslog_level",    { SNOOPY_CONFIGFILE_OPTION_TYPE_STRING, &snoopy_configfile_parseValue_syslog_level,    &snoopy_configfile_getOptionValueAsString_syslog_level    } },
-    { "",                { SNOOPY_CONFIGFILE_OPTION_TYPE_NONE,    NULL,                                          NULL                                               } },
+    { "message_format",                { SNOOPY_CONFIGFILE_OPTION_TYPE_STRING, &snoopy_configfile_parseValue_message_format,                &snoopy_configfile_getOptionValueAsString_message_format                } },
+    { "output",                        { SNOOPY_CONFIGFILE_OPTION_TYPE_STRING, &snoopy_configfile_parseValue_output,                        &snoopy_configfile_getOptionValueAsString_output                        } },
+    { "syslog_facility",               { SNOOPY_CONFIGFILE_OPTION_TYPE_STRING, &snoopy_configfile_parseValue_syslog_facility,               &snoopy_configfile_getOptionValueAsString_syslog_facility               } },
+    { "syslog_ident",                  { SNOOPY_CONFIGFILE_OPTION_TYPE_STRING, &snoopy_configfile_parseValue_syslog_ident,                  &snoopy_configfile_getOptionValueAsString_syslog_ident                  } },
+    { "syslog_level",                  { SNOOPY_CONFIGFILE_OPTION_TYPE_STRING, &snoopy_configfile_parseValue_syslog_level,                  &snoopy_configfile_getOptionValueAsString_syslog_level                  } },
+    { "datasource_message_max_length", { SNOOPY_CONFIGFILE_OPTION_TYPE_INT,    &snoopy_configfile_parseValue_datasource_message_max_length, &snoopy_configfile_getOptionValueAsString_datasource_message_max_length } },
+    { "log_message_max_length",        { SNOOPY_CONFIGFILE_OPTION_TYPE_INT,    &snoopy_configfile_parseValue_log_message_max_length,        &snoopy_configfile_getOptionValueAsString_log_message_max_length        } },
+    { "",                              { SNOOPY_CONFIGFILE_OPTION_TYPE_NONE,    NULL,                                                        NULL                                                                   } },
 };
 
 
@@ -587,6 +590,84 @@ int snoopy_configfile_getboolean (const char *c, int notfound)
         ret = notfound ;
     }
     return ret;
+}
+
+
+
+/*
+ * Parse 'datasource_message_max_length' config option
+ *
+ * Params:
+ *     confValString:   Value from configuration file
+ *     CFG:             Snoopy configuration struct
+ *
+ * Return:
+ *     int              SNOOPY_CONFIGFILE_PARSEVALUE_SUCCESS or
+ *                      SNOOPY_CONFIGFILE_PARSEVALUE_ERROR
+ */
+int snoopy_configfile_parseValue_datasource_message_max_length (
+    const char *confValString,
+    snoopy_configuration_t* CFG
+) {
+    CFG->datasource_message_max_length = snoopy_util_parser_strByteLength(
+        confValString,
+        SNOOPY_DATASOURCE_MESSAGE_MAX_LENGTH_HARDMIN,
+        SNOOPY_DATASOURCE_MESSAGE_MAX_LENGTH_HARDMAX,
+        SNOOPY_DATASOURCE_MESSAGE_MAX_LENGTH_DEFAULT
+    );
+
+    return SNOOPY_CONFIGFILE_PARSEVALUE_SUCCESS;
+}
+
+
+
+/*
+ * Parse 'log_message_max_length' config option
+ *
+ * Params:
+ *     confValString:   Value from configuration file
+ *     CFG:             Snoopy configuration struct
+ *
+ * Return:
+ *     int              SNOOPY_CONFIGFILE_PARSEVALUE_SUCCESS or
+ *                      SNOOPY_CONFIGFILE_PARSEVALUE_ERROR
+ */
+int snoopy_configfile_parseValue_log_message_max_length (
+    const char *confValString,
+    snoopy_configuration_t* CFG
+) {
+    CFG->log_message_max_length = snoopy_util_parser_strByteLength(
+        confValString,
+        SNOOPY_LOG_MESSAGE_MAX_LENGTH_HARDMIN,
+        SNOOPY_LOG_MESSAGE_MAX_LENGTH_HARDMAX,
+        SNOOPY_LOG_MESSAGE_MAX_LENGTH_DEFAULT
+    );
+
+    return SNOOPY_CONFIGFILE_PARSEVALUE_SUCCESS;
+}
+
+
+
+char * snoopy_configfile_getOptionValueAsString_datasource_message_max_length ()
+{
+    const snoopy_configuration_t * CFG = snoopy_configuration_get();
+
+    size_t strBufSize = sizeof(CFG->datasource_message_max_length)*8 + 1;
+    char * strBuf     = malloc(strBufSize);
+    snprintf(strBuf, strBufSize, "%zu", CFG->datasource_message_max_length);
+    return strBuf;
+}
+
+
+
+char * snoopy_configfile_getOptionValueAsString_log_message_max_length ()
+{
+    const snoopy_configuration_t * CFG = snoopy_configuration_get();
+
+    size_t strBufSize = sizeof(CFG->log_message_max_length)*8 + 1;
+    char * strBuf     = malloc(strBufSize);
+    snprintf(strBuf, strBufSize, "%zu", CFG->log_message_max_length);
+    return strBuf;
 }
 
 

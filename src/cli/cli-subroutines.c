@@ -114,6 +114,12 @@ void fatalErrorValue (const char * const message, const char * const value)
     printErrorValue(message, value);
     exit(127);
 }
+__attribute__((noreturn)) void fatalErrorValueFree (const char * const message, char * const value)
+{
+    printErrorValue(message, value);
+    free(value);
+    exit(127);
+}
 
 
 char * libsnoopySo_getFilePath ()

@@ -22,7 +22,11 @@
 
 
 
+#include "datasource-common.h"
+
+
+
 /*
  * SNOOPY DATA SOURCE: noop
  */
-int snoopy_datasource_noop (char * const result, char const * const arg);
+int snoopy_datasource_noop (char * const resultBuf, size_t resultBufSize, char const * const arg);

@@ -55,7 +55,7 @@ extern char **environ;
  * Return:
  *     number of characters in the returned string, or SNOOPY_DATASOURCE_FAILURE
  */
-int snoopy_datasource_env_all (char * const result, __attribute__((unused)) char const * const arg)
+int snoopy_datasource_env_all (char * const resultBuf, size_t resultBufSize, __attribute__((unused)) char const * const arg)
 {
     int resultSize = 0; // Current size of message to be returned back - does not include trailing null character
 
@@ -64,36 +64,35 @@ int snoopy_datasource_env_all (char * const result, __attribute__((unused)) char
     int i = 0;
     while (NULL != envItem) {
         i++;
-        int   remResultSize    = 0;
-        remResultSize = SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE - resultSize;
+        size_t remResultSize = resultBufSize - resultSize;
 
         // Add comma if required - must be still 5 characters available for this (,...\0)
         if ((i > 1) && (remResultSize >= 5)) {
-            result[resultSize] = ',';
-            result[resultSize+1] = '\0';
+            resultBuf[resultSize] = ',';
+            resultBuf[resultSize+1] = '\0';
             resultSize++;
             remResultSize--;
         }
 
         // Do we append whole environmental variable, or just part of it?
         // +3 to account for ... and +1 for null character
-        if ((int)(strlen(envItem) + 3 + 1) < remResultSize) {
+        if ((strlen(envItem) + 3 + 1) < remResultSize) {
             int strSizeCopied = 0;
 
             // Append whole ENV variable
-            strSizeCopied = snprintf(&result[resultSize], remResultSize, "%s", envItem);
+            strSizeCopied = snprintf(&resultBuf[resultSize], remResultSize, "%s", envItem);
             resultSize += strSizeCopied;
 
         } else {
-            int strSizeToCopy = 0;
+            size_t strSizeToCopy = 0;
 
             // This one includes null char, therefore the actual string length that will be copied is X-1 characters + \0
             strSizeToCopy = remResultSize - 3; // -4 to account for "...\0"
-            snprintf(&result[resultSize], strSizeToCopy, "%s", envItem);
+            snprintf(&resultBuf[resultSize], strSizeToCopy, "%s", envItem);
             resultSize += strSizeToCopy - 1;   // Account for added \0 at the end - we do not use strSizeCopied here, which already includes it
 
             strSizeToCopy = 4; // -4 to account for "...\0"
-            snprintf(&result[resultSize], strSizeToCopy, "...");
+            snprintf(&resultBuf[resultSize], strSizeToCopy, "...");
             resultSize += strSizeToCopy-1;
             break;
         }

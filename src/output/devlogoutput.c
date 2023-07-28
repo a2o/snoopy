@@ -64,13 +64,17 @@ int snoopy_output_devlogoutput (char const * const logMessage, __attribute__((un
 
     /* Generate syslog ident string */
     char syslogIdent[SNOOPY_SYSLOG_IDENT_FORMAT_BUF_SIZE] = {'\0'};
-    snoopy_message_generateFromFormat(syslogIdent, SNOOPY_SYSLOG_IDENT_FORMAT_BUF_SIZE, CFG->syslog_ident_format);
+    snoopy_message_generateFromFormat(syslogIdent, SNOOPY_SYSLOG_IDENT_FORMAT_BUF_SIZE, SNOOPY_SYSLOG_IDENT_FORMAT_BUF_SIZE, CFG->syslog_ident_format);
+
+    /* Allocate buffer */
+    size_t logMessageWithPrefixSize = strlen(logMessage) + SNOOPY_SYSLOG_IDENT_FORMAT_BUF_SIZE + 100;   // +100 ought to be enough for... whatever :)
+    char * logMessageWithPrefix = malloc(logMessageWithPrefixSize);
+    logMessageWithPrefix[0] = '\0';
 
     /* Generate final message - add prefix which is otherwise added by syslog() syscall */
-    char logMessageWithPrefix[SNOOPY_LOG_MESSAGE_BUF_SIZE + SNOOPY_SYSLOG_IDENT_FORMAT_BUF_SIZE + 100] = {'\0'};   // +100 ought to be enough
     snprintf(
         logMessageWithPrefix,
-        SNOOPY_LOG_MESSAGE_BUF_SIZE + SNOOPY_SYSLOG_IDENT_FORMAT_BUF_SIZE + 100,
+        logMessageWithPrefixSize,
         "<%d>%.*s[%d]: %s",
         CFG->syslog_facility | CFG->syslog_level,
         SNOOPY_SYSLOG_IDENT_FORMAT_BUF_SIZE-1,
@@ -80,5 +84,7 @@ int snoopy_output_devlogoutput (char const * const logMessage, __attribute__((un
     );
 
     /* Pass execution to another output provider */
-    return snoopy_output_socketoutput(logMessageWithPrefix, "/dev/log");
+    int bytesWritten = snoopy_output_socketoutput(logMessageWithPrefix, "/dev/log");
+    free(logMessageWithPrefix);
+    return bytesWritten;
 }

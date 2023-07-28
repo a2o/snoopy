@@ -100,11 +100,8 @@ jobs:
 
       ### Report debugging info on failure
       #
-      - uses: actions/upload-artifact@v2
+      - run: cat install-snoopy.log
         if: failure()
-        with:
-          name: install-snoopy.log
-          path: install-snoopy.log
 
 
 

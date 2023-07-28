@@ -22,6 +22,10 @@
 
 
 
+#include "datasource-common.h"
+
+
+
 #include "snoopy.h"
 #include <sys/types.h>
 
@@ -30,4 +34,4 @@
 /*
  * SNOOPY DATA SOURCE: tty-related common functions
  */
-int snoopy_datasource_tty__get_tty_uid (uid_t * ttyUid, char * const result);
+int snoopy_datasource_tty__get_tty_uid (uid_t * ttyUid, char * const resultBuf, size_t resultBufSize);

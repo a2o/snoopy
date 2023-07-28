@@ -36,6 +36,10 @@
 
 
 
+#define RESULT_BUF_SIZE 2048
+
+
+
 /*
  * Local helper functions
  */
@@ -109,7 +113,7 @@ int snoopyTestCli_action_unit_datasource_cmdline (int argc, char ** argv)
 
     mockDatasourceCmdline("test35", "cmdInFn", (char *[]) {str2045, "1", NULL}, str2045exp);
 
-    printSuccess("Mocking src/datasource/cmdline.c complete.");
+    printSuccess("Mocking src/datasource/cmdline.c complete (@datasource_message_max_length=2047).");
     return 0;
 }
 
@@ -121,7 +125,7 @@ static void mockDatasourceCmdline (
     char * const argv[],
     char const * const expectedResult)
 {
-    char   resultBuf[SNOOPY_DATASOURCE_MESSAGE_MAX_SIZE] = {'\0'};
+    char   resultBuf[RESULT_BUF_SIZE] = {'\0'};
     char * result = resultBuf;
     int    retVal;
 
@@ -129,7 +133,7 @@ static void mockDatasourceCmdline (
     snoopy_entrypoint_test_cli_init(filename, argv, NULL);
 
     // Run the datasource
-    retVal = snoopy_datasource_cmdline(result, NULL);
+    retVal = snoopy_datasource_cmdline(result, RESULT_BUF_SIZE, NULL);
     if (SNOOPY_DATASOURCE_FAILED(retVal)) {
         fatalErrorValue("Datasource failure", expectedResult);
     }

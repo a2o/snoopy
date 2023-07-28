@@ -22,7 +22,11 @@
 
 
 
+#include "datasource-common.h"
+
+
+
 /*
  * SNOOPY DATA SOURCE: tid_kernel
  */
-int snoopy_datasource_tid_kernel (char * const result, char const * const arg);
+int snoopy_datasource_tid_kernel (char * const resultBuf, size_t resultBufSize, char const * const arg);

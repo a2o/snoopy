@@ -26,3 +26,4 @@
  * Parser functions
  */
 int snoopy_util_parser_csvToArgList (char *argListRaw, char ***argListParsed);
+int snoopy_util_parser_strByteLength (const char *numberAsText, const int valMin, const int valMax, const int valDefault);
