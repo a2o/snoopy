@@ -39,6 +39,7 @@
 #include <sys/un.h>
 #include <unistd.h>
 
+#define PATH_SIZE    107
 
 
 /*
@@ -76,12 +77,11 @@ int snoopy_output_socketoutput (char const * const logMessage, char const * cons
     }
 
     remote.sun_family = AF_LOCAL;
-    strncpy(remote.sun_path, arg, 107);   // Coverity suggests -1 here
-    if (strlen(arg) > 107) {
-        remote.sun_path[107] = '\0';
-    }
+    strncpy(remote.sun_path, arg, PATH_SIZE);   // Coverity suggests -1 here
+    if (strlen(arg) > PATH_SIZE)
+        remote.sun_path[PATH_SIZE] = '\0';
 
-    remoteLength      = (int) strlen(remote.sun_path) + (int) sizeof(remote.sun_family);
+    remoteLength = (int) strnlen(remote.sun_path, PATH_SIZE) + (int) sizeof(remote.sun_family);
     if (connect(s, (struct sockaddr *)&remote, remoteLength) == -1) {
         close(s);
         return SNOOPY_OUTPUT_FAILURE;
