@@ -104,12 +104,12 @@ void printErrorValue (const char * const message, const char * const value)
 }
 
 
-void fatalError (const char * const message)
+__attribute__((noreturn)) void fatalError (const char * const message)
 {
     printError(message);
     exit(127);
 }
-void fatalErrorValue (const char * const message, const char * const value)
+__attribute__((noreturn)) void fatalErrorValue (const char * const message, const char * const value)
 {
     printErrorValue(message, value);
     exit(127);
