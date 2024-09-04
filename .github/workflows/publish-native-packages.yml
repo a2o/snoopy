@@ -37,7 +37,6 @@ jobs:
           - ciready/almalinux:8-ci-c
           - ciready/almalinux:9-ci-c
 
-          - ciready/centos:stream-8-ci-c
           - ciready/centos:stream-9-ci-c
 
           - ciready/debian:buster-ci-c
