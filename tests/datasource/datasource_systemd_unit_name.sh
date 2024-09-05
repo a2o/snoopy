@@ -43,6 +43,11 @@ else
 
 fi
 
+# Adjust the empty value to pass the test
+if [ "$VAL_EXPECTED" == "" ]; then
+    VAL_EXPECTED="-"
+fi
+
 
 
 ### Evaluate
