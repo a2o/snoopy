@@ -48,7 +48,7 @@ jobs:
 
           - ciready/centos:stream-9-ci-c
 
-          - ciready/ubuntu:22.04-ci-c
+          - ciready/ubuntu:24.04-ci-c
 
 
 

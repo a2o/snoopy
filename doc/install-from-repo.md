@@ -169,6 +169,14 @@ zypper install snoopy
 Packages are provided for active Ubuntu LTS versions only.
 List of supported Ubuntu LTS versions is [here](https://github.com/a2o/snoopy-packages/tree/master/repo/ubuntu/dists).
 
+Ubuntu 24.04 LTS (Noble Numbat) [search-key:ubuntu-24.04]:
+```shell
+curl https://a2o.github.io/snoopy-packages/snoopy-packages-key.pub | apt-key add - &&
+echo "deb https://a2o.github.io/snoopy-packages/repo/ubuntu noble stable" > /etc/apt/sources.list.d/snoopy-stable.list &&
+apt update &&
+apt install snoopy
+```
+
 Ubuntu 22.04 LTS (Jammy Jellyfish) [search-key:ubuntu-22.04]:
 ```shell
 curl https://a2o.github.io/snoopy-packages/snoopy-packages-key.pub | apt-key add - &&

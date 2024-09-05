@@ -53,7 +53,7 @@ jobs:
 
           - ciready/opensuse:leap-15.4-ci-c
 
-          - ciready/ubuntu:22.04-ci-c
+          - ciready/ubuntu:24.04-ci-c
           - ciready/ubuntu:rolling-ci-c
 
 
