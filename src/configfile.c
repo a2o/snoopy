@@ -301,10 +301,10 @@ int snoopy_configfile_parseValue_output (
         outputArg  = "";
     } else {
         // Separate output name from its arguments
+        // (arguments may contain further ':' characters, like "file:/var/log/snoopy-%{datetime:%Y-%m-%d}")
         outputName = strtok_r(confVal, ":", &saveptr1);
-        outputArg  = strtok_r(NULL   , ":", &saveptr1);
+        outputArg  = outputName + strlen(outputName) + 1;
         outputArgFound = SNOOPY_TRUE;
-
     }
 
     // Determine output name
