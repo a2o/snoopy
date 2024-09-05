@@ -18,6 +18,9 @@ if OUTPUT_ENABLED_file
 if DATASOURCE_ENABLED_username
     TESTS += output_file-dynamic.sh
 endif
+if DATASOURCE_ENABLED_snoopy_literal
+    TESTS += output_file-dynamic-arg.sh
+endif
 endif
 
 TESTS += output_noop.sh
