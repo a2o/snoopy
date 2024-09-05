@@ -81,6 +81,22 @@ jobs:
 
 
 
+      - name: Check the SONAR_TOKEN value
+        shell: bash
+        run: |
+            if [[ "$SONAR_TOKEN" == "" ]]; then
+                echo "ERROR: SONAR_TOKEN environmental variable not set or empty."
+                echo "ERROR: If you're running this workflow locally with 'act', add the '--secret-file=...', like this"
+                echo "ERROR:"
+                echo "ERROR:     act -j code-qa-sonarcloud --secret-file=dev-tools/submit-to-sonarcloud.conf"
+                echo "ERROR:"
+                exit 1
+            fi
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+
+
       ### Fetch the code
       #
       - name: Checkout branch ${{ github.ref }}
@@ -171,11 +187,11 @@ jobs:
           #LATEST_SONAR_SCANNER_VERSION=`wget -q -O - --header "Accept: application/vnd.github.v3+json" https://api.github.com/repos/SonarSource/sonar-scanner-cli/releases/latest | grep '"tag_name"' | head -n1 | cut -d '"' -f4`
           #
           # Replacing it with this static definition for now:
-          LATEST_SONAR_SCANNER_VERSION="4.8.0.2856"
+          LATEST_SONAR_SCANNER_VERSION="6.1.0.4477"
 
           echo "Got the latest Sonar Scanner version: $LATEST_SONAR_SCANNER_VERSION"
-          LATEST_SONAR_SCANNER_ZIP="sonar-scanner-cli-$LATEST_SONAR_SCANNER_VERSION-linux.zip"
-          LATEST_SONAR_SCANNER_DIR="sonar-scanner-$LATEST_SONAR_SCANNER_VERSION-linux"
+          LATEST_SONAR_SCANNER_ZIP="sonar-scanner-cli-$LATEST_SONAR_SCANNER_VERSION-linux-x64.zip"
+          LATEST_SONAR_SCANNER_DIR="sonar-scanner-$LATEST_SONAR_SCANNER_VERSION-linux-x64"
           wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/$LATEST_SONAR_SCANNER_ZIP
           unzip $LATEST_SONAR_SCANNER_ZIP
           ln -s $LATEST_SONAR_SCANNER_DIR/bin/sonar-scanner /opt/sonar-scanner
