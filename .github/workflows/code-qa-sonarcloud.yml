@@ -81,6 +81,22 @@ jobs:
 
 
 
+      - name: Check the SONAR_TOKEN value
+        shell: bash
+        run: |
+            if [[ "$SONAR_TOKEN" == "" ]]; then
+                echo "ERROR: SONAR_TOKEN environmental variable not set or empty."
+                echo "ERROR: If you're running this workflow locally with 'act', add the '--secret-file=...', like this"
+                echo "ERROR:"
+                echo "ERROR:     act -j code-qa-sonarcloud --secret-file=dev-tools/submit-to-sonarcloud.conf"
+                echo "ERROR:"
+                exit 1
+            fi
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+
+
       ### Fetch the code
       #
       - name: Checkout branch ${{ github.ref }}
