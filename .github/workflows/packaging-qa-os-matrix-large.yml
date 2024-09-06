@@ -62,6 +62,7 @@ jobs:
 
           - ciready/ubuntu:20.04-ci-c
           - ciready/ubuntu:22.04-ci-c
+          - ciready/ubuntu:24.04-ci-c
 
 
 

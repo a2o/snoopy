@@ -4,10 +4,11 @@
 
 
 
-2023-xx-xx - Version 2.5.2
+2024-xx-xx - Version 2.5.2
 --------------------------
 New features:
 =============
+o Add Ubuntu 24.04 support.
 o Add OpenSUSE 15.5 support.
 o Configurable max log message length.
     Ref: https://github.com/a2o/snoopy/issue/254
