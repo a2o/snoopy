@@ -34,12 +34,12 @@ BOOTSTRAP_GIT_REPO_REQUIRED="false"
 # NOTICE: Certain changes here must potentially be reflected
 # in the ../install/install-snoopy.sh file too.
 #
-       PROGRAM_NAMES="autoconf aclocal  curl diff      file find      gcc git gzip hostname  libtoolize m4 make ps     socat tar wget"
-PACKAGE_NAMES_ALPINE="autoconf automake curl diffutils file           gcc git gzip           libtool    m4 make procps socat tar wget alpine-sdk"
-  PACKAGE_NAMES_ARCH="autoconf automake curl diffutils file           gcc git gzip inetutils libtool    m4 make procps socat tar wget"
-PACKAGE_NAMES_DEBIAN="autoconf automake curl diffutils file           gcc git gzip           libtool    m4 make procps socat tar wget"
-PACKAGE_NAMES_REDHAT="autoconf automake curl diffutils file           gcc git gzip hostname  libtool    m4 make procps socat tar wget"
-  PACKAGE_NAMES_SUSE="autoconf automake curl diffutils file findutils gcc git gzip hostname  libtool    m4 make procps socat tar wget"
+       PROGRAM_NAMES="autoconf aclocal      curl diff      file find      gcc git gzip hostname  libtoolize m4 make ps     socat tar wget"
+PACKAGE_NAMES_ALPINE="autoconf automake     curl diffutils file           gcc git gzip           libtool    m4 make procps socat tar wget alpine-sdk"
+  PACKAGE_NAMES_ARCH="autoconf automake     curl diffutils file           gcc git gzip inetutils libtool    m4 make procps socat tar wget"
+PACKAGE_NAMES_DEBIAN="autoconf automake     curl diffutils file           gcc git gzip           libtool    m4 make procps socat tar wget"
+PACKAGE_NAMES_REDHAT="autoconf automake     curl diffutils file           gcc git gzip hostname  libtool    m4 make procps socat tar wget"
+  PACKAGE_NAMES_SUSE="autoconf automake awk curl diffutils file findutils gcc git gzip hostname  libtool    m4 make procps socat tar wget"
 
 
 

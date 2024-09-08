@@ -261,19 +261,19 @@ _installPackages()
 #
 #
 
-       PROGRAM_NAMES="find      gcc gzip make ps     socat tar wget"
-PACKAGE_NAMES_ALPINE="          gcc gzip make procps socat tar wget alpine-sdk"
-  PACKAGE_NAMES_ARCH="          gcc gzip make procps socat tar wget"
-PACKAGE_NAMES_DEBIAN="          gcc gzip make procps socat tar wget"
-PACKAGE_NAMES_REDHAT="          gcc gzip make procps socat tar wget"
-  PACKAGE_NAMES_SUSE="findutils gcc gzip make procps socat tar wget"
+       PROGRAM_NAMES="    find      gcc gzip make ps     socat tar wget"
+PACKAGE_NAMES_ALPINE="              gcc gzip make procps socat tar wget alpine-sdk"
+  PACKAGE_NAMES_ARCH="              gcc gzip make procps socat tar wget"
+PACKAGE_NAMES_DEBIAN="              gcc gzip make procps socat tar wget"
+PACKAGE_NAMES_REDHAT="              gcc gzip make procps socat tar wget"
+  PACKAGE_NAMES_SUSE="awk findutils gcc gzip make procps socat tar wget"
 if [ "$SNOOPY_SOURCE_TYPE" == "git" ]; then
-           PROGRAM_NAMES="autoconf aclocal  curl find      gcc git gzip hostname  libtoolize m4 make ps     socat tar wget"
-    PACKAGE_NAMES_ALPINE="autoconf automake curl           gcc git gzip           libtool    m4 make procps socat tar wget alpine-sdk"
-      PACKAGE_NAMES_ARCH="autoconf automake curl           gcc git gzip inetutils libtool    m4 make procps socat tar wget"
-    PACKAGE_NAMES_DEBIAN="autoconf automake curl           gcc git gzip           libtool    m4 make procps socat tar wget"
-    PACKAGE_NAMES_REDHAT="autoconf automake curl           gcc git gzip hostname  libtool    m4 make procps socat tar wget"
-      PACKAGE_NAMES_SUSE="autoconf automake curl findutils gcc git gzip hostname  libtool    m4 make procps socat tar wget"
+           PROGRAM_NAMES="autoconf aclocal      curl find      gcc git gzip hostname  libtoolize m4 make ps     socat tar wget"
+    PACKAGE_NAMES_ALPINE="autoconf automake     curl           gcc git gzip           libtool    m4 make procps socat tar wget alpine-sdk"
+      PACKAGE_NAMES_ARCH="autoconf automake     curl           gcc git gzip inetutils libtool    m4 make procps socat tar wget"
+    PACKAGE_NAMES_DEBIAN="autoconf automake     curl           gcc git gzip           libtool    m4 make procps socat tar wget"
+    PACKAGE_NAMES_REDHAT="autoconf automake     curl           gcc git gzip hostname  libtool    m4 make procps socat tar wget"
+      PACKAGE_NAMES_SUSE="autoconf automake awk curl findutils gcc git gzip hostname  libtool    m4 make procps socat tar wget"
 fi
 
 if _areAllRequiredProgramsPresent "$PROGRAM_NAMES"; then
