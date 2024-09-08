@@ -45,7 +45,6 @@ jobs:
           - almalinux/8-base:latest
           - almalinux/9-base:latest
 
-          - quay.io/centos/centos:stream8
           - quay.io/centos/centos:stream9
 
           - debian:buster
