@@ -4,23 +4,26 @@
 
 
 
-2024-xx-xx - Version 2.5.2
+2024-10-24 - Version 2.5.2
 --------------------------
 New features:
 =============
-o Add Ubuntu 24.04 support.
-o Add OpenSUSE 15.5 support.
-o Configurable max log message length.
+o Add Ubuntu 24.04 support (GH #275).
+o Add OpenSUSE 15.5 support (GH #262).
+o Configurable max log message length (GH #264).
     Ref: https://github.com/a2o/snoopy/issue/254
     Ref: https://github.com/a2o/snoopy/pull/264
 
 Deprecations:
 =============
-o Remove Ubuntu 18.04 support.
-o Remove OpenSUSE 15.3 support.
+o Remove Ubuntu 18.04 support (GH #261).
+o Remove OpenSUSE 15.3 support (GH #262).
+o Remove CentOS Stream 8 support (GH #272, #278).
 
 Bugfixes:
 =========
+o Fix datasource argument handling in output specification
+    Ref: https://github.com/a2o/snoopy/pull/274
 o Fix incorrectly placed free() call in `systemd_unit_name` datasource
     Ref: https://github.com/a2o/snoopy/pull/264
 
