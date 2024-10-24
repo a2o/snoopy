@@ -26,6 +26,8 @@ and work out any kinks that get pointed out.
 The following assumptions are, well, assumed, by the releasing scripts:
 - `master` branch is used for releasing.
 - All the code that is to be released is already merged into the `master` branch.
+- Guide `doc/install-from-repo.md` updated with distribution versions that are
+  actually supported (for automated testing in the last step).
 - The final release-related updates to `ChangeLog` and `README.md` files are already
   present in the local files, **but not yet committed**.
 - The release commit does not yet exist.
