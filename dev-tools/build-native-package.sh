@@ -193,7 +193,7 @@ case "$OS_ID" in
                 PKG_RELEASE_DIST="bp155"
                 ;;
             *)
-                _fatalError "Unsuppoterd SUSE version: $OS_VERSION"
+                _fatalError "Unsupported SUSE version: $OS_VERSION"
                 ;;
         esac
         PKG_RELEASE_TAG="${PKG_RELEASE_NUMBER}.${PKG_RELEASE_DIST}"

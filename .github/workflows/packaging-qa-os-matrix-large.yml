@@ -94,7 +94,7 @@ jobs:
 
       ### Archlinux "workaround"
       #
-      - name: "WORKAROUND: Make makepkg run as roon on Arch Linux"
+      - name: "WORKAROUND: Make makepkg run as root on Arch Linux"
         run: |
             sed -i 's/EUID == 0/EUID == 1987/' /usr/sbin/makepkg
         if: ${{ startsWith(matrix.container, 'ciready/archlinux:') }}
