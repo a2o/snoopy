@@ -185,17 +185,7 @@ case "$OS_ID" in
         # For rpm/zypper, 1.0.0~rc1 < 1.0.0
         PKG_SNOOPY_VERSION=`echo "$SNOOPY_RELEASE_VERSION" | sed -e 's/-\?rc/~rc/' | sed -e 's/-/_/g'`
         PKG_RELEASE_NUMBER="$ARG_PKG_RELEASE_NUMBER"
-        case "$OS_VERSION" in
-            "15.4")
-                PKG_RELEASE_DIST="bp154"
-                ;;
-            "15.5")
-                PKG_RELEASE_DIST="bp155"
-                ;;
-            *)
-                _fatalError "Unsupported SUSE version: $OS_VERSION"
-                ;;
-        esac
+        PKG_RELEASE_DIST=`echo "bp$OS_VERSION" | sed -e 's/\.//'`
         PKG_RELEASE_TAG="${PKG_RELEASE_NUMBER}.${PKG_RELEASE_DIST}"
 
         ARCHITECTURE=`rpm --eval '%{_arch}'`
