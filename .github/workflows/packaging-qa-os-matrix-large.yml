@@ -46,7 +46,8 @@ jobs:
     strategy:
       matrix:
         container:
-          - ciready/archlinux:base-devel-ci-c
+          # Disabled because fakeroot hangs in a Docker container
+          #- ciready/archlinux:base-devel-ci-c
 
           - ciready/almalinux:8-ci-c
           - ciready/almalinux:9-ci-c
