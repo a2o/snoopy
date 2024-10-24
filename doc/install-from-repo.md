@@ -58,21 +58,14 @@ yum install snoopy
 
 ## Arch Linux
 
-NOTICE: Trusted keys must be already initialized (hint: `pacman-key --init`).
+NOTICE: Arch Linux packaging is currently not supported.
 
-Arch Linux rolling-release [search-key:arch]:
-```shell
-curl -o snoopy-packages-key.pub https://a2o.github.io/snoopy-packages/snoopy-packages-key.pub &&
-pacman-key --add snoopy-packages-key.pub &&
-pacman-key --lsign-key snoopy-packages@a2o.github.com &&
+The reason is a bug that causes `fakeroot` tool (used internally by Arch's packaging toolset)
+to hang indefinitely when run inside a Docker container. Since Snoopy Logger is using Docker
+(via Github Actions, or locally) for creating native binary packages, this bug is a showstopper
+and binary packages for Arch will not be provided until this bug is resolved.
 
-echo "
-[snoopy-stable]
-Server = https://a2o.github.io/snoopy-packages/repo/arch/stable/
-" >> /etc/pacman.conf &&
-
-pacman -Sy snoopy
-```
+Reference: https://github.com/docker/for-mac/issues/7331
 
 
 
