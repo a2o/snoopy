@@ -39,7 +39,8 @@ jobs:
     strategy:
       matrix:
         container:
-          - archlinux:base-devel
+          # Disabled because fakeroot hangs in a Docker container
+          #- archlinux:base-devel
 
           - almalinux/8-base:latest
           - almalinux/9-base:latest
