@@ -31,10 +31,10 @@ BOOTSTRAP_GIT_REPO_REQUIRED="false"
 
 ### Definitions
 #
-  PACKAGE_NAMES_ARCH="pacman openssh"
+  PACKAGE_NAMES_ARCH="pacman                                 openssh"
 PACKAGE_NAMES_DEBIAN="debhelper apt-utils             gnupg"
 PACKAGE_NAMES_REDHAT="rpm-build createrepo   rpm-sign gnupg2"
-  PACKAGE_NAMES_SUSE="rpm-build createrepo_c          gpg2"
+  PACKAGE_NAMES_SUSE="rpm-build createrepo_c          gpg2   openssh-clients"
 
 
 
