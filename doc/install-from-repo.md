@@ -146,19 +146,19 @@ apt install snoopy
 
 List of supported openSUSE Leap versions [here](https://github.com/a2o/snoopy-packages/tree/master/repo/opensuse-leap).
 
+openSUSE Leap 15.6 [search-key:opensuse-leap-15.6]:
+```shell
+curl -o snoopy-packages-key.pub https://a2o.github.io/snoopy-packages/snoopy-packages-key.pub &&
+rpm --import snoopy-packages-key.pub &&
+zypper addrepo -n "Snoopy Upstream Stable Repository" -g -e https://a2o.github.io/snoopy-packages/repo/opensuse-leap/15.6/stable/ snoopy-stable &&
+zypper install snoopy
+```
+
 openSUSE Leap 15.5 [search-key:opensuse-leap-15.5]:
 ```shell
 curl -o snoopy-packages-key.pub https://a2o.github.io/snoopy-packages/snoopy-packages-key.pub &&
 rpm --import snoopy-packages-key.pub &&
 zypper addrepo -n "Snoopy Upstream Stable Repository" -g -e https://a2o.github.io/snoopy-packages/repo/opensuse-leap/15.5/stable/ snoopy-stable &&
-zypper install snoopy
-```
-
-openSUSE Leap 15.4 [search-key:opensuse-leap-15.4]:
-```shell
-curl -o snoopy-packages-key.pub https://a2o.github.io/snoopy-packages/snoopy-packages-key.pub &&
-rpm --import snoopy-packages-key.pub &&
-zypper addrepo -n "Snoopy Upstream Stable Repository" -g -e https://a2o.github.io/snoopy-packages/repo/opensuse-leap/15.4/stable/ snoopy-stable &&
 zypper install snoopy
 ```
 
