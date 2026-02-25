@@ -114,7 +114,7 @@ int snoopy_datasource_domain (char * const resultBuf, size_t resultBufSize, __at
 
 
     /* Read line by line */
-    const char *linePtr;
+    char *linePtr;
     char *hashPtr;
     char *lineEntryPtr;
     char *savePtr;
