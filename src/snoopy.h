@@ -28,7 +28,9 @@
  * - prevents GCC from complaining about not using strerror_r return value
  * - enables strdup() presence
  */
+#ifndef  _XOPEN_SOURCE
 #define  _XOPEN_SOURCE   700
+#endif
 
 
 
