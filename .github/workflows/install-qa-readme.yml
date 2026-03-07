@@ -23,7 +23,7 @@ jobs:
   install-qa-test-readme-steps:
 
     name: Test install steps from README.md
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     container: ubuntu:20.04
 
 

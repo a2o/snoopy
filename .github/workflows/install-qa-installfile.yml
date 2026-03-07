@@ -25,7 +25,7 @@ jobs:
   install-qa-test-installfile:
 
     name: Test install-snoopy.sh ${{matrix.install_mode}}
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     container: ubuntu:20.04
     strategy:
       matrix:

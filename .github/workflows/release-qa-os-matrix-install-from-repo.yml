@@ -29,7 +29,7 @@ jobs:
   release-qa-os-matrix-install-from-repo:
 
     name: Install on ${{matrix.container}}
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
 
 
 
