@@ -51,7 +51,7 @@ jobs:
   build-qa-out-of-tree-build:
 
     name: Out-of-tree build
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     container: ciready/ubuntu:20.04-ci-c
 
 
